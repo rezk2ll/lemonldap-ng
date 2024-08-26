@@ -93,21 +93,41 @@ sub handler {
 
     # Save pdata
     if ( $sp or %{ $req->pdata } ) {
-        my %v = (
-            name   => $self->conf->{cookieName} . 'pdata',
-            secure => $self->conf->{securedCookie},
-            (
-                %{ $req->pdata }
-                ? ( value => uri_escape( JSON::to_json( $req->pdata ) ) )
-                : ( value => '', expires => 'Wed, 21 Oct 2015 00:00:00 GMT' )
-            ),
-            (
-                $self->conf->{pdataDomain}
-                ? ( domain => $self->conf->{pdataDomain}, )
-                : ()
-            ),
-        );
-        push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+        my %pdata_options = ();
+        $pdata_options{domain} = $self->conf->{pdataDomain}
+          if $self->conf->{pdataDomain};
+
+        if ( %{ $req->pdata } ) {
+            push @{ $res->[1] }, 'Set-Cookie',
+              $self->cookie(
+                name   => $self->conf->{cookieName} . 'pdata',
+                secure => $self->conf->{securedCookie},
+                value  => uri_escape( JSON::to_json( $req->pdata ) ),
+                %pdata_options,
+              );
+
+        }
+        else {
+            push @{ $res->[1] }, 'Set-Cookie',
+              $self->cookie(
+                name    => $self->conf->{cookieName} . 'pdata',
+                secure  => $self->conf->{securedCookie},
+                value   => '',
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+                %pdata_options,
+              );
+
+            # Avoid regressions with #3228
+            push @{ $res->[1] }, 'Set-Cookie',
+              $self->genDomainCookie(
+                $req,
+                name    => $self->conf->{cookieName} . 'pdata',
+                secure  => $self->conf->{securedCookie},
+                value   => '',
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+                %pdata_options,
+              );
+        }
     }
     return $res;
 }

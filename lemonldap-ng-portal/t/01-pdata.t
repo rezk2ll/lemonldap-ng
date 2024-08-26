@@ -61,12 +61,6 @@ count(1);
 expectOK($res);
 
 $tmp = expectCookie( $res, 'lemonldappdata' );
-unlike(
-    Plack::Response->new(@$res)->headers->header('Set-Cookie'),
-    qr/lemonldappdata=[^,]*domain=/,
-    "Domain not set in pdata cookie"
-);
-count(1);
 ok( $tmp eq '', 'Pdata is ""' ) or explain( $res, 'lemonldappdata=;' );
 count(1);
 

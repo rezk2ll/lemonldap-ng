@@ -410,6 +410,17 @@ sub removeCookie {
             secure  => $self->conf->{securedCookie},
         )
     );
+
+    # Avoid regressions with #3228
+    $req->addCookie(
+        $self->p->genDomainCookie(
+            $req,
+            name    => $self->cookieName,
+            value   => 0,
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+            secure  => $self->conf->{securedCookie},
+        )
+    );
 }
 
 sub removeExistingSessions {
