@@ -720,6 +720,7 @@ fi
 %{lm_bindir}/lmConfigEditor
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
+%{lm_bindir}/llngUserAttributes
 %{_mandir}/man1/lemonldap-ng-cli*
 %{_mandir}/man1/importMetadata*
 %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*

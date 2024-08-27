@@ -8,3 +8,4 @@ usr/share/lemonldap-ng/bin/lemonldap-ng-cli
 usr/share/lemonldap-ng/manager
 usr/share/lemonldap-ng/bin/lmConfigEditor
 usr/share/lemonldap-ng/bin/llngDeleteSession
+usr/share/lemonldap-ng/bin/llngUserAttributes
