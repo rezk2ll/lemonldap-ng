@@ -4,6 +4,7 @@ etc/lemonldap-ng/manager-apache2.conf
 etc/lemonldap-ng/manager-nginx.conf
 usr/share/lemonldap-ng/bin/lemonldap-ng-cli
 usr/share/lemonldap-ng/bin/llngDeleteSession
+usr/share/lemonldap-ng/bin/llngUserAttributes
 usr/share/lemonldap-ng/bin/lmConfigEditor
 usr/share/lemonldap-ng/manager
 usr/share/man/man3/Lemonldap::NG::Manager*
