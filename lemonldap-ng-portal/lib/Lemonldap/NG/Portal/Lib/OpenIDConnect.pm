@@ -1908,13 +1908,15 @@ sub getEndPointAuthenticationCredentials {
             $self->logger->error("Unsuported client_assertion_type $atype");
         }
     }
-    elsif ( $req->param('client_id') and $req->param('client_secret') ) {
+    elsif ( $req->param('client_id')
+        and $req->body_parameters->{client_secret} )
+    {
         $scheme = 'client_secret_post';
         $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
     }
-    elsif ( $req->param('client_id') and !$req->param('client_secret') ) {
+    elsif ( $req->param('client_id') ) {
         $scheme = 'none';
         $self->logger->debug("Method none used");
         $client_id = $req->param('client_id');
