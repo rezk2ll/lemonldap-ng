@@ -23,7 +23,6 @@ of this module
 use strict;
 use Mouse::Role;
 use Lemonldap::NG::Common::Util qw/display2F/;
-use Lemonldap::NG::Portal::Main::Constants qw/PE_OK/;
 use JSON;
 
 requires qw(p conf logger);
@@ -80,7 +79,7 @@ sub update2fDevice {
 
 =item add2fDevice
 
-Register a new device
+Store a new device
 
     $self->add2fDevice($req, $info, $device);
 
@@ -104,12 +103,6 @@ sub add2fDevice {
 
     my $_2fDevices = $self->get2fDevices( $req, $info );
 
-    my $registration_state = { authenticationLevel => $self->authnLevel, };
-
-    my $h = $self->p->processHook( $req, 'sfRegisterDevice', $info, $device,
-        $registration_state );
-    return 0 if ( $h != PE_OK );
-
     push @{$_2fDevices}, $device;
 
     my $uid = $info->{ $self->conf->{whatToTrace} };
@@ -124,8 +117,6 @@ sub add2fDevice {
     );
     $self->p->updatePersistentSession( $req,
         { _2fDevices => to_json($_2fDevices) } );
-
-    $self->markRegistered( $req, $registration_state->{authenticationLevel} );
     return 1;
 }
 

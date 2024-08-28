@@ -2,6 +2,7 @@
 package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
+use Lemonldap::NG::Portal::Main::Constants qw/PE_OK PE_ERROR/;
 use Mouse;
 
 our $VERSION = '2.20.0';
@@ -170,6 +171,25 @@ sub failResponse {
 sub successResponse {
     my ( $self, $req, $info ) = @_;
     return $self->p->sendJSONresponse( $req, $info );
+}
+
+sub registerDevice {
+    my ( $self, $req, $info, $device ) = @_;
+
+    my $registration_state = { authenticationLevel => $self->authnLevel, };
+
+    my $h = $self->p->processHook( $req, 'sfRegisterDevice', $info, $device,
+        $registration_state );
+    return $h if ( $h != PE_OK );
+
+    if ( $self->add2fDevice( $req, $info, $device ) ) {
+        $self->markRegistered( $req,
+            $registration_state->{authenticationLevel} );
+        return PE_OK;
+    }
+    else {
+        return PE_ERROR;
+    }
 }
 
 1;

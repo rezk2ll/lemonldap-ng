@@ -2,6 +2,7 @@
 package Lemonldap::NG::Portal::2F::Register::Password;
 
 use strict;
+use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
@@ -93,24 +94,22 @@ sub verify {
     }
 
     # Add a new one
-    if (
-        $self->add2fDevice(
-            $req,
-            $req->userData,
-            {
-                _secret => $secret,
-                name    => 'password',
-                type    => $self->type,
-                epoch   => time()
-            }
-        )
-      )
-    {
+    my $res = $self->registerDevice(
+        $req,
+        $req->userData,
+        {
+            _secret => $secret,
+            name    => 'password',
+            type    => $self->type,
+            epoch   => time()
+        }
+    );
+    if ( $res == PE_OK ) {
         return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . "2f: unable to add password" );
-        return $self->failResponse( $req, 'serverError' );
+        return $self->failResponse( $req, "PE$res" );
     }
 }
 

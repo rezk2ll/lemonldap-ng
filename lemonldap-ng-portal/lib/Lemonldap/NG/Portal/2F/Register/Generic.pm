@@ -117,24 +117,22 @@ sub verify {
     }
 
     # Add a new one
-    if (
-        $self->add2fDevice(
-            $req,
-            $req->userData,
-            {
-                _generic => $generic,
-                name     => $genericname,
-                type     => $self->prefix,
-                epoch    => time()
-            }
-        )
-      )
-    {
+    my $res = $self->registerDevice(
+        $req,
+        $req->userData,
+        {
+            _generic => $generic,
+            name     => $genericname,
+            type     => $self->prefix,
+            epoch    => time()
+        }
+    );
+    if ( $res == PE_OK ) {
         return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . "2f: unable to add device" );
-        return $self->failResponse( $req, 'serverError' );
+        return $self->failResponse( $req, "PE$res" );
     }
 }
 
