@@ -76,7 +76,7 @@ sub processHook {
         }
     }
     if ( $err != PE_OK ) {
-        my $msg = "Hook $hookName returned " . portalConsts->{$err};
+        my $msg = "Hook $hookName returned $err (" . portalConsts->{$err} . ")";
         if ( $err > 0 ) {
             $self->logger->warn($msg);
         }
