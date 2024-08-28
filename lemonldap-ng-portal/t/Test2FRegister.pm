@@ -1,6 +1,7 @@
 package t::Test2FRegister;
 
 use strict;
+use Lemonldap::NG::Portal::Main::Constants qw/PE_OK PE_ERROR/;
 use Mouse;
 
 our $VERSION = '2.19.0';
@@ -13,8 +14,8 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has logo   => ( is => 'rw', default => 'test.png' );
-has prefix => ( is => 'rw', default => 'test' );
+has logo     => ( is => 'rw', default => 'test.png' );
+has prefix   => ( is => 'rw', default => 'test' );
 has template => ( is => 'ro', default => 'generic2fregister' );
 has welcome  => ( is => 'ro', default => 'generic2fwelcome' );
 has type     => ( is => 'ro', default => 'test' );
@@ -26,7 +27,7 @@ sub run {
         my $private = $req->param('private');
         if ($private) {
 
-            $self->add2fDevice(
+            my $res = $self->registerDevice(
                 $req,
                 $req->userData,
                 {
@@ -36,7 +37,12 @@ sub run {
                     epoch    => time()
                 }
             );
-            return $self->p->sendJSONresponse( $req, { result => 1 } );
+            if ( $res == PE_OK ) {
+                return $self->p->sendJSONresponse( $req, { result => 1 } );
+            }
+            else {
+                return $self->failResponse( $req, "PE$res" );
+            }
         }
     }
     return $self->p->sendError( $req, 'error', 400 );
