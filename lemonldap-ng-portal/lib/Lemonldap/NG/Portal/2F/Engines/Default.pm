@@ -1238,7 +1238,7 @@ sub _registerRoutes {
 
 sub get2fTplParams {
     my ( $self, $req, $module ) = @_;
-    my %param;
+    my %param       = $self->p->getErrorTplParams($req);
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug( $module->prefix . '2f: checkLogins set' )
       if $checkLogins;
@@ -1249,10 +1249,6 @@ sub get2fTplParams {
 
     $param{CHECKLOGINS}   = $checkLogins;
     $param{STAYCONNECTED} = $stayConnected;
-
-    $param{AUTH_ERROR}      = $req->error;
-    $param{AUTH_ERROR_TYPE} = $req->error_type;
-    $param{AUTH_ERROR_ROLE} = $req->error_role;
 
     return %param;
 }
