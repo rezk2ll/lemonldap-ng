@@ -1,3 +1,12 @@
+lemonldap-ng (2.19.2) jammy; urgency=medium
+
+  * Bugs:
+    * #3208: llngUserAttributes is not installed in 2.19.1
+    * #3223: [security][CVE-2024-45160] regression in OIDC client authentication allow empty client_secret to be accepted
+    * #3228: [Security:low] Incorrect cookie domain for non-sso cookies
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 28 Aug 2024 14:16:13 +0200
+
 lemonldap-ng (2.19.1) jammy; urgency=medium
 
   * Bugs:
