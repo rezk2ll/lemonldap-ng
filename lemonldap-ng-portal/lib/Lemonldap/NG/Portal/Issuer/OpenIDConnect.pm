@@ -2202,7 +2202,11 @@ sub userInfo {
       $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsUserInfoSignAlg};
 
     unless ($userinfo_sign_alg) {
+        my $debug_response = to_json($userinfo_response);
+        utf8::downgrade($debug_response);
+        $self->logger->debug( "Return UserInfo as JSON: " . $debug_response );
         return $self->p->sendJSONresponse( $req, $userinfo_response );
+
     }
     else {
         my $userinfo_jwt = $self->encryptToken(
@@ -2652,8 +2656,10 @@ sub logout {
                               . " $userId from $rp: "
                               . $resp->message );
                         $self->logger->debug("Logout token: $jwt");
-                        $self->logger->debug( 'Upstream status: ' . $resp->status_line );
-                        $self->logger->debug( 'Upstream response: ' . ( $resp->content // '') );
+                        $self->logger->debug(
+                            'Upstream status: ' . $resp->status_line );
+                        $self->logger->debug(
+                            'Upstream response: ' . ( $resp->content // '' ) );
                         $code = PE_SLO_ERROR;
                     }
                     else {
