@@ -1158,15 +1158,25 @@ sub newAccessToken {
         %{$info},
     };
 
-    my $session = $self->getOpenIDConnectSession(
-        undef,
-        "access_token",
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
-          || $self->conf->{oidcServiceAccessTokenExpiration},
-        $at_info,
-    );
+    my $ttl =
+         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
+      || $self->conf->{oidcServiceAccessTokenExpiration};
+    my $session =
+      $self->getOpenIDConnectSession( undef, "access_token", $ttl, $at_info, );
 
     if ($session) {
+
+        my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+        $self->auditLog(
+            $req,
+            code    => "ISSUER_OIDC_ACCESS_TOKEN",
+            rp      => $rp,
+            message =>
+              ("Access Token for $user generated for $rp with TTL $ttl"),
+            user => $user,
+            ttl  => $ttl,
+        );
+
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
               $self->makeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
