@@ -32,10 +32,6 @@ stages:
 before_script:
   - env | grep ^CI_
 
-build_buster:
-  extends: .debian_build_job
-  image: buildpkg/debian:buster
-
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
@@ -100,7 +96,6 @@ sign:
     - cd $CI_PROJECT_DIR
     - ci-sign-pkg
   dependencies:
-    - build_buster
     - build_bullseye
     - build_centos_7
     - build_rocky_8
