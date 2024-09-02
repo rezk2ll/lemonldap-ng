@@ -79,6 +79,7 @@ lib/Lemonldap/NG/Common/Session/REST.pm
 lib/Lemonldap/NG/Common/TOTP.pm
 lib/Lemonldap/NG/Common/UserAgent.pm
 lib/Lemonldap/NG/Common/Util.pm
+lib/Lemonldap/NG/Common/Util/Crypto.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
