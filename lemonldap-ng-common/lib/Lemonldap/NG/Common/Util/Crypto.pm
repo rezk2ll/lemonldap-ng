@@ -152,9 +152,47 @@ This package contains various cryptography-related functions
 
 =head1 METHODS
 
-=head3 getPSessionID($uid)
+=head3 genCertKey($key_len, $password, $cn)
 
-This method computes the psession ID from the user login
+This method generates a RSA private key and a self-signed certificate, and returns a hashref of
+
+=over
+
+=item public: certificate in PEM format, subject is built from given $cn
+
+=item private: private key in PEM format, optionnaly encrypted with supplied password
+
+=item hash: unique identifier for the key
+
+=back
+
+=head3 genEcKey($curve_name)
+
+This method generates an ECDSA key pair and returns a hashref of
+
+=over
+
+=item public: public key in PEM format
+
+=item private: private key in PEM format
+
+=item hash: unique identifier for the key
+
+=back
+
+=head3 genRsaKey($key_len, $password)
+
+This method generates a RSA key pair and returns a hashref of
+
+=over
+
+=item public: public key in PEM format
+
+=item private: private key in PEM format, optionnaly encrypted with supplied password
+
+=item hash: unique identifier for the key
+
+=back
 
 =head1 AUTHORS
 
