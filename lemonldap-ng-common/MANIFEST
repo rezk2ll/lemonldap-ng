@@ -120,6 +120,7 @@ t/60-Session-Cache.t
 t/60-Session-Cli.t
 t/60-U2F-Migrate.t
 t/70-User-Agent.t
+t/71-Util-Crypto.t
 t/99-pod.t
 t/data/preview-all-test-metadata.xml
 t/lemonldap-ng.ini
