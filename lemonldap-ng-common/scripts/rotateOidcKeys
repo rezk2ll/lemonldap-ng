@@ -11,6 +11,7 @@ use strict;
 
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Util::Crypto;
+use URI;
 
 my $debug = 0;
 
@@ -21,6 +22,7 @@ my $lmconf = Lemonldap::NG::Common::Conf->new()
   or die $Lemonldap::NG::Common::Conf::msg;
 my $conf = $lmconf->getConf();
 
+my $cn = eval { URI->new( $conf->{portal} )->host } || 'localhost';
 print "Configuration loaded\n" if $debug;
 
 # Verify type
@@ -43,7 +45,7 @@ if ( $type eq 'EC' ) {
     $keys = Lemonldap::NG::Common::Util::Crypto::genEcKey('secp256r1');
 }
 else {
-    $keys = Lemonldap::NG::Common::Util::Crypto::genRsaKey(2048);
+    $keys = Lemonldap::NG::Common::Util::Crypto::genCertKey( 2048, undef, $cn );
 }
 
 print "Private key generated:\n" . $keys->{private} . "\n" if $debug;
@@ -86,7 +88,8 @@ if ( $conf->{oidcServicePrivateKeyEnc} ) {
         $keys = Lemonldap::NG::Common::Util::Crypto::genEcKey('secp256r1');
     }
     else {
-        $keys = Lemonldap::NG::Common::Util::Crypto::genRsaKey(2048);
+        $keys =
+          Lemonldap::NG::Common::Util::Crypto::genCertKey( 2048, undef, $cn );
     }
 
     # Move current key into previous one
