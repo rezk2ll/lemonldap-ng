@@ -455,19 +455,15 @@ sub dynamic_hash_password {
 
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI dynamic_hash_new_password(ref dbh,
+## @method protected Lemonldap::NG::Portal::_DBI get_dynamic_hash_new_password(ref dbh,
 ##  string user, string password)
-# Return hashed password for use in SQL statement
+# @return hashed password
 # @param dbh database handler
 # @param user connected user
 # @param password clear password
 # @param dbscheme the scheme to use for hashing
-# @return hashed password
-sub dynamic_hash_new_password {
-    my $self     = shift;
-    my $dbh      = shift;
-    my $user     = shift;
-    my $password = shift;
+sub get_dynamic_hash_new_password {
+    my ( $self, $dbh, $user, $password ) = @_;
     my $dbscheme = $self->conf->{dbiDynamicHashNewPasswordScheme} || "";
 
     # Authorized hash schemes and salted hash schemes
@@ -483,7 +479,7 @@ sub dynamic_hash_new_password {
     if ( $dbscheme eq "" ) {
         $self->logger->info(
             "No hash scheme selected, storing password in clear text");
-        return "?";
+        return $password;
 
     }
 
@@ -498,7 +494,7 @@ sub dynamic_hash_new_password {
         $hash =
           $self->hash_unix_password_from_database( $dbh, $dbsalt, $password );
 
-        return "'$hash'";
+        return $hash;
 
     }
 
@@ -520,7 +516,7 @@ sub dynamic_hash_new_password {
             $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
 
     }
 
@@ -533,16 +529,38 @@ sub dynamic_hash_new_password {
           $self->hash_password_from_database( $dbh, $dbscheme, "", $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
     }
 
     # no valid hash scheme
     else {
         $self->logger->error("No selected hash scheme: $dbscheme is invalid");
         $self->userLogger->warn("Unable to store password for $user");
-        return "";
+        return;
+    }
+}
+
+# DEPRECATED: this function returned the password hash as a piece of SQL query
+# which is fragile
+sub dynamic_hash_new_password {
+    my ( $self, $dbh, $user, $password ) = @_;
+    my $dbscheme = $self->conf->{dbiDynamicHashNewPasswordScheme} || "";
+
+    # no hash scheme => assume clear text
+    if ( $dbscheme eq "" ) {
+        $self->logger->info(
+            "No hash scheme selected, storing password in clear text");
+        return "?";
+
     }
 
+    my $hash = $self->get_dynamic_hash_new_password( $dbh, $user, $password );
+    if ($hash) {
+        return "'$hash'";
+    }
+    else {
+        return "";
+    }
 }
 
 # Verify user and password with SQL SELECT
