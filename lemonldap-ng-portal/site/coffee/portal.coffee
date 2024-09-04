@@ -308,12 +308,9 @@ $(window).on 'load', () ->
 	if datas['choicetab']
 		authMenuTabs.tabs "option", "active", $('#authMenu a[href="#' + datas['choicetab'] + '"]').parent().index()
 
-	if datas['login']
-		$("input[type=password]:first").focus()
-	else
-		# If there are no auto-focused fields, focus on first visible input
-		if $("input[autofocus]").length == 0
-			$("input[type!=hidden]:first").focus();
+	# If there are no auto-focused fields, focus on first visible input
+	if $("input[autofocus]").length == 0
+		$("input[type!=hidden]:first").focus();
 
 	# Open links in new windows if required
 	if datas['newwindow']

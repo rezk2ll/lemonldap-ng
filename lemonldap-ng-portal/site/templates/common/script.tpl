@@ -30,7 +30,6 @@
  "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
  "choicetab":"<TMPL_VAR NAME="CHOICE_VALUE">",
  "language": "<TMPL_VAR NAME="LANGUAGE">",
- "login":"<TMPL_VAR NAME="LOGIN">",
  "newwindow":<TMPL_VAR NAME="NEWWINDOW" DEFAULT="0">,
  "appslistorder":"<TMPL_VAR NAME="APPSLIST_ORDER">",
  "activeTimer":<TMPL_VAR NAME="ACTIVE_TIMER" DEFAULT="0">,
