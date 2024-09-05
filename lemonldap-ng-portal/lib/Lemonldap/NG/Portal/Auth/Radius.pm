@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.20';
 
 # PROPERTIES
 
@@ -68,11 +68,10 @@ sub authenticate {
     # Session info is empty or unknown at this step
     my $res = $self->radiusLib->check_pwd( $req, {}, $req->user,
         $req->data->{password} );
-    unless ($res) {
-        return PE_RADIUSCONNECTFAILED;
-    }
+    return PE_RADIUSCONNECTFAILED unless $res;
     unless ( $res->{result} == 1 ) {
-        $self->userLogger->warn("Radius authentication failed for user " . $req->{user});
+        $self->userLogger->warn(
+            "Radius authentication failed for user " . $req->{user} );
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
@@ -88,7 +87,8 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $attributeMap = $self->sessionKeys;
-       $req->{sessionInfo}->{authenticationLevel} = $self->conf->{radiusAuthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} =
+      $self->conf->{radiusAuthnLevel};
 
     if ($attributeMap) {
         while ( my ( $attr_radname, $attr_value ) =
@@ -100,6 +100,7 @@ sub setAuthSessionInfo {
             }
         }
     }
+
     return PE_OK;
 }
 
