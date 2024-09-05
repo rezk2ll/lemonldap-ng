@@ -44,6 +44,14 @@ tools:
 
 See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
 
+window.datas.login is no longer defined in JS code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `window.datas.login` global JS variable used to contain the user's login.
+It caused a security issue and was removed in this version. This only affects
+users who wrote custom JS code for the portal and who explicitely used this
+variable.
+
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -91,29 +91,6 @@ from both templates.
     -<!-- //endif -->
      <TMPL_INCLUDE NAME="footer.tpl">
 
-Passwordless WebAuthn
-^^^^^^^^^^^^^^^^^^^^^
-
-In order to support autocompletion of WebAuthn credentials on supported web browsers, update `standardlogin.tpl`
-
-.. code:: diff
-
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    index c6af84745..81ce95c3d 100644
-    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    @@ -10,7 +10,8 @@
-         <div class="input-group-prepend">
-           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
-         </div>
-    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
-    +    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">"
-    +      trplaceholder="login" required aria-required="true" autocomplete="webauthn"/>
-       </div>
-       <div class="input-group mb-3">
-         <div class="input-group-prepend">
-
-
 Also update `2fregisters.tpl` to that resident credentials are properly show to the user
 
 .. code:: diff
@@ -151,6 +128,113 @@ To avoid the TOTP code been submitted twice, add `btn-single-submit` class to TO
           <span class="fa fa-sign-in"></span>
           <span trspan="connect">Connect</span>
         </button>
+
+Vulnerability in templates
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to fix a vulnerability in templates, apply the following patch:
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl b/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl
+    index fa16e81b8..2db7d3ef5 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl
+    @@ -11,7 +11,7 @@
+             <div class="input-group-prepend">
+               <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+             </div>
+    -        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="user" aria-required="true"/>
+    +        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="user" aria-required="true"/>
+           </div>
+           <div class="input-group mb-3">
+             <div class="input-group-prepend">
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl b/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl
+    index 72f72e8a9..4a7109668 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl
+    @@ -6,7 +6,7 @@
+       <div class="row">
+         <TMPL_IF NAME="SESSIONS">
+         <div class="card col border-secondary">
+    -      <div class="text-center bg-light text-dark"><b><span trspan="activeSessions">ACTIVE SSO SESSIONS</span>: <u><TMPL_VAR NAME="LOGIN"></u></b></div>
+    +      <div class="text-center bg-light text-dark"><b><span trspan="activeSessions">ACTIVE SSO SESSIONS</span>: <u><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></u></b></div>
+           <table class="table table-sm table-hover text-center">
+             <thead>
+               <tr>
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl
+    index fc2582c17..2608241e4 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl
+    @@ -5,7 +5,7 @@
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+         </div>
+    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="mail" required aria-required="true" />
+    +    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="mail" required aria-required="true" />
+       </div>
+
+       <div class="input-group mb-3">
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/password.tpl b/lemonldap-ng-portal/site/templates/bootstrap/password.tpl
+    index b417e324c..c135c95fe 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/password.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/password.tpl
+    @@ -17,11 +17,11 @@
+
+         <TMPL_IF NAME="LOGIN">
+         <div class="input-group mb-3">
+    -      <input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN>" />
+    +      <input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN ESCAPE=HTML>" />
+           <div class="input-group-prepend">
+             <span class="input-group-text"><label for="staticUser" class="mb-0"><i class="fa fa-user"></i></label></span>
+           </div>
+    -      <input id="staticUser" type="text" readonly class="form-control" value="<TMPL_VAR NAME=LOGIN>" />
+    +      <input id="staticUser" type="text" readonly class="form-control" value="<TMPL_VAR NAME=LOGIN ESCAPE=HTML>" />
+         </div>
+         </TMPL_IF>
+
+
+
+Multiple changes to login form
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to implement WebAuthn changes, fix the template vulnerability, and improve focus management, update ``standardform.tpl``
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    index c6af84745..0c5fdeb44 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    @@ -10,21 +10,23 @@
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+         </div>
+    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
+    +    <input id="userfield" name="user" type="text" class="form-control"
+    +      value="<TMPL_IF NAME="ACTIVE_FORM"><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></TMPL_IF>"
+    +      trplaceholder="login" required aria-required="true" autocomplete="webauthn" <TMPL_UNLESS NAME="LOGIN">autofocus</TMPL_UNLESS> />
+       </div>
+       <div class="input-group mb-3">
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="passwordfield" class="mb-0"><i class="fa fa-lock"></i></label></span>
+         </div>
+         <TMPL_IF NAME="DONT_STORE_PASSWORD">
+    -      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true"/>
+    +      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true" <TMPL_IF NAME="LOGIN">autofocus</TMPL_IF> />
+           <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+             <div class="input-group-append">
+               <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
+             </div>
+           </TMPL_IF>
+         <TMPL_ELSE>
+    -      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
+    +      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true" <TMPL_IF NAME="LOGIN">autofocus</TMPL_IF> />
+           <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+             <div class="input-group-append">
+               <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
+
+
 
 2.19.0
 ------
