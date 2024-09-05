@@ -7,7 +7,7 @@ use JSON qw(to_json from_json);
 BEGIN {
     require 't/test-lib.pm';
 }
-my $maintests = 75;
+my $maintests = 77;
 
 SKIP: {
     require Lemonldap::NG::Common::TOTP;
@@ -326,12 +326,46 @@ SKIP: {
     ok( $devices == 1, '2F device found' )
       or explain( $devices, '2F device registered' );
 
+    {
+        my $delete_query = buildForm( { epoch => $epoch } );
+        $res = $client->_post(
+            '/2fregisters/totp/delete',
+            $delete_query,
+            length => length($delete_query),
+            cookie => "lemonldap=$id",
+        );
+        my $json = expectBadRequest($res);
+        ok( $res->[2]->[0] =~ 'csrfToken',
+            "Deletion expects valid CSRF token" );
+    }
+
+    {
+        my $delete_query =
+          buildForm( { epoch => $epoch, csrf_token => "1234566" } );
+        $res = $client->_post(
+            '/2fregisters/totp/delete',
+            $delete_query,
+            length => length($delete_query),
+            cookie => "lemonldap=$id",
+        );
+        my $json = expectBadRequest($res);
+        ok( $res->[2]->[0] =~ 'csrfToken',
+            "Deletion expects valid CSRF token" );
+    }
+
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => "test/html",
+    );
+
     # Try to unregister TOTP
+	my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
-            IO::String->new("epoch=$epoch"),
-            length => 16,
+			$delete_query,
+			length => length($delete_query),
             cookie => "lemonldap=$id2",
         ),
         'Delete TOTP query'
@@ -460,11 +494,12 @@ SKIP: {
       or explain( $devices, '2F devices registered' );
 
     # Try to unregister TOTP
+	my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
-            IO::String->new("epoch=$epoch"),
-            length => 16,
+			$delete_query,
+			length => length($delete_query),
             cookie => "lemonldap=$id2",
         ),
         'Delete TOTP query'
