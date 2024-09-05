@@ -23,7 +23,7 @@ sub init {
 
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
-    return $self->check_password( $req->user, $pwd );
+    return $self->check_password( $req, $pwd );
 }
 
 sub modifyPassword {
@@ -41,8 +41,8 @@ sub modifyPassword {
 
         # Dynamic password hashes
         $stored_value =
-          $self->get_dynamic_hash_new_password( $self->dbh, $req->user, $pwd,
-            $table, $userCol, $passwordCol );
+          $self->get_dynamic_hash_new_password( $req, $self->dbh, $req->user,
+            $pwd, $table, $userCol, $passwordCol );
     }
     else {
         # Static Password hash
