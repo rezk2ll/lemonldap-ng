@@ -8,5 +8,6 @@ Development
    contribute
    handlerarch
    plugincustom
+   hooks
    customhandlers
    oidctokenexchange

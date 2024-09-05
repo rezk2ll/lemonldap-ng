@@ -77,10 +77,7 @@ Hooks
 Your plugin can also register itself to be called at some points of interest
 within the main LemonLDAP::NG code.
 
-.. toctree::
-   :maxdepth: 1
-
-   hooks
+Check the :doc:`list of available plugin hooks <hooks>` for details
 
 Routes
 ~~~~~~
