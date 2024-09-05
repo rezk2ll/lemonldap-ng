@@ -208,7 +208,7 @@ Add a translation key
 
 If you need to create a new parameter in Manager or add a new message in Portal, you must add a key in JSON languages files.
 
-To ease this process, use the script ``scripts/addTrKey`` provided in the sources:
+To ease this process, use the script ``scripts/addTrEntry`` provided in the sources:
 
 ::
 

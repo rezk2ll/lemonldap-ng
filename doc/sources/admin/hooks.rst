@@ -822,6 +822,51 @@ Sample code::
         return PE_OK;
     }
 
+sfAfterVerify
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.20
+
+This hook is called after verifying a second factor, whether it was successful or not.
+You can use it to change the verification status depending on some condition.
+
+The hook's parameters are:
+
+* An instance of the 2F module in use
+* A hash of session information
+* A hash containing the verification result, which you can modify. Its subkeys are:
+    * `authenticationLevel`: authentication level granted by the module
+    * `device`: if applicable, details of the 2FA device used (name, type, epoch, etc.)
+    * `result`: result code of this attempt
+    * `retries`: how many retries are left after this attempt
+
+Sample code::
+
+    use constant hook => { sfAfterVerify => 'ipExceptions', };
+
+    sub ipExceptions {
+        my ( $self, $req, $module, $session, $verify_result ) = @_;
+
+        my $status_of_verification = $verify_result->{result};
+
+        # Override authentication level for a particular IP
+        if ( $status_of_verification == PE_OK and $req->address eq "127.0.0.1" )
+        {
+            $verify_result->{authenticationLevel} = 7;
+        }
+
+        # This special IP has infinite retries
+        if (    $status_of_verification != PE_OK
+            and $req->address eq "127.0.0.2"
+            and $verify_result->{retries} == 0 )
+        {
+            $self->logger->info("Allowing more retries to 127.0.0.2");
+            $verify_result->{retries} = 1;
+        }
+        return PE_OK;
+    }
+
+
 sfBeforeRetry
 ~~~~~~~~~~~~~
 
@@ -854,6 +899,46 @@ Sample code::
         }
         return PE_OK;
     }
+
+sfRegisterDevice
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.20
+
+This hook is called immediately before registering a new second factor device
+into the user's persistent session.
+You can use it to abort the operation unless some condition is met, to modified
+the stored data, or to change the authentication level obtained immediately
+after registration.
+
+The hook's parameters are:
+
+* A hash of session information
+* A hash containing the second factor device data (type, name, timestamp, and implementation-specific fields)
+* A hash containing the current registration state, which you can modify to change the authentication level
+
+Sample code::
+
+    use constant hook => { sfRegisterDevice => 'specialDeviceNames' };
+
+    sub specialDeviceNames {
+        my ( $self, $req, $info, $device, $registration_state ) = @_;
+
+        # If the device name given by the user contains the word "insecure",
+        # downgrade the authentication level
+        if ( $device->{name} =~ /insecure/i ) {
+            $registration_state->{authenticationLevel} = 1;
+        }
+
+        # If the device name contains the word "invalid",
+        # abort registration
+        if ( $device->{name} =~ /invalid/i ) {
+            return PE_ERROR;
+        }
+
+        return PE_OK;
+    }
+
 
 Generic hooks
 -------------

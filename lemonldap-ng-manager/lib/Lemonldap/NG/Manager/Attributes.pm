@@ -426,6 +426,10 @@ sub attributes {
                         'v' => 'WebID'
                     },
                     {
+                        'k' => 'WebAuthn',
+                        'v' => 'WebAuthn'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -597,6 +601,10 @@ sub attributes {
                     'v' => 'WebID'
                 },
                 {
+                    'k' => 'WebAuthn',
+                    'v' => 'WebAuthn'
+                },
+                {
                     'k' => 'Demo',
                     'v' => 'Demonstration'
                 },
@@ -709,15 +717,15 @@ sub attributes {
         },
         'captcha_login_enabled' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_mail_enabled' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_register_enabled' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_size' => {
             'default' => 6,
@@ -1383,16 +1391,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'dbiPasswordMailCol' => {
             'type' => 'text'
         },
-        'dbiUserChain' => {
-            'type' => 'text'
-        },
-        'dbiUserPassword' => {
-            'type' => 'password'
-        },
         'dbiUserTable' => {
-            'type' => 'text'
-        },
-        'dbiUserUser' => {
             'type' => 'text'
         },
         'decryptValueFunctions' => {
@@ -1637,7 +1636,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'text'
         },
         'hideOldPassword' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'httpOnly' => {
@@ -4333,6 +4332,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
             'type' => 'samlService'
         },
+        'samlAuthnContextMapExtra' => {
+            'type' => 'keyTextContainer'
+        },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,
             'type'    => 'int'
@@ -5386,6 +5388,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'trustedBrowserUseTotp' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },
@@ -5650,6 +5656,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'webauthnAppId' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'webauthnAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
         },
         'webauthnDisplayNameAttr' => {
             'type' => 'text'

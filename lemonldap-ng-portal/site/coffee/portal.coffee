@@ -16,32 +16,32 @@ translationFields = {}
 
 ppolicyResults = {}
 setResult = (field, result) ->
-	  ppolicyResults[field] = result
+	ppolicyResults[field] = result
 
-	  displayIcon(field, result)
+	displayIcon(field, result)
 
-	  # Compute form validity from all previous results
-	  if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
+	# Compute form validity from all previous results
+	if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
 
-			  $('#newpassword').get(0)?.setCustomValidity('')
-	  else
-			  $('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
-	  updateBorder()
+			$('#newpassword').get(0)?.setCustomValidity('')
+	else
+			$('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
+	updateBorder()
 
 displayIcon = (field, result) ->
-	  # Clear icon
-	  $("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary')
-	  $("#" + field).attr('role', 'status')
+	# Clear icon
+	$("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary')
+	$("#" + field).attr('role', 'status')
 
-	  # Display correct icon
-	  switch result
-		  when "good" then $("#" + field).addClass('fa-check text-success')
-		  when "bad"
-			  $("#" + field).addClass('fa-times text-danger')
-			  $("#" + field).attr('role', 'alert')
-		  when "unknown" then $("#" + field).addClass('fa-question-circle text-secondary')
-		  when "waiting" then $("#" + field).addClass('fa-spinner fa-pulse text-secondary')
-		  when "info" then $("#" + field).addClass('fa-info-circle text-info')
+	# Display correct icon
+	switch result
+		when "good" then $("#" + field).addClass('fa-check text-success')
+		when "bad"
+			$("#" + field).addClass('fa-times text-danger')
+			$("#" + field).attr('role', 'alert')
+		when "unknown" then $("#" + field).addClass('fa-question-circle text-secondary')
+		when "waiting" then $("#" + field).addClass('fa-spinner fa-pulse text-secondary')
+		when "info" then $("#" + field).addClass('fa-info-circle text-info')
 
 updateBorder = () ->
 	if $('#newpassword').get(0)?.checkValidity() and $('#confirmpassword').get(0)?.checkValidity()
@@ -348,17 +348,17 @@ $(window).on 'load', () ->
 
 	# Language detection. Priority order:
 	#  0 - llnglanguage parameter
-	#  1 - window.language value (server-set from Cookie+Accept-Language)
+	#  1 - datas['language'] value (server-set from Cookie+Accept-Language)
 	if window.location.search
 		queryLang = getQueryParam('llnglanguage')
 		console.log 'Get lang from parameter' if queryLang
 		setCookieLang = getQueryParam('setCookieLang')
 		console.log 'Set lang cookie' if setCookieLang == 1
 	if !lang
-		lang = window.language
+		lang = window.datas['language']
 		console.log 'Get lang from server' if lang && !queryLang
 	else if lang not in window.availableLanguages
-		lang = window.language
+		lang = window.datas['language']
 		console.log 'Lang not available -> Get lang from server' if !queryLang
 	if queryLang
 		if queryLang not in window.availableLanguages

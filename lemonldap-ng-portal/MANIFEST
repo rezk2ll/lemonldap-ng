@@ -49,8 +49,10 @@ lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
+lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
+lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
 lib/Lemonldap/NG/Portal/Captcha/SecurityImage.pm
 lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Custom.pm
@@ -107,6 +109,7 @@ lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Main/SecondFactor.pm
 lib/Lemonldap/NG/Portal/Main/UserDB.pm
+lib/Lemonldap/NG/Portal/Password.pod
 lib/Lemonldap/NG/Portal/Password/AD.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
@@ -186,6 +189,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/downloadSamlMetadata
 scripts/lemonldap-ng-portal.preset
 scripts/lemonldap-ng-portal.service
 scripts/lemonldap-ng-portal.timer
@@ -394,8 +398,10 @@ site/htdocs/static/common/js/sslChoice.min.js.map
 site/htdocs/static/common/js/totpregistration.js
 site/htdocs/static/common/js/totpregistration.min.js
 site/htdocs/static/common/js/totpregistration.min.js.map
-site/htdocs/static/common/js/webauthn-ui.js
-site/htdocs/static/common/js/webauthn-ui.min.js
+site/htdocs/static/common/js/webauthn-json.browser-global.js
+site/htdocs/static/common/js/webauthn-json.browser-global.js.map
+site/htdocs/static/common/js/webauthn-json.browser-global.min.js
+site/htdocs/static/common/js/webauthn-json.browser-global.min.js.map
 site/htdocs/static/common/js/webauthncheck.js
 site/htdocs/static/common/js/webauthncheck.min.js
 site/htdocs/static/common/js/webauthncheck.min.js.map
@@ -417,6 +423,7 @@ site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/Slave.png
 site/htdocs/static/common/modules/SSL.png
 site/htdocs/static/common/modules/Twitter.png
+site/htdocs/static/common/modules/webauthn.png
 site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png
@@ -511,6 +518,7 @@ site/templates/bootstrap/totp2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/webauthn2fcheck.tpl
 site/templates/bootstrap/webauthn2fregister.tpl
+site/templates/bootstrap/webauthnform.tpl
 site/templates/bootstrap/yubikey2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
@@ -555,6 +563,7 @@ t/01-BuildUrl.t
 t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.pm
+t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
@@ -567,7 +576,6 @@ t/01-WebAuthn.t
 t/02-Password-Demo-checkEntropy.t
 t/02-Password-Demo-checkHIBP.t
 t/02-Password-Demo-Hook.t
-t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo-Mail.t
@@ -617,6 +625,8 @@ t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
 t/29-AuthGPG.t
 t/29-AuthSSL.t
+t/29-AuthWebAuthn-Choice.t
+t/29-AuthWebAuthn.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
@@ -625,6 +635,7 @@ t/30-Auth-and-issuer-SAML-POST-Choice-2FA.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
+t/30-Auth-and-issuer-SAML-Redirect-Extra-AuthnContext.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t
@@ -781,6 +792,7 @@ t/40-Notifications-XML-File.t
 t/40-Notifications-XML-Server.t
 t/41-Captcha-old-api.t
 t/41-Captcha-with-LDAP.t
+t/41-Captcha-with-rule.t
 t/41-Captcha.t
 t/41-Token-with-global-storage.t
 t/41-Token.t

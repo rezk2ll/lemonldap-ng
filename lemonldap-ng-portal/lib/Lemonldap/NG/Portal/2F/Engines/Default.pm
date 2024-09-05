@@ -26,6 +26,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
 );
 
+use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
+
 our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -152,6 +154,7 @@ sub init {
                     "::2F::Register::Generic",
                     $over,
                     prefix             => $extraKey,
+                    type               => $extraKey,
                     logo               => $m->logo,
                     label              => $m->label,
                     userCanRemove      => 1,
@@ -447,7 +450,7 @@ sub run {
             message => (
                     'Second factor '
                   . $am[0]->prefix
-                  . '2F selected for '
+                  . '2f selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
             ),
             code => "2FA_SELECTED",
@@ -623,13 +626,19 @@ sub _displayRegister {
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
           unless $m->{r}->( $req, $req->userData );
+        my $mod = $m->{m};
+
+        if ( $mod->can('initDisplay') ) {
+            $mod->initDisplay($req);
+        }
         return $self->p->sendHtml(
             $req,
-            $m->{m}->template,
+            $mod->template,
             params => {
+                CUSTOM_SCRIPT    => $req->data->{customScript},
                 PREFIX           => $prefix,
                 "PREFIX_$prefix" => 1,
-                MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                MSG              => $self->canUpdateSfa($req) || $mod->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );
@@ -679,7 +688,15 @@ sub _displayRegister {
         my $prefix = $reg_mod_info->{p};
         my $module = $reg_mod_info->{m};
         foreach (@$_2fDevices) {
+
             if ( $_->{type} eq $type ) {
+
+                # Set k_v template variables for non_private values
+                # and also not for epoch/name
+                my $extrakeys = filterKey2F( $_, "epoch", "name" );
+                while ( my ( $k, $v ) = each %$extrakeys ) {
+                    $_->{"${k}_${v}"} = 1;
+                }
 
                 # Populate additional info for template engine
                 $_->{prefix}     = $prefix;
@@ -712,6 +729,8 @@ sub _displayRegister {
                 $self->p->buildUrl( $req->portal, '2fregisters' ), ''
             ),
             %tplParams,
+            CSRF_TOKEN => $self->ott->createToken()
+
         }
     );
 }
@@ -920,49 +939,98 @@ sub _verify {
     if ( $tokres != PE_OK ) {
         $self->auditLog(
             $req,
-            message      => "Token validation failed during 2FA verification",
-            code         => "2FA_VERIFICATION_FAILED",
-            user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            message => (
+                "Token validation failed during ${prefix}2f verification ("
+                  . portalConsts->{$tokres} . ")"
+            ),
+            code         => "2FA_FAILED",
             reason       => "Token validation failed",
+            type         => $prefix,
             portal_error => portalConsts->{$tokres},
         );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }
 
+    my $user = $session->{ $self->conf->{whatToTrace} };
+
     # Evaluate hook
-    my $h = $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
-    if ( $h != PE_OK ) {
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { $h } ] );
+    {
+        my $h =
+          $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
     }
 
     # Launch second factor verification
-    my $res = $module->verify( $req, $session );
+    my $verify_result = {
+        result              => $module->verify( $req, $session ),
+        authenticationLevel => $module->authnLevel,
+        retries             => ( $session->{_2fRetries} || 0 ),
+        (
+            $req->data->{_2fDevice} ? ( device => $req->data->{_2fDevice} ) : ()
+        ),
+        (
+            $req->data->{_2fLogInfo}
+            ? ( logInfo => $req->data->{_2fLogInfo} )
+            : ()
+        ),
+    };
+
+    # Evaluate hook
+    {
+        my $h = $self->p->processHook( $req, 'sfAfterVerify', $module, $session,
+            $verify_result );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
+    }
+
+    # May be modified by sfAfterVerify
+    my $res        = $verify_result->{result};
+    my $authnLevel = $verify_result->{authenticationLevel};
+    my $retries    = $verify_result->{retries};
 
     $self->restore2faSessionInfo( $req, $session );
 
     # Case error
-    if ( $res and !$req->data->{_2fRetries} ) {
+    if ( $res and $retries == 0 ) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
 
+        $self->auditLog(
+            $req,
+            message => (
+                "Second factor ${prefix}2f failed for $user ("
+                  . portalConsts->{$res} . ")"
+            ),
+            code         => "2FA_FAILED",
+            user         => $user,
+            type         => $prefix,
+            portal_error => portalConsts->{$res},
+        );
+
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
-        $req->sessionInfo->{'_2f'} = $module->prefix;
+        $req->sessionInfo->{'_2f'} = $prefix;
         return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
     elsif ($res) {
         $req->data->{_2fRetries} = (
-            ( $req->data->{_2fRetries} > 0 )
-            ? $req->data->{_2fRetries} - 1
+            ( $retries > 0 )
+            ? $retries - 1
             : 0
         );
 
         # Evaluate hook
-        my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
-        if ( $h != PE_OK ) {
-            $req->noLoginDisplay(1);
-            return $self->p->do( $req, [ sub { $h } ] );
+        {
+            my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
+            if ( $h != PE_OK ) {
+                $req->noLoginDisplay(1);
+                return $self->p->do( $req, [ sub { $h } ] );
+            }
         }
 
         $self->logger->debug(
@@ -978,12 +1046,26 @@ sub _verify {
 
     # Else restore session
     $req->mustRedirect(1);
-    $self->userLogger->notice( $module->prefix
-          . '2f verification succeeded for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+    my $device  = $verify_result->{device};
+    my $logInfo = $verify_result->{logInfo} || {};
+    my $logInfoStr =
+      join( ', ', map { "$_: " . $logInfo->{$_} } keys %$logInfo );
 
-    my $level = $module->authnLevel;
-    return $self->_continueLogin( $req, $module->prefix, $module->authnLevel );
+    $self->auditLog(
+        $req,
+        message => (
+                "Second factor ${prefix}2f verification succeeded for abarnes"
+              . ( $device     ? ( " with device " . display2F($device) ) : "" )
+              . ( $logInfoStr ? " ($logInfoStr)"                         : "" )
+        ),
+        code => "2FA_SUCCESS",
+        user => $user,
+        type => $prefix,
+        ( $device ? ( device => display2F($device) ) : () ),
+        %$logInfo,
+    );
+
+    return $self->_continueLogin( $req, $prefix, $authnLevel, );
 }
 
 sub searchForAuthorized2Fmodules {
@@ -1158,7 +1240,7 @@ sub _registerRoutes {
 
 sub get2fTplParams {
     my ( $self, $req, $module ) = @_;
-    my %param;
+    my %param       = $self->p->getErrorTplParams($req);
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug( $module->prefix . '2f: checkLogins set' )
       if $checkLogins;
@@ -1169,10 +1251,6 @@ sub get2fTplParams {
 
     $param{CHECKLOGINS}   = $checkLogins;
     $param{STAYCONNECTED} = $stayConnected;
-
-    $param{AUTH_ERROR}      = $req->error;
-    $param{AUTH_ERROR_TYPE} = $req->error_type;
-    $param{AUTH_ERROR_ROLE} = $req->error_role;
 
     return %param;
 }

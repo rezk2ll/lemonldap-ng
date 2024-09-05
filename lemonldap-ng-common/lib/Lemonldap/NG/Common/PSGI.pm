@@ -131,7 +131,7 @@ sub _getLanguageListFromHeader {
         # Skip invalid entries
         $lang ? ( [ $lang, $prio ] ) : ()
       }
-      split( qr/\s*,\s*/, $req->languages );
+      split( qr/\s*,\s*/, $req->languages || "" );
 
     # Sort by priority (perl sort is stable by default)
     @req_languages_and_prio =
@@ -342,9 +342,8 @@ sub sendJs {
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
-      . 'var language="%s";'
       . 'var portal="%s";', $sp, $sc, $self->languages,
-      $self->getLanguage($req), $portal;
+      $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
     return [
         200,

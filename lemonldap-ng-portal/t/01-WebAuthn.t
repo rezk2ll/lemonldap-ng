@@ -83,11 +83,15 @@ ENDKEY
         my ( $host, $url, $query ) =
           expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
-        my ($json) = $res->[2]->[0] =~
-m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
-        ok( $json, "Found request object in JS data" );
-        $json = from_json($json);
-        my $request   = $json->{request};
+        expectXpath( $res,
+                '//script[@src="/static/common/js/'
+              . 'webauthn-json.browser-global.min.js"]' );
+        expectXpath( $res,
+            '//script[@src="/static/common/js/webauthncheck.min.js"]' );
+        is( getJsVars($res)->{webauthn_autostart},
+            "1", "WebAuthn set to autostart" );
+        ok( my $request = getJsVars($res)->{request},
+            "Found WebAuthn request" );
         my $challenge = $request->{challenge};
         ok( $challenge, "Found challenge" );
 
@@ -160,11 +164,14 @@ m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
         my ( $host, $url, $query ) =
           expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
-        my ($json) = $res->[2]->[0] =~
-m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
-        ok( $json, "Found request object in JS data" );
-        $json = from_json($json);
-        my $request   = $json->{request};
+        expectXpath( $res,
+                '//script[@src="/static/common/js/'
+              . 'webauthn-json.browser-global.min.js"]' );
+        expectXpath( $res,
+            '//script[@src="/static/common/js/webauthncheck.min.js"]' );
+
+        ok( my $request = getJsVars($res)->{request},
+            "Found WebAuthn request" );
         my $challenge = $request->{challenge};
         ok( $challenge, "Found challenge" );
 

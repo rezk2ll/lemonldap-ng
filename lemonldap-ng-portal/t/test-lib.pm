@@ -295,7 +295,7 @@ sub getJsVars {
       getHtmlElement( $res, '//script[@type="application/init"]' );
 
     my @parsed_initscripts =
-      map { from_json($_) } $initscripts->to_literal_list();
+      map { from_json( $_->string_value ) } $initscripts->get_nodelist();
 
     my %vars = map { %$_ } @parsed_initscripts;
     return \%vars;
@@ -641,12 +641,12 @@ sub getHtmlElement {
 sub expectXpath {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-    my ( $res, $xpath ) = @_;
+    my ( $res, $xpath, $message ) = @_;
+    $message ||= "Found at least one result for $xpath";
 
-    return ok(
-        getHtmlElement( $res, $xpath ),
-        "Found at least one result for $xpath"
-    );
+    ok( $res = getHtmlElement( $res, $xpath ), $message, );
+    count(1);
+    return $res;
 }
 
 =head4 getCookies($res)

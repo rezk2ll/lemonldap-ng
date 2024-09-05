@@ -175,24 +175,10 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
-                                    nodes => [ {
-                                            title => 'dbiConnectionAuth',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'dbiAuthChain',
-                                                'dbiAuthUser',
-                                                'dbiAuthPassword'
-                                            ]
-                                        },
-                                        {
-                                            title => 'dbiConnectionUser',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'dbiUserChain',
-                                                'dbiUserUser',
-                                                'dbiUserPassword'
-                                            ]
-                                        }
+                                    nodes => [
+                                        'dbiAuthChain',
+                                        'dbiAuthUser',
+                                        'dbiAuthPassword'
                                     ]
                                 },
                                 {
@@ -250,6 +236,14 @@ sub tree {
                                 'krbAuthnLevel', 'krbKeytab',
                                 'krbByJs',       'krbRemoveDomain',
                                 'krbAllowedDomains',
+                            ]
+                        },
+                        {
+                            title => 'webauthnParams',
+                            form  => 'simpleInputContainer',
+                            help  => 'authwebauthn.html',
+                            nodes => [
+                                'webauthnAuthnLevel',
                             ]
                         },
                         {
@@ -774,6 +768,7 @@ sub tree {
                                 'stayConnectedTimeout',
                                 'stayConnectedCookieName',
                                 'stayConnectedSingleSession',
+                                'trustedBrowserUseTotp',
                             ],
                         },
                         {
@@ -1362,7 +1357,8 @@ sub tree {
                         'samlAuthnContextMapPassword',
                         'samlAuthnContextMapPasswordProtectedTransport',
                         'samlAuthnContextMapKerberos',
-                        'samlAuthnContextMapTLSClient'
+                        'samlAuthnContextMapTLSClient',
+                        'samlAuthnContextMapExtra'
                     ]
                 },
                 {

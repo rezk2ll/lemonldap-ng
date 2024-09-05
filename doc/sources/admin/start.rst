@@ -108,6 +108,7 @@ Portal
 -  :doc:`Portal menu<portalmenu>`
 -  :doc:`REST/SOAP servers<portalservers>`
 -  :doc:`Captcha<captcha>`
+-  :doc:`reCaptcha<recaptcha>`
 -  :doc:`Public pages<public_pages>`
 
 
@@ -143,6 +144,7 @@ Official Backends                                                    Authenticat
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
+:doc:`Passkeys<authwebauthn>` |beta|                                 ✔                                                         
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========

@@ -42,7 +42,7 @@ Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
  2019-2023, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 
-Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
+Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png lemonldap-ng-portal/site/htdocs/static/common/modules/webauthn.png
 Copyright: James Cullum <https://github.com/JamesCullum>
 License: WebAuthnLogoLicense
 
@@ -55,6 +55,10 @@ Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/webauthn-json.browser-global.*
+Copyright: GitHub, Inc.
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
 Copyright: Apache Software Foundation (ASF)
@@ -1767,7 +1771,7 @@ License: SIL-OFL
  .
  The OFL allows the licensed fonts to be used, studied, modified and
  redistributed freely as long as they are not sold by themselves. The
- fonts, including any derivative works, can be bundled, embedded, 
+ fonts, including any derivative works, can be bundled, embedded,
  redistributed and/or sold with any software provided that any reserved
  names are not used by derivative works. The fonts and derivatives,
  however, cannot be released under any other type of license. The

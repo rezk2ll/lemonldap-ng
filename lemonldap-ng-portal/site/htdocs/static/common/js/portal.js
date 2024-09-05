@@ -394,12 +394,12 @@ LemonLDAP::NG Portal jQuery scripts
       }
     }
     if (!lang) {
-      lang = window.language;
+      lang = window.datas['language'];
       if (lang && !queryLang) {
         console.log('Get lang from server');
       }
     } else if (indexOf.call(window.availableLanguages, lang) < 0) {
-      lang = window.language;
+      lang = window.datas['language'];
       if (!queryLang) {
         console.log('Lang not available -> Get lang from server');
       }
