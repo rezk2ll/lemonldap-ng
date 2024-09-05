@@ -15,14 +15,6 @@ our $VERSION = '2.0.14';
 
 # PROPERTIES
 
-has authnLevel => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        $_[0]->conf->{radiusAuthnLevel};
-    }
-);
-
 has modulename => ( is => 'ro', default => 'radius' );
 has radiusLib  => ( is => 'rw' );
 
@@ -96,6 +88,7 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $attributeMap = $self->sessionKeys;
+       $req->{sessionInfo}->{authenticationLevel} = $self->conf->{radiusAuthnLevel};
 
     if ($attributeMap) {
         while ( my ( $attr_radname, $attr_value ) =
@@ -107,6 +100,7 @@ sub setAuthSessionInfo {
             }
         }
     }
+    return PE_OK;
 }
 
 sub authLogout {
