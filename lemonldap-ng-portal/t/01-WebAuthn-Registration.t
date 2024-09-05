@@ -337,7 +337,37 @@ ENDKEY
         my $epoch = $tr->getAttribute('epoch');
         ok( $epoch, "Found epoch for $name" );
 
-        my $delete_query = buildForm( { epoch => $epoch } );
+		{
+        	my $delete_query = buildForm( { epoch => $epoch } );
+            $res = $client->_post(
+                '/2fregisters/webauthn/delete',
+                $delete_query,
+                length => length($delete_query),
+                cookie => "lemonldap=$id",
+            );
+			my $json = expectBadRequest($res);
+			ok( $res->[2]->[0] =~ 'csrfToken', "Deletion expects valid CSRF token" );
+		}
+
+		{
+        	my $delete_query = buildForm( { epoch => $epoch, csrf_token => "123456" } );
+            $res = $client->_post(
+                '/2fregisters/webauthn/delete',
+                $delete_query,
+                length => length($delete_query),
+                cookie => "lemonldap=$id",
+            );
+			my $json = expectBadRequest($res);
+			ok( $res->[2]->[0] =~ 'csrfToken', "Deletion expects valid CSRF token" );
+		}
+
+		$res = $client->_get(
+			'/2fregisters',
+			cookie => "lemonldap=$id",
+			accept => "test/html",
+		);
+
+        my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
         ok(
             $res = $client->_post(
                 '/2fregisters/webauthn/delete',

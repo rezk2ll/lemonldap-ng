@@ -32,6 +32,18 @@ has rule => (
     }
 );
 
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
+        return $ott;
+    }
+);
+
 sub init {
     my ($self) = @_;
 
@@ -116,6 +128,9 @@ sub delete {
     return $self->p->sendError( $req, 'notAuthorized', 400 )
       unless $self->userCanRemove;
 
+    $self->checkCsrfToken($req)
+      or return $self->p->sendError( $req, 'csrfToken', 400 );
+
     my $epoch = $req->param('epoch')
       or return $self->p->sendError( $req,
         $self->prefix . '2f: "epoch" parameter is missing', 400 );
@@ -190,6 +205,12 @@ sub registerDevice {
     else {
         return PE_ERROR;
     }
+}
+
+sub checkCsrfToken {
+    my ( $self, $req ) = @_;
+
+    return $self->ott->getToken( $req->param('csrf_token') );
 }
 
 1;
