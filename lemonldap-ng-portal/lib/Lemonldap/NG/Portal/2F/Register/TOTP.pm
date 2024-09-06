@@ -2,6 +2,7 @@
 package Lemonldap::NG::Portal::2F::Register::TOTP;
 
 use strict;
+use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 use Mouse;
 use JSON qw(from_json to_json);
 
@@ -88,24 +89,22 @@ sub verify {
     }
 
     # Store TOTP secret
-    if (
-        $self->add2fDevice(
-            $req,
-            $req->userData,
-            {
-                _secret => $storable_secret,
-                type    => $self->type,
-                name    => $TOTPName,
-                epoch   => time()
-            }
-        )
-      )
-    {
+    my $res = $self->registerDevice(
+        $req,
+        $req->userData,
+        {
+            _secret => $storable_secret,
+            type    => $self->type,
+            name    => $TOTPName,
+            epoch   => time()
+        }
+    );
+    if ( $res == PE_OK ) {
         return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . "2f: unable to add device" );
-        return $self->failResponse( $req, 'serverError' );
+        return $self->failResponse( $req, "PE$res" );
     }
 }
 

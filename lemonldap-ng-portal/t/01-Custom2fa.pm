@@ -33,14 +33,14 @@ push @{ $client->p->hook->{sendHtml} }, sub {
 };
 
 subtest "Register 2FA on first login" => sub {
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23,
-    ),
-    'Auth query'
-);
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+        ),
+        'Auth query'
+    );
     my $pdata = expectCookie( $res, 'lemonldappdata' );
     expectRedirection( $res, "http://auth.example.com/2fregisters" );
 
@@ -67,6 +67,21 @@ ok(
     expectXpath( $res, '//span[@trspan="generic2fwelcome"]' );
     $pdata = expectCookie( $res, 'lemonldappdata' );
 
+    # test hook failure
+    $t::sfHookPlugin::hookResult = 1234;
+    ok(
+        $res = $client->_post(
+            '/2fregisters/test/register',
+            {
+                private => "myprivateinfo",
+            },
+            cookie => "lemonldappdata=$pdata",
+        ),
+        'Post code'
+    );
+    expectReject( $res, 500, "PE1234" );
+
+    $t::sfHookPlugin::hookResult = 0;
     ok(
         $res = $client->_post(
             '/2fregisters/test/register',
@@ -122,14 +137,14 @@ subtest "Login with 2FA" => sub {
     $query .= "&failme=1";
 
     # This request will be failed by the hook
-ok(
-    $res = $client->_post(
-        '/test2fcheck', IO::String->new($query),
-        length => length($query),
-        accept => 'text/html',
-    ),
-    'Post code'
-);
+    ok(
+        $res = $client->_post(
+            '/test2fcheck', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post code'
+    );
 
     # Retry form is displayed
     expectXpath( $res, '//span[@trmsg="110"]' );
@@ -160,7 +175,7 @@ ok(
         ),
         'Post code'
     );
-my $id = expectCookie($res);
+    my $id = expectCookie($res);
     expectSessionAttributes(
         $client, $id,
         uid                 => "dwho",
@@ -172,15 +187,15 @@ my $id = expectCookie($res);
 subtest "Register 2FA from logged in session" => sub {
 
     my $id = $client->login("rtyler");
-ok(
-    $res = $client->_get(
-        '/2fregisters',
-        cookie => "lemonldap=$id",
-        accept => 'text/html',
-    ),
-    '2FA manager'
-);
-expectRedirection( $res, qr#http://auth\.example\.com/2fregisters/test# );
+    ok(
+        $res = $client->_get(
+            '/2fregisters',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        '2FA manager'
+    );
+    expectRedirection( $res, qr#http://auth\.example\.com/2fregisters/test# );
 
     ok(
         $res = $client->_post(

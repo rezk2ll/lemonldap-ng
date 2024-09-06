@@ -7,6 +7,7 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_FORMEMPTY
   PE_ERROR
+  PE_OK
 );
 
 our $VERSION = '2.19.0';
@@ -54,19 +55,17 @@ sub register {
                 'yourKeyIsAlreadyRegistered' );
         }
 
-        if (
-            $self->add2fDevice(
-                $req,
-                $req->userData,
-                {
-                    _yubikey => $key,
-                    type     => $self->type,
-                    name     => $UBKName,
-                    epoch    => time()
-                }
-            )
-          )
-        {
+        my $res = $self->registerDevice(
+            $req,
+            $req->userData,
+            {
+                _yubikey => $key,
+                type     => $self->type,
+                name     => $UBKName,
+                epoch    => time()
+            }
+        );
+        if ( $res == PE_OK ) {
             return [
                 302,
                 [
@@ -79,7 +78,7 @@ sub register {
         }
         else {
             $self->logger->debug( $self->prefix . "2f: unable to add device" );
-            return $self->failResponse( $req, 'serverError' );
+            return $self->failResponse( $req, "PE$res" );
         }
     }
     else {

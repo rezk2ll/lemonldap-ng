@@ -662,6 +662,7 @@ install_bin:	install_conf_dir
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
+		${SRCPORTALDIR}/scripts/llngUserAttributes \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
 		${SRCCOMMONDIR}/scripts/convertToHashSessionStorage \

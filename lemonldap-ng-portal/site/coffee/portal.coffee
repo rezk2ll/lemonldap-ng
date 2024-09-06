@@ -16,32 +16,32 @@ translationFields = {}
 
 ppolicyResults = {}
 setResult = (field, result) ->
-	  ppolicyResults[field] = result
+	ppolicyResults[field] = result
 
-	  displayIcon(field, result)
+	displayIcon(field, result)
 
-	  # Compute form validity from all previous results
-	  if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
+	# Compute form validity from all previous results
+	if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
 
-			  $('#newpassword').get(0)?.setCustomValidity('')
-	  else
-			  $('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
-	  updateBorder()
+			$('#newpassword').get(0)?.setCustomValidity('')
+	else
+			$('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
+	updateBorder()
 
 displayIcon = (field, result) ->
-	  # Clear icon
-	  $("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary')
-	  $("#" + field).attr('role', 'status')
+	# Clear icon
+	$("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary')
+	$("#" + field).attr('role', 'status')
 
-	  # Display correct icon
-	  switch result
-		  when "good" then $("#" + field).addClass('fa-check text-success')
-		  when "bad"
-			  $("#" + field).addClass('fa-times text-danger')
-			  $("#" + field).attr('role', 'alert')
-		  when "unknown" then $("#" + field).addClass('fa-question-circle text-secondary')
-		  when "waiting" then $("#" + field).addClass('fa-spinner fa-pulse text-secondary')
-		  when "info" then $("#" + field).addClass('fa-info-circle text-info')
+	# Display correct icon
+	switch result
+		when "good" then $("#" + field).addClass('fa-check text-success')
+		when "bad"
+			$("#" + field).addClass('fa-times text-danger')
+			$("#" + field).attr('role', 'alert')
+		when "unknown" then $("#" + field).addClass('fa-question-circle text-secondary')
+		when "waiting" then $("#" + field).addClass('fa-spinner fa-pulse text-secondary')
+		when "info" then $("#" + field).addClass('fa-info-circle text-info')
 
 updateBorder = () ->
 	if $('#newpassword').get(0)?.checkValidity() and $('#confirmpassword').get(0)?.checkValidity()

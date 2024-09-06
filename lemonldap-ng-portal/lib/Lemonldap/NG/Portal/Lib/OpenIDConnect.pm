@@ -1158,15 +1158,25 @@ sub newAccessToken {
         %{$info},
     };
 
-    my $session = $self->getOpenIDConnectSession(
-        undef,
-        "access_token",
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
-          || $self->conf->{oidcServiceAccessTokenExpiration},
-        $at_info,
-    );
+    my $ttl =
+         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
+      || $self->conf->{oidcServiceAccessTokenExpiration};
+    my $session =
+      $self->getOpenIDConnectSession( undef, "access_token", $ttl, $at_info, );
 
     if ($session) {
+
+        my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+        $self->auditLog(
+            $req,
+            code    => "ISSUER_OIDC_ACCESS_TOKEN",
+            rp      => $rp,
+            message =>
+              ("Access Token for $user generated for $rp with TTL $ttl"),
+            user => $user,
+            ttl  => $ttl,
+        );
+
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
               $self->makeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
@@ -1767,6 +1777,12 @@ sub checkEndPointAuthenticationCredentials {
             "Relying Party $rp is public, do not check client secret");
     }
     else {
+        if ( $method eq "none" ) {
+            $self->logger->error(
+                "Relying Party $rp is confidential but no known method was used"
+                  . " to authenticate on token endpoint" );
+            return undef;
+        }
         if ( $method =~ /^client_secret_(?:basic|post)$/ ) {
             unless ($client_secret) {
                 $self->logger->error(
@@ -1902,13 +1918,15 @@ sub getEndPointAuthenticationCredentials {
             $self->logger->error("Unsuported client_assertion_type $atype");
         }
     }
-    elsif ( $req->param('client_id') and $req->param('client_secret') ) {
+    elsif ( $req->param('client_id')
+        and $req->body_parameters->{client_secret} )
+    {
         $scheme = 'client_secret_post';
         $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
     }
-    elsif ( $req->param('client_id') and !$req->param('client_secret') ) {
+    elsif ( $req->param('client_id') ) {
         $scheme = 'none';
         $self->logger->debug("Method none used");
         $client_id = $req->param('client_id');

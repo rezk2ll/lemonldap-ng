@@ -158,6 +158,7 @@
 "contextSwitching_ON":"Fer sanblan enn lot itilizater",
 "continue":"Kontinie",
 "createAccount":"Kre enn kont",
+"csrfToken":"Security token is invalid. Page will refresh automatically. Please try again.",
 "current":"Aktiel",
 "currentPwd":"Modpas aktiel",
 "date":"Dat",

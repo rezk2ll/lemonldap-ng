@@ -5,6 +5,8 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADOTP);
 
+our $hookResult = PE_OK;
+
 use constant hook => {
     sfBeforeVerify   => 'ipHasChanged',
     sfBeforeRetry    => 'allowedToRetry',
@@ -48,7 +50,7 @@ sub sfRegisterDevice {
         $registration_state->{authenticationLevel} = 7;
     }
 
-    return PE_OK;
+    return $hookResult;
 }
 
 sub sfAfterVerify {

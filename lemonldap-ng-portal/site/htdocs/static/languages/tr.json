@@ -158,6 +158,7 @@
 "contextSwitching_ON":"Başka bir kullanıcı gibi görün",
 "continue":"Devam Et",
 "createAccount":"Hesap oluştur",
+"csrfToken":"Security token is invalid. Page will refresh automatically. Please try again.",
 "current":"Geçerli",
 "currentPwd":"Mevcut parola",
 "date":"Tarih",

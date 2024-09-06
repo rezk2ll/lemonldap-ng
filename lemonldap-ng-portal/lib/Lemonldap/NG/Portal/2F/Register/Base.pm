@@ -2,6 +2,7 @@
 package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
+use Lemonldap::NG::Portal::Main::Constants qw/PE_OK PE_ERROR/;
 use Mouse;
 
 our $VERSION = '2.20.0';
@@ -28,6 +29,18 @@ has rule => (
     lazy    => 1,
     default => sub {
         return $_[0]->conf->{ $_[0]->prefix . '2fSelfRegistration' };
+    }
+);
+
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
+        return $ott;
     }
 );
 
@@ -115,6 +128,9 @@ sub delete {
     return $self->p->sendError( $req, 'notAuthorized', 400 )
       unless $self->userCanRemove;
 
+    $self->checkCsrfToken($req)
+      or return $self->p->sendError( $req, 'csrfToken', 400 );
+
     my $epoch = $req->param('epoch')
       or return $self->p->sendError( $req,
         $self->prefix . '2f: "epoch" parameter is missing', 400 );
@@ -170,6 +186,31 @@ sub failResponse {
 sub successResponse {
     my ( $self, $req, $info ) = @_;
     return $self->p->sendJSONresponse( $req, $info );
+}
+
+sub registerDevice {
+    my ( $self, $req, $info, $device ) = @_;
+
+    my $registration_state = { authenticationLevel => $self->authnLevel, };
+
+    my $h = $self->p->processHook( $req, 'sfRegisterDevice', $info, $device,
+        $registration_state );
+    return $h if ( $h != PE_OK );
+
+    if ( $self->add2fDevice( $req, $info, $device ) ) {
+        $self->markRegistered( $req,
+            $registration_state->{authenticationLevel} );
+        return PE_OK;
+    }
+    else {
+        return PE_ERROR;
+    }
+}
+
+sub checkCsrfToken {
+    my ( $self, $req ) = @_;
+
+    return $self->ott->getToken( $req->param('csrf_token') );
 }
 
 1;

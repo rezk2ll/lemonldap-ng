@@ -77,10 +77,7 @@ Hooks
 Your plugin can also register itself to be called at some points of interest
 within the main LemonLDAP::NG code.
 
-.. toctree::
-   :maxdepth: 1
-
-   hooks
+Check the :doc:`list of available plugin hooks <hooks>` for details
 
 Routes
 ~~~~~~
@@ -233,25 +230,25 @@ Example
 Plugin Perl module
 ~~~~~~~~~~~~~~~~~~
 
-This example creates a ``Lemonldap::NG::Portal::MyPlugin`` plugin that
+This example creates a ``Lemonldap::NG::Portal::Plugins::MyPlugin`` plugin that
 showcases some features of the plugin system.
 
 First, create a file to contain the plugin code ::
 
-   vi /usr/share/perl5/Lemonldap/NG/Portal/MyPlugin.pm
+   vi /usr/share/perl5/Lemonldap/NG/Portal/Plugins/MyPlugin.pm
 
 .. tip::
 
     If you do not want to mix files from the distribution with
     your own work, put your own code in
-    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``.
+    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/Plugins/MyPlugin.pm``.
     Or you can use your own namespace such as ``ACME::Corp::MyPlugin``.
 
 .. code-block:: perl
 
    # The package name must match the file path
-   # This file must be in Lemonldap/NG/Portal/MyPlugin.pm
-   package Lemonldap::NG::Portal::MyPlugin;
+   # This file must be in Lemonldap/NG/Portal/Plugins/MyPlugin.pm
+   package Lemonldap::NG::Portal::Plugins::MyPlugin;
 
    use Mouse;
    use Lemonldap::NG::Portal::Main::Constants;
@@ -323,8 +320,8 @@ Declare the plugin in lemonldap-ng.ini:
 .. code-block:: perl
 
    [portal]
-   customPlugins = Lemonldap::NG::Portal::MyPlugin
-   ;customPlugins = Lemonldap::NG::Portal::MyPlugin1, Lemonldap::NG::Portal::MyPlugin2, ...
+   customPlugins = Lemonldap::NG::Portal::Plugins::MyPlugin
+   ;customPlugins = Lemonldap::NG::Portal::Plugins::MyPlugin1, Lemonldap::NG::Portal::Plugins::MyPlugin2, ...
 
 Since 2.0.7, it can also be configured in Manager, in General Parameters
 > Plugins > Custom Plugins.

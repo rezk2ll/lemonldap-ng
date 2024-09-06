@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::2F::Register::WebAuthn;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 use JSON qw(from_json to_json);
 use MIME::Base64 qw(encode_base64url decode_base64url);
 use Crypt::URandom;
@@ -228,28 +229,27 @@ sub _registration {
           ( $registration_options->{authenticatorSelection}->{residentKey} eq
             "required" )
     );
-    if (
-        $self->add2fDevice(
-            $req,
-            $req->userData,
-            {
-                _credentialId        => $credential_id,
-                _credentialPublicKey => $credential_pubkey,
-                _signCount           => $signature_count,
-                ( $aaguid ? ( _aaguid => $aaguid ) : () ),
-                type  => $self->type,
-                name  => $keyName,
-                epoch => time(),
-                ( $is_resident ? ( resident => 1 ) : () ),
-            }
-        )
-      )
-    {
+    my $res = $self->registerDevice(
+        $req,
+        $req->userData,
+        {
+            _credentialId        => $credential_id,
+            _credentialPublicKey => $credential_pubkey,
+            _signCount           => $signature_count,
+            ( $aaguid ? ( _aaguid => $aaguid ) : () ),
+            type  => $self->type,
+            name  => $keyName,
+            epoch => time(),
+            ( $is_resident ? ( resident => 1 ) : () ),
+        }
+    );
+
+    if ( $res == PE_OK ) {
         return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . '2f: unable to add device' );
-        return $self->failResponse( $req, 'serverError' );
+        return $self->failResponse( $req, "PE$res" );
     }
 }
 

@@ -186,16 +186,12 @@ sub getCasSession {
 sub returnCasValidateError {
     my ( $self, $req ) = @_;
 
-    $self->logger->debug("Return CAS validate error");
-
     return [ 200, [ 'Content-Length' => 4 ], ["no\n\n"] ];
 }
 
 # Return success for CAS VALIDATE request
 sub returnCasValidateSuccess {
     my ( $self, $req, $username ) = @_;
-
-    $self->logger->debug("Return CAS validate success with username $username");
 
     return $self->sendSoapResponse( $req, "yes\n$username\n" );
 }
@@ -206,8 +202,6 @@ sub returnCasServiceValidateError {
 
     $code ||= 'INTERNAL_ERROR';
     $text ||= 'No description provided';
-
-    $self->logger->debug("Return CAS service validate error $code ($text)");
 
     return $self->sendSoapResponse(
         $req, "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
@@ -221,9 +215,6 @@ sub returnCasServiceValidateError {
 # Return success for CAS SERVICE VALIDATE request
 sub returnCasServiceValidateSuccess {
     my ( $self, $req, $username, $pgtIou, $proxies, $attributes ) = @_;
-
-    $self->logger->debug(
-        "Return CAS service validate success with username $username");
 
     my $s = "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
 \t<cas:authenticationSuccess>

@@ -137,47 +137,20 @@ sub _modifyPassword {
               $self->p->getFirstValue(
                 $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
-            # Build mail content
-            my $tr      = $self->translate($req);
-            my $subject = $self->conf->{mailSubject};
-            unless ($subject) {
-                $subject = 'mailSubject';
-                $tr->( \$subject );
-            }
-            my $body;
-            my $html;
             my $password = $req->data->{newpassword};
-
-            if ( $self->conf->{mailBody} ) {
-
-                # We use a specific text message, no html
-                $body = $self->conf->{mailBody};
-
-                # Replace variables in body
-                $body =~ s/\$password/$password/g;
-                $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
-
-            }
-
-            else {
-
-                # Use HTML template
-                $body = $self->loadMailTemplate(
-                    $req,
-                    'mail_password',
-                    filter => $tr,
-                    params => {
-                        password => $password,
-                    },
-                );
-                $html = 1;
-            }
 
             # Send mail
             unless (
-                $self->send_mail(
-                    $req->data->{mailAddress},
-                    $subject, $body, $html
+                $self->sendEmail(
+                    $req,
+                    subject       => $self->conf->{mailSubject},
+                    subject_trmsg => 'mailSubject',
+                    body          => $self->conf->{mailBody},
+                    body_template => 'mail_password',
+                    dest          => $req->data->{mailAddress},
+                    params        => {
+                        password => $password,
+                    }
                 )
               )
             {

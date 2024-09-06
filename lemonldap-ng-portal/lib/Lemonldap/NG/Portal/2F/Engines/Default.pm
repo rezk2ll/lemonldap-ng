@@ -450,7 +450,7 @@ sub run {
             message => (
                     'Second factor '
                   . $am[0]->prefix
-                  . '2F selected for '
+                  . '2f selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
             ),
             code => "2FA_SELECTED",
@@ -729,6 +729,8 @@ sub _displayRegister {
                 $self->p->buildUrl( $req->portal, '2fregisters' ), ''
             ),
             %tplParams,
+            CSRF_TOKEN => $self->ott->createToken()
+
         }
     );
 }
@@ -937,14 +939,19 @@ sub _verify {
     if ( $tokres != PE_OK ) {
         $self->auditLog(
             $req,
-            message      => "Token validation failed during 2FA verification",
-            code         => "2FA_VERIFICATION_FAILED",
-            user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            message => (
+                "Token validation failed during ${prefix}2f verification ("
+                  . portalConsts->{$tokres} . ")"
+            ),
+            code         => "2FA_FAILED",
             reason       => "Token validation failed",
+            type         => $prefix,
             portal_error => portalConsts->{$tokres},
         );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }
+
+    my $user = $session->{ $self->conf->{whatToTrace} };
 
     # Evaluate hook
     {
@@ -993,6 +1000,18 @@ sub _verify {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
 
+        $self->auditLog(
+            $req,
+            message => (
+                "Second factor ${prefix}2f failed for $user ("
+                  . portalConsts->{$res} . ")"
+            ),
+            code         => "2FA_FAILED",
+            user         => $user,
+            type         => $prefix,
+            portal_error => portalConsts->{$res},
+        );
+
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
         $req->sessionInfo->{'_2f'} = $prefix;
@@ -1031,12 +1050,11 @@ sub _verify {
     my $logInfo = $verify_result->{logInfo} || {};
     my $logInfoStr =
       join( ', ', map { "$_: " . $logInfo->{$_} } keys %$logInfo );
-    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
 
     $self->auditLog(
         $req,
         message => (
-                "${prefix}2f verification succeeded for abarnes"
+                "Second factor ${prefix}2f verification succeeded for abarnes"
               . ( $device     ? ( " with device " . display2F($device) ) : "" )
               . ( $logInfoStr ? " ($logInfoStr)"                         : "" )
         ),
@@ -1222,7 +1240,7 @@ sub _registerRoutes {
 
 sub get2fTplParams {
     my ( $self, $req, $module ) = @_;
-    my %param;
+    my %param       = $self->p->getErrorTplParams($req);
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug( $module->prefix . '2f: checkLogins set' )
       if $checkLogins;
@@ -1233,10 +1251,6 @@ sub get2fTplParams {
 
     $param{CHECKLOGINS}   = $checkLogins;
     $param{STAYCONNECTED} = $stayConnected;
-
-    $param{AUTH_ERROR}      = $req->error;
-    $param{AUTH_ERROR_TYPE} = $req->error_type;
-    $param{AUTH_ERROR_ROLE} = $req->error_role;
 
     return %param;
 }
