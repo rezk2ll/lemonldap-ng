@@ -59,7 +59,6 @@ BuildRequires:  perl(Apache::Session::Browseable)
 BuildRequires:  perl(Apache::Session::Generate::MD5)
 BuildRequires:  perl(Apache::Session::Lock::File)
 BuildRequires:  perl(APR::Table)
-BuildRequires:  perl(AuthCAS)
 BuildRequires:  perl(Authen::PAM)
 BuildRequires:  perl(Authen::Radius)
 %{!?el7:BuildRequires:  perl(Authen::WebAuthn)}
