@@ -226,68 +226,6 @@ sub hash_password_from_database {
     # Return encode_base64(SQL_METHOD(password + salt) + salt)
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI hash_unix_password_from_database
-##  (ref dbh, string dbmethod, string dbsalt, string password)
-# Hash the given password calling the dbmethod function in database
-# @param dbh database handler
-# @param dbunixsalth the unix salt including prefix and converted to hex (optional hash)
-# @param password the password to hash
-# @return unix password hash
-sub hash_unix_password_from_database {
-
-    # Remark: database function must get hexadecimal input
-    # and send back hexadecimal output
-    my $self        = shift;
-    my $dbh         = shift;
-    my $dbunixsalth = shift;
-    my $password    = shift;
-
-    # convert password to hexa
-    my $passwordh = unpack "H*", $password;
-
-    # If an unix hashing algorithm is specifid:
-    # We need to give a salt and algorithm as second parameter.
-    # A unix salted password string starts with algorithm,
-    # then salt and ends with the hash.
-    # eg. $6$ telling crypt that we want sha512...
-    # $2a$ and $2y$ not working in latest mariadb. If wanted
-    # there is additional research nessesary!
-    my @rows = ();
-    eval {
-        my $sth =
-          $dbh->prepare("SELECT unixcrypth('$passwordh', '$dbunixsalth')");
-        $sth->execute();
-        @rows = $sth->fetchrow_array();
-    };
-    if ($@) {
-        $self->logger->error(
-            "DBI error while hashing with unixcrypth hash function: $@");
-        $self->userLogger->warn("Unable to check password");
-        return "";
-    }
-
-    if ( @rows == 1 ) {
-        $self->logger->debug(
-"Successfully hashed password with unixcrypth hash function in database"
-        );
-
-        # convert salt to binary
-        # my $dbsaltb = pack 'H*', $dbsalt;
-
-        # convert result to binary
-        my $res = pack 'H*', $rows[0];
-
-        # res string contains all information, methode, salt and hash
-        return $res;
-    }
-    else {
-        $self->userLogger->warn("Unable to check password with unixcrypth");
-        return "";
-    }
-
-    # Return encode_base64(unixcrypth($n$salt$hash))
-}
-
 ## @method protected Lemonldap::NG::Portal::_DBI get_salt(string dbhash)
 # Return salt from salted hash password
 # @param dbhash hash password
@@ -387,16 +325,8 @@ sub get_dynamic_hash_password {
         $self->logger->debug(
             "Using unixcrypt$dbscheme to hash salted password");
 
-        # Hex the salt
-        my $dbhash = unpack "H*", $dbhash;
-
-        # Let the db generate a unix hash
-        # The dbhash contains the hash and the encrypt function will
-        # ignore the rest (algorithm, hash)
-        $hash =
-          $self->hash_unix_password_from_database( $dbh, $dbhash, $password );
+        $hash = crypt($password, $dbhash);
         return $hash;
-
     }
 
     # no hash scheme => assume clear text
@@ -531,10 +461,9 @@ sub get_dynamic_hash_new_password {
 
         $dbscheme = $1;
         $dbsalt   = gen_salt_text();
-        $dbsalt   = unpack "H*", "\$$dbscheme\$$dbsalt\$";
+        $dbsalt   = "\$$dbscheme\$$dbsalt\$";
 
-        $hash =
-          $self->hash_unix_password_from_database( $dbh, $dbsalt, $password );
+        $hash = crypt($password, $dbsalt);
 
         return $hash;
 
