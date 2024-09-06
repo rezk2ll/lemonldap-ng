@@ -7,7 +7,6 @@ build_requires:
   Digest::HMAC_SHA1: '0'
   Env: '0'
   IO::Pipe: '0'
-  Test::MockObject: '0'
   Test::Pod: '1'
   Time::Fake: '0'
 configure_requires:

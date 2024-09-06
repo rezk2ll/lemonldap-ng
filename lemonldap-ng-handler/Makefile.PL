@@ -12,7 +12,6 @@ WriteMakefile(
         'Digest::HMAC_SHA1' => 0,
         'Env'               => 0,
         'IO::Pipe'          => 0,
-        'Test::MockObject'  => 0,
         'Test::Pod'         => 1.00,
         'Time::Fake'        => 0,
         'Cwd'               => 0,
