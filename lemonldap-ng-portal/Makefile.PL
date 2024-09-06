@@ -35,7 +35,6 @@ WriteMakefile(
             'Net::OpenID::Server'         => 0,
             'SOAP::Lite'                  => 0,
             'Text::Unidecode'             => 0,
-            'Unicode::String'             => 0,
             'Web::ID'                     => 0,
         },
         resources => {

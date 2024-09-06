@@ -181,7 +181,6 @@ BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Text::Unidecode)
 BuildRequires:  perl(threads::shared)
 BuildRequires:  perl(Time::Local)
-BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(URI)
 BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::QueryParam)
