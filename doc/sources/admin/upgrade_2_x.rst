@@ -18,6 +18,16 @@ No known issues.
 2.20.0
 ------
 
+2FA deletion now uses a timeout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Users may start encountering timeout errors if they remain on the 2FA manager
+page too long before deleting their 2FA. In this situation, the page is
+automatically refreshed. However, to improve user experience, you may want to
+increase the *General Parameters* » *Second factors* » *Global options* »
+*Login timeout* setting to increase the timeout.
+
+
 U2F is no more supported
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
