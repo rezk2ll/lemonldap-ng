@@ -383,7 +383,7 @@ sub attributes {
                     },
                     {
                         'k' => 'OpenID',
-                        'v' => 'OpenID'
+                        'v' => 'OpenID 2.0 (deprecated)'
                     },
                     {
                         'k' => 'OpenIDConnect',
@@ -423,7 +423,7 @@ sub attributes {
                     },
                     {
                         'k' => 'WebID',
-                        'v' => 'WebID'
+                        'v' => 'WebID (deprecated)'
                     },
                     {
                         'k' => 'WebAuthn',
@@ -464,7 +464,7 @@ sub attributes {
                     },
                     {
                         'k' => 'OpenID',
-                        'v' => 'OpenID'
+                        'v' => 'OpenID 2.0 (deprecated)'
                     },
                     {
                         'k' => 'OpenIDConnect',
@@ -492,7 +492,7 @@ sub attributes {
                     },
                     {
                         'k' => 'WebID',
-                        'v' => 'WebID'
+                        'v' => 'WebID (deprecated)'
                     },
                     {
                         'k' => 'Custom',
@@ -598,7 +598,7 @@ sub attributes {
                 },
                 {
                     'k' => 'WebID',
-                    'v' => 'WebID'
+                    'v' => 'WebID (deprecated)'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -622,7 +622,7 @@ sub attributes {
                 },
                 {
                     'k' => 'OpenID',
-                    'v' => 'OpenID'
+                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
@@ -1116,7 +1116,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 },
                 {
                     'k' => 'WebID',
-                    'v' => 'WebID'
+                    'v' => 'WebID (deprecated)'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -1132,7 +1132,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 },
                 {
                     'k' => 'OpenID',
-                    'v' => 'OpenID'
+                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
