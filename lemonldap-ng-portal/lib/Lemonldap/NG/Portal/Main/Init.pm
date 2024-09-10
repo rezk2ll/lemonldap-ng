@@ -51,6 +51,10 @@ has _jsRedirect => ( is => 'rw' );
 has trustedDomainsRe         => ( is => 'rw' );
 has additionalTrustedDomains => ( is => 'rw', default => sub { [] } );
 
+# Entrypoints
+has _pluginEntryPoints =>
+  ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+
 # Lists to store plugins entry-points
 my @entryPoints;
 
@@ -118,6 +122,7 @@ sub _resetPluginsAndServices {
     $self->spRules( {} );
     $self->hook( {} );
     $self->pluginSessionDataToRemember( {} );
+    $self->_pluginEntryPoints( [] );
 
     # Reinitialize arrays
     foreach ( qw(_macros _groups), @entryPoints ) {
@@ -570,8 +575,6 @@ sub findEP {
             }
         }
     }
-    $self->logger->debug("Plugin $plugin initialized");
-
     # Second factors
     if ( $obj->isa("Lemonldap::NG::Portal::Main::SecondFactor") ) {
         $self->_sfEngine->_enable_2f_module($obj);
@@ -592,6 +595,45 @@ sub findEP {
             $self->spRules->{$k} = $obj->spRules->{$k};
         }
     }
+
+    # Plugin entrypoints
+    for my $ep ( @{ $self->_pluginEntryPoints } ) {
+        if (   ( $ep->{can} and $obj->can( $ep->{can} ) )
+            or ( $ep->{isa}  and $obj->isa( $ep->{isa} ) )
+            or ( $ep->{does} and $obj->does( $ep->{does} ) ) )
+        {
+            my @args = @{ $ep->{args} || [] };
+            if ( my $callback = $ep->{callback} ) {
+                $self->logger->debug(
+                    "Invoking callback registered by $ep->{_pkg}");
+                $callback->( $obj, @args );
+            }
+            elsif ( $ep->{service} && $ep->{method} ) {
+                my $service = $self->getService( $ep->{service} );
+                if ($service) {
+                    if ( my $method = $service->can( $ep->{method} ) ) {
+                        $self->logger->debug(
+                                "Invoking $ep->{method} on $ep->{service}"
+                              . " on behalf of $ep->{_pkg}" );
+                        $service->$method( $obj, @args );
+                    }
+                    else {
+                        $self->logger->warn(
+                            "Service $ep->{service} has no $ep->{method} method"
+                              . " in entrypoint added by $ep->{_pkg}" );
+                    }
+                }
+                else {
+                    $self->logger->warn(
+                            "Could not find service $ep->{service}"
+                          . " in entrypoint added by $ep->{_pkg}" );
+                }
+            }
+        }
+    }
+
+    $self->logger->debug("Plugin $plugin initialized");
+
     return $obj;
 }
 
@@ -667,6 +709,12 @@ sub buildRule {
 sub addPasswordPolicyDisplay {
     my ( $self, $id, $options ) = @_;
     $self->_ppRules->{$id} = {%$options};
+}
+
+sub _addPluginEntryPoint {
+    my ( $self, %entryPointDescription ) = @_;
+    push @{ $self->_pluginEntryPoints },
+      { _pkg => "[unknown]", %entryPointDescription };
 }
 
 1;
