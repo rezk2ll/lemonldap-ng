@@ -200,7 +200,6 @@ BuildRequires:  perl(File::Find)
 BuildRequires:  perl(File::Path)
 %{!?el7:BuildRequires:  perl(GeoIP2)}
 BuildRequires:  perl(HTTP::Request::Common)
-BuildRequires:  perl(IPC::Open3)
 BuildRequires:  perl(lib)
 BuildRequires:  perl(locale)
 BuildRequires:  perl(LWP::Protocol::PSGI)
