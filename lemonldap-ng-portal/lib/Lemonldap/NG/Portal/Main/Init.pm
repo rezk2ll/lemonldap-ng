@@ -575,16 +575,6 @@ sub findEP {
             }
         }
     }
-    # Second factors
-    if ( $obj->isa("Lemonldap::NG::Portal::Main::SecondFactor") ) {
-        $self->_sfEngine->_enable_2f_module($obj);
-        $self->logger->debug("Loaded $plugin as a 2FA module");
-    }
-
-    if ( $obj->isa("Lemonldap::NG::Portal::2F::Register::Base") ) {
-        $self->_sfEngine->_enable_2f_register_module($obj);
-        $self->logger->debug("Loaded $plugin as a 2F Register module");
-    }
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
