@@ -475,6 +475,7 @@ bzip2 -9 %{modulename}.pp
     UNITDIR=%{_unitdir}/ \
     TMPFILESDIR=%{_tmpfilesdir}/ \
     ETCDEFAULTDIR=%{_sysconfdir}/default \
+    MANDIR=%{_mandir}/ \
     DNSDOMAIN=%{lm_dnsdomain} \
     APACHEVERSION=%{apache_version} \
     APACHEUSER=%{lm_apacheuser} \
@@ -752,6 +753,7 @@ fi
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %{lm_examplesdir}/llngapp.psgi
+%{_mandir}/man8/llng-fastcgi-server.8p*
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},755)
 %dir %{_rundir}/llng-fastcgi-server
 
