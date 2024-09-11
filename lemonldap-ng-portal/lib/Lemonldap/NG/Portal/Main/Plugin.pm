@@ -300,6 +300,42 @@ LemonLDAP::NG code. Example:
 
 =back
 
+=head3 Registering new entrypoints
+
+Use the C<addEntryPoint> method to register a new entrypoint for future plugin loads.
+This can be useful if you would like to extend your plugin with other plugins,
+or interact with existing LemonLDAP::NG services in some way.
+
+C<addEntryPoint> takes a hash of options, for example:
+
+        $self->addEntryPoint(
+            isa      => "My::Base::Class",
+            callback => sub {
+                my ($plugin) = @_;
+                $self->do_domething_with($plugin);
+            }
+        );
+
+=over
+
+=item C<can>: trigger the entry point when the newly loaded plugin has a given method
+
+=item C<does>: trigger the entry point when the newly loaded plugin consumes a given role
+
+=item C<isa>: trigger the entry point when the newly loaded plugin extends a given class
+
+=item C<callback>: when triggered, run the given code reference, with the new
+plugin instance as first argument, and optional extra arguments
+
+=item C<service> and C<method>: when triggered, run the given method of the
+given portal service, with the new plugin instance as first argument, and
+optional extra arguments
+
+=item C<args>: optional array reference of extra arguments to pass to the
+callback or service
+
+=back
+
 =head1 LOGGING
 
 Logging is provided by $self->logger and $self->userLogger. The following rules

@@ -223,6 +223,60 @@ This module must inherit from ``Lemonldap::NG::Portal::2F::Register::Base``.
 
     extends 'Lemonldap::NG::Portal::2F::Register::Base';
 
+Custrom entry points
+~~~~~~~~~~~~~~~~~~~~
+
+Entrypoints allow plugins to register custom actions when they are loaded.
+LemonLDAP::NG comes with many pre-defined entrypoints already. But you may want
+to add your own, especially if you are creating a plugin that can itself have
+plugins.
+
+You can call the ``addEntryPoint`` method in your plugin's ``init`` to
+create your custom entrypoints.
+
+.. note::
+
+   Only plugins loaded *after* registering the entry point will trigger it. Be
+   careful with the ordering of your ``customPlugins`` variable.
+
+Here are a few examples:
+
+.. code:: perl
+
+    sub init {
+        my ($self) = @_;
+
+        # ...
+
+        # From now on, when loading a new plugin that inherits from
+        # My::Base::Class, run the provided code reference, with an
+        # instance of the plugin being loaded as first argument
+        $self->addEntryPoint(
+            isa      => "My::Base::Class",
+            callback => sub {
+                my ($plugin) = @_;
+                $self->do_domething_with($plugin);
+            }
+        );
+
+        # From now on, when loading a new plugin that uses My::Role
+        # Call a particular method of a particular service, passing the new
+        # plugins instance and optional extra arguments.
+        # This will effectively run:
+        #  $portal->getService('myservice')
+        #         ->mymethod($plugin, "role_entry_point")
+        $self->addEntryPoint(
+            does    => "My::Role",
+            service => "myservice",
+            method  => "mymethod",
+            args    => ["role_entry_point"],
+        );
+
+        # ...
+        return 1;
+    }
+
+See also ``Lemonldap::NG::Portal::Main::Plugin`` man page for full details.
 
 Example
 -------
