@@ -501,13 +501,19 @@ sub encodeUrl {
 # @return Constant $class->REDIRECT
 sub goToPortal {
     my ( $class, $req, $url, $arg, $path ) = @_;
+
+    my $portal = $class->tsv->{portal}->($req);
+    if ( !$class->tsv->{useRedirectAjaxOnUnauthorized} and $req->wantJSON ) {
+        $class->set_header_out( $req, 'WWW-Authenticate' => "SSO $portal" );
+        return $class->AUTH_REQUIRED;
+    }
     $path ||= '';
     my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl( $req, $url );
     $class->logger->debug(
         'Redirect ' . $req->address . " to portal (url was $url)" );
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->($req)
+            'Location' => $portal
           . "$path?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
