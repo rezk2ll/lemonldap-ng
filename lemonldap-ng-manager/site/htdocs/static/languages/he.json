@@ -1327,6 +1327,7 @@
 "uri":"URI",
 "url":"כתובת",
 "use":"להשתמש",
+"useRedirectAjaxOnUnauthorized":"Redirect AJAX requests on unauthorized",
 "useRedirectOnError":"הפניה בעת שגיאה",
 "useRedirectOnForbidden":"הפניה כשאסור",
 "useSafeJail":"להשתמש בבידוד מאובטח",

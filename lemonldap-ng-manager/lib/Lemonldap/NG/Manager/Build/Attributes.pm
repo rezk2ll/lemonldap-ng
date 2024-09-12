@@ -1355,6 +1355,12 @@ sub attributes {
             type          => 'bool',
             documentation => 'Avoid browsers to store users password',
         },
+        useRedirectAjaxOnUnauthorized => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Redirect Ajax requests to portal for unauthorized (401)',
+            flags         => 'h',
+        },
         useRedirectOnError => {
             type          => 'bool',
             default       => 1,

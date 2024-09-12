@@ -1327,6 +1327,7 @@
 "uri":"URI",
 "url":"URL",
 "use":"Użyj",
+"useRedirectAjaxOnUnauthorized":"Redirect AJAX requests on unauthorized",
 "useRedirectOnError":"Przekieruj w przypadku błędu",
 "useRedirectOnForbidden":"Przekieruj, gdy zabronione",
 "useSafeJail":"Użyj Safe jail",
