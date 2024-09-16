@@ -315,7 +315,7 @@ ENDKEY
                 '_credentialId'        => encode_base64url($credential_id_1),
                 '_credentialPublicKey' =>
 'pQECAyYgASFYIM_oQXEUzjPwEhM4gWmIbCuOXc4Ja8jPDKxbQaZckal7Ilgg_9a693_nkf7flk1S9AV2tjrtJPF6kg8TCGbFKoeD9Wc',
-                '_signCount' => 6,
+                '_signCount' => 7,
                 'name'       => "MyFirstDevice",
                 'type'       => 'WebAuthn'
             },
@@ -427,6 +427,25 @@ ENDKEY
         [ {
                 'id'   => encode_base64url($credential_id_1),
                 'type' => 'public-key'
+            },
+            {
+                'id'         => encode_base64url($credential_id_2),
+                'type'       => 'public-key',
+                'transports' => [ 'usb', 'nfc' ],
+            }
+        ]
+    );
+
+    # Check that webauthnDefaultTransports are correctly applied
+    $client->ini(
+        { %{ $client->ini }, webauthnDefaultTransports => "usb, nfc, ble" } );
+    verify_device(
+        $client, $id,
+        $webauthn_tester_1,
+        [ {
+                'id'         => encode_base64url($credential_id_1),
+                'type'       => 'public-key',
+                'transports' => [ 'usb', 'nfc', 'ble' ],
             },
             {
                 'id'         => encode_base64url($credential_id_2),
