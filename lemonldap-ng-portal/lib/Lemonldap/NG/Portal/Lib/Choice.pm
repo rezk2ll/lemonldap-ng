@@ -67,16 +67,12 @@ sub init {
         }
 
         # Display conditions
-        my $safe = Safe->new;
         my $cond = $mods[4];
-        if ( defined $cond and $cond !~ /^$/ ) {
-            $self->logger->debug("Found rule $cond for $name");
-            $_choiceRules->{$name} =
-              $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
-            if ($@) {
-                $self->logger->error("Bad condition $cond: $@");
-                return 0;
-            }
+        if ( defined $cond and $cond ne "" ) {    # 0 is a valid rule!
+            my $rule =
+              $self->p->buildRule( $cond, "choice condition for $name" );
+            return 0 unless $rule;
+            $_choiceRules->{$name} = $rule;
         }
         else {
             $self->logger->debug("No rule for $name");
@@ -211,10 +207,10 @@ sub _buildAuthLoop {
             $self->logger->error("$_ has no rule");
             $_choiceRules->{$_} = sub { 1 };
         }
-        unless ( $_choiceRules->{$_}->( $req->env ) ) {
+        unless ( $_choiceRules->{$_}->( $req, {} ) ) {
             $self->logger->debug(
-"Condition returns false, authentication choice $_ will not be displayed"
-            );
+                    "Condition returns false, authentication choice $_"
+                  . " will not be displayed" );
         }
         else {
             $self->logger->debug("Displaying authentication choice $_");
