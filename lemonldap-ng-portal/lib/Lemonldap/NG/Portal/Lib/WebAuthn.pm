@@ -376,7 +376,14 @@ sub _getTransportsFromCredential {
         return [ split( qr/\s*,\s*/, $transports_str ) ];
     }
     else {
-        return;
+        if ( $self->conf->{webauthnDefaultTransports} ) {
+            return [
+                split( qr/\s*,\s*/, $self->conf->{webauthnDefaultTransports} )
+            ];
+        }
+        else {
+            return;
+        }
     }
 }
 
