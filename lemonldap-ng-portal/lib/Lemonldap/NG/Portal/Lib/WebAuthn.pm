@@ -109,8 +109,7 @@ sub generateChallenge {
     my $challenge = $self->_generateBasicChallenge($req);
 
     $challenge->{allowCredentials} =
-      [ map { { type => "public-key", id => $_->{_credentialId}, } }
-          @webauthn_devices ];
+      [ map { $self->_formatCredentialForRequest($_) } @webauthn_devices ];
 
     if ( my $appid = $self->appid($req) ) {
         $challenge->{extensions}->{appid} = $appid;
@@ -120,6 +119,17 @@ sub generateChallenge {
         "WebAuthn authentication parameters " . to_json($challenge) );
 
     return $challenge;
+}
+
+sub _formatCredentialForRequest {
+    my ( $self, $credential ) = @_;
+
+    my $transports = $self->_getTransportsFromCredential($credential);
+    return {
+        type => "public-key",
+        id   => $_->{_credentialId},
+        ( $transports ? ( transports => $transports ) : () ),
+    };
 }
 
 sub generateDiscoverableChallenge {
@@ -345,6 +355,29 @@ sub decode_credential {
     }
 
     return $credential;
+}
+
+sub _serializeTransportsFromJsonResponse {
+    my ( $self, $credential_json ) = @_;
+
+    my $transports =
+      eval { from_json($credential_json)->{response}->{transports} };
+    $self->logger->debug("Could not read transports from response: $@") if $@;
+
+    my $transports_str = join( ",", @{ $transports || [] } );
+    return $transports_str;
+}
+
+sub _getTransportsFromCredential {
+    my ( $self, $credential ) = @_;
+
+    my $transports_str = $credential->{_transports};
+    if ($transports_str) {
+        return [ split( qr/\s*,\s*/, $transports_str ) ];
+    }
+    else {
+        return;
+    }
 }
 
 1;

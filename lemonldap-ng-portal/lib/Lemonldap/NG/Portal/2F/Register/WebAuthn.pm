@@ -229,6 +229,9 @@ sub _registration {
           ( $registration_options->{authenticatorSelection}->{residentKey} eq
             "required" )
     );
+
+    my $serialized_transports =
+      $self->_serializeTransportsFromJsonResponse($credential_json);
     my $res = $self->registerDevice(
         $req,
         $req->userData,
@@ -236,6 +239,11 @@ sub _registration {
             _credentialId        => $credential_id,
             _credentialPublicKey => $credential_pubkey,
             _signCount           => $signature_count,
+            (
+                $serialized_transports
+                ? ( _transports => $serialized_transports )
+                : ()
+            ),
             ( $aaguid ? ( _aaguid => $aaguid ) : () ),
             type  => $self->type,
             name  => $keyName,
