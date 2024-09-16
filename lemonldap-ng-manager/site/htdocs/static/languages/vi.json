@@ -1377,6 +1377,7 @@
 "webauthn2fUserVerification":"xác minh người dùng",
 "webauthnAppId":"Send U2F AppID",
 "webauthnAuthnLevel":"Mức xác thực",
+"webauthnDefaultTransports":"Default transports",
 "webauthnDisplayNameAttr":"Thuộc tính Tên hiển thị của người dùng",
 "webauthnParams":"WebAuthn parameters",
 "webauthnRpId":"Relying Party ID",

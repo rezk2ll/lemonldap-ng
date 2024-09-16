@@ -1008,6 +1008,7 @@ sub tree {
                                 'webauthnRpId',
                                 'webauthnAppId',
                                 'webauthnDisplayNameAttr',
+                                'webauthnDefaultTransports',
                                 'webauthn2fAuthnLevel',
                                 'webauthn2fLabel',
                                 'webauthn2fLogo',

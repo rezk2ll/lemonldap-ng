@@ -1377,6 +1377,7 @@
 "webauthn2fUserVerification":"Подтверждение пользователя",
 "webauthnAppId":"Send U2F AppID",
 "webauthnAuthnLevel":"Уровень аутентификации",
+"webauthnDefaultTransports":"Default transports",
 "webauthnDisplayNameAttr":"Атрибут отображаемого имени пользователя",
 "webauthnParams":"WebAuthn parameters",
 "webauthnRpId":"Relying Party ID",

@@ -1377,6 +1377,7 @@
 "webauthn2fUserVerification":"Kullanıcı doğrulama",
 "webauthnAppId":"Send U2F AppID",
 "webauthnAuthnLevel":"Doğrulama seviyesi",
+"webauthnDefaultTransports":"Default transports",
 "webauthnDisplayNameAttr":"Kullanıcı Görüntülenen İsim niteliği",
 "webauthnParams":"WebAuthn parameters",
 "webauthnRpId":"Relying Party ID",

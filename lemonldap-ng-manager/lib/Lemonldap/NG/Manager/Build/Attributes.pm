@@ -2626,6 +2626,10 @@ sub attributes {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',
         },
+        webauthnDefaultTransports => {
+            type          => 'text',
+            documentation => 'WebAuthn default transports',
+        },
         webauthnAuthnLevel => {
             type          => 'int',
             default       => 3,

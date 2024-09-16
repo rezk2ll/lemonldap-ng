@@ -1377,6 +1377,7 @@
 "webauthn2fUserVerification":"Weryfikacja użytkownika",
 "webauthnAppId":"Send U2F AppID",
 "webauthnAuthnLevel":"Poziom uwierzytelnienia",
+"webauthnDefaultTransports":"Default transports",
 "webauthnDisplayNameAttr":"Atrybut nazwy wyświetlanej użytkownika",
 "webauthnParams":"WebAuthn parameters",
 "webauthnRpId":"Relying Party ID",

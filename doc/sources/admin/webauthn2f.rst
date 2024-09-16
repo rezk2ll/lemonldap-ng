@@ -44,6 +44,8 @@ Configuration
 - **Relying Party ID**: The domain name on which WebAuthn devices can be
   registered and used. It must be a non-public suffix of the portal's hostname.
 - **User Display Name attribute**: session attribute containing user display name
+- **Default transports**: Comma-separated list of transport hints sent to the
+  web browser, if none are provided during registration
 - **Authentication level**: you can overwrite here auth level for
   WebAuthn registered users. Leave it blank keeps auth level provided by
   first authentication module *(default: 2 for user/password based

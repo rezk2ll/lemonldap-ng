@@ -5661,6 +5661,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 3,
             'type'    => 'int'
         },
+        'webauthnDefaultTransports' => {
+            'type' => 'text'
+        },
         'webauthnDisplayNameAttr' => {
             'type' => 'text'
         },
