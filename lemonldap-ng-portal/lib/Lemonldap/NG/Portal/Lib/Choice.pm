@@ -223,8 +223,6 @@ sub _buildAuthLoop {
                 $req->data->{cspFormAction} ||= {};
                 if (
                     defined $url
-                    and not $self->checkXSSAttack( 'URI',
-                        $req->env->{'REQUEST_URI'} )
                     and $url =~
                     q%^(https?://)?[^\s/.?#$].[^\s]+$% # URL must be well formatted
                   )
