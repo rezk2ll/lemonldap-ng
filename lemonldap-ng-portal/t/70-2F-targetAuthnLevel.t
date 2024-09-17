@@ -11,9 +11,14 @@ my $client = LLNG::Manager::Test->new( {
             logLevel             => 'error',
             totp2fActivation     => "\$targetAuthnLevel <= 10",
             password2fActivation => "\$targetAuthnLevel <= 5",
-            authentication       => 'Demo',
+            authentication       => 'Choice',
             userDB               => 'Same',
-            vhostOptions         => {
+            authChoiceModules    => {
+                '1_Demo' => 'Demo;Demo;Null;;$targetAuthnLevel<=10',
+                '2_Demo' => 'Demo;Demo;Null;;$targetAuthnLevel<=5',
+            },
+
+            vhostOptions => {
                 "test1.example.com" => {
                     vhostAuthnLevel => 5
                 },
@@ -32,7 +37,19 @@ my $keySecret;
 my $token;
 my $code;
 
-subtest "Check test1 vhost asks TOTP and 2Password" => sub {
+subtest "Check test1 offer both Auth choices and both 2FA choices" => sub {
+
+    ok(
+        $res = $client->_get(
+            "/",
+            query  => { url => encodeUrl("http://test1.example.com") },
+            accept => "text/html"
+        ),
+        "Get login form"
+    );
+    my @forms = map { $_->getAttribute("value") }
+      expectXpath( $res, '//input[@name="lmAuth"]' )->get_nodelist();
+    is_deeply( [@forms], [qw/1_Demo 2_Demo/], "Two choices offered" );
 
     ok(
         $res = $client->_post(
@@ -40,6 +57,7 @@ subtest "Check test1 vhost asks TOTP and 2Password" => sub {
             {
                 user     => "dwho",
                 password => "dwho",
+                lmAuth   => "1_Demo",
                 url      => encodeUrl("http://test1.example.com"),
             }
         ),
@@ -60,11 +78,24 @@ subtest "Check test1 vhost asks TOTP and 2Password" => sub {
 subtest "Check test2 vhost asks only TOTP" => sub {
 
     ok(
+        $res = $client->_get(
+            "/",
+            query  => { url => encodeUrl("http://test2.example.com") },
+            accept => "text/html"
+        ),
+        "Get login form"
+    );
+    my @forms = map { $_->getAttribute("value") }
+      expectXpath( $res, '//input[@name="lmAuth"]' )->get_nodelist();
+    is_deeply( [@forms], [qw/1_Demo/], "One choice offered" );
+
+    ok(
         $res = $client->_post(
             '/',
             {
                 user     => "dwho",
                 password => "dwho",
+                lmAuth   => "1_Demo",
                 url      => encodeUrl("http://test2.example.com"),
             }
         ),
