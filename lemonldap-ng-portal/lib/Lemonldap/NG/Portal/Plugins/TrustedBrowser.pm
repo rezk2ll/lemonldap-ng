@@ -31,6 +31,7 @@ extends qw(
 
 # INTERFACE
 
+use constant beforeAuth => 'checkAlreadyTrusted';
 use constant beforeLogout => 'logout';
 
 # INITIALIZATION
@@ -111,6 +112,19 @@ sub init {
 }
 
 # RUNNING METHODS
+
+# Check if browser is trusted before auth
+sub checkAlreadyTrusted {
+    my ( $self, $req ) = @_;
+
+    my $session = $self->getTrustedBrowserSessionFromReq($req);
+
+    if ($session) {
+        $req->data->{browserAlreadyTrusted} = 1;
+    }
+
+    return PE_OK;
+}
 
 # This method is called by the portal in standard auth flows
 

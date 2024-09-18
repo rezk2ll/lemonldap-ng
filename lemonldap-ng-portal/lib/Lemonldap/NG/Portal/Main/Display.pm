@@ -439,6 +439,7 @@ sub display {
                 ) ? ( STAYCONNECTED => 1 )
                 : ()
             ),
+            BROWSER_ALREADY_TRUSTED => $req->{data}->{browserAlreadyTrusted},
             (
                 $self->rememberAuthChoice->( $req, $req->sessionInfo )
                 ? ( REMEMBERAUTHCHOICE => 1 )
