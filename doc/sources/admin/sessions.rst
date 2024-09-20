@@ -25,6 +25,9 @@ To configure sessions, go in Manager, ``General Parameters`` »
 
 -  **Opening conditions**: rules which are evaluated before granting
    session, see :doc:`Grant Session plugin documentation<grantsession>`
+-  **Log application access**: record OIDC/SAML/CAS application access
+   to session. This can be used to define custom display rules based on
+   previous access to application by user.
 -  **Sessions storage**: you can define here which session backend to
    use, with the backend options. See
    :ref:`sessions database configuration<start-sessions-database>` to

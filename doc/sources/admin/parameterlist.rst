@@ -32,6 +32,7 @@ SSLVarIf                                                                        
 activeTimer                                             Enable timers on portal pages                                                        ✔
 adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
+appAccessHistoryEnabled                                 Log protected apps access to session                                                 ✔
 applicationList                                         Applications list                                                                    ✔
 authChoiceAuthBasic                                     Auth module used by AuthBasic handler                                                ✔
 authChoiceFindUser                                      Auth module used by FindUser plugin                                                  ✔

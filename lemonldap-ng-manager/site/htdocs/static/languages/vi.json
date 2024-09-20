@@ -70,6 +70,7 @@
 "apacheAuthnLevel":"Mức xác thực",
 "apacheParams":"Thông số Apache",
 "api":"API",
+"appAccessHistoryEnabled":"Log application access",
 "application":"Ứng dụng",
 "applicationDisplay":"Hiển thị ứng dụng",
 "applicationList":"Danh mục và ứng dụng",

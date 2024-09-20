@@ -914,6 +914,8 @@ sub _authorizeEndpoint {
 
         my $state = $oidc_request->{'state'};
 
+    	$self->p->registerProtectedAppAccess( $req, $req->sessionInfo->{ $self->conf->{whatToTrace} }, "oidc:$rp" );
+
         $self->auditLog(
             $req,
             code    => "ISSUER_OIDC_LOGIN_SUCCESS",

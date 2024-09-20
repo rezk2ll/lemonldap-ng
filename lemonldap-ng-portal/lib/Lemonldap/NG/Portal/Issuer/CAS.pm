@@ -993,6 +993,8 @@ sub _validate2 {
             $req->param('ticket') );
     }
 
+    $self->p->registerProtectedAppAccess( $req, $username, "cas:$app" );
+
     my $h =
       $self->p->processHook( $req, 'casGenerateValidateResponse', $username,
         $attributes );

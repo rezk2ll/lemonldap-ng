@@ -1150,6 +1150,8 @@ sub run {
             $self->logger->debug(
                 "Link session $session_id to SAML session $saml_session_id");
 
+			$self->p->registerProtectedAppAccess($req, $req->{sessionInfo}->{ $self->conf->{whatToTrace} }, "saml:$spConfKey");
+
             # Send SSO Response
 
             # Register IDP in Common Domain Cookie if needed
