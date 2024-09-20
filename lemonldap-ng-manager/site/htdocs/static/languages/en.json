@@ -188,7 +188,7 @@
 "cda":"Multiple domains",
 "certificateResetByMailCeaAttribute":" Certificate Exact Assertion attribute name",
 "certificateResetByMailCertificateAttribute":" Certificate binary content attribute name",
-"certificateResetByMailManagement":"Certificate management",
+"certificateResetByMailManagement":"Reset certificate by mail",
 "certificateResetByMailStep1Body":"Reset mail content",
 "certificateResetByMailStep1Subject":"Reset mail subject",
 "certificateResetByMailStep2Body":"Confirmation mail content",
