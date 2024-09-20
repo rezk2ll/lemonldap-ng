@@ -32,10 +32,6 @@ stages:
 before_script:
   - env | grep ^CI_
 
-build_buster:
-  extends: .debian_build_job
-  image: buildpkg/debian:buster
-
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
@@ -51,6 +47,10 @@ build_focal:
 build_jammy:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
+
+build_noble:
+  extends: .debian_build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:noble
 
 build_centos_7:
   extends: .build_job
@@ -96,7 +96,6 @@ sign:
     - cd $CI_PROJECT_DIR
     - ci-sign-pkg
   dependencies:
-    - build_buster
     - build_bullseye
     - build_centos_7
     - build_rocky_8
