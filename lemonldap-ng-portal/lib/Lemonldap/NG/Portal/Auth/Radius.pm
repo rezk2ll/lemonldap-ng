@@ -49,6 +49,7 @@ sub init {
             radius_secret  => $self->conf->{radiusSecret},
             radius_server  => $self->conf->{radiusServer},
             radius_timeout => $self->conf->{radiusTimeout},
+            radius_msgauth => $self->conf->{radiusMsgAuth},
             modulename     => "radius",
             logger         => $self->logger,
             p              => $self->p,
