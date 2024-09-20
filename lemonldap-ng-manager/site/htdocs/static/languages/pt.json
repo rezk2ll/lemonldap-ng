@@ -70,6 +70,7 @@
 "apacheAuthnLevel":"Nível de autenticação",
 "apacheParams":"parametros Apache",
 "api":"API",
+"appAccessHistoryEnabled":"Log application access",
 "application":"Aplicação",
 "applicationDisplay":"Mostrar aplicativo",
 "applicationList":"Categorias e aplicativos",

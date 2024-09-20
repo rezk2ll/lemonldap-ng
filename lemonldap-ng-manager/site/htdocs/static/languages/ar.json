@@ -70,6 +70,7 @@
 "apacheAuthnLevel":"مستوى إثبات الهوية",
 "apacheParams":"معاييرأباتش",
 "api":"API",
+"appAccessHistoryEnabled":"Log application access",
 "application":"تطبيق",
 "applicationDisplay":"عرض التطبيق",
 "applicationList":"الاقسام والتطبيقات",

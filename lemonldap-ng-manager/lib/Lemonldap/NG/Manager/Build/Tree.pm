@@ -610,6 +610,7 @@ sub tree {
                         'timeoutActivity',
                         'timeoutActivityInterval',
                         'grantSessionRules',
+                        'appAccessHistoryEnabled',
                         {
                             title => 'sessionStorage',
                             help  => 'start.html#sessions-database',

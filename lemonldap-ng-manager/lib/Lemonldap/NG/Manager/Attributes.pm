@@ -310,6 +310,10 @@ sub attributes {
             'default' => 3,
             'type'    => 'int'
         },
+        'appAccessHistoryEnabled' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'applicationList' => {
             'default' => {
                 'default' => {

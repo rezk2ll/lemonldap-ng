@@ -5270,6 +5270,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               'List of RP authorized to query for an access_token of this RP',
         },
+        appAccessHistoryEnabled => {
+            type    => 'bool',
+            default => 0,
+			documentation => 'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
+        },
     };
 }
 

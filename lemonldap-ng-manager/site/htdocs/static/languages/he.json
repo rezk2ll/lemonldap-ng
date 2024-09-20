@@ -70,6 +70,7 @@
 "apacheAuthnLevel":"דרגת אימות",
 "apacheParams":"משתנים ב־Apache",
 "api":"API",
+"appAccessHistoryEnabled":"Log application access",
 "application":"יישום",
 "applicationDisplay":"הצגת יישום",
 "applicationList":"קטגוריות ויישומים",

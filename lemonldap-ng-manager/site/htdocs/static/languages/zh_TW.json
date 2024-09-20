@@ -70,6 +70,7 @@
 "apacheAuthnLevel":"驗證等級",
 "apacheParams":"Apache 參數",
 "api":"API",
+"appAccessHistoryEnabled":"Log application access",
 "application":"應用程式",
 "applicationDisplay":"顯示應用程式",
 "applicationList":"分類與應用程式",

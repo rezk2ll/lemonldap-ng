@@ -1372,6 +1372,34 @@ sub registerLogin {
     PE_OK;
 }
 
+# Register access to protected app
+# @param Lemonldap::NG::Portal::Main::Request $req The request
+# @param string $uid The connected user ident
+# @param string $app The application client/RP namespaced with protocol
+sub registerProtectedAppAccess {
+    my ( $self, $req, $uid, $app ) = @_;
+
+    return unless $self->conf->{appAccessHistoryEnabled};
+
+    $self->logger->debug("Registering $app access for user $uid");
+
+    my $persistentSession = $self->getPersistentSession($uid);
+    my $entry = $persistentSession->data->{_appHistory}->{$app} || {};
+
+    $entry->{access_time} = time();
+    $entry->{access_count}++;
+
+    $self->updatePersistentSession(
+        $req,
+        {
+            _appHistory => {
+                %{ $persistentSession->data->{_appHistory} }, $app => $entry
+            }
+        },
+        $uid
+    );
+}
+
 # put main session data into a hash ref
 # @param hashref $session The session to sum up
 # @return hashref
