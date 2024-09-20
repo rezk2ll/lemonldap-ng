@@ -49,6 +49,12 @@ Portal templates changes
 
 If you modified some non-custom HTML templates, :doc:`refer to template upgrade instructions<upgrade_templates>`
 
+Status changed
+^^^^^^^^^^^^^^
+
+The obsolete "portal status" and "status" features were removed from 2.20.0.
+An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
+
 2.19.0
 ------
 

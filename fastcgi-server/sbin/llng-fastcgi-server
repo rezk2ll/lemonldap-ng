@@ -83,9 +83,6 @@ my %builder = (
     reload => sub {
         return $class->reload();
     },
-    status => sub {
-        return $class->status();
-    },
     manager => sub {
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );

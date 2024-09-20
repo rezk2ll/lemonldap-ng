@@ -400,6 +400,7 @@ sub defaultValues {
         'SSLIssuerVar'            => 'SSL_CLIENT_I_DN',
         'SSLVar'                  => 'SSL_CLIENT_S_DN_Email',
         'SSLVarIf'                => {},
+        'statusQueueName'         => 'llng_status',
         'stayConnected'           => 0,
         'stayConnectedCookieName' => 'llngconnection',
         'stayConnectedTimeout'    => 2592000,

@@ -179,6 +179,7 @@ disablePersistentStorage                                Enabled persistent stora
 displaySessionId                                        Display _session_id with sessions explorer                                           ✔
 domain                                                  DNS domain                                                                           ✔      ✔
 eventQueueName                                          Event channel name                                                                   ✔
+eventStatus                                             Push status into message broker                                                             ✔               ✔
 exportedAttr                                            List of attributes to export by SOAP or REST servers                                 ✔
 exportedVars                                            Main exported variables                                                              ✔
 ext2FSendCommand                                        Send command of External second factor                                               ✔
@@ -684,7 +685,7 @@ soapSessionServer                                       Enable SOAP session serv
 sslByAjax                                               Use Ajax request for SSL                                                             ✔
 sslHost                                                 URL for SSL Ajax request                                                             ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
-status                                                  Status daemon activation                                                                    ✔               ✔
+statusQueueName                                         Status channel name                                                                         ✔               ✔
 stayConnected                                           Stay connected activation rule                                                       ✔
 stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔

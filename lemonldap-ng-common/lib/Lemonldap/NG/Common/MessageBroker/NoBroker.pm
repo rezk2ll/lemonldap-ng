@@ -16,15 +16,18 @@ our $channels = {};
 sub new {
     my ( $class, $conf, $logger ) = @_;
     $channels->{ $conf->{eventQueueName} } //= [];
+    $channels->{ $conf->{statusQueueName} } = 'no';
     return bless {
         checkTime      => $conf->{checkTime},
         eventQueueName => $conf->{eventQueueName},
-        logger => $logger,
+        logger         => $logger,
     }, $class;
 }
 
 sub publish {
     my ( $self, $channel, $msg ) = @_;
+    die 'eventStatus not authorized without broker'
+      if $channels->{$channel} eq 'no' and $ENV{FORCE_STATUS} ne 'force status';
     die unless $channel and $msg;
     $channels->{$channel} = []
       unless ref( $channels->{$channel} );

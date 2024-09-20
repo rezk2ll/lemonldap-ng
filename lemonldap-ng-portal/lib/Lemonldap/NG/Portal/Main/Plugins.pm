@@ -16,7 +16,6 @@ use Mouse;
 our @pList = (
     portalDisplayResetPassword          => '::Plugins::MailPasswordReset',
     portalDisplayCertificateResetByMail => '::Plugins::CertificateResetByMail',
-    portalStatus                        => '::Plugins::Status',
     cda                                 => '::Plugins::CDA',
     notification                        => '::Plugins::Notifications',
     rememberAuthChoiceRule              => '::Plugins::RememberAuthChoice',

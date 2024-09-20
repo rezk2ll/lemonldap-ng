@@ -353,11 +353,11 @@ sub do {
     my $err = $req->error( $self->process( $req, nofail => $nofail ) );
 
     # Update status
-    if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->{env}->{REQUEST_URI}
-              . " $err\n" );
-    }
+    $self->HANDLER->publishStatus(
+        user       => ( $req->user ? $req->user : $req->address ),
+        url        => $req->{env}->{HTTP_HOST} . $req->{env}->{REQUEST_URI},
+        portalCode => $err,
+    );
 
     # Update history
     return $req->response if $err == PE_SENDRESPONSE;

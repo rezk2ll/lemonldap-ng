@@ -79,26 +79,6 @@ sub _run {
     }
 }
 
-sub status {
-    my ( $class, $args ) = @_;
-    $args //= {};
-    my $self = $class->new($args);
-    $self->init($args);
-
-    # Check if main handler initialization has been done
-    unless ( %{ $self->api->tsv } ) {
-        eval { $self->api->checkConf() };
-        $self->logger->error($@) if ($@);
-    }
-    return $self->psgiAdapter(
-        sub {
-            my $req = $_[0];
-            $self->api->status($req);
-            return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
-        }
-    );
-}
-
 sub reload {
     my ( $class, $args ) = @_;
     $args //= {};

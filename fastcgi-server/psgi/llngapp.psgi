@@ -12,10 +12,6 @@ my %builder = (
         require Lemonldap::NG::Handler::Server::Nginx;
         return Lemonldap::NG::Handler::Server::Nginx->reload();
     },
-    status => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
-        return Lemonldap::NG::Handler::Server::Nginx->status();
-    },
     manager => sub {
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );

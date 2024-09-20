@@ -1438,6 +1438,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 'llng_events',
             'type'    => 'text'
         },
+        'eventStatus' => {
+            'type' => 'bool'
+        },
         'exportedAttr' => {
             'type' => 'text'
         },
@@ -5273,8 +5276,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'staticPrefix' => {
             'type' => 'text'
         },
-        'status' => {
-            'type' => 'bool'
+        'statusQueueName' => {
+            'default' => 'llng_status',
+            'type'    => 'text'
         },
         'stayConnected' => {
             'default' => 0,
