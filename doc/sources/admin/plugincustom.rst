@@ -223,8 +223,8 @@ This module must inherit from ``Lemonldap::NG::Portal::2F::Register::Base``.
 
     extends 'Lemonldap::NG::Portal::2F::Register::Base';
 
-Custrom entry points
-~~~~~~~~~~~~~~~~~~~~
+Custom entry points
+~~~~~~~~~~~~~~~~~~~
 
 Entrypoints allow plugins to register custom actions when they are loaded.
 LemonLDAP::NG comes with many pre-defined entrypoints already. But you may want
