@@ -2409,6 +2409,10 @@ sub attributes {
             default       => 20,
             documentation => 'Radius 2f verification timeout',
         },
+        radius2fMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radius2fSendInitialRequest => {
             type          => 'bool',
             default       => 0,
@@ -4196,7 +4200,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusTimeout => {
             type => 'intOrNull',
         },
-
+        radiusMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radiusExportedVars => {
             type => 'keyTextContainer',
 
