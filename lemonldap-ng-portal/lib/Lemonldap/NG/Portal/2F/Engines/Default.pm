@@ -213,6 +213,19 @@ sub init {
         '2fregisters' => 'restoreSession',
         [ 'GET', 'POST' ]
     ) if ( $self->conf->{sfRequired} );
+
+    $self->addEntryPoint(
+        isa     => 'Lemonldap::NG::Portal::Main::SecondFactor',
+        service => "secondFactor",
+        method  => "_enable_2f_module",
+    );
+
+    $self->addEntryPoint(
+        isa     => 'Lemonldap::NG::Portal::2F::Register::Base',
+        service => "secondFactor",
+        method  => "_enable_2f_register_module",
+    );
+
     return 1;
 }
 
