@@ -3916,7 +3916,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'portalForceAuthnInterval' => {
-            'default' => 5,
+            'default' => 300,
             'type'    => 'int'
         },
         'portalMainLogo' => {

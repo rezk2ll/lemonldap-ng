@@ -1134,7 +1134,7 @@ sub attributes {
               'Enable force to authenticate when displaying portal',
         },
         portalForceAuthnInterval => {
-            default       => 5,
+            default       => 300,
             type          => 'int',
             documentation =>
 'Maximum interval in seconds since last authentication to force reauthentication',
