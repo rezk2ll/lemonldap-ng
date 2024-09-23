@@ -1013,7 +1013,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	else \
 		$(CHMOD) 777 $(RFILECONFIGDIR); \
 	fi
-	@cp $(SRCCOMMONDIR)/tools/lmConfig.* $(SRCCOMMONDIR)/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@cp $(SRCCOMMONDIR)/tools/*.sql $(RTOOLSDIR)
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
 	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; s#__CACHEDIR__#$(CACHEDIR)#g;' \
 		$(RCONFDIR)/$(CONFFILENAME)
