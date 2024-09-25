@@ -723,6 +723,9 @@ sub updateSession {
                 $self->logger->error( $apacheSession->error );
             }
         }
+
+        # remove the corresponding session from handler cache
+        HANDLER->publishEvent( $req, { action => 'unlog', id => $id } );
     }
 }
 
