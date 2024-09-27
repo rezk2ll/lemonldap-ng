@@ -35,22 +35,32 @@ before_script:
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bullseye/*_all.deb
 
 build_bookworm:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bookworm/*_all.deb
 
 build_focal:
   extends: .debian_build_job
   image: buildpkg/ubuntu:focal
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/focal/*_all.deb
 
 build_jammy:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/jammy/*_all.deb
 
 build_noble:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:noble
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
 
 build_centos_7:
   extends: .build_job
