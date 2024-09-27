@@ -464,6 +464,7 @@ prepare_test_server:
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		DEFDOCDIR=`pwd`/doc \
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
+		MANDIR=`pwd`/e2e-tests/conf/man \
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
 	#@cp -f e2e-tests/index.* e2e-tests/conf/
