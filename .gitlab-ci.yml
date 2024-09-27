@@ -65,6 +65,7 @@ build_centos_7:
     - make dist
     - yum -y install openssl openssl-libs
     - ci-build-pkg
+    - yum -y install ${CI_PROJECT_DIR}/result/centos/7/*.noarch.rpm
 
 build_rocky_8:
   extends: .build_job
@@ -75,6 +76,7 @@ build_rocky_8:
     - dnf -y install epel-release
     - make dist
     - ci-build-pkg
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/8/*.noarch.rpm
 
 build_rocky_9:
   extends: .build_job
@@ -85,6 +87,7 @@ build_rocky_9:
     - dnf -y install epel-release
     - make dist
     - ci-build-pkg
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/9/*.noarch.rpm
 
 sign:
   image: buildpkg/debian:bullseye
