@@ -1,13 +1,13 @@
 package Lemonldap::NG::Common::MessageBroker::Redis;
 
 use strict;
-use Redis;
 use JSON;
 
 our $VERSION = '2.20.0';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;
+    require Redis;
     my $self = bless { logger => $logger }, $class;
     my $args = $conf->{messageBrokerOptions} // {};
 

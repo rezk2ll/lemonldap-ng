@@ -1,12 +1,14 @@
 package Lemonldap::NG::Common::MessageBroker::MQTT;
 
 use strict;
-use Net::MQTT::Simple;
 
 our $VERSION = '2.20.0';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;
+
+    require Net::MQTT::Simple;
+
     my $args = $conf->{messageBrokerOptions};
     $args //= {};
     $args->{server} ||= 'localhost:1883';
