@@ -68,7 +68,7 @@ Edit ``lemonldap-ng.ini`` to load the Perl module(s)
 
     You can declare multiple custom function files, separated by a ,
 
-    require /path/to/SSOExtensions1.pm, /path/to/SSOExtensions2.pm
+    require = /path/to/SSOExtensions1.pm, /path/to/SSOExtensions2.pm
 
 
 Declare custom functions
