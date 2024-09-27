@@ -133,6 +133,25 @@ Also update `2fregisters.tpl` to that resident credentials are properly show to 
                  <td class="align-middle"><TMPL_VAR NAME="name"></td>
                  <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
 
+TOTP check
+^^^^^^^^^^
+
+To avoid the TOTP code been submitted twice, add `btn-single-submit` class to TOTP check submit in `totp2fcheck.tpl`:
+
+.. code:: diff
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   @@ -24,7 +24,7 @@
+        </div>
+      </div>
+      <div class="buttons mb-3">
+   -    <button type="submit" class="btn btn-success">
+   +    <button type="submit" class="btn btn-success btn-single-submit">
+          <span class="fa fa-sign-in"></span>
+          <span trspan="connect">Connect</span>
+        </button>
+
 2.19.0
 ------
 

@@ -3916,7 +3916,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'portalForceAuthnInterval' => {
-            'default' => 5,
+            'default' => 300,
             'type'    => 'int'
         },
         'portalMainLogo' => {
@@ -4056,6 +4056,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'radius2fLogo' => {
             'type' => 'text'
         },
+        'radius2fMsgAuth' => {
+            'type' => 'bool'
+        },
         'radius2fRequestAttributes' => {
             'default'    => {},
             'keyMsgFail' => '__badKeyName__',
@@ -4093,6 +4096,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
+        },
+        'radiusMsgAuth' => {
+            'type' => 'bool'
         },
         'radiusRequestAttributes' => {
             'default'    => {},

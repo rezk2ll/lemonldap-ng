@@ -1134,7 +1134,7 @@ sub attributes {
               'Enable force to authenticate when displaying portal',
         },
         portalForceAuthnInterval => {
-            default       => 5,
+            default       => 300,
             type          => 'int',
             documentation =>
 'Maximum interval in seconds since last authentication to force reauthentication',
@@ -2414,6 +2414,10 @@ sub attributes {
             type          => 'int',
             default       => 20,
             documentation => 'Radius 2f verification timeout',
+        },
+        radius2fMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
         },
         radius2fSendInitialRequest => {
             type          => 'bool',
@@ -4202,7 +4206,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusTimeout => {
             type => 'intOrNull',
         },
-
+        radiusMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radiusExportedVars => {
             type => 'keyTextContainer',
 

@@ -719,6 +719,14 @@
         return $('#btn-back-to-top').css("display", "none");
       }
     });
+    $('.btn-single-submit').on('click', function(event) {
+      if ($(this).data('data-submitted') === true) {
+        event.preventDefault();
+        return $(this).prop('disabled', true);
+      } else {
+        return $(this).data('data-submitted', true);
+      }
+    });
     $(document).trigger("portalLoaded");
     return true;
   });

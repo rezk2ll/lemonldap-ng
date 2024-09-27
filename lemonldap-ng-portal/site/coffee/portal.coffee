@@ -567,5 +567,12 @@ $(window).on 'load', () ->
 		else
 			$('#btn-back-to-top').css("display","none")
 
+	$('.btn-single-submit').on 'click', (event) ->
+		if $(this).data('data-submitted') == true
+			event.preventDefault()
+			$(this).prop('disabled',true)
+		else
+			$(this).data('data-submitted', true)
+
 	$(document).trigger "portalLoaded"
 	true

@@ -1,13 +1,13 @@
 package Lemonldap::NG::Common::MessageBroker::Pg;
 
 use strict;
-use DBI;
 use JSON;
 
 our $VERSION = '2.20.0';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;
+    require DBI;
     my $args = $conf->{messageBrokerOptions};
     unless ($args
         and $args->{dbiChain}

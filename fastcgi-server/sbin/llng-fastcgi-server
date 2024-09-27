@@ -80,6 +80,9 @@ if ($customFunctionsFile) {
 }
 
 my %builder = (
+    handler => sub {
+        return $class->run( {} );
+    },
     reload => sub {
         return $class->reload();
     },
@@ -115,8 +118,6 @@ my %builder = (
         }
     },
 );
-
-$_apps{handler} = $class->run( {} );
 
 my $app = sub {
     $SIG{'PIPE'} = sub {
