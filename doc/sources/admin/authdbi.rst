@@ -154,7 +154,7 @@ Schema
 Password
 ~~~~~~~~
 
--  **Hash schema**: SQL method for hashing password. Can be left blank
+-  **Hash scheme**: SQL method for hashing password. Can be left blank
    for plain text passwords. The method will be forced to uppercase in
    SQL statement.
 -  **Dynamic hash activation**: Activate dynamic hashing. With dynamic
