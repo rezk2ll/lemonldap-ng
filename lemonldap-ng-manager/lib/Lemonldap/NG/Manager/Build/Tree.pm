@@ -1266,6 +1266,7 @@ sub tree {
                             nodes => [
                                 'https',
                                 'port',
+                                'useRedirectAjaxOnUnauthorized',
                                 'useRedirectOnForbidden',
                                 'useRedirectOnError',
                                 'maintenance'

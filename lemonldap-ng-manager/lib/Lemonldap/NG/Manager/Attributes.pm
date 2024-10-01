@@ -5467,6 +5467,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             ],
             'type' => 'select'
         },
+        'useRedirectAjaxOnUnauthorized' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'useRedirectOnError' => {
             'default' => 1,
             'type'    => 'bool'

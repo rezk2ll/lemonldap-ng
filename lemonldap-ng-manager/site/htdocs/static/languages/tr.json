@@ -1329,6 +1329,7 @@
 "uri":"URI",
 "url":"URL",
 "use":"Kullan",
+"useRedirectAjaxOnUnauthorized":"Redirect AJAX requests on unauthorized",
 "useRedirectOnError":"Hatada yönlendir",
 "useRedirectOnForbidden":"Yasakta yönlendir",
 "useSafeJail":"Güvenli kafesi kullan",

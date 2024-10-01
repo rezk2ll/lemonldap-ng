@@ -1329,6 +1329,7 @@
 "uri":"URI",
 "url":"يو آر إل",
 "use":"استخدم",
+"useRedirectAjaxOnUnauthorized":"Redirect AJAX requests on unauthorized",
 "useRedirectOnError":"إعادة التوجيه على الخطأ",
 "useRedirectOnForbidden":"ممنوع إعادة التوجيه ",
 "useSafeJail":"استخدام السجن الآمن",

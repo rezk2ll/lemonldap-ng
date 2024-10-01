@@ -137,6 +137,7 @@ sub reload {
 #      - timeoutActivityInterval
 #      - useRedirectOnError
 #      - useRedirectOnForbidden
+#      - useRedirectAjaxOnUnauthorized
 #      - useSafeJail
 #      (objects)
 #      - cipher  # Lemonldap::NG::Common::Crypto object
@@ -227,7 +228,7 @@ sub defaultValuesInit {
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    upgradeSession
         hashedSessionStore      eventQueueName     eventStatus
-        statusQueueName
+        statusQueueName useRedirectAjaxOnUnauthorized
         )
       );
 
