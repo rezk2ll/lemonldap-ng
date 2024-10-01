@@ -55,6 +55,15 @@ Status changed
 The obsolete "portal status" and "status" features were removed from 2.20.0.
 An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
 
+SAML federations
+^^^^^^^^^^^^^^^^
+
+The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
+
+Switching to this method should improve performnace.
+
+Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
+
 2.19.0
 ------
 
