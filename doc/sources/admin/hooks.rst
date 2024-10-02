@@ -832,6 +832,39 @@ Sample code::
         return PE_OK;
     }
 
+Choice Authentication hooks
+---------------------------
+
+getAuthChoice
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.20.0
+
+This hook is triggered when LemonLDAP::NG selects an :doc:`authentication choice <authchoice>`.
+
+It is only run if no built-in mechanism has succeeded, and lets you select an
+authentication choice from custom conditions instead of displaying a choice to
+the user.
+
+The hook's only parameter is a context hash which you can modify. Its subkeys are
+
+  * ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
+
+Sample code::
+
+    use constant hook => { getAuthChoice => 'autoChoice', };
+
+    sub autoChoice {
+        my ( $self, $req, $context ) = @_;
+
+        # Pick a default choice for all users on a certain IP
+        if ( $req->address eq "1.2.3.4" ) {
+            $context->{choice} = "1_DEMO";
+        }
+        return PE_OK;
+    }
+
+
 
 Password change hooks
 ---------------------

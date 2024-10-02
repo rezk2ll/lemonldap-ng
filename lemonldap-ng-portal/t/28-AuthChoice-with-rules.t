@@ -22,8 +22,7 @@ SKIP: {
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => 'error',
                 useSafeJail    => 1,
@@ -58,6 +57,7 @@ SKIP: {
                 krbKeytab           => '/etc/keytab',
                 krbByJs             => 1,
                 krbAuthnLevel       => 4,
+                customPlugins       => "t::ChoiceHookPlugin",
             }
         }
     );
@@ -141,6 +141,24 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
     expectOK($res);
     my $id = expectCookie($res);
     $client->logout($id);
+
+    # Test selection by hook
+    ok(
+        $res = $client->_post(
+            '/',
+            {
+                user     => "dwho",
+                password => "dwho",
+            },
+            ip => '1.2.3.4',
+        ),
+        'Auth query'
+    );
+    count(1);
+    expectOK($res);
+    $id = expectCookie($res);
+    $client->logout($id);
+
     clean_sessions();
 }
 count($maintests);

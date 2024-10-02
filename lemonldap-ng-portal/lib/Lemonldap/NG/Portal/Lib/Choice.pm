@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Lib::Choice;
 use strict;
 use Mouse;
 use Safe;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -90,58 +91,11 @@ sub init {
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-    my $name;
 
-    # Check Choice from pdata
-    if ( defined $req->pdata->{_choice} ) {
-        $name = $req->pdata->{_choice};
-        $self->logger->debug("Choice $name selected from pdata");
-    }
-    elsif (( defined $req->data->{_authChoice} )
-        or ( defined $req->data->{_choice} ) )
-    {
-        $name = $req->data->{_authChoice} || $req->data->{_choice};
-        $self->logger->debug("Choice $name selected from req->data");
-    }
+    my ( $name, $how ) = $self->_getChoiceFromReq($req);
 
-    unless ($name) {
-
-        # Check with catch method
-        foreach ( keys %{ $self->catch } ) {
-            if ( $req->path_info =~ $self->catch->{$_} ) {
-                $name = $_;
-                $self->logger->debug(
-                    "Choice $name selected from " . $req->path_info );
-                last;
-            }
-        }
-    }
-
-    unless ($name) {
-
-        # Set by OAuth Resource Owner grant // RESTServer pwdCheck
-        if ( $req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic} )
-        {
-            $name = $self->{conf}->{authChoiceAuthBasic};
-        }
-    }
-
-    unless ($name) {
-
-        # Check with other methods
-        $name ||=
-             $req->data->{findUserChoice}
-          || $req->param( $self->conf->{authChoiceParam} )
-          || $req->userData->{_choice}
-          || $req->sessionInfo->{_choice}
-          or return 0;
-        my $from =
-            $req->data->{findUserChoice}                  ? 'findUser'
-          : $req->param( $self->conf->{authChoiceParam} ) ? 'param'
-          : $req->userData->{_choice}                     ? 'userData'
-          :                                                 'sessionInfo';
-        $self->logger->debug("Choice $name selected from $from");
-    }
+    return 0 unless ($name);
+    $self->logger->debug("Choice $name selected from $how");
 
     unless ( defined $self->modules->{$name} ) {
         $self->logger->error("Unknown choice '$name'");
@@ -161,6 +115,55 @@ sub checkChoice {
     $req->data->{ "enabledMods" . $self->type } =
       [ $self->modules->{$name} ];
     return $name;
+}
+
+sub _getChoiceFromReq {
+    my ( $self, $req ) = @_;
+
+    # Check Choice from pdata
+    if ( defined $req->pdata->{_choice} ) {
+        return ( $req->pdata->{_choice}, "pdata" );
+    }
+    elsif (( defined $req->data->{_authChoice} )
+        or ( defined $req->data->{_choice} ) )
+    {
+        my $name = $req->data->{_authChoice} || $req->data->{_choice};
+        return ( $name, "req->data" );
+    }
+
+    # Check with catch method
+    foreach ( keys %{ $self->catch } ) {
+        if ( $req->path_info =~ $self->catch->{$_} ) {
+            return ( $_, "caught path " . $req->path_info );
+        }
+    }
+
+    # Set by OAuth Resource Owner grant // RESTServer pwdCheck
+    if ( $req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic} ) {
+        return ( $self->{conf}->{authChoiceAuthBasic}, "basic auth context" );
+    }
+
+    # Check with other methods
+    my $options = [
+        [ findUser => $req->data->{findUserChoice} ],
+        [ param    => scalar( $req->param( $self->conf->{authChoiceParam} ) ) ],
+        [ userData => $req->userData->{_choice} ],
+        [ sessionInfo => $req->sessionInfo->{_choice} ],
+    ];
+    for my $opt (@$options) {
+        return ( $opt->[1], $opt->[0] )
+          if $opt->[1];
+    }
+
+    # Try hook
+    my $context = {};
+    my $h       = $self->p->processHook( $req, 'getAuthChoice', $context );
+    return 0 if ( $h != PE_OK );
+    if ( $h == PE_OK and $context->{choice} ) {
+        return ( $context->{choice}, "hook" );
+    }
+
+    return 0;
 }
 
 sub name {

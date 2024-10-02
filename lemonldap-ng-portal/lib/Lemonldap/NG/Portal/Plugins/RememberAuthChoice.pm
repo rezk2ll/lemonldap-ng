@@ -16,9 +16,10 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INTERFACE
 
-use constant endAuth      => 'storeRememberedAuthChoice';
-use constant beforeAuth   => 'checkRememberedAuthChoice';
+use constant endAuth    => 'storeRememberedAuthChoice';
+use constant beforeAuth => 'checkRememberedAuthChoice';
 use constant beforeLogout => 'removeRememberedAuthChoice';
+use constant hook       => { getAuthChoice => "autoChoice", };
 
 has rule => ( is => 'rw', default => sub { 0 } );
 
@@ -168,7 +169,20 @@ sub removeRememberedAuthChoice {
         );
 
     }
+    return PE_OK;
+}
 
+sub autoChoice {
+    my ( $self, $req, $context ) = @_;
+
+    if ( my $choice = $req->cookies->{ $self->rememberCookieName }
+        and $self->conf->{rememberTimer} == 0 )
+    {
+        $context->{choice} = $choice;
+
+        # Continue remembering the choice
+        $req->pdata->{rememberauthchoice} = "true";
+    }
     return PE_OK;
 }
 
