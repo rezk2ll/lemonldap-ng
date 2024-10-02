@@ -155,6 +155,14 @@ sub _getChoiceFromReq {
           if $opt->[1];
     }
 
+    if ($self->conf->{authChoiceSelectOnly}) {
+        my @allowed_choices = grep { $self->_evaluateRule( $req, $_ ) }
+        keys %{ $self->conf->{authChoiceModules} };
+        if ( @allowed_choices == 1 ) {
+            return ( $allowed_choices[0], "only available" );
+        }
+    }
+
     # Try hook
     my $context = {};
     my $h       = $self->p->processHook( $req, 'getAuthChoice', $context );
