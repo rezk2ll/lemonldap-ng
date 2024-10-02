@@ -206,14 +206,7 @@ sub _buildAuthLoop {
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
           split( /;\s*/, $self->conf->{authChoiceModules}->{$_} );
 
-        my $extraData = {};
-        $extraData->{targetAuthnLevel} = $req->pdata->{targetAuthnLevel}
-          if defined $req->pdata->{targetAuthnLevel};
-        unless ( $_choiceRules->{$_} ) {
-            $self->logger->error("$_ has no rule");
-            $_choiceRules->{$_} = sub { 1 };
-        }
-        unless ( $_choiceRules->{$_}->( $req, $extraData ) ) {
+        unless ( $self->_evaluateRule( $req, $_ ) ) {
             $self->logger->debug(
                     "Condition returns false, authentication choice $_"
                   . " will not be displayed" );
@@ -334,6 +327,19 @@ sub _buildAuthLoop {
 
     return \@authLoop;
 
+}
+
+sub _evaluateRule {
+    my ( $self, $req, $choice ) = @_;
+
+    my $extraData = {};
+    $extraData->{targetAuthnLevel} = $req->pdata->{targetAuthnLevel}
+      if defined $req->pdata->{targetAuthnLevel};
+    unless ( $_choiceRules->{$choice} ) {
+        $self->logger->error("$choice has no rule");
+        $_choiceRules->{$choice} = sub { 1 };
+    }
+    return $_choiceRules->{$_}->( $req, $extraData );
 }
 
 1;
