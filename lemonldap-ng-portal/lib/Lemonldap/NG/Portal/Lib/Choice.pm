@@ -154,6 +154,15 @@ sub _getChoiceFromReq {
         return ( $opt->[1], $opt->[0] )
           if $opt->[1];
     }
+
+    # Try hook
+    my $context = {};
+    my $h       = $self->p->processHook( $req, 'getAuthChoice', $context );
+    return 0 if ( $h != PE_OK );
+    if ( $h == PE_OK and $context->{choice} ) {
+        return ( $context->{choice}, "hook" );
+    }
+
     return 0;
 }
 
