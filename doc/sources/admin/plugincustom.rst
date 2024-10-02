@@ -192,6 +192,18 @@ If you want to display user feedback, you need to do two additional things
 
 * Implement a JS check and trigger it on the :ref:`checkpassword event <checkpassword>`
 
+Creating a custom CAPTCHA
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See the ``Lemonldap::NG::Portal::Captcha`` manual page for details on how to
+implement a Captcha module.
+
+Creating a custom menu tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See the ``Lemonldap::NG::Portal::MenuTab`` manual page for details on how to
+implement a new tab for the application menu
+
 Creating a second factor module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
