@@ -111,5 +111,40 @@ subtest "Auto-selection with timer=0" => sub {
     is( $remember, "slavechoice", 'Cookie is maintained' );
 };
 
+# Test to forget auth choice at logout
+subtest "Forget auth choice at logout" => sub {
+    $client->ini(
+        { %{ $client->ini }, rememberAuthChoiceForgetAtLogout => 1 } );
+
+    # Authenticate
+    ok(
+        $res = $client->_get(
+            '/',
+            accept   => 'text/html',
+            'query'  => 'lmAuth=slavechoice&rememberauthchoice=true',
+            'custom' => { 'HTTP_USERID' => 'dwho' }
+        ),
+        'Get authentication portal'
+    );
+
+    my $id       = expectCookie($res);
+    my $remember = expectCookie( $res, "llngrememberauthchoice" );
+    is( $remember, "slavechoice", 'AuthChoice cookie is set' );
+
+    # Logout
+    ok(
+        $res = $client->_get(
+            '/',
+            accept => 'text/html',
+            cookie => "lemonldap=$id",
+            query  => "logout=1"
+        ),
+        'Logout'
+    );
+
+    $remember = expectCookie( $res, "llngrememberauthchoice" );
+    is( $remember, "0", 'AuthCoice cookie is removed' );
+};
+
 clean_sessions();
 done_testing();
