@@ -539,6 +539,12 @@ sub attributes {
             documentation => 'Separator for multiple values',
             flags         => 'hmp',
         },
+        rememberAuthChoiceForgetAtLogout => {
+            type          => 'bool',
+            default       => 0,
+            documentation =>
+              'Forget Auth Choice at logout',
+        },
         rememberAuthChoiceRule => {
             type          => 'boolOrExpr',
             default       => 0,
