@@ -1011,6 +1011,7 @@
 "reloadTimeout":"Délai de mise à jour",
 "reloadUrls":"URLs de mise à jour",
 "rememberAuthChoice":"Se souvenir du choix d'authentification",
+"rememberAuthChoiceForgetAtLogout":"Oublier le choix à la déconnexion",
 "rememberAuthChoiceRule":"Activation",
 "rememberCookieName":"Nom du cookie",
 "rememberCookieTimeout":"Durée de vie du cookie",

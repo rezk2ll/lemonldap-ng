@@ -1011,6 +1011,7 @@
 "reloadTimeout":"Reload timeout",
 "reloadUrls":"Recargar las URL",
 "rememberAuthChoice":"Remember authentication choice",
+"rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Activación",
 "rememberCookieName":"Nombre de la cookie",
 "rememberCookieTimeout":"cookie lifetime",

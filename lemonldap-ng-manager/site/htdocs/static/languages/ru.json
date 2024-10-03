@@ -1011,6 +1011,7 @@
 "reloadTimeout":"Время ожидания перезагрузки",
 "reloadUrls":"Перезагрузка URL",
 "rememberAuthChoice":"Запомнить выбор аутентификации",
+"rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Активация",
 "rememberCookieName":"Имя файла cookie",
 "rememberCookieTimeout":"время жизни файлов куки",
