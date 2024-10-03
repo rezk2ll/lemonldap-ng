@@ -783,6 +783,7 @@ sub tree {
                                 'rememberCookieTimeout',
                                 'rememberDefaultChecked',
                                 'rememberTimer',
+                                'rememberAuthChoiceForgetAtLogout',
                             ]
                         },
                         {

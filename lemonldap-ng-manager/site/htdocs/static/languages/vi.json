@@ -1011,6 +1011,7 @@
 "reloadTimeout":"hết thời gian tải lại",
 "reloadUrls":"Tải lại URLs",
 "rememberAuthChoice":"Ghi nhớ lựa chọn xác thực",
+"rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Kích hoạt",
 "rememberCookieName":"Tên cookie",
 "rememberCookieTimeout":"thời gian tồn tại của cookie",

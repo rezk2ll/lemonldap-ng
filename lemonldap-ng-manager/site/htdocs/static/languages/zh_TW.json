@@ -1011,6 +1011,7 @@
 "reloadTimeout":"重新載入逾時",
 "reloadUrls":"重新載入 URL",
 "rememberAuthChoice":"Remember authentication choice",
+"rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"啟用",
 "rememberCookieName":"Cookie 名稱",
 "rememberCookieTimeout":"cookie lifetime",

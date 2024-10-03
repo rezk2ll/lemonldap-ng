@@ -1011,6 +1011,7 @@
 "reloadTimeout":"Yeniden yükleme zaman aşımı",
 "reloadUrls":"URL'leri yeniden yükle",
 "rememberAuthChoice":"Kimlik doğrulama seçimini hatırla",
+"rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Aktivasyon",
 "rememberCookieName":"Çerez adı",
 "rememberCookieTimeout":"çerez ömrü",
