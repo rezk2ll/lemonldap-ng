@@ -9,12 +9,15 @@ WriteMakefile(
     LICENSE        => 'gpl',
     PMLIBDIRS      => ['lib'],
     BUILD_REQUIRES => {
+        'Cache::Memcached'  => 0,
+        'Cwd'               => 0,
         'Digest::HMAC_SHA1' => 0,
         'Env'               => 0,
+        'HTTP::Message'     => 0,
         'IO::Pipe'          => 0,
+        'SOAP::Lite'        => 0,
         'Test::Pod'         => 1.00,
         'Time::Fake'        => 0,
-        'Cwd'               => 0,
     },
     META_MERGE => {
         'recommends' => {
