@@ -131,24 +131,7 @@ DBI
 Parameters for DBI backend are the same as
 :doc:`DBI configuration backend<sqlconfbackend>`.
 
-
-.. attention::
-
-    You have to create the table by yourself:
-
-    .. code:: sql
-
-       CREATE TABLE notifications (
-         date datetime NOT NULL,
-         uid varchar(255) NOT NULL,
-         ref varchar(255) NOT NULL,
-         cond varchar(255) DEFAULT NULL,
-         xml longblob NOT NULL,
-         done datetime DEFAULT NULL,
-         PRIMARY KEY (date, uid,ref)
-       )
-
-
+You can find the database schema in ``/usr/share/lemonldap-ng/ressources/sessions.*.sql``.
 
 To summary available options:
 
