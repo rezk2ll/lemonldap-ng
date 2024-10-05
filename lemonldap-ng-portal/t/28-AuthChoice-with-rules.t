@@ -126,15 +126,37 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
       or explain( $res->[2]->[0],
         '<img src="/static/common/logos/logo_llng_old.png"' );
 
-    # Test SQL
-    my $postString = 'user=dwho&password=dwho&test=2_sql';
-
-    # Try to authenticate
-    # -------------------
+    # Fail password
     ok(
         $res = $client->_post(
-            '/', IO::String->new($postString),
-            length => length($postString)
+            '/',
+            {
+                user     => "dwho",
+                password => "invalid",
+                test     => "2_sql",
+            },
+            accept => "text/html",
+        ),
+        'Auth query'
+    );
+    count(1);
+    my $n = getHtmlElement( $res,
+        '//div[@id="2_sql"]//input[@id="userfield"]/@value' )->pop();
+    is( $n->value, "dwho", "login autofilled in SQL form" );
+    $n = getHtmlElement( $res,
+        '//div[@id="3_demo"]//input[@id="userfield"]/@value' )->pop();
+    is( $n->value, "", "login not autofilled in SQL form" );
+    count(2);
+
+    # Authenticate
+    ok(
+        $res = $client->_post(
+            '/',
+            {
+                user     => "dwho",
+                password => "dwho",
+                test     => "2_sql",
+            },
         ),
         'Auth query'
     );

@@ -305,6 +305,19 @@ sub _buildAuthLoop {
                     }
                 }
 
+                # If a choice has already been selected,
+                # activate the corresponding form
+                if ( $req->data->{_authChoice} ) {
+                    $optionsLoop->{ACTIVE_FORM} =
+                      ( $req->data->{_authChoice} eq $_ );
+
+                }
+
+                # if not, activate the first form in the list
+                else {
+                    $optionsLoop->{ACTIVE_FORM} = @authLoop ? 0 : 1;
+                }
+
                 # Register item in loop
                 push @authLoop, $optionsLoop;
 

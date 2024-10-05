@@ -416,6 +416,7 @@ sub display {
             $self->getErrorTplParams($req),
             AUTH_URL              => $req->{data}->{_url},
             LOGIN                 => $login,
+            ACTIVE_FORM           => 1,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,
