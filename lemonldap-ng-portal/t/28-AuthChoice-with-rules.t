@@ -181,6 +181,48 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
     $id = expectCookie($res);
     $client->logout($id);
 
+    # Select by only available choice (disabled)
+    $client->ini( {
+            %{ $client->ini },
+            authChoiceModules    => { '1_demo' => 'Demo;Demo;Null' },
+            authChoiceSelectOnly => 0
+        }
+    );
+    ok(
+        $res = $client->_post(
+            '/',
+            {
+                user     => "dwho",
+                password => "dwho",
+            },
+            accept => "text/html",
+        ),
+        'Auth query'
+    );
+    count(1);
+    expectPortalError( $res, 9 );
+
+    # Select by only available choice (enabled)
+    $client->ini( {
+            %{ $client->ini },
+            authChoiceModules    => { '1_demo' => 'Demo;Demo;Null' },
+            authChoiceSelectOnly => 1
+        }
+    );
+    ok(
+        $res = $client->_post(
+            '/',
+            {
+                user     => "dwho",
+                password => "dwho",
+            },
+            accept => "text/html",
+        ),
+        'Auth query'
+    );
+    count(1);
+    expectCookie($res);
+
     clean_sessions();
 }
 count($maintests);
