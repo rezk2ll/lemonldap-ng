@@ -126,6 +126,11 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
       or explain( $res->[2]->[0],
         '<img src="/static/common/logos/logo_llng_old.png"' );
 
+    ok(getHtmlElement( $res,
+            '//div[@id="2_sql"]//input[@id="userfield"]/@autofocus' ), "User field has focus") ;
+    is (getHtmlElement($res, '//input/@autofocus')->size, 1, "Only one field has focus");
+    count(2);
+
     # Fail password
     ok(
         $res = $client->_post(
@@ -133,7 +138,7 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
             {
                 user     => "dwho",
                 password => "invalid",
-                test     => "2_sql",
+                test     => "3_demo",
             },
             accept => "text/html",
         ),
@@ -141,11 +146,16 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
     );
     count(1);
     my $n = getHtmlElement( $res,
-        '//div[@id="2_sql"]//input[@id="userfield"]/@value' )->pop();
+        '//div[@id="3_demo"]//input[@id="userfield"]/@value' )->pop();
     is( $n->value, "dwho", "login autofilled in SQL form" );
     $n = getHtmlElement( $res,
-        '//div[@id="3_demo"]//input[@id="userfield"]/@value' )->pop();
+        '//div[@id="2_sql"]//input[@id="userfield"]/@value' )->pop();
     is( $n->value, "", "login not autofilled in SQL form" );
+    count(2);
+
+    ok(getHtmlElement( $res,
+            '//div[@id="3_demo"]//input[@id="passwordfield"]/@autofocus' ), "Password field has focus") ;
+    is (getHtmlElement($res, '//input/@autofocus')->size, 1, "Only one field has focus");
     count(2);
 
     # Authenticate
