@@ -86,6 +86,7 @@
 "authChoiceFindUser":"Escolha usada para pesquisar conta de usuário",
 "authChoiceModules":"Módulos permitidos",
 "authChoiceParam":"Parâmetro de URL",
+"authChoiceSelectOnly":"Auto-select only method",
 "authOnly":"Apenas autenticação",
 "authParams":"Parâmetros de autenticação",
 "authentication":"Módulo de autenticação",

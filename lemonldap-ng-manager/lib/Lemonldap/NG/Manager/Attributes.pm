@@ -542,6 +542,9 @@ sub attributes {
             'default' => 'lmAuth',
             'type'    => 'text'
         },
+        'authChoiceSelectOnly' => {
+            'type' => 'bool'
+        },
         'authentication' => {
             'default' => 'Demo',
             'select'  => [ {

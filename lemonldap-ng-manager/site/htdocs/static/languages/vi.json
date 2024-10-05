@@ -86,6 +86,7 @@
 "authChoiceFindUser":"Lựa chọn được sử dụng để tìm kiếm tài khoản người dùng",
 "authChoiceModules":"Các mô-đun được phép",
 "authChoiceParam":"Tham số URL",
+"authChoiceSelectOnly":"Auto-select only method",
 "authOnly":"Chỉ xác thực",
 "authParams":"Thông số xác thực",
 "authentication":"Mô đun xác thực",

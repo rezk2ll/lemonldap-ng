@@ -86,6 +86,7 @@
 "authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"الوحدات المسموح بها",
 "authChoiceParam":"معايير URL",
+"authChoiceSelectOnly":"Auto-select only method",
 "authOnly":"إثبات الهوية فقط",
 "authParams":"معايير إثبات الهوية",
 "authentication":"وحدة إثبات الهوية",

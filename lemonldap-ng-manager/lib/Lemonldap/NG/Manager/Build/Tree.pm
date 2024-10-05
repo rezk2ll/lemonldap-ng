@@ -151,7 +151,8 @@ sub tree {
                             help  => 'authchoice.html',
                             nodes => [
                                 'authChoiceParam',     'authChoiceModules',
-                                'authChoiceAuthBasic', 'authChoiceFindUser'
+                                'authChoiceAuthBasic', 'authChoiceFindUser',
+                                'authChoiceSelectOnly',
                             ]
                         },
                         {

@@ -86,6 +86,7 @@
 "authChoiceFindUser":"Выбор, используемый для поиска учетной записи пользователя",
 "authChoiceModules":"Разрешенные модули",
 "authChoiceParam":"URL-параметр",
+"authChoiceSelectOnly":"Auto-select only method",
 "authOnly":"Только аутентификация",
 "authParams":"Параметры аутентификации",
 "authentication":"Модуль аутентификации",

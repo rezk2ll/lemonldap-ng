@@ -86,6 +86,7 @@
 "authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"Allowed modules",
 "authChoiceParam":"URL parameter",
+"authChoiceSelectOnly":"Auto-select only method",
 "authOnly":"Authentication only",
 "authParams":"Authentication parameters",
 "authentication":"Authentication module",
