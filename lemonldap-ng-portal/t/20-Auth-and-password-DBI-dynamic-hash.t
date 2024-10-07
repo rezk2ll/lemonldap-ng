@@ -35,18 +35,6 @@ sub hook {
             }
         );
 
-        $connection->sqlite_create_function(
-            'unixcrypth',
-            2,
-            sub {
-                my $p    = shift;
-                my $hash = shift;
-                return
-                  unpack( 'H*',
-                    crypt( pack( 'H*', $p ), pack( 'H*', $hash ) ) );
-            }
-        );
-
         return $connection;
     }
 }

@@ -226,68 +226,6 @@ sub hash_password_from_database {
     # Return encode_base64(SQL_METHOD(password + salt) + salt)
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI hash_unix_password_from_database
-##  (ref dbh, string dbmethod, string dbsalt, string password)
-# Hash the given password calling the dbmethod function in database
-# @param dbh database handler
-# @param dbunixsalth the unix salt including prefix and converted to hex (optional hash)
-# @param password the password to hash
-# @return unix password hash
-sub hash_unix_password_from_database {
-
-    # Remark: database function must get hexadecimal input
-    # and send back hexadecimal output
-    my $self        = shift;
-    my $dbh         = shift;
-    my $dbunixsalth = shift;
-    my $password    = shift;
-
-    # convert password to hexa
-    my $passwordh = unpack "H*", $password;
-
-    # If an unix hashing algorithm is specifid:
-    # We need to give a salt and algorithm as second parameter.
-    # A unix salted password string starts with algorithm,
-    # then salt and ends with the hash.
-    # eg. $6$ telling crypt that we want sha512...
-    # $2a$ and $2y$ not working in latest mariadb. If wanted
-    # there is additional research nessesary!
-    my @rows = ();
-    eval {
-        my $sth =
-          $dbh->prepare("SELECT unixcrypth('$passwordh', '$dbunixsalth')");
-        $sth->execute();
-        @rows = $sth->fetchrow_array();
-    };
-    if ($@) {
-        $self->logger->error(
-            "DBI error while hashing with unixcrypth hash function: $@");
-        $self->userLogger->warn("Unable to check password");
-        return "";
-    }
-
-    if ( @rows == 1 ) {
-        $self->logger->debug(
-"Successfully hashed password with unixcrypth hash function in database"
-        );
-
-        # convert salt to binary
-        # my $dbsaltb = pack 'H*', $dbsalt;
-
-        # convert result to binary
-        my $res = pack 'H*', $rows[0];
-
-        # res string contains all information, methode, salt and hash
-        return $res;
-    }
-    else {
-        $self->userLogger->warn("Unable to check password with unixcrypth");
-        return "";
-    }
-
-    # Return encode_base64(unixcrypth($n$salt$hash))
-}
-
 ## @method protected Lemonldap::NG::Portal::_DBI get_salt(string dbhash)
 # Return salt from salted hash password
 # @param dbhash hash password
@@ -337,7 +275,7 @@ sub gen_salt_text {
     return substr( $dbsalt, 0, 16 );
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI dynamic_hash_password(ref dbh,
+## @method protected Lemonldap::NG::Portal::_DBI get_dynamic_hash_password(ref dbh,
 ##  string user, string password, string table, string loginCol, string passwordCol)
 # Return hashed password for use in SQL statement
 # @param dbh database handler
@@ -347,7 +285,7 @@ sub gen_salt_text {
 # @param loginCol name of the row containing the login
 # @param passwordCol name of the row containing the password
 # @return hashed password
-sub dynamic_hash_password {
+sub get_dynamic_hash_password {
     my $self        = shift;
     my $dbh         = shift;
     my $user        = shift;
@@ -381,28 +319,20 @@ sub dynamic_hash_password {
             $self->logger->error(
                 "No valid unix hash scheme: unixcrypt$dbscheme for user $user");
             $self->userLogger->warn("Unable to check password for $user");
-            return "";
+            return;
         }
 
         $self->logger->debug(
             "Using unixcrypt$dbscheme to hash salted password");
 
-        # Hex the salt
-        my $dbhash = unpack "H*", $dbhash;
-
-        # Let the db generate a unix hash
-        # The dbhash contains the hash and the encrypt function will
-        # ignore the rest (algorithm, hash)
-        $hash =
-          $self->hash_unix_password_from_database( $dbh, $dbhash, $password );
-        return "'$hash'";
-
+        $hash = crypt($password, $dbhash);
+        return $hash;
     }
 
     # no hash scheme => assume clear text
     if ( $dbscheme eq "" ) {
         $self->logger->info("Password has no hash scheme");
-        return "?";
+        return $password;
 
     }
 
@@ -425,7 +355,7 @@ sub dynamic_hash_password {
             $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
 
     }
 
@@ -439,16 +369,43 @@ sub dynamic_hash_password {
           $self->hash_password_from_database( $dbh, $dbscheme, "", $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
     }
 
     # no valid hash scheme
     else {
         $self->logger->error("No valid hash scheme: $dbscheme for user $user");
         $self->userLogger->warn("Unable to check password for $user");
+        return;
+    }
+}
+
+# DEPRECATED: this function returned the password hash as a piece of SQL query
+# which is fragile
+sub dynamic_hash_password {
+    my $self        = shift;
+    my $dbh         = shift;
+    my $user        = shift;
+    my $password    = shift;
+    my $table       = shift;
+    my $loginCol    = shift;
+    my $passwordCol = shift;
+    my $dbhash      = shift;
+
+    my $hashed_password =
+      $self->get_dynamic_hash_password( $dbh, $user, $password, $table,
+        $loginCol, $passwordCol, $dbhash );
+    if ($hashed_password) {
+        if ( $hashed_password eq $password ) {
+            return "?";
+        }
+        else {
+            return "'$hashed_password'";
+        }
+    }
+    else {
         return "";
     }
-
 }
 
 ## @method protected Lemonldap::NG::Portal::_DBI get_dynamic_hash_new_password(ref dbh,
@@ -504,10 +461,9 @@ sub get_dynamic_hash_new_password {
 
         $dbscheme = $1;
         $dbsalt   = gen_salt_text();
-        $dbsalt   = unpack "H*", "\$$dbscheme\$$dbsalt\$";
+        $dbsalt   = "\$$dbscheme\$$dbsalt\$";
 
-        $hash =
-          $self->hash_unix_password_from_database( $dbh, $dbsalt, $password );
+        $hash = crypt($password, $dbsalt);
 
         return $hash;
 
@@ -626,6 +582,7 @@ sub check_password {
     my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;
 
     my $passwordsql;
+    my $comparevalue;
     if ( $dynamicHash == 1 ) {
 
         my $dbh = $self->dbh;
@@ -651,8 +608,9 @@ sub check_password {
         }
 
         # Compte hash on DB side
-        $passwordsql =
-          $self->dynamic_hash_password( $dbh, $user, $password, $table,
+        $passwordsql = "?";
+        $comparevalue =
+          $self->get_dynamic_hash_password( $dbh, $user, $password, $table,
             $loginCol, $passwordCol, $dbhash );
     }
     else {
@@ -660,6 +618,7 @@ sub check_password {
         $passwordsql =
           $self->hash_password_for_select( "?",
             $self->conf->{dbiAuthPasswordHash} );
+        $comparevalue = $password;
     }
 
     my @rows = ();
@@ -667,12 +626,7 @@ sub check_password {
         my $sth = $self->dbh->prepare(
 "SELECT $loginCol FROM $table WHERE $loginCol=? AND $passwordCol=$passwordsql"
         );
-        if ( $passwordsql =~ /.*\?.*/ ) {
-            $sth->execute( $user, $password );
-        }
-        else {
-            $sth->execute($user);
-        }
+        $sth->execute( $user, $comparevalue );
         @rows = $sth->fetchrow_array();
     };
     if ($@) {
