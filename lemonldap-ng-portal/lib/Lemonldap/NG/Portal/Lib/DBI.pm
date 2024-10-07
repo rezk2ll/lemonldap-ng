@@ -337,7 +337,7 @@ sub gen_salt_text {
     return substr( $dbsalt, 0, 16 );
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI dynamic_hash_password(ref dbh,
+## @method protected Lemonldap::NG::Portal::_DBI get_dynamic_hash_password(ref dbh,
 ##  string user, string password, string table, string loginCol, string passwordCol)
 # Return hashed password for use in SQL statement
 # @param dbh database handler
@@ -347,7 +347,7 @@ sub gen_salt_text {
 # @param loginCol name of the row containing the login
 # @param passwordCol name of the row containing the password
 # @return hashed password
-sub dynamic_hash_password {
+sub get_dynamic_hash_password {
     my $self        = shift;
     my $dbh         = shift;
     my $user        = shift;
@@ -381,7 +381,7 @@ sub dynamic_hash_password {
             $self->logger->error(
                 "No valid unix hash scheme: unixcrypt$dbscheme for user $user");
             $self->userLogger->warn("Unable to check password for $user");
-            return "";
+            return;
         }
 
         $self->logger->debug(
@@ -395,14 +395,14 @@ sub dynamic_hash_password {
         # ignore the rest (algorithm, hash)
         $hash =
           $self->hash_unix_password_from_database( $dbh, $dbhash, $password );
-        return "'$hash'";
+        return $hash;
 
     }
 
     # no hash scheme => assume clear text
     if ( $dbscheme eq "" ) {
         $self->logger->info("Password has no hash scheme");
-        return "?";
+        return $password;
 
     }
 
@@ -425,7 +425,7 @@ sub dynamic_hash_password {
             $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
 
     }
 
@@ -439,16 +439,43 @@ sub dynamic_hash_password {
           $self->hash_password_from_database( $dbh, $dbscheme, "", $password );
         $hash = "{$dbscheme}$hash";
 
-        return "'$hash'";
+        return $hash;
     }
 
     # no valid hash scheme
     else {
         $self->logger->error("No valid hash scheme: $dbscheme for user $user");
         $self->userLogger->warn("Unable to check password for $user");
+        return;
+    }
+}
+
+# DEPRECATED: this function returned the password hash as a piece of SQL query
+# which is fragile
+sub dynamic_hash_password {
+    my $self        = shift;
+    my $dbh         = shift;
+    my $user        = shift;
+    my $password    = shift;
+    my $table       = shift;
+    my $loginCol    = shift;
+    my $passwordCol = shift;
+    my $dbhash      = shift;
+
+    my $hashed_password =
+      $self->get_dynamic_hash_password( $dbh, $user, $password, $table,
+        $loginCol, $passwordCol, $dbhash );
+    if ($hashed_password) {
+        if ( $hashed_password eq $password ) {
+            return "?";
+        }
+        else {
+            return "'$hashed_password'";
+        }
+    }
+    else {
         return "";
     }
-
 }
 
 ## @method protected Lemonldap::NG::Portal::_DBI get_dynamic_hash_new_password(ref dbh,
@@ -626,6 +653,7 @@ sub check_password {
     my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;
 
     my $passwordsql;
+    my $comparevalue;
     if ( $dynamicHash == 1 ) {
 
         my $dbh = $self->dbh;
@@ -651,8 +679,9 @@ sub check_password {
         }
 
         # Compte hash on DB side
-        $passwordsql =
-          $self->dynamic_hash_password( $dbh, $user, $password, $table,
+        $passwordsql = "?";
+        $comparevalue =
+          $self->get_dynamic_hash_password( $dbh, $user, $password, $table,
             $loginCol, $passwordCol, $dbhash );
     }
     else {
@@ -660,6 +689,7 @@ sub check_password {
         $passwordsql =
           $self->hash_password_for_select( "?",
             $self->conf->{dbiAuthPasswordHash} );
+        $comparevalue = $password;
     }
 
     my @rows = ();
@@ -667,12 +697,7 @@ sub check_password {
         my $sth = $self->dbh->prepare(
 "SELECT $loginCol FROM $table WHERE $loginCol=? AND $passwordCol=$passwordsql"
         );
-        if ( $passwordsql =~ /.*\?.*/ ) {
-            $sth->execute( $user, $password );
-        }
-        else {
-            $sth->execute($user);
-        }
+        $sth->execute( $user, $comparevalue );
         @rows = $sth->fetchrow_array();
     };
     if ($@) {
