@@ -52,11 +52,6 @@ It caused a security issue and was removed in this version. This only affects
 users who wrote custom JS code for the portal and who explicitely used this
 variable.
 
-Portal templates changes
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you modified some non-custom HTML templates, :doc:`refer to template upgrade instructions<upgrade_templates>`
-
 Status changed
 ^^^^^^^^^^^^^^
 
@@ -71,6 +66,20 @@ The recommended way of configuring SAML federations is now to keep bundled metad
 Switching to this method should improve performnace.
 
 Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
+
+Auth::DBI no longer uses stored procedures to generate UNIX-style hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this version, we no longer require stored procedures to generate
+``unixcrypt1``, ``unixcrypt5`` and ``unixcrypt6`` hashes. The computation is
+performed by LemonLDAP::NG itself.
+This does not require any action by the admin or users. Let us know if you
+encounter regressions.
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you modified some non-custom HTML templates, :doc:`refer to template upgrade instructions<upgrade_templates>`
 
 2.19.0
 ------
