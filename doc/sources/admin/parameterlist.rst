@@ -32,12 +32,13 @@ SSLVarIf                                                                        
 activeTimer                                             Enable timers on portal pages                                                        ✔
 adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
-appAccessHistoryEnabled                                 Log protected apps access to session                                                 ✔
+appAccessHistoryEnabled                                 Shall OIDC/SAML/CAS protected apps access be recorded to session?                    ✔
 applicationList                                         Applications list                                                                    ✔
 authChoiceAuthBasic                                     Auth module used by AuthBasic handler                                                ✔
 authChoiceFindUser                                      Auth module used by FindUser plugin                                                  ✔
 authChoiceModules                                       Hash list of Choice strings                                                          ✔
 authChoiceParam                                         Applications list                                                                    ✔
+authChoiceSelectOnly                                    Automatically select only available choice                                           ✔
 authentication                                          Authentication module                                                                ✔
 autoSigninRules                                         List of auto signin rules                                                            ✔
 available2F                                             Available second factor modules                                                      ✔                      ✔
@@ -168,10 +169,7 @@ dbiDynamicHashValidSaltedSchemes                                                
 dbiDynamicHashValidSchemes                                                                                                                   ✔
 dbiExportedVars                                         DBI exported variables                                                               ✔
 dbiPasswordMailCol                                                                                                                           ✔
-dbiUserChain                                                                                                                                 ✔
-dbiUserPassword                                                                                                                              ✔
 dbiUserTable                                                                                                                                 ✔
-dbiUserUser                                                                                                                                  ✔
 decryptValueFunctions                                   Custom function used for decrypting values                                           ✔
 decryptValueRule                                        Decrypt value activation rule                                                        ✔
 defaultNewKeySize                                       Default size for new RSA key helper                                                                 ✔       ✔
@@ -532,6 +530,7 @@ radius2fAuthnLevel                                      Authentication level for
 radius2fDictionaryFile                                                                                                                       ✔
 radius2fLabel                                           Portal label for Radius 2F                                                           ✔
 radius2fLogo                                            Custom logo for Radius 2F                                                            ✔
+radius2fMsgAuth                                         Use Message-Authentication for Radius requests                                       ✔
 radius2fRequestAttributes                               RADIUS second factor authentication attributes                                       ✔
 radius2fSecret                                                                                                                               ✔
 radius2fSendInitialRequest                              Dial in to radius server before displaying form                                      ✔
@@ -541,6 +540,7 @@ radius2fUsernameSessionKey                              Session key used as Radi
 radiusAuthnLevel                                        Radius authentication level                                                          ✔
 radiusDictionaryFile                                                                                                                         ✔
 radiusExportedVars                                      RADIUS exported variables                                                            ✔
+radiusMsgAuth                                           Use Message-Authentication for Radius requests                                       ✔
 radiusRequestAttributes                                 RADIUS authentication attributes                                                     ✔
 radiusSecret                                                                                                                                 ✔
 radiusServer                                                                                                                                 ✔
@@ -557,6 +557,7 @@ registerTimeout                                         Register session timeout
 registerUrl                                             URL of register page                                                                 ✔
 reloadTimeout                                           Configuration reload timeout                                                                        ✔
 reloadUrls                                              URL to call on reload                                                                ✔
+rememberAuthChoiceForgetAtLogout                        Forget Auth Choice at logout                                                         ✔
 rememberAuthChoiceRule                                  remember auth choice activation rule                                                 ✔
 rememberCookieName                                      Name of the remember auth choice cookie                                              ✔
 rememberCookieTimeout                                   lifetime of the remember auth choice cookie                                                         ✔
@@ -591,6 +592,7 @@ restSessionServer                                       Enable REST session serv
 restUserDBUrl                                                                                                                                ✔
 sameSite                                                Cookie SameSite value                                                                ✔      ✔
 samlAttributeAuthorityDescriptorAttributeServiceSOAP    SAML Attribute Authority SOAP                                                        ✔
+samlAuthnContextMapExtra                                SAML extra authn contexts                                                            ✔
 samlAuthnContextMapKerberos                             SAML authn context kerberos level                                                    ✔
 samlAuthnContextMapPassword                             SAML authn context password level                                                    ✔
 samlAuthnContextMapPasswordProtectedTransport           SAML authn context password protected transport level                                ✔
@@ -714,6 +716,7 @@ totp2fSelfRegistration                                  TOTP self registration a
 totp2fTTL                                               TOTP device time to live                                                             ✔
 totp2fUserCanRemoveKey                                  Authorize users to remove existing TOTP secret                                       ✔
 trustedBrowserRule                                      Trusted browser registration rule                                                    ✔
+trustedBrowserUseTotp                                   Use TOTP for trusted browser registration                                            ✔
 trustedDomains                                          Trusted domains                                                                      ✔
 twitterAppName                                                                                                                               ✔
 twitterAuthnLevel                                       Twitter authentication level                                                         ✔
@@ -721,6 +724,7 @@ twitterKey                                                                      
 twitterSecret                                                                                                                                ✔
 twitterUserField                                                                                                                             ✔
 upgradeSession                                          Upgrade session activation                                                           ✔
+useRedirectAjaxOnUnauthorized                           Redirect Ajax requests to portal for unauthorized (401)                                     ✔
 useRedirectOnError                                      Use 302 redirect code for error (500)                                                       ✔
 useRedirectOnForbidden                                  Use 302 redirect code for forbidden (403)                                            ✔
 useSafeJail                                             Activate Safe jail                                                                   ✔      ✔
@@ -747,6 +751,8 @@ webauthn2fSelfRegistration                              WebAuthn self registrati
 webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
 webauthn2fUserVerification                              Verify user during registration and login                                            ✔
 webauthnAppId                                           Send AppID extension                                                                 ✔
+webauthnAuthnLevel                                      WebAuthn authentication level                                                        ✔
+webauthnDefaultTransports                               WebAuthn default transports                                                          ✔
 webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
 webauthnRpId                                            WebAuthn Relying Party ID                                                            ✔
 webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
