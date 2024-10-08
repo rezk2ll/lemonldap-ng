@@ -322,8 +322,12 @@ This package deploys the Apache Handler.
 %package manager
 Summary:        LemonLDAP-NG administration interface
 Requires:       lemonldap-ng-common = %{version}-%{release}
+Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-angular) = 1.7.9
+Provides:       bundled(js-angular-animate) = 1.8.1
+Provides:       bundled(js-angular-aria) = 1.8.1
 Provides:       bundled(js-angular-bootstrap) = 2.5.0
+Provides:       bundled(js-angular-cookies) = 1.8.1
 Provides:       bundled(js-angular-ui-tree) = 2.22.6
 Provides:       bundled(js-es5-shim) = 4.5.14
 Provides:       bundled(js-filesaver) = 2.0.4
@@ -370,10 +374,12 @@ Recommends:     perl(Net::OAuth)
 Recommends:     perl(Net::OpenID::Consumer)
 %endif
 Provides:       bundled(fontawesome-fonts) = 4.7.0
-Provides:       bundled(js-bootstrap) = 4.5.2
+Provides:       bundled(js-bootstrap) = 4.6.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
+Provides:       bundled(js-jquery-cookie) = 1.4.1
+Provides:       bundled(js-jssha) = 3.3.0
 Provides:       bundled(js-qrious) = 4.0.2
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
 Provides:       lemonldap-ng-nginx = %{version}-%{release}
