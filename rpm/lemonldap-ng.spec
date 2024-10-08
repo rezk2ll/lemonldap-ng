@@ -481,10 +481,8 @@ bzip2 -9 %{modulename}.pp
     STORAGECONFFILE=%{lm_storagefile} \
     TOOLSDIR=%{lm_sharedir}/ressources \
     CONFDIR=%{lm_confdir} \
-    CRONDIR=%{_sysconfdir}/cron.d \
     DATADIR=%{lm_vardir} \
     CACHEDIR=%{lm_cachedir} \
-    INITDIR=%{_sysconfdir}/init.d \
     UNITDIR=%{_unitdir}/ \
     TMPFILESDIR=%{_tmpfilesdir}/ \
     ETCDEFAULTDIR=%{_sysconfdir}/default \
@@ -498,6 +496,7 @@ bzip2 -9 %{modulename}.pp
     LLNGAPPDIR=%{lm_sharedir}/llng-server \
     CHOWN=/usr/bin/true \
     CHGRP=/usr/bin/true \
+    WITHRC=no \
     PROD=yes
 
 # Remove some unwanted files
@@ -505,16 +504,9 @@ find %{buildroot} -name .packlist -exec rm -f {} \;
 find %{buildroot} -name perllocal.pod -exec rm -f {} \;
 find %{buildroot} -name *.bak -exec rm -f {} \;
 
-# Drop sysvinit script for FastCGI Server
-rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
-
 # UWSGI Application
 mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
 mkdir -p %{buildroot}%{lm_sharedir}/llng-server
-
-# Drop cron files
-rm -f %{buildroot}%{_sysconfdir}/cron.d/lemonldap-ng-handler
-rm -f %{buildroot}%{_sysconfdir}/cron.d/lemonldap-ng-portal
 
 # Install systemd presets for timers
 mkdir -p %{buildroot}%{_presetdir}
