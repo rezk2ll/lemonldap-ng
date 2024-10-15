@@ -180,6 +180,8 @@ BuildRequires:  perl(Lasso)
 BuildRequires:  perl(LWP::Protocol::https)
 BuildRequires:  perl(Moose)
 BuildRequires:  perl(Net::Facebook::Oauth2)
+BuildRequires:  perl(Net::MQTT::Simple)
+BuildRequires:  perl(Net::MQTT::Simple::SSL)
 BuildRequires:  perl(Net::OAuth)
 BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Perl::Tidy)
@@ -280,7 +282,8 @@ Requires:       (mod_fcgid if httpd)
 Requires:       (perl(mod_perl2) if httpd)
 Requires:       (perl(Apache2::ServerRec) if httpd)
 Recommends:     perl(LWP::Protocol::https)
-%{?fedora:Recommends:     perl(Net::MQTT::Simple)}
+Recommends:     perl(Net::MQTT::Simple)
+Recommends:     perl(Net::MQTT::Simple::SSL)
 %endif
 Obsoletes:      perl-Lemonldap-NG-Common < %{version}-%{release}
 Provides:       perl-Lemonldap-NG-Common = %{version}-%{release}
