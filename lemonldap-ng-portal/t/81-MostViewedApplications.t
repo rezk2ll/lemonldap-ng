@@ -9,7 +9,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $debug = "error";
+my $maintests = 30;
+my $debug     = "error";
 
 my ( $portal, $psession );
 $portal = portal();
@@ -25,38 +26,15 @@ oidc_auth( $portal, 'oidc_2' );
 reload_session();
 ok( ref( $psession->{data}->{_appHistory} ) eq 'HASH',
     'Session contains history hash' );
-count(1);
 
 ok( $psession->{data}->{_appHistory}->{"oidc:app1"}->{access_count} == 2,
     'OIDC App 1 has been accessed twice' );
-count(1);
 
 ok( $psession->{data}->{_appHistory}->{"oidc:app2"}->{access_count} == 1,
     'OIDC App 2 has been accessed once' );
-count(1);
 
 ok( keys( %{ $psession->{data}->{_appHistory} } ) == 2,
     'History contains two entries' );
-count(1);
-
-#
-# SAML applications
-#
-
-saml_auth($portal);
-reload_session();
-
-ok( keys( %{ $psession->{data}->{_appHistory} } ) == 3,
-    'History contains three entries' );
-count(1);
-
-ok( $psession->{data}->{_appHistory}->{"saml:app1"}->{access_count} == 1,
-    'SAML App 1 has been accessed once' );
-count(1);
-
-ok( keys( %{ $psession->{data}->{_appHistory} } ) == 3,
-    'History contains three entries' );
-count(1);
 
 #
 # CAS applications
@@ -69,23 +47,41 @@ cas_auth( $portal, "cas_2" );
 reload_session();
 ok( ref( $psession->{data}->{_appHistory} ) eq 'HASH',
     'Session contains history hash' );
-count(1);
 
 ok( $psession->{data}->{_appHistory}->{"cas:app1"}->{access_count} == 2,
     'CAS App 1 has been accessed twice' );
-count(1);
 
 ok( $psession->{data}->{_appHistory}->{"cas:app2"}->{access_count} == 1,
     'CAS App 2 has been accessed once' );
-count(1);
 
-ok( keys( %{ $psession->{data}->{_appHistory} } ) == 5,
-    'History contains five entries' );
-count(1);
+ok( keys( %{ $psession->{data}->{_appHistory} } ) == 4,
+    'History contains four entries' );
+
+#
+# SAML applications
+#
+
+SKIP: {
+    eval "use Lasso";
+    if ($@) {
+        skip 'Lasso not found', 6;
+    }
+
+    $portal = portal_with_lasso();
+
+    saml_auth($portal);
+    reload_session();
+
+    ok( keys( %{ $psession->{data}->{_appHistory} } ) == 5,
+        'History contains five entries' );
+
+    ok( $psession->{data}->{_appHistory}->{"saml:app1"}->{access_count} == 1,
+        'SAML App 1 has been accessed once' );
+}
 
 clean_sessions();
 
-done_testing( count() );
+done_testing($maintests);
 
 sub reload_session {
     $psession = getPSession('dwho');
@@ -236,6 +232,40 @@ sub portal {
                     },
                 },
 
+                # CAS conf.
+                issuerDBCASActivation => 1,
+                casAttr               => 'uid',
+                casAttributes => { cn => 'cn', uid => 'uid', multi => 'multi' },
+                casAccessControlPolicy => 'none',
+                multiValuesSeparator   => ';',
+                macros                 =>
+                  { multi => '"value1;value2"', _whatToTrace => '$uid' },
+                casAppMetaDataOptions => {
+                    app1 => {
+                        casAppMetaDataOptionsService =>
+                          'http://cas_1.example.org',
+                    },
+                    app2 => {
+                        casAppMetaDataOptionsService =>
+                          'http://cas_2.example.org',
+                    },
+                },
+            }
+        }
+    );
+}
+
+sub portal_with_lasso {
+    return LLNG::Manager::Test->new( {
+            ini => {
+                logLevel       => $debug,
+                domain         => 'op.com',
+                portal         => 'http://auth.idp.com/',
+                authentication => 'Demo',
+                userDB         => 'Same',
+
+                appAccessHistoryEnabled => 1,
+
                 # SAML conf.
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
@@ -266,25 +296,6 @@ sub portal {
                     app1 => {
                         samlSPMetaDataXML =>
                           samlProxyMetaDataXML( 'proxy', 'HTTP-Redirect' )
-                    },
-                },
-
-                # CAS conf.
-                issuerDBCASActivation => 1,
-                casAttr               => 'uid',
-                casAttributes => { cn => 'cn', uid => 'uid', multi => 'multi' },
-                casAccessControlPolicy => 'none',
-                multiValuesSeparator   => ';',
-                macros                 =>
-                  { multi => '"value1;value2"', _whatToTrace => '$uid' },
-                casAppMetaDataOptions => {
-                    app1 => {
-                        casAppMetaDataOptionsService =>
-                          'http://cas_1.example.org',
-                    },
-                    app2 => {
-                        casAppMetaDataOptionsService =>
-                          'http://cas_2.example.org',
                     },
                 },
             }
