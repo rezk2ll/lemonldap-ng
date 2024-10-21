@@ -2291,10 +2291,17 @@ sub _createJWT {
         }
         @keyArg = ( key => \$priv_key, );
 
+        my %extra_headers;
         if ( $self->conf->{oidcServiceKeyIdSig} ) {
-            push @keyArg,
-              extra_headers => { kid => $self->conf->{oidcServiceKeyIdSig} };
+            $extra_headers{kid} = $self->conf->{oidcServiceKeyIdSig};
         }
+        my $key_info =
+          $self->getCertInfo( $self->conf->{oidcServicePublicKeySig} );
+        if ( $key_info->{x5t} ) {
+            $extra_headers{x5t} = $key_info->{x5t};
+        }
+
+        push @keyArg, extra_headers => \%extra_headers if %extra_headers;
     }
 
     # Encode payload here due to #2748
