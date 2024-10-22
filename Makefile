@@ -665,6 +665,7 @@ install_bin:	install_conf_dir
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
+		${SRCPORTALDIR}/scripts/downloadSamlMetadata \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
 		${SRCCOMMONDIR}/scripts/convertToHashSessionStorage \

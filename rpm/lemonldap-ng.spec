@@ -733,6 +733,7 @@ fi
 %files portal
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
+%{lm_bindir}/downloadSamlMetadata
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %{_unitdir}/lemonldap-ng-portal.service
