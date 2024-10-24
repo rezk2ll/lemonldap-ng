@@ -6,11 +6,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_CONFIRM
   PE_TOKENEXPIRED
+  PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
+
+sub forAuthUser { 'handleAuthRequests' }
 
 # INITIALIZATION
 
@@ -161,6 +164,20 @@ sub confirm {
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }
+}
+
+# Takes care of callbacks for external methods (SAML, OIDC...)
+sub handleAuthRequests {
+    my ( $self, $req ) = @_;
+    if (    $self->p->_authentication->can('isCallback')
+        and $self->p->_authentication->isCallback($req) )
+    {
+        $req->id(undef);
+        $req->parameters->{'confirm'} = 1;
+        $req->response( $self->confirm($req) );
+        return PE_SENDRESPONSE;
+    }
+    return PE_OK;
 }
 
 1;
