@@ -22,7 +22,6 @@ $client->ini( {
         %{ $client->ini },
         cacheTagSalt         => "zzz",
         authChoiceModules    => { '1_demo' => 'Demo;Demo;Null' },
-        authChoiceSelectOnly => 0
     }
 );
 isnt( $client->p->cacheTag, $tag, "Using a salt changes the tag" );
