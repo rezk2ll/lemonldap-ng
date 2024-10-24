@@ -102,7 +102,7 @@ sub extractFormInfo {
     my $content_type   = $req->content_type;
 
     # 1.1 SSO assertion consumer
-    if ( $url =~ $self->ssoAssConsumerRe ) {
+    if ( $self->isCallback($req) ) {
         $self->logger->debug(
             "URL $url detected as an SSO assertion consumer URL");
 
@@ -1465,6 +1465,11 @@ sub authLogout {
         $self->userLogger->error("Lasso method $method not implemented here");
         return PE_SLO_ERROR;
     }
+}
+
+sub isCallback {
+    my ( $self, $req ) = @_;
+    return $req->uri =~ $self->ssoAssConsumerRe;
 }
 
 sub handleAuthRequests {
