@@ -20,6 +20,13 @@ has ua => (
     }
 );
 
+has score => (
+    is      => 'ro',
+    default => sub {
+        return $_[0]->{conf}->{captchaOptions}->{score} || 0.5;
+    }
+);
+
 sub init {
     my ($self) = @_;
     unless ($self->conf->{captchaOptions}->{dataSiteKey}
@@ -75,11 +82,15 @@ sub check_captcha {
             $self->logger->error("reCaptcha: $@");
             return 0;
         }
-        unless ( $res->{success} ) {
+        my $success =
+              $res->{success}
+          and $res->{score}
+          and ( $res->{score} >= $self->score );
+        unless ($success) {
             $self->logger->info(
                 'reCaptcha errors:' . $response->decoded_content );
         }
-        return $res->{success};
+        return $success;
     }
     $self->logger->error( 'reCaptcha error: ' . $response->status_line );
     return 0;
