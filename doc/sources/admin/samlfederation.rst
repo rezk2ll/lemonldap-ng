@@ -3,6 +3,10 @@ Connect to SAML Federations
 
 .. versionadded: 2.0.16
 
+.. warning::
+
+    This feature only works with version 2.6.0 of Lasso and above
+
 Presentation
 ------------
 
