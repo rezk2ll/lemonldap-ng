@@ -25,7 +25,13 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    eval "use Lasso";
+    unless (
+        eval
+'use Lasso; (Lasso::check_version( 2, 6, 0, Lasso::Constants::CHECK_VERSION_NUMERIC) )? 1 : 0'
+      )
+    {
+        skip 'Lasso not found or too old';
+    }
     if ($@) {
         skip 'Lasso not found';
     }
