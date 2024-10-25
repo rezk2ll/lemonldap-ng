@@ -53,6 +53,7 @@ lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
+lib/Lemonldap/NG/Portal/Captcha/ReCaptcha3.pm
 lib/Lemonldap/NG/Portal/Captcha/SecurityImage.pm
 lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Custom.pm
@@ -384,6 +385,7 @@ site/htdocs/static/common/js/portal.min.js.map
 site/htdocs/static/common/js/ppolicy.js
 site/htdocs/static/common/js/ppolicy.min.js
 site/htdocs/static/common/js/ppolicy.min.js.map
+site/htdocs/static/common/js/recaptchav3.js
 site/htdocs/static/common/js/recaptchav3.min.js
 site/htdocs/static/common/js/recaptchav3.min.js.map
 site/htdocs/static/common/js/redirect.js

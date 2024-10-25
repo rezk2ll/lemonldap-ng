@@ -15,11 +15,12 @@ Configuration
 Configure captcha like :doc:`LLNG internal captcha<captcha>` but use a
 "custom captcha module", set:
 
-- **Captcha module** to "``::Captcha::ReCaptcha``"
+- **Captcha module** to "``::Captcha::ReCaptcha``" or "``::Captcha::ReCaptcha3``" for version 3
 - in **Captcha module options**, add the following keys
 
    - ``dataSiteKey``: the key ID given in Google console
    - ``secretKey``: the secret key
+   - ``score`` *(version 3 only)*: the minimal score. Default to 0.5
 
 Then adapt the "Content-Security-Policy" headers, cspDefault and cspScript
 should be set to :
