@@ -563,7 +563,7 @@ sub load_sp_metadata {
 sub lazy_load_message {
     my ( $self, $message ) = @_;
     return unless $message;
-    my $entityID = Lasso::profile_get_issuer($message);
+    my $entityID = $self->getIssuer($message);
     if ($entityID) {
         $self->logger->debug("Found entityID $entityID in message");
         return $self->lazy_load_entityid($entityID);
@@ -1436,6 +1436,28 @@ sub acceptSSO {
     eval { Lasso::Login::accept_sso($login); };
 
     return $self->checkLassoError($@);
+}
+
+## @method string getIssuer(string msg)
+# Get issuer from message
+# @param msg SAML message
+# @return issuer
+sub getIssuer {
+    my ( $self, $message ) = @_;
+
+    # Work around lasso bug (https://dev.entrouvert.org/issues/97575)
+    $message =~ s/&RelayState=$//g;
+    my $issuer = eval { Lasso::profile_get_issuer($message) };
+    if ($@) {
+        $self->logger->debug("lasso_profile_get_issuer: $@");
+    }
+    if ( !$issuer ) {
+        $self->logger->debug(
+                "lasso_profile_get_issuer could not find entityID"
+              . " in incoming message" );
+        return;
+    }
+    return $issuer;
 }
 
 ## @method string storeRelayState(hashref infos)
