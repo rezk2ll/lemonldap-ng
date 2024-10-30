@@ -1593,7 +1593,9 @@ sub getAttributeValue {
 
         $value = join(
             $self->{conf}->{multiValuesSeparator},
-            map { $_->any->content || () } @attr_values
+            map {
+                eval { $_->any->content } || ()
+            } @attr_values
         );
     }
 
