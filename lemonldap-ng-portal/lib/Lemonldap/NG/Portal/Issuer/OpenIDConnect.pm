@@ -1499,7 +1499,7 @@ sub _handleClientCredentialsGrant {
     }
 
     my $access_token = $self->newAccessToken(
-        $req, $rp, $scope, $infos,
+        $req, $rp, $scope, $session->data,
         {
             scope           => $scope,
             rp              => $rp,
