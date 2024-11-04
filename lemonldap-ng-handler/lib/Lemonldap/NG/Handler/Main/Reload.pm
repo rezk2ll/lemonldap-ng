@@ -594,6 +594,7 @@ sub logout_app_sso {
 sub aliasInit {
     my ( $class, $conf ) = @_;
 
+    delete $class->tsv->{vhostAlias};
     foreach my $vhost ( keys %{ $conf->{vhostOptions} || {} } ) {
         if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
