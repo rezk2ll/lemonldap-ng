@@ -140,6 +140,21 @@ To summary available options:
 -  **dbiPassword**: DBI password.
 -  **dbiTable**: Notifications table name.
 
+.. note::
+
+    DBI configuration example:
+
+    ::
+
+       notificationStorage = DBI
+       notificationStorageOptions={  \
+           'dbiChain'    => 'DBI:Pg:dbname=llng;host=mydb;port=5432', \
+           'dbiTable'    => 'notifications', \
+           'dbiUser'     => 'user', \
+           'dbiPassword' => 'qwerty', \
+           'type'        => 'CDBI', \
+       }
+
 LDAP
 ^^^^
 
@@ -158,22 +173,19 @@ To summary available options:
 -  **ldapBindPassword**: LDAP password.
 -  **ldapConfBase**: Notifications branch DN.
 
-
 .. note::
 
-    DBI configuration example:
+    LDAP configuration example:
 
     ::
 
-       notificationStorage = DBI
+       notificationStorage = LDAP
        notificationStorageOptions={  \
-           'dbiChain'    => 'DBI:Pg:dbname=llng;host=mabdd;port=5432', \
-           'dbiTable'    => 'notifications', \
-           'dbiUser'     => 'user', \
-           'dbiPassword' => 'qwerty', \
-           'type'        => 'CDBI', \
+           'ldapServer'       => 'ldap://localhost', \
+           'ldapBindDN'       => 'cn=manager,dc=example,dc=com', \
+           'ldapBindPassword' => 'secret', \
+           'ldapConfBase'     => 'ou=notifications,ou=applications,dc=example,dc=com', \
        }
-
 
 
 Wildcard
