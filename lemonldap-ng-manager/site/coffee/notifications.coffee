@@ -212,13 +212,13 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			$scope.currentNotification =
 				uid: node.uid
 				reference: node.reference
-				condition: node.condition
 			if $scope.type == 'done'
 				$scope.currentNotification.done = response.data.done
 			try 
 				console.log "Try to parse a JSON formated notification..."
 				notif = JSON.parse response.data.notifications
 				$scope.currentNotification.date = $scope.notifDate(notif.date)
+				$scope.currentNotification.condition = notif.condition
 				$scope.currentNotification.text = notif.text
 				$scope.currentNotification.title = notif.title
 				$scope.currentNotification.subtitle = notif.subtitle
