@@ -152,7 +152,6 @@ To summary available options:
            'dbiTable'    => 'notifications', \
            'dbiUser'     => 'user', \
            'dbiPassword' => 'qwerty', \
-           'type'        => 'CDBI', \
        }
 
 LDAP
