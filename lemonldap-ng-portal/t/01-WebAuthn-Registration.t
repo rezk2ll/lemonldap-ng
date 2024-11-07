@@ -135,6 +135,9 @@ ENDKEY
                 IO::String->new('{}'),
                 cookie => "lemonldap=$id",
                 length => 2,
+                custom => {
+                    HTTP_X_CSRF_CHECK => 1,
+                },
             ),
             'Registration challenge'
         );
@@ -176,6 +179,9 @@ ENDKEY
                 IO::String->new($registration_response),
                 cookie => "lemonldap=$id",
                 length => length($registration_response),
+                custom => {
+                    HTTP_X_CSRF_CHECK => 1,
+                },
             ),
             'Registration challenge'
         );
@@ -206,6 +212,9 @@ ENDKEY
                 IO::String->new('{}'),
                 cookie => "lemonldap=$id",
                 length => 2,
+                custom => {
+                    HTTP_X_CSRF_CHECK => 1,
+                },
             ),
             'Registration challenge'
         );
@@ -239,6 +248,9 @@ ENDKEY
                 IO::String->new($verification_response),
                 cookie => "lemonldap=$id",
                 length => length($verification_response),
+                custom => {
+                    HTTP_X_CSRF_CHECK => 1,
+                },
             ),
             'Registration challenge'
         );
