@@ -128,7 +128,7 @@ sub delete {
     return $self->p->sendError( $req, 'notAuthorized', 400 )
       unless $self->userCanRemove;
 
-    $self->checkCsrfToken($req)
+    $self->checkCsrf($req)
       or return $self->p->sendError( $req, 'csrfError', 400 );
 
     my $epoch = $req->param('epoch')
@@ -207,7 +207,7 @@ sub registerDevice {
     }
 }
 
-sub checkCsrfToken {
+sub checkCsrf {
     my ( $self, $req ) = @_;
     return $req->headers->header('X-CSRF-Check');
 }
