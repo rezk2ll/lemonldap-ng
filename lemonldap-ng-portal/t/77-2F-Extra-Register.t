@@ -586,13 +586,12 @@ subtest "Register and use rest based custom SF as dwho" => sub {
             cookie => "lemonldap=$id",
         );
         my $json = expectBadRequest($res);
-        ok( $res->[2]->[0] =~ 'csrfToken',
+        ok( $res->[2]->[0] =~ 'csrfError',
             "Deletion expects valid CSRF token" );
     }
 
     {
-        my $delete_query =
-          buildForm( { epoch => $epoch, csrf_token => "1234566" } );
+        my $delete_query = buildForm( { epoch => $epoch } );
         $res = $client->_post(
             "/2fregisters/$prefix/delete",
             $delete_query,
@@ -600,7 +599,7 @@ subtest "Register and use rest based custom SF as dwho" => sub {
             cookie => "lemonldap=$id",
         );
         my $json = expectBadRequest($res);
-        ok( $res->[2]->[0] =~ 'csrfToken',
+        ok( $res->[2]->[0] =~ 'csrfError',
             "Deletion expects valid CSRF token" );
     }
 
@@ -610,13 +609,16 @@ subtest "Register and use rest based custom SF as dwho" => sub {
         accept => "test/html",
     );
 
-    $query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
+    $query = buildForm( { epoch => $epoch } );
     ok(
         $res = $client->_post(
             "/2fregisters/$prefix/delete",
             IO::String->new($query),
             cookie => "lemonldap=$id",
             length => length($query),
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Post deletion'
     );

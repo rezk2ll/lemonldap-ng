@@ -353,14 +353,13 @@ ENDKEY
             );
             my $json = expectBadRequest($res);
             ok(
-                $res->[2]->[0] =~ 'csrfToken',
+                $res->[2]->[0] =~ 'csrfError',
                 "Deletion expects valid CSRF token"
             );
         }
 
         {
-            my $delete_query =
-              buildForm( { epoch => $epoch, csrf_token => "123456" } );
+            my $delete_query = buildForm( { epoch => $epoch } );
             $res = $client->_post(
                 '/2fregisters/webauthn/delete',
                 $delete_query,
@@ -369,7 +368,7 @@ ENDKEY
             );
             my $json = expectBadRequest($res);
             ok(
-                $res->[2]->[0] =~ 'csrfToken',
+                $res->[2]->[0] =~ 'csrfError',
                 "Deletion expects valid CSRF token"
             );
         }
@@ -380,14 +379,16 @@ ENDKEY
             accept => "test/html",
         );
 
-        my $delete_query = buildForm(
-            { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
+        my $delete_query = buildForm( { epoch => $epoch } );
         ok(
             $res = $client->_post(
                 '/2fregisters/webauthn/delete',
                 $delete_query,
                 length => length($delete_query),
                 cookie => "lemonldap=$id",
+                custom => {
+                    HTTP_X_CSRF_CHECK => 1,
+                },
             ),
             'Delete WebAuthn query'
         );
