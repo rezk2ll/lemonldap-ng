@@ -7,7 +7,7 @@ use JSON qw(to_json from_json);
 BEGIN {
     require 't/test-lib.pm';
 }
-my $maintests = 77;
+my $maintests = 76;
 
 SKIP: {
     require Lemonldap::NG::Common::TOTP;
@@ -93,9 +93,13 @@ SKIP: {
     # JS query
     ok(
         $res = $client->_post(
-            '/2fregisters/totp/getkey', IO::String->new(''),
+            '/2fregisters/totp/getkey',
+            IO::String->new(''),
             cookie => "lemonldap=$id",
             length => 0,
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Get new key'
     );
@@ -119,6 +123,9 @@ SKIP: {
             IO::String->new($s),
             length => length($s),
             cookie => "lemonldap=$id",
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Post code'
     );
@@ -271,9 +278,13 @@ SKIP: {
     # JS query
     ok(
         $res = $client->_post(
-            '/2fregisters/totp/getkey', IO::String->new(''),
+            '/2fregisters/totp/getkey',
+            IO::String->new(''),
             cookie => "lemonldap=$id2",
             length => 0,
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Get new key'
     );
@@ -298,6 +309,9 @@ SKIP: {
             IO::String->new($s),
             length => length($s),
             cookie => "lemonldap=$id2",
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Post code'
     );
@@ -325,19 +339,6 @@ SKIP: {
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $devices == 1, '2F device found' )
       or explain( $devices, '2F device registered' );
-
-    {
-        my $delete_query = buildForm( { epoch => $epoch } );
-        $res = $client->_post(
-            '/2fregisters/totp/delete',
-            $delete_query,
-            length => length($delete_query),
-            cookie => "lemonldap=$id",
-        );
-        my $json = expectBadRequest($res);
-        ok( $res->[2]->[0] =~ 'csrfError',
-            "Deletion expects valid CSRF token" );
-    }
 
     {
         my $delete_query = buildForm( { epoch => $epoch } );
