@@ -16,8 +16,7 @@ SKIP: {
         skip 'Convert::Base32 is missing';
     }
     my $res;
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel             => 'error',
                 authentication       => 'Demo',
@@ -146,7 +145,8 @@ SKIP: {
         ),
         'Auth query'
     );
-    ( $host, $url, $query ) = expectForm( $res, undef, '/totp2fcheck', 'token' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/totp2fcheck', 'token' );
     $query .= '&sf=totp';
     ok(
         $res = $client->_post(
@@ -335,13 +335,12 @@ SKIP: {
             cookie => "lemonldap=$id",
         );
         my $json = expectBadRequest($res);
-        ok( $res->[2]->[0] =~ 'csrfToken',
+        ok( $res->[2]->[0] =~ 'csrfError',
             "Deletion expects valid CSRF token" );
     }
 
     {
-        my $delete_query =
-          buildForm( { epoch => $epoch, csrf_token => "1234566" } );
+        my $delete_query = buildForm( { epoch => $epoch } );
         $res = $client->_post(
             '/2fregisters/totp/delete',
             $delete_query,
@@ -349,7 +348,7 @@ SKIP: {
             cookie => "lemonldap=$id",
         );
         my $json = expectBadRequest($res);
-        ok( $res->[2]->[0] =~ 'csrfToken',
+        ok( $res->[2]->[0] =~ 'csrfError',
             "Deletion expects valid CSRF token" );
     }
 
@@ -360,13 +359,16 @@ SKIP: {
     );
 
     # Try to unregister TOTP
-	my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
+    my $delete_query = buildForm( { epoch => $epoch } );
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
-			$delete_query,
-			length => length($delete_query),
+            $delete_query,
+            length => length($delete_query),
             cookie => "lemonldap=$id2",
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Delete TOTP query'
     );
@@ -494,13 +496,16 @@ SKIP: {
       or explain( $devices, '2F devices registered' );
 
     # Try to unregister TOTP
-	my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
+    $delete_query = buildForm( { epoch => $epoch } );
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
-			$delete_query,
-			length => length($delete_query),
+            $delete_query,
+            length => length($delete_query),
             cookie => "lemonldap=$id2",
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
         ),
         'Delete TOTP query'
     );

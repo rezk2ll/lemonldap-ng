@@ -742,8 +742,6 @@ sub _displayRegister {
                 $self->p->buildUrl( $req->portal, '2fregisters' ), ''
             ),
             %tplParams,
-            CSRF_TOKEN => $self->ott->createToken()
-
         }
     );
 }
