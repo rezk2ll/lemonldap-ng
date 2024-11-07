@@ -42,6 +42,9 @@
           password: password,
           passwordverify: passwordverify
         },
+        headers: {
+          "X-CSRF-Check": "1"
+        },
         error: displayError,
         success: function (data) {
           var e;

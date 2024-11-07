@@ -37,6 +37,9 @@ register = function() {
     url: `${portal}2fregisters/webauthn/registrationchallenge`,
     data: {},
     dataType: 'json',
+    headers: {
+      "X-CSRF-Check": "1"
+    },
     error: displayError,
     success: function(ch) {
       var e, request;
@@ -60,6 +63,9 @@ register = function() {
                 state_id: ch.state_id,
                 credential: JSON.stringify(response),
                 keyName: $('#keyName').val()
+              },
+              headers: {
+                  "X-CSRF-Check": "1"
               },
               dataType: 'json',
               success: function(resp) {
@@ -107,6 +113,9 @@ verify = function() {
     type: "POST",
     url: `${portal}2fregisters/webauthn/verificationchallenge`,
     data: {},
+    headers: {
+      "X-CSRF-Check": "1"
+    },
     dataType: 'json',
     error: displayError,
     success: function(ch) {
@@ -123,6 +132,9 @@ verify = function() {
           data: {
             state_id: ch.state_id,
             credential: JSON.stringify(response)
+          },
+          headers: {
+              "X-CSRF-Check": "1"
           },
           dataType: 'json',
           success: function(resp) {
