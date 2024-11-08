@@ -123,6 +123,9 @@ menu =
 	session: [
 		title: 'deleteSession'
 		icon:  'trash'
+	,
+		title: 'globalLogout'
+		icon: 'trash'
 	]
 	home: []
 
@@ -189,6 +192,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.deleteSession = ->
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false
+
+	$scope.globalLogout = ->
+		$scope.waiting = true
+		$http['post']("#{scriptname}sessions/glogout/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false
