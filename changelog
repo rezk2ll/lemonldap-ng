@@ -1,3 +1,16 @@
+lemonldap-ng (2.20.1) noble; urgency=medium
+
+  * Bugs:
+    * #3255: [Security] Adaptative Authentication Rules triggered by "Refresh my rights"
+    * #3257: [Security] XSS in upgradeSession / forceUpgrade pages
+    * #3260: downloadSamlMetadata missing from packages in 2.20.0
+    * #3261: CDA request for id  is not valid
+    * #3263: "This application is not known" when trying to access a federation application with empty  RelayState
+    * #3264: SAML regression in 2.20.0
+    * #3274: Internal error when captcha rule isn't validated
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 08 Nov 2024 15:31:50 +0100
+
 lemonldap-ng (2.20.0) noble; urgency=medium
 
   * Bugs:
