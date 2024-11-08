@@ -10,6 +10,8 @@ Known issues
 
 .. Adjust for every new version that has known, unreleased bugs
 
+* `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
+
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -42,7 +44,7 @@ tools:
    lemonldap-ng-sessions secondfactors migrateu2f --all
    lemonldap-ng-sessions secondfactors delType --all U2F
 
-See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
+See :ref:`lemonldap-ng-sessions doc <cli-sessions>`
 
 window.datas.login is no longer defined in JS code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

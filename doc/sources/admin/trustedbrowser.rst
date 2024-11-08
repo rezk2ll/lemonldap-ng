@@ -9,6 +9,14 @@ be used to skip the entire authentication, or just bypass second factors.
     The Trusted Browser feature uses a TOTP challenge behind the scenes. This
     means it only works if the client web browser is in sync with the server.
 
+.. note::
+
+    When logging out explicitely from the *Logout* button on the portal, the
+    current browser trust is destroyed. If you want to test this feature
+    without having to wait for your existing session to expire, you need to
+    manually remove the ``lemonldap`` session cookie (and leave the
+    ``llngconnection`` long-lived cookie alone.
+
 Configuration
 -------------
 

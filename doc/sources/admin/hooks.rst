@@ -40,6 +40,9 @@ The hook's parameters are:
 * A hash of the current session info
 * the configuration key of the relying party which is being identified
 
+.. versionchanged:: 2.21.0
+   You can use ``$info->{_scope}`` to update granted scopes in this hook
+
 Sample code::
 
    use constant hook => {

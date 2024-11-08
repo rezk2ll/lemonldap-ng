@@ -147,7 +147,7 @@ In order to use the deprecated RDBI storage, use the following table schemas:
 
 
 MySQL
-^^^^^
+~~~~~
 
 .. code-block:: sql
 
@@ -159,7 +159,7 @@ MySQL
        );
 
 PostgreSQL
-^^^^^^^^^^
+~~~~~~~~~~
 
 .. code-block:: sql
 
