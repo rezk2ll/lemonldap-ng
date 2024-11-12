@@ -386,6 +386,7 @@
 "findUserSearchingAttributes":"Attributs de recherche",
 "findUserWildcard":"Caractère utilisé comme joker",
 "findUsers":"Recherche de compte",
+"floatingCategoryId":"Id de la catégorie flottante",
 "forbidden":"Vous n'êtes pas autorisé à visualiser cette page",
 "forceSave":"Forcer la sauvegarde",
 "formReplay":"Rejeu de formulaires",

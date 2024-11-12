@@ -386,6 +386,7 @@
 "findUserSearchingAttributes":"Searching attributes",
 "findUserWildcard":"Character used as wildcard",
 "findUsers":"Search for user account",
+"floatingCategoryId":"Floating category Id",
 "forbidden":"You're not authorized to show this page",
 "forceSave":"Force save",
 "formReplay":"Form replay",

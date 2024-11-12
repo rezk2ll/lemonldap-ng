@@ -54,6 +54,7 @@ sub tree {
                                 'portalFavicon',
                                 'showLanguages',
                                 'scrollTop',
+                                'floatingCategoryId',
                                 'portalCustomCss',
                                 'portalCustomJs',
                                 'portalSkin',
@@ -177,8 +178,7 @@ sub tree {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
                                     nodes => [
-                                        'dbiAuthChain',
-                                        'dbiAuthUser',
+                                        'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
                                     ]
                                 },
@@ -243,9 +243,7 @@ sub tree {
                             title => 'webauthnParams',
                             form  => 'simpleInputContainer',
                             help  => 'authwebauthn.html',
-                            nodes => [
-                                'webauthnAuthnLevel',
-                            ]
+                            nodes => [ 'webauthnAuthnLevel', ]
                         },
                         {
                             title => 'ldapParams',

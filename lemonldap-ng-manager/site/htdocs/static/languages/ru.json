@@ -386,6 +386,7 @@
 "findUserSearchingAttributes":"Поиск атрибутов",
 "findUserWildcard":"Символ, используемый в качестве подстановочного знака",
 "findUsers":"Поиск учетной записи пользователя",
+"floatingCategoryId":"Floating category Id",
 "forbidden":"У вас нет прав для просмотра этой страницы",
 "forceSave":"Принудительное сохранение",
 "formReplay":"Воспроизведение формы",

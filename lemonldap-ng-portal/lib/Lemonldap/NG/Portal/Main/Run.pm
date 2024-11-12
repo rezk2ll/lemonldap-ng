@@ -1281,6 +1281,7 @@ sub tplParams {
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
+        FLOATING_ID  => $self->conf->{floatingCategoryId},
         SKIN         => $self->getSkin($req),
         SKIN_PATH    => $portalPath . "skins",
         SAMESITE     => getSameSite( $self->conf ),

@@ -227,8 +227,18 @@ div.input-group > p.form-control > label {
 #btn-back-to-top {
   position: fixed;
   bottom: 70px;
-  right: 20px;
+  right: 15px;
   display: none;
+}
+
+#floating-menu {
+  position: fixed;
+  bottom: 30px;
+  left: -140px;
+  display: block;
+  transform: scale(.7);
+  cursor: move;
+  z-index: 1000;
 }
 
 /* Hide "remember my authentication choice" timer */
