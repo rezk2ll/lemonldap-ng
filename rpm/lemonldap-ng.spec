@@ -786,6 +786,9 @@ fi
 * Wed Aug 28 2024 Clement Oudot <clem.oudot@gmail.com> - 2.19.2-1
 - Update to 2.19.2
 
+* Thu Jul 18 2024 Fedora Release Engineering <releng@fedoraproject.org> - 2.19.1-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
+
 * Mon Jul 15 2024 Clement Oudot <clem.oudot@gmail.com> - 2.19.1-1
 - Update to 2.19.1
 
@@ -797,6 +800,12 @@ fi
 
 * Tue Feb 06 2024 Clement Oudot <clem.oudot@gmail.com> - 2.18.2-1
 - Update to 2.18.2
+
+* Thu Jan 25 2024 Fedora Release Engineering <releng@fedoraproject.org> - 2.18.1-1.2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
+
+* Sun Jan 21 2024 Fedora Release Engineering <releng@fedoraproject.org> - 2.18.1-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
 * Fri Dec 22 2023 Clement Oudot <clem.oudot@gmail.com> - 2.18.1-1
 - Update to 2.18.1
