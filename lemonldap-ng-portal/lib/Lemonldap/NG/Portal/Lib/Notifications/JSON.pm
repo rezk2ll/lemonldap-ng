@@ -358,6 +358,9 @@ sub toForm {
               [ map { $j++; { id => '1x' . $i . 'x' . $j, value => $_ } }
                   @{ $_->{check} } ];
         }
+        if ( $_->{text} ) {
+            $_->{text} =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+        }
         $_->{id} = "1x$i";
         $_;
     } @notifs;
