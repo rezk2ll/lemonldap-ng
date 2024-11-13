@@ -26,6 +26,7 @@ CREATE TABLE psessions (
     _httpSessionType varchar(64),
     _whatToTrace varchar(64),
     ipAddr varchar(64),
+    _webAuthnUserHandle varchar(128),
     _session_uid varchar(64)
 )  DEFAULT CHARSET utf8;
 CREATE INDEX i_p__session_kind ON psessions (_session_kind);
@@ -33,6 +34,7 @@ CREATE INDEX i_p__httpSessionType ON psessions (_httpSessionType);
 CREATE INDEX i_p__session_uid ON psessions (_session_uid);
 CREATE INDEX i_p_ipAddr ON psessions (ipAddr);
 CREATE INDEX i_p__whatToTrace ON psessions (_whatToTrace);
+CREATE INDEX i_p__webAuthnUserHandle ON psessions (_webAuthnUserHandle);
 
 CREATE TABLE samlsessions (
     id varchar(64) not null primary key,
