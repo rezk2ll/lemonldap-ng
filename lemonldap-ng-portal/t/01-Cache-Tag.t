@@ -20,7 +20,7 @@ is( length( $client->p->cacheTag ), 8, "Asset tag has expected length" );
 
 $client->ini( {
         %{ $client->ini },
-        assetTagSalt         => "zzz",
+        cacheTagSalt         => "zzz",
         authChoiceModules    => { '1_demo' => 'Demo;Demo;Null' },
         authChoiceSelectOnly => 0
     }
