@@ -1,7 +1,7 @@
 <!-- //if:jsminified
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
 //else -->
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.js?v=<TMPL_VAR CACHE_TAG>"></script>
 <!-- //endif -->
 
 <div class="form-group">

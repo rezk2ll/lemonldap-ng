@@ -1277,6 +1277,7 @@ sub tplParams {
     }
 
     return (
+        CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
