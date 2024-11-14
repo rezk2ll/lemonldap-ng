@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"İzin verilen başarısız girişler",
 "bruteForceProtectionMaxLockTime":"Maksimum kilit süresi",
 "bruteForceProtectionTempo":"Kilit süresi",
+"cacheTagSalt":"Cache-busting salt",
 "cancel":"İptal Et",
 "captcha":"Captcha modülü",
 "captchaCustom":"Captcha modülünü özelleştir",

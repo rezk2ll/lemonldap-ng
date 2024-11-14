@@ -719,6 +719,9 @@ sub attributes {
             'default' => 30,
             'type'    => 'int'
         },
+        'cacheTagSalt' => {
+            'type' => 'text'
+        },
         'captcha' => {
             'type' => 'PerlModule'
         },

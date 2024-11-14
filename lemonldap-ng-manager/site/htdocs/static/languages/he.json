@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"כמות כניסות כושלות מותרת",
 "bruteForceProtectionMaxLockTime":"זמן הנעילה המרבי",
 "bruteForceProtectionTempo":"זמן נעילה",
+"cacheTagSalt":"Cache-busting salt",
 "cancel":"ביטול",
 "captcha":"Captcha module",
 "captchaCustom":"Custom Captcha module",

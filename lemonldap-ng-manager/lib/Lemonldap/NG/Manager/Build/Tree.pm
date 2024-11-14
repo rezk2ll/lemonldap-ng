@@ -111,6 +111,7 @@ sub tree {
                                         'portalErrorOnExpiredSession',
                                         'portalErrorOnMailNotFound',
                                         'portalDisplayRefreshMyRights',
+                                        'cacheTagSalt',
                                     ]
                                 }
                             ]

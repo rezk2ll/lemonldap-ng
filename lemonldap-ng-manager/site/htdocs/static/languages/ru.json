@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"Разрешенные неудачные попытки входа",
 "bruteForceProtectionMaxLockTime":"Максимальное время блокировки",
 "bruteForceProtectionTempo":"Время блокировки",
+"cacheTagSalt":"Cache-busting salt",
 "cancel":"Отмена",
 "captcha":"Модуль капчи",
 "captchaCustom":"Пользовательский модуль капчи",
