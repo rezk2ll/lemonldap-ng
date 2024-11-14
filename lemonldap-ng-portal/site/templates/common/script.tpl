@@ -4,8 +4,8 @@
   <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/javascript/jquery-cookie/jquery.cookie.min.js"></script>
 //elsif:useexternallibs
-  <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
  //elsif:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>
