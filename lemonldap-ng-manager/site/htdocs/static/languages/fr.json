@@ -829,6 +829,7 @@
 "oidcServiceMetaDataTimeouts":"Expirations",
 "oidcServiceMetaDataTokenURI":"Jetons",
 "oidcServiceMetaDataUserInfoURI":"Informations utilisateur",
+"oidcServiceMetadataTtl":"TTL pour les metadata OIDC",
 "oidcServiceNewKeyIdSig":"Futur identifiant de clef de signature",
 "oidcServiceNewKeyTypeSig":"Type de clef",
 "oidcServiceNewPrivateKeySig":"Future clef privée de signature",

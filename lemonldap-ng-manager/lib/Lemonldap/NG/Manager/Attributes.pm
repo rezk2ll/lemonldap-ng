@@ -3519,6 +3519,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'token',
             'type'    => 'text'
         },
+        'oidcServiceMetadataTtl' => {
+            'type' => 'int'
+        },
         'oidcServiceMetaDataUserInfoURI' => {
             'default' => 'userinfo',
             'type'    => 'text'

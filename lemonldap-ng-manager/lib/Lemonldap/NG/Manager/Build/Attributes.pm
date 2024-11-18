@@ -4942,6 +4942,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation => 'Drop CORS headers from OIDC issuer responses',
         },
+        oidcServiceMetadataTtl => {
+            type          => 'int',
+            documentation => 'OIDC Metadata TTL',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
