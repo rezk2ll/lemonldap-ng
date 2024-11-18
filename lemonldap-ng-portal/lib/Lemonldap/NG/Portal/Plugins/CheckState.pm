@@ -44,6 +44,29 @@ sub check {
         push @rep, 'Unable to get conf';
     }
 
+    foreach(qw(global oidc saml cas)) {
+        my $module = $self->conf->{"${_}Storage"};
+        my $moduleOpts = $self->conf->{"${_}StorageOptions"};
+        my $type = $_ eq 'global' ? 'SSO' : uc($_);
+        if ( $module and $moduleOpts and %$moduleOpts ) {
+            my $session = Lemonldap::NG::Common::Session->new( {
+                storageModule => $module,
+                storageModuleOptions => $moduleOpts,
+                kind => 'TEST',
+                info => {
+                    test => 'Test',
+                }
+            });
+            if ($session and $session->data) {
+                unless ($session->remove) {
+                    push @rep, "Unable to delete $type session";
+                }
+            } else {
+                push @rep, "Unable to create $type session";
+            }
+        }
+    }
+
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
         $req->parameters->{user}     = ($user);
