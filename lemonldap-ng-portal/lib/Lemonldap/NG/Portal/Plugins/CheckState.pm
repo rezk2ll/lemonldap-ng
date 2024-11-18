@@ -40,6 +40,10 @@ sub check {
         push @rep, "Bad result before auth: $res";
     }
 
+    if ( ! $self->p->HANDLER->checkConf ) {
+        push @rep, 'Unable to get conf';
+    }
+
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
         $req->parameters->{user}     = ($user);
