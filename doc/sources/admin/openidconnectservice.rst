@@ -122,6 +122,9 @@ Timeouts
    Default value is one hour.
 -  **Offline sessions**: This option sets lifetime of Refresh Tokens
    retrieved with ``offline_access`` scope. Default value is one month.
+-  **OIDC Metadata TTL**: When a non 0 value is set here, the OIDC metadata
+   are generated with a ``Cache-Control: public`` header and the corresponding
+   "time-to-live" value.
 
 
 Sessions
