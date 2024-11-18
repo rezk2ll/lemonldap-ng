@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"Allowed failed logins",
 "bruteForceProtectionMaxLockTime":"Maximum lock time",
 "bruteForceProtectionTempo":"Lock time",
+"cacheTagSalt":"Cache-busting salt",
 "cancel":"Cancelar",
 "captcha":"Captcha module",
 "captchaCustom":"Custom Captcha module",

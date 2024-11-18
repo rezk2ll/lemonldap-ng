@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"Cho phép đăng nhập không thành công",
 "bruteForceProtectionMaxLockTime":"Thời gian khóa tối đa",
 "bruteForceProtectionTempo":"thời gian khóa",
+"cacheTagSalt":"Cache-busting salt",
 "cancel":"Hủy",
 "captcha":"mô-đun captcha",
 "captchaCustom":"Mô-đun Captcha tùy chỉnh",

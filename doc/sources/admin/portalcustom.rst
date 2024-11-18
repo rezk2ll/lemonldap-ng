@@ -257,6 +257,13 @@ You can find additional documentation on the syntax of template files in the
 `official documentation of the HTML::Template module
 <https://metacpan.org/pod/HTML::Template>`__
 
+.. note::
+
+    If you modify the static files of your theme often, you should use the
+    *Cache-busting salt* configuration parameters to force web browsers to
+    reload your static resources by changing the special ``?v=`` parameter in static resource URLs.
+    Be sure that you include ``?v=<TMPL_VAR CACHE_TAG>`` in the URL of your static resources
+
 .. _intlmessages:
 
 Messages
@@ -453,6 +460,8 @@ Other
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
 -  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
+-  **Cache-busting salt**: change this value any time you update a static file
+   on the server to force your users to reload their browser cache
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center

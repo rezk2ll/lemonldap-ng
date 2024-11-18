@@ -1099,6 +1099,10 @@ sub attributes {
             msgFail       => '__badValue__',
             documentation => 'Rules to choose portal skin',
         },
+        cacheTagSalt => {
+            type          => 'text',
+            documentation => 'Salt value for cache busting tag',
+        },
 
         # Security
         formTimeout => {

@@ -15,6 +15,25 @@ Template updates
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
 
 
+2.21.0
+------
+
+Cache-busting tags
+^^^^^^^^^^^^^^^^^^
+
+When upgrading to a new LemonLDAP::NG version, you may encounter bugs due to
+old, cached javascript and CSS files being still used by some web browsers.
+This version of LemonLDAP::NG introduces a ``?v=`` parameter in static resource
+URLs to avoid this. The version ID is incremented on every version change.
+
+You can use the *Cache-busting salt* parameter in the manager to change the
+value, which will force a reload of static resources for all your users.
+
+This change is not mandatory, but is recommended to avoid bugs. In order to implement it, add
+
+``?v=<TMPL_VAR CACHE_TAG>`` at the end of all static resource URLs in your custom templates.
+
+
 2.20.0
 ------
 

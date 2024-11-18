@@ -136,6 +136,7 @@
 "bruteForceProtectionMaxFailed":"Nombre d'échecs de connexion autorisés",
 "bruteForceProtectionMaxLockTime":"Temps maximum de verrouillage",
 "bruteForceProtectionTempo":"Temps de verrouillage",
+"cacheTagSalt":"Sel pour l'anti-cache",
 "cancel":"Annuler",
 "captcha":"Module Captcha",
 "captchaCustom":"Module Captcha personnalisé",

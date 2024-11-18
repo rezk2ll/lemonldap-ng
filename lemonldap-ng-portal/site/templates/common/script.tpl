@@ -1,27 +1,27 @@
  <!-- Load javascript common to all skins -->
  <!-- //if:usedebianlibs
-  <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/javascript/jquery-cookie/jquery.cookie.min.js"></script>
+  <script type="text/javascript" src="/javascript/jquery/jquery.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="/javascript/jquery-cookie/jquery.cookie.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
 //elsif:useexternallibs
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
  //elsif:jsminified
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
  //else -->
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js?v=<TMPL_VAR CACHE_TAG>"></script>
  <!-- //endif -->
 
  <TMPL_IF NAME="DISPLAY_PPOLICY">
  <!-- //if:jsminified
- <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.min.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
  //else -->
- <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.js?v=<TMPL_VAR CACHE_TAG>"></script>
  <!-- //endif -->
  </TMPL_IF>
 
