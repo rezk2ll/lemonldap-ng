@@ -1584,6 +1584,7 @@ sub tree {
                         'oidcServiceIDTokenExpiration',
                         'oidcServiceAccessTokenExpiration',
                         'oidcServiceOfflineSessionExpiration',
+                        'oidcServiceMetadataTtl',
                     ]
                 },
                 {

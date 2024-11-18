@@ -272,6 +272,7 @@ t/17-extra2f.t
 t/20-test-coverage.t
 t/30-DBI-Cli.t
 t/40-sessions.t
+t/41-sessions-global-logout.t
 t/50-notifications-DBI.t
 t/50-notifications.t
 t/60-2ndfa.t

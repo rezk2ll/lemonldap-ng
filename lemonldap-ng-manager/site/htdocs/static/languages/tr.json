@@ -830,6 +830,7 @@
 "oidcServiceMetaDataTimeouts":"Zaman aşımları",
 "oidcServiceMetaDataTokenURI":"Jetonlar",
 "oidcServiceMetaDataUserInfoURI":"Kullanıcı Bilgisi",
+"oidcServiceMetadataTtl":"OIDC Metadata TTL",
 "oidcServiceNewKeyIdSig":"Sonraki imzalama anahtarı kimliği",
 "oidcServiceNewKeyTypeSig":"Anahtar türü",
 "oidcServiceNewPrivateKeySig":"Sonraki imzalama özel anahtarı",

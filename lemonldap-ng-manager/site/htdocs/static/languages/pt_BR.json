@@ -830,6 +830,7 @@
 "oidcServiceMetaDataTimeouts":"Expirações",
 "oidcServiceMetaDataTokenURI":"Tokens",
 "oidcServiceMetaDataUserInfoURI":"Informação de usuário",
+"oidcServiceMetadataTtl":"OIDC Metadata TTL",
 "oidcServiceNewKeyIdSig":"Próximo ID da chave de assinatura",
 "oidcServiceNewKeyTypeSig":"Key type",
 "oidcServiceNewPrivateKeySig":"Próxima chave privada de assinatura",

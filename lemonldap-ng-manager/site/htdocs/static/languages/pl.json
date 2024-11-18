@@ -830,6 +830,7 @@
 "oidcServiceMetaDataTimeouts":"Limit czasu",
 "oidcServiceMetaDataTokenURI":"Tokeny",
 "oidcServiceMetaDataUserInfoURI":"Informacja o użytkowniku",
+"oidcServiceMetadataTtl":"OIDC Metadata TTL",
 "oidcServiceNewKeyIdSig":"Następny identyfikator klucza podpisywania",
 "oidcServiceNewKeyTypeSig":"Key type",
 "oidcServiceNewPrivateKeySig":"Next signing private key",

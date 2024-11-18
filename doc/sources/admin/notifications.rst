@@ -261,6 +261,15 @@ Notifications are JSON (default) or XML files containing:
     Several notifications can be inserted with a single request by using an
     array of JSON (Tested with an array of 10,000 elements)
 
+Variables
+^^^^^^^^^
+
+.. versionadded:: 2.21.0
+   You can use session variables in notifications's ``text`` field by using the ``$varname`` syntax.
+   Note that complex Perl expressions are not allowed, only simple variable interpolation.
+   This feature is only available when using JSON notifications.
+
+
 Examples
 ^^^^^^^^
 
