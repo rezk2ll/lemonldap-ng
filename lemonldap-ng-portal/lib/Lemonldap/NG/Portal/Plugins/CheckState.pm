@@ -22,8 +22,8 @@ sub init {
             'checkStateSecret is required for "check state" plugin');
         return 0;
     }
-    $self->addUnauthRoute( checkstate => 'check', ['GET'] )
-      ->addAuthRoute( checkstate => 'check', ['GET'] );
+    $self->addUnauthRoute( checkstate => 'check', [ 'GET', 'POST' ] )
+      ->addAuthRoute( checkstate => 'check', [ 'GET', 'POST' ] );
 
     return 1;
 }
