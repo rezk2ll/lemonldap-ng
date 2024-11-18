@@ -50,3 +50,7 @@ Example
    ``https://auth.example.com/checkstate?secret=qwerty``
 -  Try to log a user in:
    ``https://auth.example.com/checkstate?secret=qwerty&user=dwho&password=dwho``
+-  Full test for a server that doesn't allow simple user/password authentication
+   ``https://auth.example.com/checkstate?secret=qwerty&user=dwho&sessions``
+-  Full test for a server that allow simple user/password authentication
+   ``https://auth.example.com/checkstate?secret=qwerty&user=dwho&password=dwho&sessions``
