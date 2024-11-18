@@ -40,32 +40,41 @@ sub check {
         push @rep, "Bad result before auth: $res";
     }
 
-    if ( ! $self->p->HANDLER->checkConf ) {
+    if ( !$self->p->HANDLER->checkConf ) {
         push @rep, 'Unable to get conf';
     }
 
-    foreach(qw(global oidc saml cas)) {
-        my $module = $self->conf->{"${_}Storage"};
+    foreach (qw(global oidc saml cas)) {
+        my $module     = $self->conf->{"${_}Storage"};
         my $moduleOpts = $self->conf->{"${_}StorageOptions"};
-        my $type = $_ eq 'global' ? 'SSO' : uc($_);
+        my $type       = $_ eq 'global' ? 'SSO' : uc($_);
         if ( $module and $moduleOpts and %$moduleOpts ) {
             my $session = Lemonldap::NG::Common::Session->new( {
-                storageModule => $module,
-                storageModuleOptions => $moduleOpts,
-                kind => 'TEST',
-                info => {
-                    test => 'Test',
+                    storageModule        => $module,
+                    storageModuleOptions => $moduleOpts,
+                    kind                 => 'TEST',
+                    info                 => {
+                        test => 'Test',
+                    }
                 }
-            });
-            if ($session and $session->data) {
-                unless ($session->remove) {
+            );
+            if ( $session and $session->data ) {
+                unless ( $session->remove ) {
                     push @rep, "Unable to delete $type session";
                 }
-            } else {
+            }
+            else {
                 push @rep, "Unable to create $type session";
             }
         }
     }
+
+    my $choice = $req->param('choice');
+    if ($choice) {
+        $req->data->{_authChoice} = $choice;
+    }
+
+    my $keepUser = $req->user;
 
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
@@ -93,6 +102,17 @@ sub check {
         }
         $self->p->deleteSession($req);
     }
+    elsif ( $user = $req->param('user') ) {
+        $req->user($user);
+        if ( $self->p->getUser($req) ) {
+            push @rep, "Unable to find user $user"
+              . ( $choice ? " (choice: $choice)" : '' );
+        }
+    }
+
+    # Drop test parameters
+    delete $req->data->{_authChoice};
+    $req->user($keepUser);
 
     return $self->p->sendError( $req, join( ",\n", @rep ), 500 ) if (@rep);
     return $self->p->sendJSONresponse( $req,
