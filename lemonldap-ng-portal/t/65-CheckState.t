@@ -120,6 +120,17 @@ SKIP: {
     );
     $j = expectJSON($res);
     is( $j->{result}, 1, "response has a result key with value 1" );
+
+    ok(
+        $res = $client->_get(
+            '/checkstate',
+            accept => 'application/json',
+            query  => 'secret=x&user=dwho&sessions'
+        ),
+        'Test correct secret with good user without password'
+    );
+    $j = expectJSON($res);
+    is( $j->{result}, 1, "response has a result key with value 1" );
 }
 
 done_testing();

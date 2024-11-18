@@ -15,13 +15,14 @@ Usage
 -----
 
 When enabled, ``/checkstate`` URL path is handled by this plugin.
-GET parameters:
+GET *(or POST)* parameters:
 
 ============= ======== ============================================================
 GET Parameter Need     Value
 ============= ======== ============================================================
 ``secret``    required Same value as the shared secret given to the manager
-``user``      optional If set (with password), a login/logout process will be tried
+``sessions``  optional If set to any value, checkState tries to create/delete a session into all defined session databases *(SSO, OIDC, CAS, and SAML)*
+``user``      optional If set (with password), a login/logout process will be tried, else if set without password, this user is searched into users database
 ``password``  optional
 ============= ======== ============================================================
 
