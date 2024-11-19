@@ -17,6 +17,9 @@ use Mouse;
 use Regexp::Assemble;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
+use Lemonldap::NG::Portal;
+use MIME::Base64;
+use Digest::SHA;
 
 # PROPERTIES
 
@@ -50,6 +53,8 @@ has _jsRedirect => ( is => 'rw' );
 # TrustedDomain regexp
 has trustedDomainsRe         => ( is => 'rw' );
 has additionalTrustedDomains => ( is => 'rw', default => sub { [] } );
+
+has cacheTag => ( is => 'rw' );
 
 # Entrypoints
 has _pluginEntryPoints =>
@@ -465,6 +470,19 @@ sub reloadConf {
     if ($default_portal_host) {
         HANDLER->tsv->{defaultCondition}->{$default_portal_host} ||= sub { 1 };
     }
+
+    # Set asset tag from version and optional salt
+    my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
+    my $digest         = substr(
+        MIME::Base64::encode_base64url(
+            Digest::SHA::hmac_sha256(
+                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt,
+                $self->conf->{key}
+            )
+        ),
+        0, 8
+    );
+    $self->cacheTag($digest);
 
     1;
 }

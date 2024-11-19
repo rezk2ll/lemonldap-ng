@@ -2704,8 +2704,11 @@ sub logout {
 sub metadata {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    my %args;
+    $args{ttl} = $self->conf->{oidcServiceMetadataTtl}
+      if $self->conf->{oidcServiceMetadataTtl};
     return $self->p->sendJSONresponse( $req,
-        $self->metadataDoc( $self->get_issuer($req) ) );
+        $self->metadataDoc( $self->get_issuer($req) ), %args );
 }
 
 # Store request parameters in %ENV

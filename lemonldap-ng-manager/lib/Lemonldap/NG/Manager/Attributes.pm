@@ -719,6 +719,9 @@ sub attributes {
             'default' => 30,
             'type'    => 'int'
         },
+        'cacheTagSalt' => {
+            'type' => 'text'
+        },
         'captcha' => {
             'type' => 'PerlModule'
         },
@@ -3522,6 +3525,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceMetaDataTokenURI' => {
             'default' => 'token',
             'type'    => 'text'
+        },
+        'oidcServiceMetadataTtl' => {
+            'type' => 'int'
         },
         'oidcServiceMetaDataUserInfoURI' => {
             'default' => 'userinfo',

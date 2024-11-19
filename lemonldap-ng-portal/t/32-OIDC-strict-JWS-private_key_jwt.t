@@ -16,6 +16,12 @@ my ( $op, $rp, $res );
 LWP::Protocol::PSGI->register(
     sub {
         my $req = Plack::Request->new(@_);
+        if ( my $jwt = $req->parameters->{client_assertion} ) {
+            my $h = id_token_header($jwt);
+            is( $h->{x5t}, oidc_cert_op_public_sig_x5t,
+                "Correct X509 thumbprint in JWT header" );
+            count(1);
+        }
         ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, ' REST request' );
         my $host = $1;
         my $url  = $2;

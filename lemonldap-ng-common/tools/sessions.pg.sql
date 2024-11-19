@@ -17,11 +17,12 @@ CREATE TABLE psessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
-CREATE INDEX i_p__session_kind    ON psessions ((a_session ->> '_session_kind'));
-CREATE INDEX i_p__httpSessionType ON psessions ((a_session ->> '_httpSessionType'));
-CREATE INDEX i_p__session_uid     ON psessions ((a_session ->> '_session_uid'));
-CREATE INDEX i_p_ipAddr           ON psessions ((a_session ->> 'ipAddr'));
-CREATE INDEX i_p__whatToTrace     ON psessions ((a_session ->> '_whatToTrace'));
+CREATE INDEX i_p__session_kind          ON psessions ((a_session ->> '_session_kind'));
+CREATE INDEX i_p__httpSessionType       ON psessions ((a_session ->> '_httpSessionType'));
+CREATE INDEX i_p__session_uid           ON psessions ((a_session ->> '_session_uid'));
+CREATE INDEX i_p_ipAddr                 ON psessions ((a_session ->> 'ipAddr'));
+CREATE INDEX i_p__whatToTrace           ON psessions ((a_session ->> '_whatToTrace'));
+CREATE INDEX i_p__webAuthnUserHandle    ON psessions ((a_session ->> '_webAuthnUserHandle'));
 
 
 CREATE UNLOGGED TABLE samlsessions (

@@ -112,6 +112,7 @@ sub tree {
                                         'portalErrorOnExpiredSession',
                                         'portalErrorOnMailNotFound',
                                         'portalDisplayRefreshMyRights',
+                                        'cacheTagSalt',
                                     ]
                                 }
                             ]
@@ -1581,6 +1582,7 @@ sub tree {
                         'oidcServiceIDTokenExpiration',
                         'oidcServiceAccessTokenExpiration',
                         'oidcServiceOfflineSessionExpiration',
+                        'oidcServiceMetadataTtl',
                     ]
                 },
                 {

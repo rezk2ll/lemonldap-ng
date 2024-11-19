@@ -82,6 +82,7 @@ sub ask {
     $url = '' if $self->p->checkXSSAttack('url', $url);
     $forceUpgrade = '' if $self->p->checkXSSAttack('forceUpgrade', $forceUpgrade);
 
+    my $cacheTag = $self->p->cacheTag;
     # Display form
     return $self->p->sendHtml(
         $req,
@@ -97,7 +98,7 @@ sub ask {
             (
                 $self->conf->{"skip${action}Confirmation"}
                 ? ( CUSTOM_SCRIPT =>
-qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js?v=$cacheTag"></script>'
                   )
                 : ()
             )

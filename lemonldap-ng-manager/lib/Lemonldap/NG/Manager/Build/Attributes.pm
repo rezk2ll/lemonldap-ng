@@ -1104,6 +1104,10 @@ sub attributes {
             msgFail       => '__badValue__',
             documentation => 'Rules to choose portal skin',
         },
+        cacheTagSalt => {
+            type          => 'text',
+            documentation => 'Salt value for cache busting tag',
+        },
 
         # Security
         formTimeout => {
@@ -4946,6 +4950,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcDropCspHeaders => {
             type          => 'bool',
             documentation => 'Drop CORS headers from OIDC issuer responses',
+        },
+        oidcServiceMetadataTtl => {
+            type          => 'int',
+            documentation => 'OIDC Metadata TTL',
         },
 
         # OpenID Connect metadata nodes

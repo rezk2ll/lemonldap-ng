@@ -870,6 +870,7 @@ t/64-StayConnected-with-rule.t
 t/64-StayConnected-without-fingerprint-checking.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
+t/65-CheckState-with-choice.t
 t/65-CheckState.t
 t/66-CDA-already-auth.t
 t/66-CDA-PSGI-Try.t
