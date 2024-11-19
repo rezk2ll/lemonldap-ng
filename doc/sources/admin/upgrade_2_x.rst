@@ -33,11 +33,10 @@ increase the *General Parameters* » *Second factors* » *Global options* »
 U2F is no more supported
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Current browser no more support U2F specification which has been replaced by
-**Webauthn**. Starting from version 2.20.0, LLNG no more support U2G also.
+Current browsers no more support U2F specification which has been replaced by
+**Webauthn**. Starting from version 2.20.0, LemonLDAP::NG no more supports U2F also.
 
-You can easily replace **U2F** by **Webauthn**. LNG provide also migration
-tools:
+You can easily replace **U2F** by **Webauthn**. LemonLDAP::NG provides also migration tools:
 
 ::
 
