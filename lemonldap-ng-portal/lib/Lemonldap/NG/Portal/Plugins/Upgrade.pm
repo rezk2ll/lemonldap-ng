@@ -56,6 +56,8 @@ sub askRenew {
 sub confirmUpgrade {
     my ( $self, $req ) = @_;
 
+    $req->data->{discardChoiceForCurrentSession} = 1;
+
     # sfOnlyUpgrade feature can only be used during session renew
     return $self->confirm( $req, $self->conf->{sfOnlyUpgrade} );
 }
