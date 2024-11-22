@@ -121,7 +121,7 @@ sub extractFormInfo {
     }
 
     # Check callback
-    if ( $req->param( $self->conf->{oidcRPCallbackGetParam} ) ) {
+    if ( $self->isCallback($req) ) {
 
         $self->logger->debug(
             'OpenIDConnect callback URI detected: ' . $req->uri );
@@ -368,6 +368,11 @@ sub extractFormInfo {
     $req->steps( [] );
 
     return PE_OK;
+}
+
+sub isCallback {
+    my ( $self, $req ) = @_;
+    return $req->param( $self->conf->{oidcRPCallbackGetParam} );
 }
 
 sub authenticate {

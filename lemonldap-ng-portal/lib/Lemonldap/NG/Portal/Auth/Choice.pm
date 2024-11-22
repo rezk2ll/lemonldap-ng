@@ -72,4 +72,16 @@ sub setSecurity {
     }
 }
 
+sub isCallback {
+    my ( $self, $req ) = @_;
+    if ( my $choice = $req->pdata->{_choice} ) {
+        my $mod = $self->modules->{$choice};
+        if ( $mod and $mod->can('isCallback') and $mod->isCallback($req) ) {
+            $self->logger->debug("Detected callback for $choice");
+            return 1;
+        }
+    }
+    return;
+}
+
 1;
