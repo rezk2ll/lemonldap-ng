@@ -48,12 +48,6 @@ configuration.
 Debian/Ubuntu
 ~~~~~~~~~~~~~
 
--  Install log format *(automatically loaded when linked in this place)*
-
-::
-
-   ln -s /etc/lemonldap-ng/nginx-lmlog.conf /etc/nginx/conf.d/llng-lmlog.conf
-
 -  Install snippet for vhost configuration files:
 
 ::
