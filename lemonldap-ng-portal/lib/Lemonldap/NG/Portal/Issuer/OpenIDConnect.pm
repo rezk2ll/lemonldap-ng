@@ -914,7 +914,8 @@ sub _authorizeEndpoint {
 
         my $state = $oidc_request->{'state'};
 
-    	$self->p->registerProtectedAppAccess( $req, $req->sessionInfo->{ $self->conf->{whatToTrace} }, "oidc:$rp" );
+        $self->p->registerProtectedAppAccess( $req,
+            $req->sessionInfo->{ $self->conf->{whatToTrace} }, "oidc:$rp" );
 
         $self->auditLog(
             $req,
@@ -1502,7 +1503,8 @@ sub _handleClientCredentialsGrant {
     }
 
     my $access_token = $self->newAccessToken(
-        $req, $rp, $scope, $session->data,
+        $req, $rp, $scope,
+        $session->data,
         {
             scope           => $scope,
             rp              => $rp,
