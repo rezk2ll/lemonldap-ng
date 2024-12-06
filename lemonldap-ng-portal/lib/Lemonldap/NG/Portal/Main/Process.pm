@@ -284,7 +284,7 @@ sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
         $self->_unauthLogout($req);
-        $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
+        $req->steps( [ 'controlUrl', [ returnPE => PE_LOGOUT_OK ] ] );
     }
     return PE_OK;
 }
@@ -300,7 +300,7 @@ sub checkCancel {
     if ( $req->param('cancel') ) {
         $self->logger->debug('Cancel called, run authCancel calls');
         $req->mustRedirect(1);
-        $req->steps( [ @{ $self->authCancel }, sub { PE_OK } ] );
+        $req->steps( [ @{ $self->authCancel }, [ returnPE => PE_OK ] ] );
         return PE_OK;
     }
     return PE_OK;
@@ -499,7 +499,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      [ returnPE => PE_BADCREDENTIALS ],
         ]
     );
 

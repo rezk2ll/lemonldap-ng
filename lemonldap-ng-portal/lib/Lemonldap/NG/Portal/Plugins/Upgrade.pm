@@ -124,14 +124,14 @@ sub confirm {
                 $upg = 1;
             }
             else {
-                return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+                return $self->p->doPE($req, PE_TOKENEXPIRED);
             }
         }
     }
 
     $req->steps( ['controlUrl'] );
     my $res = $self->p->process($req);
-    return $self->p->do( $req, [ sub { $res } ] ) if $res;
+    return $self->p->doPE($req, $res) if $res;
 
     if ( $upg or $req->param('confirm') and $req->param('confirm') == 1 ) {
         $req->data->{noerror} = 1;
@@ -164,7 +164,7 @@ sub confirm {
         # Go to portal
         $self->logger->debug("Upgrade session did not trigger -> Go to Portal");
         $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_OK } ] );
+        return $self->p->doPE($req, PE_OK);
     }
 }
 

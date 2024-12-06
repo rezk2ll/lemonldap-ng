@@ -73,7 +73,7 @@ sub _auth_route {
     my $res = $self->p->process($req);
     if ( $res && $res > 0 ) {
         $req->wantErrorRender(1);
-        return $self->p->do( $req, [ sub { $res } ] );
+        return $self->p->doPE($req, $res);
     }
 
     return $self->auth_route( $req, @path );
@@ -123,7 +123,7 @@ sub ajax_success {
     else {
         $self->logger->error("Could not create user token for $user");
         $req->wantErrorRender(1);
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        return $self->p->doPE($req, PE_ERROR);
     }
 }
 

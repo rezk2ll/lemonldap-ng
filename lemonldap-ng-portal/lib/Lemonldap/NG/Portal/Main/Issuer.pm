@@ -168,7 +168,7 @@ sub _forAuthUser {
     if ( $restore_failed and !@path ) {
         $self->logger->error("Unable to restore issuer context");
         $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+        return $self->p->doPE($req, PE_TOKENEXPIRED);
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here

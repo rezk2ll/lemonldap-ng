@@ -302,9 +302,9 @@ sub refresh {
             )
         );
         $req->urldc( $req->portal );
-        return $self->do( $req, [ sub { PE_INFO } ] );
+        return $self->doPE( $req, PE_INFO );
     }
-    return $self->do( $req, [ sub { PE_OK } ] );
+    return $self->doPE( $req, PE_OK );
 }
 
 sub logout {
@@ -323,7 +323,7 @@ sub logout {
 sub unauthLogout {
     my ( $self, $req ) = @_;
     $self->_unauthLogout($req);
-    return $self->do( $req, [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
+    return $self->do( $req, [ 'controlUrl', [ returnPE => PE_LOGOUT_OK ] ] );
 }
 
 sub _unauthLogout {
@@ -437,8 +437,8 @@ sub do {
 # ---------
 
 sub doPE {
-    my ($self, $req, $res) = @_;
-    return $self->do($req, [ [ returnPE => $res ] ]);
+    my ( $self, $req, $res ) = @_;
+    return $self->do( $req, [ [ returnPE => $res ] ] );
 }
 
 sub getModule {

@@ -53,7 +53,7 @@ sub auth_route {
     }
     else {
         $req->wantErrorRender(1);
-        return $self->p->do( $req, [ sub { PE_CERTIFICATEREQUIRED } ] );
+        return $self->p->doPE($req, PE_CERTIFICATEREQUIRED);
     }
 }
 
