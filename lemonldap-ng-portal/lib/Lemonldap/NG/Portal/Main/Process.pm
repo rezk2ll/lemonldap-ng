@@ -289,6 +289,12 @@ sub checkUnauthLogout {
     return PE_OK;
 }
 
+sub returnPE {
+    my ( $self, $req, $code ) = @_;
+
+    return $code;
+}
+
 sub checkCancel {
     my ( $self, $req ) = @_;
     if ( $req->param('cancel') ) {

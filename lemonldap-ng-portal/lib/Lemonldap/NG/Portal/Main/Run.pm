@@ -436,6 +436,11 @@ sub do {
 # Utilities
 # ---------
 
+sub doPE {
+    my ($self, $req, $res) = @_;
+    return $self->do($req, [ [ returnPE => $res ] ]);
+}
+
 sub getModule {
     my ( $self, $req, $type ) = @_;
     if ( my $val =
