@@ -650,11 +650,14 @@ sub loadModule {
     my $obj;
     $module = "Lemonldap::NG::Portal$module" if ( $module =~ /^::/ );
 
-    eval "require $module";
-    if ($@) {
-        $self->logger->error("$module load error: $@");
-        $self->error("$module load error: $@");
-        return 0;
+    # If module is not already in namespace, try to load it
+    unless ( $module->can('new') ) {
+        eval "require $module";
+        if ($@) {
+            $self->logger->error("$module load error: $@");
+            $self->error("$module load error: $@");
+            return 0;
+        }
     }
     eval {
         $obj = $module->new( { p => $self, conf => $conf, %args } );
