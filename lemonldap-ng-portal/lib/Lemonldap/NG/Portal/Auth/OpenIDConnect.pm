@@ -538,19 +538,14 @@ sub frontLogout {
     if ($badRequest) {
         return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
     }
+
+    # Ignore beforeLogout errors
     $req->steps( $self->p->beforeLogout );
-    my $res = $self->p->process($req);
-    return $self->p->do(
-        $req,
-        [
-            'authLogout',
-            'deleteSession',
-            sub {
-                $req->response($response);
-                return $res ? $res : PE_SENDRESPONSE;
-            }
-        ]
-    );
+    $self->p->process($req);
+
+    $req->data->{_continueLogout} = 1;
+    $req->response($response);
+    return $self->p->do($req, [ 'authLogout', 'deleteSession', [ returnPE => PE_SENDRESPONSE] ]);
 }
 
 # Implements https://openid.net/specs/openid-connect-backchannel-1_0.html
