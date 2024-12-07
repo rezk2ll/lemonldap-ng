@@ -261,20 +261,29 @@ sub processRefreshSession {
     # Avoid interferences when refresh is run on multiple sessions
     # in the same request
     $req->sessionInfo( {} );
+
+    # Transmit refreshed session data to setRefreshedSessionData
+    $req->data->{refreshedSessionData} = \%data;
     $req->steps( [
-            'getUser',
-            @{ $self->betweenAuthAndData },
-            'setSessionInfo',
-            sub {
-                $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
-                $_[0]->refresh(1);
-                return PE_OK;
-            },
-            $self->groupsAndMacros,
-            'setLocalGroups',
+            'getUser',              @{ $self->betweenAuthAndData },
+            'setSessionInfo',       'setRefreshedSessionData',
+            $self->groupsAndMacros, 'setLocalGroups',
         ]
     );
-    return $self->process($req);
+    my $res = $self->process($req);
+    delete $req->data->{refreshedSessionData};
+
+    return $res;
+}
+
+sub setRefreshedSessionData {
+    my ( $self, $req ) = @_;
+    my %data = %{ $req->data->{refreshedSessionData} };
+
+    $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
+    $req->refresh(1);
+
+    return PE_OK;
 }
 
 sub refresh {
