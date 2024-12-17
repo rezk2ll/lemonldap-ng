@@ -473,11 +473,12 @@ sub reloadConf {
 
     # Set asset tag from version and optional salt
     my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
+    my $key = $self->conf->{key} // "";
     my $digest         = substr(
         MIME::Base64::encode_base64url(
             Digest::SHA::hmac_sha256(
                 $Lemonldap::NG::Portal::VERSION . $cacheTagSalt,
-                $self->conf->{key}
+                $key
             )
         ),
         0, 8
