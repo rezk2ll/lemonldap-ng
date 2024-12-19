@@ -243,7 +243,8 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		$(SRCPORTALDIR)/lib/Lemonldap/NG/Portal/Main/Constants.pm \
 		$(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
-		_example/conf/lmConf-1.json
+		_example/conf/lmConf-1.json \
+		doc/sources/admin/error_codes.rst
 
 
 

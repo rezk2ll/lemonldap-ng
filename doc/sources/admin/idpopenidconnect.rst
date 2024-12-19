@@ -357,13 +357,13 @@ By default, the following scope-to-attributes are already mapped by LL::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
-   email; email email_verified
-   address; street_address locality region postal_code country
-   phone; phone_number phone_number_verified
+   profile, name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+   email, email email_verified
+   address, street_address locality region postal_code country
+   phone, phone_number phone_number_verified
 
 If you want to expose custom attributes to OpenID Connect clients,
 you have to declare them in a new scope in this section.
