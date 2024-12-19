@@ -19,8 +19,8 @@ Enable and start the service :
 
 ::
 
-   systemctl enable llng-fastcgi-server
-   systemctl start llng-fastcgi-server
+   systemctl enable lemonldap-ng-fastcgi-server
+   systemctl start lemonldap-ng-fastcgi-server
 
 Red Hat/CentOS
 ~~~~~~~~~~~~~~
