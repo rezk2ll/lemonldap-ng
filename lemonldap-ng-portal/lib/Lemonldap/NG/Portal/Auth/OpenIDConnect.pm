@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -38,7 +38,7 @@ sub init {
         $self->logger->error("No OP configured");
         return 0;
     }
-    my @list       = ();
+    my @list = ();
 
     foreach (@tab) {
         my $name = $_;
@@ -48,7 +48,7 @@ sub init {
         my $tooltip =
           $self->opOptions->{$_}->{oidcOPMetaDataOptionsTooltip} || $name;
         my $order = $self->opOptions->{$_}->{oidcOPMetaDataOptionsSortNumber}
-          // 0;
+          // 999999;
         my $img_src;
 
         if ($icon) {
@@ -68,7 +68,7 @@ sub init {
           };
     }
 
-    my $re     = '^/' . $self->path . '/(?:' . join(
+    my $re = '^/' . $self->path . '/(?:' . join(
         '|',
         map {
             my $s = $self->conf->{$_};
