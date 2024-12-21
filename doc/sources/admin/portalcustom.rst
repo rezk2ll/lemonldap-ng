@@ -75,7 +75,7 @@ Custom CSS file
 You can define a custom CSS file, for example ``custom.css``, which will
 be loaded after default CSS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
@@ -95,9 +95,9 @@ Custom JS file
 Similarly, you can define a custom JS file, for example ``custom.js``, which will
 be loaded after default JS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
-Then set this value in Custom CSS parameter:
+Then set this value in Custom JS parameter:
 ``bootstrap/js/custom.js``.
 
 Check out the :doc:`jqueryevents` page for available integrations

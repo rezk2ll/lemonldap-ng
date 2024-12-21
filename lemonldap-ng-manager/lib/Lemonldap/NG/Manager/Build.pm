@@ -575,7 +575,7 @@ Error codes list
 
 .. csv-table::
    :header: "Error label", "Error number"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
 
@@ -587,7 +587,7 @@ EOF
       )
     {
 
-        $content .= "    ``" . $key . "``;" . $portalConstants{$key} . "\n";
+        $content .= "    ``" . $key . "``," . $portalConstants{$key} . "\n";
     }
 
     open( F, '>', $self->docConstantsFile ) or die($!);

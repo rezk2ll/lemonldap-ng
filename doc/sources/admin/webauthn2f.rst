@@ -56,6 +56,30 @@ Configuration
 - **Logo** (Optional): logo file *(in static/<skin> directory)*
 
 
+.. attention::
+    If you want to use a custom rule for "activation" and want to keep self-registration,
+    you must add the following condition to the custom activation rule::
+
+        and has2f('WebAuthn')
+
+    Without this condition, WebAuthn device will be asked even for users who didn't register one.
+    This is automatically done when "activation" is simply set to "on".
+
+
+Provisioning
+------------
+
+If you don't want to use self-registration, set public part of user's
+yubikey in Second Factor Devices array (JSON) in your user-database.
+Then map it to the \_2fDevices attribute (see
+:doc:`exported variables<exportedvars>`):
+
+.. code::
+
+   [{"name" : "MyFIDO2" , "type" : "WebAuthn" , "epoch":"1524078936"}, ...]
+
+
+
 .. _migrateu2ftowebauthn:
 
 Migrating existing U2F devices

@@ -117,7 +117,7 @@ sub verify {
     }
 
     # Add a new one
-    my $res = $self->registerDevice(
+    $res = $self->registerDevice(
         $req,
         $req->userData,
         {

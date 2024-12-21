@@ -494,7 +494,7 @@ SKIP: {
       or explain( $devices, '2F devices registered' );
 
     # Try to unregister TOTP
-	my $delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
+	$delete_query = buildForm( { epoch => $epoch, csrf_token => getJsVars($res)->{csrf_token} } );
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
