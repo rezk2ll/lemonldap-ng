@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 sub tree {
     return [ {
@@ -54,7 +54,7 @@ sub tree {
                                 'portalFavicon',
                                 'showLanguages',
                                 'scrollTop',
-                                'floatingCategoryId',
+                                'floatingCategoryName',
                                 'portalCustomCss',
                                 'portalCustomJs',
                                 'portalSkin',

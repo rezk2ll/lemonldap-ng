@@ -571,8 +571,8 @@ $(window).on 'load', () ->
 		else
 			$(this).data('data-submitted', true)
 
-	$("#sort_#{datas['floatingId']}").appendTo('#floating-menu').find("i").remove()
-	$("#sort_#{datas['floatingId']}").draggable()
+	$(".category.#{datas['floatingCategory']}").appendTo('#floating-menu').find("i").remove()
+	$(".category.#{datas['floatingCategory']}").draggable()
 
 	$(document).trigger "portalLoaded"
 	true

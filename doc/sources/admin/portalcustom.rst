@@ -58,12 +58,10 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
     A blank or null value disable this feature.
 
-Floating category Id
-~~~~~~~~~~~~~~~~~~~~
+Floating category name
+~~~~~~~~~~~~~~~~~~~~~~
 
-Categories are displayed and sorted by their Id which is built like this form: sort_1, sort_2,...
-You can display an applications category as a floating menu by specifying its Id number.
-Id can be found by displaying page source code with your brother debug console.
+You can display an applications category as a floating menu by specifying its name.
 
 .. tip::
 

@@ -524,10 +524,9 @@ sub attributes {
             default       => 400,
             documentation => 'Display back to top button',
         },
-        floatingCategoryId => {
-            type          => 'int',
-            default       => 0,
-            documentation => 'Display floating menu with id=sort_<int>',
+        floatingCategoryName => {
+            type          => 'text',
+            documentation => 'Name of the category displayed as floating menu',
         },
         staticPrefix => {
             type          => 'text',

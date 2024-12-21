@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -1282,7 +1282,7 @@ sub tplParams {
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
-        FLOATING_ID  => $self->conf->{floatingCategoryId},
+        FLOATING_CAT => $self->conf->{floatingCategoryName},
         SKIN         => $self->getSkin($req),
         SKIN_PATH    => $portalPath . "skins",
         SAMESITE     => getSameSite( $self->conf ),

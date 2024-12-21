@@ -98,7 +98,6 @@ sub defaultValues {
         'failedLoginNumber'    => 5,
         'findUserControl'      => '^[*\\w]+$',
         'findUserWildcard'     => '*',
-        'floatingCategoryId'   => 0,
         'formTimeout'          => 120,
         'githubAuthnLevel'     => 1,
         'githubScope'          => 'user:email',
