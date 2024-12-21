@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -3803,6 +3803,7 @@ sub attributes {
         },
         sfOnlyUpgrade => {
             type          => 'bool',
+            default       => 0,
             help          => 'secondfactor.html',
             documentation => 'Only trigger second factor on session upgrade',
         },
