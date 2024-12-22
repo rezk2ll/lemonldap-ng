@@ -129,7 +129,7 @@
             <TMPL_IF NAME="category">
             <!-- Category -->
 
-              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary <TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
+              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
 
                 <div class="card-header text-white bg-secondary">
                 <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
