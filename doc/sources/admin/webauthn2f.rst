@@ -28,21 +28,22 @@ distribution, you can install it with::
 Configuration
 ~~~~~~~~~~~~~
 
-- **Activation**: set it to "on"
-- **Self registration**: set it to "on" if users are authorized to
-  register their keys.
-- **Allow user to remove WebAuthn**: If enabled, user can unregister their WebAuthn device.
+- **Activation**: Set it to "on".
+- **Self registration**: set it to "on" if users are authorized to register their keys
+- **Allow user to remove WebAuthn**: if enabled, user can unregister their WebAuthn devices
 - **User verification**: Whether or not LemonLDAP::NG requires the user to
   authenticate to their second factor device. Usually by entering a PIN code.
   *Warning*: The *Required* option is not supported by older U2F security keys.
+- **Use discoverable credential**: a private key that is associated with a user handle is generated on the authenticator
 - **Attestation**: Type of attestation to request from the authenticator. After
   enabling this you need to specify a list of trusted certificates
 - **Attestation trusted certificates**: A concatenation of PEM certificates
   that you trust for attestation
-- **Relying Party display name**: How the LemonLDAP::NG server will appear in
+- **Relying Party display name**: how the LemonLDAP::NG server will appear in
   the web browser messages displayed to the user
 - **Relying Party ID**: The domain name on which WebAuthn devices can be
   registered and used. It must be a non-public suffix of the portal's hostname.
+- **Send U2F AppID**: send the string that declares which facets that belong to this application
 - **User Display Name attribute**: session attribute containing user display name
 - **Default transports**: Comma-separated list of transport hints sent to the
   web browser, if none are provided during registration
