@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -1340,6 +1340,7 @@ sub findRPFromUri {
 sub isUriAllowedForRP {
     my ( $self, $uri, $rp, $option, $wildcard_allowed ) = @_;
     my $allowed_uris = $self->rpOptions->{$rp}->{$option} // "";
+    $self->logger->debug("Allowed URIs for $rp: $allowed_uris");
 
     my $is_uri_allowed;
     if ($wildcard_allowed) {
