@@ -176,7 +176,7 @@ SKIP: {
 
     # Logout initiated by OP
 
- # Reset conf to make sure to make sure lazy loading works during logout (#3014)
+ # Reset conf to make sure lazy loading works during logout (#3014)
     withHandler( 'op', sub { $op->p->HANDLER->checkConf(1) } );
 
     ok(
