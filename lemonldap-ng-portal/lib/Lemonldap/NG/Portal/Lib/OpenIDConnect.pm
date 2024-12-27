@@ -218,8 +218,9 @@ sub load_rp {
       )
     {
         $self->logger->debug("Processing JWKS options for RP $rp...");
-        my $jwks =
-          $self->decodeJSON( $config{options}->{oidcRPMetaDataOptionsJwks} );
+        my $jwks = $config{options}->{oidcRPMetaDataOptionsJwks};
+        $jwks = $self->decodeJSON($jwks) if $jwks and not ref $jwks;
+
         if ( !$jwks
             and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
         {
