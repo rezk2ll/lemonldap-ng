@@ -3,10 +3,9 @@ WebAuthn as a second factor
 
 `Web Authentication <https://www.w3.org/TR/webauthn/>`__ , shortened as WebAuthn, is a standard method by which a web browser can authenticate to an application (*Relying Party*, in our case, this is LemonLDAP::NG) through the use of an *Authenticator*, which can be a hardware token (USB, NFC...) or provided by the user's device itself (TPM).
 
+.. tip::
 
-.. versionadded:: 2.0.14
-   Currently, we only implement WebAuthn as a second factor. Passwordless,
-   first-factor authentication will be added in a later release.
+   If you want to use Webauthn as first factor (also called `passwordless`), see :doc:`dedicated documentation<authwebauthn>`.
 
 Implementation status
 ~~~~~~~~~~~~~~~~~~~~~
@@ -20,8 +19,17 @@ Requirements
 ~~~~~~~~~~~~
 
 You need to install the `Authen::WebAuthn` CPAN module for WebAuthn to work on
-your LemonLDAP::NG installation. If there is no package for it in your
-distribution, you can install it with::
+your LemonLDAP::NG installation.
+
+For Debian::
+
+    apt install libauthen-webauthn-perl
+
+For RHEL (>=8)::
+
+    dnf install perl-Authen-WebAuthn
+
+If there is no package for it in your distribution, you can install it with::
 
     cpanm Authen::WebAuthn
 
