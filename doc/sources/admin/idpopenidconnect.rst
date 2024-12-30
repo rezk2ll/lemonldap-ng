@@ -296,6 +296,10 @@ Options
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
 
+.. important::
+
+    JWKS URI MUST be reachable by Portal to fetch JWKS document
+
 -  **Timeouts**
 
    -  **Authorization Codes** *(default: one minute)*: Expiration time of
@@ -384,8 +388,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 .. important::
 
     Your custom attributes will only be visible if the application requests the
-    corresponding scope value, or if you use a Scope Rule to always enable that
-    scope.
+    corresponding scope value, or if you use a Scope Rule to always enable that scope.
 
 
 .. _oidcscoperules:
