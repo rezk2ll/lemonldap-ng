@@ -264,7 +264,8 @@ Options
       `request_uri
       <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
-   -  **Required authentication level**: Required authentication level to access this application
+   -  **Required authentication level**: Required authentication level to
+      access this application. Since ``2.21.0`` this can be a Perl expression.
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
    -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
    -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
