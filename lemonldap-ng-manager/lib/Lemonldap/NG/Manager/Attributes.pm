@@ -787,7 +787,10 @@ sub attributes {
             'type' => 'subContainer'
         },
         'casAppMetaDataOptionsAuthnLevel' => {
-            'type' => 'intOrNull'
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
         },
         'casAppMetaDataOptionsComment' => {
             'type' => 'longtext'
@@ -2871,7 +2874,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsAuthnLevel' => {
-            'type' => 'intOrNull'
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
         },
         'oidcRPMetaDataOptionsAuthnRequireNonce' => {
             'default' => 0,
@@ -4828,7 +4834,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'       => 'keyTextContainer'
         },
         'samlSPMetaDataOptionsAuthnLevel' => {
-            'type' => 'intOrNull'
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
         },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
             'default' => 1,
