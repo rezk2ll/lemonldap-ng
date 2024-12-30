@@ -26,11 +26,12 @@ has ua => (
     }
 );
 
-has casSrvList => ( is => 'rw', default => sub { {} }, );
-has casAppList => ( is => 'rw', default => sub { {} }, );
-has srvRules   => ( is => 'rw', default => sub { {} }, );
-has spRules    => ( is => 'rw', default => sub { {} }, );
-has spMacros   => ( is => 'rw', default => sub { {} }, );
+has casSrvList   => ( is => 'rw', default => sub { {} }, );
+has casAppList   => ( is => 'rw', default => sub { {} }, );
+has srvRules     => ( is => 'rw', default => sub { {} }, );
+has spLevelRules => ( is => 'rw', default => sub { {} }, );
+has spRules      => ( is => 'rw', default => sub { {} }, );
+has spMacros     => ( is => 'rw', default => sub { {} }, );
 
 # XML parser
 has parser => (
@@ -86,13 +87,19 @@ sub loadApp {
           $self->conf->{casAppMetaDataOptions}->{$_}
           ->{casAppMetaDataOptionsRule};
         if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error(
-                    "Unable to build access rule for CAS Application $_: "
-                      . $self->p->HANDLER->tsv->{jail}->error );
+            $rule = $self->p->buildRule( $rule, "access rule for App $_" );
+            unless ($rule) {
                 $valid = 0;
             }
+        }
+
+        # Required authentication level rule
+        my $levelrule = $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        $levelrule = $self->p->buildRule( $levelrule,
+            "required authentication level" . " rule for App $_" );
+        unless ($levelrule) {
+            $valid = 0;
         }
 
         # Load per-application macros
@@ -117,8 +124,9 @@ sub loadApp {
         if ($valid) {
             $self->casAppList->{$_} =
               $self->conf->{casAppMetaDataOptions}->{$_};
-            $self->spRules->{$_}  = $rule;
-            $self->spMacros->{$_} = $compiledMacros;
+            $self->spRules->{$_}      = $rule;
+            $self->spLevelRules->{$_} = $levelrule;
+            $self->spMacros->{$_}     = $compiledMacros;
         }
         else {
             $self->logger->error(

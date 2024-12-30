@@ -196,8 +196,8 @@ sub storeEnv {
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
             # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel};
+            my $targetAuthnLevel = $self->spLevelRules->{$spConfKey}->( $req, {} );
+
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
         }
@@ -619,7 +619,7 @@ sub run {
             $self->logger->debug("SSO: authentication request is valid");
 
             my $spAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel} || 0;
+              $self->spLevelRules->{$spConfKey}->( $req, $req->sessionInfo );
 
             # Get ForceAuthn flag
             my $force_authn;
