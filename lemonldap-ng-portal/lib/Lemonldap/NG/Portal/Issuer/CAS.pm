@@ -203,7 +203,8 @@ sub run {
         ) if ( $h != PE_OK );
 
         my $service = $cas_request->{service};
-        $service = '' if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
+        $service = ''
+          if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
 
