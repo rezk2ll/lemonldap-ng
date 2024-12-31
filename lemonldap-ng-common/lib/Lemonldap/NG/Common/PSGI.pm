@@ -431,8 +431,8 @@ sub _run {
     );
 }
 
-# This method turns a sub that takes a Lemonldap::NG::Common::PSGI::Request
-# obect and returns a PSGI response into a proper PSGI method.
+# This method returns a sub that takes a Lemonldap::NG::Common::PSGI::Request
+# object and returns a PSGI response into a proper PSGI method.
 sub psgiAdapter {
     my ( $self, $sub ) = @_;
     return sub {

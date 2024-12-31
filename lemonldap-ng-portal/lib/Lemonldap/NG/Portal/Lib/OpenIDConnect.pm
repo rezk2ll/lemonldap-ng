@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT qw(encode_jwt decode_jwt);
+use Crypt::JWT  qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -28,7 +28,7 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 # PROPERTIES
 
@@ -151,10 +151,10 @@ sub load_rp {
 
     # Additional claims
     my $extraClaims = $config{extraClaims};
-
     if ($extraClaims) {
+        $self->logger->debug("Processing extra claims for RP $rp...");
         foreach my $scope ( keys %$extraClaims ) {
-            $self->logger->debug("Processing scope value $scope for $rp");
+            $self->logger->debug("Processing scope value $scope for RP $rp...");
             my @extraAttributes = split( /\s/, $extraClaims->{$scope} );
             $scope_values->{$scope} = \@extraAttributes;
         }
@@ -163,6 +163,7 @@ sub load_rp {
     # Access rule
     my $rule = $config{options}->{oidcRPMetaDataOptionsRule};
     if ( length $rule ) {
+        $self->logger->debug("Processing access rule for RP $rp...");
         $rule = $self->p->HANDLER->substitute($rule);
         unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
             $self->logger->error( "Unable to build access rule for RP $rp: "
@@ -177,6 +178,7 @@ sub load_rp {
     for my $macroAttr ( keys %{$macros} ) {
         my $macroRule = $macros->{$macroAttr};
         if ( length $macroRule ) {
+            $self->logger->debug("Processing macros for RP $rp...");
             $macroRule = $self->p->HANDLER->substitute($macroRule);
             if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
                 $compiledMacros->{$macroAttr} = $macroRule;
@@ -196,6 +198,7 @@ sub load_rp {
     for my $scopeName ( keys %{$scope_rules} ) {
         my $scopeRule = $scope_rules->{$scopeName};
         if ( length $scopeRule ) {
+            $self->logger->debug("Processing dynamic scopes for RP $rp...");
             $scopeRule = $self->p->HANDLER->substitute($scopeRule);
             if ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) ) {
                 $compiled_scope_rules->{$scopeName} = $scopeRule;
@@ -214,10 +217,14 @@ sub load_rp {
             or $config{options}->{oidcRPMetaDataOptionsJwks} )
       )
     {
+        $self->logger->debug("Processing JWKS options for RP $rp...");
         my $jwks = $config{options}->{oidcRPMetaDataOptionsJwks};
+        $jwks = $self->decodeJSON($jwks) if $jwks and not ref $jwks;
+
         if ( !$jwks
             and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
         {
+            $self->logger->debug("Fetching JWKS URL: $url for RP $rp");
             my $resp = $self->ua->get($url);
             if ( $resp->is_success ) {
                 my $content = $self->decodeJSON( $resp->decoded_content );
@@ -237,6 +244,7 @@ sub load_rp {
             }
         }
         if ( $jwks and ref($jwks) eq 'HASH' and $jwks->{keys} ) {
+            $self->logger->debug("Processing JWKS document for RP $rp");
             my %keys;
             my %validKeys;
             foreach my $key ( sort @{ $jwks->{keys} } ) {
@@ -265,7 +273,8 @@ sub load_rp {
                 }
             }
             unless (%validKeys) {
-                $self->logger->error("Unable to find a supported key for $rp");
+                $self->logger->error(
+                    "Unable to find a supported key for RP $rp");
                 $valid = 0;
             }
             else {
@@ -281,6 +290,7 @@ sub load_rp {
         }
     }
     if ($valid) {
+        $self->logger->debug(" -> RP $rp is valid");
 
         # Register RP
         $self->rpOptions->{$rp}    = $config{options};
@@ -291,6 +301,7 @@ sub load_rp {
         $self->rpRules->{$rp}      = $rule;
     }
     else {
+        $self->logger->debug(" -> RP $rp is NOT valid");
         $self->logger->error(
             "Relying Party $rp has errors and will be ignored");
     }
@@ -375,7 +386,8 @@ sub getCallbackUri {
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
 
-    my $callback_uri = $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
+    my $callback_uri =
+      $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
     $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;

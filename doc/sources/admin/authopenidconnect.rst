@@ -273,19 +273,26 @@ Used only if at least 2 OIDC Providers are declared
 -  **Logo**: Logo of the OP
 -  **Tooltip**: Information displayed on mouse over the button
 -  **Resolution rule**: Rule that will be applied to preselect an OP
-   for a user. You have access to all environment variable *(like user
-   IP address)* and all session keys.
+   for a user. You have access to all environment variables *(like user
+   IP address)* and all session keys. You have also access to OIDC parameters
+   constituting the QueryString. Those variables are prefixed by ``llng_oidc_``.
 
-For example, to preselect this OP for users coming from 129.168.0.0/16
-network
-
-::
+For example, to preselect this OP for users coming from 192.168.0.0/16 network ::
 
    $ENV{REMOTE_ADDR} =~ /^192\.168/
+
+   $env->{REMOTE_ADDR} =~ /^192\.168/
+
+   inSubnet('192.168.0.0/16')
 
 To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected ::
 
     $_choice eq "MY_OP"
+
+To preselect this OP for users with a particular ``login_hint`` ::
+
+   $env->{llng_oidc_login_hint} =~ /@example\.com$/
+
 
 -  **Order**: Used for sorting OP
 
