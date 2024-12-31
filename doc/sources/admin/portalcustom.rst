@@ -61,7 +61,8 @@ You can display a button to go to back to the top after <value> pixels scrolling
 Floating category name
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can display an applications category as a floating menu by specifying its name.
+You can display an applications category as a floating menu by specifying its category ``name``.
+Example: ``Sample applications``.
 
 .. tip::
 
