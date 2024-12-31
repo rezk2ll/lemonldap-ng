@@ -39,6 +39,27 @@ Apply the following patches to ``menu.tpl`` and ``script.tpl`` to use this new f
                      <div class="card-header text-white bg-secondary">
                      <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
 
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/footer.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/footer.tpl
+    @@ -1,10 +1,12 @@
+       </div>
+     
+    -<TMPL_IF NAME="SCROLL_TOP">
+    -  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+    -    <i class="fa fa-arrow-circle-up"></i>
+    -  </button>
+    -</TMPL_IF>
+    +  <TMPL_IF NAME="SCROLL_TOP">
+    +    <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+    +      <i class="fa fa-chevron-up"></i>
+    +    </button>
+    +  </TMPL_IF>
+    +
+    +  <div class="col-6" id="floating-menu"></div>
+     
+       <div id="footer">
+         <div class="row">
+
     --- a/lemonldap-ng-portal/site/templates/common/script.tpl
     +++ b/lemonldap-ng-portal/site/templates/common/script.tpl
     @@ -49,7 +49,7 @@
