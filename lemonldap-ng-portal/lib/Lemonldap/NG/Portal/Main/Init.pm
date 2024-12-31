@@ -505,7 +505,7 @@ sub loadPlugin {
     my ( $self, $plugin ) = @_;
     unless ($plugin) {
         require Carp;
-        Carp::confess('Calling loadPugin without arg !');
+        Carp::confess('Calling loadPugin without arg!');
     }
     my $obj;
     return 0

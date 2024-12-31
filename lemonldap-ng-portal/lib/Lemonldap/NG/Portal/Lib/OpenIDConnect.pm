@@ -244,7 +244,7 @@ sub load_rp {
             }
         }
         if ( $jwks and ref($jwks) eq 'HASH' and $jwks->{keys} ) {
-            $self->logger->debug("Processing JWKS document for RP $rp...");
+            $self->logger->debug("Processing JWKS document for RP $rp");
             my %keys;
             my %validKeys;
             foreach my $key ( sort @{ $jwks->{keys} } ) {
