@@ -249,16 +249,16 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
 # JS source files
-MANAGERJSSRCFILES:=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
-PORTALJSSRCFILES:=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.js')
-MANAGERJSDSTFILES:=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
-PORTALJSDSTFILES:=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
-JSDSTFILES:=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
+MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
+PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.js')
+MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
+PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
+JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
 
 # Minified files
 JSMINFILES=$(JSSRCFILES:.js=.min.js)
@@ -323,20 +323,30 @@ configure:	common_conf handler_conf portal_conf manager_conf
 
 js: $(JSDSTFILES)
 
-minify: js $(JSMINFILES) $(CSSMINFILES)
+minify: $(JSDSTFILES) $(JSMINFILES) $(CSSMINFILES)
+
+_rollup_portal:
+	@if which rollup >/dev/null; then \
+		cd $(SRCPORTALDIR)/site/js-src && \
+		rollup -c; \
+	else \
+		echo "Can't find rollup"; \
+	fi
 
 $(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/js-src/%.js
+	$(MAKE) _rollup_portal
+
+_rollup_manager:
 	@if which rollup >/dev/null; then \
-		echo "Compiling $(SRCPORTALDIR)/site/js-src/$*.js"; \
-		rollup -f iife -o $(SRCPORTALDIR)/site/htdocs/static/common/js/$*.js $(SRCPORTALDIR)/site/js-src/$*.js; \
+		cd $(SRCMANAGERDIR)/site/js-src && \
+		rollup -c; \
 	else \
 		echo "Can't find rollup"; \
 	fi
 
 $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
-	@if which rollup >/dev/null; then \
-		echo "Compiling $(SRCMANAGERDIR)/site/js-src/$*.js"; \
-		rollup -f iife -o $(SRCMANAGERDIR)/site/htdocs/static/js/$*.js $(SRCMANAGERDIR)/site/js-src/$*.js; \
+	@if test "$*" != "conftree"; then \
+		$(MAKE) _rollup_manager; \
 	fi
 
 %.min.css: %.css
