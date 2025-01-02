@@ -30,6 +30,8 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 use constant beforeAuth  => 'storeEnvAndCheckGateway';
 use constant sessionKind => 'ICAS';
 
+use constant hook => { updateSessionId => 'updateCasSecondarySessions', };
+
 has rule => ( is => 'rw' );
 
 sub init {
