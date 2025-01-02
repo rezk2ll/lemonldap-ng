@@ -554,8 +554,8 @@ sub _authorizeEndpoint {
         );
     }
 
-    my $spAuthnLevel =
-      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $spAuthnLevel = $self->rpLevelRules->{$rp}->( $req, $req->sessionInfo );
+    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 
     # RP may increase, but not lower, the requirement set in LLNG conf
     if ( $oidc_request->{'acr_values'} ) {
@@ -2760,8 +2760,7 @@ sub exportRequestParameters {
 
     # Store target authentication level in pdata
     if ($rp) {
-        my $targetAuthnLevel =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+        my $targetAuthnLevel = $self->rpLevelRules->{$rp}->( $req, {} );
 
         if ( my $acr_values = $req->env->{'llng_oidc_acr_values'} ) {
             $targetAuthnLevel =

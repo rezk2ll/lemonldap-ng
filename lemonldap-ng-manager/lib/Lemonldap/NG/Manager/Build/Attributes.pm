@@ -542,8 +542,7 @@ sub attributes {
         rememberAuthChoiceForgetAtLogout => {
             type          => 'bool',
             default       => 0,
-            documentation =>
-              'Forget Auth Choice at logout',
+            documentation => 'Forget Auth Choice at logout',
         },
         rememberAuthChoiceRule => {
             type          => 'boolOrExpr',
@@ -1368,8 +1367,9 @@ sub attributes {
         useRedirectAjaxOnUnauthorized => {
             type          => 'bool',
             default       => 1,
-            documentation => 'Redirect Ajax requests to portal for unauthorized (401)',
-            flags         => 'h',
+            documentation =>
+              'Redirect Ajax requests to portal for unauthorized (401)',
+            flags => 'h',
         },
         useRedirectOnError => {
             type          => 'bool',
@@ -3030,7 +3030,8 @@ sub attributes {
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this CAS application',
         },
@@ -3696,7 +3697,8 @@ sub attributes {
             default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this SP',
         },
@@ -5194,7 +5196,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Invalidate refresh token after use',
         },
         oidcRPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this RP',
         },
@@ -5303,9 +5306,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
               'List of RP authorized to query for an access_token of this RP',
         },
         appAccessHistoryEnabled => {
-            type    => 'bool',
-            default => 0,
-			documentation => 'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
+            type          => 'bool',
+            default       => 0,
+            documentation =>
+'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
         },
     };
 }

@@ -40,6 +40,7 @@ has rpAttributes => ( is => 'rw', default => sub { {} }, );
 has rpMacros     => ( is => 'rw', default => sub { {} } );
 has rpOptions    => ( is => 'rw', default => sub { {} }, );
 has rpRules      => ( is => 'rw', default => sub { {} } );
+has rpLevelRules => ( is => 'rw', default => sub { {} } );
 has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
 has rpEncKey     => ( is => 'rw', default => sub { {} } );
@@ -164,12 +165,18 @@ sub load_rp {
     my $rule = $config{options}->{oidcRPMetaDataOptionsRule};
     if ( length $rule ) {
         $self->logger->debug("Processing access rule for RP $rp...");
-        $rule = $self->p->HANDLER->substitute($rule);
-        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-            $self->logger->error( "Unable to build access rule for RP $rp: "
-                  . $self->p->HANDLER->tsv->{jail}->error );
+        $rule = $self->p->buildRule( $rule, "access rule for RP $rp" );
+        unless ($rule) {
             $valid = 0;
         }
+    }
+
+    # Required authentication level rule
+    my $levelrule = $config{options}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    $levelrule = $self->p->buildRule( $levelrule,
+        "required authentication level rule for RP $rp" );
+    unless ($levelrule) {
+        $valid = 0;
     }
 
     # Load per-RP macros
@@ -299,6 +306,7 @@ sub load_rp {
         $self->rpMacros->{$rp}     = $compiledMacros;
         $self->rpScopeRules->{$rp} = $compiled_scope_rules;
         $self->rpRules->{$rp}      = $rule;
+        $self->rpLevelRules->{$rp} = $levelrule;
     }
     else {
         $self->logger->debug(" -> RP $rp is NOT valid");

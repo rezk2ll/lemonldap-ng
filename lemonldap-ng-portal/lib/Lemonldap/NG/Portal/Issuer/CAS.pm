@@ -127,8 +127,8 @@ sub storeEnvAndCheckGateway {
             $req->env->{llng_cas_app} = $app;
 
             # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->casAppList->{$app}->{casAppMetaDataOptionsAuthnLevel};
+            my $targetAuthnLevel = $self->spLevelRules->{$app}->( $req, {} );
+
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
 
@@ -203,7 +203,8 @@ sub run {
         ) if ( $h != PE_OK );
 
         my $service = $cas_request->{service};
-        $service = '' if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
+        $service = ''
+          if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
 
@@ -225,7 +226,7 @@ sub run {
         my $spAuthnLevel = 0;
         if ($app) {
             $spAuthnLevel =
-              $self->casAppList->{$app}->{casAppMetaDataOptionsAuthnLevel} || 0;
+              $self->spLevelRules->{$app}->( $req, $req->sessionInfo );
         }
 
         # Renew
