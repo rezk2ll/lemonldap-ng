@@ -3317,6 +3317,39 @@ sub setProviderEncryptionMode {
 
 }
 
+## @method boolean updateSAMLSecondarySessions(string old_session_id, string new_session_id)
+# Update _saml_id of secondary sessions when the session ID is changed (upgrade)
+sub updateSAMLSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    # Find SAML sessions
+    my $saml_sessions =
+      Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
+        "_saml_id", $old_session_id );
+
+    if (
+        my @saml_sessions_keys =
+        grep { $saml_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$saml_sessions
+      )
+    {
+
+        foreach my $saml_session (@saml_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve SAML session $saml_session");
+
+            my $samlSessionInfo = $self->getSamlSession($saml_session);
+
+            # Update session
+            if ($samlSessionInfo) {
+                $samlSessionInfo->update( { '_saml_id' => $new_session_id } );
+            }
+        }
+    }
+    return;
+}
+
 ## @method boolean deleteSAMLSecondarySessions(string session_id)
 # Find and delete SAML sessions bounded to a primary session
 # @param session_id Primary session ID
