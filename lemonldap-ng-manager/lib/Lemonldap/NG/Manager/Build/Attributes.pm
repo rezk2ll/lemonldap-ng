@@ -524,6 +524,10 @@ sub attributes {
             default       => 400,
             documentation => 'Display back to top button',
         },
+        floatingCategoryName => {
+            type          => 'text',
+            documentation => 'Name of the category displayed as floating menu',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',

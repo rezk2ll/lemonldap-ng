@@ -58,6 +58,16 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
     A blank or null value disable this feature.
 
+Floating category name
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can display an applications category as a floating menu by specifying its category ``name``.
+Example: ``Sample applications``.
+
+.. tip::
+
+    A blank or an inexisting value disable this feature.
+
 Custom CSS file
 ~~~~~~~~~~~~~~~
 

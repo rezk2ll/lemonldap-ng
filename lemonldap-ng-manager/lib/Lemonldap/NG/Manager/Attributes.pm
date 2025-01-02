@@ -1551,6 +1551,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => '*',
             'type'    => 'text'
         },
+        'floatingCategoryName' => {
+            'type' => 'text'
+        },
         'forceGlobalStorageIssuerOTT' => {
             'type' => 'bool'
         },

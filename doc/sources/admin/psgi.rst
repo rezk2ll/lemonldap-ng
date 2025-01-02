@@ -153,7 +153,7 @@ and/or Nginx init files several options. Example:
 
       uwsgi:
               plugins: psgi
-              socket: /tmp/uwsgi.sock
+              socket: /run/uwsgi.sock
 
     and adapting Nignx configuration files:
 
@@ -161,7 +161,7 @@ and/or Nginx init files several options. Example:
 
       # With uWSGI
       include /etc/nginx/uwsgi_params;
-      uwsgi_pass unix:///tmp/uwsgi.sock;
+      uwsgi_pass unix:/run/uwsgi.sock;
       uwsgi_param LLTYPE psgi;
       uwsgi_param SCRIPT_FILENAME $document_root$sc;
       uwsgi_param SCRIPT_NAME $sc;
