@@ -38,6 +38,7 @@ with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
 # INTERFACE
 
 sub beforeAuth { 'exportRequestParameters' }
+use constant hook => { updateSessionId => 'updateOidcSecondarySessions' };
 
 # INITIALIZATION
 
@@ -2963,6 +2964,44 @@ sub encryptToken {
         return undef;
     }
     return $token;
+}
+
+# Change the ID of secondary sessions (during upgrade)
+sub updateOidcSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my %opts    = $self->_storeOpts;
+    my $options = $opts{storageModuleOptions};
+    $options->{backend} = $opts{storageModule};
+
+    my $oidc_sessions =
+      $module->searchOn( $options, "user_session_id", $old_session_id );
+
+    if (
+        my @oidc_sessions_keys =
+        grep { $oidc_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$oidc_sessions
+      )
+    {
+
+        foreach my $oidc_session (@oidc_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve OIDC session $oidc_session");
+
+            my $oidcSession = $self->getOpenIDConnectSession($oidc_session);
+
+            if ($oidcSession) {
+
+                # Delete session
+                $oidcSession->update( { user_session_id => $new_session_id } );
+            }
+        }
+    }
+
+    return;
 }
 
 1;
