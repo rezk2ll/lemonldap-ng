@@ -784,7 +784,9 @@ sub getAccessTokenFromTokenEndpoint {
     }
 
     if ( $response->is_error ) {
-        $self->logger->error( "Bad token response: " . $response->message );
+        $self->logger->error(
+            "Bad token response from $op, grant_type: $grant_type, error: "
+              . $response->message );
         $self->logger->debug( $response->content );
         return 0;
     }
