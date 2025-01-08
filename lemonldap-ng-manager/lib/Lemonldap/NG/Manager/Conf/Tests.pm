@@ -1286,6 +1286,22 @@ sub tests {
                 and $conf->{passwordPolicyActivation} );
             return 1;
         },
+        accessTokenConsistency => sub {
+            return 1
+              unless $conf->{issuerDBOpenIDConnectActivation};
+            my @pb;
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsAccessTokenClaims}
+                  and not $opts->{oidcRPMetaDataOptionsAccessTokenJWT};
+            }
+            return 1 unless @pb;
+            return ( 0,
+                'access_token cannot be opaque with claims in access_token ('
+                  . join( ', ', @pb )
+                  . ')' );
+        }
     };
 }
 
