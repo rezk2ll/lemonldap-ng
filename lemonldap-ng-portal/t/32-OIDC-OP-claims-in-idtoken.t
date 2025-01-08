@@ -97,6 +97,11 @@ count(3);
 ok( $rp = register( 'rp', sub { rp( $jwks, $metadata ) } ), 'RP portal' );
 count(1);
 
+eval '
+    no warnings;
+    sub Lemonldap::NG::Portal::Lib::OpenIDConnect::getUserInfo {die}
+';
+
 # Query RP for auth
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
