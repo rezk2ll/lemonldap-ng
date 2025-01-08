@@ -2486,6 +2486,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'oidcOPMetaDataOptionsAccessTokenClaims' => {
+            'type' => 'bool'
+        },
         'oidcOPMetaDataOptionsAcrValues' => {
             'type' => 'text'
         },
@@ -2604,6 +2607,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcOPMetaDataOptionsIcon' => {
             'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsIDTokenForceClaims' => {
+            'type' => 'bool'
         },
         'oidcOPMetaDataOptionsIDTokenMaxAge' => {
             'default' => 30,

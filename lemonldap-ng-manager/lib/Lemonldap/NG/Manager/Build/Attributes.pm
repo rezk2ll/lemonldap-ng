@@ -5051,6 +5051,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Use PKCE with this OP',
         },
+        oidcOPMetaDataOptionsIDTokenForceClaims => {
+            type => 'bool',
+            documentation => "Use data from ID token instead of user_info endmoint",
+        },
+        oidcOPMetaDataOptionsAccessTokenClaims => {
+            type => 'bool',
+            documentation => "Use data from access token instead of user_info endmoint",
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

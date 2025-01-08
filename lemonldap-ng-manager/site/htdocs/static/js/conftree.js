@@ -479,6 +479,18 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUseNonce",
                   "title" : "oidcOPMetaDataOptionsUseNonce",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIDTokenForceClaims",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIDTokenForceClaims",
+                  "title" : "oidcOPMetaDataOptionsIDTokenForceClaims",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAccessTokenClaims",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAccessTokenClaims",
+                  "title" : "oidcOPMetaDataOptionsAccessTokenClaims",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
