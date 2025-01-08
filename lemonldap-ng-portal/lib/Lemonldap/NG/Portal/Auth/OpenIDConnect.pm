@@ -209,6 +209,7 @@ sub extractFormInfo {
                 $self->decodeJWT( $id_token, $op ) )
             {
                 $self->logger->error("JWT signature verification failed");
+                $self->logger->error("Failing JWT is: $id_token");
                 return PE_OIDC_AUTH_ERROR;
             }
             $self->logger->debug("JWT signature verified");
