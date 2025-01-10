@@ -572,7 +572,7 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
 
 %post common
 # Upgrade from previous version
-# See http://lemonldap-ng.org/documentation/1.0/upgrade
+# See https://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
     if [ -e %{lm_confdir}/storage.conf \
          -o -e %{lm_confdir}/apply.conf \
