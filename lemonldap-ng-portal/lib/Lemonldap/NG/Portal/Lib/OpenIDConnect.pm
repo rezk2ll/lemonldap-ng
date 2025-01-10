@@ -47,11 +47,11 @@ has rpEncKey     => ( is => 'rw', default => sub { {} } );
 has rpSigKey     => ( is => 'rw', default => sub { {} } );
 
 # Deprecated names, remove in 3.0
-*oidcOPList   = *opMetadata;
-*oidcRPList   = *rpOptions;
-*spMacros     = *rpMacros;
-*spRules      = *rpRules;
-*spScopeRules = *rpScopeRules;
+*oidcOPList   = \&opMetadata;
+*oidcRPList   = \&rpOptions;
+*spMacros     = \&rpMacros;
+*spRules      = \&rpRules;
+*spScopeRules = \&rpScopeRules;
 
 # return LWP::UserAgent object
 has ua => (
