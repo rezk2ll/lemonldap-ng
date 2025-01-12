@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::UserDB::OpenIDConnect;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::JWT 'getJWTPayload';
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_AUTH_ERROR
   PE_BADCREDENTIALS
@@ -44,21 +45,20 @@ sub getUser {
 
     my $userinfo_content;
     if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsIDTokenForceClaims} ) {
-        my ( undef, $tmp, undef ) = split /\./, $req->data->{id_token};
-        $userinfo_content =
-          eval { JSON::from_json( MIME::Base64::decode_base64url($tmp) ) };
-        $self->logger->error("Unable to read ID token content: $@") if ($@);
+        $userinfo_content = getJWTPayload( $req->data->{id_token} );
+        $self->logger->error(
+            "Unable to read ID token content: " . $req->data->{id_token} )
+          unless ($userinfo_content);
     }
     if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsAccessTokenClaims} ) {
-        my ( undef, $tmp, undef ) = split /\./, $req->data->{access_token};
-        eval {
-            $tmp = JSON::from_json( MIME::Base64::decode_base64url($tmp) );
-            $userinfo_content =
-              $userinfo_content
-              ? { %{ $userinfo_content || {} }, %{ $tmp || {} } }
-              : $tmp;
-        };
-        $self->logger->error("Unable to read ID token content: $@") if ($@);
+        my $tmp = getJWTPayload($access_token);
+        if ($tmp) {
+            $userinfo_content = { %{ $userinfo_content || {} }, %$tmp };
+        }
+        else {
+            $self->logger->error(
+                "Unable to read ID token content: $access_token");
+        }
     }
     unless ($userinfo_content) {
         $userinfo_content = $self->getUserInfo( $op, $access_token );
