@@ -260,8 +260,7 @@ Protocol
    date and reject it if too old
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
--  **Use claims from ID Token**: use claims given in ID token instead of querying userInfo endpoint
--  **Use claims from Access Token**: use claims given in access_token instead of querying userInfo endpoint
+-  **User Info source**: source of user info data. Default to query userInfo endpoint
 
 Comment: Set a comment
 """""""""""""""""""""""
