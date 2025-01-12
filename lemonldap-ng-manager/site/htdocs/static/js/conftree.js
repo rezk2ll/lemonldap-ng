@@ -481,16 +481,25 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIDTokenForceClaims",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIDTokenForceClaims",
-                  "title" : "oidcOPMetaDataOptionsIDTokenForceClaims",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAccessTokenClaims",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAccessTokenClaims",
-                  "title" : "oidcOPMetaDataOptionsAccessTokenClaims",
-                  "type" : "bool"
+                  "default" : "userinfo",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "select" : [
+                     {
+                        "k" : "userinfo",
+                        "v" : "Userinfo endpoint"
+                     },
+                     {
+                        "k" : "id_token",
+                        "v" : "ID Token"
+                     },
+                     {
+                        "k" : "access_token",
+                        "v" : "Access Token"
+                     }
+                  ],
+                  "title" : "oidcOPMetaDataOptionsUserinfoSource",
+                  "type" : "select"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",

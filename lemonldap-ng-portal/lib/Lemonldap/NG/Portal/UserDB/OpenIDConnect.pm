@@ -44,13 +44,15 @@ sub getUser {
     }
 
     my $userinfo_content;
-    if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsIDTokenForceClaims} ) {
+    my $source = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUserinfoSource}
+      || 'userinfo';
+    if ( $source eq 'id_token' ) {
         $userinfo_content = getJWTPayload( $req->data->{id_token} );
         $self->logger->error(
             "Unable to read ID token content: " . $req->data->{id_token} )
           unless ($userinfo_content);
     }
-    if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsAccessTokenClaims} ) {
+    elsif ( $source eq 'access_token' ) {
         my $tmp = getJWTPayload($access_token);
         if ($tmp) {
             $userinfo_content = { %{ $userinfo_content || {} }, %$tmp };
@@ -61,6 +63,11 @@ sub getUser {
         }
     }
     unless ($userinfo_content) {
+        unless ( $source eq 'userinfo' ) {
+            $self->logger->error(
+                "Failed to get user info from $source, trying userinfo endpoint"
+            );
+        }
         $userinfo_content = $self->getUserInfo( $op, $access_token );
     }
 

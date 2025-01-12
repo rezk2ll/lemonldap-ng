@@ -245,7 +245,7 @@ sub rp {
                         oidcOPMetaDataOptionsClientID           => "rpid",
                         oidcOPMetaDataOptionsStoreIDToken       => 1,
                         oidcOPMetaDataOptionsUseNonce           => 1,
-                        oidcOPMetaDataOptionsIDTokenForceClaims => 1,
+                        oidcOPMetaDataOptionsUserinfoSource     => 'id_token',
                         oidcOPMetaDataOptionsConfigurationURI   =>
                           "https://auth.op.com/.well-known/openid-configuration"
                     }

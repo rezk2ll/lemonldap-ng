@@ -2486,9 +2486,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptions' => {
             'type' => 'subContainer'
         },
-        'oidcOPMetaDataOptionsAccessTokenClaims' => {
-            'type' => 'bool'
-        },
         'oidcOPMetaDataOptionsAcrValues' => {
             'type' => 'text'
         },
@@ -2608,9 +2605,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptionsIcon' => {
             'type' => 'text'
         },
-        'oidcOPMetaDataOptionsIDTokenForceClaims' => {
-            'type' => 'bool'
-        },
         'oidcOPMetaDataOptionsIDTokenMaxAge' => {
             'default' => 30,
             'type'    => 'int'
@@ -2678,6 +2672,23 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcOPMetaDataOptionsUserAttribute' => {
             'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsUserinfoSource' => {
+            'default' => 'userinfo',
+            'select'  => [ {
+                    'k' => 'userinfo',
+                    'v' => 'Userinfo endpoint'
+                },
+                {
+                    'k' => 'id_token',
+                    'v' => 'ID Token'
+                },
+                {
+                    'k' => 'access_token',
+                    'v' => 'Access Token'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPCallbackGetParam' => {
             'default' => 'openidconnectcallback',

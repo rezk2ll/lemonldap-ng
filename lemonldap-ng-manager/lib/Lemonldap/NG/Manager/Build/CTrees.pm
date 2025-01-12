@@ -201,8 +201,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsCheckJWTSignature',
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
                             'oidcOPMetaDataOptionsUseNonce',
-                            'oidcOPMetaDataOptionsIDTokenForceClaims',
-                            'oidcOPMetaDataOptionsAccessTokenClaims',
+                            'oidcOPMetaDataOptionsUserinfoSource',
                         ]
                     },
                     'oidcOPMetaDataOptionsComment'
