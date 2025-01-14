@@ -94,7 +94,38 @@ The current LemonLDAP::NG configuration can be accessed in the ``$self->conf`` h
 You can set your own parameters in ``General Parameters`` » ``Plugins`` » ``Custom plugins`` » ``Additional parameters``
 and reach them through ``customPluginsParams``
 
+.. tip::
+
+    If you have got several plugins with several parameters, parameters can be passed by using JSON notation ``myPluginParams = {"title":"myTitle", "msg":"myMsg"}`` and converted into a PERL object with ``from_json`` function.
+
+
 .. code-block:: perl
+
+    use Mouse;
+    use JSON 'from_json';
+
+    has myPluginParams => (
+        is => 'ro',
+        builder => sub {
+            my $self = $_[0];
+            my $defaultParams = {
+                title => 'title',
+                msg   => 'msg',
+                path  => 'path',
+            };
+            my $params = eval {
+                from_json( $self->conf->{customPluginsParams}->{myPluginParams} );
+            };
+            if ($@) {
+                my $package = __PACKAGE__;
+                $self->userLogger->warn(
+            "Bad JSON file: $package plugin will use default parameters ($@)"
+                );
+                return $defaultParams;
+            }
+            return { %$defaultParams, %$params };
+        }
+    );
 
     sub my_function {
         my ($self, $req) = @_;
@@ -104,7 +135,10 @@ and reach them through ``customPluginsParams``
 
         # Get your custom LLNG option
         my $myvar = $self->conf->{customPluginsParams}->{myvar};
-        }
+
+        # Get your custom LLNG option from your parameters hash
+        my $title = $self->myPluginParams->{title};
+    }
 
 Logs
 ~~~~
