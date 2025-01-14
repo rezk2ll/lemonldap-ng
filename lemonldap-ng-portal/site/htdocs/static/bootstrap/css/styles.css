@@ -197,16 +197,21 @@ div.oidc_consent_message > ul {
 }
 
 input.key {
+  -webkit-text-security: disc;
+}
+
+/* Uncomment this if browser does not support '-webkit-text-security' directive
+input.key {
   font-family: 'password';
   width: 100px;  
 }
-
 @font-face {
   font-family: 'password';
-  /*font-style: normal;*/
-  /*font-weight: 400;*/
+  font-style: normal;
+  font-weight: 400;
   src: url(/static/common/fonts/password.ttf);
 }
+*/
 
 .info.table caption {
   color: black;
