@@ -723,6 +723,7 @@
 "oidcOPMetaDataOptionsUiLocales":"Giao diện Người dùng",
 "oidcOPMetaDataOptionsUseNonce":"Sử dụng nonce",
 "oidcOPMetaDataOptionsUserAttribute":"Thuộc tính chứa định danh người dùng",
+"oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"Tên bộ cung cấp kết nối OpenID",
 "oidcParams":"Các tham số kết nối OpenID",
 "oidcRP":"OpenID Connect Relying Party",

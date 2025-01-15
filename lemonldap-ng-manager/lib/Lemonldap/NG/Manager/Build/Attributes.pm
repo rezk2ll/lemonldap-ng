@@ -5051,6 +5051,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Use PKCE with this OP',
         },
+        oidcOPMetaDataOptionsUserinfoSource => {
+            type    => 'select',
+            default => 'userinfo',
+            select  => [
+                { k => 'userinfo',     v => 'Userinfo endpoint' },
+                { k => 'id_token',     v => 'ID Token' },
+                { k => 'access_token', v => 'Access Token' },
+            ],
+            documentation => "Source of userinfo",
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

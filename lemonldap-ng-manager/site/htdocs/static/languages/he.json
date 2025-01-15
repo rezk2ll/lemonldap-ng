@@ -723,6 +723,7 @@
 "oidcOPMetaDataOptionsUiLocales":"Locales UI",
 "oidcOPMetaDataOptionsUseNonce":"Use nonce",
 "oidcOPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
+"oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"OpenID Connect Provider Name",
 "oidcParams":"משתני OpenID Connect",
 "oidcRP":"גוף סמך של OpenID Connect",

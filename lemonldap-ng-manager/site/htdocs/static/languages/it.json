@@ -723,6 +723,7 @@
 "oidcOPMetaDataOptionsUiLocales":"Locales UI",
 "oidcOPMetaDataOptionsUseNonce":"Usare nonce",
 "oidcOPMetaDataOptionsUserAttribute":"Attributo che contiene l'identificatore dell'utente",
+"oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"Nome del Provider di OpenID Connect",
 "oidcParams":"Parametri di OpenID Connect",
 "oidcRP":"Parte basata su OpenID Connect",

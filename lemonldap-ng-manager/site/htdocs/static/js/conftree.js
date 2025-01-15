@@ -479,6 +479,27 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUseNonce",
                   "title" : "oidcOPMetaDataOptionsUseNonce",
                   "type" : "bool"
+               },
+               {
+                  "default" : "userinfo",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "select" : [
+                     {
+                        "k" : "userinfo",
+                        "v" : "Userinfo endpoint"
+                     },
+                     {
+                        "k" : "id_token",
+                        "v" : "ID Token"
+                     },
+                     {
+                        "k" : "access_token",
+                        "v" : "Access Token"
+                     }
+                  ],
+                  "title" : "oidcOPMetaDataOptionsUserinfoSource",
+                  "type" : "select"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",

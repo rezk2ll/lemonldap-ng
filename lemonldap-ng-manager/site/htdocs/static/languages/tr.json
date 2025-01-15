@@ -723,6 +723,7 @@
 "oidcOPMetaDataOptionsUiLocales":"Yerel UI",
 "oidcOPMetaDataOptionsUseNonce":"Tek seferlik anahtarı kullan",
 "oidcOPMetaDataOptionsUserAttribute":"Nitelik kullanıcı kimliği içeriyor",
+"oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"OpenID Connect Sağlayıcı Adı",
 "oidcParams":"OpenID Connect parametreleri",
 "oidcRP":"OpenID Connect Relying Party",

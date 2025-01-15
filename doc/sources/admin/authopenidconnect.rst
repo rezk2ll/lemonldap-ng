@@ -260,6 +260,7 @@ Protocol
    date and reject it if too old
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
+-  **User Info source**: source of user data. Default to query userInfo endpoint
 
 Comment: Set a comment
 """""""""""""""""""""""

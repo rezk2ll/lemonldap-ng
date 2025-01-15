@@ -723,6 +723,7 @@
 "oidcOPMetaDataOptionsUiLocales":"UI локалей",
 "oidcOPMetaDataOptionsUseNonce":"Использовать одноразовый номер",
 "oidcOPMetaDataOptionsUserAttribute":"Атрибут, содержащий идентификатор пользователя",
+"oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"Имя провайдера OpenID Connect",
 "oidcParams":"Параметры OpenID Connect",
 "oidcRP":"Доверяющая сторона OpenID Connect",
