@@ -7,14 +7,11 @@ Presentation
 Password is not a common attribute. Indeed, in most of the cases, it is
 not stored in clear text in the backend (LDAP or database).
 
-So, to keep user password in session, you cannot just export the
+So to keep user password in session, you cannot just export the
 password variable in session. To bypass this, LL::NG can remember what
-password was given by user on authentication phase.
-
+password was given by user during authentication.
 
 .. attention::
-
-
 
     -  As this may be a security hole, password store in session is not
        activated by default
@@ -23,7 +20,8 @@ password was given by user on authentication phase.
        so not with Kerberos for example
     -  This mechanism will not work with Persistent connections plugin, as
        the password is not available if user is automatically connected
-
+    -  Password can be encrypted in session, you need to enable this option,
+       as this is disabled by default
 
 
 Configuration
@@ -31,6 +29,9 @@ Configuration
 
 Go in Manager, ``General Parameters`` » ``Sessions`` »
 ``Store user password in session data`` and set to ``On``.
+
+To encrypt value in session, go to ``General Parameters`` » ``Sessions`` »
+``Encrypt password in sessio`` and set to ``On``.
 
 Usage
 -----

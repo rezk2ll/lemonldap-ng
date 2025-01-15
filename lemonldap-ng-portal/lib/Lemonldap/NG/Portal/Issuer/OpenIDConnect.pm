@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -554,8 +554,8 @@ sub _authorizeEndpoint {
         );
     }
 
-    my $spAuthnLevel =
-      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $spAuthnLevel = $self->rpLevelRules->{$rp}->( $req, $req->sessionInfo );
+    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 
     # RP may increase, but not lower, the requirement set in LLNG conf
     if ( $oidc_request->{'acr_values'} ) {
@@ -913,6 +913,9 @@ sub _authorizeEndpoint {
         $self->logger->debug("Generated code: $code");
 
         my $state = $oidc_request->{'state'};
+
+        $self->p->registerProtectedAppAccess( $req,
+            $req->sessionInfo->{ $self->conf->{whatToTrace} }, "oidc:$rp" );
 
         $self->auditLog(
             $req,
@@ -1337,6 +1340,7 @@ sub findRPFromUri {
 sub isUriAllowedForRP {
     my ( $self, $uri, $rp, $option, $wildcard_allowed ) = @_;
     my $allowed_uris = $self->rpOptions->{$rp}->{$option} // "";
+    $self->logger->debug("Allowed URIs for $rp: $allowed_uris");
 
     my $is_uri_allowed;
     if ($wildcard_allowed) {
@@ -1477,6 +1481,9 @@ sub _handleClientCredentialsGrant {
         $infos, $rp );
     return $self->sendOIDCError( $req, 'server_error', 500 ) if ( $h != PE_OK );
 
+    # Update scope in case hook changed it
+    $scope = $infos->{_scope};
+
     # Run rule against session info
     if ( my $rule = $self->rpRules->{$rp} ) {
         my $ruleVariables =
@@ -1497,7 +1504,8 @@ sub _handleClientCredentialsGrant {
     }
 
     my $access_token = $self->newAccessToken(
-        $req, $rp, $scope, $infos,
+        $req, $rp, $scope,
+        $session->data,
         {
             scope           => $scope,
             rp              => $rp,
@@ -2684,8 +2692,11 @@ sub logout {
 sub metadata {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    my %args;
+    $args{ttl} = $self->conf->{oidcServiceMetadataTtl}
+      if $self->conf->{oidcServiceMetadataTtl};
     return $self->p->sendJSONresponse( $req,
-        $self->metadataDoc( $self->get_issuer($req) ) );
+        $self->metadataDoc( $self->get_issuer($req) ), %args );
 }
 
 # Store request parameters in %ENV
@@ -2734,8 +2745,7 @@ sub exportRequestParameters {
 
     # Store target authentication level in pdata
     if ($rp) {
-        my $targetAuthnLevel =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+        my $targetAuthnLevel = $self->rpLevelRules->{$rp}->( $req, {} );
 
         if ( my $acr_values = $req->env->{'llng_oidc_acr_values'} ) {
             $targetAuthnLevel =

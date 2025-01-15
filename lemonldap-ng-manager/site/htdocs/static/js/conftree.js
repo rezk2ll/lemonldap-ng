@@ -58,8 +58,7 @@ function templates(tpl,key) {
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
-            "title" : "casAppMetaDataOptionsAuthnLevel",
-            "type" : "intOrNull"
+            "title" : "casAppMetaDataOptionsAuthnLevel"
          },
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
@@ -480,6 +479,27 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUseNonce",
                   "title" : "oidcOPMetaDataOptionsUseNonce",
                   "type" : "bool"
+               },
+               {
+                  "default" : "userinfo",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "select" : [
+                     {
+                        "k" : "userinfo",
+                        "v" : "Userinfo endpoint"
+                     },
+                     {
+                        "k" : "id_token",
+                        "v" : "ID Token"
+                     },
+                     {
+                        "k" : "access_token",
+                        "v" : "Access Token"
+                     }
+                  ],
+                  "title" : "oidcOPMetaDataOptionsUserinfoSource",
+                  "type" : "select"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
@@ -739,8 +759,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
-                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "oidcRPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
@@ -2027,8 +2046,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
-                  "title" : "samlSPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "samlSPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",

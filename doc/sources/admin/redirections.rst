@@ -68,6 +68,7 @@ The user will be redirected on portal URL with error in the ``lmerror`` route.
 These parameters can be configured in Manager, in ``General Parameters``
 > ``Advanced parameters`` > ``Handler redirections``:
 
+-  **Redirect AJAX requests on unauthorized**: use 302 instead of 401 when AJAX requests are not authenticated
 -  **Redirect on forbidden**: use 302 instead 403
 -  **Redirect on error**: use 302 instead 500 or 503
 

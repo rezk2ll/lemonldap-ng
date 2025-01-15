@@ -34,6 +34,7 @@ has idpAttributes => ( is => 'rw', default => sub { {} } );
 has idpOptions    => ( is => 'rw', default => sub { {} } );
 has spList        => ( is => 'rw', default => sub { {} } );
 has spRules       => ( is => 'rw', default => sub { {} } );
+has spLevelRules  => ( is => 'rw', default => sub { {} } );
 has spMacros      => ( is => 'rw', default => sub { {} } );
 has spAttributes  => ( is => 'rw', default => sub { {} } );
 has spOptions     => ( is => 'rw', default => sub { {} } );
@@ -461,15 +462,22 @@ sub load_sp_metadata {
       = @_;
 
     my $valid = 1;
-    my $rule  = $options->{samlSPMetaDataOptionsRule};
 
+    # Access Rule
+    my $rule = $options->{samlSPMetaDataOptionsRule};
     if ( length $rule ) {
-        $rule = $self->p->HANDLER->substitute($rule);
-        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-            $self->logger->error( 'SAML SP rule error: '
-                  . $self->p->HANDLER->tsv->{jail}->error );
+        $rule = $self->p->buildRule( $rule, "access rule for SP $spConfKey" );
+        unless ($rule) {
             $valid = 0;
         }
+    }
+
+    # Required authentication level rule
+    my $levelrule = $options->{samlSPMetaDataOptionsAuthnLevel} || 0;
+    $levelrule = $self->p->buildRule( $levelrule,
+        "required authentication level rule for SP $spConfKey" );
+    unless ($levelrule) {
+        $valid = 0;
     }
 
     # Load per-SP macros
@@ -491,8 +499,9 @@ sub load_sp_metadata {
     }
 
     if ($valid) {
-        $self->spRules->{$spConfKey}  = $rule;
-        $self->spMacros->{$spConfKey} = $compiledMacros;
+        $self->spRules->{$spConfKey}      = $rule;
+        $self->spLevelRules->{$spConfKey} = $levelrule;
+        $self->spMacros->{$spConfKey}     = $compiledMacros;
     }
     else {
         $self->logger->error(
@@ -563,7 +572,7 @@ sub load_sp_metadata {
 sub lazy_load_message {
     my ( $self, $message ) = @_;
     return unless $message;
-    my $entityID = Lasso::profile_get_issuer($message);
+    my $entityID = $self->getIssuer($message);
     if ($entityID) {
         $self->logger->debug("Found entityID $entityID in message");
         return $self->lazy_load_entityid($entityID);
@@ -1438,6 +1447,28 @@ sub acceptSSO {
     return $self->checkLassoError($@);
 }
 
+## @method string getIssuer(string msg)
+# Get issuer from message
+# @param msg SAML message
+# @return issuer
+sub getIssuer {
+    my ( $self, $message ) = @_;
+
+    # Work around lasso bug (https://dev.entrouvert.org/issues/97575)
+    $message =~ s/&RelayState=$//g;
+    my $issuer = eval { Lasso::profile_get_issuer($message) };
+    if ($@) {
+        $self->logger->debug("lasso_profile_get_issuer: $@");
+    }
+    if ( !$issuer ) {
+        $self->logger->debug(
+                "lasso_profile_get_issuer could not find entityID"
+              . " in incoming message" );
+        return;
+    }
+    return $issuer;
+}
+
 ## @method string storeRelayState(hashref infos)
 # Store information in relayState database and return
 # corresponding session_id
@@ -1571,7 +1602,10 @@ sub getAttributeValue {
 
         $value = join(
             $self->{conf}->{multiValuesSeparator},
-            map { $_->any->content || () } @attr_values
+            map {
+                eval { $_->any->content }
+                  || ()
+            } @attr_values
         );
     }
 

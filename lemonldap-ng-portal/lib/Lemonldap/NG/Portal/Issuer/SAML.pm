@@ -196,8 +196,8 @@ sub storeEnv {
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
             # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel};
+            my $targetAuthnLevel = $self->spLevelRules->{$spConfKey}->( $req, {} );
+
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
         }
@@ -619,7 +619,7 @@ sub run {
             $self->logger->debug("SSO: authentication request is valid");
 
             my $spAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel} || 0;
+              $self->spLevelRules->{$spConfKey}->( $req, $req->sessionInfo );
 
             # Get ForceAuthn flag
             my $force_authn;
@@ -1150,6 +1150,10 @@ sub run {
             $self->logger->debug(
                 "Link session $session_id to SAML session $saml_session_id");
 
+            $self->p->registerProtectedAppAccess( $req,
+                $req->{sessionInfo}->{ $self->conf->{whatToTrace} },
+                "saml:$spConfKey" );
+
             # Send SSO Response
 
             # Register IDP in Common Domain Cookie if needed
@@ -1229,9 +1233,9 @@ sub run {
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
-                    user            => $user,
-                    saml_name_id    => $name_id_content,
-                    attributes => \%log_attributes,
+                    user         => $user,
+                    saml_name_id => $name_id_content,
+                    attributes   => \%log_attributes,
                 );
 
                 # Use autosubmit form
@@ -1278,9 +1282,9 @@ sub run {
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
-                    user            => $user,
-                    saml_name_id    => $name_id_content,
-                    attributes => \%log_attributes,
+                    user         => $user,
+                    saml_name_id => $name_id_content,
+                    attributes   => \%log_attributes,
                 );
 
                 # Redirect user to response URL
@@ -1646,7 +1650,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $req->urldc( $self->p->buildUrl($req->portal, { logout => 1 } ) );
+        $req->urldc( $self->p->buildUrl( $req->portal, { logout => 1 } ) );
         return PE_OK;
     }
 
@@ -1946,7 +1950,8 @@ sub _finishSlo {
     # Else build SLO status relay URL and display info
     else {
         $req->{urldc} =
-          $self->p->buildUrl( $req->portal, 'saml', 'relaySingleLogoutTermination' );
+          $self->p->buildUrl( $req->portal, 'saml',
+            'relaySingleLogoutTermination' );
         $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
         return $self->p->do( $req, [] );
     }
@@ -2164,9 +2169,11 @@ sub sloServer {
             };
             $logoutContextSession =
               $self->getSamlSession( undef, $logoutInfos );
-            my $uri =
-              URI->new(
-                $self->p->buildUrl( $req->portal, 'saml', 'singleLogoutResume' ) );
+            my $uri = URI->new(
+                $self->p->buildUrl(
+                    $req->portal, 'saml', 'singleLogoutResume'
+                )
+            );
             $uri->query_param( ResumeParams => $logoutContextSession->id );
             $req->{issuerUrldc} = $uri->as_string;
         }

@@ -117,8 +117,8 @@ Options
 -  **User attribute**: session field that will be used as main
    identifier.
 -  **Logout**: enable back-channel logout to this CAS application
--  **Authentication Level**: required authentication level to access this
-   application
+-  **Required authentication Level**: required authentication level to access this
+   application. Since ``2.21.0`` this can be a Perl expression.
 -  **Access rule**: access rule to enforce on this application. If
    left blank, access will be allowed for everyone.
 -  **Comment**: set a comment

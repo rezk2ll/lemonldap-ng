@@ -169,7 +169,8 @@ Security
 
 -  **Encryption mode**: set the encryption mode for this SP (None, NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP Initiated URL on this SP.
--  **Authentication level**: required authentication level to access this SP
+-  **Required authentication level**: required authentication level to access
+   this SP. Since ``2.21.0`` this can be a Perl expression.
 -  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 Federation

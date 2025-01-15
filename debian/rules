@@ -49,6 +49,7 @@ override_dh_auto_install:
 			CRONDIR=/etc/cron.d \
 			DATADIR=$(LMVARDIR) \
 			CACHEDIR=$(LMCACHEDIR) \
+			MANDIR=/usr/share/man \
 			APACHEUSER=www-data \
 			APACHEGROUP=www-data \
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \

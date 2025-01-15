@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -36,7 +36,7 @@ sub onReload {
 sub checkConf {
     my ( $class, $force ) = @_;
     $class->logger->debug("Check configuration for $class");
-    my $prm  = { local => !$force, localPrm => $class->localConfig };
+    my $prm    = { local => !$force, localPrm => $class->localConfig };
     my $cfgNum = $class->confAcc->lastCfg();
     $prm->{local} = 0 if $class->cfgNum and $cfgNum != $class->cfgNum;
     my $conf = $class->confAcc->getConf($prm);
@@ -137,6 +137,7 @@ sub reload {
 #      - timeoutActivityInterval
 #      - useRedirectOnError
 #      - useRedirectOnForbidden
+#      - useRedirectAjaxOnUnauthorized
 #      - useSafeJail
 #      (objects)
 #      - cipher  # Lemonldap::NG::Common::Crypto object
@@ -226,7 +227,8 @@ sub defaultValuesInit {
         useSafeJail  httpOnly   whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    upgradeSession
-        hashedSessionStore      eventQueueName
+        hashedSessionStore      eventQueueName     eventStatus
+        statusQueueName useRedirectAjaxOnUnauthorized
         )
       );
 
@@ -427,7 +429,6 @@ sub sessionStorageInit {
                       keys %{ $class->tsv->{sessionCacheOptions} // {} }
                 ) . '}';
             }
-            $class->tsv->{statusPipe}->print("RELOADCACHE $params\n");
         }
     }
     return 1;
@@ -593,6 +594,7 @@ sub logout_app_sso {
 sub aliasInit {
     my ( $class, $conf ) = @_;
 
+    delete $class->tsv->{vhostAlias};
     foreach my $vhost ( keys %{ $conf->{vhostOptions} || {} } ) {
         if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
@@ -632,9 +634,9 @@ sub msgBrokerInit {
     $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
     eval "require $brokerClass";
     die $@ if $@;
-    $class->tsv->{msgBrokerReader} = $brokerClass->new($conf, $class->logger);
+    $class->tsv->{msgBrokerReader} = $brokerClass->new( $conf, $class->logger );
     $class->tsv->{msgBrokerReader}->subscribe( $conf->{eventQueueName} );
-    $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf, $class->logger);
+    $class->tsv->{msgBrokerWriter} = $brokerClass->new( $conf, $class->logger );
 }
 
 sub substitute {

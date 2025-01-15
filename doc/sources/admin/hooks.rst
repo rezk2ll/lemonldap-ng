@@ -40,6 +40,9 @@ The hook's parameters are:
 * A hash of the current session info
 * the configuration key of the relying party which is being identified
 
+.. versionchanged:: 2.21.0
+   You can use ``$info->{_scope}`` to update granted scopes in this hook
+
 Sample code::
 
    use constant hook => {
@@ -725,6 +728,147 @@ Sample code::
    }
 
 
+DBI Authentication hooks
+------------------------
+
+dbiVerifyPassword
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.20.0
+
+This hook is triggered when LemonLDAP::NG is verifying a password hash
+:doc:`obtained from a database <authdbi>`.  It will only run if *Dynamic
+hashing* is enabled
+
+You can use this hook to implement a custom hashing scheme
+
+The hook's parameters are:
+
+* The password submitted by the user
+* The stored value, usually a hash, from the database
+* A state object used to return information to Auth::DBI. Its subkeys are
+
+  * ``result``: boolean result of the password verification
+
+.. warning::
+
+    This hook must return ``PE_DONE`` in order to indicate that it performed
+    password validation. The result of validation (good password or bad
+    password) must be set in ``$state->{result}``.
+
+Sample code::
+
+    use constant hook => { dbiVerifyPassword => 'verify_password', };
+
+    sub verify_password {
+        my ( $self, $req, $submitted_password, $stored_hash, $state ) = @_;
+
+        # Check if the stored hash is understood by this plugin
+        # TODO: adjust the regexp to match your custom scheme
+        if ( $stored_hash =~ /^\$custom\$/ ) {
+
+            # TODO: use your own verification method here
+            # my $is_correct_password = ...
+
+            $state->{result} = $is_correct_password;
+
+            # Return DONE to indicate that the verification was done.
+            # Other plugins will not be called
+            return PE_DONE;
+        }
+
+      # Returning OK means that this plugin hasn't done anything
+      # processing will continue to other plugins and default LemonLDAP::NG code
+        return PE_OK;
+    }
+
+
+dbiHashPassword
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.20.0
+
+This hook is triggered when LemonLDAP::NG is about to
+:doc:`set or change the user's password in a database <authdbi>`.
+It will only run if *Dynamic hashing* is enabled.
+
+You can use this hook to implement a new algorithm that admins can
+configure as the *Hash scheme* for new passwords.
+
+The hook's parameters are:
+
+* The *Hash scheme* configured by the admin
+* The password to be stored
+* A state object used to return information to Password::DBI. Its subkeys are
+
+  * ``hashed_password``: the hashed value that will be stored in the database
+
+.. warning::
+
+    This hook must return ``PE_DONE`` in order to indicate that it successfully
+    hashed the password password validation.
+
+Sample code::
+
+    use constant hook => { dbiHashPassword => 'hash_new_password', };
+
+    sub hash_new_password {
+        my ( $self, $req, $scheme, $new_password, $result ) = @_;
+
+        # Check if the desired scheme is implemented by this plugin
+        # TODO: replace by the name of your custom scheme
+        if ( $scheme eq "MyCustomScheme" ) {
+
+            # TODO: use your own hashing method here
+            # my $hashed_password = ...
+
+            $result->{hashed_password} = $hashed_password;
+
+            # Return DONE to indicate that the hashing was done.
+            # Other plugins will not be called
+            return PE_DONE;
+        }
+
+        # Returning OK means that this plugin hasn't done anything
+        # processing will continue to other plugins and default
+        # LemonLDAP::NG code
+        return PE_OK;
+    }
+
+Choice Authentication hooks
+---------------------------
+
+getAuthChoice
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.20.0
+
+This hook is triggered when LemonLDAP::NG selects an :doc:`authentication choice <authchoice>`.
+
+It is only run if no built-in mechanism has succeeded, and lets you select an
+authentication choice from custom conditions instead of displaying a choice to
+the user.
+
+The hook's only parameter is a context hash which you can modify. Its subkeys are
+
+  * ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
+
+Sample code::
+
+    use constant hook => { getAuthChoice => 'autoChoice', };
+
+    sub autoChoice {
+        my ( $self, $req, $context ) = @_;
+
+        # Pick a default choice for all users on a certain IP
+        if ( $req->address eq "1.2.3.4" ) {
+            $context->{choice} = "1_DEMO";
+        }
+        return PE_OK;
+    }
+
+
+
 Password change hooks
 ---------------------
 
@@ -835,10 +979,11 @@ The hook's parameters are:
 * An instance of the 2F module in use
 * A hash of session information
 * A hash containing the verification result, which you can modify. Its subkeys are:
-    * `authenticationLevel`: authentication level granted by the module
-    * `device`: if applicable, details of the 2FA device used (name, type, epoch, etc.)
-    * `result`: result code of this attempt
-    * `retries`: how many retries are left after this attempt
+
+  * ``authenticationLevel``: authentication level granted by the module
+  * ``device``: if applicable, details of the 2FA device used (name, type, epoch, etc.)
+  * ``result``: result code of this attempt
+  * ``retries``: how many retries are left after this attempt
 
 Sample code::
 
@@ -915,7 +1060,9 @@ The hook's parameters are:
 
 * A hash of session information
 * A hash containing the second factor device data (type, name, timestamp, and implementation-specific fields)
-* A hash containing the current registration state, which you can modify to change the authentication level
+* A hash containing the current registration state, which you can modify to change the authentication level. Its subkeys are
+
+  * ``authenticationLevel``: authentication level granted by the module
 
 Sample code::
 

@@ -83,12 +83,12 @@ And fill it:
 ::
 
    generic_sso
-           service_name                   Centralized auth service
-           service_id                          lemonldapng
-           email_http_header            HTTP_MAIL
-           netid_http_header             HTTP_AUTH_USER
+           service_name               Centralized auth service
+           service_id                 lemonldapng
+           email_http_header          HTTP_MAIL
+           netid_http_header          HTTP_AUTH_USER
            internal_email_by_netid    1
-           logout_url                          http://sympa.example.com/wws/logout
+           logout_url                 https://auth.example.com/?logout=1
 
 
 .. tip::
@@ -123,7 +123,7 @@ authentication URL.
           ServerName sympa.example.com
 
           <Location /wws/sso_login/lemonldapng>
-          PerlHeaderParserHandler Lemonldap::NG::Handler
+          PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
           </Location>
 
           ...

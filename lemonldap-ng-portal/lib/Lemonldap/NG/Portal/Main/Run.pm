@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -353,11 +353,11 @@ sub do {
     my $err = $req->error( $self->process( $req, nofail => $nofail ) );
 
     # Update status
-    if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->{env}->{REQUEST_URI}
-              . " $err\n" );
-    }
+    $self->HANDLER->publishStatus(
+        user       => ( $req->user ? $req->user : $req->address ),
+        url        => $req->{env}->{HTTP_HOST} . $req->{env}->{REQUEST_URI},
+        portalCode => $err,
+    );
 
     # Update history
     return $req->response if $err == PE_SENDRESPONSE;
@@ -723,6 +723,9 @@ sub updateSession {
                 $self->logger->error( $apacheSession->error );
             }
         }
+
+        # remove the corresponding session from handler cache
+        HANDLER->publishEvent( $req, { action => 'unlog', id => $id } );
     }
 }
 
@@ -1274,10 +1277,12 @@ sub tplParams {
     }
 
     return (
+        CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
+        FLOATING_CAT => $self->conf->{floatingCategoryName},
         SKIN         => $self->getSkin($req),
         SKIN_PATH    => $portalPath . "skins",
         SAMESITE     => getSameSite( $self->conf ),
@@ -1370,6 +1375,34 @@ sub registerLogin {
     $self->updatePersistentSession( $req, { _loginHistory => $history, } );
 
     PE_OK;
+}
+
+# Register access to protected app
+# @param Lemonldap::NG::Portal::Main::Request $req The request
+# @param string $uid The connected user ident
+# @param string $app The application client/RP namespaced with protocol
+sub registerProtectedAppAccess {
+    my ( $self, $req, $uid, $app ) = @_;
+
+    return unless $self->conf->{appAccessHistoryEnabled};
+
+    $self->logger->debug("Registering $app access for user $uid");
+
+    my $persistentSession = $self->getPersistentSession($uid);
+    my $entry = $persistentSession->data->{_appHistory}->{$app} || {};
+
+    $entry->{access_time} = time();
+    $entry->{access_count}++;
+
+    $self->updatePersistentSession(
+        $req,
+        {
+            _appHistory => {
+                %{ $persistentSession->data->{_appHistory} }, $app => $entry
+            }
+        },
+        $uid
+    );
 }
 
 # put main session data into a hash ref
@@ -1479,6 +1512,9 @@ sub loadTemplate {
         global_vars            => 0,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
+    if ( $self->can('tplParams') ) {
+        $tpl->param( $self->tplParams($req) );
+    }
     if ( $prm{params} ) {
         $tpl->param( %{ $prm{params} } );
     }

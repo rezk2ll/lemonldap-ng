@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Lib::Choice;
 use strict;
 use Mouse;
 use Safe;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -67,16 +68,12 @@ sub init {
         }
 
         # Display conditions
-        my $safe = Safe->new;
         my $cond = $mods[4];
-        if ( defined $cond and $cond !~ /^$/ ) {
-            $self->logger->debug("Found rule $cond for $name");
-            $_choiceRules->{$name} =
-              $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
-            if ($@) {
-                $self->logger->error("Bad condition $cond: $@");
-                return 0;
-            }
+        if ( defined $cond and $cond ne "" ) {    # 0 is a valid rule!
+            my $rule =
+              $self->p->buildRule( $cond, "choice condition for $name" );
+            return 0 unless $rule;
+            $_choiceRules->{$name} = $rule;
         }
         else {
             $self->logger->debug("No rule for $name");
@@ -94,58 +91,11 @@ sub init {
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-    my $name;
 
-    # Check Choice from pdata
-    if ( defined $req->pdata->{_choice} ) {
-        $name = $req->pdata->{_choice};
-        $self->logger->debug("Choice $name selected from pdata");
-    }
-    elsif (( defined $req->data->{_authChoice} )
-        or ( defined $req->data->{_choice} ) )
-    {
-        $name = $req->data->{_authChoice} || $req->data->{_choice};
-        $self->logger->debug("Choice $name selected from req->data");
-    }
+    my ( $name, $how ) = $self->_getChoiceFromReq($req);
 
-    unless ($name) {
-
-        # Check with catch method
-        foreach ( keys %{ $self->catch } ) {
-            if ( $req->path_info =~ $self->catch->{$_} ) {
-                $name = $_;
-                $self->logger->debug(
-                    "Choice $name selected from " . $req->path_info );
-                last;
-            }
-        }
-    }
-
-    unless ($name) {
-
-        # Set by OAuth Resource Owner grant // RESTServer pwdCheck
-        if ( $req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic} )
-        {
-            $name = $self->{conf}->{authChoiceAuthBasic};
-        }
-    }
-
-    unless ($name) {
-
-        # Check with other methods
-        $name ||=
-             $req->data->{findUserChoice}
-          || $req->param( $self->conf->{authChoiceParam} )
-          || $req->userData->{_choice}
-          || $req->sessionInfo->{_choice}
-          or return 0;
-        my $from =
-            $req->data->{findUserChoice}                  ? 'findUser'
-          : $req->param( $self->conf->{authChoiceParam} ) ? 'param'
-          : $req->userData->{_choice}                     ? 'userData'
-          :                                                 'sessionInfo';
-        $self->logger->debug("Choice $name selected from $from");
-    }
+    return 0 unless ($name);
+    $self->logger->debug("Choice $name selected from $how");
 
     unless ( defined $self->modules->{$name} ) {
         $self->logger->error("Unknown choice '$name'");
@@ -165,6 +115,71 @@ sub checkChoice {
     $req->data->{ "enabledMods" . $self->type } =
       [ $self->modules->{$name} ];
     return $name;
+}
+
+sub _getChoiceFromReq {
+    my ( $self, $req ) = @_;
+
+    # Check Choice from pdata
+    if ( defined $req->pdata->{_choice} ) {
+        return ( $req->pdata->{_choice}, "pdata" );
+    }
+    elsif (( defined $req->data->{_authChoice} )
+        or ( defined $req->data->{_choice} ) )
+    {
+        my $name = $req->data->{_authChoice} || $req->data->{_choice};
+        return ( $name, "req->data" );
+    }
+
+    # Check with catch method
+    foreach ( keys %{ $self->catch } ) {
+        if ( $req->path_info =~ $self->catch->{$_} ) {
+            return ( $_, "caught path " . $req->path_info );
+        }
+    }
+
+    # Set by OAuth Resource Owner grant // RESTServer pwdCheck
+    if ( $req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic} ) {
+        return ( $self->{conf}->{authChoiceAuthBasic}, "basic auth context" );
+    }
+
+    if ( $req->data->{findUserChoice} ) {
+        return ( $req->data->{findUserChoice}, "findUser" );
+    }
+
+    if ( $req->parameters->get( $self->conf->{authChoiceParam} ) ) {
+        return ( $req->parameters->get( $self->conf->{authChoiceParam} ),
+            "param" );
+    }
+
+    # Use the choice from current session unless we are doing an upgrade
+    # in which case the user should be offered to choose again
+    unless ( $req->data->{discardChoiceForCurrentSession} ) {
+        if ( $req->userData->{_choice} ) {
+            return ( $req->userData->{_choice}, "userData" );
+        }
+        if ( $req->sessionInfo->{_choice} ) {
+            return ( $req->sessionInfo->{_choice}, "sessionInfo" );
+        }
+    }
+
+    if ( $self->conf->{authChoiceSelectOnly} ) {
+        my @allowed_choices = grep { $self->_evaluateRule( $req, $_ ) }
+          keys %{ $self->conf->{authChoiceModules} };
+        if ( @allowed_choices == 1 ) {
+            return ( $allowed_choices[0], "only available" );
+        }
+    }
+
+    # Try hook
+    my $context = {};
+    my $h       = $self->p->processHook( $req, 'getAuthChoice', $context );
+    return 0 if ( $h != PE_OK );
+    if ( $h == PE_OK and $context->{choice} ) {
+        return ( $context->{choice}, "hook" );
+    }
+
+    return 0;
 }
 
 sub name {
@@ -207,14 +222,10 @@ sub _buildAuthLoop {
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
           split( /;\s*/, $self->conf->{authChoiceModules}->{$_} );
 
-        unless ( $_choiceRules->{$_} ) {
-            $self->logger->error("$_ has no rule");
-            $_choiceRules->{$_} = sub { 1 };
-        }
-        unless ( $_choiceRules->{$_}->( $req->env ) ) {
+        unless ( $self->_evaluateRule( $req, $_ ) ) {
             $self->logger->debug(
-"Condition returns false, authentication choice $_ will not be displayed"
-            );
+                    "Condition returns false, authentication choice $_"
+                  . " will not be displayed" );
         }
         else {
             $self->logger->debug("Displaying authentication choice $_");
@@ -224,8 +235,6 @@ sub _buildAuthLoop {
                 $req->data->{cspFormAction} ||= {};
                 if (
                     defined $url
-                    and not $self->checkXSSAttack( 'URI',
-                        $req->env->{'REQUEST_URI'} )
                     and $url =~
                     q%^(https?://)?[^\s/.?#$].[^\s]+$% # URL must be well formatted
                   )
@@ -305,6 +314,19 @@ sub _buildAuthLoop {
                     }
                 }
 
+                # If a choice has already been selected,
+                # activate the corresponding form
+                if ( $req->data->{_authChoice} ) {
+                    $optionsLoop->{ACTIVE_FORM} =
+                      ( $req->data->{_authChoice} eq $_ );
+
+                }
+
+                # if not, activate the first form in the list
+                else {
+                    $optionsLoop->{ACTIVE_FORM} = @authLoop ? 0 : 1;
+                }
+
                 # Register item in loop
                 push @authLoop, $optionsLoop;
 
@@ -321,6 +343,19 @@ sub _buildAuthLoop {
 
     return \@authLoop;
 
+}
+
+sub _evaluateRule {
+    my ( $self, $req, $choice ) = @_;
+
+    my $extraData = {};
+    $extraData->{targetAuthnLevel} = $req->pdata->{targetAuthnLevel}
+      if defined $req->pdata->{targetAuthnLevel};
+    unless ( $_choiceRules->{$choice} ) {
+        $self->logger->error("$choice has no rule");
+        $_choiceRules->{$choice} = sub { 1 };
+    }
+    return $_choiceRules->{$_}->( $req, $extraData );
 }
 
 1;

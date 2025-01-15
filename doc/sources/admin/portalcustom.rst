@@ -58,13 +58,23 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
     A blank or null value disable this feature.
 
+Floating category name
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can display an applications category as a floating menu by specifying its category ``name``.
+Example: ``Sample applications``.
+
+.. tip::
+
+    A blank or an inexisting value disable this feature.
+
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
 You can define a custom CSS file, for example ``custom.css``, which will
 be loaded after default CSS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
@@ -84,9 +94,9 @@ Custom JS file
 Similarly, you can define a custom JS file, for example ``custom.js``, which will
 be loaded after default JS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
-Then set this value in Custom CSS parameter:
+Then set this value in Custom JS parameter:
 ``bootstrap/js/custom.js``.
 
 Check out the :doc:`jqueryevents` page for available integrations
@@ -256,6 +266,13 @@ lemonldap-ng-cli:
 You can find additional documentation on the syntax of template files in the
 `official documentation of the HTML::Template module
 <https://metacpan.org/pod/HTML::Template>`__
+
+.. note::
+
+    If you modify the static files of your theme often, you should use the
+    *Cache-busting salt* configuration parameters to force web browsers to
+    reload your static resources by changing the special ``?v=`` parameter in static resource URLs.
+    Be sure that you include ``?v=<TMPL_VAR CACHE_TAG>`` in the URL of your static resources
 
 .. _intlmessages:
 
@@ -453,6 +470,8 @@ Other
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
 -  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
+-  **Cache-busting salt**: change this value any time you update a static file
+   on the server to force your users to reload their browser cache
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center

@@ -293,7 +293,6 @@ Name                                                                 Description
 :doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
 :doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
 :doc:`Notifications system<notifications>`                           Display a message during log in process 
-:doc:`Portal status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
 :doc:`Reset certificate by mail<resetcertificate>`  [15]_\ |new|     Allow users to reset their certificate
@@ -518,10 +517,8 @@ Exploitation
 -  :doc:`Performances<performances>`
 -  :doc:`Security<security>`
 -  :doc:`SELinux<selinux>`
--  :doc:`Handler status page<status>`
 -  :doc:`Portal state check<checkstate>` *(health check for fail-over)*
    |new|
--  :doc:`Monitoring<monitoring>`
 -  :doc:`Logs settings<logs>`
 -  :doc:`Error messages<error>`
 -  :doc:`High Availability<highavailability>`

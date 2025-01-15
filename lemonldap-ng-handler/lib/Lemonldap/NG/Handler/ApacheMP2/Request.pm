@@ -26,10 +26,7 @@ sub new {
         PATH_INFO      => '',
         SERVER_PORT    => $ENV{SERVER_PORT} || $r->get_server_port,
         REQUEST_METHOD => $r->method,
-        UNIQUE_ID      => (
-            $r->subprocess_env('UNIQUE_ID')
-              || join( '', map { [ 0 .. 9, 'a' .. 'f' ]->[ rand 16 ] } 1 .. 16 )
-        ),
+        UNIQUE_ID      => $r->subprocess_env('UNIQUE_ID'),
         'psgi.version'    => [ 1, 1 ],
         'psgi.url_scheme' => ( $ENV{HTTPS} || 'off' ) =~ /^(?:on|1)$/i
         ? 'https'
@@ -60,8 +57,7 @@ sub new {
     my $uri = URI->new( "http://" . $r->hostname . $r->unparsed_uri );
     $env->{PATH_INFO} = uri_unescape( $uri->path );
 
-    my $self = Plack::Request->new($env);
-    $self->{data} = {};
+    my $self = Lemonldap::NG::Common::PSGI::Request->new($env);
     bless $self, $class;
     return $self;
 }
@@ -73,7 +69,7 @@ sub data {
 
 sub wantJSON {
     return 1
-      if ( defined $_[0]->accept
+      if ( defined $_[0]->env->{HTTP_ACCEPT}
         and $_[0]->env->{HTTP_ACCEPT} =~ m#(?:application|text)/json#i );
     return 0;
 }

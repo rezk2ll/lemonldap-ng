@@ -128,7 +128,7 @@ is( $id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token" );
 my $id_token_header = id_token_header($id_token);
 ok( !exists $id_token_header->{kid}, "HS** ID token has no kid header" );
 
-# Reset conf to make sure to make sure lazy loading works
+# Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
 
 # Get userinfo
@@ -151,7 +151,7 @@ like( $json->{_scope}, qr/\bopenid\b/, "Scopes are visible in hook" );
 
 expectJWT( $token, access_token_hook => 1 );
 
-# Reset conf to make sure to make sure lazy loading works
+# Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
 
 # Introspect to find scopes
@@ -174,7 +174,7 @@ $json = from_json( $res->[2]->[0] );
 like( $json->{scope}, qr/\bmy_hooked_scope\b/, "Found hook defined scope" );
 like( $json->{scope}, qr/\bmyscope\b/, "Found result of oidcResolveScope" );
 
-# Reset conf to make sure to make sure lazy loading works
+# Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
 
 # Refresh access token
@@ -205,7 +205,7 @@ $json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
 $refresh_token = $json->{refresh_token};
 ok( $refresh_token, 'Refresh token present' );
 
-# Reset conf to make sure to make sure lazy loading works
+# Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
 
 $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );

@@ -125,32 +125,6 @@ You can also use zypper on local RPMs file:
 
    zypper install lemonldap-ng-* perl-Lemonldap-NG-*
 
-With RPM
-~~~~~~~~
-
-Before installing the packages, install all dependencies: (you need to
-get dependencies from previous repositories)
-
-::
-
-   zypper install apache2 apache2-mod_perl apache2-mod_fcgid perl-ldap perl-XML-SAX perl-XML-NamespaceSupport perl-XML-Simple perl-XML-LibXML perl-Config-IniFiles perl-Digest-HMAC perl-Crypt-OpenSSL-RSA perl-Authen-SASL perl-Unicode-String gd perl-Regexp-Assemble perl-Authen-Captcha perl-Cache-Cache perl-Apache-Session perl-CGI-Session perl-IO-String perl-MIME-Lite perl-SOAP-Lite perl-XML-LibXSLT perl-String-Random perl-Email-Date-Format perl-Crypt-Rijndael perl-HTML-Template perl-JSON perl-Crypt-OpenSSL-X509 perl-Crypt-DES perl-Class-Inspector perl-Test-MockObject perl-Clone perl-Net-CIDR-Lite perl-ExtUtils-MakeMaker perl-CGI perl-CGI-Session perl-HTML-Template perl-SOAP-Lite perl-IPC-ShareLite perl-Error perl-HTML-Parser perl-libwww-perl perl-DBI perl-Cache-Memcached perl-Class-ErrorHandler perl-Convert-PEM perl-Crypt-DES_EDE3 perl-Digest-SHA perl-Env perl-Mouse perl-String-CRC32 perl-Plack perl-Regexp-Common perl-Crypt-OpenSSL-Bignum perl-FCGI-ProcManager perl-HTML-FormatText-WithLinks
-
-You have then to install all the downloaded packages:
-
-::
-
-   rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
-
-
-.. tip::
-
-    You can choose to install only one component by choosing the
-    package ``lemonldap-ng-portal``, ``lemonldap-ng-handler`` or
-    ``lemonldap-ng-manager``.
-
-    Install the package ``lemonldap-ng-conf`` on all server which contains
-    one of those packages.
-
 First configuration steps
 -------------------------
 

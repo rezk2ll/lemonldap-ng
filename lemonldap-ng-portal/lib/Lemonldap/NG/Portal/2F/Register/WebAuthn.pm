@@ -64,9 +64,10 @@ use constant supportedActions => {
 sub initDisplay {
     my ( $self, $req ) = @_;
 
+    my $cacheTag = $self->p->cacheTag;
     $req->data->{customScript} .= <<"EOF";
-<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js"></script>
-<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js?v=$cacheTag"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js?v=$cacheTag"></script>
 EOF
 
 }
@@ -229,6 +230,9 @@ sub _registration {
           ( $registration_options->{authenticatorSelection}->{residentKey} eq
             "required" )
     );
+
+    my $serialized_transports =
+      $self->_serializeTransportsFromJsonResponse($credential_json);
     my $res = $self->registerDevice(
         $req,
         $req->userData,
@@ -236,6 +240,11 @@ sub _registration {
             _credentialId        => $credential_id,
             _credentialPublicKey => $credential_pubkey,
             _signCount           => $signature_count,
+            (
+                $serialized_transports
+                ? ( _transports => $serialized_transports )
+                : ()
+            ),
             ( $aaguid ? ( _aaguid => $aaguid ) : () ),
             type  => $self->type,
             name  => $keyName,

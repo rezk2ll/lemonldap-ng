@@ -1,3 +1,94 @@
+lemonldap-ng (2.20.1) noble; urgency=medium
+
+  * Bugs:
+    * #3255: [Security] Adaptative Authentication Rules triggered by "Refresh my rights"
+    * #3257: [Security] XSS in upgradeSession / forceUpgrade pages
+    * #3260: downloadSamlMetadata missing from packages in 2.20.0
+    * #3261: CDA request for id  is not valid
+    * #3263: "This application is not known" when trying to access a federation application with empty  RelayState
+    * #3264: SAML regression in 2.20.0
+    * #3274: Internal error when captcha rule isn't validated
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 08 Nov 2024 15:31:50 +0100
+
+lemonldap-ng (2.20.0) noble; urgency=medium
+
+  * Bugs:
+    * #1886: mysql and MariaDB DBI UserBackend UTF8 encoding
+    * #2461: Session cache not invalidated when upgrading session with 2FA
+    * #2718: "Connected as" menu is broken on narrow screens
+    * #2978: Using the (unimplemented) claims= parameter in an OIDC authorize request triggers XSS detection with authentication=Choice
+    * #3122: Random DB errors when using llng-fastcgi-server in foreground mode
+    * #3154: log4perl %S{} broken with Apache2 Handler
+    * #3178: oidcOPMetaDataOptionsAuthnEndpointAuthMethod: Invalid value 'get' for this select
+    * #3182: Logging out from CAS/OIDC without redirection does not display the logged out message
+    * #3183: Random unit tests failure on CentOS
+    * #3185: Hidden numbers in captcha
+    * #3198: manager api does not allow federated SAML sps
+    * #3204: Email language does not correspond to portal language when default language is used
+    * #3206: Oldpassword is sent to client when password reset form is displayed by LDAP password policy
+    * #3210: Using a USB Fido2 device to authenticate requires a manual step
+    * #3216: Jitsi JWT issuer ASAP server fails when oidcServicePublicKeySig is a PUBLIC KEY
+    * #3220: Captcha and TrustedBrowser plugins are always loaded
+    * #3229: Client secret sent as GET is treated as 'client_secret_post'
+    * #3232: [security] XSS/HTML Injection login page when user contains special characters
+    * #3233: AuthenticationLevel not set by Radius authentication module
+    * #3237: Failed logout of oidc clients in multi-node environment
+    * #3242: Manage HEAD requests
+    * #3248: log warnings when requiring multiple custom functions files
+    * #3250: when failing to authenticate with Auth::Choice, login is pre-filled in all choices
+
+  * New features:
+    * #3035: FIDO2 / WebAuthn Passwordless
+    * #3051: Add message broker support to instantly share events like logout or configuration update (Redis, PostgreSQL and MQTT)
+    * #3148: Implement OIDC token exchange
+    * #3174: Allow hooks to modify the authentication level depending on which 2FA device was used
+    * #3203: Allow plugins to easily add new portal tabs
+    * #3214: Both systemd and sysvinit tooling are always installed
+    * #3215: rotateOidcKey has no option to create X.509 certificates
+    * #3219: ReCaptcha plugin
+    * #3221: API requests reaching the handler should return 401 instead of 302
+    * #3231: Improve password hashing in Auth::DBI
+    * #3243: Allow message authentication in Auth::Radius and 2F::Radius
+
+  * Improvements:
+    * #1848: select authentication scheme according to authentication level
+    * #2396: Refresh token rotation
+    * #2788: Make custom skins testable
+    * #3056: Remove XML::Simple (again)
+    * #3126: Allow multiple TOTP devices to be registered
+    * #3135: Default value for portalForceAuthnInterval might be too low when using 2FA and prompt parameter in OIDC flow
+    * #3145: Append an option to define password max length
+    * #3149: Make WebAuthn appid optional
+    * #3152: inGroup extended function does not work with a list of group
+    * #3153: Drop dependency to Crypt::U2F::Server
+    * #3155: Deprecate/remove the Status server
+    * #3156: OIDC introspection endpoint shouldn't refuse authenticated connexions even when client is public
+    * #3160: Use netblocks to define accredited IP to connect with AuthSlave
+    * #3164: Manager "raw" upload should check configuration
+    * #3166: Improve output of lemonldap-ng-cli restore
+    * #3175: If only one Choice available, submit it by default
+    * #3177: Nginx error_page configuration is missing
+    * #3187: Clicking twice on 2FA code submit button raises an error
+    * #3193: Change cursor into pointer when hover renew captcha link
+    * #3196: Append password policy option to check dynamically if newpassword & confirmpassword are the same
+    * #3197: Add SAML authentication level "urn:federation:authentication:windows" for ADFS compatibility
+    * #3199: Add "count" command to lemonldap-ng-sessions
+    * #3202: Add "backup/restore" command to lemonldap-ng-sessions cli
+    * #3212: llng-fastcgi-server manpage is not installed
+    * #3222: Change captcha_* parameters into `boolOrExpr` to permit to change rules depending on network
+    * #3226: Bad manager translations
+    * #3245: Plugin RememberAuthChoice: option to remove cookie at logout
+    * #3246: Plugin RememberAuthChoice: hide screen if timer is configured to 0
+
+  * Templates:
+    * #3187: Clicking twice on 2FA code submit button raises an error
+
+  * WebServer Confs:
+    * #3177: Nginx error_page configuration is missing
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 08 Oct 2024 11:06:47 +0200
+
 lemonldap-ng (2.19.2) jammy; urgency=medium
 
   * Bugs:

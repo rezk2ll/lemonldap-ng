@@ -54,6 +54,7 @@ Then, go in ``Choice Parameters``:
    :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
 -  **FindUser plugin parameter**: authentication module called by
    Find user plugin (:doc:`Find user plugin<finduser>`)
+-  **Auto-select only method**: if only one authentication method is available, automatically select it
 
 |image0|
 
@@ -75,6 +76,13 @@ Define here:
 .. code-block:: perl
 
    $env->{urldc} =~ /test1\.example\.com/
+
+.. versionchanged:: 2.20.0
+
+    Starting with version *2.20.0*, you can use the same syntax as :doc:`regular
+    rules <rules_examples>`. In addition to the following special variables
+
+    * ``$targetAuthnLevel``: authentication level requested by the current application
 
 
 Ordering of choices on the main login page

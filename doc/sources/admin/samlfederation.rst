@@ -3,27 +3,32 @@ Connect to SAML Federations
 
 .. versionadded: 2.0.16
 
-|beta| This feature is a new, experimental way to manage SAML federations. Regular users should read the :doc:`renater` doc instead.
+.. warning::
 
+    This feature only works with version 2.6.0 of Lasso and above
 
 Presentation
 ------------
 
-In previous LemonLDAP::NG versions, the way to handle federations was to import the entire federation into the LemonLDAP::NG configuration. This caused several issues:
+SAML federations are a list of Identity Providers or Service Providers which publish their metadata in a central point.
+Members of the federation can then easily download and use the full metadata file to connect to any party of the federation.
+
+Well known federations are `Renater <https://www.renater.fr/>`_ and `EduGain <https://edugain.org/>`_.
+
+Note that in previous LemonLDAP::NG versions, the way to handle federations was to import the entire federation into the LemonLDAP::NG configuration.
+This caused several issues:
 
 * The configuration JSON objects grows very large, sometimes beyond storage limitations
 * The memory consumption is very high
-* The manager interface becomes crowded with service definitions that are very rarely used
+* The manager interface becomes crowded with service definitions that are very rarely use
 
-A new federation feature has been added in LemonLDAP::NG 2.0.16 to address
-those issues. This is still a beta feature so feel free to experiment with it
-and provide bug reports and fixes.
+Now LL::NG works with a separated federation metadata file, and provide the possibility to override some settings in its configuration.
 
 Configuration
 -------------
 
 Declare your SAML federation files
-==================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You need to use the provided ``downloadSamlMetadata`` script to periodically download
 the federation metadata on each portal server. This script checks if the
@@ -47,7 +52,7 @@ You should list local file paths, separated by spaces. For example ::
 In case an EntityID is defined in multiple files, the first match wins.
 
 Configure template IDP/SPs
-==========================
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SAML metadata does not contain all the information LemonLDAP::NG needs. It is
 recommended that you create a generic configuration for all the providers found
@@ -72,7 +77,7 @@ LemonLDAP::NG lets you decide what to do with these attributes:
 You can also define additional attributes to be sent in the *Exported Attributes* section. In case of a conflict between an attribute definition in federation metadata and an explicit definition in LemonLDAP::NG configuration, the LemonLDAP::NG configuration wins.
 
 Configure specific IDP/SPs
-==========================
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may want to override the federation-wide defaults for some specific
 SP/IDPs. A common example is the Renater test SP that defines all its
@@ -87,7 +92,7 @@ To do this:
 * Set the desired configuration options on this provider
 
 Configure SAML attributes
-=========================
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Federation metadata files contains information about attributes required or
 simply requested by federated service providers (SP). In order for those
@@ -121,5 +126,3 @@ In order to provide a ``subject-id`` attribute, you must create a macro with
 The ``subject-id`` attribute will only be sent if the SP metadata contains the
 ``urn:oasis:names:tc:SAML:profiles:subject-id:req`` extension with a value of
 ``any`` or ``subject-id``
-
-.. |beta| image:: /documentation/beta.png

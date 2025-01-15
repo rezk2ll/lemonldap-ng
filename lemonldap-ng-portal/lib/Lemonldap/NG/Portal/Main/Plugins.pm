@@ -16,7 +16,6 @@ use Mouse;
 our @pList = (
     portalDisplayResetPassword          => '::Plugins::MailPasswordReset',
     portalDisplayCertificateResetByMail => '::Plugins::CertificateResetByMail',
-    portalStatus                        => '::Plugins::Status',
     cda                                 => '::Plugins::CDA',
     notification                        => '::Plugins::Notifications',
     rememberAuthChoiceRule              => '::Plugins::RememberAuthChoice',
@@ -70,6 +69,12 @@ sub enabledServices {
     my ($self) = @_;
     my $conf = $self->conf;
     my @res;
+
+    # Second factor
+    push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
+
+    # Portal menu
+    push @res, [ menu         => "::Main::Menu" ];
 
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {

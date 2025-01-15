@@ -17,26 +17,29 @@ use Mouse;
 use Regexp::Assemble;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
+use Lemonldap::NG::Portal;
+use MIME::Base64;
+use Digest::SHA;
 
 # PROPERTIES
 
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
-has menu        => ( is => 'rw', default => sub { {} } );
 has trOver      => ( is => 'rw', default => sub { { all => {} } } );
 
 # Sub modules
 has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
-has _sfEngine       => ( is => 'rw' );
 
 has _loadedServices => ( is => 'rw', default => sub { {} } );
 
 # Legacy
 sub _captcha        { $_[0]->getService('captcha') }
 sub _trustedBrowser { $_[0]->getService('trustedBrowser') }
+sub _sfEngine       { $_[0]->getService('secondFactor') }
+sub menu            { $_[0]->getService('menu') }
 
 has _ppRules => ( is => 'rw', default => sub { {} } );
 
@@ -50,6 +53,12 @@ has _jsRedirect => ( is => 'rw' );
 # TrustedDomain regexp
 has trustedDomainsRe         => ( is => 'rw' );
 has additionalTrustedDomains => ( is => 'rw', default => sub { [] } );
+
+has cacheTag => ( is => 'rw' );
+
+# Entrypoints
+has _pluginEntryPoints =>
+  ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
 
 # Lists to store plugins entry-points
 my @entryPoints;
@@ -118,6 +127,7 @@ sub _resetPluginsAndServices {
     $self->spRules( {} );
     $self->hook( {} );
     $self->pluginSessionDataToRemember( {} );
+    $self->_pluginEntryPoints( [] );
 
     # Reinitialize arrays
     foreach ( qw(_macros _groups), @entryPoints ) {
@@ -308,7 +318,6 @@ sub reloadConf {
 
     # Load menu
     # ---------
-    $self->menu( $self->loadPlugin('::Main::Menu') );
     $self->displayInit;
 
     # Load authentication/userDB
@@ -328,11 +337,6 @@ sub reloadConf {
         return $self->fail
           unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
-
-    # Load second-factor engine
-    return $self->fail
-      unless $self->{_sfEngine} =
-      $self->loadPlugin( $self->conf->{'sfEngine'} );
 
     # Compile macros in _macros, groups in _groups
     foreach my $type (qw(macros groups)) {
@@ -467,6 +471,20 @@ sub reloadConf {
         HANDLER->tsv->{defaultCondition}->{$default_portal_host} ||= sub { 1 };
     }
 
+    # Set asset tag from version and optional salt
+    my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
+    my $key = $self->conf->{key} // "";
+    my $digest         = substr(
+        MIME::Base64::encode_base64url(
+            Digest::SHA::hmac_sha256(
+                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt,
+                $key
+            )
+        ),
+        0, 8
+    );
+    $self->cacheTag($digest);
+
     1;
 }
 
@@ -474,11 +492,12 @@ sub reloadConf {
 
 sub loadService {
     my ( $self, $name, $plugin ) = @_;
+    $self->logger->debug("Loading service $name from $plugin");
     return $self->_loadedServices->{$name} = $self->loadPlugin($plugin);
 }
 
 sub getService {
-    my ($self, $name) = @_;
+    my ( $self, $name ) = @_;
     return $_[0]->_loadedServices->{$name};
 }
 
@@ -486,7 +505,7 @@ sub loadPlugin {
     my ( $self, $plugin ) = @_;
     unless ($plugin) {
         require Carp;
-        Carp::confess('Calling loadPugin without arg !');
+        Carp::confess('Calling loadPugin without arg!');
     }
     my $obj;
     return 0
@@ -575,18 +594,6 @@ sub findEP {
             }
         }
     }
-    $self->logger->debug("Plugin $plugin initialized");
-
-    # Second factors
-    if ( $obj->isa("Lemonldap::NG::Portal::Main::SecondFactor") ) {
-        $self->_sfEngine->_enable_2f_module($obj);
-        $self->logger->debug("Loaded $plugin as a 2FA module");
-    }
-
-    if ( $obj->isa("Lemonldap::NG::Portal::2F::Register::Base") ) {
-        $self->_sfEngine->_enable_2f_register_module($obj);
-        $self->logger->debug("Loaded $plugin as a 2F Register module");
-    }
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
@@ -597,6 +604,45 @@ sub findEP {
             $self->spRules->{$k} = $obj->spRules->{$k};
         }
     }
+
+    # Plugin entrypoints
+    for my $ep ( @{ $self->_pluginEntryPoints } ) {
+        if (   ( $ep->{can} and $obj->can( $ep->{can} ) )
+            or ( $ep->{isa}  and $obj->isa( $ep->{isa} ) )
+            or ( $ep->{does} and $obj->does( $ep->{does} ) ) )
+        {
+            my @args = @{ $ep->{args} || [] };
+            if ( my $callback = $ep->{callback} ) {
+                $self->logger->debug(
+                    "Invoking callback registered by $ep->{_pkg}");
+                $callback->( $obj, @args );
+            }
+            elsif ( $ep->{service} && $ep->{method} ) {
+                my $service = $self->getService( $ep->{service} );
+                if ($service) {
+                    if ( my $method = $service->can( $ep->{method} ) ) {
+                        $self->logger->debug(
+                                "Invoking $ep->{method} on $ep->{service}"
+                              . " on behalf of $ep->{_pkg}" );
+                        $service->$method( $obj, @args );
+                    }
+                    else {
+                        $self->logger->warn(
+                            "Service $ep->{service} has no $ep->{method} method"
+                              . " in entrypoint added by $ep->{_pkg}" );
+                    }
+                }
+                else {
+                    $self->logger->warn(
+                            "Could not find service $ep->{service}"
+                          . " in entrypoint added by $ep->{_pkg}" );
+                }
+            }
+        }
+    }
+
+    $self->logger->debug("Plugin $plugin initialized");
+
     return $obj;
 }
 
@@ -672,6 +718,12 @@ sub buildRule {
 sub addPasswordPolicyDisplay {
     my ( $self, $id, $options ) = @_;
     $self->_ppRules->{$id} = {%$options};
+}
+
+sub _addPluginEntryPoint {
+    my ( $self, %entryPointDescription ) = @_;
+    push @{ $self->_pluginEntryPoints },
+      { _pkg => "[unknown]", %entryPointDescription };
 }
 
 1;

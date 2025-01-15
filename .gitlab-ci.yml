@@ -32,25 +32,35 @@ stages:
 before_script:
   - env | grep ^CI_
 
-build_buster:
-  extends: .debian_build_job
-  image: buildpkg/debian:buster
-
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bullseye/*_all.deb
 
 build_bookworm:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bookworm/*_all.deb
 
 build_focal:
   extends: .debian_build_job
   image: buildpkg/ubuntu:focal
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/focal/*_all.deb
 
 build_jammy:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/jammy/*_all.deb
+
+build_noble:
+  extends: .debian_build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:noble
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
 
 build_centos_7:
   extends: .build_job
@@ -65,6 +75,7 @@ build_centos_7:
     - make dist
     - yum -y install openssl openssl-libs
     - ci-build-pkg
+    - yum -y install ${CI_PROJECT_DIR}/result/centos/7/*.noarch.rpm
 
 build_rocky_8:
   extends: .build_job
@@ -75,6 +86,7 @@ build_rocky_8:
     - dnf -y install epel-release
     - make dist
     - ci-build-pkg
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/8/*.noarch.rpm
 
 build_rocky_9:
   extends: .build_job
@@ -85,6 +97,7 @@ build_rocky_9:
     - dnf -y install epel-release
     - make dist
     - ci-build-pkg
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/9/*.noarch.rpm
 
 sign:
   image: buildpkg/debian:bullseye
@@ -96,7 +109,6 @@ sign:
     - cd $CI_PROJECT_DIR
     - ci-sign-pkg
   dependencies:
-    - build_buster
     - build_bullseye
     - build_centos_7
     - build_rocky_8

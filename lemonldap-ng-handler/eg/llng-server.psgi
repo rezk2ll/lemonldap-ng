@@ -27,10 +27,6 @@ my %builder = (
         eval "require $class";
         return $class->reload();
     },
-    status => sub {
-        eval "require $class";
-        return $class->status();
-    },
     manager => sub {
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );

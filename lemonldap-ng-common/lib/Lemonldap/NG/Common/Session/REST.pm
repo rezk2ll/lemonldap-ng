@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Util qw/display2F getPSessionID/;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 has sessionTypes => ( is => 'rw' );
 
@@ -333,7 +333,8 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     #   { session => <sessionId>, userId => <_session_uid> }
     else {
         $res = [
-            map {
+            sort { $a->{userId} cmp $b->{userId} }
+              map {
                 {
                     session => $_,
                     userId  => $res->{$_}->{_session_uid},

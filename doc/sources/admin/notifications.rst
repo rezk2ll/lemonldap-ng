@@ -131,24 +131,7 @@ DBI
 Parameters for DBI backend are the same as
 :doc:`DBI configuration backend<sqlconfbackend>`.
 
-
-.. attention::
-
-    You have to create the table by yourself:
-
-    .. code:: sql
-
-       CREATE TABLE notifications (
-         date datetime NOT NULL,
-         uid varchar(255) NOT NULL,
-         ref varchar(255) NOT NULL,
-         cond varchar(255) DEFAULT NULL,
-         xml longblob NOT NULL,
-         done datetime DEFAULT NULL,
-         PRIMARY KEY (date, uid,ref)
-       )
-
-
+You can find the database schema in ``/usr/share/lemonldap-ng/ressources/sessions.*.sql``.
 
 To summary available options:
 
@@ -156,6 +139,20 @@ To summary available options:
 -  **dbiUser**: DBI user.
 -  **dbiPassword**: DBI password.
 -  **dbiTable**: Notifications table name.
+
+.. note::
+
+    DBI configuration example:
+
+    ::
+
+       notificationStorage = DBI
+       notificationStorageOptions={  \
+           'dbiChain'    => 'DBI:Pg:dbname=llng;host=mydb;port=5432', \
+           'dbiTable'    => 'notifications', \
+           'dbiUser'     => 'user', \
+           'dbiPassword' => 'qwerty', \
+       }
 
 LDAP
 ^^^^
@@ -175,22 +172,19 @@ To summary available options:
 -  **ldapBindPassword**: LDAP password.
 -  **ldapConfBase**: Notifications branch DN.
 
-
 .. note::
 
-    DBI configuration example:
+    LDAP configuration example:
 
     ::
 
-       notificationStorage = DBI
+       notificationStorage = LDAP
        notificationStorageOptions={  \
-           'dbiChain'    => 'DBI:Pg:dbname=llng;host=mabdd;port=5432', \
-           'dbiTable'    => 'notifications', \
-           'dbiUser'     => 'user', \
-           'dbiPassword' => 'qwerty', \
-           'type'        => 'CDBI', \
+           'ldapServer'       => 'ldap://localhost', \
+           'ldapBindDN'       => 'cn=manager,dc=example,dc=com', \
+           'ldapBindPassword' => 'secret', \
+           'ldapConfBase'     => 'ou=notifications,ou=applications,dc=example,dc=com', \
        }
-
 
 
 Wildcard
@@ -266,6 +260,15 @@ Notifications are JSON (default) or XML files containing:
 
     Several notifications can be inserted with a single request by using an
     array of JSON (Tested with an array of 10,000 elements)
+
+Variables
+^^^^^^^^^
+
+.. versionadded:: 2.21.0
+   You can use session variables in notifications's ``text`` field by using the ``$varname`` syntax.
+   Note that complex Perl expressions are not allowed, only simple variable interpolation.
+   This feature is only available when using JSON notifications.
+
 
 Examples
 ^^^^^^^^

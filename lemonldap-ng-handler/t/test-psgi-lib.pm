@@ -31,7 +31,6 @@ sub init {
         localSessionStorage => '',
         logLevel            => $ENV{LLNGLOGLEVEL} || 'error',
         cookieName          => 'lemonldap',
-        status              => 1,
         securedCookie       => 0,
         https               => 0,
         hiddenAttributes    => 'cn /^mail/',
@@ -137,7 +136,6 @@ has app => (
     builder => sub {
         my $builder = Plack::Builder->new;
         $builder->mount( '/reload' => $module->reload( $_[0]->{ini} ) );
-        $builder->mount( '/status' => $module->status( $_[0]->{ini} ) );
         $builder->mount( '/'       => $module->run( $_[0]->{ini} ) );
         return $builder->to_app;
     }

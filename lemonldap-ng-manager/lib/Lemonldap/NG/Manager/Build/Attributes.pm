@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -376,10 +376,16 @@ sub attributes {
             type          => 'text',
             documentation => 'Version of LLNG which build configuration',
         },
-        status => {
+        eventStatus => {
             type          => 'bool',
-            documentation => 'Status daemon activation',
+            documentation => 'Push status into message broker',
             flags         => 'h',
+        },
+        statusQueueName => {
+            type          => 'text',
+            default       => 'llng_status',
+            flags         => 'h',
+            documentation => 'Status channel name',
         },
         confirmFormMethod => {
             type   => "select",
@@ -518,6 +524,10 @@ sub attributes {
             default       => 400,
             documentation => 'Display back to top button',
         },
+        floatingCategoryName => {
+            type          => 'text',
+            documentation => 'Name of the category displayed as floating menu',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',
@@ -532,6 +542,11 @@ sub attributes {
             default       => '; ',
             documentation => 'Separator for multiple values',
             flags         => 'hmp',
+        },
+        rememberAuthChoiceForgetAtLogout => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Forget Auth Choice at logout',
         },
         rememberAuthChoiceRule => {
             type          => 'boolOrExpr',
@@ -1087,6 +1102,10 @@ sub attributes {
             msgFail       => '__badValue__',
             documentation => 'Rules to choose portal skin',
         },
+        cacheTagSalt => {
+            type          => 'text',
+            documentation => 'Salt value for cache busting tag',
+        },
 
         # Security
         formTimeout => {
@@ -1128,7 +1147,7 @@ sub attributes {
               'Enable force to authenticate when displaying portal',
         },
         portalForceAuthnInterval => {
-            default       => 5,
+            default       => 300,
             type          => 'int',
             documentation =>
 'Maximum interval in seconds since last authentication to force reauthentication',
@@ -1348,6 +1367,13 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Avoid browsers to store users password',
+        },
+        useRedirectAjaxOnUnauthorized => {
+            type          => 'bool',
+            default       => 1,
+            documentation =>
+              'Redirect Ajax requests to portal for unauthorized (401)',
+            flags => 'h',
         },
         useRedirectOnError => {
             type          => 'bool',
@@ -2403,6 +2429,10 @@ sub attributes {
             default       => 20,
             documentation => 'Radius 2f verification timeout',
         },
+        radius2fMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radius2fSendInitialRequest => {
             type          => 'bool',
             default       => 0,
@@ -2625,6 +2655,10 @@ sub attributes {
         webauthnRpName => {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',
+        },
+        webauthnDefaultTransports => {
+            type          => 'text',
+            documentation => 'WebAuthn default transports',
         },
         webauthnAuthnLevel => {
             type          => 'int',
@@ -3000,7 +3034,8 @@ sub attributes {
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this CAS application',
         },
@@ -3666,7 +3701,8 @@ sub attributes {
             default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this SP',
         },
@@ -3706,13 +3742,13 @@ sub attributes {
                 { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'SSL' },
                 { k => 'Twitter',     v => 'Twitter' },
-                { k => 'WebID',       v => 'WebID' },
+                { k => 'WebID',       v => 'WebID (deprecated)' },
                 { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
                 { k => 'Combination', v => 'combineMods' },
                 { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
-                { k => 'OpenID', v => 'OpenID' },
+                { k => 'OpenID', v => 'OpenID 2.0 (deprecated)' },
                 { k => 'OpenIDConnect', v => 'OpenID Connect' },
                 { k => 'SAML',          v => 'SAML v2' },
                 { k => 'Proxy',         v => 'Proxy' },
@@ -3773,6 +3809,7 @@ sub attributes {
         },
         sfOnlyUpgrade => {
             type          => 'bool',
+            default       => 0,
             help          => 'secondfactor.html',
             documentation => 'Only trigger second factor on session upgrade',
         },
@@ -4186,7 +4223,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusTimeout => {
             type => 'intOrNull',
         },
-
+        radiusMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radiusExportedVars => {
             type => 'keyTextContainer',
 
@@ -4485,6 +4525,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Auth module used by FindUser plugin',
         },
+        authChoiceSelectOnly => {
+            type          => 'bool',
+            documentation => 'Automatically select only available choice',
+        },
         authChoiceModules => {
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
@@ -4507,7 +4551,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'LinkedIn',      v => 'LinkedIn' },
                     { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
-                    { k => 'OpenID',        v => 'OpenID' },
+                    { k => 'OpenID',        v => 'OpenID 2.0 (deprecated)' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
                     { k => 'Proxy',         v => 'Proxy' },
                     { k => 'Radius',        v => 'Radius' },
@@ -4517,7 +4561,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Slave',         v => 'Slave' },
                     { k => 'SSL',           v => 'SSL' },
                     { k => 'Twitter',       v => 'Twitter' },
-                    { k => 'WebID',         v => 'WebID' },
+                    { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
@@ -4532,14 +4576,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'LDAP',          v => 'LDAP' },
                     { k => 'Null',          v => 'None' },
-                    { k => 'OpenID',        v => 'OpenID' },
+                    { k => 'OpenID',        v => 'OpenID 2.0 (deprecated)' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
                     { k => 'Proxy',         v => 'Proxy' },
                     { k => 'REST',          v => 'REST' },
                     { k => 'Remote',        v => 'Remote' },
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
-                    { k => 'WebID',         v => 'WebID' },
+                    { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [
@@ -4580,11 +4624,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'SSL' },
                 { k => 'Twitter',  v => 'Twitter' },
-                { k => 'WebID',    v => 'WebID' },
+                { k => 'WebID',    v => 'WebID (deprecated)' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
-                { k => 'OpenID', v => 'OpenID' },
+                { k => 'OpenID', v => 'OpenID 2.0 (deprecated)' },
                 { k => 'OpenIDConnect', v => 'OpenID Connect' },
                 { k => 'SAML',          v => 'SAML v2' },
                 { k => 'Proxy',         v => 'Proxy' },
@@ -4909,6 +4953,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation => 'Drop CORS headers from OIDC issuer responses',
         },
+        oidcServiceMetadataTtl => {
+            type          => 'int',
+            documentation => 'OIDC Metadata TTL',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
@@ -5002,6 +5050,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Use PKCE with this OP',
+        },
+        oidcOPMetaDataOptionsUserinfoSource => {
+            type    => 'select',
+            default => 'userinfo',
+            select  => [
+                { k => 'userinfo',     v => 'Userinfo endpoint' },
+                { k => 'id_token',     v => 'ID Token' },
+                { k => 'access_token', v => 'Access Token' },
+            ],
+            documentation => "Source of userinfo",
         },
 
         # OpenID Connect relying parties
@@ -5152,7 +5210,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Invalidate refresh token after use',
         },
         oidcRPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this RP',
         },
@@ -5263,6 +5322,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation =>
               'List of RP authorized to query for an access_token of this RP',
+        },
+        appAccessHistoryEnabled => {
+            type          => 'bool',
+            default       => 0,
+            documentation =>
+'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
         },
     };
 }

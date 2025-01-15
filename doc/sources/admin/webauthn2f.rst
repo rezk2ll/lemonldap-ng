@@ -3,10 +3,9 @@ WebAuthn as a second factor
 
 `Web Authentication <https://www.w3.org/TR/webauthn/>`__ , shortened as WebAuthn, is a standard method by which a web browser can authenticate to an application (*Relying Party*, in our case, this is LemonLDAP::NG) through the use of an *Authenticator*, which can be a hardware token (USB, NFC...) or provided by the user's device itself (TPM).
 
+.. tip::
 
-.. versionadded:: 2.0.14
-   Currently, we only implement WebAuthn as a second factor. Passwordless,
-   first-factor authentication will be added in a later release.
+   If you want to use Webauthn as first factor (also called `passwordless`), see :doc:`dedicated documentation<authwebauthn>`.
 
 Implementation status
 ~~~~~~~~~~~~~~~~~~~~~
@@ -20,30 +19,42 @@ Requirements
 ~~~~~~~~~~~~
 
 You need to install the `Authen::WebAuthn` CPAN module for WebAuthn to work on
-your LemonLDAP::NG installation. If there is no package for it in your
-distribution, you can install it with::
+your LemonLDAP::NG installation.
+
+For Debian::
+
+    apt install libauthen-webauthn-perl
+
+For RHEL (>=8)::
+
+    dnf install perl-Authen-WebAuthn
+
+If there is no package for it in your distribution, you can install it with::
 
     cpanm Authen::WebAuthn
 
 Configuration
 ~~~~~~~~~~~~~
 
-- **Activation**: set it to "on"
-- **Self registration**: set it to "on" if users are authorized to
-  register their keys.
-- **Allow user to remove WebAuthn**: If enabled, user can unregister their WebAuthn device.
+- **Activation**: Set it to "on".
+- **Self registration**: set it to "on" if users are authorized to register their keys
+- **Allow user to remove WebAuthn**: if enabled, user can unregister their WebAuthn devices
 - **User verification**: Whether or not LemonLDAP::NG requires the user to
   authenticate to their second factor device. Usually by entering a PIN code.
   *Warning*: The *Required* option is not supported by older U2F security keys.
+- **Use discoverable credential**: a private key that is associated with a user handle is generated on the authenticator
 - **Attestation**: Type of attestation to request from the authenticator. After
   enabling this you need to specify a list of trusted certificates
 - **Attestation trusted certificates**: A concatenation of PEM certificates
   that you trust for attestation
-- **Relying Party display name**: How the LemonLDAP::NG server will appear in
+- **Relying Party display name**: how the LemonLDAP::NG server will appear in
   the web browser messages displayed to the user
 - **Relying Party ID**: The domain name on which WebAuthn devices can be
   registered and used. It must be a non-public suffix of the portal's hostname.
+- **Send U2F AppID**: send the string that declares which facets that belong to this application
 - **User Display Name attribute**: session attribute containing user display name
+- **Default transports**: Comma-separated list of transport hints sent to the
+  web browser, if none are provided during registration
 - **Authentication level**: you can overwrite here auth level for
   WebAuthn registered users. Leave it blank keeps auth level provided by
   first authentication module *(default: 2 for user/password based
@@ -52,6 +63,30 @@ Configuration
 - **Label** (Optional): label that should be displayed to the user on
   the choice screen
 - **Logo** (Optional): logo file *(in static/<skin> directory)*
+
+
+.. attention::
+    If you want to use a custom rule for "activation" and want to keep self-registration,
+    you must add the following condition to the custom activation rule::
+
+        and has2f('WebAuthn')
+
+    Without this condition, WebAuthn device will be asked even for users who didn't register one.
+    This is automatically done when "activation" is simply set to "on".
+
+
+Provisioning
+------------
+
+If you don't want to use self-registration, set public part of user's
+yubikey in Second Factor Devices array (JSON) in your user-database.
+Then map it to the \_2fDevices attribute (see
+:doc:`exported variables<exportedvars>`):
+
+.. code::
+
+   [{"name" : "MyFIDO2" , "type" : "WebAuthn" , "epoch":"1524078936"}, ...]
+
 
 
 .. _migrateu2ftowebauthn:

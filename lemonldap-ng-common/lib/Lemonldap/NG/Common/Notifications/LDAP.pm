@@ -168,10 +168,10 @@ sub getAll {
             $f->{$k} = $v;
         }
         $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
-            date => $f->{date},
-            uid  => $f->{uid},
-            ref  => $f->{ref},
-            cond => $f->{condition},
+            date      => $f->{date},
+            uid       => $f->{uid},
+            ref       => $f->{ref},
+            condition => $f->{cond},
         };
     }
     return $result;
@@ -194,10 +194,10 @@ sub getExisting {
             $f->{$k} = $v;
         }
         $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
-            date => $f->{date},
-            uid  => $f->{uid},
-            ref  => $f->{ref},
-            cond => $f->{condition},
+            date      => $f->{date},
+            uid       => $f->{uid},
+            ref       => $f->{ref},
+            condition => $f->{cond},
         };
     }
     return $result;
@@ -316,8 +316,12 @@ sub getDone {
             $self->logger->warn("Bad date: $f->{done}");
             return {};
         }
-        $result->{"$f->{date}#$f->{uid}#$f->{ref}"} =
-          { notified => $done, uid => $f->{uid}, ref => $f->{ref}, };
+        $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
+            notified  => $done,
+            uid       => $f->{uid},
+            ref       => $f->{ref},
+            condition => $f->{cond}
+        };
     }
 
     # $ldap->unbind() && delete $self->{ldap};

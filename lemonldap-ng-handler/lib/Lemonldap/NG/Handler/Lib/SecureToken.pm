@@ -6,8 +6,6 @@
 #
 # Create a secure token used to resolve user identity by a protected application
 
-# This specific handler is intended to be called directly by Apache
-
 package Lemonldap::NG::Handler::Lib::SecureToken;
 
 use strict;

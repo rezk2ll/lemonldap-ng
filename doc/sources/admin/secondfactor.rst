@@ -76,6 +76,17 @@ of doing a complete reauthentication.
 
 .. |beta| image:: /documentation/beta.png
 
+Special Rule Activation
+-----------------------
+
+When activating second factor an additional option is available called "Special Rule". This 
+option allows the second factor to be enabled only when the conditions of the expression are met.
+
+.. tip::
+
+   Using the following expression ``$targetAuthnLevel <= 10`` enables the second factor when 
+   the application targetAuthnLevel is equal to the required authentication level.
+
 Login timeout
 -------------
 

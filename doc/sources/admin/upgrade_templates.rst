@@ -6,13 +6,87 @@ Template updates
     The content of this page only applies to you if:
 
     * You are using a custom LemonLDAP::NG theme
-    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``,
-      etc.). Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
+    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.).
+    Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
 
     In other words, you can safely ignore this entire page if:
 
     * You only changed the logo or background
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
+
+
+2.21.0
+------
+
+Floating category menu
+^^^^^^^^^^^^^^^^^^^^^^
+
+You can now display an applications category as a floating menu by setting a category name
+in ``General Parameters`` > ``Portal`` > ``Customization`` > ``Floating category name``.
+Apply the following patches to ``menu.tpl`` and ``script.tpl`` to use this new feature:
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
+    @@ -129,7 +129,7 @@
+                 <TMPL_IF NAME="category">
+                 <!-- Category -->
+     
+    -              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" id="sort_<TMPL_VAR NAME="__counter__">">
+    +              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
+     
+                     <div class="card-header text-white bg-secondary">
+                     <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/footer.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/footer.tpl
+    @@ -1,10 +1,12 @@
+       </div>
+     
+    -<TMPL_IF NAME="SCROLL_TOP">
+    -  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+    -    <i class="fa fa-arrow-circle-up"></i>
+    -  </button>
+    -</TMPL_IF>
+    +  <TMPL_IF NAME="SCROLL_TOP">
+    +    <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+    +      <i class="fa fa-chevron-up"></i>
+    +    </button>
+    +  </TMPL_IF>
+    +
+    +  <div class="col-6" id="floating-menu"></div>
+     
+       <div id="footer">
+         <div class="row">
+
+    --- a/lemonldap-ng-portal/site/templates/common/script.tpl
+    +++ b/lemonldap-ng-portal/site/templates/common/script.tpl
+    @@ -49,7 +49,7 @@
+      "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,
+      "dontStorePassword":<TMPL_VAR NAME="DONT_STORE_PASSWORD" DEFAULT="0">,
+      "scrollTop":<TMPL_VAR NAME="SCROLL_TOP" DEFAULT="0">,
+    - "floatingId":<TMPL_VAR NAME="FLOATING_ID" DEFAULT="0">,
+    + "floatingCategory":"<TMPL_VAR NAME="FLOATING_CAT">",
+      "sameSite":"<TMPL_VAR NAME="SAMESITE">",
+      "cookieSecure":<TMPL_VAR NAME="COOKIESECURE">,
+      "csrf_token":"<TMPL_VAR NAME="CSRF_TOKEN">"
+
+
+Cache-busting tags
+^^^^^^^^^^^^^^^^^^
+
+When upgrading to a new LemonLDAP::NG version, you may encounter bugs due to
+old, cached javascript and CSS files being still used by some web browsers.
+This version of LemonLDAP::NG introduces a ``?v=`` parameter in static resource
+URLs to avoid this. The version ID is incremented on every version change.
+
+You can use the *Cache-busting salt* parameter in the manager to change the
+value, which will force a reload of static resources for all your users.
+
+This change is not mandatory, but is recommended to avoid bugs. In order to implement it, add
+
+``?v=<TMPL_VAR CACHE_TAG>`` at the end of all static resource URLs in your custom templates.
 
 
 2.20.0
@@ -55,8 +129,6 @@ from both templates.
 
 .. code-block:: diff
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
-    index aad8d4886..5d4f24fad 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
     @@ -17,13 +17,6 @@
@@ -73,8 +145,7 @@ from both templates.
      </TMPL_IF>
 
      </div>
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
-    index d2e9d9df9..fe1f194f7 100644
+
     --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
     @@ -43,12 +43,4 @@
@@ -91,32 +162,9 @@ from both templates.
     -<!-- //endif -->
      <TMPL_INCLUDE NAME="footer.tpl">
 
-Passwordless WebAuthn
-^^^^^^^^^^^^^^^^^^^^^
+Also update `2fregisters.tpl` to that resident credentials are properly show to the user:
 
-In order to support autocompletion of WebAuthn credentials on supported web browsers, update `standardlogin.tpl`
-
-.. code:: diff
-
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    index c6af84745..81ce95c3d 100644
-    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    @@ -10,7 +10,8 @@
-         <div class="input-group-prepend">
-           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
-         </div>
-    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
-    +    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">"
-    +      trplaceholder="login" required aria-required="true" autocomplete="webauthn"/>
-       </div>
-       <div class="input-group mb-3">
-         <div class="input-group-prepend">
-
-
-Also update `2fregisters.tpl` to that resident credentials are properly show to the user
-
-.. code:: diff
+.. code-block:: diff
 
     --- a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
@@ -133,16 +181,135 @@ Also update `2fregisters.tpl` to that resident credentials are properly show to 
                  <td class="align-middle"><TMPL_VAR NAME="name"></td>
                  <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
 
+TOTP check
+^^^^^^^^^^
+
+To avoid the TOTP code been submitted twice, add `btn-single-submit` class to TOTP check submit in `totp2fcheck.tpl`:
+
+.. code-block:: diff
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   @@ -24,7 +24,7 @@
+        </div>
+      </div>
+      <div class="buttons mb-3">
+   -    <button type="submit" class="btn btn-success">
+   +    <button type="submit" class="btn btn-success btn-single-submit">
+          <span class="fa fa-sign-in"></span>
+          <span trspan="connect">Connect</span>
+        </button>
+
+Vulnerability in templates
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to fix a vulnerability in templates, apply the following patch:
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/checkuser.tpl
+    @@ -11,7 +11,7 @@
+             <div class="input-group-prepend">
+               <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+             </div>
+    -        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="user" aria-required="true"/>
+    +        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="user" aria-required="true"/>
+           </div>
+           <div class="input-group mb-3">
+             <div class="input-group-prepend">
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/globallogout.tpl
+    @@ -6,7 +6,7 @@
+       <div class="row">
+         <TMPL_IF NAME="SESSIONS">
+         <div class="card col border-secondary">
+    -      <div class="text-center bg-light text-dark"><b><span trspan="activeSessions">ACTIVE SSO SESSIONS</span>: <u><TMPL_VAR NAME="LOGIN"></u></b></div>
+    +      <div class="text-center bg-light text-dark"><b><span trspan="activeSessions">ACTIVE SSO SESSIONS</span>: <u><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></u></b></div>
+           <table class="table table-sm table-hover text-center">
+             <thead>
+               <tr>
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/gpgform.tpl
+    @@ -5,7 +5,7 @@
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+         </div>
+    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="mail" required aria-required="true" />
+    +    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="mail" required aria-required="true" />
+       </div>
+
+       <div class="input-group mb-3">
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/password.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/password.tpl
+    @@ -17,11 +17,11 @@
+
+         <TMPL_IF NAME="LOGIN">
+         <div class="input-group mb-3">
+    -      <input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN>" />
+    +      <input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN ESCAPE=HTML>" />
+           <div class="input-group-prepend">
+             <span class="input-group-text"><label for="staticUser" class="mb-0"><i class="fa fa-user"></i></label></span>
+           </div>
+    -      <input id="staticUser" type="text" readonly class="form-control" value="<TMPL_VAR NAME=LOGIN>" />
+    +      <input id="staticUser" type="text" readonly class="form-control" value="<TMPL_VAR NAME=LOGIN ESCAPE=HTML>" />
+         </div>
+         </TMPL_IF>
+
+
+
+Multiple changes to login form
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to implement WebAuthn changes, fix the template vulnerability, and improve focus management, update ``standardform.tpl``:
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    @@ -10,21 +10,23 @@
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+         </div>
+    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
+    +    <input id="userfield" name="user" type="text" class="form-control"
+    +      value="<TMPL_IF NAME="ACTIVE_FORM"><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></TMPL_IF>"
+    +      trplaceholder="login" required aria-required="true" autocomplete="webauthn" <TMPL_UNLESS NAME="LOGIN">autofocus</TMPL_UNLESS> />
+       </div>
+       <div class="input-group mb-3">
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="passwordfield" class="mb-0"><i class="fa fa-lock"></i></label></span>
+         </div>
+         <TMPL_IF NAME="DONT_STORE_PASSWORD">
+    -      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true"/>
+    +      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true" <TMPL_IF NAME="LOGIN">autofocus</TMPL_IF> />
+           <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+             <div class="input-group-append">
+               <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
+             </div>
+           </TMPL_IF>
+         <TMPL_ELSE>
+    -      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
+    +      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true" <TMPL_IF NAME="LOGIN">autofocus</TMPL_IF> />
+           <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+             <div class="input-group-append">
+               <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
+
+
+
 2.19.0
 ------
 
 TOTP registration
 ^^^^^^^^^^^^^^^^^
 
-The TOTP registration now offers a ``otpauth://`` url that can automatically open your TOTP application when viewed on mobile. Apply the following patch to ``totp2fregister.tpl`` to use this new feature::
+The TOTP registration now offers a ``otpauth://`` url that can automatically open your TOTP application when viewed on mobile. Apply the following patch to ``totp2fregister.tpl`` to use this new feature:
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
-    index 506a83481..a14e61d31 100644
+.. code-block:: diff
+
     --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
     @@ -11,8 +11,8 @@
@@ -164,8 +331,6 @@ It is recommended to apply the following patch to your custom templates so that 
 
 .. code-block:: diff
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
-    index 4f277f295..c0381fc9e 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
     @@ -2,7 +2,11 @@
@@ -180,8 +345,6 @@ It is recommended to apply the following patch to your custom templates so that 
 
      <div class="card">
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
-    index 098d91345..361365ef6 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
     @@ -2,7 +2,11 @@
@@ -196,8 +359,6 @@ It is recommended to apply the following patch to your custom templates so that 
 
      <div class="card">
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
-    index 427f78f6c..8e84497e6 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
     @@ -2,7 +2,11 @@
@@ -212,8 +373,6 @@ It is recommended to apply the following patch to your custom templates so that 
 
      <div class="card">
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
-    index 881625d5f..aad8d4886 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
     @@ -3,7 +3,7 @@
@@ -258,7 +417,7 @@ It is now possible to use Font Awesome icons in the application menu.
 
 If you modified the default ``menu.tpl`` template, you need to update it:
 
-.. code:: diff
+.. code-block:: diff
 
     --- a/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
@@ -282,9 +441,9 @@ If you are using the default templates from the ``bootstrap`` theme, you don't n
 Password policy
 ^^^^^^^^^^^^^^^
 
-It is recommended to update your theme's ``passwordpolicy.tpl`` to correctly display special characters in password policies
+It is recommended to update your theme's ``passwordpolicy.tpl`` to correctly display special characters in password policies:
 
-::
+.. code-block:: diff
 
     --- a/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
@@ -311,7 +470,7 @@ The default ``skin.min.js`` file has been updated in this release, be sure to co
 
 Due to some internal changes in the way registrable second factors are handled, it is recommended to update your custom `2fregisters.tpl`
 
-.. code:: diff
+.. code-block:: diff
 
     @@ -32,7 +32,14 @@
                  <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
@@ -354,7 +513,7 @@ Re-send 2FA code
 
 The :doc:`mail <mail2f>`, :doc:`external <external2f>` and :doc:`REST <rest2f>` based 2FA types can now re-send the user code if delivery failed for some reason. If you use custom templates, you must update ``ext2fcheck.tpl``
 
-.. code:: diff
+.. code-block:: diff
 
     --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
@@ -380,7 +539,7 @@ Customizing the 2FA logo in the registration screen
 
 The 2FA registration screen now displays the custom logo and label set in configuration. If you use custom templates, you should update ``2fregisters.tpl``
 
-.. code:: diff
+.. code-block:: diff
 
 	@@ -77,10 +77,16 @@
 		 <div class="card border-secondary">
@@ -411,7 +570,7 @@ A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in 
 
 If you use custom templates, you should update ``login.tpl``
 
-.. code:: diff
+.. code-block:: diff
 
     --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
@@ -487,10 +646,8 @@ If you are using the default templates from the ``bootstrap`` theme, you don't n
 
 If you defined the "Register page URL" or the password "Reset page URL" to an external application, you need to fix the ``standardform.tpl`` template by applying the following patch:
 
-.. code:: diff
+.. code-block:: diff
 
-    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
-    index 3a6256e59..d5192f0ce 100644
     --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
     @@ -48,14 +48,14 @@

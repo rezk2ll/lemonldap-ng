@@ -6,6 +6,8 @@ use Plack::Builder;
 # Basic test app
 my $testApp = sub {
     my ($env) = @_;
+    local $Data::Dumper::Sortkeys = 1;
+    local $Data::Dumper::Indent   = 1;
     return [
         200,
         [ 'Content-Type' => 'text/plain' ],
@@ -43,9 +45,20 @@ my $manager = builder {
     Lemonldap::NG::Manager->run( {} );
 };
 
+my $domain = $ENV{DNSDOMAIN} || "example.com";
+
 # Global app
+if ( $ENV{PORT} and $ENV{DNSDOMAIN} ) {
+    print STDERR <<EOF;
+LemonLDAP demo server:
+* http://test1.$ENV{DNSDOMAIN}:$ENV{PORT}/
+* http://auth.$ENV{DNSDOMAIN}:$ENV{PORT}/
+* http://manager.$ENV{DNSDOMAIN}:$ENV{PORT}/
+
+EOF
+}
 builder {
-    mount 'http://test1.example.com/'   => $test;
-    mount 'http://auth.example.com/'    => $portal;
-    mount 'http://manager.example.com/' => $manager;
+    mount "http://test1.$domain/"   => $test;
+    mount "http://auth.$domain/"    => $portal;
+    mount "http://manager.$domain/" => $manager;
 };

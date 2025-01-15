@@ -373,8 +373,11 @@ sub getLocalConf {
         foreach ( $cfg->Parameters(DEFAULTSECTION) ) {
             $r->{$_} = $cfg->val( DEFAULTSECTION, $_ );
             if ( $_ eq "require" ) {
-                eval { require $r->{$_} };
-                $msg .= "Error: $@" if ($@);
+
+                foreach my $require ( split /[,\s]+/, $r->{$_} ) {
+                    eval { require $require };
+                    $msg .= "Error: $@" if ($@);
+                }
             }
             if (   $r->{$_} =~ /^[{\[].*[}\]]$/
                 || $r->{$_} =~ /^sub\s*{.*}$/ )

@@ -80,11 +80,11 @@ if ($customFunctionsFile) {
 }
 
 my %builder = (
+    handler => sub {
+        return $class->run( {} );
+    },
     reload => sub {
         return $class->reload();
-    },
-    status => sub {
-        return $class->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;
@@ -118,8 +118,6 @@ my %builder = (
         }
     },
 );
-
-$_apps{handler} = $class->run( {} );
 
 my $app = sub {
     $SIG{'PIPE'} = sub {

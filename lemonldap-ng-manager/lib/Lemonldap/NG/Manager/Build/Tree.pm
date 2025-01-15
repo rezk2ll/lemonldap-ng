@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 sub tree {
     return [ {
@@ -54,6 +54,7 @@ sub tree {
                                 'portalFavicon',
                                 'showLanguages',
                                 'scrollTop',
+                                'floatingCategoryName',
                                 'portalCustomCss',
                                 'portalCustomJs',
                                 'portalSkin',
@@ -111,6 +112,7 @@ sub tree {
                                         'portalErrorOnExpiredSession',
                                         'portalErrorOnMailNotFound',
                                         'portalDisplayRefreshMyRights',
+                                        'cacheTagSalt',
                                     ]
                                 }
                             ]
@@ -151,7 +153,8 @@ sub tree {
                             help  => 'authchoice.html',
                             nodes => [
                                 'authChoiceParam',     'authChoiceModules',
-                                'authChoiceAuthBasic', 'authChoiceFindUser'
+                                'authChoiceAuthBasic', 'authChoiceFindUser',
+                                'authChoiceSelectOnly',
                             ]
                         },
                         {
@@ -176,8 +179,7 @@ sub tree {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
                                     nodes => [
-                                        'dbiAuthChain',
-                                        'dbiAuthUser',
+                                        'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
                                     ]
                                 },
@@ -242,9 +244,7 @@ sub tree {
                             title => 'webauthnParams',
                             form  => 'simpleInputContainer',
                             help  => 'authwebauthn.html',
-                            nodes => [
-                                'webauthnAuthnLevel',
-                            ]
+                            nodes => [ 'webauthnAuthnLevel', ]
                         },
                         {
                             title => 'ldapParams',
@@ -398,6 +398,7 @@ sub tree {
                                 'radiusSecret',
                                 'radiusServer',
                                 'radiusTimeout',
+                                'radiusMsgAuth',
                                 'radiusExportedVars',
                                 'radiusDictionaryFile',
                                 'radiusRequestAttributes',
@@ -610,6 +611,7 @@ sub tree {
                         'timeoutActivity',
                         'timeoutActivityInterval',
                         'grantSessionRules',
+                        'appAccessHistoryEnabled',
                         {
                             title => 'sessionStorage',
                             help  => 'start.html#sessions-database',
@@ -781,6 +783,7 @@ sub tree {
                                 'rememberCookieTimeout',
                                 'rememberDefaultChecked',
                                 'rememberTimer',
+                                'rememberAuthChoiceForgetAtLogout',
                             ]
                         },
                         {
@@ -1008,6 +1011,7 @@ sub tree {
                                 'webauthnRpId',
                                 'webauthnAppId',
                                 'webauthnDisplayNameAttr',
+                                'webauthnDefaultTransports',
                                 'webauthn2fAuthnLevel',
                                 'webauthn2fLabel',
                                 'webauthn2fLogo',
@@ -1092,6 +1096,7 @@ sub tree {
                                 'radius2fSecret',
                                 'radius2fUsernameSessionKey',
                                 'radius2fTimeout',
+                                'radius2fMsgAuth',
                                 'radius2fDictionaryFile',
                                 'radius2fRequestAttributes',
                                 'radius2fSendInitialRequest',
@@ -1262,6 +1267,7 @@ sub tree {
                             nodes => [
                                 'https',
                                 'port',
+                                'useRedirectAjaxOnUnauthorized',
                                 'useRedirectOnForbidden',
                                 'useRedirectOnError',
                                 'maintenance'
@@ -1576,6 +1582,7 @@ sub tree {
                         'oidcServiceIDTokenExpiration',
                         'oidcServiceAccessTokenExpiration',
                         'oidcServiceOfflineSessionExpiration',
+                        'oidcServiceMetadataTtl',
                     ]
                 },
                 {

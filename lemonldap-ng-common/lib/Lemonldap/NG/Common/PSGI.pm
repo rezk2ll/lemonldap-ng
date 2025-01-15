@@ -431,8 +431,8 @@ sub _run {
     );
 }
 
-# This method turns a sub that takes a Lemonldap::NG::Common::PSGI::Request
-# obect and returns a PSGI response into a proper PSGI method.
+# This method returns a sub that takes a Lemonldap::NG::Common::PSGI::Request
+# object and returns a PSGI response into a proper PSGI method.
 sub psgiAdapter {
     my ( $self, $sub ) = @_;
     return sub {
@@ -455,11 +455,12 @@ sub logAndRun {
         $self->userLogger->setRequestObj($req);
     }
 
-    $self->logger->info( "New request "
-          . ref($self) . " "
-          . $req->method . " "
-          . $req->request_uri );
-
+    if ( ref $self->logger ) {
+        $self->logger->info( "New request "
+              . ref($self) . " "
+              . $req->method . " "
+              . $req->request_uri );
+    }
     my $res = $sub->($req);
 
     # Clear the logging system before the next request

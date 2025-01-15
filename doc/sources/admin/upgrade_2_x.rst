@@ -10,6 +10,8 @@ Known issues
 
 .. Adjust for every new version that has known, unreleased bugs
 
+* `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
+
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -18,21 +20,62 @@ No known issues.
 2.20.0
 ------
 
+2FA deletion now uses a timeout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Users may start encountering timeout errors if they remain on the 2FA manager
+page too long before deleting their 2FA. In this situation, the page is
+automatically refreshed. However, to improve user experience, you may want to
+increase the *General Parameters* » *Second factors* » *Global options* »
+*Login timeout* setting to increase the timeout.
+
+
 U2F is no more supported
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Current browser no more support U2F specification which has been replaced by
-**Webauthn**. Starting from version 2.20.0, LLNG no more support U2G also.
+Current browsers no more support U2F specification which has been replaced by
+**Webauthn**. Starting from version 2.20.0, LemonLDAP::NG no more supports U2F also.
 
-You can easily replace **U2F** by **Webauthn**. LNG provide also migration
-tools:
+You can easily replace **U2F** by **Webauthn**. LemonLDAP::NG provides also migration tools:
 
 ::
 
    lemonldap-ng-sessions secondfactors migrateu2f --all
    lemonldap-ng-sessions secondfactors delType --all U2F
 
-See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
+See :ref:`lemonldap-ng-sessions doc <cli-sessions>`
+
+window.datas.login is no longer defined in JS code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `window.datas.login` global JS variable used to contain the user's login.
+It caused a security issue and was removed in this version. This only affects
+users who wrote custom JS code for the portal and who explicitely used this
+variable.
+
+Status changed
+^^^^^^^^^^^^^^
+
+The obsolete "portal status" and "status" features were removed from 2.20.0.
+An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
+
+SAML federations
+^^^^^^^^^^^^^^^^
+
+The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
+
+Switching to this method should improve performnace.
+
+Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
+
+Auth::DBI no longer uses stored procedures to generate UNIX-style hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this version, we no longer require stored procedures to generate
+``unixcrypt1``, ``unixcrypt5`` and ``unixcrypt6`` hashes. The computation is
+performed by LemonLDAP::NG itself.
+This does not require any action by the admin or users. Let us know if you
+encounter regressions.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,16 +282,16 @@ The error messages for the following situations have been changed:
 
 .. csv-table::
    :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
-   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
-   An unauthorized logout URL was specified during logout from a CAS application;error_108;PE108;Unauthorized URL
-   An unauthorized Redirect URI was used during an OIDC login;error_108;PE108;Unauthorized URL
-   The provided url= parameter does not correspond to a protected URL;error_109;PE109;Not a protected or trusted URL
+   An authentication request has been made to an unknown CAS application,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown SAML service provider,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown OIDC relying party,error_107,PE107,This application is not known
+   User was not allowed to access a CAS application,error_84,PE84,You're not authorized to access to this host
+   An unauthorized logout URL was specified during logout from a CAS application,error_108,PE108,Unauthorized URL
+   An unauthorized Redirect URI was used during an OIDC login,error_108,PE108,Unauthorized URL
+   The provided url= parameter does not correspond to a protected URL,error_109,PE109,Not a protected or trusted URL
 
 Users who wish to adjust error messages in these situations should update their translation files
 
