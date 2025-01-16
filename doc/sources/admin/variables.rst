@@ -125,6 +125,15 @@ Key            Description
 \_loginHistory HASH of login success and failures
 ============== ==================================
 
+Application history
+-------------------
+
+============== ==================================
+Key            Description
+============== ==================================
+\_appHistory   HASH of accessed applications
+============== ==================================
+
 LDAP
 ----
 
