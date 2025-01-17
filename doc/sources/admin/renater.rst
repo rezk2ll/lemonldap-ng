@@ -43,7 +43,7 @@ Follow :doc:`SAML Federation documentation<samlfederation>` to enable `IDP metad
 
 .. code-block:: shell
 
-   /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml -o /etc/lemonldap-ng/main-idps-renater-metadata.xml
+   /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
 
 Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
 
@@ -52,7 +52,7 @@ With configuration CLI:
 .. code-block:: shell
 
    /usr/*/lemonldap-ng/bin/lemonldap-ng-cli set \
-     samlFederationFiles /etc/lemonldap-ng/main-idps-renater-metadata.xml
+     samlFederationFiles /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
 
 
 Add your SP into the federation
@@ -89,10 +89,12 @@ With configuration CLI:
 
 .. tip::
 
-   You can ovveride these settings for a specific IDP by creating a new IDP in configuration and configuring the Federation EntityID with the value of the IDP EntityID.
+   You can override these settings for a specific IDP by creating a new IDP in configuration and configuring the Federation EntityID with the value of the IDP EntityID.
 
 Register as Identity Provider
 -----------------------------
+
+If you want to give access to Renater applications (SP) to users authenticated with your LL::NG server, then you will act as an Identity Provider.
 
 .. _llng-configuration-renater-1:
 
@@ -116,12 +118,45 @@ moment.
 SAML Federation
 ~~~~~~~~~~~~~~~
 
-Follow :doc:`SAML Federation documentation<samlfederation>` to enable `SP metadata file bundle <https://services.renater.fr/federation/documentation/generale/metadata/versions-metadata.>`_ download.
+Follow :doc:`SAML Federation documentation<samlfederation>` to enable `SP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`_ download. For Example:
+
+.. code-block:: shell
+
+   /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
+
+Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
+
+With configuration CLI:
+
+.. code-block:: shell
+
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli set \
+     samlFederationFiles /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
 
 Add your IDP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to https://federation.renater.fr/registry and register your IDP.
+Go to `Renater registration portal <https://federation.renater.fr/registry>`__ and register your IDP on the Renater federation.
+
+Create the SP template
+~~~~~~~~~~~~~~~~~~~~~~
+
+Declare a template Service Provider in LL::NG configuration that will hold the default settings for all SP of the Renater Federation :
+
+* Keep metadata empty
+* Associate it by setting Options > Federation > Entity identifier to https://federation.renater.fr/
+
+With configuration CLI:
+
+.. code-block:: shell
+
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli addKey \
+     samlSPMetaDataOptions/idp-renater samlSPMetaDataOptionsFederationEntityID 'https://federation.renater.fr/'
+
+.. tip::
+
+   You can override these settings for a specific SP by creating a new SP in configuration and configuring the Federation EntityID with the value of the SP EntityID.
+
 
 .. |image0| image:: /logos/1renater.png
    :class: align-center
