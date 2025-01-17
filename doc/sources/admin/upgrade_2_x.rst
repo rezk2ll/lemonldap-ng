@@ -17,6 +17,22 @@ Known regressions in the latest released version
 
 No known issues.
 
+
+2.20.2
+------
+
+Post-logout redirection
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from this version, passing a ``url=`` parameter to the LemonLDAP logout
+URL (``https://auth.example.com/logout`` or
+``https://auth.example.com/?logout=1``) will only redirect the user to this URL
+if the URL's domain is a known VHost, or a trusted domain.
+
+To add a new domain to the trusted domain list, use the ``trustedDomains``
+variable or the *General parameters* > *Advanced parameters* > *Security* >
+*Trusted domains*. Wildcards can be used to allow all subdomains.
+
 2.20.0
 ------
 
