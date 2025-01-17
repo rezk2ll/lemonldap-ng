@@ -6,8 +6,7 @@ Template updates
     The content of this page only applies to you if:
 
     * You are using a custom LemonLDAP::NG theme
-    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.).
-    Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
+    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.). Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
 
     In other words, you can safely ignore this entire page if:
 
