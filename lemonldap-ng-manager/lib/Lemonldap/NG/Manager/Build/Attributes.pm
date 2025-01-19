@@ -5061,6 +5061,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             documentation => "Source of userinfo",
         },
+        oidcOPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            documentation => "Don't insert typ header",
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
@@ -5318,6 +5322,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation =>
               'List of RP authorized to query for an access_token of this RP',
+        },
+        oidcRPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            documentation => "Don't insert typ header",
         },
         appAccessHistoryEnabled => {
             type          => 'bool',

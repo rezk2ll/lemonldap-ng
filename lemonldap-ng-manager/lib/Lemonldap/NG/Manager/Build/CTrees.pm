@@ -202,6 +202,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
                             'oidcOPMetaDataOptionsUseNonce',
                             'oidcOPMetaDataOptionsUserinfoSource',
+                            'oidcOPMetaDataOptionsNoJwtHeader',
                         ]
                     },
                     'oidcOPMetaDataOptionsComment'
@@ -247,6 +248,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsTokenXAuthorizedRP',
+                            'oidcRPMetaDataOptionsNoJwtHeader',
                         ]
                     },
                     {
