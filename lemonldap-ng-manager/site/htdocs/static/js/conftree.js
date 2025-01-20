@@ -500,6 +500,12 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcOPMetaDataOptionsUserinfoSource",
                   "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcOPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
@@ -680,6 +686,12 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
                   "title" : "oidcRPMetaDataOptionsTokenXAuthorizedRP"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAdvanced",
