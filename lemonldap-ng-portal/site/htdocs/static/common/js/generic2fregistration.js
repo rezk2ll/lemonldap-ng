@@ -41,6 +41,9 @@
         data: {
           generic: generic
         },
+        headers: {
+          "X-CSRF-Check": "1"
+        },
         error: displayError,
         success: function (data) {
           if (data.error) {
@@ -77,6 +80,9 @@
           genericname: genericname,
           genericcode: genericcode,
           token: token
+        },
+        headers: {
+          "X-CSRF-Check": "1"
         },
         error: displayError,
         success: function (data) {

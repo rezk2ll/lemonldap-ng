@@ -34,6 +34,9 @@ getKey = function() {
     type: "POST",
     url: `${portal}2fregisters/totp/getkey`,
     dataType: 'json',
+    headers: {
+      "X-CSRF-Check": "1"
+    },
     error: displayError,
     // Display key and QR code
     success: function(data) {
@@ -91,6 +94,9 @@ verify = function() {
         token: token,
         code: val,
         TOTPName: $('#TOTPName').val()
+      },
+      headers: {
+        "X-CSRF-Check": "1"
       },
       error: displayError,
       success: function(data) {

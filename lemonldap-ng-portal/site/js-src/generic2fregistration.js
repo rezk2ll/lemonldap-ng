@@ -41,18 +41,21 @@ verify = function() {
       data: {
         generic: generic
       },
+      headers: {
+          "X-CSRF-Check": "1"
+      },
       error: displayError,
       success: function(data) {
-        if (data.error) {
-          if (data.error.match(/PE79/)) {
-            return setMsg(data.error, 'warning');
+          if (data.error) {
+              if (data.error.match(/PE79/)) {
+                  return setMsg(data.error, 'warning');
+              } else {
+                  return setMsg(data.error, 'danger');
+              }
           } else {
-            return setMsg(data.error, 'danger');
+              $('#token').val(data.token);
+              return setMsg('genericCheckCode', 'success');
           }
-        } else {
-          $('#token').val(data.token);
-          return setMsg('genericCheckCode', 'success');
-        }
       }
     });
   }
@@ -78,6 +81,9 @@ register = function() {
         genericname: genericname,
         genericcode: genericcode,
         token: token
+      },
+      headers: {
+        "X-CSRF-Check": "1"
       },
       error: displayError,
       success: function(data) {

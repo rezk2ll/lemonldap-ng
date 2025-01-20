@@ -51,8 +51,7 @@
  "scrollTop":<TMPL_VAR NAME="SCROLL_TOP" DEFAULT="0">,
  "floatingCategory":"<TMPL_VAR NAME="FLOATING_CAT">",
  "sameSite":"<TMPL_VAR NAME="SAMESITE">",
- "cookieSecure":<TMPL_VAR NAME="COOKIESECURE">,
- "csrf_token":"<TMPL_VAR NAME="CSRF_TOKEN">"
+ "cookieSecure":<TMPL_VAR NAME="COOKIESECURE">
  }
  </script>
 
