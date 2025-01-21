@@ -1,3 +1,14 @@
+lemonldap-ng (2.20.2) noble; urgency=medium
+
+  * Bugs:
+    * #3258: [Security][CVE-2024-52948] CSRF on 2FA registration
+    * #3281: Test user abarnes mentionned in 2FA logs
+    * #3293: [Session explorer] offline sessions count is wrong
+    * #3301: [Security] Open redirect vulnerability in logout
+    * #3307: Manager test on aliases is not correct
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 21 Jan 2025 16:37:44 +0100
+
 lemonldap-ng (2.20.1) noble; urgency=medium
 
   * Bugs:
