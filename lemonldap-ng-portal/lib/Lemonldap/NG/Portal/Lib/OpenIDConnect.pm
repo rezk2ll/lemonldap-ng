@@ -1828,6 +1828,7 @@ sub checkEndPointAuthenticationCredentials {
             }
         }
     }
+    $self->p->HANDLER->set_user($req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID});
     return ( $rp, $method );
 }
 
