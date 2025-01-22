@@ -269,6 +269,10 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
 License: LGPL-3
 
+Files: lemonldap-ng-portal/t/geoip/*
+Copyright: 2013 - 2024 by MaxMind, Inc.
+License: Expat
+
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
  2004, Florent Monnier
