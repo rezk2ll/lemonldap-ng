@@ -38,7 +38,7 @@ In section "General Parameters > Plugins > Location detection", you can set thes
 
    -  **Enable plugin**: Enable/disable this plugin
    -  **Path to GeoIP database**: Full path to GeoIP2 database
-   -  **Information requested for IP**: Choose ``city`` or ``¢ountry``
+   -  **Information requested for IP**: Choose ``city`` or ``country``
    -  **Information requested for User Agent**: Choose ``browser`` or ``os``
 
 Usage
