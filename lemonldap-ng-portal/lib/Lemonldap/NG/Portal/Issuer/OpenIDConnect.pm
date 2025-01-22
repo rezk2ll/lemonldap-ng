@@ -122,7 +122,7 @@ sub init {
         oidcServiceMetaDataEndSessionURI    => 'endSessionDone',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
         oidcServiceMetaDataTokenURI         => 'token',
-        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataUserInfoURI      => 'unauthUserInfo',
         oidcServiceMetaDataJWKSURI          => 'jwks',
         oidcServiceMetaDataRegistrationURI  => 'registration',
         oidcServiceMetaDataIntrospectionURI => 'introspection',
@@ -2155,9 +2155,14 @@ sub _rotateRefreshSession {
     return $refreshSession;
 }
 
+sub unauthUserInfo {
+    my ( $self, $req ) = @_;
+    return $self->userInfo( $req, 1 );
+}
+
 # Handle userinfo endpoint
 sub userInfo {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $setUser ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
@@ -2184,6 +2189,9 @@ sub userInfo {
     my $scope           = $accessTokenSession->data->{scope};
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    $self->p->HANDLER->set_user( $req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
+      if $setUser;
 
     if ( $self->rpOptions->{$rp}
         ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
