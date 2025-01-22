@@ -41,6 +41,7 @@ use constant liDump      => '_lassoIdentityDumpI';
 
 # Simply store SP in $req->env
 use constant beforeAuth => 'storeEnv';
+use constant hook => { updateSessionId => 'updateSAMLSecondarySessions', };
 
 # INITIALIZATION
 

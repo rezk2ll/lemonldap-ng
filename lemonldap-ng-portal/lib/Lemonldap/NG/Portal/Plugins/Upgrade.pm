@@ -115,6 +115,8 @@ sub confirm {
     my ( $self, $req, $sfOnly ) = @_;
     my $upg;
 
+    my $old_id = $req->userData->{_session_id};
+
     if ( $req->param('kerberos') ) {
         $upg = 1;
     }
@@ -156,7 +158,13 @@ sub confirm {
                 '', 0
             );    # Insert token
                   # Do a regular login
-            return $self->p->login($req);
+            my $res = $self->p->login($req);
+
+            if ( $old_id and $req->id and $old_id ne $req->id ) {
+                $self->p->processHook( $req, 'updateSessionId', $old_id,
+                    $req->id );
+            }
+            return $res;
         }
     }
     else {
