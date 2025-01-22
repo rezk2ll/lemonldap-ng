@@ -271,7 +271,7 @@ License: LGPL-3
 
 Files: lemonldap-ng-portal/t/geoip/*
 Copyright: 2013 - 2024 by MaxMind, Inc.
-License: Expat
+License: Expat or Apache-2.0
 
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
