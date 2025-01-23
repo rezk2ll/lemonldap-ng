@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"巨集",
 "casAppMetaDataNodes":"CAS 應用程式",
 "casAppMetaDataOptions":"選項",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"需要的驗證等級",
 "casAppMetaDataOptionsComment":"註解",
 "casAppMetaDataOptionsDisplay":"顯示",

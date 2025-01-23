@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"ماكرو",
 "casAppMetaDataNodes":"تطبيق كاس",
 "casAppMetaDataOptions":"خيارات",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"مستوى إثبات الهوية  واجب",
 "casAppMetaDataOptionsComment":"تعليق",
 "casAppMetaDataOptionsDisplay":"عرض",

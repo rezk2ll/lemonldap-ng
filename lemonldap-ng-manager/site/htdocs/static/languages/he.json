@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"תסריטי מאקרו",
 "casAppMetaDataNodes":"יישומי CAS",
 "casAppMetaDataOptions":"אפשרויות",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"דרגת אימות נדרשת",
 "casAppMetaDataOptionsComment":"הערה",
 "casAppMetaDataOptionsDisplay":"תצוגה",

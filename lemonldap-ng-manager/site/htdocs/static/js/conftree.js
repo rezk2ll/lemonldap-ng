@@ -49,6 +49,13 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "title" : "casAppMetaDataOptionsAllowProxy",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",

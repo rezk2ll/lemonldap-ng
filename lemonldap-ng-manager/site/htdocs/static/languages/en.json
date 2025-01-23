@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"Macros",
 "casAppMetaDataNodes":"CAS Applications",
 "casAppMetaDataOptions":"Options",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"Required authentication level",
 "casAppMetaDataOptionsComment":"Comment",
 "casAppMetaDataOptionsDisplay":"Display",

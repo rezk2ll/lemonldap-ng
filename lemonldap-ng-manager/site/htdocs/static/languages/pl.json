@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"Makra",
 "casAppMetaDataNodes":"Aplikacje CAS",
 "casAppMetaDataOptions":"Opcje",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"Wymagany poziom uwierzytelnienia",
 "casAppMetaDataOptionsComment":"Komentarz",
 "casAppMetaDataOptionsDisplay":"Wyświetl",

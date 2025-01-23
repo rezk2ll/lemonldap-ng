@@ -369,6 +369,7 @@ sub cTrees {
                 nodes => [
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
+                    'casAppMetaDataOptionsAllowProxy',
                     'casAppMetaDataOptionsLogout',
                     'casAppMetaDataOptionsAuthnLevel',
                     'casAppMetaDataOptionsRule',

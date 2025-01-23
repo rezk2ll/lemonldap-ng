@@ -3063,6 +3063,11 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS User attribute',
         },
+        casAppMetaDataOptionsAllowProxy => {
+            type          => 'bool',
+            documentation => 'Allow CAS proxy',
+            default => 1,
+        },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
             help =>

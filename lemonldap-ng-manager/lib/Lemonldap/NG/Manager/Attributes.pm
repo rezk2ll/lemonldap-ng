@@ -786,6 +786,10 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsAllowProxy' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'casAppMetaDataOptionsAuthnLevel' => {
             'test' => sub {
                 return perlExpr(@_);

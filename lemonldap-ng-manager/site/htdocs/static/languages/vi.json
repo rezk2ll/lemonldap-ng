@@ -151,6 +151,7 @@
 "casAppMetaDataMacros":"Macros",
 "casAppMetaDataNodes":"Ứng dụng CAS",
 "casAppMetaDataOptions":"Tùy chọn",
+"casAppMetaDataOptionsAllowProxy":"Allow proxy",
 "casAppMetaDataOptionsAuthnLevel":"Mức xác thực bắt buộc",
 "casAppMetaDataOptionsComment":"Bình luận",
 "casAppMetaDataOptionsDisplay":"Hiển thị",
