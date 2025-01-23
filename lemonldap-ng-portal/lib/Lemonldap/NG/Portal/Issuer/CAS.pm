@@ -869,6 +869,19 @@ sub _validate2 {
     # Proxy granting ticket
     if ($pgtUrl) {
 
+        my $allow_proxy = 1;
+        if ($app) {
+            $allow_proxy = $self->casAppList->{$app}->{casAppMetaDataOptionsAllowProxy} // 1;
+        }
+        if (!$allow_proxy) {
+            return $self->_failValidate2(
+                $req,
+                app  => $app,
+                code => 'UNAUTHORIZED_SERVICE_PROXY',
+                msg  => 'CAS proxy is not allowed'
+            );
+        }
+
         # Create a proxy granting ticket
         $self->logger->debug(
             "Create a CAS proxy granting ticket for service $service");
