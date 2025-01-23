@@ -34,10 +34,6 @@ License: Artistic or GPL-1+
 Comment: contains code from DateTime::Format::Duration::XSD by Smal D A,
  <mialinx@gmail.com>
 
-Files: lemonldap-ng-portal/inc/LWP/Protocol/PSGI.pm
-Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
-License: Artistic or GPL-1+
-
 Files: *.js
 Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
  2006-2023, Clement Oudot <clem.oudot@gmail.com>
@@ -46,7 +42,7 @@ Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
  2019-2023, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 
-Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
+Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png lemonldap-ng-portal/site/htdocs/static/common/modules/webauthn.png
 Copyright: James Cullum <https://github.com/JamesCullum>
 License: WebAuthnLogoLicense
 
@@ -59,6 +55,10 @@ Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/webauthn-json.browser-global.*
+Copyright: GitHub, Inc.
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
 Copyright: Apache Software Foundation (ASF)
@@ -268,6 +268,10 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
  doc/sources/admin/icons/*
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
 License: LGPL-3
+
+Files: lemonldap-ng-portal/t/geoip/*
+Copyright: 2013 - 2024 by MaxMind, Inc.
+License: Expat or Apache-2.0
 
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>

@@ -122,7 +122,7 @@ License: CC-BY-2.5
 Comment: downloaded from https://github.com/legacy-icons/famfamfam-silk/
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/2F/*
-Copyright: aterina Limpitsouni
+Copyright: 2024 Katerina Limpitsouni
 License: unDraw
 Comment: downloaded from https://undraw.co/
 
@@ -268,6 +268,10 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
  doc/sources/admin/icons/*
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
 License: LGPL-3
+
+Files: lemonldap-ng-portal/t/geoip/*
+Copyright: 2013 - 2024 by MaxMind, Inc.
+License: Expat or Apache-2.0
 
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
