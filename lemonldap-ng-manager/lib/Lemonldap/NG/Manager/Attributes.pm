@@ -2618,7 +2618,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'int'
         },
         'oidcOPMetaDataOptionsNoJwtHeader' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
@@ -3173,7 +3174,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsNoJwtHeader' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'intOrNull'

@@ -5063,6 +5063,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcOPMetaDataOptionsNoJwtHeader => {
             type          => 'bool',
+            default       => 0,
             documentation => "Don't insert typ header",
         },
 
@@ -5325,6 +5326,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsNoJwtHeader => {
             type          => 'bool',
+            default       => 0,
             documentation => "Don't insert typ header",
         },
         appAccessHistoryEnabled => {

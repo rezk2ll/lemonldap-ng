@@ -245,10 +245,10 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAccessTokenJWT',
                             'oidcRPMetaDataOptionsAccessTokenClaims',
                             'oidcRPMetaDataOptionsRefreshToken',
+                            'oidcRPMetaDataOptionsNoJwtHeader',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsTokenXAuthorizedRP',
-                            'oidcRPMetaDataOptionsNoJwtHeader',
                         ]
                     },
                     {

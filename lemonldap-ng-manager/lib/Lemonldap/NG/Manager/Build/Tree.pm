@@ -707,7 +707,7 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'passwordManagement',
+                            title => 'passwordResetByMailManagement',
                             help  => 'resetpassword.html',
                             nodes => [ {
                                     title => 'mailContent',

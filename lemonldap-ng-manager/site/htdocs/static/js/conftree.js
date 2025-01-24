@@ -502,6 +502,7 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
                   "title" : "oidcOPMetaDataOptionsNoJwtHeader",
@@ -673,6 +674,13 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "title" : "oidcRPMetaDataOptionsUserIDAttr"
@@ -686,12 +694,6 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
                   "title" : "oidcRPMetaDataOptionsTokenXAuthorizedRP"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
-                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
-                  "type" : "bool"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAdvanced",
