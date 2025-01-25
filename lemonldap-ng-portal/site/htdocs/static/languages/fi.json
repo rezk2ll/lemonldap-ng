@@ -158,7 +158,7 @@
 "contextSwitching_ON":"Esiinny toisena käyttäjänä",
 "continue":"Jatka",
 "createAccount":"Luo käyttäjätili",
-"csrfError":"CSRF check failed",
+"csrfError":"CSRF-tarkistus epäonnistui",
 "current":"Nykyinen",
 "currentPwd":"Nykyinen salasana",
 "date":"Päivämäärä",

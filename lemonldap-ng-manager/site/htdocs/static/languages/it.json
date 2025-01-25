@@ -898,7 +898,7 @@
 "password2fTTL":"Lifetime",
 "password2fUserCanRemoveKey":"Allow user to remove password",
 "passwordDB":"Modulo password",
-"passwordManagement":"Password management",
+"passwordManagement":"Gestione password",
 "passwordPolicy":"Password policy",
 "passwordPolicyActivation":"Attivazione",
 "passwordPolicyMaxSize":"Maximal size",

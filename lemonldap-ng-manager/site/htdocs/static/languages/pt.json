@@ -898,7 +898,7 @@
 "password2fTTL":"Duração da vida",
 "password2fUserCanRemoveKey":"Permitir que usuário remova a senha",
 "passwordDB":"Módulo de senha",
-"passwordManagement":"Password management",
+"passwordManagement":"Gerenciamento de senha",
 "passwordPolicy":"Política de senha",
 "passwordPolicyActivation":"Ativação",
 "passwordPolicyMaxSize":"Maximal size",

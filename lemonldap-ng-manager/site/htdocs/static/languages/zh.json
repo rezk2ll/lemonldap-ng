@@ -898,7 +898,7 @@
 "password2fTTL":"壽命",
 "password2fUserCanRemoveKey":"Allow user to remove password",
 "passwordDB":"密碼模組",
-"passwordManagement":"Password management",
+"passwordManagement":"密碼管理",
 "passwordPolicy":"密碼政策",
 "passwordPolicyActivation":"激活",
 "passwordPolicyMaxSize":"Maximal size",

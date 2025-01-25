@@ -898,7 +898,7 @@
 "password2fTTL":"Продолжительность жизни",
 "password2fUserCanRemoveKey":"Разрешить пользователю удалять пароль",
 "passwordDB":"Модуль пароля",
-"passwordManagement":"Password management",
+"passwordManagement":"Управление паролем",
 "passwordPolicy":"Политика паролей",
 "passwordPolicyActivation":"Активация",
 "passwordPolicyMaxSize":"Maximal size",
