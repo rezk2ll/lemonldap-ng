@@ -871,9 +871,10 @@ sub _validate2 {
 
         my $allow_proxy = 1;
         if ($app) {
-            $allow_proxy = $self->casAppList->{$app}->{casAppMetaDataOptionsAllowProxy} // 1;
+            $allow_proxy =
+              $self->casAppList->{$app}->{casAppMetaDataOptionsAllowProxy} // 1;
         }
-        if (!$allow_proxy) {
+        if ( !$allow_proxy ) {
             return $self->_failValidate2(
                 $req,
                 app  => $app,
@@ -1218,15 +1219,16 @@ sub _failValidate1 {
 
 sub _failValidate2 {
     my ( $self, $req, %params ) = @_;
-    my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
-    my $code   = $params{'code'} || 'INTERNAL_ERROR';
-    my $res    = $params{res}    || PE_ERROR;
-    my $app    = $params{app};
+    my $message = $params{'msg'} ? ": $params{'msg'}" : "";
+    my $reason  = $params{'msg'};
+    my $code    = $params{'code'} || 'INTERNAL_ERROR';
+    my $res     = $params{res}    || PE_ERROR;
+    my $app     = $params{app};
 
     $self->auditLog(
         $req,
         code    => "ISSUER_CAS_VALIDATE_FAILED",
-        message => ( "CAS validation failed" . $reason ),
+        message => ( "CAS validation failed" . $message ),
         ( $reason ? ( reason => $reason ) : () ),
         ( $app    ? ( app    => $app )    : () ),
         cas_code     => $code,
