@@ -691,22 +691,26 @@ install_bin:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
 		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*
