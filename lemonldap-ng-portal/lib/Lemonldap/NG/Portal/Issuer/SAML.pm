@@ -563,7 +563,7 @@ sub run {
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
                 $self->logger->debug(
-                    "Get NameID format $nameIDFormat from request");
+                    "Get NameID format $nameIDFormat from request") if defined($nameIDFormat);
             }
 
             # Get default NameID Format from configuration
