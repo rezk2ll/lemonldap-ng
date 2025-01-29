@@ -20,7 +20,7 @@ if [ -r /etc/default/lemonldap-ng-fastcgi-server ]; then
 	. /etc/default/lemonldap-ng-fastcgi-server
 fi
 
-STOP_SCHEDULE="${STOP_SCHEDULE:-QUIT/5/TERM/5/KILL/5}"
+STOP_SCHEDULE="${STOP_SCHEDULE:-TERM/5/KILL/5}"
 
 test -x $DAEMON || exit 0
 
@@ -76,7 +76,7 @@ stop_server() {
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
-	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --exec $DAEMON
+	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --user=$USER --group=$GROUP
 	RETVAL="$?"
 	sleep 1
 	return "$RETVAL"
