@@ -660,6 +660,7 @@ fi
 %{_mandir}/man1/convertToHashSessionStorage*
 %{_mandir}/man1/encryptTotpSecrets*
 %{_mandir}/man1/lemonldap-ng-sessions*
+%{_mandir}/man1/rotateOidcKeys*
 %dir %{_libexecdir}/%{name}
 %dir %{lm_sbindir}
 %dir %{lm_bindir}
