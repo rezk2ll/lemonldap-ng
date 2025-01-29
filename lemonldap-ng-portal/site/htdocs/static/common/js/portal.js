@@ -81,6 +81,7 @@
     }
   };
   translatePage = function (lang) {
+    document.documentElement.lang = lang;
     return $.getJSON(`${window.staticPrefix}languages/${lang}.json`, function (data) {
       var k, ref, ref1, v;
       translationFields = data;
