@@ -136,6 +136,7 @@
     } else {
       lang = window.currentLanguage;
     }
+    document.documentElement.lang = lang;
     return $.getJSON("".concat(window.staticPrefix, "languages/").concat(lang, ".json"), function (data) {
       var k, ref, ref1, v;
       translationFields = data;
