@@ -149,7 +149,8 @@ sub appListDiff {
 
             # Category doesn't exists in new conf
             else {
-                $res[0]->{$cat} = $conf[0]->{$key};
+                my @tmp = _copyAppList( $self, $conf[0]->{$key} );
+                $res[0]->{$cat} = $tmp[1];
             }
         }
 
@@ -159,9 +160,10 @@ sub appListDiff {
             if ( $conf[1]->{$key} ) {
                 my $newname = $conf[1]->{$key}->{options}->{name};
 
+                # compare options
                 foreach my $k ( keys %{ $conf[1]->{$key}->{options} } ) {
-                    unless ( $conf[1]->{$key}->{options}->{$k} eq
-                        $conf[0]->{$key}->{options}->{$k} )
+                    unless ( ( $conf[1]->{$key}->{options}->{$k} // "" ) eq
+                        ( $conf[0]->{$key}->{options}->{$k} // "" ) )
                     {
                         $res[0]->{$newname}->{options}->{$k} =
                           $conf[0]->{$key}->{options}->{$k};
