@@ -92,28 +92,30 @@ sub _run {
                 $req->userData( $self->api->data );
                 $req->respHeaders( $res->[1] );
             }
-            elsif ( ( (
-                            $res->[0] != 403
-                        and $res->[0] != 503
-                        and $res->[0] != 302
-                    )
-                    or $req->path_info =~ m#^/+lmerror/#i
-                    or ( $res->[0] == 302
-                        and not grep( m#/lmerror/503#, @{ $res->[1] } ) )
-                )
-                and not $req->data->{noTry}
-              )
-            {
-
-                # Unset headers (handler adds a Location header)
-                $self->logger->debug(
-                    "User not authenticated, Try in use, cancel redirection");
-                $req->userData( {} );
-                $req->respHeaders( [] );
-                $self->routes( $self->unAuthRoutes );
-            }
             else {
-                return $res;
+                my $mt = $self->api->checkMaintenanceMode($req);
+                if (
+                    not $req->data->{noTry}
+                    and (
+                       # Normal case, only Forbidden response are given directly
+                        ( $res->[0] != 403 and !$mt )
+
+            # If portal is in maintainance mode call it only to display /lmerror
+                        or ( $mt and $req->path_info =~ m#^/+lmerror/#i )
+                    )
+                  )
+                {
+                    # Unset headers (handler adds a Location header)
+                    $self->logger->debug(
+                        "User not authenticated, Try in use, cancel redirection"
+                    );
+                    $req->userData( {} );
+                    $req->respHeaders( [] );
+                    $self->routes( $self->unAuthRoutes );
+                }
+                else {
+                    return $res;
+                }
             }
             $res = $self->handler($req);
             push @{ $res->[1] }, $req->spliceHdrs;
