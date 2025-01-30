@@ -924,8 +924,9 @@ sub _scanNodes {
                         if ( $name eq 'authChoiceModules' ) {
                             hdebug('     authChoiceModules');
                             if ( ref( $n->{data}->[5] ) eq 'ARRAY' ) {
-                                $n->{data}->[5] = to_json(
-                                    { map { @$_ } @{ $n->{data}->[5] } } );
+                                $n->{data}->[5] =
+                                  to_json( { map { @$_ } @{ $n->{data}->[5] } },
+                                    { canonical => 1 } );
                             }
                             else {
                                 $n->{data}->[5] = '{}';
