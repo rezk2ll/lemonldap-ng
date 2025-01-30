@@ -393,7 +393,7 @@ m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
     }
 }
 
-=head4 expectAuthenticatedAs($user)
+=head4 expectAuthenticatedAs($res, $user)
 
 Verify that result has a C<Lm-Remote-User> header and value is $user
 
