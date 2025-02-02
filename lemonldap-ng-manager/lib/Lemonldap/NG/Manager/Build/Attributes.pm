@@ -4962,6 +4962,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'int',
             documentation => 'OIDC Metadata TTL',
         },
+        oidcServiceMetaDataDisallowNoneAlg => {
+            type        => 'bool',
+            description => 'Disallow "none" algorithm for signature',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {

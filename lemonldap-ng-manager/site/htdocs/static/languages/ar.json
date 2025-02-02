@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"ترخيص",
 "oidcServiceMetaDataBackChannelURI":"URI قناة الخلفية",
 "oidcServiceMetaDataCheckSessionURI":"تحقق من الجلسة",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Endpoints",
 "oidcServiceMetaDataEndSessionURI":"نهاية الجلسة",

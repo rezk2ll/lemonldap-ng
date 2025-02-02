@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Yetkilendirme",
 "oidcServiceMetaDataBackChannelURI":"Arka-Kanal URI",
 "oidcServiceMetaDataCheckSessionURI":"Oturumu Kontrol Et",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Uç noktalar",
 "oidcServiceMetaDataEndSessionURI":"Oturumun sonu",

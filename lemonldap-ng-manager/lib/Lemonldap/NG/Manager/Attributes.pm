@@ -3533,6 +3533,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'checksession.html',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataDisallowNoneAlg' => {
+            'type' => 'bool'
+        },
         'oidcServiceMetaDataEndSessionURI' => {
             'default' => 'logout',
             'type'    => 'text'

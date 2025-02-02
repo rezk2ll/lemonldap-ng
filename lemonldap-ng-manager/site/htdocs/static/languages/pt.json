@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Autorização",
 "oidcServiceMetaDataBackChannelURI":"URI do Back-Channel",
 "oidcServiceMetaDataCheckSessionURI":"Conferir sessão",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Pontos finais",
 "oidcServiceMetaDataEndSessionURI":"Fim de sessão",

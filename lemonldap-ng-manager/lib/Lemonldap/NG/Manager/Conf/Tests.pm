@@ -126,7 +126,7 @@ sub tests {
               keys %{ $conf->{vhostOptions} };
 
             foreach my $alias (@aliases) {
-                    push @all_aliases, split(/\s+/, $alias);
+                push @all_aliases, split( /\s+/, $alias );
             }
 
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
@@ -1305,7 +1305,21 @@ sub tests {
                 'access_token cannot be opaque with claims in access_token ('
                   . join( ', ', @pb )
                   . ')' );
-        }
+        },
+        oidcNoneConsistency => sub {
+            my @pb;
+            return 1 unless $conf->{oidcServiceMetaDataDisallowNoneAlg};
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsIDTokenSignAlg} eq 'none'
+                  or $opts->{oidcRPMetaDataOptionsUserInfoSignAlg} eq 'none';
+            }
+            return 1 unless @pb;
+            return ( 1,
+                'Signature algorithm is not allowed but set for: '
+                  . join( ', ', @pb ) );
+        },
     };
 }
 
