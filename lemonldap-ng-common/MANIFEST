@@ -104,6 +104,7 @@ t/03-Common-Conf-RDBI.t
 t/05-Common-Conf-LDAP.t
 t/10-PSGI-Request.t
 t/10-PSGI.t
+t/11-Logger-Log4Perl.t
 t/11-Logger.t
 t/11-TestLogger.t
 t/30-Common-Safelib.t
@@ -124,6 +125,7 @@ t/71-Util-Crypto.t
 t/99-pod.t
 t/data/preview-all-test-metadata.xml
 t/lemonldap-ng.ini
+t/log4perl.ini
 t/overlay_test/lmConf-1.json
 t/overlay_test/overlay/globalStorage
 t/overlay_test/overlay/globalStorageOptions
