@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Uỷ quyền",
 "oidcServiceMetaDataBackChannelURI":"URI kênh sau",
 "oidcServiceMetaDataCheckSessionURI":"Kiểm tra phiên",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Endpoints",
 "oidcServiceMetaDataEndSessionURI":"Kết thúc phiên",

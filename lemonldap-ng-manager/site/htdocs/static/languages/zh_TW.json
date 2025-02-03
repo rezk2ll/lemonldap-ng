@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"授權",
 "oidcServiceMetaDataBackChannelURI":"反向頻道 URI",
 "oidcServiceMetaDataCheckSessionURI":"檢查工作階段",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Endpoints",
 "oidcServiceMetaDataEndSessionURI":"工作階段結束",

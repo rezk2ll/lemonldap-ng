@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Авторизация",
 "oidcServiceMetaDataBackChannelURI":"URI обратного канала",
 "oidcServiceMetaDataCheckSessionURI":"Проверить сеанс",
+"oidcServiceMetaDataDisallowNoneAlg":"Disallow \"none\" algorithm for signature",
 "oidcServiceMetaDataEncKeys":"Encryption keys",
 "oidcServiceMetaDataEndPoints":"Конечные точки",
 "oidcServiceMetaDataEndSessionURI":"Конец сеанса",

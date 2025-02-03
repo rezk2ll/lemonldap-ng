@@ -1571,6 +1571,7 @@ sub tree {
                         'oidcServiceEncAlgorithmAlg',
                         'oidcServiceEncAlgorithmEnc',
                         'oidcServiceHideMetadata',
+                        'oidcServiceMetaDataDisallowNoneAlg',
                     ],
                 },
                 {

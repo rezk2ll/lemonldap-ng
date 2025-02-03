@@ -820,6 +820,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Autorisation",
 "oidcServiceMetaDataBackChannelURI":"URI du canal caché",
 "oidcServiceMetaDataCheckSessionURI":"Vérification de session",
+"oidcServiceMetaDataDisallowNoneAlg":"Désactiver l'algorithme none pour les signatures",
 "oidcServiceMetaDataEncKeys":"Clefs de chiffrement",
 "oidcServiceMetaDataEndPoints":"Points d'accès",
 "oidcServiceMetaDataEndSessionURI":"Fin de session",
