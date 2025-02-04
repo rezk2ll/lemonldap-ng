@@ -172,6 +172,15 @@ sub appListDiff {
                     }
                 }
 
+                # look for deleted options as well
+                foreach my $k ( keys %{ $conf[0]->{$key}->{options} } ) {
+                    unless ( exists $conf[1]->{$key}->{options}->{$k} ) {
+                        $res[0]->{$newname}->{options}->{$k} =
+                          $conf[0]->{$key}->{options}->{$k};
+                        $res[1]->{$newname}->{options}->{$k} = undef;
+                    }
+                }
+
                 # Remove found key from new keys
                 $keys[1] = [ grep { $_ ne $key } @{ $keys[1] // [] } ];
             }
