@@ -340,6 +340,7 @@
 "diffWithPrevious":"önceki ile farkı",
 "disablePersistentStorage":"Depolamayı devre dışı bırak",
 "disabled":"Devre dışı",
+"disabledPlugins":"Disabled plugins",
 "displaySessionId":"Oturum kimliğini görüntüle",
 "dn":"DN",
 "domain":"Etki alanı",

@@ -340,6 +340,7 @@
 "diffWithPrevious":"différence avec la précédente",
 "disablePersistentStorage":"Désactiver le stockage",
 "disabled":"Désactivé",
+"disabledPlugins":"Modules désactivés",
 "displaySessionId":"Afficher l'identifiant de session",
 "dn":"DN",
 "domain":"Domaine",
