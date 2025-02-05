@@ -123,6 +123,7 @@ sub load {
         }
         binmode FILE;
         $f = join( '', <FILE> );
+        close FILE;
         eval { $ret = from_json( $f, { allow_nonref => 1 } ) };
         if ($@) {
             print STDERR "$@\n";

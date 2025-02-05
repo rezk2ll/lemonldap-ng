@@ -1144,7 +1144,6 @@ sub newAuthorizationCode {
         $self->rpOptions->{$rp}
           ->{oidcRPMetaDataOptionsAuthorizationCodeExpiration}
           || $self->conf->{oidcServiceAuthorizationCodeExpiration},
-        ,
         $info
     );
 }
@@ -1532,7 +1531,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -1829,6 +1828,7 @@ sub checkEndPointAuthenticationCredentials {
             }
         }
     }
+    $self->p->HANDLER->set_user($req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID});
     return ( $rp, $method );
 }
 
@@ -2280,6 +2280,7 @@ sub _createJWT {
     my ( $self, $payload, $alg, $partner, $type, $isRp ) = @_;
 
     my @keyArg;
+    my %extra_headers;
 
     # Set Cript::JWT arguments depending on "alg"
     #  a) "none"
@@ -2313,7 +2314,6 @@ sub _createJWT {
         }
         @keyArg = ( key => \$priv_key, );
 
-        my %extra_headers;
         if ( $self->conf->{oidcServiceKeyIdSig} ) {
             $extra_headers{kid} = $self->conf->{oidcServiceKeyIdSig};
         }
@@ -2323,8 +2323,15 @@ sub _createJWT {
             $extra_headers{x5t} = $key_info->{x5t};
         }
 
-        push @keyArg, extra_headers => \%extra_headers if %extra_headers;
     }
+    my $noTyp =
+        $isRp
+      ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsNoJwtHeader}
+      : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsNoJwtHeader};
+    unless ($noTyp) {
+        $extra_headers{typ} = $type || 'JWT';
+    }
+    push @keyArg, extra_headers => \%extra_headers if %extra_headers;
 
     # Encode payload here due to #2748
     my $jwt = eval {

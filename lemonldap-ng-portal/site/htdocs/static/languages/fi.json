@@ -158,7 +158,7 @@
 "contextSwitching_ON":"Esiinny toisena käyttäjänä",
 "continue":"Jatka",
 "createAccount":"Luo käyttäjätili",
-"csrfToken":"Turvaväline ei ole kelvollinen. Sivu päivittyy automaattisesti. Ole hyvä ja yritä uudelleen.",
+"csrfError":"CSRF-tarkistus epäonnistui",
 "current":"Nykyinen",
 "currentPwd":"Nykyinen salasana",
 "date":"Päivämäärä",

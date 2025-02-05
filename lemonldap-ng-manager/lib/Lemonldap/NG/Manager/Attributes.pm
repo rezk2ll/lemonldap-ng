@@ -786,6 +786,10 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsAllowProxy' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'casAppMetaDataOptionsAuthnLevel' => {
             'test' => sub {
                 return perlExpr(@_);
@@ -2617,6 +2621,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'int'
         },
+        'oidcOPMetaDataOptionsNoJwtHeader' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
         },
@@ -3172,6 +3180,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsNoJwtHeader' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'intOrNull'
         },
@@ -3523,6 +3535,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceMetaDataCheckSessionURI' => {
             'default' => 'checksession.html',
             'type'    => 'text'
+        },
+        'oidcServiceMetaDataDisallowNoneAlg' => {
+            'type' => 'bool'
         },
         'oidcServiceMetaDataEndSessionURI' => {
             'default' => 'logout',

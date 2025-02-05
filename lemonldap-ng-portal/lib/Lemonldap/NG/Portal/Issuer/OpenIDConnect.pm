@@ -38,6 +38,7 @@ with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
 # INTERFACE
 
 sub beforeAuth { 'exportRequestParameters' }
+use constant hook => { updateSessionId => 'updateOidcSecondarySessions' };
 
 # INITIALIZATION
 
@@ -121,7 +122,7 @@ sub init {
         oidcServiceMetaDataEndSessionURI    => 'endSessionDone',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
         oidcServiceMetaDataTokenURI         => 'token',
-        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataUserInfoURI      => 'unauthUserInfo',
         oidcServiceMetaDataJWKSURI          => 'jwks',
         oidcServiceMetaDataRegistrationURI  => 'registration',
         oidcServiceMetaDataIntrospectionURI => 'introspection',
@@ -2139,9 +2140,14 @@ sub _rotateRefreshSession {
     return $refreshSession;
 }
 
+sub unauthUserInfo {
+    my ( $self, $req ) = @_;
+    return $self->userInfo( $req, 1 );
+}
+
 # Handle userinfo endpoint
 sub userInfo {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $setUser ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
@@ -2168,6 +2174,9 @@ sub userInfo {
     my $scope           = $accessTokenSession->data->{scope};
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    $self->p->HANDLER->set_user( $req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
+      if $setUser;
 
     if ( $self->rpOptions->{$rp}
         ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
@@ -2970,6 +2979,44 @@ sub getAttributesForUser {
         $self->logger->error( "Could not resolve user: " . $req->user );
     }
     return 0;
+}
+
+# Change the ID of secondary sessions (during upgrade)
+sub updateOidcSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my %opts    = $self->_storeOpts;
+    my $options = $opts{storageModuleOptions};
+    $options->{backend} = $opts{storageModule};
+
+    my $oidc_sessions =
+      $module->searchOn( $options, "user_session_id", $old_session_id );
+
+    if (
+        my @oidc_sessions_keys =
+        grep { $oidc_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$oidc_sessions
+      )
+    {
+
+        foreach my $oidc_session (@oidc_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve OIDC session $oidc_session");
+
+            my $oidcSession = $self->getOpenIDConnectSession($oidc_session);
+
+            if ($oidcSession) {
+
+                # Delete session
+                $oidcSession->update( { user_session_id => $new_session_id } );
+            }
+        }
+    }
+
+    return;
 }
 
 1;

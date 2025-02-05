@@ -601,6 +601,7 @@ t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
 t/05-Hashed-Session.t
+t/06-portal-maintainance.t
 t/10-AuthCustom.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
@@ -734,6 +735,7 @@ t/32-OIDC-ID-Token.t
 t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t
+t/32-OIDC-JWT-type-header.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
@@ -741,6 +743,8 @@ t/32-OIDC-Metadata.t
 t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
+t/32-OIDC-OP-claims-in-accesstoken.t
+t/32-OIDC-OP-claims-in-idtoken.t
 t/32-OIDC-Opaque-Token.t
 t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Password-Grant.t
@@ -985,7 +989,8 @@ t/ChoiceHookPlugin.pm
 t/Custom.pm
 t/CustomMenu.pm
 t/DbiCustomHash.pm
-t/geoip/test.mmdb
+t/geoip/GeoIP2-City-Test.mmdb
+t/geoip/GeoIP2-Country-Test.mmdb
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key

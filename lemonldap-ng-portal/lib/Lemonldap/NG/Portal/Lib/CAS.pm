@@ -293,6 +293,49 @@ sub returnCasProxySuccess {
     );
 }
 
+# Change the ID of secondary sessions (during upgrade)
+sub updateCasSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    # Find CAS sessions
+    my $moduleOptions;
+    if ( $self->conf->{casStorage} ) {
+        $moduleOptions = $self->conf->{casStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{casStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $cas_sessions =
+      $module->searchOn( $moduleOptions, "_cas_id", $old_session_id );
+
+    if (
+        my @cas_sessions_keys =
+        grep { $cas_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$cas_sessions
+      )
+    {
+
+        foreach my $cas_session (@cas_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve CAS session $cas_session");
+
+            my $casSession = $self->getCasSession($cas_session);
+
+            # Delete session
+            if ($casSession) {
+                $casSession->update( { _cas_id => $new_session_id } );
+            }
+        }
+    }
+
+    return;
+}
+
 # Find and delete CAS sessions bounded to a primary session
 sub deleteCasSecondarySessions {
     my ( $self, $session_id ) = @_;

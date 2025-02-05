@@ -113,6 +113,10 @@ sub _generate_user_handle {
 
 sub _registrationchallenge {
     my ( $self, $req ) = @_;
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     my $user             = $req->userData->{ $self->conf->{whatToTrace} };
     my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
@@ -160,6 +164,9 @@ sub _registrationchallenge {
 sub _registration {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
 
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
@@ -266,6 +273,9 @@ sub _verificationchallenge {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     $self->logger->debug( $self->prefix . '2f: verification challenge req' );
 
     my $request = $self->generateChallenge( $req, $req->userData );
@@ -290,6 +300,9 @@ sub _verificationchallenge {
 sub _verification {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
 
     my $credential_json = $req->param('credential');
 

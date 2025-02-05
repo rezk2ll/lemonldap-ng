@@ -54,8 +54,10 @@ delete2F = function(device, epoch, prefix) {
     type: "POST",
     url: `${portal}2fregisters/${prefix}/delete`,
     data: {
-      epoch: epoch,
-      csrf_token: datas.csrf_token
+      epoch: epoch
+    },
+    headers: {
+      "X-CSRF-Check": "1"
     },
     dataType: 'json',
     error: displayError,

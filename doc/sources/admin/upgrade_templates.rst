@@ -88,6 +88,13 @@ This change is not mandatory, but is recommended to avoid bugs. In order to impl
 
 ``?v=<TMPL_VAR CACHE_TAG>`` at the end of all static resource URLs in your custom templates.
 
+JWT headers restored
+^^^^^^^^^^^^^^^^^^^^
+
+JSON-Web-Tokens didn't have the "typ" header starting from version 2.17.0.
+This header is set to "JWT" except for access_token where value is "at+JWT".
+If you encounter issues with this value, a parameter has been added in the
+manager to not insert the "typ" header into JWT: **Don't insert typ header**.
 
 2.20.0
 ------
