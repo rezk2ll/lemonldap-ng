@@ -88,6 +88,10 @@ file (section configuration):
    ; optional
    dbiTable    = mytablename
 
+.. tip::
+
+   We recommend adding the `mysql_connect_timeout`, `mysql_write_timeout`, and `mysql_read_timeout` options to the DBI string
+
 PostGreSQL
 ----------
 
@@ -139,6 +143,9 @@ file (section configuration):
    ; optional
    dbiTable    = mytablename
 
+.. tip::
+
+   We recommend adding the `tcp_user_timeout` and `keepalives_idle` options to the DBI string
 
 RDBI (deprecated)
 ------------------

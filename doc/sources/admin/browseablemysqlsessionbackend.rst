@@ -36,9 +36,14 @@ Then, set the following module options:
 Required parameters
 =================== ================================================= =============================================================
 Name                Comment                                           Example
-**DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:mysql:database=lemonldap-ng
+**DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:mysql:database=lemonldap-ng;port=3306
 **UserName**        The database username                             lemonldapng
 **Password**        The database password                             mysuperpassword
 **TableName**       Table name (optional)                             sessions
 **Index**           Fields to index                                   refer to :ref:`fieldstoindex`
 =================== ================================================= =============================================================
+
+
+.. tip::
+
+   We recommend adding the `mysql_connect_timeout`, `mysql_write_timeout`, and `mysql_read_timeout` options to the DataSource string
