@@ -507,9 +507,24 @@ sub loadPlugin {
         require Carp;
         Carp::confess('Calling loadPugin without arg!');
     }
-    my $obj;
-    return 0
-      unless ( $obj = $self->loadModule("$plugin") );
+
+    my $full_name =
+      ( $plugin =~ /^::/ ) ? "Lemonldap::NG::Portal$plugin" : $plugin;
+    if (
+        grep {
+            my $item_full_name =
+              ( $_ =~ /^::/ ) ? "Lemonldap::NG::Portal$_" : $_;
+            $item_full_name eq $full_name
+        } split( /[\s,]+/, $self->conf->{disabledPlugins} // "" )
+      )
+    {
+        $self->logger->debug(
+            "Module $plugin is disallowed by disabledPlugins and was not loaded"
+        );
+        return 1;
+    }
+
+    return 0 unless ( my $obj = $self->loadModule($plugin) );
     return $self->findEP( $plugin, $obj );
 }
 

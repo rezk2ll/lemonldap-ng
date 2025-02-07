@@ -4692,6 +4692,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'keyTextContainer',
             documentation => 'Custom plugins parameters',
         },
+        disabledPlugins => {
+            type          => 'text',
+            documentation => 'Disabled plugins',
+        },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {
