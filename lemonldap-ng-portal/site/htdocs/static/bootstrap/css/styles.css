@@ -85,6 +85,20 @@ li.ui-state-active {
   margin-top: 20px;
 }
 
+.bg-info{
+  background-color: #0E606C !important;
+}
+
+.btn-primary {
+  background-color: #0054ad;
+  border-color: #0054ad;
+}
+
+.btn-success {
+  background-color: #175e28;
+  border-color: #175e28;
+}
+
 div.category {
   margin: 10px 0;
   cursor: grab;
