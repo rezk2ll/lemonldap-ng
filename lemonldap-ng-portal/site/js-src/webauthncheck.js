@@ -49,6 +49,10 @@ check = function() {
   }
 };
 
+// This function is exported so that custom JS code can call it
+// Do not remove without a deprecation notice
+window.webauthn_start = check;
+
 trySetupConditional = function() {
   if (PublicKeyCredential.isConditionalMediationAvailable) {
     return PublicKeyCredential.isConditionalMediationAvailable().then(function(result) {

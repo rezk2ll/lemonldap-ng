@@ -60,6 +60,10 @@ tryssl = function(myevent) {
   return false;
 };
 
+// This function is exported so that custom JS code can call it
+// Do not remove without a deprecation notice
+window.ssl_start = tryssl;
+
 sendUrl = function(form, path) {
   var form_url;
   form_url = form.attr('action');
