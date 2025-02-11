@@ -81,6 +81,11 @@
     }
   };
   translatePage = function (lang) {
+    if (lang) {
+      window.currentLanguage = lang;
+    } else {
+      lang = window.currentLanguage;
+    }
     return $.getJSON(`${window.staticPrefix}languages/${lang}.json`, function (data) {
       var k, ref, ref1, v;
       translationFields = data;
@@ -148,7 +153,11 @@
       return str;
     }
   };
+
+  // These functions are exported so that custom JS code can call them
+  // Do not remove without a deprecation notice
   window.translate = translate;
+  window.translatePage = translatePage;
 
   // Initialization variables: read all <script type="application/init"> tags and
   // return JSON parsing result. This is set in window.data variable

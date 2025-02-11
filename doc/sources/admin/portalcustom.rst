@@ -101,6 +101,15 @@ Then set this value in Custom JS parameter:
 
 Check out the :doc:`jqueryevents` page for available integrations
 
+Some javascript functions are exported by LemonLDAP:
+
+* ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
+
+.. versionadded:: 2.21.0
+
+    * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
+    * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
+    * ``ssl_start``: start SSL authentication. This only works the login page
 
 .. _portalcustom-skin-customization:
 
