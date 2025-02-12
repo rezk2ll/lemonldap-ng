@@ -116,9 +116,10 @@ Options
    See :ref:`idpcas-url-matching`.
 -  **User attribute**: session field that will be used as main
    identifier.
+-  **Allow proxy** (since *2.21.0*): allow CAS proxying features on this application
 -  **Logout**: enable back-channel logout to this CAS application
 -  **Required authentication Level**: required authentication level to access this
-   application
+   application. Since *2.21.0* this can be a Perl expression.
 -  **Access rule**: access rule to enforce on this application. If
    left blank, access will be allowed for everyone.
 -  **Comment**: set a comment

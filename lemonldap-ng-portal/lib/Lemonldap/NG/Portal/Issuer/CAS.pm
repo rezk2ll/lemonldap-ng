@@ -30,6 +30,8 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 use constant beforeAuth  => 'storeEnvAndCheckGateway';
 use constant sessionKind => 'ICAS';
 
+use constant hook => { updateSessionId => 'updateCasSecondarySessions', };
+
 has rule => ( is => 'rw' );
 
 sub init {
@@ -127,8 +129,8 @@ sub storeEnvAndCheckGateway {
             $req->env->{llng_cas_app} = $app;
 
             # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->casAppList->{$app}->{casAppMetaDataOptionsAuthnLevel};
+            my $targetAuthnLevel = $self->spLevelRules->{$app}->( $req, {} );
+
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
 
@@ -203,7 +205,8 @@ sub run {
         ) if ( $h != PE_OK );
 
         my $service = $cas_request->{service};
-        $service = '' if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
+        $service = ''
+          if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
 
@@ -225,7 +228,7 @@ sub run {
         my $spAuthnLevel = 0;
         if ($app) {
             $spAuthnLevel =
-              $self->casAppList->{$app}->{casAppMetaDataOptionsAuthnLevel} || 0;
+              $self->spLevelRules->{$app}->( $req, $req->sessionInfo );
         }
 
         # Renew
@@ -866,6 +869,20 @@ sub _validate2 {
     # Proxy granting ticket
     if ($pgtUrl) {
 
+        my $allow_proxy = 1;
+        if ($app) {
+            $allow_proxy =
+              $self->casAppList->{$app}->{casAppMetaDataOptionsAllowProxy} // 1;
+        }
+        if ( !$allow_proxy ) {
+            return $self->_failValidate2(
+                $req,
+                app  => $app,
+                code => 'UNAUTHORIZED_SERVICE_PROXY',
+                msg  => 'CAS proxy is not allowed'
+            );
+        }
+
         # Create a proxy granting ticket
         $self->logger->debug(
             "Create a CAS proxy granting ticket for service $service");
@@ -993,7 +1010,7 @@ sub _validate2 {
             $req->param('ticket') );
     }
 
-    $self->p->registerProtectedAppAccess( $req, $username, "cas:$app" );
+    $self->p->registerProtectedAppAccess( $req, $username, "cas:$app" ) if $app;
 
     my $h =
       $self->p->processHook( $req, 'casGenerateValidateResponse', $username,
@@ -1202,15 +1219,16 @@ sub _failValidate1 {
 
 sub _failValidate2 {
     my ( $self, $req, %params ) = @_;
-    my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
-    my $code   = $params{'code'} || 'INTERNAL_ERROR';
-    my $res    = $params{res}    || PE_ERROR;
-    my $app    = $params{app};
+    my $message = $params{'msg'} ? ": $params{'msg'}" : "";
+    my $reason  = $params{'msg'};
+    my $code    = $params{'code'} || 'INTERNAL_ERROR';
+    my $res     = $params{res}    || PE_ERROR;
+    my $app     = $params{app};
 
     $self->auditLog(
         $req,
         code    => "ISSUER_CAS_VALIDATE_FAILED",
-        message => ( "CAS validation failed" . $reason ),
+        message => ( "CAS validation failed" . $message ),
         ( $reason ? ( reason => $reason ) : () ),
         ( $app    ? ( app    => $app )    : () ),
         cas_code     => $code,

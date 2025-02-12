@@ -58,13 +58,23 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
     A blank or null value disable this feature.
 
+Floating category name
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can display an applications category as a floating menu by specifying its category ``name``.
+Example: ``Sample applications``.
+
+.. tip::
+
+    A blank or an inexisting value disable this feature.
+
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
 You can define a custom CSS file, for example ``custom.css``, which will
 be loaded after default CSS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
@@ -84,13 +94,22 @@ Custom JS file
 Similarly, you can define a custom JS file, for example ``custom.js``, which will
 be loaded after default JS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
-Then set this value in Custom CSS parameter:
+Then set this value in Custom JS parameter:
 ``bootstrap/js/custom.js``.
 
 Check out the :doc:`jqueryevents` page for available integrations
 
+Some javascript functions are exported by LemonLDAP:
+
+* ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
+
+.. versionadded:: 2.21.0
+
+    * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
+    * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
+    * ``ssl_start``: start SSL authentication. This only works the login page
 
 .. _portalcustom-skin-customization:
 

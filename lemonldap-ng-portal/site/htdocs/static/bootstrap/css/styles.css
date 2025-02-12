@@ -197,16 +197,21 @@ div.oidc_consent_message > ul {
 }
 
 input.key {
+  -webkit-text-security: disc;
+}
+
+/* Uncomment this if browser does not support '-webkit-text-security' directive
+input.key {
   font-family: 'password';
   width: 100px;  
 }
-
 @font-face {
   font-family: 'password';
-  /*font-style: normal;*/
-  /*font-weight: 400;*/
+  font-style: normal;
+  font-weight: 400;
   src: url(/static/common/fonts/password.ttf);
 }
+*/
 
 .info.table caption {
   color: black;
@@ -227,8 +232,18 @@ div.input-group > p.form-control > label {
 #btn-back-to-top {
   position: fixed;
   bottom: 70px;
-  right: 20px;
+  right: 15px;
   display: none;
+}
+
+#floating-menu {
+  position: fixed;
+  bottom: 30px;
+  left: -100px;
+  display: block;
+  transform: scale(.7);
+  cursor: move;
+  z-index: 1000;
 }
 
 /* Hide "remember my authentication choice" timer */

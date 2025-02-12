@@ -119,14 +119,18 @@ sub tests {
         },
 
         vhostNotAnAlias => sub {
-            my ( @pb, $aliases );
+            my ( @pb, @aliases, @all_aliases );
 
-            $aliases = join ' ',
+            @aliases =
               map { $conf->{vhostOptions}->{$_}->{vhostAliases} }
               keys %{ $conf->{vhostOptions} };
 
+            foreach my $alias (@aliases) {
+                push @all_aliases, split( /\s+/, $alias );
+            }
+
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
-                push @pb, $vh if $aliases =~ /\Q$vh\E/;
+                push @pb, $vh if ( grep /^$vh$/, @all_aliases );
             }
             return @pb
               ? ( 0, 'Virtual hosts ' . join( ', ', @pb ) . ' match an alias' )
@@ -1285,6 +1289,36 @@ sub tests {
                 and $conf->{passwordPolicyMinSize}
                 and $conf->{passwordPolicyActivation} );
             return 1;
+        },
+        accessTokenConsistency => sub {
+            return 1
+              unless $conf->{issuerDBOpenIDConnectActivation};
+            my @pb;
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsAccessTokenClaims}
+                  and not $opts->{oidcRPMetaDataOptionsAccessTokenJWT};
+            }
+            return 1 unless @pb;
+            return ( 0,
+                'access_token cannot be opaque with claims in access_token ('
+                  . join( ', ', @pb )
+                  . ')' );
+        },
+        oidcNoneConsistency => sub {
+            my @pb;
+            return 1 unless $conf->{oidcServiceMetaDataDisallowNoneAlg};
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsIDTokenSignAlg} eq 'none'
+                  or $opts->{oidcRPMetaDataOptionsUserInfoSignAlg} eq 'none';
+            }
+            return 1 unless @pb;
+            return ( 1,
+                'Signature algorithm is not allowed but set for: '
+                  . join( ', ', @pb ) );
         },
     };
 }

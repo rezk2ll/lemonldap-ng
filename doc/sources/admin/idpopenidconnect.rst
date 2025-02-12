@@ -234,6 +234,7 @@ Options
    -  **Other RP allowed to exchange access_token** (since version ``2.20.0``):
       You can specify a space-separated list of Relying-Party allowed to ask
       for a token exchange. See :doc:`OpenID-Connect Token Exchange<oidctokenexchange>`
+   -  **Don't insert typ header**: don't add the type header in JWT
 
 -  **Scope**
 
@@ -264,7 +265,8 @@ Options
       `request_uri
       <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
-   -  **Required authentication level**: Required authentication level to access this application
+   -  **Required authentication level**: Required authentication level to
+      access this application. Since ``2.21.0`` this can be a Perl expression.
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
    -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
    -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
@@ -295,6 +297,10 @@ Options
 
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
+
+.. important::
+
+    JWKS URI MUST be reachable by Portal to fetch JWKS document
 
 -  **Timeouts**
 
@@ -357,13 +363,13 @@ By default, the following scope-to-attributes are already mapped by LL::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
-   email; email email_verified
-   address; street_address locality region postal_code country
-   phone; phone_number phone_number_verified
+   profile, name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+   email, email email_verified
+   address, street_address locality region postal_code country
+   phone, phone_number phone_number_verified
 
 If you want to expose custom attributes to OpenID Connect clients,
 you have to declare them in a new scope in this section.
@@ -384,8 +390,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 .. important::
 
     Your custom attributes will only be visible if the application requests the
-    corresponding scope value, or if you use a Scope Rule to always enable that
-    scope.
+    corresponding scope value, or if you use a Scope Rule to always enable that scope.
 
 
 .. _oidcscoperules:

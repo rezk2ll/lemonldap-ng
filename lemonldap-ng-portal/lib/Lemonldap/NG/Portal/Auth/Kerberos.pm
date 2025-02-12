@@ -50,7 +50,7 @@ sub init {
     $self->keytab("FILE:$file");
     $self->AjaxInitScript( '<script type="text/javascript" src="'
           . $self->p->staticPrefix
-          . '/common/js/kerberosChoice.js"></script>' )
+          . '/common/js/kerberosChoice.min.js"></script>' )
       if $self->conf->{krbByJs};
     return 1;
 }

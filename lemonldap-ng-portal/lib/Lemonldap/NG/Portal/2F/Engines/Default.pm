@@ -512,6 +512,7 @@ sub save2faSessionInfo {
     $info->{_2fRetries}     = $req->data->{_2fRetries};
     $info->{_2fRealSession} = $req->id;
     $info->{_2fUrldc}       = $req->urldc;
+    $info->{_2fInfo}        = $req->info;
     $info->{_2fUtime}       = $req->sessionInfo->{_utime};
     if ( $self->conf->{impersonationRule} ) {
         $info->{_impSpoofId} = $spoofId;
@@ -531,6 +532,7 @@ sub restore2faSessionInfo {
     $req->sessionInfo($info);
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
+    $req->info( delete $req->sessionInfo->{_2fInfo} );
     $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
 }
 
@@ -742,8 +744,6 @@ sub _displayRegister {
                 $self->p->buildUrl( $req->portal, '2fregisters' ), ''
             ),
             %tplParams,
-            CSRF_TOKEN => $self->ott->createToken()
-
         }
     );
 }

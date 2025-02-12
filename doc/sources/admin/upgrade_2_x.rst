@@ -17,6 +17,22 @@ Known regressions in the latest released version
 
 No known issues.
 
+
+2.20.2
+------
+
+Post-logout redirection
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from this version, passing a ``url=`` parameter to the LemonLDAP logout
+URL (``https://auth.example.com/logout`` or
+``https://auth.example.com/?logout=1``) will only redirect the user to this URL
+if the URL's domain is a known VHost, or a trusted domain.
+
+To add a new domain to the trusted domain list, use the ``trustedDomains``
+variable or the *General parameters* > *Advanced parameters* > *Security* >
+*Trusted domains*. Wildcards can be used to allow all subdomains.
+
 2.20.0
 ------
 
@@ -282,16 +298,16 @@ The error messages for the following situations have been changed:
 
 .. csv-table::
    :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
-   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
-   An unauthorized logout URL was specified during logout from a CAS application;error_108;PE108;Unauthorized URL
-   An unauthorized Redirect URI was used during an OIDC login;error_108;PE108;Unauthorized URL
-   The provided url= parameter does not correspond to a protected URL;error_109;PE109;Not a protected or trusted URL
+   An authentication request has been made to an unknown CAS application,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown SAML service provider,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown OIDC relying party,error_107,PE107,This application is not known
+   User was not allowed to access a CAS application,error_84,PE84,You're not authorized to access to this host
+   An unauthorized logout URL was specified during logout from a CAS application,error_108,PE108,Unauthorized URL
+   An unauthorized Redirect URI was used during an OIDC login,error_108,PE108,Unauthorized URL
+   The provided url= parameter does not correspond to a protected URL,error_109,PE109,Not a protected or trusted URL
 
 Users who wish to adjust error messages in these situations should update their translation files
 

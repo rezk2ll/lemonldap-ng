@@ -200,7 +200,9 @@ sub cTrees {
                             'oidcOPMetaDataOptionsTokenEndpointAuthMethod',
                             'oidcOPMetaDataOptionsCheckJWTSignature',
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
-                            'oidcOPMetaDataOptionsUseNonce'
+                            'oidcOPMetaDataOptionsUseNonce',
+                            'oidcOPMetaDataOptionsUserinfoSource',
+                            'oidcOPMetaDataOptionsNoJwtHeader',
                         ]
                     },
                     'oidcOPMetaDataOptionsComment'
@@ -243,6 +245,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAccessTokenJWT',
                             'oidcRPMetaDataOptionsAccessTokenClaims',
                             'oidcRPMetaDataOptionsRefreshToken',
+                            'oidcRPMetaDataOptionsNoJwtHeader',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsTokenXAuthorizedRP',
@@ -366,6 +369,7 @@ sub cTrees {
                 nodes => [
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
+                    'casAppMetaDataOptionsAllowProxy',
                     'casAppMetaDataOptionsLogout',
                     'casAppMetaDataOptionsAuthnLevel',
                     'casAppMetaDataOptionsRule',

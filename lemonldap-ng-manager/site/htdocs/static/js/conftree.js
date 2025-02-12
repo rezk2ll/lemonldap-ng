@@ -49,6 +49,13 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "title" : "casAppMetaDataOptionsAllowProxy",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
@@ -58,8 +65,7 @@ function templates(tpl,key) {
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
-            "title" : "casAppMetaDataOptionsAuthnLevel",
-            "type" : "intOrNull"
+            "title" : "casAppMetaDataOptionsAuthnLevel"
          },
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
@@ -480,6 +486,34 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUseNonce",
                   "title" : "oidcOPMetaDataOptionsUseNonce",
                   "type" : "bool"
+               },
+               {
+                  "default" : "userinfo",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "select" : [
+                     {
+                        "k" : "userinfo",
+                        "v" : "Userinfo endpoint"
+                     },
+                     {
+                        "k" : "id_token",
+                        "v" : "ID Token"
+                     },
+                     {
+                        "k" : "access_token",
+                        "v" : "Access Token"
+                     }
+                  ],
+                  "title" : "oidcOPMetaDataOptionsUserinfoSource",
+                  "type" : "select"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcOPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
@@ -647,6 +681,13 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "title" : "oidcRPMetaDataOptionsUserIDAttr"
@@ -733,8 +774,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
-                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "oidcRPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
@@ -2021,8 +2061,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
-                  "title" : "samlSPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "samlSPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",

@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 sub tree {
     return [ {
@@ -54,6 +54,7 @@ sub tree {
                                 'portalFavicon',
                                 'showLanguages',
                                 'scrollTop',
+                                'floatingCategoryName',
                                 'portalCustomCss',
                                 'portalCustomJs',
                                 'portalSkin',
@@ -178,8 +179,7 @@ sub tree {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
                                     nodes => [
-                                        'dbiAuthChain',
-                                        'dbiAuthUser',
+                                        'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
                                     ]
                                 },
@@ -244,9 +244,7 @@ sub tree {
                             title => 'webauthnParams',
                             form  => 'simpleInputContainer',
                             help  => 'authwebauthn.html',
-                            nodes => [
-                                'webauthnAuthnLevel',
-                            ]
+                            nodes => [ 'webauthnAuthnLevel', ]
                         },
                         {
                             title => 'ldapParams',
@@ -709,7 +707,7 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'passwordManagement',
+                            title => 'passwordResetByMailManagement',
                             help  => 'resetpassword.html',
                             nodes => [ {
                                     title => 'mailContent',
@@ -945,8 +943,8 @@ sub tree {
                         },
                         {
                             title => 'customPluginsNode',
-                            help  => 'plugincustom.html',
-                            nodes => [ 'customPlugins', 'customPluginsParams' ]
+                            help  => 'plugincustom.html#plugin-options',
+                            nodes => [ 'customPlugins', 'customPluginsParams', 'disabledPlugins' ]
                         },
                     ]
                 },
@@ -1573,6 +1571,7 @@ sub tree {
                         'oidcServiceEncAlgorithmAlg',
                         'oidcServiceEncAlgorithmEnc',
                         'oidcServiceHideMetadata',
+                        'oidcServiceMetaDataDisallowNoneAlg',
                     ],
                 },
                 {

@@ -26,11 +26,12 @@ has ua => (
     }
 );
 
-has casSrvList => ( is => 'rw', default => sub { {} }, );
-has casAppList => ( is => 'rw', default => sub { {} }, );
-has srvRules   => ( is => 'rw', default => sub { {} }, );
-has spRules    => ( is => 'rw', default => sub { {} }, );
-has spMacros   => ( is => 'rw', default => sub { {} }, );
+has casSrvList   => ( is => 'rw', default => sub { {} }, );
+has casAppList   => ( is => 'rw', default => sub { {} }, );
+has srvRules     => ( is => 'rw', default => sub { {} }, );
+has spLevelRules => ( is => 'rw', default => sub { {} }, );
+has spRules      => ( is => 'rw', default => sub { {} }, );
+has spMacros     => ( is => 'rw', default => sub { {} }, );
 
 # XML parser
 has parser => (
@@ -86,13 +87,19 @@ sub loadApp {
           $self->conf->{casAppMetaDataOptions}->{$_}
           ->{casAppMetaDataOptionsRule};
         if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error(
-                    "Unable to build access rule for CAS Application $_: "
-                      . $self->p->HANDLER->tsv->{jail}->error );
+            $rule = $self->p->buildRule( $rule, "access rule for App $_" );
+            unless ($rule) {
                 $valid = 0;
             }
+        }
+
+        # Required authentication level rule
+        my $levelrule = $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        $levelrule = $self->p->buildRule( $levelrule,
+            "required authentication level" . " rule for App $_" );
+        unless ($levelrule) {
+            $valid = 0;
         }
 
         # Load per-application macros
@@ -117,8 +124,9 @@ sub loadApp {
         if ($valid) {
             $self->casAppList->{$_} =
               $self->conf->{casAppMetaDataOptions}->{$_};
-            $self->spRules->{$_}  = $rule;
-            $self->spMacros->{$_} = $compiledMacros;
+            $self->spRules->{$_}      = $rule;
+            $self->spLevelRules->{$_} = $levelrule;
+            $self->spMacros->{$_}     = $compiledMacros;
         }
         else {
             $self->logger->error(
@@ -283,6 +291,49 @@ sub returnCasProxySuccess {
 \t</cas:proxySuccess>
 </cas:serviceResponse>\n"
     );
+}
+
+# Change the ID of secondary sessions (during upgrade)
+sub updateCasSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    # Find CAS sessions
+    my $moduleOptions;
+    if ( $self->conf->{casStorage} ) {
+        $moduleOptions = $self->conf->{casStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{casStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $cas_sessions =
+      $module->searchOn( $moduleOptions, "_cas_id", $old_session_id );
+
+    if (
+        my @cas_sessions_keys =
+        grep { $cas_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$cas_sessions
+      )
+    {
+
+        foreach my $cas_session (@cas_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve CAS session $cas_session");
+
+            my $casSession = $self->getCasSession($cas_session);
+
+            # Delete session
+            if ($casSession) {
+                $casSession->update( { _cas_id => $new_session_id } );
+            }
+        }
+    }
+
+    return;
 }
 
 # Find and delete CAS sessions bounded to a primary session

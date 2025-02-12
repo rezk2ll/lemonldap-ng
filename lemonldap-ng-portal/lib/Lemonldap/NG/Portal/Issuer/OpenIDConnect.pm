@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -38,6 +38,7 @@ with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
 # INTERFACE
 
 sub beforeAuth { 'exportRequestParameters' }
+use constant hook => { updateSessionId => 'updateOidcSecondarySessions' };
 
 # INITIALIZATION
 
@@ -121,7 +122,7 @@ sub init {
         oidcServiceMetaDataEndSessionURI    => 'endSessionDone',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
         oidcServiceMetaDataTokenURI         => 'token',
-        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataUserInfoURI      => 'unauthUserInfo',
         oidcServiceMetaDataJWKSURI          => 'jwks',
         oidcServiceMetaDataRegistrationURI  => 'registration',
         oidcServiceMetaDataIntrospectionURI => 'introspection',
@@ -554,8 +555,8 @@ sub _authorizeEndpoint {
         );
     }
 
-    my $spAuthnLevel =
-      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $spAuthnLevel = $self->rpLevelRules->{$rp}->( $req, $req->sessionInfo );
+    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 
     # RP may increase, but not lower, the requirement set in LLNG conf
     if ( $oidc_request->{'acr_values'} ) {
@@ -1340,6 +1341,7 @@ sub findRPFromUri {
 sub isUriAllowedForRP {
     my ( $self, $uri, $rp, $option, $wildcard_allowed ) = @_;
     my $allowed_uris = $self->rpOptions->{$rp}->{$option} // "";
+    $self->logger->debug("Allowed URIs for $rp: $allowed_uris");
 
     my $is_uri_allowed;
     if ($wildcard_allowed) {
@@ -2153,9 +2155,14 @@ sub _rotateRefreshSession {
     return $refreshSession;
 }
 
+sub unauthUserInfo {
+    my ( $self, $req ) = @_;
+    return $self->userInfo( $req, 1 );
+}
+
 # Handle userinfo endpoint
 sub userInfo {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $setUser ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
@@ -2182,6 +2189,9 @@ sub userInfo {
     my $scope           = $accessTokenSession->data->{scope};
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    $self->p->HANDLER->set_user( $req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
+      if $setUser;
 
     if ( $self->rpOptions->{$rp}
         ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
@@ -2759,8 +2769,7 @@ sub exportRequestParameters {
 
     # Store target authentication level in pdata
     if ($rp) {
-        my $targetAuthnLevel =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+        my $targetAuthnLevel = $self->rpLevelRules->{$rp}->( $req, {} );
 
         if ( my $acr_values = $req->env->{'llng_oidc_acr_values'} ) {
             $targetAuthnLevel =
@@ -2963,6 +2972,44 @@ sub encryptToken {
         return undef;
     }
     return $token;
+}
+
+# Change the ID of secondary sessions (during upgrade)
+sub updateOidcSecondarySessions {
+    my ( $self, $req, $old_session_id, $new_session_id ) = @_;
+
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my %opts    = $self->_storeOpts;
+    my $options = $opts{storageModuleOptions};
+    $options->{backend} = $opts{storageModule};
+
+    my $oidc_sessions =
+      $module->searchOn( $options, "user_session_id", $old_session_id );
+
+    if (
+        my @oidc_sessions_keys =
+        grep { $oidc_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$oidc_sessions
+      )
+    {
+
+        foreach my $oidc_session (@oidc_sessions_keys) {
+
+            # Get session
+            $self->logger->debug("Retrieve OIDC session $oidc_session");
+
+            my $oidcSession = $self->getOpenIDConnectSession($oidc_session);
+
+            if ($oidcSession) {
+
+                # Delete session
+                $oidcSession->update( { user_session_id => $new_session_id } );
+            }
+        }
+    }
+
+    return;
 }
 
 1;

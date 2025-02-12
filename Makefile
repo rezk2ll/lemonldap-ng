@@ -243,26 +243,26 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		$(SRCPORTALDIR)/lib/Lemonldap/NG/Portal/Main/Constants.pm \
 		$(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
-		_example/conf/lmConf-1.json
+		_example/conf/lmConf-1.json \
+		doc/sources/admin/error_codes.rst
 
 
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
-# Coffee files
-MANAGERCOFFEESRCFILES:=$(shell find lemonldap-ng-manager/site/coffee -type f -name '*.coffee')
-PORTALCOFFEESRCFILES:=$(shell find lemonldap-ng-portal/site/coffee -type f -name '*.coffee')
-COFFEESRCFILES=$(MANAGERCOFFEESRCFILES) $(PORTALCOFFEESRCFILES)
-MANAGERCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/js/,$(MANAGERCOFFEESRCFILES:.coffee=.js))
-PORTALCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/common/js/,$(PORTALCOFFEESRCFILES:.coffee=.js))
-COFFEEDSTFILES:=$(MANAGERCOFFEEDSTFILES) $(PORTALCOFFEEDSTFILES)
+# JS source files
+MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
+PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.js')
+MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
+PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
+JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
 
 # Minified files
-JSDSTFILES=$(JSSRCFILES:.js=.min.js)
-CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
+JSMINFILES=$(JSSRCFILES:.js=.min.js)
+CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 
 # -------
 # TARGETS
@@ -321,22 +321,32 @@ all:	configure common handler manager portal documentation
 
 configure:	common_conf handler_conf portal_conf manager_conf
 
-js: $(COFFEEDSTFILES)
+js: $(JSDSTFILES)
 
-minify: js $(JSDSTFILES) $(CSSDSTFILES)
+minify: $(JSDSTFILES) $(JSMINFILES) $(CSSMINFILES)
 
-$(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%.coffee
-	@if which coffee >/dev/null; then \
-		echo "Compiling $(SRCPORTALDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
+_rollup_portal:
+	@if which rollup >/dev/null; then \
+		cd $(SRCPORTALDIR)/site/js-src && \
+		rollup -c; \
 	else \
-		echo "Can't find coffee"; \
+		echo "Can't find rollup"; \
 	fi
 
-$(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
-	@if which coffee >/dev/null; then \
-		echo "Compiling $(SRCMANAGERDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCMANAGERDIR)/site/htdocs/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
+$(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/js-src/%.js
+	$(MAKE) _rollup_portal
+
+_rollup_manager:
+	@if which rollup >/dev/null; then \
+		cd $(SRCMANAGERDIR)/site/js-src && \
+		rollup -c; \
+	else \
+		echo "Can't find rollup"; \
+	fi
+
+$(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
+	@if test "$*" != "conftree"; then \
+		$(MAKE) _rollup_manager; \
 	fi
 
 %.min.css: %.css
@@ -345,7 +355,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 
 %.min.js: %.js
 	@echo "Compressing $*.js"
-	if test "$(UGLIFYJSVERSION)" = 2; then \
+	@if test "$(UGLIFYJSVERSION)" = 2; then \
 		cd `dirname $*`; \
 		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
 	else \
@@ -681,22 +691,26 @@ install_bin:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
 		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*

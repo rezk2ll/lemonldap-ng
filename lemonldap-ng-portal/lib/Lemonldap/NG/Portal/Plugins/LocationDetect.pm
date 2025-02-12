@@ -108,25 +108,26 @@ sub getIpInfo {
         $type = "country";
     }
 
-    my $city_display;
-    my $city_code;
-    my $city =
-      eval { $self->reader->$type( ip => $req->address )->city() };
-    if ($@) {
-        my $msg = $@;
-        if ( blessed($@) && $@->isa('Throwable::Error') ) {
-            $msg = $@->message;
-        }
+    my $city_display = "Unknown";
+    my $city_code    = "unknown";
+    if ( $type eq "city" ) {
+        my $city =
+          eval { $self->reader->$type( ip => $req->address )->city() };
+        if ($@) {
+            my $msg = $@;
+            if ( blessed($@) && $@->isa('Throwable::Error') ) {
+                $msg = $@->message;
+            }
 
-        $self->logger->warn( "[LocationDetect] Could not resolve city for IP "
-              . $req->address . ": "
-              . $msg );
-        $city_code    = "unknown";
-        $city_display = "Unknown";
-    }
-    else {
-        $city_code    = $city->geoname_id                    || "unknown";
-        $city_display = $self->_get_localized( $req, $city ) || "Unknown";
+            $self->logger->warn(
+                    "[LocationDetect] Could not resolve city for IP "
+                  . $req->address . ": "
+                  . $msg );
+        }
+        else {
+            $city_code    = $city->geoname_id                    || "unknown";
+            $city_display = $self->_get_localized( $req, $city ) || "Unknown";
+        }
     }
 
     my $country_display;

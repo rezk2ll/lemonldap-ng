@@ -49,9 +49,9 @@
  "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,
  "dontStorePassword":<TMPL_VAR NAME="DONT_STORE_PASSWORD" DEFAULT="0">,
  "scrollTop":<TMPL_VAR NAME="SCROLL_TOP" DEFAULT="0">,
+ "floatingCategory":"<TMPL_VAR NAME="FLOATING_CAT">",
  "sameSite":"<TMPL_VAR NAME="SAMESITE">",
- "cookieSecure":<TMPL_VAR NAME="COOKIESECURE">,
- "csrf_token":"<TMPL_VAR NAME="CSRF_TOKEN">"
+ "cookieSecure":<TMPL_VAR NAME="COOKIESECURE">
  }
  </script>
 

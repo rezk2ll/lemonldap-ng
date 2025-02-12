@@ -1,4 +1,4 @@
-# LLNG wrapper class to enable OAuth2 handler with FastCGI handler
+# LLNG wrapper class to enable OAuth2 handler with auto-protected PSGI
 #
 # See https://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::PSGI::OAuth2;

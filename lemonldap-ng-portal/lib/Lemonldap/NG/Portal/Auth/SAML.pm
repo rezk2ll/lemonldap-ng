@@ -25,7 +25,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -964,7 +964,7 @@ sub extractFormInfo {
             $idpName = $self->{idpList}->{$_}->{displayName}
               if $self->{idpList}->{$_}->{displayName};
             my $icon    = $self->{idpList}->{$_}->{icon};
-            my $order   = $self->{idpList}->{$_}->{order} // 0;
+            my $order   = $self->{idpList}->{$_}->{order} // 999999;
             my $tooltip = $self->{idpList}->{$_}->{tooltip} || $idpName;
             my $img_src = '';
 

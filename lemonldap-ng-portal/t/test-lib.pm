@@ -263,8 +263,7 @@ sub expectRedirection {
         return @match;
     }
     else {
-        ok( getRedirection($res) eq $location, " Location is $location" )
-          or explain( $res->[1], "Location => $location" );
+        is( getRedirection($res), $location, " Location is $location" );
         count(1);
     }
 }
@@ -394,7 +393,7 @@ m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
     }
 }
 
-=head4 expectAuthenticatedAs($user)
+=head4 expectAuthenticatedAs($res, $user)
 
 Verify that result has a C<Lm-Remote-User> header and value is $user
 

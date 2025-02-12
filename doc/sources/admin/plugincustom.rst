@@ -15,6 +15,22 @@ Common use cases for plugins are:
 Creating a plugin can be as simple as writing a short Perl module file and
 declaring it in your configuration. See below for an example.
 
+
+.. _plugin-options:
+
+Enabling custom plugins
+-----------------------
+
+LemonLDAP::NG comes with many plugins already, but you might want to write your owns and load them as well
+
+In *General parameters* » *Plugins* » *Custom plugins*
+
+- **Modules list**: The list of custom modules to load. Modules will be loaded after the built-in ones
+- **Additional parameters**: Configuration for your custom plugins
+- **Disabled plugins**: (*since 2.21.0*): List of built-in modules you do not
+  want LemonLDAP::NG to load. This is useful if you want to overload a built-in
+  module with one of your own.
+
 Plugin API
 ----------
 
@@ -94,7 +110,38 @@ The current LemonLDAP::NG configuration can be accessed in the ``$self->conf`` h
 You can set your own parameters in ``General Parameters`` » ``Plugins`` » ``Custom plugins`` » ``Additional parameters``
 and reach them through ``customPluginsParams``
 
+.. tip::
+
+    If you have got several plugins with several parameters, parameters can be passed by using JSON notation ``myPluginParams = {"title":"myTitle", "msg":"myMsg"}`` and converted into a PERL object with ``from_json`` function.
+
+
 .. code-block:: perl
+
+    use Mouse;
+    use JSON 'from_json';
+
+    has myPluginParams => (
+        is => 'ro',
+        builder => sub {
+            my $self = $_[0];
+            my $defaultParams = {
+                title => 'title',
+                msg   => 'msg',
+                path  => 'path',
+            };
+            my $params = eval {
+                from_json( $self->conf->{customPluginsParams}->{myPluginParams} );
+            };
+            if ($@) {
+                my $package = __PACKAGE__;
+                $self->userLogger->warn(
+            "Bad JSON file: $package plugin will use default parameters ($@)"
+                );
+                return $defaultParams;
+            }
+            return { %$defaultParams, %$params };
+        }
+    );
 
     sub my_function {
         my ($self, $req) = @_;
@@ -104,7 +151,10 @@ and reach them through ``customPluginsParams``
 
         # Get your custom LLNG option
         my $myvar = $self->conf->{customPluginsParams}->{myvar};
-        }
+
+        # Get your custom LLNG option from your parameters hash
+        my $title = $self->myPluginParams->{title};
+    }
 
 Logs
 ~~~~

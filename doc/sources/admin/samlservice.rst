@@ -454,7 +454,7 @@ SAML sessions module name and options
 
 By default, the main session module is used to store SAML temporary data
 (like relay-states), but if you need high performance on session access, you
-should use a decidated session storage.
+should use a dedicated session storage.
 
 Common Domain Cookie
 ^^^^^^^^^^^^^^^^^^^^
