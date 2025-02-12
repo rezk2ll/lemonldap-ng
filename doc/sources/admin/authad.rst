@@ -40,10 +40,10 @@ policy:
    from Windows Server 2003)*. It is too late for the user to do
    anything. He must contact his administrator.
 -  a warning before password expiration is possible in AD, but only in
-   GPO (``Computer Configuration\Windows Settings\Local Policies\Security``
-   Options under Interactive Logon: Prompt user to change password
-   before expiration). However it as no reality in LDAP referential. A
-   "password warning time before password expiration" variable can be
+   GPO (*Computer Configuration* » *Windows Settings* » *Local Policies* » *Security Options*
+   under *"Interactive Logon: Prompt user to change password before expiration"*).
+   However it has no reality in LDAP referential. A
+   *"password warning time before password expiration"* variable can be
    specified in LemonLDAP::NG to do so.
 
 
