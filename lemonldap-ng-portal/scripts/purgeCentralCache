@@ -70,7 +70,7 @@ if ( defined $conf->{globalStorage} ) {
 
 # SAML
 if ( defined $conf->{samlStorage}
-    or keys %{ $conf->{samlStorageOptions} } )
+    or keys %{ $conf->{samlStorageOptions} ||= {} } )
 {
 
     # Load module
@@ -87,7 +87,7 @@ if ( defined $conf->{samlStorage}
 
 # CAS
 if ( defined $conf->{casStorage}
-    or keys %{ $conf->{casStorageOptions} } )
+    or keys %{ $conf->{casStorageOptions} ||= {} } )
 {
 
     # Load module
@@ -104,7 +104,7 @@ if ( defined $conf->{casStorage}
 
 # Captcha
 if ( defined $conf->{captchaStorage}
-    or keys %{ $conf->{captchaStorageOptions} } )
+    or keys %{ $conf->{captchaStorageOptions} ||= {} } )
 {
 
     # Load module
@@ -121,7 +121,7 @@ if ( defined $conf->{captchaStorage}
 
 # OpenIDConnect
 if ( defined $conf->{oidcStorage}
-    or keys %{ $conf->{oidcStorageOptions} } )
+    or keys %{ $conf->{oidcStorageOptions} ||= {} } )
 {
 
     # Load module
@@ -304,7 +304,8 @@ for my $options (@backends) {
             }
             push @servers, $server;
         }
-        my $ldap = Net::LDAP->new( \@servers, keepalive => 1, onerror   => undef, );
+        my $ldap =
+          Net::LDAP->new( \@servers, keepalive => 1, onerror => undef, );
         unless ($ldap) {
             print STDERR "Unable to connect to LDAP server\n";
             $nb_error++;
@@ -319,7 +320,9 @@ for my $options (@backends) {
             $h{capath} ||= $options->{ldapCAPath} if ( $options->{ldapCAPath} );
             my $start_tls = $ldap->start_tls(%h);
             if ( $start_tls->code ) {
-                print STDERR "STARTTLS error: " . $start_tls->code . ': ' . $start_tls->error;;
+                print STDERR "STARTTLS error: "
+                  . $start_tls->code . ': '
+                  . $start_tls->error;
                 $nb_error++;
                 next;
             }
