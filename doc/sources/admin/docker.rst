@@ -10,7 +10,7 @@ Presentation
 containers.
 
 You can find a Docker image for LemonLDAP::NG in this repository:
-https://hub.docker.com/r/coudot/lemonldap-ng/
+https://hub.docker.com/r/lemonldapng/lemonldap-ng/
 
 See also this github project:
 https://github.com/LemonLDAPNG/lemonldap-ng-docker
@@ -32,7 +32,7 @@ Prerequisites:
 
 ::
 
-   docker run -d -p 80:80 coudot/lemonldap-ng
+   docker run -d -p 80:80 lemonldapng/lemonldap-ng
 
 Then connect to http://auth.example.com with your browser and log in
 with dwho/dwho.
