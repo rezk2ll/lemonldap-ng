@@ -199,7 +199,7 @@ sub returnCasValidateError {
 
 # Return success for CAS VALIDATE request
 sub returnCasValidateSuccess {
-    my ( $self, $req, $username ) = @_;
+    my ( $self, $req, $username, $pgtIou, $proxies, $attributes ) = @_;
 
     return $self->sendSoapResponse( $req, "yes\n$username\n" );
 }
