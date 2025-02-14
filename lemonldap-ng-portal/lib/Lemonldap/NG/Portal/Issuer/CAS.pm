@@ -511,7 +511,7 @@ sub validate {
 
     # Required parameters: service and ticket
     unless ( $service and $ticket ) {
-        return $self->_failValidate( $req,
+        return $self->_failValidate1( $req,
             msg => "Service and Ticket parameters required" );
     }
 
@@ -519,14 +519,14 @@ sub validate {
         "Get validate request with ticket $ticket for service $service");
 
     unless ( $ticket =~ s/^ST-// ) {
-        return $self->_failValidate( $req,
+        return $self->_failValidate1( $req,
             msg => "Provided ticket is not a service ticket (ST)" );
     }
 
     my $casServiceSession = $self->getCasSession($ticket);
 
     unless ($casServiceSession) {
-        return $self->_failValidate( $req,
+        return $self->_failValidate1( $req,
             msg => "Service ticket session $ticket not found" );
     }
 
@@ -537,7 +537,7 @@ sub validate {
             time >
             ( $casServiceSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            return $self->_failValidate( $req,
+            return $self->_failValidate1( $req,
                 msg => "Session $ticket has expired" );
         }
     }
@@ -579,7 +579,7 @@ sub validate {
 
         unless ( $casServiceSession->data->{renew} ) {
             $self->deleteCasSession($casServiceSession);
-            return $self->_failValidate( $req,
+            return $self->_failValidate1( $req,
                 msg => "Authentication renew requested,"
                   . " but not done in former authentication process" );
         }
@@ -591,7 +591,7 @@ sub validate {
 
     unless ($localSession) {
         $self->deleteCasSession($casServiceSession);
-        return $self->_failValidate( $req,
+        return $self->_failValidate1( $req,
                 msg => "Local session "
               . $casServiceSession->data->{_cas_id}
               . " notfound" );
@@ -613,7 +613,7 @@ sub validate {
 
     my $h =
       $self->p->processHook( $req, 'casGenerateValidateResponse', $username );
-    return $self->_failValidate(
+    return $self->_failValidate1(
         $req,
         res => $h,
         msg => "casGenerateValidateResponse hook failed",
