@@ -8,6 +8,7 @@ use Hash::MultiValue;
 use XML::LibXML;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
+use Crypt::URandom;
 
 our $VERSION = '2.20.0';
 
@@ -697,6 +698,193 @@ sub buildLogoutRequest {
 
     $self->logger->debug("Generated CAS logout request: $logout_request_text");
     return $logout_request_text;
+}
+
+sub getServiceTicketFromSamlRequest {
+    my ( $self, $soap_message ) = @_;
+    my $artifact = eval {
+        my $dom = $self->parser->parse_string($soap_message);
+        my $xpc = XML::LibXML::XPathContext->new($dom);
+        $xpc->registerNs( 'samlp', 'urn:oasis:names:tc:SAML:1.0:protocol' );
+        $xpc->registerNs( 'saml',  'urn:oasis:names:tc:SAML:1.0:assertion' );
+        $xpc->registerNs( 'SOAP-ENV',
+            'http://schemas.xmlsoap.org/soap/envelope/' );
+        use Test::More;
+        $xpc->find('//samlp:AssertionArtifact/text()')->string_value();
+
+    };
+    if ($@) {
+        $self->logger->error("Could not process SamlValidate request: $@");
+        return;
+    }
+    return $artifact;
+}
+
+sub returnSamlValidateSuccess {
+    my ( $self, $req, $username, $pgtIou, $proxies, $attributes ) = @_;
+
+    my $document = XML::LibXML->createDocument( "1.0", "UTF-8" );
+
+    my $envelope =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Envelope" );
+    $document->setDocumentElement($envelope);
+
+    my $body =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Body" );
+    $envelope->appendChild($body);
+
+    my $issueInstant = strftime( "%Y-%m-%dT%TZ", gmtime() );
+    my $authInstant  = strftime( "%Y-%m-%dT%TZ",
+        gmtime( $req->sessionInfo->{_lastAuthnUTime} ) );
+    my $response =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "Response" );
+    $response->setNamespace( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "saml", 0 );
+    $response->setNamespace( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "samlp", 0 );
+
+    $response->setAttribute( "IssueInstant", $issueInstant );
+    $response->setAttribute( "MajorVersion", "1" );
+    $response->setAttribute( "MinorVersion", "1" );
+    $body->appendChild($response);
+
+    my $status =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "Status" );
+    $response->appendChild($status);
+
+    my $status_code =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "StatusCode" );
+    $status_code->setAttribute( "Value", "samlp:Success" );
+    $status->appendChild($status_code);
+
+    my $assertion =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "Assertion" );
+    $assertion->setAttribute( "AssertionID",
+        "_" . unpack( "H*", Crypt::URandom::urandom(16) ) );
+    $assertion->setAttribute( "IssueInstant", $issueInstant );
+    $assertion->setAttribute( "MajorVersion", "1" );
+    $assertion->setAttribute( "MinorVersion", "1" );
+
+    $response->appendChild($assertion);
+
+    my $authentication_statement =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "AuthenticationStatement" );
+    $authentication_statement->setAttribute( "AuthenticationInstant",
+        $authInstant );
+    $authentication_statement->setAttribute( "AuthenticationMethod",
+        "urn:oasis:names:tc:SAML:1.0:am:unspecified" );
+    $assertion->appendChild($authentication_statement);
+
+    my $subject =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "Subject" );
+    $authentication_statement->appendChild($subject);
+    my $name_identifier =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "NameIdentifier" );
+    $name_identifier->appendText($username);
+    $subject->appendChild($name_identifier);
+
+    my $attribute_statement =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "AttributeStatement" );
+    $attribute_statement->appendChild( $subject->cloneNode(1) );
+    $assertion->appendChild($attribute_statement);
+
+    if ( defined $attributes ) {
+        foreach my $attribute ( keys %$attributes ) {
+            my $saml_attribute = $document->createElementNS(
+                "urn:oasis:names:tc:SAML:1.0:assertion", "Attribute" );
+            $saml_attribute->setAttribute( "AttributeName", $attribute );
+            $saml_attribute->setAttribute( "AttributeNamespace",
+                "http://www.ja-sig.org/products/cas/" );
+            my $has_value;
+
+            foreach my $value (
+                split(
+                    $self->conf->{multiValuesSeparator},
+                    $attributes->{$attribute}
+                )
+              )
+            {
+                my $attribute_value = $document->createElementNS(
+                    "urn:oasis:names:tc:SAML:1.0:assertion",
+                    "AttributeValue" );
+                utf8::downgrade($value);
+                $attribute_value->appendText($value);
+                $saml_attribute->appendChild($attribute_value);
+                $has_value = 1;
+            }
+
+            $attribute_statement->appendChild($saml_attribute) if $has_value;
+        }
+    }
+
+    my $soap_response = $envelope->toString;
+    utf8::encode($soap_response);
+    return $self->sendSoapResponse( $req, $soap_response );
+}
+
+sub returnSamlValidateError {
+    my ( $self, $req, $code, $reason ) = @_;
+
+    my $saml_code =
+      { INVALID_REQUEST => "Requester", INVALID_TICKET => "Requester" }->{$code}
+      // "Responder";
+
+    my $document = XML::LibXML->createDocument( "1.0", "UTF-8" );
+
+    my $envelope =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Envelope" );
+    $document->setDocumentElement($envelope);
+
+    my $body =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Body" );
+    $envelope->appendChild($body);
+
+    my $response =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "Response" );
+    $response->setNamespace( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "saml", 0 );
+    $response->setNamespace( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "samlp", 0 );
+
+    $response->setAttribute( "IssueInstant",
+        strftime( "%Y-%m-%dT%TZ", gmtime() ) );
+    $response->setAttribute( "MajorVersion", "1" );
+    $response->setAttribute( "MinorVersion", "1" );
+    $body->appendChild($response);
+
+    my $status =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "Status" );
+    $response->appendChild($status);
+
+    my $status_code =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "StatusCode" );
+    $status_code->setAttribute( "Value", "samlp:$saml_code" );
+    $status->appendChild($status_code);
+
+    my $status_message =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "StatusMessage" );
+    $status_message->appendText($reason);
+    $status->appendChild($status_message);
+
+    my $soap_response = $envelope->toString;
+    utf8::encode($soap_response);
+    return $self->sendSoapResponse( $req, $soap_response );
 }
 
 1;

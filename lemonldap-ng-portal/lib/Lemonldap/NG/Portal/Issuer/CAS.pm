@@ -54,7 +54,7 @@ sub init {
     return 0 unless ( $self->loadApp );
     $self->addUnauthRoute(
         ( $self->path ) => {
-            samlValidate    => 'samlNotImplemented',
+            samlValidate    => 'samlValidate',
             serviceValidate => 'serviceValidate',
             relayLogout     => 'relayLogout',
             validate        => 'validate',
@@ -70,7 +70,7 @@ sub init {
 
     $self->addUnauthRoute(
         ( $self->path ) => {
-            samlValidate => 'samlNotImplemented',
+            samlValidate => 'samlValidate',
         },
         ['POST']
     );
@@ -601,13 +601,18 @@ sub serviceValidate {
     );
 }
 
-sub samlNotImplemented {
+sub samlValidate {
     my ( $self, $req ) = @_;
-    return $self->p->sendError(
+
+    my $service = $req->query_parameters->{TARGET};
+    my $ticket  = $self->getServiceTicketFromSamlRequest( $req->content );
+
+    return $self->_validate_generic(
         $req,
-        "The CAS samlValidate endpoint is not implemented. "
-          . "Please use serviceValidate instead",
-        501
+        service => $service,
+        ticket  => $ticket,
+        success => 'returnSamlValidateSuccess',
+        failure => '_failValidateSaml',
     );
 }
 
@@ -1133,6 +1138,27 @@ sub _failValidate2 {
     );
 
     return $self->returnCasServiceValidateError( $req, $code, $reason );
+}
+
+sub _failValidateSaml {
+    my ( $self, $req, %params ) = @_;
+    my $message = $params{'msg'} ? ": $params{'msg'}" : "";
+    my $reason  = $params{'msg'};
+    my $code    = $params{'code'};
+    my $res     = $params{res} || PE_ERROR;
+    my $app     = $params{app};
+
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_CAS_VALIDATE_FAILED",
+        message => ( "CAS validation failed" . $message ),
+        ( $reason ? ( reason => $reason ) : () ),
+        ( $app    ? ( app    => $app )    : () ),
+        cas_code     => $code,
+        portal_error => portalConsts->{$res},
+    );
+
+    return $self->returnSamlValidateError( $req, $code, $reason );
 }
 
 sub _failLogin {
