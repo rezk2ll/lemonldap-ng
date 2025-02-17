@@ -446,7 +446,9 @@ sub getServerLogoutURL {
 sub validateST {
     my ( $self, $req, $service, $ticket, $srvConf, $proxied ) = @_;
 
-    my %prm          = ( service => $service, ticket => $ticket );
+    my %prm = ( service => $service, ticket => $ticket );
+
+    my $samlValidate = $srvConf->{casSrvMetaDataOptionsSamlValidate};
 
     my $proxy_url;
     if (%$proxied) {
@@ -463,8 +465,16 @@ sub validateST {
         $prm{pgtUrl} = $proxy_url;
     }
 
-    my $request = $self->_buildRequestForServiceValidate(
-        $srvConf->{casSrvMetaDataOptionsUrl}, %prm );
+    my $request = do {
+        if ($samlValidate) {
+            $self->_buildRequestForSamlValidate(
+                $srvConf->{casSrvMetaDataOptionsUrl}, %prm );
+        }
+        else {
+            $self->_buildRequestForServiceValidate(
+                $srvConf->{casSrvMetaDataOptionsUrl}, %prm );
+        }
+    };
 
     my $response = $self->ua->request($request);
 
@@ -474,7 +484,15 @@ sub validateST {
     return 0 if $response->is_error;
 
     my $xml = $response->decoded_content( default_charset => 'UTF-8' );
-    my $extract_result = $self->getAttributesFromServiceValidateResponse($xml);
+
+    my $extract_result = do {
+        if ($samlValidate) {
+            $self->getAttributesFromSamlValidateResponse($xml);
+        }
+        else {
+            $self->getAttributesFromServiceValidateResponse($xml);
+        }
+    };
 
     if ( $extract_result->{success} ) {
         my $user       = $extract_result->{user};
@@ -509,6 +527,21 @@ sub _buildRequestForServiceValidate {
     $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
 
     return HTTP::Request->new( GET => $serviceValidateUrl );
+}
+
+sub _buildRequestForSamlValidate {
+    my ( $self, $url, %prm ) = @_;
+
+    my $serviceValidateUrl =
+      "$url/samlValidate?" . build_urlencoded( TARGET => $prm{service} );
+
+    $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
+
+    return HTTP::Request->new(
+        POST => $serviceValidateUrl,
+        [ 'Content-Type' => 'text/xml; charset=UTF-8' ],
+        $self->buildSamlValidateRequest( $prm{ticket} )
+    );
 }
 
 # Store PGT IOU and PGT ID
@@ -648,6 +681,44 @@ sub buildLogoutRequest {
     return $logout_request_text;
 }
 
+sub buildSamlValidateRequest {
+    my ( $self, $ticket ) = @_;
+
+    my $now = strftime( "%Y-%m-%dT%TZ", gmtime() );
+
+    my $document = XML::LibXML->createDocument( "1.0", "UTF-8" );
+
+    my $envelope =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Envelope" );
+    $document->setDocumentElement($envelope);
+
+    my $body =
+      $document->createElementNS( "http://schemas.xmlsoap.org/soap/envelope/",
+        "SOAP-ENV:Body" );
+    $envelope->appendChild($body);
+
+    my $request =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "samlp:Request" );
+    $request->setAttribute( "MajorVersion", 1 );
+    $request->setAttribute( "MinorVersion", 1 );
+    $request->setAttribute( "RequestID",
+        "_" . unpack( "H*", Crypt::URandom::urandom(16) ) );
+    $request->setAttribute( "IssueInstant", $now );
+    $body->appendChild($request);
+
+    my $assert_art =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:protocol",
+        "samlp:AssertionArtifact" );
+    $assert_art->appendText($ticket);
+    $request->appendChild($assert_art);
+
+    my $request_text = $envelope->toString;
+    $self->logger->debug("Generated CAS samlValidate request: $request_text");
+    return $request_text;
+}
+
 sub getServiceTicketFromSamlRequest {
     my ( $self, $soap_message ) = @_;
     my $artifact = eval {
@@ -754,6 +825,99 @@ sub getAttributesFromServiceValidateResponse {
         attributes => $attrs->multi,
         pgtId      => $pgtId,
     };
+}
+
+sub getAttributesFromSamlValidateResponse {
+    my ( $self, $soap_message ) = @_;
+    my $result = eval {
+        my $dom = $self->parser->parse_string($soap_message);
+        my $xpc = XML::LibXML::XPathContext->new($dom);
+        $xpc->registerNs( 'samlp', 'urn:oasis:names:tc:SAML:1.0:protocol' );
+        $xpc->registerNs( 'saml',  'urn:oasis:names:tc:SAML:1.0:assertion' );
+        $xpc->registerNs( 'SOAP-ENV',
+            'http://schemas.xmlsoap.org/soap/envelope/' );
+        my $response =
+          $xpc->find('/SOAP-ENV:Envelope/SOAP-ENV:Body/samlp:Response')->pop;
+        if ($response) {
+            return $self->_saml_validate_response($response);
+        }
+        else {
+            return {
+                success => 0,
+                message =>
+                  "samlValidate response did not contain a Response element",
+            };
+        }
+    };
+    if ($@) {
+        return {
+            success => 0,
+            message => "Could not process samlValidate response: $@",
+        };
+    }
+    return $result;
+}
+
+sub _saml_validate_response {
+    my ( $self, $response ) = @_;
+    my $status =
+      $response->find('./samlp:Status/samlp:StatusCode/@Value')->string_value();
+    if ( $status and $status eq "samlp:Success" ) {
+        my $user =
+          $response->find( './saml:Assertion'
+              . '/*[self::saml:AttributeStatement or self::saml:AuthenticationStatement]'
+              . '/saml:Subject/saml:NameIdentifier/text()' )->string_value();
+
+        if ($user) {
+            my $attributes = $self->_saml_validate_get_attributes($response);
+            return {
+                success    => 1,
+                user       => $user,
+                attributes => $attributes,
+            };
+        }
+        else {
+            return {
+                success => 0,
+                message => "No subject found in samlValidate response",
+            };
+        }
+    }
+    else {
+        my $display_status = $status // '<not found>';
+        return {
+            success => 0,
+            message => "samlValidate response status is $display_status",
+        };
+    }
+}
+
+sub _saml_validate_get_attributes {
+    my ( $self, $response ) = @_;
+    my $attributes     = {};
+    my @attribute_list = $response->find(
+        './saml:Assertion' . '/saml:AttributeStatement/saml:Attribute' )
+      ->get_nodelist;
+    for my $attribute (@attribute_list) {
+        my $attribute_name = $attribute->getAttribute("AttributeName");
+        if ($attribute_name) {
+            my @attribute_values =
+              $attribute->find("./saml:AttributeValue")->get_nodelist;
+            if (@attribute_values) {
+                $attributes->{$attribute_name} = [
+                    map {
+                        my $text = $_->textContent;
+                        utf8::encode($text);
+                        $text =~ s/^\s+//;
+                        $text =~ s/\s+$//;
+                        $text;
+                    } @attribute_values
+                ];
+            }
+        }
+    }
+
+    return $attributes;
 }
 
 sub returnSamlValidateSuccess {
