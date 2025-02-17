@@ -559,7 +559,6 @@ sub validateST {
           $attrs->get_all($_);
     }
 
-    # TODO store attributes for UserDBCAS
     return ( $user, $result );
 }
 
@@ -694,7 +693,7 @@ sub buildLogoutRequest {
         "samlp:SessionIndex" );
     $SessionIndex->appendText($ticket);
     $LogoutRequest->appendChild($SessionIndex);
-    my $logout_request_text = $LogoutRequest->toString();
+    my $logout_request_text = $LogoutRequest->toString;
 
     $self->logger->debug("Generated CAS logout request: $logout_request_text");
     return $logout_request_text;
