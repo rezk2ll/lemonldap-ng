@@ -1337,7 +1337,7 @@ sub newRefreshToken {
 sub getRefreshToken {
     my ( $self, $id ) = @_;
 
-    return $self->getOpenIDConnectSession( $id, "refresh_token" );
+    return $self->getOpenIDConnectSession( $id, "refresh_token", noCache => 1 );
 }
 
 sub updateRefreshToken {
@@ -1377,11 +1377,17 @@ sub getOpenIDConnectSession {
 
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
             $self->_storeOpts(),
-            cacheModule        => $self->conf->{localSessionStorage},
-            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
-            hashStore          => $self->conf->{hashedSessionStore},
-            id                 => $id,
-            kind               => $self->sessionKind,
+            (
+                $opts{noCache} ? ()
+                : (
+                    cacheModule        => $self->conf->{localSessionStorage},
+                    cacheModuleOptions =>
+                      $self->conf->{localSessionStorageOptions}
+                )
+            ),
+            hashStore => $self->conf->{hashedSessionStore},
+            id        => $id,
+            kind      => $self->sessionKind,
             (
                 $opts{info}
                 ? (
