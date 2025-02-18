@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use POSIX qw(strftime);
 use Hash::MultiValue;
+use HTTP::Request;
 use XML::LibXML;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
@@ -445,7 +446,7 @@ sub getServerLogoutURL {
 sub validateST {
     my ( $self, $req, $service, $ticket, $srvConf, $proxied ) = @_;
 
-    my %prm = ( service => $service, ticket => $ticket );
+    my %prm          = ( service => $service, ticket => $ticket );
 
     my $proxy_url;
     if (%$proxied) {
@@ -462,105 +463,52 @@ sub validateST {
         $prm{pgtUrl} = $proxy_url;
     }
 
-    my $serviceValidateUrl =
-      "$srvConf->{casSrvMetaDataOptionsUrl}/serviceValidate?"
-      . build_urlencoded(%prm);
+    my $request = $self->_buildRequestForServiceValidate(
+        $srvConf->{casSrvMetaDataOptionsUrl}, %prm );
 
-    $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
-
-    my $response = $self->ua->get($serviceValidateUrl);
+    my $response = $self->ua->request($request);
 
     $self->logger->debug(
         "Get CAS serviceValidate response: " . $response->as_string );
 
     return 0 if $response->is_error;
 
-    my $xml         = $response->decoded_content( default_charset => 'UTF-8' );
-    my $casResponse = $self->parser->parse_string($xml)->documentElement;
+    my $xml = $response->decoded_content( default_charset => 'UTF-8' );
+    my $extract_result = $self->getAttributesFromServiceValidateResponse($xml);
 
-    unless ( $casResponse->nodeName eq "cas:serviceResponse" ) {
-        $self->logger->error( "Failed to validate Service Ticket $ticket: "
-              . "unexpected top-level XML element: "
-              . $casResponse->nodeName );
-        return 0;
-    }
+    if ( $extract_result->{success} ) {
+        my $user       = $extract_result->{user};
+        my $attributes = $extract_result->{attributes};
 
-    if ( my $failure =
-        $casResponse->getElementsByTagName('cas:authenticationFailure') )
-    {
-        $self->logger->error( "Failed to validate Service Ticket $ticket: "
-              . $failure->string_value =~ s/\R//r );
-        return 0;
-    }
-
-    # Get proxy data and store pgtId
-    if ($proxy_url) {
-        my $pgtIou =
-          $casResponse->find(
-            '//cas:authenticationSuccess/cas:proxyGrantingTicket')
-          ->string_value;
-
-        if ($pgtIou) {
-            my $moduleOptions;
-            if ( $self->conf->{casStorage} ) {
-                $moduleOptions = $self->conf->{casStorageOptions} || {};
-                $moduleOptions->{backend} = $self->conf->{casStorage};
-            }
-            else {
-                $moduleOptions = $self->conf->{globalStorageOptions} || {};
-                $moduleOptions->{backend} = $self->conf->{globalStorage};
-            }
-            my $module = "Lemonldap::NG::Common::Apache::Session";
-
-            my $pgtIdSessions =
-              $module->searchOn( $moduleOptions, "pgtIou", $pgtIou );
-
-            foreach my $id (
-                grep {
-                    $pgtIdSessions->{$_}->{_session_kind} eq $self->sessionKind
-                }
-                keys %$pgtIdSessions
-              )
-            {
-
-                # There should be only on session
-                my $pgtIdSession = $self->getCasSession($id) or next;
-                $req->data->{pgtId} = $pgtIdSession->data->{pgtId};
-                $pgtIdSession->remove;
-            }
+        # Flatten each list of attribute values
+        my $result = {};
+        while ( my ( $attribute, $values ) = each %$attributes ) {
+            $result->{$attribute} =
+              join( $self->conf->{multiValuesSeparator}, @$values );
         }
-    }
 
-    my $user =
-      $casResponse->find('//cas:authenticationSuccess/cas:user')->string_value;
-    unless ($user) {
+        if ( $proxy_url and $extract_result->{pgtId} ) {
+            $self->logger->debug("Storing PGT id");
+            $req->data->{pgtId} = $extract_result->{pgtId};
+        }
+
+        return ( $user, $result );
+    }
+    else {
+        my $error = $extract_result->{message};
         $self->logger->error(
-            "Could not extract cas:user field from XML response");
+            "Failed to validate Service Ticket $ticket: $error");
         return 0;
     }
+}
 
-    my $attrs = Hash::MultiValue->new;
-    if ( my $casAttr =
-        $casResponse->find('//cas:authenticationSuccess/cas:attributes/cas:*') )
-    {
-        $casAttr->foreach(
-            sub {
-                my $k = $_[0]->localname;
-                my $v = $_[0]->textContent;
-                utf8::encode($v);
-                $attrs->add( $k => $v );
-            }
-        );
-    }
+sub _buildRequestForServiceValidate {
+    my ( $self, $url, %prm ) = @_;
 
-    # Flatten each list of attribute values
-    my $result = {};
-    for ( $attrs->keys ) {
-        $result->{$_} = join $self->conf->{multiValuesSeparator},
-          $attrs->get_all($_);
-    }
+    my $serviceValidateUrl = "$url/serviceValidate?" . build_urlencoded(%prm);
+    $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
 
-    return ( $user, $result );
+    return HTTP::Request->new( GET => $serviceValidateUrl );
 }
 
 # Store PGT IOU and PGT ID
@@ -718,6 +666,94 @@ sub getServiceTicketFromSamlRequest {
         return;
     }
     return $artifact;
+}
+
+sub getAttributesFromServiceValidateResponse {
+    my ( $self, $xml ) = @_;
+
+    my $casResponse = $self->parser->parse_string($xml)->documentElement;
+
+    unless ( $casResponse->nodeName eq "cas:serviceResponse" ) {
+        return {
+            success => 0,
+            message => (
+                "unexpected top-level XML element: " . $casResponse->nodeName
+            ),
+        };
+    }
+
+    if ( my $failure =
+        $casResponse->getElementsByTagName('cas:authenticationFailure') )
+    {
+        return {
+            success => 0,
+            message => ( $failure->string_value =~ s/\R//r ),
+        };
+    }
+
+    my $pgtId;
+
+    # Get proxy data and store pgtId
+    my $pgtIou =
+      $casResponse->find('//cas:authenticationSuccess/cas:proxyGrantingTicket')
+      ->string_value;
+
+    if ($pgtIou) {
+        my $moduleOptions;
+        if ( $self->conf->{casStorage} ) {
+            $moduleOptions = $self->conf->{casStorageOptions} || {};
+            $moduleOptions->{backend} = $self->conf->{casStorage};
+        }
+        else {
+            $moduleOptions = $self->conf->{globalStorageOptions} || {};
+            $moduleOptions->{backend} = $self->conf->{globalStorage};
+        }
+        my $module = "Lemonldap::NG::Common::Apache::Session";
+
+        my $pgtIdSessions =
+          $module->searchOn( $moduleOptions, "pgtIou", $pgtIou );
+
+        foreach my $id (
+            grep { $pgtIdSessions->{$_}->{_session_kind} eq $self->sessionKind }
+            keys %$pgtIdSessions
+          )
+        {
+
+            # There should be only on session
+            my $pgtIdSession = $self->getCasSession($id) or next;
+            $pgtId = $pgtIdSession->data->{pgtId};
+            $pgtIdSession->remove;
+        }
+    }
+
+    my $user =
+      $casResponse->find('//cas:authenticationSuccess/cas:user')->string_value;
+    unless ($user) {
+        return {
+            success => 0,
+            message => "Could not extract cas:user field from XML response",
+        };
+    }
+
+    my $attrs = Hash::MultiValue->new;
+    if ( my $casAttr =
+        $casResponse->find('//cas:authenticationSuccess/cas:attributes/cas:*') )
+    {
+        $casAttr->foreach(
+            sub {
+                my $k = $_[0]->localname;
+                my $v = $_[0]->textContent;
+                utf8::encode($v);
+                $attrs->add( $k => $v );
+            }
+        );
+    }
+    return {
+        success    => 1,
+        user       => $user,
+        attributes => $attrs->multi,
+        pgtId      => $pgtId,
+    };
 }
 
 sub returnSamlValidateSuccess {
