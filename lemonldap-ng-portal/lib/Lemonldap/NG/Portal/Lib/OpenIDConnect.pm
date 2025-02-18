@@ -1371,7 +1371,15 @@ sub updateToken {
 # If id is set to undef, return a new session
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
-    my ( $self, $id, $type, %opts ) = @_;
+    my $self = shift;
+    my $id   = shift;
+    my $type = shift;
+
+    # Check method signature ($id, $type, $ttl, $info)
+    my %opts =
+        ( ( $_[0] and $_[0] =~ /^\d+$/ ) or ( $_[1] and ref $_[1] ) )
+      ? ( ttl => $_[0], info => $_[1] )
+      : (@_);
 
     $opts{ttl} ||= $self->conf->{timeout};
 
