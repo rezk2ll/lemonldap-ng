@@ -1375,7 +1375,7 @@ sub getOpenIDConnectSession {
     my $id   = shift;
     my $type = shift;
 
-    # Check method signature ($id, $type, $ttl, $info)
+    # Check old method signature ($id, $type, $ttl, $info)
     my %opts =
         ( ( $_[0] and $_[0] =~ /^\d+$/ ) or ( $_[1] and ref $_[1] ) )
       ? ( ttl => $_[0], info => $_[1] )
