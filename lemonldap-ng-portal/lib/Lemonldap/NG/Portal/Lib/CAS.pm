@@ -936,6 +936,7 @@ sub returnSamlValidateSuccess {
     $envelope->appendChild($body);
 
     my $issueInstant = strftime( "%Y-%m-%dT%TZ", gmtime() );
+    my $notAfter     = strftime( "%Y-%m-%dT%TZ", gmtime( time + 300 ) );
     my $authInstant  = strftime( "%Y-%m-%dT%TZ",
         gmtime( $req->sessionInfo->{_lastAuthnUTime} ) );
     my $response =
@@ -972,6 +973,13 @@ sub returnSamlValidateSuccess {
     $assertion->setAttribute( "MinorVersion", "1" );
 
     $response->appendChild($assertion);
+
+    my $assertion_conditions =
+      $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
+        "Conditions" );
+    $assertion_conditions->setAttribute( "NotBefore",    $issueInstant );
+    $assertion_conditions->setAttribute( "NotOnOrAfter", $notAfter );
+    $assertion->appendChild($assertion_conditions);
 
     my $authentication_statement =
       $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
