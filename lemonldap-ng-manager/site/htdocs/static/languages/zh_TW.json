@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"已代理的服務",
 "casSrvMetaDataOptionsRenew":"更新驗證",
 "casSrvMetaDataOptionsResolutionRule":"解析規則",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"順序",
 "casSrvMetaDataOptionsTooltip":"工具提示",
 "casSrvMetaDataOptionsUrl":"伺服器 URL",

@@ -370,6 +370,7 @@ sub cTrees {
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
                     'casAppMetaDataOptionsAllowProxy',
+                    'casSrvMetaDataOptionsSamlValidate',
                     'casAppMetaDataOptionsLogout',
                     'casAppMetaDataOptionsAuthnLevel',
                     'casAppMetaDataOptionsRule',

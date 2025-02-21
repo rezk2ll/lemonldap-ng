@@ -872,6 +872,9 @@ sub attributes {
             'default' => '',
             'type'    => 'longtext'
         },
+        'casSrvMetaDataOptionsSamlValidate' => {
+            'type' => 'bool'
+        },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'intOrNull'
         },

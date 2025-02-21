@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"خدمات البروكسي",
 "casSrvMetaDataOptionsRenew":"تجديد إثبات الهوية",
 "casSrvMetaDataOptionsResolutionRule":"حل القاعدة",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Order",
 "casSrvMetaDataOptionsTooltip":"Tooltip",
 "casSrvMetaDataOptionsUrl":" يو أر ل الخادم",

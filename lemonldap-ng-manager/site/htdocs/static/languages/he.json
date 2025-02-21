@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"שירותים מתווכים",
 "casSrvMetaDataOptionsRenew":"חידוש אימות",
 "casSrvMetaDataOptionsResolutionRule":"Resolution rule",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"סדר",
 "casSrvMetaDataOptionsTooltip":"חלונית עצה",
 "casSrvMetaDataOptionsUrl":"כתובת שרת",

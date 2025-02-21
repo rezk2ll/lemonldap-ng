@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"Прокси-сервисы",
 "casSrvMetaDataOptionsRenew":"Продлить аутентификацию",
 "casSrvMetaDataOptionsResolutionRule":"Правило разрешения",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Порядок",
 "casSrvMetaDataOptionsTooltip":"Подсказка",
 "casSrvMetaDataOptionsUrl":"URL-адрес сервера",

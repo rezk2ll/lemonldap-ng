@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"Usługi proxy",
 "casSrvMetaDataOptionsRenew":"Odnów uwierzytelnianie",
 "casSrvMetaDataOptionsResolutionRule":"Reguła rozstrzygania",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Kolejność",
 "casSrvMetaDataOptionsTooltip":"Etykietka",
 "casSrvMetaDataOptionsUrl":"URL serwera",
