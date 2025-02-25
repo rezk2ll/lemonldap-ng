@@ -1547,9 +1547,24 @@ sub cspGetHost {
     return;
 }
 
+sub relativeUrl {
+    my $self = shift;
+    my $req  = shift;
+
+    my $uri = $self->_buildUrlObj( $req->portal, @_ );
+    return $uri->path_query;
+}
+
 sub buildUrl {
     my $self = shift;
     return $self->portal unless @_;
+
+    return $self->_buildUrlObj(@_)->as_string;
+}
+
+sub _buildUrlObj {
+    my $self = shift;
+    return URI->new( $self->portal ) unless @_;
 
     # URL base is $self->portal unless first arg is an URL
     my $uri =
@@ -1569,7 +1584,7 @@ sub buildUrl {
         }
     }
     $uri->path_segments(@pathSg);
-    return $uri->as_string;
+    return $uri;
 }
 
 sub rememberBrowser {
