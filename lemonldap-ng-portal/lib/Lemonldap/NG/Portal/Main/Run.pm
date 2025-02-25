@@ -1279,6 +1279,7 @@ sub tplParams {
     return (
         CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,
+        PORTAL_BASE  => $portalPath,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
