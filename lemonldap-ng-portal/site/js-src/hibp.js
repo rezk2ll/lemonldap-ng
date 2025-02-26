@@ -12,7 +12,7 @@ $(document).on('checkpassword', function(event, context) {
         setResult('ppolicy-checkhibp-feedback', "waiting");
         return $.ajax({
           dataType: "json",
-          url: "/checkhibp",
+          url: `${scriptname}checkhibp`,
           method: "POST",
           data: {
             "password": btoa(newpasswordVal)

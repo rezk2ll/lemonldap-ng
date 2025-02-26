@@ -76,7 +76,7 @@
       console.log('Send AJAX request');
       return $.ajax({
         type: "GET",
-        url: `${portal}mynotifications/${notif}`,
+        url: `${scriptname}mynotifications/${notif}`,
         data: {
           epoch: epoch
         },

@@ -53,7 +53,7 @@
     }
     return $.ajax({
       type: "POST",
-      url: `${portal}2fregisters/${prefix}/delete`,
+      url: `${scriptname}2fregisters/${prefix}/delete`,
       data: {
         epoch: epoch
       },

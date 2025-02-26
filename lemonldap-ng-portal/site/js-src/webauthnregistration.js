@@ -34,7 +34,7 @@ register = function() {
   // 1 get registration token
   return $.ajax({
     type: "POST",
-    url: `${portal}2fregisters/webauthn/registrationchallenge`,
+    url: `${scriptname}2fregisters/webauthn/registrationchallenge`,
     data: {},
     dataType: 'json',
     headers: {
@@ -58,7 +58,7 @@ register = function() {
           if (!e.isDefaultPrevented()) {
             return $.ajax({
               type: "POST",
-              url: `${portal}2fregisters/webauthn/registration`,
+              url: `${scriptname}2fregisters/webauthn/registration`,
               data: {
                 state_id: ch.state_id,
                 credential: JSON.stringify(response),
@@ -111,7 +111,7 @@ verify = function() {
   // 1 get challenge
   return $.ajax({
     type: "POST",
-    url: `${portal}2fregisters/webauthn/verificationchallenge`,
+    url: `${scriptname}2fregisters/webauthn/verificationchallenge`,
     data: {},
     headers: {
       "X-CSRF-Check": "1"
@@ -128,7 +128,7 @@ verify = function() {
       return webauthnJSON.get(request).then(function(response) {
         return $.ajax({
           type: "POST",
-          url: `${portal}2fregisters/webauthn/verification`,
+          url: `${scriptname}2fregisters/webauthn/verification`,
           data: {
             state_id: ch.state_id,
             credential: JSON.stringify(response)

@@ -47,7 +47,7 @@
         // send a request to checkentropy endpoint
         return $.ajax({
           dataType: "json",
-          url: "/checkentropy",
+          url: `${scriptname}checkentropy`,
           method: "POST",
           data: {
             "password": btoa(newpasswordVal)

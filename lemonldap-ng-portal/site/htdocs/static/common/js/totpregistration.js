@@ -31,7 +31,7 @@
     setMsg('yourTotpKey', 'warning');
     return $.ajax({
       type: "POST",
-      url: `${portal}2fregisters/totp/getkey`,
+      url: `${scriptname}2fregisters/totp/getkey`,
       dataType: 'json',
       headers: {
         "X-CSRF-Check": "1"
@@ -86,7 +86,7 @@
     } else {
       return $.ajax({
         type: "POST",
-        url: `${portal}2fregisters/totp/verify`,
+        url: `${scriptname}2fregisters/totp/verify`,
         dataType: 'json',
         data: {
           token: token,
