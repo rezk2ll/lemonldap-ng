@@ -5,18 +5,18 @@
   LemonLDAP::NG Generic registration script
   */
   var displayError, register, setMsg, verify;
-  setMsg = function (msg, level) {
+  setMsg = function setMsg(msg, level) {
     $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
-    $('#color').addClass(`message-${level}`);
+    $('#color').addClass("message-".concat(level));
     if (level === 'positive') {
       level = 'success';
     }
-    $('#color').addClass(`alert-${level}`);
+    $('#color').addClass("alert-".concat(level));
     return $('#msg').attr('role', level === 'danger' ? 'alert' : 'status');
   };
-  displayError = function (j, status, err) {
+  displayError = function displayError(j, status, err) {
     var res;
     console.log('Error', err);
     res = JSON.parse(j.responseText);
@@ -26,7 +26,7 @@
       return setMsg(res, 'warning');
     }
   };
-  verify = function () {
+  verify = function verify() {
     var generic, prefix;
     generic = $('#generic').val();
     prefix = window.datas.prefix;
@@ -36,7 +36,7 @@
     } else {
       return $.ajax({
         type: 'POST',
-        url: `${portal}2fregisters/${prefix}/sendcode`,
+        url: "".concat(portal, "2fregisters/").concat(prefix, "/sendcode"),
         dataType: 'json',
         data: {
           generic: generic
@@ -45,7 +45,7 @@
           "X-CSRF-Check": "1"
         },
         error: displayError,
-        success: function (data) {
+        success: function success(data) {
           if (data.error) {
             if (data.error.match(/PE79/)) {
               return setMsg(data.error, 'warning');
@@ -60,7 +60,7 @@
       });
     }
   };
-  register = function () {
+  register = function register() {
     var generic, genericcode, genericname, prefix, token;
     generic = $('#generic').val();
     genericname = $('#genericname').val();
@@ -73,7 +73,7 @@
     } else {
       return $.ajax({
         type: 'POST',
-        url: `${portal}2fregisters/${prefix}/verify`,
+        url: "".concat(portal, "2fregisters/").concat(prefix, "/verify"),
         dataType: 'json',
         data: {
           generic: generic,
@@ -85,7 +85,7 @@
           "X-CSRF-Check": "1"
         },
         error: displayError,
-        success: function (data) {
+        success: function success(data) {
           var e;
           if (data.error) {
             if (data.error.match(/mailNotSent/)) {

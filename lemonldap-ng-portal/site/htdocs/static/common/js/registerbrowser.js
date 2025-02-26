@@ -14,7 +14,7 @@
       return setTimeout(go, 500);
     }
   });
-  go = function () {
+  go = function go() {
     var e, script, secret, usetotp;
     usetotp = Boolean(parseInt($('#usetotp').attr("value")));
     if (window.localStorage && usetotp) {
@@ -31,7 +31,7 @@
       }
       if (secret) {
         try {
-          $('#fg').attr("value", `TOTP_${getToken(secret)}`);
+          $('#fg').attr("value", "TOTP_".concat(getToken(secret)));
           $('#form').submit();
           return;
         } catch (error) {
@@ -49,12 +49,12 @@
     // If script not loaded after 1s, skip its load
     return setTimeout(tryFingerprint, 1000);
   };
-  tryFingerprint = function () {
+  tryFingerprint = function tryFingerprint() {
     console.log("Trying fingerprint");
     if (window.Fingerprint2) {
       return Fingerprint2.get(function (components) {
         var result, values;
-        values = components.map(component => {
+        values = components.map(function (component) {
           return component.value;
         });
         result = Fingerprint2.x64hash128(values.join(''), 31);
@@ -66,7 +66,7 @@
       return $('#form').submit();
     }
   };
-  getToken = function (key) {
+  getToken = function getToken(key) {
     var hmac, offset, otp, shaObj, time;
     key = base32tohex(key);
     time = leftpad(dec2hex(Math.floor(Date.now() / 30000)), 16, "0");
@@ -78,13 +78,13 @@
     otp = (hex2dec(hmac.substr(offset * 2, 8)) & hex2dec("7fffffff")) + "";
     return otp.substr(Math.max(otp.length - 6, 0), 6);
   };
-  hex2dec = function (s) {
+  hex2dec = function hex2dec(s) {
     return parseInt(s, 16);
   };
-  dec2hex = function (s) {
+  dec2hex = function dec2hex(s) {
     return (s < 15.5 ? "0" : "") + Math.round(s).toString(16);
   };
-  base32tohex = function (base32) {
+  base32tohex = function base32tohex(base32) {
     var base32chars, bits, chunk, hex, i, j, k, ref, ref1, val;
     base32chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     bits = "";
@@ -103,7 +103,7 @@
     }
     return hex;
   };
-  leftpad = function (str, len, pad) {
+  leftpad = function leftpad(str, len, pad) {
     if (len + 1 >= str.length) {
       str = Array(len + 1 - str.length).join(pad) + str;
     }
