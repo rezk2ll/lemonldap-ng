@@ -33,4 +33,5 @@ dev/sessions/
 dev/conf/
 ui/manager/build
 ui/manager/dist
+ui/manager/coverage
 *.css.json
