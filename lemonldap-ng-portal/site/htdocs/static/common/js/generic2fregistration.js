@@ -36,7 +36,7 @@
     } else {
       return $.ajax({
         type: 'POST',
-        url: "".concat(portal, "2fregisters/").concat(prefix, "/sendcode"),
+        url: "".concat(scriptname, "2fregisters/").concat(prefix, "/sendcode"),
         dataType: 'json',
         data: {
           generic: generic
@@ -73,7 +73,7 @@
     } else {
       return $.ajax({
         type: 'POST',
-        url: "".concat(portal, "2fregisters/").concat(prefix, "/verify"),
+        url: "".concat(scriptname, "2fregisters/").concat(prefix, "/verify"),
         dataType: 'json',
         data: {
           generic: generic,

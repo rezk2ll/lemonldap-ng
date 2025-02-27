@@ -6,7 +6,7 @@ renewCaptcha = function() {
   // Request to get new token and image
   return $.ajax({
     type: "GET",
-    url: `${portal}renewcaptcha`,
+    url: `${scriptname}renewcaptcha`,
     dataType: 'json',
     error: function(j, status, err) {
       var res;

@@ -8,7 +8,7 @@
     // Request to get new token and image
     return $.ajax({
       type: "GET",
-      url: "".concat(portal, "renewcaptcha"),
+      url: "".concat(scriptname, "renewcaptcha"),
       dataType: 'json',
       error: function error(j, status, err) {
         var res;

@@ -15,7 +15,7 @@
           setResult('ppolicy-checkhibp-feedback', "waiting");
           return $.ajax({
             dataType: "json",
-            url: "/checkhibp",
+            url: "".concat(scriptname, "checkhibp"),
             method: "POST",
             data: {
               "password": btoa(newpasswordVal)

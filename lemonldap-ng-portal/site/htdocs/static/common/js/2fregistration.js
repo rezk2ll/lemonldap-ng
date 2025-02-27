@@ -82,7 +82,7 @@
     }
     return $.ajax(_defineProperty({
       type: "POST",
-      url: "".concat(portal, "2fregisters/").concat(prefix, "/delete"),
+      url: "".concat(scriptname, "2fregisters/").concat(prefix, "/delete"),
       data: {
         epoch: epoch
       },

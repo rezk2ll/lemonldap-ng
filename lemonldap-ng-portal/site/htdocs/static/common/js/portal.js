@@ -276,7 +276,7 @@
     // First request to get token
     return $.ajax({
       type: "GET",
-      url: scriptname + 'mysession/?gettoken',
+      url: "".concat(scriptname, "mysession/?gettoken"),
       dataType: 'json',
       error: error,
       // On success, value is set
@@ -288,7 +288,7 @@
         d[key] = val;
         return $.ajax({
           type: "PUT",
-          url: scriptname + 'mysession/persistent',
+          url: "".concat(scriptname, "mysession/persistent"),
           dataType: 'json',
           data: d,
           success: _success,
@@ -300,7 +300,7 @@
   delKey = function delKey(key, sub, _success2, error) {
     return $.ajax({
       type: "GET",
-      url: scriptname + 'mysession/?gettoken',
+      url: "".concat(scriptname, "mysession/?gettoken"),
       dataType: 'json',
       error: error,
       // On success, value is set
@@ -715,7 +715,7 @@
       console.log('Send findUser request with parameters', str);
       return $.ajax({
         type: "POST",
-        url: "".concat(portal, "finduser"),
+        url: "".concat(scriptname, "finduser"),
         dataType: 'json',
         data: str,
         // On success, values are set

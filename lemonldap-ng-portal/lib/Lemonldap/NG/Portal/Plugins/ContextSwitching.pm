@@ -124,6 +124,7 @@ sub display {
 
     # Display form
     my $params = {
+        FORM_ACTION   => $self->p->relativeUrl( $req, 'switchcontext' ),
         MSG           => 'contextSwitching_ON',
         ALERTE        => 'alert-danger',
         IMPERSONATION => $self->conf->{contextSwitchingRule},

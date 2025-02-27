@@ -35,7 +35,7 @@
     // 1 get registration token
     return $.ajax({
       type: "POST",
-      url: "".concat(portal, "2fregisters/webauthn/registrationchallenge"),
+      url: "".concat(scriptname, "2fregisters/webauthn/registrationchallenge"),
       data: {},
       dataType: 'json',
       headers: {
@@ -59,7 +59,7 @@
             if (!e.isDefaultPrevented()) {
               return $.ajax({
                 type: "POST",
-                url: "".concat(portal, "2fregisters/webauthn/registration"),
+                url: "".concat(scriptname, "2fregisters/webauthn/registration"),
                 data: {
                   state_id: ch.state_id,
                   credential: JSON.stringify(response),
@@ -110,7 +110,7 @@
     // 1 get challenge
     return $.ajax({
       type: "POST",
-      url: "".concat(portal, "2fregisters/webauthn/verificationchallenge"),
+      url: "".concat(scriptname, "2fregisters/webauthn/verificationchallenge"),
       data: {},
       headers: {
         "X-CSRF-Check": "1"
@@ -127,7 +127,7 @@
         return webauthnJSON.get(request).then(function (response) {
           return $.ajax({
             type: "POST",
-            url: "".concat(portal, "2fregisters/webauthn/verification"),
+            url: "".concat(scriptname, "2fregisters/webauthn/verification"),
             data: {
               state_id: ch.state_id,
               credential: JSON.stringify(response)

@@ -51,7 +51,8 @@ sub run {
         $req,
         'totp2fcheck',
         params => {
-            TOKEN => $token,
+            TARGET => $self->p->relativeUrl( $req, 'totp2fcheck' ),
+            TOKEN  => $token,
             $self->get2fTplParams($req),
         }
     );

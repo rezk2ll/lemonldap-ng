@@ -36,7 +36,7 @@
     } else {
       return $.ajax({
         type: 'POST',
-        url: "".concat(portal, "2fregisters/password/verify"),
+        url: "".concat(scriptname, "2fregisters/password/verify"),
         dataType: 'json',
         data: {
           password: password,
