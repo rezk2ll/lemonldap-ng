@@ -1,0 +1,38 @@
+.cfgNum {
+  border-radius: 3px;
+  margin: 5px;
+  padding: 1px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-size: xx-large;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  margin-left: 2vw;
+  margin-right: 5vw;
+  grid-gap: 5px;
+  flex-flow: column;
+}
+
+.top {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 2vw;
+  background-color: #d6d6d6;
+}
+
+.title {
+  font-size: xx-large;
+}
+.title2 {
+  font-size: larger;
+  padding: 15px;
+  text-align: left;
+}
+.title3 {
+  font-size: large;
+  padding: 15px;
+}

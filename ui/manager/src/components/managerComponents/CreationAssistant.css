@@ -1,0 +1,19 @@
+.createAssistant {
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+}
+
+.createAssistant select {
+  font-size: medium;
+}
+
+.createAssistant input {
+  font-size: medium;
+  margin: 2%;
+}
+
+.createAssistant textarea {
+  font-size: large;
+}

@@ -1,0 +1,58 @@
+.infoTable {
+  width: 100%;
+  margin: 10px;
+  text-align: left;
+  max-width: 100%;
+  flex-wrap: wrap;
+  border-collapse: collapse;
+}
+
+.infoTable tr,
+td,
+th {
+  padding: 1%;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  background-color: #d6d6d6;
+  padding-left: 2vw;
+}
+
+.desc {
+  display: flex;
+  flex-direction: row;
+  align-content: space-evenly;
+  margin: 2%;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+}
+
+.descBox {
+  margin: 1%;
+  border: 2px solid #acacac;
+  padding: 2%;
+  border-radius: 15px;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.descBox button {
+  left: 50%;
+}
+
+.logo {
+  width: 20vw;
+}
+
+.search-container {
+  display: flex;
+  margin: 15px;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+}
+
+.search {
+  margin-right: 2%;
+}
