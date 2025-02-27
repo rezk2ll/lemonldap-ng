@@ -76,7 +76,7 @@ export function SAMLIssuer() {
               setOption("basic");
             }}
           >
-            {t("Basic Option")}
+            {t("basicOptions")}
           </label>
           <label
             className={`option ${

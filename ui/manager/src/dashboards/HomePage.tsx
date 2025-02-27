@@ -1,5 +1,6 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DownloadIcon from "@mui/icons-material/Download";
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import { Button, TextField } from "@mui/material";
 import { t } from "i18next";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -9,12 +10,7 @@ import { ConfStats } from "../components/ConfStats";
 import { Footer } from "../components/Footer";
 import { SavePopup } from "../components/SavePopup";
 import { VisuallyHiddenInput } from "../components/managerComponents/VisuallyHiddenInput";
-import {
-  getConfigAsync,
-  removeError,
-  saveConfigAsync,
-  setError,
-} from "../features/config/configSlice";
+import { getConfigAsync, removeError, saveConfigAsync, setError } from "../features/config/configSlice";
 import { exportData } from "../utils/exportData";
 import { handleChangeFile } from "../utils/readFiles";
 import { llngConfig } from "../utils/types";
@@ -25,12 +21,7 @@ export function HomePage() {
   const config = useAppSelector((state) => state.config);
   const dispatch = useAppDispatch();
   const [configPresent, setConfigPresent] = useState<boolean>(
-    Boolean(
-      config.data.metadata &&
-        !config.data.metadata.next &&
-        !config.loading &&
-        !config.error.has
-    )
+    Boolean(config.data.metadata && !config.data.metadata.next && !config.loading && !config.error.has)
   );
   const [aimedConf, SetAimedConf] = useState(0);
   useEffect(() => {
@@ -58,9 +49,26 @@ export function HomePage() {
           <div>
             <div className="head">
               <div>
-                <strong className="title">{t("Configuration Manager")}</strong>
+                <strong className="title">{t("configurationManager")}</strong>
               </div>
               <div className="search-container">
+                <div className="search">
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    startIcon={<OtherHousesIcon />}
+                    onClick={async function () {
+                      (window as any).links.map((el: { title: string; target: string }) => {
+                        if (el.title === "conf") {
+                          window.location.assign(el.target);
+                        }
+                      });
+                    }}
+                  >
+                    {t("oldManager")}
+                  </Button>
+                </div>
                 <div className="search">
                   <Button
                     component="label"
@@ -76,27 +84,15 @@ export function HomePage() {
                   </Button>
                 </div>
                 <div className="search">
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
-                  >
+                  <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CloudUploadIcon />}>
                     {t("restore")}
                     <VisuallyHiddenInput
                       type="file"
                       onChange={(e) => {
                         if (e.target instanceof HTMLInputElement) {
-                          handleChangeFile(
-                            e as ChangeEvent<HTMLInputElement>
-                          ).then((fileContent) => {
+                          handleChangeFile(e as ChangeEvent<HTMLInputElement>).then((fileContent) => {
                             console.debug("File content:", fileContent);
-                            dispatch(
-                              saveConfigAsync(
-                                JSON.parse(fileContent) as llngConfig
-                              )
-                            );
+                            dispatch(saveConfigAsync(JSON.parse(fileContent) as llngConfig));
                             setOpenSavePopup(true);
                           });
                         }
@@ -105,18 +101,12 @@ export function HomePage() {
                   </Button>
                 </div>
                 <div className="search">
-                  <Button
-                    variant="contained"
-                    onClick={() => dispatch(push(`#authParams/latest`))}
-                  >
+                  <Button variant="contained" onClick={() => dispatch(push(`#authParams/latest`))}>
                     {t("authParams")}
                   </Button>
                 </div>
                 <div className="search">
-                  <Button
-                    variant="contained"
-                    onClick={() => dispatch(push(`#tree/latest`))}
-                  >
+                  <Button variant="contained" onClick={() => dispatch(push(`#tree/latest`))}>
                     {t("tree")}
                   </Button>
                 </div>
@@ -124,24 +114,17 @@ export function HomePage() {
                   <TextField
                     type="number"
                     size="small"
-                    label={t("search config num")}
+                    label={t("browse")}
                     error={Boolean(aimedConf && aimedConf <= 0)}
                     helperText={`${"Enter only positive and non nul numbers"}`}
-                    placeholder={t("search config num")}
+                    placeholder={t("browse")}
                     onChange={(e) => SetAimedConf(Number(e.target.value))}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        if (
-                          0 < aimedConf &&
-                          aimedConf <= config.data.metadata.cfgNum
-                        ) {
+                        if (0 < aimedConf && aimedConf <= config.data.metadata.cfgNum) {
                           dispatch(push(`#conf/${aimedConf}`));
                         } else {
-                          dispatch(
-                            setError(
-                              `Wrong config number :${aimedConf}, try latest : ${config.data.metadata.cfgNum}`
-                            )
-                          );
+                          dispatch(setError(`Wrong config number :${aimedConf}, try latest : ${config.data.metadata.cfgNum}`));
                         }
                       }
                     }}
@@ -149,17 +132,10 @@ export function HomePage() {
                   <Button
                     variant="contained"
                     onClick={() => {
-                      if (
-                        0 < aimedConf &&
-                        aimedConf <= config.data.metadata.cfgNum
-                      ) {
+                      if (0 < aimedConf && aimedConf <= config.data.metadata.cfgNum) {
                         dispatch(push(`#conf/${aimedConf}`));
                       } else {
-                        dispatch(
-                          setError(
-                            `Wrong config number :${aimedConf}, try latest : ${config.data.metadata.cfgNum}`
-                          )
-                        );
+                        dispatch(setError(`Wrong config number :${aimedConf}, try latest : ${config.data.metadata.cfgNum}`));
                       }
                     }}
                   >
@@ -175,7 +151,7 @@ export function HomePage() {
                 <thead>
                   <tr>
                     <th colSpan={2}>
-                      <strong>{t("Latest conf info")}</strong>
+                      <strong>{t("currentConfiguration")}</strong>
                     </th>
                   </tr>
                 </thead>
@@ -234,12 +210,7 @@ export function HomePage() {
             <strong>{t("latestError")}</strong> {config.error.errorContent}
           </div>
           <Footer cfgVersion={config.data.config.cfgVersion} />
-          <SavePopup
-            config={config}
-            dispatch={dispatch}
-            openSavePopup={openSavePopup}
-            setOpenSavePopup={setOpenSavePopup}
-          />
+          <SavePopup config={config} dispatch={dispatch} openSavePopup={openSavePopup} setOpenSavePopup={setOpenSavePopup} />
         </>
       );
     }

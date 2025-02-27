@@ -73,7 +73,7 @@ export default function SaveButton({ partial }: { partial?: boolean }) {
         partial={partial}
       />
       <div className={`notif red ${openErrorPopup ? "visible" : "hidden"}`}>
-        {t("Cannot save with app warnings")}
+        {t("saveWithWarnings")}
       </div>
     </div>
   );

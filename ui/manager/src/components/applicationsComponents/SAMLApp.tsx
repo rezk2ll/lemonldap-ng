@@ -47,7 +47,7 @@ export function SAMLApp({
               setOpen(false);
             }}
           >
-            {t("Basic Option")}
+            {t("basicOptions")}
           </label>
           <label
             className={`option ${
