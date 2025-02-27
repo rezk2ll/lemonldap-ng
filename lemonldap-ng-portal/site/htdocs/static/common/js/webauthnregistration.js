@@ -5,17 +5,17 @@
   LemonLDAP::NG WebAuthn registration script
   */
   var displayError, register, setMsg, verify;
-  setMsg = function (msg, level) {
+  setMsg = function setMsg(msg, level) {
     $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
-    $('#color').addClass(`message-${level}`);
+    $('#color').addClass("message-".concat(level));
     if (level === 'positive') {
       level = 'success';
     }
-    return $('#color').addClass(`alert-${level}`);
+    return $('#color').addClass("alert-".concat(level));
   };
-  displayError = function (j, status, err) {
+  displayError = function displayError(j, status, err) {
     var res;
     console.log('Error', err);
     res = JSON.parse(j.responseText);
@@ -27,7 +27,7 @@
   };
 
   // Registration function (launched by "register" button)
-  register = function () {
+  register = function register() {
     if (!webauthnJSON.supported()) {
       setMsg('webAuthnUnsupported', 'warning');
       return;
@@ -35,14 +35,14 @@
     // 1 get registration token
     return $.ajax({
       type: "POST",
-      url: `${scriptname}2fregisters/webauthn/registrationchallenge`,
+      url: "".concat(scriptname, "2fregisters/webauthn/registrationchallenge"),
       data: {},
       dataType: 'json',
       headers: {
         "X-CSRF-Check": "1"
       },
       error: displayError,
-      success: function (ch) {
+      success: function success(ch) {
         var e, request;
         // 2 build response
         request = {
@@ -59,7 +59,7 @@
             if (!e.isDefaultPrevented()) {
               return $.ajax({
                 type: "POST",
-                url: `${scriptname}2fregisters/webauthn/registration`,
+                url: "".concat(scriptname, "2fregisters/webauthn/registration"),
                 data: {
                   state_id: ch.state_id,
                   credential: JSON.stringify(response),
@@ -69,7 +69,7 @@
                   "X-CSRF-Check": "1"
                 },
                 dataType: 'json',
-                success: function (resp) {
+                success: function success(resp) {
                   if (resp.error) {
                     if (resp.error.match(/badName/)) {
                       return setMsg(resp.error, 'danger');
@@ -102,7 +102,7 @@
   };
 
   // Verification function (launched by "verify" button)
-  verify = function () {
+  verify = function verify() {
     if (!webauthnJSON.supported()) {
       setMsg('webAuthnUnsupported', 'warning');
       return;
@@ -110,14 +110,14 @@
     // 1 get challenge
     return $.ajax({
       type: "POST",
-      url: `${scriptname}2fregisters/webauthn/verificationchallenge`,
+      url: "".concat(scriptname, "2fregisters/webauthn/verificationchallenge"),
       data: {},
       headers: {
         "X-CSRF-Check": "1"
       },
       dataType: 'json',
       error: displayError,
-      success: function (ch) {
+      success: function success(ch) {
         var request;
         // 2 build response
         request = {
@@ -127,7 +127,7 @@
         return webauthnJSON.get(request).then(function (response) {
           return $.ajax({
             type: "POST",
-            url: `${scriptname}2fregisters/webauthn/verification`,
+            url: "".concat(scriptname, "2fregisters/webauthn/verification"),
             data: {
               state_id: ch.state_id,
               credential: JSON.stringify(response)
@@ -136,7 +136,7 @@
               "X-CSRF-Check": "1"
             },
             dataType: 'json',
-            success: function (resp) {
+            success: function success(resp) {
               if (resp.error) {
                 return setMsg('webAuthnFailed', 'danger');
               } else if (resp.result) {

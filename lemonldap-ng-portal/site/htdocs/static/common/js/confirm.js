@@ -2,15 +2,15 @@
   'use strict';
 
   // Timer for confirmation page
-  var go, i, timer, timerIsEnabled;
+  var go, i, _timer, timerIsEnabled;
   i = 5;
   timerIsEnabled = 0;
-  go = function () {
+  go = function go() {
     if (timerIsEnabled) {
       return $("#form").submit();
     }
   };
-  timer = function () {
+  _timer = function timer() {
     var h;
     h = $('#timer').html();
     if (h) {
@@ -20,12 +20,12 @@
       }
       h = h.replace(/\d+/, i);
       $('#timer').html(h);
-      return setTimeout(timer, 1000);
+      return setTimeout(_timer, 1000);
     }
   };
   $(document).ready(function () {
     setTimeout(go, 30000);
-    setTimeout(timer, 1000);
+    setTimeout(_timer, 1000);
     return $("#refuse").on('click', function () {
       return $("#confirm").attr("value", $(this).attr("val"));
     });
