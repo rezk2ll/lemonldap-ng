@@ -12,5 +12,5 @@ module.exports = inputFiles.map(file => ({
     name: path.basename(file, '.js'),
     extend: true,
   },
-  plugins: [babel({babelHelpers: 'bundled'})],
+  plugins: [babel({presets: ['@babel/preset-env'], babelHelpers: 'bundled'})],
 }));
