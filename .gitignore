@@ -31,6 +31,6 @@ lemonldap-ng-*/MANIFEST.bak
 node_modules
 dev/sessions/
 dev/conf/
-/build
-/dist
+ui/manager/build
+ui/manager/dist
 *.css.json
