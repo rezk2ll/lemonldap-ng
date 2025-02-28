@@ -278,7 +278,7 @@ In previous versions of LemonLDAP::NG, a 2FA protected account didn't need to us
 
 If you are *absolutely sure* that you want 2FA protected accounts to access AuthBasic handlers, which are password only, you can add the following test in your 2FA activation rules ::
 
-    and not $ENV{AuthBasic}
+    and not $env->{AuthBasic}
 
 
 2.0.16

@@ -19,8 +19,7 @@ Available $ENV variables
 
 The %ENV hash provides:
 
--  all headers in CGI format (``User-Agent`` becomes
-   ``HTTP_USER_AGENT``)
+-  all headers in CGI format (``User-Agent`` becomes ``HTTP_USER_AGENT``)
 -  some CGI variables depending on the context:
 
    -  For portal: all CGI standard variables (you can add custom
@@ -32,19 +31,21 @@ The %ENV hash provides:
 
 -  For Portal:
 
-   -  $ENV{urldc} : Origin URL before Handler redirection, in cleartext
-   -  $ENV{_url} : Origin URL before Handler redirection, base64 encoded
+   -  $env->{urldc} : Origin URL before Handler redirection, in cleartext
+   -  $env->{_url} : Origin URL before Handler redirection, base64 encoded
 
 See also :doc:`extended functions<extendedfunctions>`.
 
 .. tip::
 
-    You can use %ENV hash or $env hash ref. Both syntaxes are available
-    for compatibity. 
+    You can use %ENV hash or $env hash ref. Both syntaxes are available for compatibity. 
 
     ::
 
-       $ENV{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
+       $env->{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
+
+    %env and template varaibles can dump by setting ``log_params = 1``
+    in ``lemonldap-ng.ini`` file.
 
 .. _rules:
 
@@ -66,7 +67,7 @@ Restrict /admin/ directory to user bart.simpson                                 
 Restrict /js/ and /css/ directory to authenticated users                                                                                        ^/(css|js)/        accept
 Deny access to /config/ directory                                                                                                               ^/config/          deny
 Do not restrict /public/                                                                                                                        ^/public/          skip
-Do not restrict /skip/ and restrict other to authenticated users                                                                                ^/skip/            $ENV{REQUEST_URI} =~ /skip/ ? skip : 1
+Do not restrict /skip/ and restrict other to authenticated users                                                                                ^/skip/            $env->{REQUEST_URI} =~ /skip/ ? skip : 1
 Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through HTTP headers)           ^/forum/           unprotect
 Restrict access to the whole site to users that have the LDAP description field set to "LDAP administrator" (must be set in exported variables) default
 =============================================================================================================================================== ================== ======================================

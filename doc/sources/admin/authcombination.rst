@@ -281,5 +281,5 @@ implemented only \`if\` and \`or\` keywords. Examples:
 Multi expressions                                                Combination
 ================================================================ =====================================================
 ``LDAP;DBI``                                                     ``[myLDAP] or [myDBI]``
-``DBI $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/`` ``if $env->{REMOTE_ADDR} then [myDBI] else [myLDAP]``
+``DBI $env->{REMOTE_ADDR} =~ /^192/;LDAP $env->{REMOTE_ADDR} !~ /^192/`` ``if $env->{REMOTE_ADDR} then [myDBI] else [myLDAP]``
 ================================================================ =====================================================
