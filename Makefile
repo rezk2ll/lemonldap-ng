@@ -770,7 +770,7 @@ install_test:
 
 # Install targets
 # ---------------
-install:	install_libs install_bin install_fastcgi_server install_uwsgi_server install_site install_manager_ui
+install:	install_libs install_bin install_fastcgi_server install_uwsgi_server install_site
 
 # Perl libraires install
 
@@ -1046,7 +1046,7 @@ install_manager_site:	install_conf_dir
 
 install_manager_ui: 
 	# UI install
-	@cd ui/manager/;\
+	@set -ex; cd ui/manager/;\
 		npm i; \
 		rollup -c;\
 		cp dist/static/*.js  ../../lemonldap-ng-manager/site/htdocs/static;
