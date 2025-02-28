@@ -4403,7 +4403,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'samlService'
         },
         'samlAuthnContextMapExtra' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,
