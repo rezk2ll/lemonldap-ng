@@ -17,11 +17,15 @@ import postcssModules from "postcss-modules";
 import postcssPresetEnv from "postcss-preset-env";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
+<<<<<<< HEAD
 import terser from "@rollup/plugin-terser";
 import progress from "rollup-plugin-progress";
 
 // https://github.com/d3/d3-interpolate/issues/58
 const D3_WARNING = /Circular dependency.*d3-interpolate/;
+=======
+import { terser } from "rollup-plugin-terser";
+>>>>>>> ebe89c824 (Avoid error with some rollup)
 
 export default {
   input: ["src/index.tsx"],
@@ -31,6 +35,7 @@ export default {
     sourcemap: true,
     entryFileNames: "static/manager-[hash].js",
     inlineDynamicImports: true,
+<<<<<<< HEAD
     sourcemap: true, // Ensure source maps are generated
   },
   onwarn(warning, warn) {
@@ -48,6 +53,10 @@ export default {
   },
   plugins: [
     progress(),
+=======
+  },
+  plugins: [
+>>>>>>> ebe89c824 (Avoid error with some rollup)
     svgr(),
     image(),
     nodeResolve({
@@ -66,7 +75,11 @@ export default {
           ? JSON.stringify("development")
           : JSON.stringify("production"),
       preventAssignment: true,
+<<<<<<< HEAD
       "process.env.REACT_APP_HTMLNAME": '"manager.new.html"',
+=======
+      "process.env.REACT_APP_HTMLNAME": '"newmanager.html"',
+>>>>>>> ebe89c824 (Avoid error with some rollup)
     }),
     typescript({
       tsconfig: "./tsconfig.build.json",
@@ -89,12 +102,17 @@ export default {
     }),
     html({
       fileName: "index.html",
+<<<<<<< HEAD
       title: "Lemonldap react Manager built with rollup",
+=======
+      title: "React app built with rollup",
+>>>>>>> ebe89c824 (Avoid error with some rollup)
       template: ({ attributes, bundle, files, publicPath, title }) => {
         let scripts = "";
         files.js.forEach((bundle) => {
           scripts += `<script src="${bundle.fileName}"></script>`;
         });
+<<<<<<< HEAD
 
         const makeAttrs = (attrs = {}) =>
           Object.entries(attrs)
@@ -110,10 +128,25 @@ export default {
   <body>
     <div id="root" />
     ${scripts}
+=======
+        return `<!DOCTYPE html>
+<html ${JSON.stringify(attributes)}>
+  <head>
+    <title>${title}</title>
+  </head>
+  <body>
+   <div id="root" />
+   ${scripts}
+>>>>>>> ebe89c824 (Avoid error with some rollup)
   </body>
 </html>`;
       },
     }),
+<<<<<<< HEAD
     terser(),
   ],
+=======
+    // terser(),
+  ]
+>>>>>>> ebe89c824 (Avoid error with some rollup)
 };
