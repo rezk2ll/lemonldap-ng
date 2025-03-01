@@ -267,7 +267,8 @@ sub eventLogout {
         }
     }
     else {
-        $self->logger->warn('Logout event without id');
+        $self->logger->debug('Logout event without id');
+        $self->_unauthLogout($req);
     }
 }
 
