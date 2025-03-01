@@ -170,6 +170,15 @@ sub init {
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
 
+    # Register logout event (unlog event is only a local unlog: clean cache)
+    &Lemonldap::NG::Handler::Main::MsgActions::addMsgAction(
+        'logout',
+        sub {
+            my ( $class, $id, $req ) = @_;
+            return $self->eventLogout( $req, $id );
+        }
+    );
+
     # Handler::PSGI::Try initialization
     unless ( $self->SUPER::init( $self->localConfig ) ) {
         $self->logger->error( 'Initialization failed: ' . $self->error );

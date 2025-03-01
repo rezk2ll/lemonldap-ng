@@ -575,6 +575,7 @@ t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.t
 t/01-CustomMenu.pm
+t/01-disabledPlugins.t
 t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
@@ -602,6 +603,7 @@ t/04-language-selection.t
 t/05-Hashed-Session.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
+t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
