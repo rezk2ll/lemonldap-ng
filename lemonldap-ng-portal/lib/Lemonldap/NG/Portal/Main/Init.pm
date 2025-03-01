@@ -727,7 +727,7 @@ sub buildRule {
     my $overLoadedRule = $compiledRule;
     if ( $self->conf->{logParams} ) {
         $overLoadedRule = sub {
-            $self->_dump(@_);
+            $self->_dump($_[0]);
             return $compiledRule->(@_);
         };
     }

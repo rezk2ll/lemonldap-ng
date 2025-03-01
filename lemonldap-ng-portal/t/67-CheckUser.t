@@ -11,7 +11,7 @@ my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logParams           => 1,                 # Require logLevel = debug
-            logLevel            => 'error',
+            logLevel            => 'debug',
             authentication      => 'Demo',
             userDB              => 'Same',
             loginHistoryEnabled => 0,
