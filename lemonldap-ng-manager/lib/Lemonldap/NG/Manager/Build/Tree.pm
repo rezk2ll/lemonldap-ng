@@ -1514,6 +1514,7 @@ sub tree {
                         'oidcServiceMetaDataJWKSURI',
                         'oidcServiceMetaDataRegistrationURI',
                         'oidcServiceMetaDataIntrospectionURI',
+                        'oidcServiceMetaDataRevokeURI',
                         'oidcServiceMetaDataEndSessionURI',
                         'oidcServiceMetaDataCheckSessionURI',
                         'oidcServiceMetaDataFrontChannelURI',

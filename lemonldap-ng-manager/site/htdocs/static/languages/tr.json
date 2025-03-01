@@ -835,6 +835,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"Anahtarlar",
 "oidcServiceMetaDataRegistrationURI":"Kayıt",
+"oidcServiceMetaDataRevokeURI":"Token revocation",
 "oidcServiceMetaDataSecurity":"Güvenlik",
 "oidcServiceMetaDataSessions":"Oturumlar",
 "oidcServiceMetaDataSigKeys":"Signature keys",

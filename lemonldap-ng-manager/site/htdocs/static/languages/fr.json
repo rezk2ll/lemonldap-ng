@@ -835,6 +835,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"Clefs",
 "oidcServiceMetaDataRegistrationURI":"Enregistrement",
+"oidcServiceMetaDataRevokeURI":"Révocation des tokens",
 "oidcServiceMetaDataSecurity":"Sécurité",
 "oidcServiceMetaDataSessions":"Sessions",
 "oidcServiceMetaDataSigKeys":"Clefs de signature",

@@ -20,6 +20,7 @@ sub metadataDoc {
     my $checksession_uri          = $conf->{oidcServiceMetaDataCheckSessionURI};
     my $disallowNoneAlg           = $conf->{oidcServiceMetaDataDisallowNoneAlg};
     my $introspection_uri = $conf->{oidcServiceMetaDataIntrospectionURI};
+    my $revoke_uri        = $conf->{oidcServiceMetaDataRevokeURI};
 
     $path ||= $self->path . '/';
     $path = "/" . $path unless ( $issuer =~ /\/$/ );
@@ -109,6 +110,7 @@ sub metadataDoc {
 
         #check_session_iframe   => $baseUrl . $checksession_uri,
         introspection_endpoint => $baseUrl . $introspection_uri,
+        revocation_endpoint    => $baseUrl . $revoke_uri,
 
         # Scopes
         scopes_supported         => [qw/openid profile email address phone/],

@@ -253,6 +253,7 @@ sub defaultValues {
         'oidcServiceMetaDataIntrospectionURI' => 'introspect',
         'oidcServiceMetaDataJWKSURI'          => 'jwks',
         'oidcServiceMetaDataRegistrationURI'  => 'register',
+        'oidcServiceMetaDataRevokeURI'        => 'revoke',
         'oidcServiceMetaDataTokenURI'         => 'token',
         'oidcServiceMetaDataUserInfoURI'      => 'userinfo',
         'oidcServiceNewKeyTypeSig'            => 'RSA',

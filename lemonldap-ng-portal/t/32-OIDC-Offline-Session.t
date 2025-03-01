@@ -191,6 +191,22 @@ sub runTest {
         ( grep { $_ eq "!weird:scope.name~" } ( split /\s+/, $json->{scope} ) ),
         "Scope contains weird scope name"
     );
+
+    $query = "token=$refresh_token&token_hint=refresh_token";
+    ok(
+        $op->_post(
+            '/oauth2/revoke',
+            IO::String->new($query),
+            length => length($query),
+            query  => 'logout=1',
+            custom => { HTTP_AUTHORIZATION => "Basic cnBpZDpycGlk" }
+        ),
+        'Refresh_token logout'
+    );
+    Time::Fake->offset('+6s');
+    $json = expectReject( refreshGrant( $op, 'rpid', $refresh_token ),
+        400, "invalid_request" );
+    Time::Fake->reset;
 }
 
 sub runTestRemoveUser {

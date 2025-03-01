@@ -835,6 +835,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"מפתחות",
 "oidcServiceMetaDataRegistrationURI":"רישום",
+"oidcServiceMetaDataRevokeURI":"Token revocation",
 "oidcServiceMetaDataSecurity":"אבטחה",
 "oidcServiceMetaDataSessions":"הפעלות",
 "oidcServiceMetaDataSigKeys":"Signature keys",
