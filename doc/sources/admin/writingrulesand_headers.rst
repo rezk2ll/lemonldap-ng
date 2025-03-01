@@ -44,7 +44,7 @@ See also :doc:`extended functions<extendedfunctions>`.
 
        $env->{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
 
-    %env and template varaibles can dump by setting ``log_params = 1``
+    %env and template variables can be dumped by setting ``logParams = 1``
     in ``lemonldap-ng.ini`` file.
 
 .. _rules:

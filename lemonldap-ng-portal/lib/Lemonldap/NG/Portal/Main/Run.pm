@@ -1062,7 +1062,7 @@ sub getTrOver {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    if ( $self->conf->{log_params} ) {
+    if ( $self->conf->{logParams} ) {
         $self->_dump($req);
         $self->_dump( \%args );
     }

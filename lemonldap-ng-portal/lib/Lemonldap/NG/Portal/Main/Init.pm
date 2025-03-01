@@ -725,7 +725,7 @@ sub buildRule {
 
     # Avoid deep recursion
     my $overLoadedRule = $compiledRule;
-    if ($self->conf->{log_params}) {
+    if ( $self->conf->{logParams} ) {
         $overLoadedRule = sub {
             $self->_dump(@_);
             return $compiledRule->(@_);
