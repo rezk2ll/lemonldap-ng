@@ -2,12 +2,12 @@
   'use strict';
 
   // Timer for globalLogout page
-  var go, i, timer;
+  var go, i, _timer;
   i = 30;
-  go = function () {
+  go = function go() {
     return $("#globallogout").submit();
   };
-  timer = function () {
+  _timer = function timer() {
     var h;
     h = $('#timer').html();
     if (i > 0) {
@@ -15,7 +15,7 @@
     }
     h = h.replace(/\d+/, i);
     $('#timer').html(h);
-    return window.setTimeout(timer, 1000);
+    return window.setTimeout(_timer, 1000);
   };
   $(document).ready(function () {
     $(".data-epoch").each(function () {
@@ -24,7 +24,7 @@
       return $(this).text(myDate.toLocaleString());
     });
     window.setTimeout(go, 30000);
-    return window.setTimeout(timer, 1000);
+    return window.setTimeout(_timer, 1000);
   });
 
 })();

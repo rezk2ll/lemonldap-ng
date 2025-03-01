@@ -5,18 +5,18 @@
   LemonLDAP::NG TOTP registration script
   */
   var displayError, getKey, setMsg, token, verify;
-  setMsg = function (msg, level) {
+  setMsg = function setMsg(msg, level) {
     $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
-    $('#color').addClass(`message-${level}`);
+    $('#color').addClass("message-".concat(level));
     if (level === 'positive') {
       level = 'success';
     }
-    $('#color').addClass(`alert-${level}`);
+    $('#color').addClass("alert-".concat(level));
     return $('#msg').attr('role', level === 'danger' ? 'alert' : 'status');
   };
-  displayError = function (j, status, err) {
+  displayError = function displayError(j, status, err) {
     var res;
     console.log('Error', err);
     res = JSON.parse(j.responseText);
@@ -27,18 +27,18 @@
     }
   };
   token = '';
-  getKey = function () {
+  getKey = function getKey() {
     setMsg('yourTotpKey', 'warning');
     return $.ajax({
       type: "POST",
-      url: `${portal}2fregisters/totp/getkey`,
+      url: "".concat(scriptname, "2fregisters/totp/getkey"),
       dataType: 'json',
       headers: {
         "X-CSRF-Check": "1"
       },
       error: displayError,
       // Display key and QR code
-      success: function (data) {
+      success: function success(data) {
         var s, secret;
         if (data.error) {
           return setMsg(data.error, 'warning');
@@ -48,12 +48,12 @@
         }
         // Generate OTP url
         $("#divToHide").show();
-        s = `otpauth://totp/${escape(data.portal)}:${escape(data.user)}?secret=${data.secret}&issuer=${escape(data.portal)}`;
+        s = "otpauth://totp/".concat(escape(data.portal), ":").concat(escape(data.user), "?secret=").concat(data.secret, "&issuer=").concat(escape(data.portal));
         if (data.digits !== 6) {
-          s += `&digits=${data.digits}`;
+          s += "&digits=".concat(data.digits);
         }
         if (data.interval !== 30) {
-          s += `&period=${data.interval}`;
+          s += "&period=".concat(data.interval);
         }
         // Generate QR code
         new QRious({
@@ -77,7 +77,7 @@
       }
     });
   };
-  verify = function () {
+  verify = function verify() {
     var val;
     val = $('#code').val();
     if (!val) {
@@ -86,7 +86,7 @@
     } else {
       return $.ajax({
         type: "POST",
-        url: `${portal}2fregisters/totp/verify`,
+        url: "".concat(scriptname, "2fregisters/totp/verify"),
         dataType: 'json',
         data: {
           token: token,
@@ -97,7 +97,7 @@
           "X-CSRF-Check": "1"
         },
         error: displayError,
-        success: function (data) {
+        success: function success(data) {
           var e;
           if (data.error) {
             if (data.error.match(/bad(Code|Name)/)) {

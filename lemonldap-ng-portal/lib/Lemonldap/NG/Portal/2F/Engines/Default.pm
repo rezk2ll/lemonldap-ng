@@ -482,6 +482,7 @@ sub run {
         $req,
         '2fchoice',
         params => {
+            TARGET        => $self->p->relativeUrl( $req, '2fchoice' ),
             CHECKLOGINS   => $checkLogins,
             STAYCONNECTED => $stayconnected,
             TOKEN         => $token,
@@ -665,8 +666,9 @@ sub _displayRegister {
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
-                CODE  => $m->{m}->prefix,
-                URL   => '/2fregisters/' . $m->{m}->prefix,
+                CODE => $m->{m}->prefix,
+                URL  =>
+                  $self->p->relativeUrl( $req, '2fregisters', $m->{m}->prefix ),
                 LOGO  => $m->{m}->logo,
                 LABEL => $m->{m}->label
               };
@@ -1087,7 +1089,7 @@ sub searchForAuthorized2Fmodules {
     my @am;
     foreach ( @{ $self->sfModules } ) {
         my $authModuleName = $_->{m}->prefix;
-        $self->logger->debug('Looking for ' . $authModuleName . ' 2f');
+        $self->logger->debug( 'Looking for ' . $authModuleName . ' 2f' );
 
         # Adding targetAuthnLevel from req to session;
         my $modifiedSession = {%$session};
@@ -1095,7 +1097,8 @@ sub searchForAuthorized2Fmodules {
           if $req->{pdata}->{targetAuthnLevel};
 
         if ( $_->{r}->( $req, $modifiedSession ) ) {
-            $self->logger->debug(' -> ' . $authModuleName . ' 2f is available');
+            $self->logger->debug(
+                ' -> ' . $authModuleName . ' 2f is available' );
             push @am, $_->{m};
         }
     }

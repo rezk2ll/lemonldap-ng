@@ -7,10 +7,10 @@
     e = jQuery.Event("kerberosAttempt");
     $(document).trigger(e);
     if (!e.isDefaultPrevented()) {
-      return $.ajax(`${portal}authkrb`, {
+      return $.ajax("".concat(portal, "authkrb"), {
         dataType: 'json',
         // Get auth token from success response and post it
-        success: function (data) {
+        success: function success(data) {
           e = jQuery.Event("kerberosSuccess");
           $(document).trigger(e, [data]);
           if (!e.isDefaultPrevented()) {
@@ -22,9 +22,9 @@
         },
         // Case else, will display PE_BADCREDENTIALS or fallback to next auth
         // backend
-        error: function (xhr, status, error) {
+        error: function error(xhr, status, _error) {
           e = jQuery.Event("kerberosFailure");
-          $(document).trigger(e, [xhr, status, error]);
+          $(document).trigger(e, [xhr, status, _error]);
           if (!e.isDefaultPrevented()) {
             return $('#lform').submit();
           }

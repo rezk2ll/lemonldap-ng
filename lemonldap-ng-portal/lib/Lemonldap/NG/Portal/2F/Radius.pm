@@ -78,10 +78,11 @@ sub run {
         params => {
             TOKEN  => $token,
             PREFIX => $self->prefix,
-            TARGET => '/'
-              . $self->prefix
-              . '2fcheck?skin='
-              . $self->p->getSkin($req),
+            TARGET => $self->p->relativeUrl(
+                $req,
+                $self->prefix . '2fcheck',
+                { skin => $self->p->getSkin($req) }
+            ),
             LEGEND => 'enterRadius2fCode',
             $self->get2fTplParams($req),
         }

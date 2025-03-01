@@ -2,7 +2,7 @@
   'use strict';
 
   var isAlphaNumeric;
-  isAlphaNumeric = function (chr) {
+  isAlphaNumeric = function isAlphaNumeric(chr) {
     var code;
     code = chr.charCodeAt(0);
     if (code > 47 && code < 58 || code > 64 && code < 91 || code > 96 && code < 123) {
@@ -15,7 +15,7 @@
     password = context.password;
     context.evType;
     setResult = context.setResult;
-    report = function (result, id) {
+    report = function report(result, id) {
       if (result) {
         return setResult(id, "good");
       } else {

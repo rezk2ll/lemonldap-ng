@@ -96,6 +96,8 @@ sub run {
         $req,
         'globallogout',
         params => {
+            FORM_ACTION =>
+              $self->p->relativeUrl( $req, 'globallogout', { all => 1 } ),
             SESSIONS  => $sessions,
             TOKEN     => $token,
             LOGIN     => $user,
