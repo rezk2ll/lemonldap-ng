@@ -253,6 +253,7 @@ sub eventLogout {
     my ( $self, $req, $msg ) = @_;
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     $self->logger->debug("Receive a logout event");
+    $self->processHook( $req, 'eventLogout', $msg );
     if ( $msg->{id} ) {
         $self->logger->debug(" -> logout asked for $msg->{id}");
         if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
