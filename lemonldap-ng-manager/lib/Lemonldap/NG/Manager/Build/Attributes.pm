@@ -2789,6 +2789,12 @@ sub attributes {
             documentation => 'REST authentication level',
         },
 
+        # OIDC revoke token Plugin
+        restOidcRevokeSecret => {
+            type          => 'text',
+            documentation => 'REST OIDC token revocation secret',
+        },
+
         # SOAP server
         soapSessionServer => {
             default       => 0,

@@ -969,6 +969,10 @@ sub tree {
                                 'disabledPlugins'
                             ]
                         },
+                        {
+                            title => 'restOidcRevoke',
+                            nodes => [ 'restOidcRevokeSecret' ]
+                        },
                     ]
                 },
                 {

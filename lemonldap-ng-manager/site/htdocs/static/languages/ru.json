@@ -1062,6 +1062,8 @@
 "restConfigServer":"Сервер конфигурации",
 "restExportSecretKeys":"Экспортировать секретные атрибуты",
 "restFindUserDBUrl":"URL учетных записей пользователей",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"Параметры REST",
 "restPasswordServer":"Сервер сброса пароля",
 "restPwdConfirmUrl":"URL подтверждения пароля",

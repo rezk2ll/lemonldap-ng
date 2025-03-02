@@ -2457,7 +2457,7 @@ sub _revokeToken {
         $self->logger->debug("token found");
         if ( my ( $_rp, $_uid ) = $checkRight->( $oidcSession, $rp ) ) {
             my $bck =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutType};
+              $self->rpOptions->{$_rp}->{oidcRPMetaDataOptionsLogoutType};
             if ( $tokenHint eq 'refresh_token' and $bck and $bck eq 'back' ) {
                 $self->_backChannelLogout( $req, $_rp, $oidcSession->data );
             }

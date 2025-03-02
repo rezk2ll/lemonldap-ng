@@ -1062,6 +1062,8 @@
 "restConfigServer":"Configuration server",
 "restExportSecretKeys":"Export secret attributes",
 "restFindUserDBUrl":"User accounts URL",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"معايير ريست",
 "restPasswordServer":"Password reset server",
 "restPwdConfirmUrl":"عنوان اليو آر إل لتأكيد كلمة المرور",

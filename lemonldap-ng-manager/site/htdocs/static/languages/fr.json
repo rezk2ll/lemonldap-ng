@@ -1062,6 +1062,8 @@
 "restConfigServer":"Serveur de configurations",
 "restExportSecretKeys":"Exporter les attributs secrets",
 "restFindUserDBUrl":"URL des comptes utilisateurs",
+"restOidcRevoke":"Serveur de révocation des tokens OIDC",
+"restOidcRevokeSecret":"Secret",
 "restParams":"Paramètres REST",
 "restPasswordServer":"Serveur de réinitialisation de mdp",
 "restPwdConfirmUrl":"URL de confirmation de mot de passe",

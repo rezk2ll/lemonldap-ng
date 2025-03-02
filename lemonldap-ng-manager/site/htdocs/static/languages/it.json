@@ -1062,6 +1062,8 @@
 "restConfigServer":"Configuration server",
 "restExportSecretKeys":"Export secret attributes",
 "restFindUserDBUrl":"User accounts URL",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"Parametri REST",
 "restPasswordServer":"Password reset server",
 "restPwdConfirmUrl":"URL di conferma password",

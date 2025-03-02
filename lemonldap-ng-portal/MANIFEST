@@ -150,6 +150,7 @@ lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCRevokeServer.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm

@@ -4423,6 +4423,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'restFindUserDBUrl' => {
             'type' => 'url'
         },
+        'restOidcRevokeSecret' => {
+            'type' => 'text'
+        },
         'restPasswordServer' => {
             'default' => 0,
             'type'    => 'bool'

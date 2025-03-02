@@ -1062,6 +1062,8 @@
 "restConfigServer":"שרת הגדרות",
 "restExportSecretKeys":"ייצוא מאפייני סוד",
 "restFindUserDBUrl":"כתובת חשבונות משתמשים",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"משתני REST",
 "restPasswordServer":"שרת איפוס סיסמה",
 "restPwdConfirmUrl":"כתובת אימות סיסמה",

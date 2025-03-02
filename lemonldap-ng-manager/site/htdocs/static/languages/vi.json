@@ -1062,6 +1062,8 @@
 "restConfigServer":"máy chủ cấu hình",
 "restExportSecretKeys":"Xuất thuộc tính bí mật",
 "restFindUserDBUrl":"URL tài khoản người dùng",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"Tham số REST",
 "restPasswordServer":"Máy chủ đặt lại mật khẩu",
 "restPwdConfirmUrl":"URL xác nhận mật khẩu",

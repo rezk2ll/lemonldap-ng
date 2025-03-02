@@ -1062,6 +1062,8 @@
 "restConfigServer":"Yapılandırma sunucusu",
 "restExportSecretKeys":"Gizli nitelikleri dışa aktar",
 "restFindUserDBUrl":"Kullanıcı hesapları URL'si",
+"restOidcRevoke":"OIDC token revoke server",
+"restOidcRevokeSecret":"Secret",
 "restParams":"REST parametreleri",
 "restPasswordServer":"Parola sıfırlama sunucusu",
 "restPwdConfirmUrl":"Parola doğrulama bağlantısı",
