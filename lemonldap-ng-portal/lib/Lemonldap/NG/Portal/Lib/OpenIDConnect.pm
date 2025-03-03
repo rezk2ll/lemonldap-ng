@@ -429,6 +429,7 @@ sub buildAuthorizationCodeAuthnRequest {
     my $max_age       = $self->opOptions->{$op}->{oidcOPMetaDataOptionsMaxAge};
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
+    my $login_hint = $req->data->{suggestedLogin};
 
     my $authorize_request_oauth2_params = {
         response_type => $response_type,
@@ -437,6 +438,7 @@ sub buildAuthorizationCodeAuthnRequest {
         redirect_uri  => $redirect_uri,
         ( defined $state ? ( state => $state ) : () ),
         ( defined $nonce ? ( nonce => $nonce ) : () ),
+        ( defined $login_hint ? ( login_hint => $login_hint) : () ),
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
