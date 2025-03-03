@@ -1795,7 +1795,7 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid;
+    my $sid = $self->getSidFromSession($rp, $apacheSession->data);
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1822,6 +1822,7 @@ sub _handleAuthorizationCodeGrant {
                   $apacheSession->data->{ $self->conf->{whatToTrace} },
                 auth_time  => $apacheSession->data->{_lastAuthnUTime},
                 grant_type => "authorizationcode",
+                _oidc_sid  => $sid,
             },
             1,
         );
@@ -1835,9 +1836,6 @@ sub _handleAuthorizationCodeGrant {
         $refresh_token = $refreshTokenSession->id;
 
         $self->logger->debug("Generated offline refresh token: $refresh_token");
-
-        $sid = $self->getSidFromSession( $rp,
-            { _session_id => $refreshTokenSession->id } );
     }
 
     # For online access, if configured
@@ -1854,6 +1852,7 @@ sub _handleAuthorizationCodeGrant {
                   $apacheSession->data->{ $self->conf->{whatToTrace} },
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
+                _oidc_sid  => $sid,
             },
             0,
         );
@@ -1885,7 +1884,6 @@ sub _handleAuthorizationCodeGrant {
             ( $nonce   ? ( nonce   => $nonce )   : () ),
             ( $at_hash ? ( at_hash => $at_hash ) : () ),
         },
-        $sid,
     );
 
     unless ($id_token) {

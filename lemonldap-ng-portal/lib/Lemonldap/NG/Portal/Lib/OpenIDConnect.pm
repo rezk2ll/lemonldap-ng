@@ -2738,7 +2738,8 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return Digest::SHA::hmac_sha256_base64(
+    return return $sessionInfo->{_oidc_sid}
+      || Digest::SHA::hmac_sha256_base64(
         $sessionInfo->{_session_id} . ':' . $rp );
 }
 
