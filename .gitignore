@@ -2,6 +2,8 @@
 .transifexrc
 .vstags
 tags
+dev/conf
+dev/sessions
 doc/sources/admin/_build/
 doc/pages/documentation/
 e2e-tests/conf
