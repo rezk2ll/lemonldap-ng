@@ -1062,6 +1062,10 @@ sub getTrOver {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    if ( $self->conf->{logParams} ) {
+        $self->_dump($req);
+        $self->_dump( \%args );
+    }
 
     my $skin_template_dir = $self->getSkinTplDir( $self->getSkin($req) );
 

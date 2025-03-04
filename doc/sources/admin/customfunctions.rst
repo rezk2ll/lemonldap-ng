@@ -95,5 +95,5 @@ for example:
 
 ::
 
-   function1( $uid, $ENV{REMOTE_ADDR} )
+   function1( $uid, $env->{REMOTE_ADDR} )
 

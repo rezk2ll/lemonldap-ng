@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -473,12 +473,11 @@ sub reloadConf {
 
     # Set asset tag from version and optional salt
     my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
-    my $key = $self->conf->{key} // "";
-    my $digest         = substr(
+    my $key          = $self->conf->{key}          // "";
+    my $digest       = substr(
         MIME::Base64::encode_base64url(
             Digest::SHA::hmac_sha256(
-                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt,
-                $key
+                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt, $key
             )
         ),
         0, 8
@@ -714,20 +713,25 @@ sub displayError {
 # returns undef if the rule syntax was invalid
 sub buildRule {
     my ( $self, $rule, $ruleDesc ) = @_;
-    if ($ruleDesc) {
-        $ruleDesc = " $ruleDesc ";
-    }
-    else {
-        $ruleDesc = " ";
-    }
+    $ruleDesc ||= '';
     my $compiledRule =
       $self->HANDLER->buildSub( $self->HANDLER->substitute($rule) );
     unless ($compiledRule) {
         my $error =
           $self->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
-        $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
+        $self->logger->error("Bad $ruleDesc rule: $error");
+        return undef;
     }
-    return $compiledRule,;
+
+    # Avoid deep recursion
+    my $overLoadedRule = $compiledRule;
+    if ( $self->conf->{logParams} ) {
+        $overLoadedRule = sub {
+            $self->_dump($_[0]);
+            return $compiledRule->(@_);
+        };
+    }
+    return $overLoadedRule;
 }
 
 sub addPasswordPolicyDisplay {
