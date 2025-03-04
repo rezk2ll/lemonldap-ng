@@ -1860,12 +1860,12 @@ sub getEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $scheme );
 
     my $authorization = $req->authorization;
-    if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
+    if ( $authorization and $authorization =~ m#^Basic ([[:alnum:]+/=]+)#i ) {
         $scheme = 'client_secret_basic';
         $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
-              split( /:/, decode_base64($1) );
+              split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
 
