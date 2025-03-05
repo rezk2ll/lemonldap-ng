@@ -246,6 +246,8 @@ sub loadRPs {
 
 sub ssoMatch {
     my ( $self, $req ) = @_;
+    my $lh = $req->param('login_hint');
+    $req->data->{suggestedLogin} ||= $lh if $lh;
     return ( $req->uri =~ $self->ssoMatchUrl ? 1 : 0 );
 }
 

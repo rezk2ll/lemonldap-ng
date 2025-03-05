@@ -195,6 +195,7 @@ sub display {
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
             LIST              => $req->data->{list} || [],
+            LOGIN_HINT        => $req->data->{suggestedLogin},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -412,7 +413,7 @@ sub display {
     # 3 Authentication has been refused OR first access
     else {
         $skinfile = 'login';
-        my $login = $req->user;
+        my $login = $req->user || $req->data->{suggestedLogin};
         %templateParams = (
             $self->getErrorTplParams($req),
             AUTH_URL              => $req->{data}->{_url},

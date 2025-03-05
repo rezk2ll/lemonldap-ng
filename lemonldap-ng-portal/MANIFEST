@@ -575,6 +575,7 @@ t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.t
 t/01-CustomMenu.pm
+t/01-disabledPlugins.t
 t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
@@ -735,6 +736,7 @@ t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t
 t/32-OIDC-JWT-type-header.t
+t/32-OIDC-login_hint.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
