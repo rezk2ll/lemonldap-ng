@@ -328,6 +328,7 @@ sub unauthLogout {
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
+    $self->processHook( $req, 'unAuthLogout' );
     $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");

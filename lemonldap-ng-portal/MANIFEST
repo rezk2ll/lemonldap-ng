@@ -603,6 +603,7 @@ t/04-language-selection.t
 t/05-Hashed-Session.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
+t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t

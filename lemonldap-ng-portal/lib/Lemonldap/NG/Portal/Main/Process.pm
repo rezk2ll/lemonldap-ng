@@ -249,6 +249,30 @@ sub checkUnauthLogout {
     return PE_OK;
 }
 
+sub eventLogout {
+    my ( $self, $req, $msg ) = @_;
+    bless $req, 'Lemonldap::NG::Portal::Main::Request';
+    $self->logger->debug("Receive a logout event");
+    $self->processHook( $req, 'eventLogout', $msg );
+    if ( $msg->{id} ) {
+        $self->logger->debug(" -> logout asked for $msg->{id}");
+        if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
+            $req->id( $session->{_session_id} );
+            $req->pdata( {} );
+            $self->do( $req,
+                [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ],
+                1 );
+        }
+        else {
+            $self->_unauthLogout($req);
+        }
+    }
+    else {
+        $self->logger->debug('Logout event without id');
+        $self->_unauthLogout($req);
+    }
+}
+
 sub checkCancel {
     my ( $self, $req ) = @_;
     if ( $req->param('cancel') ) {
