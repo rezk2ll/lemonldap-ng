@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"Vekil sunucu servisleri",
 "casSrvMetaDataOptionsRenew":"Kimlik doğrulamayı yenile",
 "casSrvMetaDataOptionsResolutionRule":"Çözünürlük kuralı",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Sıra",
 "casSrvMetaDataOptionsTooltip":"Araç ipucu",
 "casSrvMetaDataOptionsUrl":"Sunucu URL'si",

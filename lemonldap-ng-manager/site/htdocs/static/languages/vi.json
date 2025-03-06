@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"Dịch vụ proxy",
 "casSrvMetaDataOptionsRenew":"Gia hạn chứng thực",
 "casSrvMetaDataOptionsResolutionRule":"Quy tắc phân giải ",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Order",
 "casSrvMetaDataOptionsTooltip":"Chú giải ",
 "casSrvMetaDataOptionsUrl":"URL máy chủ",

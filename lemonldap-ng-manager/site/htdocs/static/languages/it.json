@@ -179,6 +179,7 @@
 "casSrvMetaDataOptionsProxiedServices":"Servizi Proxied",
 "casSrvMetaDataOptionsRenew":"Rinnova l'autenticazione",
 "casSrvMetaDataOptionsResolutionRule":"Regola di risoluzione",
+"casSrvMetaDataOptionsSamlValidate":"Use SAML 1.1 validation",
 "casSrvMetaDataOptionsSortNumber":"Ordine",
 "casSrvMetaDataOptionsTooltip":"Tooltip",
 "casSrvMetaDataOptionsUrl":"URL del server",
