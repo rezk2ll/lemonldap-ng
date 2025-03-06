@@ -728,7 +728,6 @@ sub getServiceTicketFromSamlRequest {
         $xpc->registerNs( 'saml',  'urn:oasis:names:tc:SAML:1.0:assertion' );
         $xpc->registerNs( 'SOAP-ENV',
             'http://schemas.xmlsoap.org/soap/envelope/' );
-        use Test::More;
         $xpc->find('//samlp:AssertionArtifact/text()')->string_value();
 
     };
