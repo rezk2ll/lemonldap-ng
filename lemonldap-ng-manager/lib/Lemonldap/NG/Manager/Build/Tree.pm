@@ -178,6 +178,7 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
