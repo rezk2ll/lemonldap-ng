@@ -36,7 +36,7 @@ root.render(
     <StyledEngineProvider injectFirst>
       <React.StrictMode>
         <Provider store={store}>
-          <App htmlName={process.env.REACT_APP_HTMLNAME} />
+          <App htmlName={process.env.REACT_APP_HTMLNAME||""} />
         </Provider>
       </React.StrictMode>
     </StyledEngineProvider>

@@ -275,7 +275,7 @@ PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.j
 MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
 PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
 JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
-
+UIMANAGERDIR=ui/manager
 # Minified files
 JSMINFILES=$(JSSRCFILES:.js=.min.js)
 CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
@@ -296,7 +296,7 @@ CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 #  - packaging targets
 #  - developper corner
 
-all:	configure common handler manager portal documentation
+all:	configure common handler manager portal documentation rollup
 	@echo
 	@echo "Building succeed. Now run :"
 	@echo " - 'make test' to verify your installation"
@@ -532,6 +532,13 @@ portal:		portal_conf handler
 
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
+
+rollup: 
+	@set -ex; cd ui/manager/;\
+		npm i; \
+		rollup -c
+	cp $(UIMANAGERDIR)/dist/static/*.js  $(SRCMANAGERDIR)/site/htdocs/static;
+	cp $(UIMANAGERDIR)/dist/index.html	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
 
 # Test targets
 # ------------
@@ -1036,15 +1043,6 @@ install_manager_site:	install_conf_dir
 	@$(PERL) -i -pe 's#__MANAGERDOCDIR__#$(MANAGERRELATIVEDOCDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
-install_manager_ui: 
-	# UI install
-	@set -ex; cd ui/manager/;\
-		npm i; \
-		rollup -c;\
-		cp dist/static/*.js  ../../lemonldap-ng-manager/site/htdocs/static;
-	$(MAKE) start_web_server
-	cp ui/manager/dist/index.html e2e-tests/conf/manager/newmanager.html
-	sed -i 's/favicon/favicon\|newmanager\\\.html/g' e2e-tests/conf/manager-apache2.X.conf
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
@@ -1295,6 +1293,11 @@ clean:
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-portal/t/sessions/tmpSession*
+	@rm -rf $(UIMANAGERDIR)/node_modules
+	@rm -rf $(UIMANAGERDIR)/dist
+	@find . -wholename "$(UIMANAGERDIR)/src/*.css.json" -type f -delete
+	@rm -rf	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
+	@rm $(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
 	@echo "Cleaned"
 
 common_clean:

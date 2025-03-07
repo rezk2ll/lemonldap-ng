@@ -47,7 +47,7 @@ export default {
           ? JSON.stringify("development")
           : JSON.stringify("production"),
       preventAssignment: true,
-      "process.env.REACT_APP_HTMLNAME": '"newmanager.html"',
+      "process.env.REACT_APP_HTMLNAME": '"manager.new.html"',
     }),
     typescript({
       tsconfig: "./tsconfig.build.json",
