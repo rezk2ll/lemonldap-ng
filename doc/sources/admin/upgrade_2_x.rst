@@ -45,6 +45,14 @@ automatically refreshed. However, to improve user experience, you may want to
 increase the *General Parameters* » *Second factors* » *Global options* »
 *Login timeout* setting to increase the timeout.
 
+Client secrets as GET parameters are no longer allowed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When calling the OIDC ``/oauth2/token`` endpoint, we no longer allow the
+``client_secret`` parameter to be sent as an URL parameter. It has to be sent
+either in the body (*client_secret_post*), or as part of and ``Authentication``
+HTTP header (*client_secret_basic*).
+
 
 U2F is no more supported
 ~~~~~~~~~~~~~~~~~~~~~~~~
