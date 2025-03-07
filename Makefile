@@ -534,7 +534,7 @@ portal:		portal_conf handler
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
-rollup: 
+rollup:
 	@set -ex; cd ui/manager/;\
 		npm i; \
 		rollup -c
@@ -1044,15 +1044,6 @@ install_manager_site:	install_conf_dir
 	@$(PERL) -i -pe 's#__MANAGERDOCDIR__#$(MANAGERRELATIVEDOCDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
-install_manager_ui: 
-	# UI install
-	@set -ex; cd ui/manager/;\
-		npm i; \
-		rollup -c;\
-		cp dist/static/*.js  ../../lemonldap-ng-manager/site/htdocs/static;
-	$(MAKE) start_web_server
-	cp ui/manager/dist/index.html e2e-tests/conf/manager/newmanager.html
-	sed -i 's/favicon/favicon\|newmanager\\\.html/g' e2e-tests/conf/manager-apache2.X.conf
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
