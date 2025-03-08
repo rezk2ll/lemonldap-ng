@@ -1441,7 +1441,7 @@ sub getOpenIDConnectSession {
         if (
             time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            $self->logger->error("Session $id has expired");
+            $self->logger->notice("Session $id has expired");
             return undef;
         }
     }
@@ -1449,7 +1449,7 @@ sub getOpenIDConnectSession {
     # Make sure the token is still valid, we already compensated for
     # different TTLs when storing _utime
     if ( time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) ) {
-        $self->logger->error("Session $id has expired");
+        $self->logger->notice("Session $id has expired");
         return undef;
     }
 

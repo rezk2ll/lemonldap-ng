@@ -544,7 +544,7 @@ sub proxy {
     my $casProxyGrantingSession = $self->getCasSession($pgt);
 
     unless ($casProxyGrantingSession) {
-        $self->logger->error("Proxy granting ticket session $pgt not found");
+        $self->logger->warn("Proxy granting ticket session $pgt not found");
         $self->returnCasProxyError( $req, 'BAD_PGT', 'Ticket not found' );
     }
 
@@ -686,7 +686,7 @@ sub _validate_generic {
     my $casServiceSession = $self->getCasSession($ticket);
 
     unless ($casServiceSession) {
-        $self->logger->error("$urlType ticket session $ticket not found");
+        $self->logger->warn("$urlType ticket session $ticket not found");
         return $self->$failure(
             $req,
             code => 'INVALID_TICKET',
@@ -702,7 +702,7 @@ sub _validate_generic {
             time >
             ( $casServiceSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            $self->logger->error("$urlType ticket session $ticket has expired");
+            $self->logger->info("$urlType ticket session $ticket has expired");
             return $self->$failure(
                 $req,
                 code => 'INVALID_TICKET',
@@ -859,7 +859,7 @@ sub _validate_generic {
       $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
-        $self->userLogger->error( "Local session "
+        $self->userLogger->warn( "Local session "
               . $casServiceSession->data->{_cas_id}
               . " notfound" );
         return $self->$failure(
@@ -1048,7 +1048,7 @@ sub relayLogout {
 
     my $session = $self->getCasSession($relay);
     unless ($session) {
-        $self->logger->error("CAS session $relay not found");
+        $self->logger->warn("CAS session $relay not found");
         return $self->p->imgnok($req);
     }
 
