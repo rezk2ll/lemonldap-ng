@@ -1028,7 +1028,7 @@
 "rememberCookieName":"Cookie name",
 "rememberCookieTimeout":"cookie lifetime",
 "rememberDefaultChecked":"Check by default",
-"rememberTimer":"Timer before automatic authentication",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Cookie name",
 "remoteGlobalStorage":"Sessions module",
 "remoteGlobalStorageOptions":"Sessions module options",
