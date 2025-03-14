@@ -1,5 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
-import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
@@ -18,6 +18,8 @@ import { findElementByTitleOrValue } from "../utils/searchIntree";
 import { llngConfig } from "../utils/types";
 import "./Tree.css";
 import { TreeNodeType } from "./TreeNode";
+import HomeButton from "../components/HomeButton";
+import { t } from "i18next";
 
 export function ToggleConfTree(
   itemId: string,
@@ -101,30 +103,11 @@ export default function TreeRender({
   }, [selectedItem, tree, config]);
   if (tree) {
     return (
-      <div className="treePage">
-        <div className="tree" ref={ref}>
-          <Tree
-            disableDrag={true}
-            rowHeight={height / 25}
-            ref={treeRef}
-            onToggle={(itemId) => {
-              ToggleConfTree(itemId, treeRef, tree, config, setItems);
-            }}
-            height={height}
-            width={width}
-            onFocus={(node) => {
-              setSelectedItem(node);
-            }}
-            data={ITEMS}
-            openByDefault={false}
-          >
-            {Node}
-          </Tree>
-        </div>
-        <Divider orientation="vertical" flexItem />
-        <div style={{ width: "100%" }}>
-          <Paper style={{ backgroundColor: "lightgrey" }}>
-            <strong className="title3">{selectedItem?.data?.name}</strong>
+      <>
+        <div className="top">
+          <HomeButton />
+          <strong className="title">
+            {t("Tree")} / {selectedItem?.data?.name}{" "}
             {selectedItem?.data.help ? (
               <Link
                 target="blank"
@@ -134,29 +117,52 @@ export default function TreeRender({
                   selectedItem?.data.help
                 }
               >
-                <HelpCenterOutlinedIcon />
-                {/* {selectedItem?.data.help} */}
+                <HelpOutlineIcon fontSize="large" />
               </Link>
             ) : (
               <></>
             )}
-          </Paper>
-          <div className="nodeContent">
-            {/* <strong>Clicked Node</strong>
-            {`: ${selectedItem?.data?.id}, `}
-            <Typography variant="body2" color="textSecondary">
-              type: {selectedItem?.data.type}
-            </Typography> */}
-            {selectedItem?.data?.type && (
-              <table style={{ width: "100%" }}>
-                <tbody>
-                  <TreeNodeType node={selectedItem} config={config} />
-                </tbody>
-              </table>
-            )}
+          </strong>
+        </div>
+        <div className="treePage">
+          <div className="tree" ref={ref}>
+            <Tree
+              disableDrag={true}
+              rowHeight={height / 25}
+              ref={treeRef}
+              onToggle={(itemId) => {
+                ToggleConfTree(itemId, treeRef, tree, config, setItems);
+              }}
+              height={height}
+              width={width}
+              onFocus={(node) => {
+                setSelectedItem(node);
+              }}
+              data={ITEMS}
+              openByDefault={false}
+            >
+              {Node}
+            </Tree>
+          </div>
+          <Divider orientation="vertical" flexItem />
+          <div style={{ width: "100%" }}>
+            <div className="nodeContent">
+              {/* <strong>Clicked Node</strong>
+{`: ${selectedItem?.data?.id}, `}
+<Typography variant="body2" color="textSecondary">
+type: {selectedItem?.data.type}
+</Typography> */}
+              {selectedItem?.data?.type && (
+                <table style={{ width: "100%" }}>
+                  <tbody>
+                    <TreeNodeType node={selectedItem} config={config} />
+                  </tbody>
+                </table>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   } else {
     return (

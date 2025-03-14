@@ -246,6 +246,7 @@ MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-ma
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
+		$(SRCMANAGERDIR)/site/htdocs/static/nstruct.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/reverseTree.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
@@ -480,7 +481,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
 
 json:	$(MANAGERJSONDST) debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
-	$(MAKE) minify
+#	$(MAKE) minify
 
 debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/scripts/purgeLocalCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
@@ -1297,7 +1298,7 @@ clean:
 	@rm -rf $(UIMANAGERDIR)/dist
 	@find . -wholename "$(UIMANAGERDIR)/src/*.css.json" -type f -delete
 	@rm -rf	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
-	@rm $(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
+	@rm -rf $(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
 	@echo "Cleaned"
 
 common_clean:

@@ -160,7 +160,6 @@ export function Configuration({
             </Link>
           </Breadcrumbs>
           <TreeRender tree={tree ? tree : undefined} config={config} />
-
           <SaveButton />
         </div>
       );

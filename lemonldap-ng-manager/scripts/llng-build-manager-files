@@ -56,7 +56,7 @@ my $DEFAULT_LANGDIR          = '__MANAGERSTATICDIR__/languages';
 # Command line options
 my @plugins_dirs;
 my (
-    $struct_file,            $conftree_file,
+    $struct_file, $new_struct_file,           $conftree_file,
     $manager_constants_file, $manager_attributes_file,
     $default_values_file,    $conf_constants_file,
     $first_lmconf_file,      $reverse_tree_file,
@@ -68,6 +68,7 @@ my (
 GetOptions(
     'plugins-dir=s'                   => \@plugins_dirs,
     'struct-file=s'                   => \$struct_file,
+    'new-struct-file=s'               => \$new_struct_file,
     'conftree-file=s'                 => \$conftree_file,
     'manager-constants-file=s'        => \$manager_constants_file,
     'manager-attributes-file=s'       => \$manager_attributes_file,
@@ -101,6 +102,7 @@ sub verbose {
 
 # Set default paths from placeholders (can be overridden via options)
 $struct_file       //= "$DEFAULT_MANAGERSTATICDIR/struct.json";
+$new_struct_file   //= "$DEFAULT_MANAGERSTATICDIR/nstruct.json";
 $conftree_file     //= "$DEFAULT_MANAGERSTATICDIR/js/conftree.js";
 $reverse_tree_file //= "$DEFAULT_MANAGERSTATICDIR/reverseTree.json";
 $manager_constants_file //=
@@ -129,6 +131,7 @@ verbose "Configuration:\n"
   . "  plugins-dir:                   "
   . ( @plugins_dirs ? join( ', ', @plugins_dirs ) : '(none)' ) . "\n"
   . "  struct-file:                   $struct_file\n"
+  . "  nstruct-file:                  $new_struct_file\n"
   . "  conftree-file:                 $conftree_file\n"
   . "  manager-constants-file:        $manager_constants_file\n"
   . "  manager-attributes-file:       $manager_attributes_file\n"
@@ -383,7 +386,7 @@ if ( $conf_constants_file ne '/dev/null' && -r $conf_constants_file ) {
 # 5b. Redirect output files to /dev/null when their parent directory does not
 #     exist (component not installed locally, e.g. portal or handler absent)
 for my $ref (
-    \$struct_file,            \$conftree_file,
+    \$struct_file,   \$new_struct_file,         \$conftree_file,
     \$manager_constants_file, \$manager_attributes_file,
     \$default_values_file,    \$conf_constants_file,
     \$reverse_tree_file,      \$portal_constants_file,
@@ -400,6 +403,7 @@ for my $ref (
 verbose "Running Build.pm to generate files...\n";
 Lemonldap::NG::Manager::Build->run(
     structFile                 => $struct_file,
+    newStructFile => $new_struct_file,
     confTreeFile               => $conftree_file,
     managerConstantsFile       => $manager_constants_file,
     managerAttributesFile      => $manager_attributes_file,

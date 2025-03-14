@@ -9,6 +9,14 @@ module.exports = function (app) {
       logger: console,
       pathRewrite: { "^/": "/confs/" },
     })
+  );app.use(
+    "/static/nstruct.json",
+    createProxyMiddleware({
+      target: "http://manager.example.com:19876",
+      changeOrigin: true,
+      logger: console,
+      pathRewrite: { "^/": "/static/nstruct.json" },
+    })
   );
   app.use(
     "/manager.fcgi",

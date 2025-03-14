@@ -25,6 +25,7 @@ my %peOkValues = (
 );
 
 has structFile                 => ( isa => 'Str', is => 'ro', required => 1 );
+has newStructFile              => ( isa => 'Str', is => 'ro', required => 1 );
 has confTreeFile               => ( isa => 'Str', is => 'ro', required => 1 );
 has managerConstantsFile       => ( isa => 'Str', is => 'ro', required => 1 );
 has managerAttributesFile      => ( isa => 'Str', is => 'ro', required => 1 );
@@ -106,13 +107,16 @@ sub run {
     my $reverseScanResult =
       $self->reverseScan( Lemonldap::NG::Manager::Build::Tree::tree(),
         '', {}, $mainTree );
-
+    
+    my %cnodes;
+    
     # To build confTree.js, each special node is scanned from
     # Lemonldap::NG::Manager::Build::CTrees
     foreach my $node ( sort keys %$mainTree ) {
         @cnodesKeys = ();
         my $jsonTree = [];
         $self->scanTree( $mainTree->{$node}, $jsonTree, '__KEY__', '' );
+        $cnodes{$node} = $jsonTree;
         $jsonEnc->pretty(1);
         my $tmp = $jsonEnc->encode($jsonTree);
         $tmp =~ s!"__KEY__!tpl+"s/"+key+"/"+"!mg;
@@ -171,6 +175,22 @@ sub run {
     print F $tmp;
     close F;
     print STDERR "done\n";
+    printf STDERR $format, $self->newStructFile;
+    foreach my $node (@$jsonTree) {
+        if ( my $tmp = $node->{cnodes} ) {
+            my $name = $tmp;
+            $name =~ s/s$//;
+            $node->{cnodes} = $cnodes{$name} or die $tmp;
+        }
+    }
+    open F, ">", $self->newStructFile || die $!;
+    $tmp = $jsonEnc->encode($jsonTree);
+    $tmp =~ s/"(true|false)"/$1/sg;
+    $tmp =~ s/:\s*"(\d+)"\s*(["\}])/:$1$2/sg;
+    print F $tmp;
+    close F;
+    print STDERR "done\n";
+
     $tmp = undef;
 
     printf STDERR $format, $self->managerConstantsFile;
@@ -875,6 +895,7 @@ system.
 
   Lemonldap::NG::Manager::Build->run(
     structFile            => "site/htdocs/static/struct.json",
+    newStructFile         => "site/htdocs/static/nstruct.json",
     confTreeFile          => "site/htdocs/static/js/conftree.js",
     managerConstantsFile  => "lib/Lemonldap/NG/Common/Conf/ReConstants.pm",
     managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',

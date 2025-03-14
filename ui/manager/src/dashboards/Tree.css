@@ -2,6 +2,8 @@
   flex-grow: 1;
   text-align: left;
   width: 40%;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
 @media (max-width: 1000px) {
