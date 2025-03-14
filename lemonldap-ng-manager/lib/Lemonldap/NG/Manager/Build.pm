@@ -107,9 +107,9 @@ sub run {
     my $reverseScanResult =
       $self->reverseScan( Lemonldap::NG::Manager::Build::Tree::tree(),
         '', {}, $mainTree );
-    
+
     my %cnodes;
-    
+
     # To build confTree.js, each special node is scanned from
     # Lemonldap::NG::Manager::Build::CTrees
     foreach my $node ( sort keys %$mainTree ) {
