@@ -1754,10 +1754,12 @@ sub _handleAuthorizationCodeGrant {
     }
 
     # Check we have the same redirect_uri value
-    unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
+    unless ( my $uri =
+        $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
-        $self->userLogger->error( "Provided redirect_uri does not match "
-              . $codeSession->data->{redirect_uri} );
+        $self->userLogger->error( "Provided redirect_uri does not match: "
+              . $codeSession->data->{redirect_uri}
+              . " != $uri" );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
@@ -1797,7 +1799,7 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid = $self->getSidFromSession($rp, $apacheSession->data);
+    my $sid = $self->getSidFromSession( $rp, $apacheSession->data );
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1854,7 +1856,7 @@ sub _handleAuthorizationCodeGrant {
                   $apacheSession->data->{ $self->conf->{whatToTrace} },
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
-                _oidc_sid  => $sid,
+                _oidc_sid       => $sid,
             },
             0,
         );
@@ -2190,7 +2192,8 @@ sub userInfo {
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
 
-    $self->p->HANDLER->set_user( $req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
+    $self->p->HANDLER->set_user( $req,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
       if $setUser;
 
     if ( $self->rpOptions->{$rp}
