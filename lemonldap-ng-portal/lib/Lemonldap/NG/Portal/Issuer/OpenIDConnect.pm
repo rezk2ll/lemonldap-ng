@@ -1754,12 +1754,11 @@ sub _handleAuthorizationCodeGrant {
     }
 
     # Check we have the same redirect_uri value
-    unless ( my $uri =
-        $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
+    unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
         $self->userLogger->error( "Provided redirect_uri does not match: "
-              . $codeSession->data->{redirect_uri}
-              . " != $uri" );
+              . $codeSession->data->{redirect_uri} . ' != '
+              . $req->param("redirect_uri") );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
