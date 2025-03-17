@@ -561,6 +561,7 @@ sub _choice {
             user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
             reason       => "Token validation failed",
             portal_error => portalConsts->{$tokres},
+            logLevel     => 'warn',
         );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }

@@ -491,10 +491,11 @@ sub autoRedirect {
         if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
             $self->auditLog(
                 $req,
-                message => "Redirection to $req->{urldc} blocked",
-                code    => "UNAUTHORIZED_REDIRECT",
-                url     => $req->{urldc},
-                user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+                message  => "Redirection to $req->{urldc} blocked",
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $req->{urldc},
+                user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+                logLevel => 'warn',
             );
             delete $req->{urldc};
         }
@@ -793,9 +794,10 @@ sub _deleteSession {
             message => (
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
-            code => "LOGOUT",
-            user => $user,
-            auth => $mod,
+            code     => "LOGOUT",
+            user     => $user,
+            auth     => $mod,
+            logLevel => 'notice',
         );
     }
 
@@ -829,10 +831,11 @@ sub autoPost {
     if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
         $self->auditLog(
             $req,
-            message => "Redirection to $req->{urldc} blocked",
-            code    => "UNAUTHORIZED_REDIRECT",
-            url     => $req->{urldc},
-            user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+            message  => "Redirection to $req->{urldc} blocked",
+            code     => "UNAUTHORIZED_REDIRECT",
+            url      => $req->{urldc},
+            user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+            logLevel => 'warn',
         );
         return PE_BADURL;
     }

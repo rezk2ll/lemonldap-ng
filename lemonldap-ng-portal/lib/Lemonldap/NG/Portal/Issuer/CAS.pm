@@ -1115,6 +1115,7 @@ sub _failValidate1 {
         ( $app    ? ( app    => $app )    : () ),
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        logLevel     => 'warn',
     );
 
     return $self->returnCasValidateError();
@@ -1137,6 +1138,7 @@ sub _failValidate2 {
         cas_code     => $code,
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        logLevel     => 'warn',
     );
 
     return $self->returnCasServiceValidateError( $req, $code, $reason );
@@ -1159,6 +1161,7 @@ sub _failValidateSaml {
         cas_code     => $code,
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        logLevel     => 'warn',
     );
 
     return $self->returnSamlValidateError( $req, $code, $reason );
@@ -1178,6 +1181,7 @@ sub _failLogin {
         ( $app    ? ( app    => $app )    : () ),
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        logLevel     => 'warn',
     );
 
     return $res;
@@ -1192,9 +1196,10 @@ sub _failLoginRule {
         $req,
         code => "ISSUER_CAS_LOGIN_FAILED",
         ( $app ? ( app => $app ) : () ),
-        message => ("User $user is not authorized to access to $app"),
-        reason  => "User is not authorized by access rule",
-        user    => $user,
+        message  => ("User $user is not authorized to access to $app"),
+        reason   => "User is not authorized by access rule",
+        user     => $user,
+        logLevel => 'warn',
     );
 
     if ( $casAccessControlPolicy =~ /^(error)$/i ) {

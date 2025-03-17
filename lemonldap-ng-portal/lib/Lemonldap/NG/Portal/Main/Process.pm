@@ -173,9 +173,10 @@ sub controlUrl {
         if ( $tmp and ( $tmp !~ URIRE ) ) {
             $self->auditLog(
                 $req,
-                message => "Bad URL $tmp",
-                code    => "UNAUTHORIZED_REDIRECT",
-                url     => $tmp,
+                message  => "Bad URL $tmp",
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $tmp,
+                logLevel => 'warn',
             );
             delete $req->{urldc};
             return PE_BADURL;
@@ -215,8 +216,9 @@ sub controlUrl {
                         "URL contains an unprotected host (param: urldc"
                       . " | value: $tmp | alias: $vhost)"
                 ),
-                code => "UNAUTHORIZED_REDIRECT",
-                url  => $tmp,
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $tmp,
+                logLevel => 'warn',
             );
             delete $req->{urldc};
             return PE_UNPROTECTEDURL;

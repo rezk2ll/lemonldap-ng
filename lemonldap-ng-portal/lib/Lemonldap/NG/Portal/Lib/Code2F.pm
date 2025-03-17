@@ -115,6 +115,7 @@ sub _resend {
             reason       => "Missing token",
             portal_error => portalConsts->{PE_NOTOKEN},
             type         => $self->prefix,
+            logLevel     => 'warn',
         );
 
         eval { $self->setSecurity($req) };
@@ -134,6 +135,7 @@ sub _resend {
             reason       => "Token expired",
             portal_error => portalConsts->{PE_TOKENEXPIRED},
             type         => $self->prefix,
+            logLevel     => 'warn',
         );
         $self->setSecurity($req);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );

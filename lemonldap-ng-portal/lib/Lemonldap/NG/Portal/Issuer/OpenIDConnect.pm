@@ -1200,7 +1200,7 @@ sub _failAuthorize {
         ( $reason ? ( reason => $reason ) : () ),
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
-        logLevel     => 'notice',
+        logLevel     => 'warn',
     );
 
     return $res;
