@@ -2,9 +2,7 @@ import { llngConfig } from "../../utils/types";
 
 export function getMetadataConfig(num?: number) {
   try {
-    const response = fetch(`/confs/${num ? num : "latest"}`, {
-      credentials: "include",
-    });
+    const response = fetch(`/confs/${num ? num : "latest"}`);
     return response;
   } catch (error) {
     // console.error(error)
