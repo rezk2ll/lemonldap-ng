@@ -249,3 +249,20 @@ You can check the result with:
 
     make documentation
     firefox doc/pages/documentation/current/start.html
+
+Javascript
+~~~~~~~~~~
+
+Javascript code is produced by `rollupjs<https://rollupjs.org/>_`.
+
+Source script must be created in ``lemonldap-ng-portal/site/js-src``, then run this command:
+
+::
+
+    make js && make json
+
+On Debian, you can install rollupjs and the needed dependencies with:
+
+::
+
+    apt install rollup node-rollup-plugin-babel
