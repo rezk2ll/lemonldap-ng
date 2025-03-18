@@ -141,17 +141,19 @@ Go to `Renater registration portal <https://federation.renater.fr/registry>`__ a
 Create the SP template
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Declare a template Service Provider in LL::NG configuration that will hold the default settings for all SP of the Renater Federation :
+Declare a template Service Provider in LL::NG configuration that will hold the default settings for all SP of the Renater Federation:
 
 * Keep metadata empty
 * Associate it by setting Options > Federation > Entity identifier to https://federation.renater.fr/
+* Make required attributes optional in Options > Federation > Required attributes
 
 With configuration CLI:
 
 .. code-block:: shell
 
    /usr/*/lemonldap-ng/bin/lemonldap-ng-cli addKey \
-     samlSPMetaDataOptions/idp-renater samlSPMetaDataOptionsFederationEntityID 'https://federation.renater.fr/'
+     samlSPMetaDataOptions/sp-renater samlSPMetaDataOptionsFederationEntityID 'https://federation.renater.fr/' \
+     samlSPMetaDataOptions/sp-renater samlSPMetaDataOptionsFederationRequiredAttributes'optional'
 
 .. tip::
 
