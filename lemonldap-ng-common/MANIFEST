@@ -47,6 +47,7 @@ lib/Lemonldap/NG/Common/Logger/_Duplicate.pm
 lib/Lemonldap/NG/Common/Logger/Apache2.pm
 lib/Lemonldap/NG/Common/Logger/Dispatch.pm
 lib/Lemonldap/NG/Common/Logger/Log4perl.pm
+lib/Lemonldap/NG/Common/Logger/Loki.pm
 lib/Lemonldap/NG/Common/Logger/MessageBroker.pm
 lib/Lemonldap/NG/Common/Logger/Null.pm
 lib/Lemonldap/NG/Common/Logger/Sentry.pm
@@ -106,6 +107,7 @@ t/05-Common-Conf-LDAP.t
 t/10-PSGI-Request.t
 t/10-PSGI.t
 t/11-Logger.t
+t/11-LokiLogger.t
 t/11-TestLogger.t
 t/30-Common-Safelib.t
 t/35-Common-Crypto.t
