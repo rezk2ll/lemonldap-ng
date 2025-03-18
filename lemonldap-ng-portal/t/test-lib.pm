@@ -65,7 +65,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
-use Carp                        qw/shortmess/;
+use Carp qw/shortmess/;
 
 #use 5.10.0;
 
@@ -263,8 +263,7 @@ sub expectRedirection {
         return @match;
     }
     else {
-        ok( getRedirection($res) eq $location, " Location is $location" )
-          or explain( $res->[1], "Location => $location" );
+        is( getRedirection($res), $location, " Location is $location" );
         count(1);
     }
 }
@@ -394,7 +393,7 @@ m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
     }
 }
 
-=head4 expectAuthenticatedAs($user)
+=head4 expectAuthenticatedAs($res, $user)
 
 Verify that result has a C<Lm-Remote-User> header and value is $user
 
@@ -742,17 +741,17 @@ sub register {
     # Clear previous global handler data
     @Lemonldap::NG::Handler::Main::_onReload = ();
     $Lemonldap::NG::Handler::Main::_tshv     = {
-        tsv             => {},
-        cfgNum          => 0,
-        cfgDate         => 0,
-        lastCheck       => 0,
-        checkTime       => 600,
-        confAcc         => {},
-        logger          => {},
-        userLogger      => {},
-        lmConf          => {},
-        localConfig     => {},
-        _auditLogger    => {},
+        tsv          => {},
+        cfgNum       => 0,
+        cfgDate      => 0,
+        lastCheck    => 0,
+        checkTime    => 600,
+        confAcc      => {},
+        logger       => {},
+        userLogger   => {},
+        lmConf       => {},
+        localConfig  => {},
+        _auditLogger => {},
     };
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 
@@ -1204,6 +1203,11 @@ sub _post {
     # If $body is a HASHREF, serialize as string
     if ( ref($body) eq "HASH" ) {
         $body = main::buildForm($body);
+    }
+
+    # Automatically serialize query if given as HASHREF
+    if ( ref( $args{query} ) eq "HASH" ) {
+        $args{query} = main::buildForm( $args{query} );
     }
 
     # If $body is a string, wrap in IO::Handle

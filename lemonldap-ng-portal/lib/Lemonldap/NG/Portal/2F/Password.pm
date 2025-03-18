@@ -68,7 +68,8 @@ sub run {
         $req,
         'password2fcheck',
         params => {
-            TOKEN => $token,
+            TARGET => $self->p->relativeUrl( $req, 'password2fcheck' ),
+            TOKEN  => $token,
             $self->get2fTplParams($req),
         }
     );

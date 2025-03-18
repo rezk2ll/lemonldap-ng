@@ -72,8 +72,7 @@ Custom CSS file
 ~~~~~~~~~~~~~~~
 
 You can define a custom CSS file, for example ``custom.css``, which will
-be loaded after default CSS files. This file must be created in the
-static repository
+be loaded after default CSS files. This file must be created in the static repository
 (By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom CSS parameter:
@@ -92,8 +91,7 @@ Custom JS file
 ~~~~~~~~~~~~~~
 
 Similarly, you can define a custom JS file, for example ``custom.js``, which will
-be loaded after default JS files. This file must be created in the
-static repository
+be loaded after default JS files. This file must be created in the static repository
 (By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom JS parameter:
@@ -101,6 +99,15 @@ Then set this value in Custom JS parameter:
 
 Check out the :doc:`jqueryevents` page for available integrations
 
+Some javascript functions are exported by LemonLDAP:
+
+* ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
+
+.. versionadded:: 2.21.0
+
+    * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
+    * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
+    * ``ssl_start``: start SSL authentication. This only works the login page
 
 .. _portalcustom-skin-customization:
 
@@ -245,7 +252,7 @@ To change CSS, two options:
 
 ::
 
-   <link href="<TMPL_VAR NAME="STATIC_PREFIX">myskin/css/myskin.css" rel="stylesheet" type="text/css" />
+   <link href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/myskin.css" rel="stylesheet" type="text/css" />
 
 To add custom JS, create a new file in myskin/js/custom.js and load it in customhead.tpl ::
 

@@ -58,7 +58,8 @@ sub delSession {
     );
     $session->remove;
 
-    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    Lemonldap::NG::Handler::Main->publishEvent( $req,
+        { action => 'unlog', id => $id } );
     return $session->error
       ? $self->sendError( $req, $session->error, 200 )
       : $self->sendJSONresponse( $req, { result => 1 } );

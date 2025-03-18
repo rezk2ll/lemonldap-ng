@@ -36,11 +36,14 @@ register = function() {
   } else {
     return $.ajax({
       type: 'POST',
-      url: `${portal}2fregisters/password/verify`,
+      url: `${scriptname}2fregisters/password/verify`,
       dataType: 'json',
       data: {
         password: password,
         passwordverify: passwordverify
+      },
+      headers: {
+        "X-CSRF-Check": "1"
       },
       error: displayError,
       success: function(data) {

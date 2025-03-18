@@ -18,6 +18,7 @@ sub metadataDoc {
     my $registration_uri          = $conf->{oidcServiceMetaDataRegistrationURI};
     my $endsession_uri            = $conf->{oidcServiceMetaDataEndSessionURI};
     my $checksession_uri          = $conf->{oidcServiceMetaDataCheckSessionURI};
+    my $disallowNoneAlg           = $conf->{oidcServiceMetaDataDisallowNoneAlg};
     my $introspection_uri = $conf->{oidcServiceMetaDataIntrospectionURI};
 
     $path ||= $self->path . '/';
@@ -81,7 +82,8 @@ sub metadataDoc {
         push( @$grant_types, "hybrid" );
     }
 
-    my @supportedSigAlg = qw/none HS256 HS384 HS512/;
+    my @supportedSigAlg = qw/HS256 HS384 HS512/;
+    unshift @supportedSigAlg, 'none' unless $disallowNoneAlg;
     if ( $conf->{oidcServiceKeyTypeSig} eq 'EC' ) {
         push @supportedSigAlg, qw/ES256 ES256K ES384 ES512 EdDSA/;
     }

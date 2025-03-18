@@ -3059,9 +3059,18 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS application service',
         },
+        casSrvMetaDataOptionsSamlValidate => {
+            type          => 'bool',
+            documentation => 'use SAML validateion',
+        },
         casAppMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation => 'CAS User attribute',
+        },
+        casAppMetaDataOptionsAllowProxy => {
+            type          => 'bool',
+            documentation => 'Allow CAS proxy',
+            default => 1,
         },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
@@ -3236,6 +3245,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
+            keyTest => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {
@@ -4687,6 +4697,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'keyTextContainer',
             documentation => 'Custom plugins parameters',
         },
+        disabledPlugins => {
+            type          => 'text',
+            documentation => 'Disabled plugins',
+        },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {
@@ -4957,6 +4971,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'int',
             documentation => 'OIDC Metadata TTL',
         },
+        oidcServiceMetaDataDisallowNoneAlg => {
+            type        => 'bool',
+            description => 'Disallow "none" algorithm for signature',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
@@ -5060,6 +5078,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'access_token', v => 'Access Token' },
             ],
             documentation => "Source of userinfo",
+        },
+        oidcOPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            default       => 0,
+            documentation => "Don't insert typ header",
         },
 
         # OpenID Connect relying parties
@@ -5318,6 +5341,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation =>
               'List of RP authorized to query for an access_token of this RP',
+        },
+        oidcRPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            default       => 0,
+            documentation => "Don't insert typ header",
         },
         appAccessHistoryEnabled => {
             type          => 'bool',

@@ -261,6 +261,7 @@ Protocol
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
 -  **User Info source**: source of user data. Default to query userInfo endpoint
+-  **Don't insert typ header**: don't add the type header in JWT
 
 Comment: Set a comment
 """""""""""""""""""""""

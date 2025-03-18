@@ -53,9 +53,10 @@ sub display {
 
     # Display form
     my $params = {
-        MSG    => 'decryptCipheredValue',
-        ALERTE => 'alert-warning',
-        TOKEN  => (
+        FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+        MSG         => 'decryptCipheredValue',
+        ALERTE      => 'alert-warning',
+        TOKEN       => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''
@@ -96,9 +97,10 @@ sub run {
         }
 
         my $params = {
-            MSG    => "PE$msg",
-            ALERTE => 'alert-warning',
-            TOKEN  => $token,
+            FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+            MSG         => "PE$msg",
+            ALERTE      => 'alert-warning',
+            TOKEN       => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON;
@@ -149,8 +151,9 @@ sub run {
 
     # Display form
     my $params = {
-        MSG       => 'decryptCipheredValue',
-        DECRYPTED => (
+        FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+        MSG         => 'decryptCipheredValue',
+        DECRYPTED   => (
             $decryptedValue ? $decryptedValue
             : 'notAnEncryptedValue'
         ),

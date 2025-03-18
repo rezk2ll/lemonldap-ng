@@ -6,7 +6,9 @@ Template updates
     The content of this page only applies to you if:
 
     * You are using a custom LemonLDAP::NG theme
-    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.). Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
+    * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.).
+
+    Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
 
     In other words, you can safely ignore this entire page if:
 
@@ -22,7 +24,7 @@ Floating category menu
 
 You can now display an applications category as a floating menu by setting a category name
 in ``General Parameters`` > ``Portal`` > ``Customization`` > ``Floating category name``.
-Apply the following patches to ``menu.tpl`` and ``script.tpl`` to use this new feature:
+Apply the following patches to ``menu.tpl``, ``footer.tpl`` and ``script.tpl`` to use this new feature:
 
 .. code-block:: diff
 
@@ -87,6 +89,13 @@ This change is not mandatory, but is recommended to avoid bugs. In order to impl
 
 ``?v=<TMPL_VAR CACHE_TAG>`` at the end of all static resource URLs in your custom templates.
 
+JWT headers restored
+^^^^^^^^^^^^^^^^^^^^
+
+JSON-Web-Tokens didn't have the "typ" header starting from version 2.17.0.
+This header is set to "JWT" except for access_token where value is "at+JWT".
+If you encounter issues with this value, a parameter has been added in the
+manager to not insert the "typ" header into JWT: **Don't insert typ header**.
 
 2.20.0
 ------

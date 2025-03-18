@@ -17,6 +17,22 @@ Known regressions in the latest released version
 
 No known issues.
 
+
+2.20.2
+------
+
+Post-logout redirection
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from this version, passing a ``url=`` parameter to the LemonLDAP logout
+URL (``https://auth.example.com/logout`` or
+``https://auth.example.com/?logout=1``) will only redirect the user to this URL
+if the URL's domain is a known VHost, or a trusted domain.
+
+To add a new domain to the trusted domain list, use the ``trustedDomains``
+variable or the *General parameters* > *Advanced parameters* > *Security* >
+*Trusted domains*. Wildcards can be used to allow all subdomains.
+
 2.20.0
 ------
 
@@ -28,6 +44,14 @@ page too long before deleting their 2FA. In this situation, the page is
 automatically refreshed. However, to improve user experience, you may want to
 increase the *General Parameters* » *Second factors* » *Global options* »
 *Login timeout* setting to increase the timeout.
+
+Client secrets as GET parameters are no longer allowed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When calling the OIDC ``/oauth2/token`` endpoint, we no longer allow the
+``client_secret`` parameter to be sent as an URL parameter. It has to be sent
+either in the body (*client_secret_post*), or as part of and ``Authentication``
+HTTP header (*client_secret_basic*).
 
 
 U2F is no more supported
@@ -262,7 +286,7 @@ In previous versions of LemonLDAP::NG, a 2FA protected account didn't need to us
 
 If you are *absolutely sure* that you want 2FA protected accounts to access AuthBasic handlers, which are password only, you can add the following test in your 2FA activation rules ::
 
-    and not $ENV{AuthBasic}
+    and not $env->{AuthBasic}
 
 
 2.0.16

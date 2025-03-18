@@ -32,8 +32,11 @@ getKey = function() {
   setMsg('yourTotpKey', 'warning');
   return $.ajax({
     type: "POST",
-    url: `${portal}2fregisters/totp/getkey`,
+    url: `${scriptname}2fregisters/totp/getkey`,
     dataType: 'json',
+    headers: {
+      "X-CSRF-Check": "1"
+    },
     error: displayError,
     // Display key and QR code
     success: function(data) {
@@ -85,12 +88,15 @@ verify = function() {
   } else {
     return $.ajax({
       type: "POST",
-      url: `${portal}2fregisters/totp/verify`,
+      url: `${scriptname}2fregisters/totp/verify`,
       dataType: 'json',
       data: {
         token: token,
         code: val,
         TOTPName: $('#TOTPName').val()
+      },
+      headers: {
+        "X-CSRF-Check": "1"
       },
       error: displayError,
       success: function(data) {

@@ -234,6 +234,7 @@ Options
    -  **Other RP allowed to exchange access_token** (since version ``2.20.0``):
       You can specify a space-separated list of Relying-Party allowed to ask
       for a token exchange. See :doc:`OpenID-Connect Token Exchange<oidctokenexchange>`
+   -  **Don't insert typ header**: don't add the type header in JWT
 
 -  **Scope**
 

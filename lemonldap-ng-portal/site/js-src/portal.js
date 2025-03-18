@@ -65,6 +65,13 @@ updateBorder = function() {
 };
 
 translatePage = function(lang) {
+
+  if (lang) {
+      window.currentLanguage = lang
+  } else {
+      lang = window.currentLanguage
+  }
+
   return $.getJSON(`${window.staticPrefix}languages/${lang}.json`, function(data) {
     var k, ref, ref1, v;
     translationFields = data;
@@ -133,7 +140,11 @@ translate = function(str) {
   }
 };
 
+
+// These functions are exported so that custom JS code can call them
+// Do not remove without a deprecation notice
 window.translate = translate;
+window.translatePage = translatePage;
 
 // Initialization variables: read all <script type="application/init"> tags and
 // return JSON parsing result. This is set in window.data variable
@@ -199,7 +210,7 @@ setKey = function(key, val, success, error) {
   // First request to get token
   return $.ajax({
     type: "GET",
-    url: scriptname + 'mysession/?gettoken',
+    url: `${scriptname}mysession/?gettoken`,
     dataType: 'json',
     error: error,
     // On success, value is set
@@ -211,7 +222,7 @@ setKey = function(key, val, success, error) {
       d[key] = val;
       return $.ajax({
         type: "PUT",
-        url: scriptname + 'mysession/persistent',
+        url: `${scriptname}mysession/persistent`,
         dataType: 'json',
         data: d,
         success: success,
@@ -224,7 +235,7 @@ setKey = function(key, val, success, error) {
 delKey = function(key, sub, success, error) {
   return $.ajax({
     type: "GET",
-    url: scriptname + 'mysession/?gettoken',
+    url: `${scriptname}mysession/?gettoken`,
     dataType: 'json',
     error: error,
     // On success, value is set
@@ -642,7 +653,7 @@ $(window).on('load', function() {
     console.log('Send findUser request with parameters', str);
     return $.ajax({
       type: "POST",
-      url: `${portal}finduser`,
+      url: `${scriptname}finduser`,
       dataType: 'json',
       data: str,
       // On success, values are set

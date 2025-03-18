@@ -143,19 +143,24 @@ sub authLogout {
 
     # Avoid warning msg at first access
     $req->userData->{_combinationTry} ||= 0;
-    my $sub =
-      $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
-      ->[0];
-    unless ($sub) {
-        $self->logger->warn(
-                "Condition changed between login and logout for "
-              . $req->user
-              . ", unable to select good backend" );
-        return PE_OK;
+
+    # Avoid out of bounds access
+    if ( $req->userData->{_combinationTry} <
+        @{ $req->data->{combinationStack} // [] } )
+    {
+        my $sub =
+          $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
+          ->[0];
+        if ($sub) {
+            my ( $res, $name ) = $sub->( 'authLogout', @_ );
+            $self->logger->debug(qq'User disconnected using scheme "$name"');
+            return $res;
+        }
     }
-    my ( $res, $name ) = $sub->( 'authLogout', @_ );
-    $self->logger->debug(qq'User disconnected using scheme "$name"');
-    return $res;
+    $self->logger->warn( "Condition changed between login and logout for "
+          . $req->user
+          . ", unable to select good backend" );
+    return PE_OK;
 }
 
 sub authFinish {

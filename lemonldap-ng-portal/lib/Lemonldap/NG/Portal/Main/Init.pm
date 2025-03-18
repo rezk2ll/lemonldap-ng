@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -169,6 +169,15 @@ sub init {
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
+
+    # Register logout event (unlog event is only a local unlog: clean cache)
+    &Lemonldap::NG::Handler::Main::MsgActions::addMsgAction(
+        'logout',
+        sub {
+            my ( $class, $id, $req ) = @_;
+            return $self->eventLogout( $req, $id );
+        }
+    );
 
     # Handler::PSGI::Try initialization
     unless ( $self->SUPER::init( $self->localConfig ) ) {
@@ -473,12 +482,11 @@ sub reloadConf {
 
     # Set asset tag from version and optional salt
     my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
-    my $key = $self->conf->{key} // "";
-    my $digest         = substr(
+    my $key          = $self->conf->{key}          // "";
+    my $digest       = substr(
         MIME::Base64::encode_base64url(
             Digest::SHA::hmac_sha256(
-                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt,
-                $key
+                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt, $key
             )
         ),
         0, 8
@@ -507,9 +515,24 @@ sub loadPlugin {
         require Carp;
         Carp::confess('Calling loadPugin without arg!');
     }
-    my $obj;
-    return 0
-      unless ( $obj = $self->loadModule("$plugin") );
+
+    my $full_name =
+      ( $plugin =~ /^::/ ) ? "Lemonldap::NG::Portal$plugin" : $plugin;
+    if (
+        grep {
+            my $item_full_name =
+              ( $_ =~ /^::/ ) ? "Lemonldap::NG::Portal$_" : $_;
+            $item_full_name eq $full_name
+        } split( /[\s,]+/, $self->conf->{disabledPlugins} // "" )
+      )
+    {
+        $self->logger->debug(
+            "Module $plugin is disallowed by disabledPlugins and was not loaded"
+        );
+        return 1;
+    }
+
+    return 0 unless ( my $obj = $self->loadModule($plugin) );
     return $self->findEP( $plugin, $obj );
 }
 
@@ -699,20 +722,25 @@ sub displayError {
 # returns undef if the rule syntax was invalid
 sub buildRule {
     my ( $self, $rule, $ruleDesc ) = @_;
-    if ($ruleDesc) {
-        $ruleDesc = " $ruleDesc ";
-    }
-    else {
-        $ruleDesc = " ";
-    }
+    $ruleDesc ||= '';
     my $compiledRule =
       $self->HANDLER->buildSub( $self->HANDLER->substitute($rule) );
     unless ($compiledRule) {
         my $error =
           $self->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
-        $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
+        $self->logger->error("Bad $ruleDesc rule: $error");
+        return undef;
     }
-    return $compiledRule,;
+
+    # Avoid deep recursion
+    my $overLoadedRule = $compiledRule;
+    if ( $self->conf->{logParams} ) {
+        $overLoadedRule = sub {
+            $self->_dump($_[0]);
+            return $compiledRule->(@_);
+        };
+    }
+    return $overLoadedRule;
 }
 
 sub addPasswordPolicyDisplay {

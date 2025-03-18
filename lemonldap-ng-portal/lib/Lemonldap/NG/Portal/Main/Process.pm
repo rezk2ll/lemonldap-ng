@@ -161,21 +161,10 @@ sub controlUrl {
         }
         $req->{urldc} = URI->new( $req->{urldc} )->as_string;
 
-        # For logout request, test if Referer comes from an authorized site
-        my $tmp = (
-              $req->param('logout')
-            ? $req->referer
-            : $req->{urldc}
-        );
+        my $tmp = $req->urldc;
 
         # XSS attack
-        if (
-            $self->checkXSSAttack(
-                $req->param('logout') ? 'HTTP Referer' : 'urldc',
-                $req->{urldc}
-            )
-          )
-        {
+        if ( $self->checkXSSAttack( 'urldc', $req->{urldc} ) ) {
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -204,8 +193,7 @@ sub controlUrl {
         # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);
         $vhost = "$proto://$originalVhost";
-        $self->logger->debug( 'Required URL (param: '
-              . ( $req->param('logout') ? 'HTTP Referer'   : 'urldc' )
+        $self->logger->debug( 'Required URL (param: urldc'
               . ( $tmp ? " | value: $tmp | alias: $vhost)" : ')' ) );
 
         # If the target URL has an authLevel set in config, remember it.
@@ -224,8 +212,7 @@ sub controlUrl {
             $self->auditLog(
                 $req,
                 message => (
-                        "URL contains an unprotected host (param: "
-                      . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
+                        "URL contains an unprotected host (param: urldc"
                       . " | value: $tmp | alias: $vhost)"
                 ),
                 code => "UNAUTHORIZED_REDIRECT",
@@ -260,6 +247,30 @@ sub checkUnauthLogout {
         $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
     }
     return PE_OK;
+}
+
+sub eventLogout {
+    my ( $self, $req, $msg ) = @_;
+    bless $req, 'Lemonldap::NG::Portal::Main::Request';
+    $self->logger->debug("Receive a logout event");
+    $self->processHook( $req, 'eventLogout', $msg );
+    if ( $msg->{id} ) {
+        $self->logger->debug(" -> logout asked for $msg->{id}");
+        if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
+            $req->id( $session->{_session_id} );
+            $req->pdata( {} );
+            $self->do( $req,
+                [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ],
+                1 );
+        }
+        else {
+            $self->_unauthLogout($req);
+        }
+    }
+    else {
+        $self->logger->debug('Logout event without id');
+        $self->_unauthLogout($req);
+    }
 }
 
 sub checkCancel {

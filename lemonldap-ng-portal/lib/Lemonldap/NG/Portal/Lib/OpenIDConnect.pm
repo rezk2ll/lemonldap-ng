@@ -337,7 +337,7 @@ sub refreshJWKSdata {
 }
 
 sub refreshJWKSdataForOp {
-    my ( $self, $op ) = @_;
+    my ( $self, $op, $force ) = @_;
 
     $self->logger->debug("Attempting to refresh JWKS data for $op");
 
@@ -349,22 +349,27 @@ sub refreshJWKSdataForOp {
       $self->opOptions->{$op}->{oidcOPMetaDataOptionsJWKSTimeout};
     my $jwksUri = $self->opMetadata->{$op}->{conf}->{jwks_uri};
 
-    unless ($jwksTimeout) {
-        $self->logger->debug(
-            "No JWKS refresh timeout defined for $op, skipping...");
-        return;
-    }
-
     unless ($jwksUri) {
         $self->logger->debug("No JWKS URI defined for $op, skipping...");
         return;
     }
 
-    if ( $self->opMetadata->{$op}->{jwks}->{time}
-        && ( $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time ) )
-    {
-        $self->logger->debug("JWKS data still valid for $op, skipping...");
-        return;
+    if ( !$force ) {
+        unless ($jwksTimeout) {
+            $self->logger->debug(
+                "No JWKS refresh timeout defined for $op, skipping...");
+            return;
+        }
+
+        if (
+            $self->opMetadata->{$op}->{jwks}->{time}
+            && (
+                $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time )
+          )
+        {
+            $self->logger->debug("JWKS data still valid for $op, skipping...");
+            return;
+        }
     }
 
     $self->logger->debug("Refresh JWKS data for $op from $jwksUri");
@@ -429,6 +434,7 @@ sub buildAuthorizationCodeAuthnRequest {
     my $max_age       = $self->opOptions->{$op}->{oidcOPMetaDataOptionsMaxAge};
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
+    my $login_hint = $req->data->{suggestedLogin};
 
     my $authorize_request_oauth2_params = {
         response_type => $response_type,
@@ -437,6 +443,7 @@ sub buildAuthorizationCodeAuthnRequest {
         redirect_uri  => $redirect_uri,
         ( defined $state ? ( state => $state ) : () ),
         ( defined $nonce ? ( nonce => $nonce ) : () ),
+        ( defined $login_hint ? ( login_hint => $login_hint) : () ),
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
@@ -1141,11 +1148,10 @@ sub newAuthorizationCode {
     return $self->getOpenIDConnectSession(
         undef,
         "authorization_code",
-        $self->rpOptions->{$rp}
+        ttl => $self->rpOptions->{$rp}
           ->{oidcRPMetaDataOptionsAuthorizationCodeExpiration}
           || $self->conf->{oidcServiceAuthorizationCodeExpiration},
-        ,
-        $info
+        info => $info
     );
 }
 
@@ -1183,8 +1189,11 @@ sub newAccessToken {
     my $ttl =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
-    my $session =
-      $self->getOpenIDConnectSession( undef, "access_token", $ttl, $at_info, );
+    my $session = $self->getOpenIDConnectSession(
+        undef, "access_token",
+        ttl  => $ttl,
+        info => $at_info,
+    );
 
     if ($session) {
 
@@ -1321,8 +1330,11 @@ sub newRefreshToken {
           || $self->conf->{oidcServiceOfflineSessionExpiration} )
       : $self->conf->{timeout};
 
-    return $self->getOpenIDConnectSession( undef, "refresh_token", $ttl,
-        $info );
+    return $self->getOpenIDConnectSession(
+        undef, "refresh_token",
+        ttl  => $ttl,
+        info => $info
+    );
 }
 
 # Get existing Refresh Token
@@ -1332,7 +1344,7 @@ sub newRefreshToken {
 sub getRefreshToken {
     my ( $self, $id ) = @_;
 
-    return $self->getOpenIDConnectSession( $id, "refresh_token" );
+    return $self->getOpenIDConnectSession( $id, "refresh_token", noCache => 1 );
 }
 
 sub updateRefreshToken {
@@ -1366,24 +1378,38 @@ sub updateToken {
 # If id is set to undef, return a new session
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
-    my ( $self, $id, $type, $ttl, $info ) = @_;
+    my $self = shift;
+    my $id   = shift;
+    my $type = shift;
 
-    $ttl ||= $self->conf->{timeout};
+    # Check old method signature ($id, $type, $ttl, $info)
+    my %opts =
+        ( ( $_[0] and $_[0] =~ /^\d+$/ ) or ( $_[1] and ref $_[1] ) )
+      ? ( ttl => $_[0], info => $_[1] )
+      : (@_);
+
+    $opts{ttl} ||= $self->conf->{timeout};
 
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
             $self->_storeOpts(),
-            cacheModule        => $self->conf->{localSessionStorage},
-            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
-            hashStore          => $self->conf->{hashedSessionStore},
-            id                 => $id,
-            kind               => $self->sessionKind,
             (
-                $info
+                $opts{noCache} ? ()
+                : (
+                    cacheModule        => $self->conf->{localSessionStorage},
+                    cacheModuleOptions =>
+                      $self->conf->{localSessionStorageOptions}
+                )
+            ),
+            hashStore => $self->conf->{hashedSessionStore},
+            id        => $id,
+            kind      => $self->sessionKind,
+            (
+                $opts{info}
                 ? (
                     info => {
                         _type  => $type,
-                        _utime => time + $ttl - $self->conf->{timeout},
-                        %{$info}
+                        _utime => time + $opts{ttl} - $self->conf->{timeout},
+                        %{ $opts{info} }
                     }
                   )
                 : ()
@@ -1519,7 +1545,25 @@ sub decodeJWT {
 
     my $jwks;
     if ($op) {
+
+        # Always refresh JWKS if timeout has elapsed
         $self->refreshJWKSdataForOp($op);
+
+        my $kid = $jwt_header->{kid};
+
+        # If the JWT is signed by an unknown kid, force a refresh
+        if (
+            $kid
+            and !$self->_kid_found_in_jwks(
+                $kid, $self->opMetadata->{$op}->{jwks}
+            )
+          )
+        {
+            $self->logger->debug(
+                "Key ID $kid not found in current JWKS, forcing JWKS refresh");
+            $self->refreshJWKSdataForOp( $op, 1 );
+        }
+
         $jwks = $self->opMetadata->{$op}->{jwks};
     }
     else {
@@ -1532,7 +1576,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -1592,6 +1636,18 @@ sub decodeJWT {
         return;
     }
     return wantarray ? ( $content, $alg ) : $content;
+}
+
+sub _kid_found_in_jwks {
+    my ( $self, $kid, $jwks ) = @_;
+
+    return 0 if !$kid;
+
+    my @keys = $jwks ? @{ $jwks->{keys} // [] } : ();
+
+    my @found = grep { $_->{kid} and $_->{kid} eq $kid } @keys;
+
+    return @found > 0;
 }
 
 ### HERE
@@ -1829,6 +1885,8 @@ sub checkEndPointAuthenticationCredentials {
             }
         }
     }
+    $self->p->HANDLER->set_user( $req,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} );
     return ( $rp, $method );
 }
 
@@ -1839,12 +1897,12 @@ sub getEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $scheme );
 
     my $authorization = $req->authorization;
-    if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
+    if ( $authorization and $authorization =~ m#^Basic ([[:alnum:]+/=]+)#i ) {
         $scheme = 'client_secret_basic';
         $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
-              split( /:/, decode_base64($1) );
+              split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
 
@@ -2280,6 +2338,7 @@ sub _createJWT {
     my ( $self, $payload, $alg, $partner, $type, $isRp ) = @_;
 
     my @keyArg;
+    my %extra_headers;
 
     # Set Cript::JWT arguments depending on "alg"
     #  a) "none"
@@ -2313,7 +2372,6 @@ sub _createJWT {
         }
         @keyArg = ( key => \$priv_key, );
 
-        my %extra_headers;
         if ( $self->conf->{oidcServiceKeyIdSig} ) {
             $extra_headers{kid} = $self->conf->{oidcServiceKeyIdSig};
         }
@@ -2323,8 +2381,15 @@ sub _createJWT {
             $extra_headers{x5t} = $key_info->{x5t};
         }
 
-        push @keyArg, extra_headers => \%extra_headers if %extra_headers;
     }
+    my $noTyp =
+        $isRp
+      ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsNoJwtHeader}
+      : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsNoJwtHeader};
+    unless ($noTyp) {
+        $extra_headers{typ} = $type || 'JWT';
+    }
+    push @keyArg, extra_headers => \%extra_headers if %extra_headers;
 
     # Encode payload here due to #2748
     my $jwt = eval {
@@ -2710,7 +2775,8 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return Digest::SHA::hmac_sha256_base64(
+    return $sessionInfo->{_oidc_sid}
+      || Digest::SHA::hmac_sha256_base64(
         $sessionInfo->{_session_id} . ':' . $rp );
 }
 

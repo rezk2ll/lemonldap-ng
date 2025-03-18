@@ -49,6 +49,19 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "title" : "casAppMetaDataOptionsAllowProxy",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "title" : "casSrvMetaDataOptionsSamlValidate",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
@@ -500,6 +513,13 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcOPMetaDataOptionsUserinfoSource",
                   "type" : "select"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcOPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
@@ -664,6 +684,13 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
                   "title" : "oidcRPMetaDataOptionsRefreshToken",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
                   "type" : "bool"
                },
                {

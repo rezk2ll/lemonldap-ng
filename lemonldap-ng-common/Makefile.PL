@@ -124,6 +124,7 @@ WriteMakefile(
         'scripts/encryptTotpSecrets'    => 'blib/man1/encryptTotpSecrets.1p',
         'scripts/lemonldap-ng-cli'      => 'blib/man1/lemonldap-ng-cli.1p',
         'scripts/lemonldap-ng-sessions' => 'blib/man1/lemonldap-ng-sessions.1p',
+        'scripts/rotateOidcKeys'        => 'blib/man1/rotateOidcKeys.1p',
         'scripts/importMetadata'        => 'blib/man1/importMetadata.1p',
     },
 );

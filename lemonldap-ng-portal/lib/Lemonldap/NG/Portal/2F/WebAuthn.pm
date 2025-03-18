@@ -65,7 +65,8 @@ EOF
         $req,
         'webauthn2fcheck',
         params => {
-            DATA =>
+            TARGET => $self->p->relativeUrl( $req, 'webauthn2fcheck' ),
+            DATA   =>
               to_json( { request => $request, webauthn_autostart => \1 } ),
             TOKEN         => $token,
             CUSTOM_SCRIPT => $req->data->{customScript},

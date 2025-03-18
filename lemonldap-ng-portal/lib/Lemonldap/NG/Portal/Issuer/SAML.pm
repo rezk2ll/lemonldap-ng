@@ -41,6 +41,7 @@ use constant liDump      => '_lassoIdentityDumpI';
 
 # Simply store SP in $req->env
 use constant beforeAuth => 'storeEnv';
+use constant hook => { updateSessionId => 'updateSAMLSecondarySessions', };
 
 # INITIALIZATION
 
@@ -562,7 +563,7 @@ sub run {
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
                 $self->logger->debug(
-                    "Get NameID format $nameIDFormat from request");
+                    "Get NameID format $nameIDFormat from request") if defined($nameIDFormat);
             }
 
             # Get default NameID Format from configuration

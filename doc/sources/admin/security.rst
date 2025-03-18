@@ -338,7 +338,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Strict-Transport-Security Max-age**: Set STS header max-age if you use SSL only (by example: 15768000)
 -  **Hashed session storage**: when set to "On", SSO sessions and OIDC tokens
    are stored with a hashed name, then when parsing storage, nobody
-   can reconver SSO session name or OIDC access_token. Not enabled by default
+   can recover SSO session name or OIDC access_token. Not enabled by default
    because it breaks exiting OIDC offline sessions.
    **Incompatible with "Proxy" authentication in SOAP mode**.
 -  **CrowdSec Bouncer**: Set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`

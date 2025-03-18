@@ -259,7 +259,7 @@ Simple example:
 
    # Optionally ($fcgiResponse is the PSGI response of remote FCGI auth server)
    #sub on_reject {
-   #    my($self,$env,$fcgiResponse) = @_;
+   #    my($self, $env, $fcgiResponse) = @_;
    #    my $statusCode = $fcgiResponse->{status};
    #    ...
    #}

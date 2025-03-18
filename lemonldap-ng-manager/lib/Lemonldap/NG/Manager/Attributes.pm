@@ -786,6 +786,10 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsAllowProxy' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'casAppMetaDataOptionsAuthnLevel' => {
             'test' => sub {
                 return perlExpr(@_);
@@ -867,6 +871,9 @@ sub attributes {
         'casSrvMetaDataOptionsResolutionRule' => {
             'default' => '',
             'type'    => 'longtext'
+        },
+        'casSrvMetaDataOptionsSamlValidate' => {
+            'type' => 'bool'
         },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'intOrNull'
@@ -1431,6 +1438,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
+        },
+        'disabledPlugins' => {
+            'type' => 'text'
         },
         'disablePersistentStorage' => {
             'default' => 0,
@@ -2617,6 +2627,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'int'
         },
+        'oidcOPMetaDataOptionsNoJwtHeader' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
         },
@@ -3169,6 +3183,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsNoJwtHeader' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'intOrNull'
         },
@@ -3520,6 +3538,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceMetaDataCheckSessionURI' => {
             'default' => 'checksession.html',
             'type'    => 'text'
+        },
+        'oidcServiceMetaDataDisallowNoneAlg' => {
+            'type' => 'bool'
         },
         'oidcServiceMetaDataEndSessionURI' => {
             'default' => 'logout',
@@ -4385,7 +4406,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'samlService'
         },
         'samlAuthnContextMapExtra' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,

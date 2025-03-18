@@ -36,23 +36,26 @@ verify = function() {
   } else {
     return $.ajax({
       type: 'POST',
-      url: `${portal}2fregisters/${prefix}/sendcode`,
+      url: `${scriptname}2fregisters/${prefix}/sendcode`,
       dataType: 'json',
       data: {
         generic: generic
       },
+      headers: {
+          "X-CSRF-Check": "1"
+      },
       error: displayError,
       success: function(data) {
-        if (data.error) {
-          if (data.error.match(/PE79/)) {
-            return setMsg(data.error, 'warning');
+          if (data.error) {
+              if (data.error.match(/PE79/)) {
+                  return setMsg(data.error, 'warning');
+              } else {
+                  return setMsg(data.error, 'danger');
+              }
           } else {
-            return setMsg(data.error, 'danger');
+              $('#token').val(data.token);
+              return setMsg('genericCheckCode', 'success');
           }
-        } else {
-          $('#token').val(data.token);
-          return setMsg('genericCheckCode', 'success');
-        }
       }
     });
   }
@@ -71,13 +74,16 @@ register = function() {
   } else {
     return $.ajax({
       type: 'POST',
-      url: `${portal}2fregisters/${prefix}/verify`,
+      url: `${scriptname}2fregisters/${prefix}/verify`,
       dataType: 'json',
       data: {
         generic: generic,
         genericname: genericname,
         genericcode: genericcode,
         token: token
+      },
+      headers: {
+        "X-CSRF-Check": "1"
       },
       error: displayError,
       success: function(data) {
