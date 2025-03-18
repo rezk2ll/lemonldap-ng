@@ -18,7 +18,7 @@ Once enabled (section "General Parameters > Plugins"), you can set these paramet
    -  **Cookie name**: Name of the cookie storing the authentication choice
    -  **Cookie lifetime**: Duration of the cookie (seconds) storing the authentication choice
    -  **Check by default**: Is the checkbox "Remember my choice" checked by default?
-   -  **Timer before automatic authentication**: Timer before automatic authentication happens, if user has previously authorized the storage of authentication choice in a cookie
+   -  **Timer before automatic authentication choice**: Timer before automatic authentication choice happens, if user has previously authorized the storage of authentication choice in a cookie
 
 .. tip::
 

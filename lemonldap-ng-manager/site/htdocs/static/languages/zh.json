@@ -1028,7 +1028,7 @@
 "rememberCookieName":"Cookie 名稱",
 "rememberCookieTimeout":"cookie lifetime",
 "rememberDefaultChecked":"Check by default",
-"rememberTimer":"Timer before automatic authentication",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Cookie 名稱",
 "remoteGlobalStorage":"工作階段模組",
 "remoteGlobalStorageOptions":"工作階段模組選項",
