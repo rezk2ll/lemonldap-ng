@@ -39,11 +39,11 @@ With configuration CLI:
 SAML Federation
 ~~~~~~~~~~~~~~~
 
-Follow :doc:`SAML Federation documentation<samlfederation>` to enable `IDP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`__ download. For example :
+Follow :doc:`SAML Federation documentation<samlfederation>` to enable `IDP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`__ download as a cronjob. For example, in ``/etc/cron.d/metadata-download`` file:
 
 .. code-block:: shell
 
-   /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
+   30 3 * * * root /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
 
 Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
 
@@ -118,11 +118,11 @@ moment.
 SAML Federation
 ~~~~~~~~~~~~~~~
 
-Follow :doc:`SAML Federation documentation<samlfederation>` to enable `SP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`_ download. For Example:
+Follow :doc:`SAML Federation documentation<samlfederation>` to enable `SP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`_ download as a cronjob. For example, in ``/etc/cron.d/metadata-download`` file:
 
 .. code-block:: shell
 
-   /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
+   30 2 * * * root /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
 
 Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
 
