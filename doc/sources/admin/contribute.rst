@@ -15,10 +15,9 @@ applies the following rules:
 
 -  Javascript:
 
-   -  code must be written in
-      `CoffeeScript <http://coffeescript.org/>`__ (in
-      ``<component>/site/coffee``): ``make minify`` will generate JS
-      files
+   -  Javascript code is written in ``<component>/site/js-src`` and
+      bundled using `rollupjs <https://rollupjs.org/>`_: ``make minify`` will
+      generate JS files
 
 Get code
 --------
@@ -106,7 +105,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
+   apt install make devscripts equivs yui-compressor git uglifyjs rollup node-rollup-plugin-babel autopkgtest cpanminus
 
 
 Install dependencies
@@ -187,7 +186,7 @@ Other commands
 
      make clean
 
-* Compile CoffeeScript and minify ::
+* Compile Javascript and minify ::
 
      make minify
 
