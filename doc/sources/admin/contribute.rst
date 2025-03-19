@@ -252,13 +252,13 @@ You can check the result with:
 Javascript
 ~~~~~~~~~~
 
-Javascript code is produced by `rollupjs<https://rollupjs.org/>_`.
+Javascript code is produced by `rollupjs <https://rollupjs.org/>`_.
 
 Source script must be created in ``lemonldap-ng-portal/site/js-src``, then run this command:
 
 ::
 
-    make js && make json
+    make minify
 
 On Debian, you can install rollupjs and the needed dependencies with:
 
