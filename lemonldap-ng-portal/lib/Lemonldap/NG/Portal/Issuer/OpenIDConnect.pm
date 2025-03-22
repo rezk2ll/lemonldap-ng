@@ -1199,6 +1199,7 @@ sub _failAuthorize {
         message => ( "OIDC login failed" . $reason ),
         ( $reason ? ( reason => $reason ) : () ),
         portal_error => portalConsts->{$res},
+        user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
     );
 
     return $res;

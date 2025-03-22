@@ -1741,6 +1741,7 @@ sub returnRedirectError {
         ( $error_description ? ( reason => $error_description ) : () ),
         oauth_error  => $error,
         portal_error => portalConsts->{PE_REDIRECT},
+        user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
     );
 
     my $urldc =

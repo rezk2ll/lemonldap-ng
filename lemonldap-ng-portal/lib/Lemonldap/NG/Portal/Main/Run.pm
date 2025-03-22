@@ -494,6 +494,7 @@ sub autoRedirect {
                 message => "Redirection to $req->{urldc} blocked",
                 code    => "UNAUTHORIZED_REDIRECT",
                 url     => $req->{urldc},
+                user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
             );
             delete $req->{urldc};
         }
@@ -831,6 +832,7 @@ sub autoPost {
             message => "Redirection to $req->{urldc} blocked",
             code    => "UNAUTHORIZED_REDIRECT",
             url     => $req->{urldc},
+            user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
         );
         return PE_BADURL;
     }
