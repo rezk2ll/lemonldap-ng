@@ -145,6 +145,7 @@ sub _getLanguageListFromHeader {
 
 sub auditLog {
     my ( $self, $req, %info ) = @_;
+    $info{ip} = $req->address;
     $self->_auditLogger->log( $req, %info );
 }
 
