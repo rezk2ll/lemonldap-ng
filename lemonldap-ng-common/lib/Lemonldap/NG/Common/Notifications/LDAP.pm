@@ -13,7 +13,7 @@ use MIME::Base64 qw/encode_base64url/;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 

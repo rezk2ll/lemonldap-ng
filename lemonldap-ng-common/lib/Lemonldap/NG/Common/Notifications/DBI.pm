@@ -11,7 +11,7 @@ use Time::Local;
 use DBI;
 use Encode;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
