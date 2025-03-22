@@ -793,6 +793,7 @@ sub _deleteSession {
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
             code => "LOGOUT",
+            user => $user,
             auth => $mod,
         );
     }
