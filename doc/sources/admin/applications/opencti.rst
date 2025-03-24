@@ -7,7 +7,7 @@ OpenCTI
 Presentation
 ------------
 
-`OpenCTI <https://www.opencti.io/en/>`__ is an open source platform allowing organizations to manage their cyber threat intelligence knowledge and observables.
+`OpenCTI <https://filigran.io/solutions/open-cti/>`__ is an open source platform allowing organizations to manage their cyber threat intelligence knowledge and observables.
 
 OpenCTI allows SSO via the SAML or OIDC protocols.
 
@@ -20,7 +20,7 @@ Prerequisites
 
 First, generate a key/certificate pair for OpenCTI ::
 
-    openssl req -x509 -newkey rsa:4096 -keyout octi-saml-key.pem -out octi-saml-cert.pem -sha256 -days 3650 -nodes
+    openssl req -x509 -newkey rsa:4096 -keyout octi-saml-key.pem -out octi-saml-cert.pem -sha256 -days 3650 -noenc
 
 
 Then, download the LemonLDAP::NG SAML metadata at https://auth.example.com/saml/metadata/idp
