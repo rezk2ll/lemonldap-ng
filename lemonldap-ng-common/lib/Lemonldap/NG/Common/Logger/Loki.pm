@@ -18,6 +18,7 @@ sub new {
     $self->{j}        = JSON->new->canonical;
     $self->{instance} = $conf->{lokiInstance} || hostname;
     $self->{env}      = $conf->{lokiEnv}      || 'prod';
+    $self->{tenant}   = $conf->{lokiTenant};
     $self->{service} =
       $args{user}
       ? ( $conf->{lokiUserService} || 'auth' )
@@ -50,15 +51,20 @@ sub log {
                     env      => $self->{env},
                     service  => $self->{service},
                 },
-                values => [ [ sprintf("%19d", time*1000000000), $message ] ],
+                values =>
+                  [ [ sprintf( "%19d", time * 1000000000 ), $message ] ],
             },
         ],
     };
-    my $response = $self->{ua}->post(
-        $self->{url},
-        'Content-Type' => 'application/json',
-        Content        => $self->{j}->encode($logEntry),
+    my $req = HTTP::Request->new(
+        POST => $self->{url},
+        [
+            'Content-Type' => 'application/json',
+            ( $self->{tenant} ? ( 'X-Scope-OrgID' => $self->{tenant} ) : () )
+        ],
+        $self->{j}->encode($logEntry)
     );
+    my $response = $self->{ua}->request($req);
     unless ( $response->is_success ) {
         print STDERR "Unable to push log to loki\nMessage: $message\nResponse: "
           . $response->status_line . "\n";
