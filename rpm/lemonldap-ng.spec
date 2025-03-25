@@ -583,6 +583,7 @@ if [ $1 -gt 1 ] ; then
         chgrp %{lm_apachegroup} %{lm_storagefile} || :
     fi
 fi
+%systemd_post lemonldap-ng-rotateOidcKeys.timer
 
 %preun common
 # Upgrade from previous version
@@ -591,6 +592,10 @@ if [ $1 -eq 1 ] ; then
     find %{apache_confdir} -name 'z-lemonldap-ng*.conf' \
         -type l -delete 2>&1 > /dev/null || :
 fi
+%systemd_preun lemonldap-ng-rotateOidcKeys.timer
+
+%postun common
+%systemd_postun lemonldap-ng-rotateOidcKeys.timer
 
 %post fastcgi-server
 %systemd_post llng-fastcgi-server.service
@@ -649,6 +654,8 @@ fi
 %license COPYING LICENSE
 %dir %{lm_confdir}
 %config(noreplace) %attr(640,root,%{lm_apachegroup}) %{lm_storagefile}
+%{_unitdir}/lemonldap-ng-rotateOidcKeys.service
+%{_unitdir}/lemonldap-ng-rotateOidcKeys.timer
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
