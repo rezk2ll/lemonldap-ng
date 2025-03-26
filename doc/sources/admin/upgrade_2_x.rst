@@ -17,6 +17,17 @@ Known regressions in the latest released version
 
 No known issues.
 
+2.21.0
+------
+
+Log4Perl log level
+~~~~~~~~~~~~~~~~~~
+
+Starting from this version, the global ``logLevel`` parameter is applied
+for all loggers. Thus if you managed your log level inside the log4perl
+configuration file, you may loose unimportant logs if your ``logLevel`` is
+higher.
+
 
 2.20.2
 ------
