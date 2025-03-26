@@ -5,7 +5,7 @@ use base Lemonldap::NG::Common::PSGI;
 sub init {
     my ( $self, $args ) = @_;
 
-    $args->{logLevel} = "error";
+    $args->{logLevel} ||= "error";
     my $super = $self->SUPER::init($args);
 
     no warnings 'redefine';
