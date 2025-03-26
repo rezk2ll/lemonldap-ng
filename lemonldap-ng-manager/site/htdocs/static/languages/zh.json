@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"額外聽眾",
 "oidcRPMetaDataOptionsAdvanced":"進階",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
+"oidcRPMetaDataOptionsAllowNativeSso":"Allow Native SSO for Mobile App",
 "oidcRPMetaDataOptionsAllowOffline":"允許離線存取",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"允許 OAuth2.0 密碼授權",
 "oidcRPMetaDataOptionsAuthMethod":"權杖端點驗證方法",

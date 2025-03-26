@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"Additional audiences",
 "oidcRPMetaDataOptionsAdvanced":"מתקדם",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
+"oidcRPMetaDataOptionsAllowNativeSso":"Allow Native SSO for Mobile App",
 "oidcRPMetaDataOptionsAllowOffline":"לאפשר גישה בלתי מקוונת",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
 "oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",

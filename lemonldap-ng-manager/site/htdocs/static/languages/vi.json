@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"Đối tượng bổ sung",
 "oidcRPMetaDataOptionsAdvanced":"Nâng cao",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Cho phép cấp thông tin xác thực ứng dụng khách OAuth2.0",
+"oidcRPMetaDataOptionsAllowNativeSso":"Allow Native SSO for Mobile App",
 "oidcRPMetaDataOptionsAllowOffline":"Cho phép truy cập ngoại tuyến",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Cho phép cấp mật khẩu OAuth2.0",
 "oidcRPMetaDataOptionsAuthMethod":"Phương pháp xác thực thiết bị đầu cuối Token",

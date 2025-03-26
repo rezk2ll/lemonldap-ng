@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"Дополнительные аудитории",
 "oidcRPMetaDataOptionsAdvanced":"Расширенные",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Разрешить предоставление учетных данных клиента OAuth2.0",
+"oidcRPMetaDataOptionsAllowNativeSso":"Allow Native SSO for Mobile App",
 "oidcRPMetaDataOptionsAllowOffline":"Разрешить автономный доступ",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Разрешить предоставление пароля OAuth2.0",
 "oidcRPMetaDataOptionsAuthMethod":"Метод аутентификации конечной точки токена",

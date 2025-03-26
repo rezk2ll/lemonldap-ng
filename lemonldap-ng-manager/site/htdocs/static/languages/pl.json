@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"Dodatkowi odbiorcy",
 "oidcRPMetaDataOptionsAdvanced":"Zaawansowane",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Zezwalaj na przyznanie poświadczeń klienta OAuth2.0",
+"oidcRPMetaDataOptionsAllowNativeSso":"Allow Native SSO for Mobile App",
 "oidcRPMetaDataOptionsAllowOffline":"Zezwalaj na dostęp offline",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Zezwól na przyznanie hasła OAuth2.0",
 "oidcRPMetaDataOptionsAuthMethod":"Metoda uwierzytelniania tokena punktu końcowego",

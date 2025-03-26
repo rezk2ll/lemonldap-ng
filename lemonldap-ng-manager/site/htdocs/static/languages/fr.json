@@ -746,6 +746,7 @@
 "oidcRPMetaDataOptionsAdditionalAudiences":"Audiences supplémentaires",
 "oidcRPMetaDataOptionsAdvanced":"Avancées",
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Autoriser le Client Credentials Grant OAuth2.0",
+"oidcRPMetaDataOptionsAllowNativeSso":"Autorise le SSO natif pour application mobile",
 "oidcRPMetaDataOptionsAllowOffline":"Autoriser l'accès hors ligne",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Autoriser le Password Grant OAuth2.0",
 "oidcRPMetaDataOptionsAuthMethod":"Méthode d'authentification pour l'accès aux jetons",

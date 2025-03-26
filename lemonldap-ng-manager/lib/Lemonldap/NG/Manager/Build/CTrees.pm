@@ -265,6 +265,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRequirePKCE',
                             'oidcRPMetaDataOptionsRefreshTokenRotation',
                             'oidcRPMetaDataOptionsAllowOffline',
+                            'oidcRPMetaDataOptionsAllowNativeSso',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',
                             'oidcRPMetaDataOptionsAllowClientCredentialsGrant',
                             'oidcRPMetaDataOptionsRequestUris',

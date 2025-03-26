@@ -2875,6 +2875,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAllowNativeSso' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
             'type'    => 'bool'

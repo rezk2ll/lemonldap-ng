@@ -5243,6 +5243,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
         },
+        oidcRPMetaDataOptionsAllowNativeSso => {
+            type          => 'bool',
+            documentation => 'Allow Native SSO for Mobile Apps',
+        },
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',
             help =>
