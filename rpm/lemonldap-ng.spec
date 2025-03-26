@@ -602,30 +602,24 @@ fi
 %systemd_postun_with_restart llng-fastcgi-server.service
 
 %post portal
-%systemd_post lemonldap-ng-portal.service
-if [ $1 -gt 1 ] ; then
-  systemctl preset lemonldap-ng-portal.timer || :
-  systemctl start lemonldap-ng-portal.timer || :
-fi
+%systemd_post lemonldap-ng-portal.timer
+systemctl start lemonldap-ng-portal.timer || :
 
 %preun portal
-%systemd_preun lemonldap-ng-portal.service
+%systemd_preun lemonldap-ng-portal.timer
 
 %postun portal
-%systemd_postun lemonldap-ng-portal.service
+%systemd_postun lemonldap-ng-portal.timer
 
 %post handler
-%systemd_post lemonldap-ng-handler.service
-if [ $1 -gt 1 ] ; then
-  systemctl preset lemonldap-ng-handler.timer || :
-  systemctl start lemonldap-ng-handler.timer || :
-fi
+%systemd_post lemonldap-ng-handler.timer
+systemctl start lemonldap-ng-handler.timer || :
 
 %preun handler
-%systemd_preun lemonldap-ng-handler.service
+%systemd_preun lemonldap-ng-handler.timer
 
 %postun handler
-%systemd_postun lemonldap-ng-handler.service
+%systemd_postun lemonldap-ng-handler.timer
 
 %if 0%{?with_selinux}
 # SELinux contexts are saved so that only affected files can be
