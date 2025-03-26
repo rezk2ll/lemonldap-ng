@@ -13,12 +13,13 @@ sub new {
     my $self  = bless {}, $class;
     my $level = $conf->{logLevel} || 'info';
     $self->{url} = $conf->{lokiUrl} || 'http://localhost:3100/loki/api/v1/push';
-    $self->{label}    = $conf->{lokiLabel} || 'llng';
-    $self->{ua}       = Lemonldap::NG::Common::UserAgent->new($conf);
-    $self->{j}        = JSON->new->canonical;
-    $self->{instance} = $conf->{lokiInstance} || hostname;
-    $self->{env}      = $conf->{lokiEnv}      || 'prod';
-    $self->{tenant}   = $conf->{lokiTenant};
+    $self->{label}         = $conf->{lokiLabel} || 'llng';
+    $self->{ua}            = Lemonldap::NG::Common::UserAgent->new($conf);
+    $self->{j}             = JSON->new->canonical;
+    $self->{instance}      = $conf->{lokiInstance} || hostname;
+    $self->{env}           = $conf->{lokiEnv}      || 'prod';
+    $self->{tenant}        = $conf->{lokiTenant};
+    $self->{authorization} = $conf->{lokiAuthorization};
     $self->{service} =
       $args{user}
       ? ( $conf->{lokiUserService} || 'auth' )
@@ -60,6 +61,11 @@ sub log {
         POST => $self->{url},
         [
             'Content-Type' => 'application/json',
+            (
+                $self->{authorization}
+                ? ( 'Authorization' => $self->{authorization} )
+                : ()
+            ),
             ( $self->{tenant} ? ( 'X-Scope-OrgID' => $self->{tenant} ) : () )
         ],
         $self->{j}->encode($logEntry)
