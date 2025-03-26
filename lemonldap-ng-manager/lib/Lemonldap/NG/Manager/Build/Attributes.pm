@@ -3059,6 +3059,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS application service',
         },
+        casSrvMetaDataOptionsSamlValidate => {
+            type          => 'bool',
+            documentation => 'use SAML validateion',
+        },
         casAppMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation => 'CAS User attribute',
@@ -3241,6 +3245,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
+            keyTest => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {
@@ -4691,6 +4696,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         customPluginsParams => {
             type          => 'keyTextContainer',
             documentation => 'Custom plugins parameters',
+        },
+        disabledPlugins => {
+            type          => 'text',
+            documentation => 'Disabled plugins',
         },
 
         # OpenID Connect auth params

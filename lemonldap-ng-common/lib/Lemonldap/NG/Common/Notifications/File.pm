@@ -10,7 +10,7 @@ use Mouse;
 use Time::Local;
 use MIME::Base64;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 

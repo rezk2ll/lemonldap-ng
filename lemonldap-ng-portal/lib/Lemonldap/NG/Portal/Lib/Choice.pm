@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.21.0';
 
 has modules    => ( is => 'rw', default => sub { {} } );
 has rules      => ( is => 'rw', default => sub { {} } );

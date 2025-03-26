@@ -6,7 +6,7 @@ use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 our $_json = JSON->new->allow_nonref;
 
@@ -145,6 +145,7 @@ sub _getLanguageListFromHeader {
 
 sub auditLog {
     my ( $self, $req, %info ) = @_;
+    $info{remote_addr} = $req->address;
     $self->_auditLogger->log( $req, %info );
 }
 

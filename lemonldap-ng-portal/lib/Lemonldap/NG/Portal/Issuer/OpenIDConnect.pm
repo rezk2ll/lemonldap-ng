@@ -246,6 +246,8 @@ sub loadRPs {
 
 sub ssoMatch {
     my ( $self, $req ) = @_;
+    my $lh = $req->param('login_hint');
+    $req->data->{suggestedLogin} ||= $lh if $lh;
     return ( $req->uri =~ $self->ssoMatchUrl ? 1 : 0 );
 }
 
@@ -1197,6 +1199,7 @@ sub _failAuthorize {
         message => ( "OIDC login failed" . $reason ),
         ( $reason ? ( reason => $reason ) : () ),
         portal_error => portalConsts->{$res},
+        user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
     );
 
     return $res;
@@ -1754,8 +1757,9 @@ sub _handleAuthorizationCodeGrant {
     # Check we have the same redirect_uri value
     unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
-        $self->userLogger->error( "Provided redirect_uri does not match "
-              . $codeSession->data->{redirect_uri} );
+        $self->userLogger->error( "Provided redirect_uri does not match: "
+              . $codeSession->data->{redirect_uri} . ' != '
+              . $req->param("redirect_uri") );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
@@ -1795,7 +1799,7 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid;
+    my $sid = $self->getSidFromSession( $rp, $apacheSession->data );
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1822,6 +1826,7 @@ sub _handleAuthorizationCodeGrant {
                   $apacheSession->data->{ $self->conf->{whatToTrace} },
                 auth_time  => $apacheSession->data->{_lastAuthnUTime},
                 grant_type => "authorizationcode",
+                _oidc_sid  => $sid,
             },
             1,
         );
@@ -1835,9 +1840,6 @@ sub _handleAuthorizationCodeGrant {
         $refresh_token = $refreshTokenSession->id;
 
         $self->logger->debug("Generated offline refresh token: $refresh_token");
-
-        $sid = $self->getSidFromSession( $rp,
-            { _session_id => $refreshTokenSession->id } );
     }
 
     # For online access, if configured
@@ -1854,6 +1856,7 @@ sub _handleAuthorizationCodeGrant {
                   $apacheSession->data->{ $self->conf->{whatToTrace} },
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
+                _oidc_sid       => $sid,
             },
             0,
         );
@@ -1885,7 +1888,6 @@ sub _handleAuthorizationCodeGrant {
             ( $nonce   ? ( nonce   => $nonce )   : () ),
             ( $at_hash ? ( at_hash => $at_hash ) : () ),
         },
-        $sid,
     );
 
     unless ($id_token) {
@@ -2175,7 +2177,8 @@ sub userInfo {
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
 
-    $self->p->HANDLER->set_user( $req, $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
+    $self->p->HANDLER->set_user( $req,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} )
       if $setUser;
 
     if ( $self->rpOptions->{$rp}

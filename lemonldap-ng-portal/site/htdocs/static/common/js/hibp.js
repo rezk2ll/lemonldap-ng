@@ -15,13 +15,13 @@
           setResult('ppolicy-checkhibp-feedback', "waiting");
           return $.ajax({
             dataType: "json",
-            url: "/checkhibp",
+            url: "".concat(scriptname, "checkhibp"),
             method: "POST",
             data: {
               "password": btoa(newpasswordVal)
             },
             context: document.body,
-            success: function (data) {
+            success: function success(data) {
               var code, msg;
               code = data.code;
               msg = data.message;
@@ -39,7 +39,7 @@
                 }
               }
             },
-            error: function (j, status, err) {
+            error: function error(j, status, err) {
               var res;
               if (err) {
                 console.log('checkhibp: frontend error: ', err);

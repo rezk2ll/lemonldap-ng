@@ -178,6 +178,7 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
@@ -943,8 +944,8 @@ sub tree {
                         },
                         {
                             title => 'customPluginsNode',
-                            help  => 'plugincustom.html',
-                            nodes => [ 'customPlugins', 'customPluginsParams' ]
+                            help  => 'plugincustom.html#plugin-options',
+                            nodes => [ 'customPlugins', 'customPluginsParams', 'disabledPlugins' ]
                         },
                     ]
                 },

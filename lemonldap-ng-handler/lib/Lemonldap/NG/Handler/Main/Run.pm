@@ -308,6 +308,7 @@ sub lmLog {
 
 sub auditLog {
     my ( $class, $req, %info ) = @_;
+    $info{remote_addr} = $req->address;
     $class->_auditLogger->log( $req, %info );
 }
 

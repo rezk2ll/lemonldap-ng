@@ -105,6 +105,7 @@ sub run {
             'okta2fchoice',
             params => {
                 TOKEN   => $token,
+                TARGET  => $self->p->relativeUrl( $req, 'okta2fchoice' ),
                 MODULES => [
                     map { { CODE => $_, LABEL => $okta_factors->{$_} } }
                     sort keys %$okta_factors

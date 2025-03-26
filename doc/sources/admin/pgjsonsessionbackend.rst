@@ -54,3 +54,9 @@ Name                Comment                                           Example
 .. tip::
 
     Unlike other browseable modules, Pg::JSON does not require an ``Index`` parameter
+
+
+.. tip::
+
+   We recommend adding the `tcp_user_timeout` and `keepalives_idle` options to the DBI string
+   Refer to `the full list of PostgreSQL connection options <https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS>`_

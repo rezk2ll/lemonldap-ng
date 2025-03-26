@@ -328,6 +328,7 @@ sub unauthLogout {
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
+    $self->processHook( $req, 'unAuthLogout' );
     $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
@@ -493,6 +494,7 @@ sub autoRedirect {
                 message => "Redirection to $req->{urldc} blocked",
                 code    => "UNAUTHORIZED_REDIRECT",
                 url     => $req->{urldc},
+                user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
             );
             delete $req->{urldc};
         }
@@ -792,6 +794,7 @@ sub _deleteSession {
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
             code => "LOGOUT",
+            user => $user,
             auth => $mod,
         );
     }
@@ -829,6 +832,7 @@ sub autoPost {
             message => "Redirection to $req->{urldc} blocked",
             code    => "UNAUTHORIZED_REDIRECT",
             url     => $req->{urldc},
+            user    => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
         );
         return PE_BADURL;
     }
@@ -1062,6 +1066,10 @@ sub getTrOver {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    if ( $self->conf->{logParams} ) {
+        $self->_dump($req);
+        $self->_dump( \%args );
+    }
 
     my $skin_template_dir = $self->getSkinTplDir( $self->getSkin($req) );
 
@@ -1279,6 +1287,7 @@ sub tplParams {
     return (
         CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,
+        PORTAL_BASE  => $portalPath,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
@@ -1547,9 +1556,24 @@ sub cspGetHost {
     return;
 }
 
+sub relativeUrl {
+    my $self = shift;
+    my $req  = shift;
+
+    my $uri = $self->_buildUrlObj( $req->portal, @_ );
+    return $uri->path_query;
+}
+
 sub buildUrl {
     my $self = shift;
     return $self->portal unless @_;
+
+    return $self->_buildUrlObj(@_)->as_string;
+}
+
+sub _buildUrlObj {
+    my $self = shift;
+    return URI->new( $self->portal ) unless @_;
 
     # URL base is $self->portal unless first arg is an URL
     my $uri =
@@ -1569,7 +1593,7 @@ sub buildUrl {
         }
     }
     $uri->path_segments(@pathSg);
-    return $uri->as_string;
+    return $uri;
 }
 
 sub rememberBrowser {

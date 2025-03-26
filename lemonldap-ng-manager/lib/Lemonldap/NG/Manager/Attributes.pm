@@ -872,6 +872,9 @@ sub attributes {
             'default' => '',
             'type'    => 'longtext'
         },
+        'casSrvMetaDataOptionsSamlValidate' => {
+            'type' => 'bool'
+        },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'intOrNull'
         },
@@ -1435,6 +1438,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
+        },
+        'disabledPlugins' => {
+            'type' => 'text'
         },
         'disablePersistentStorage' => {
             'default' => 0,
@@ -4403,7 +4409,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'samlService'
         },
         'samlAuthnContextMapExtra' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,

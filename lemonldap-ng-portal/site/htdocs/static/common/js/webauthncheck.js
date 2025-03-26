@@ -5,17 +5,17 @@
   LemonLDAP::NG WebAuthn verify script
   */
   var check, setMsg, setupConditional, trySetupConditional;
-  setMsg = function (msg, level) {
+  setMsg = function setMsg(msg, level) {
     $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
-    $('#color').addClass(`message-${level}`);
+    $('#color').addClass("message-".concat(level));
     if (level === 'positive') {
       level = 'success';
     }
-    return $('#color').addClass(`alert-${level}`);
+    return $('#color').addClass("alert-".concat(level));
   };
-  check = function () {
+  check = function check() {
     var e, request;
     if (!webauthnJSON.supported()) {
       setMsg('webAuthnUnsupported', 'warning');
@@ -49,7 +49,11 @@
       });
     }
   };
-  trySetupConditional = function () {
+
+  // This function is exported so that custom JS code can call it
+  // Do not remove without a deprecation notice
+  window.webauthn_start = check;
+  trySetupConditional = function trySetupConditional() {
     if (PublicKeyCredential.isConditionalMediationAvailable) {
       return PublicKeyCredential.isConditionalMediationAvailable().then(function (result) {
         if (result) {
@@ -58,7 +62,7 @@
       });
     }
   };
-  setupConditional = function () {
+  setupConditional = function setupConditional() {
     var request;
     console.log("Setting up conditional mediation");
     window.webauthnAbort = new AbortController();

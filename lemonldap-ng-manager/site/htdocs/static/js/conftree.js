@@ -56,6 +56,12 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "title" : "casSrvMetaDataOptionsSamlValidate",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",

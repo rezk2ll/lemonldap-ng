@@ -6,7 +6,7 @@
   barWidth = new Map([["Err", "0"], ["0", "20"], ["1", "40"], ["2", "60"], ["3", "80"], ["4", "100"]]);
 
   // display entropy bar with correct level
-  displayEntropyBar = function (level) {
+  displayEntropyBar = function displayEntropyBar(level) {
     // Remove all classes from progressbar and restore default progress-bar class
     $("#entropybar div").removeClass();
     $("#entropybar div").addClass('progress-bar');
@@ -19,7 +19,7 @@
   };
 
   // display custom message if any, else remove hide div block
-  displayEntropyBarMsg = function (msg) {
+  displayEntropyBarMsg = function displayEntropyBarMsg(msg) {
     $("#entropybar-msg").html(msg);
     if (msg.length === 0) {
       return $("#entropybar-msg").addClass("entropyHidden");
@@ -47,13 +47,13 @@
         // send a request to checkentropy endpoint
         return $.ajax({
           dataType: "json",
-          url: "/checkentropy",
+          url: "".concat(scriptname, "checkentropy"),
           method: "POST",
           data: {
             "password": btoa(newpasswordVal)
           },
           context: document.body,
-          success: function (data) {
+          success: function success(data) {
             var level, msg;
             level = data.level;
             msg = data.message;
@@ -87,7 +87,7 @@
               }
             }
           },
-          error: function (j, status, err) {
+          error: function error(j, status, err) {
             var res;
             if (err) {
               console.log('checkentropy: frontend error: ', err);
