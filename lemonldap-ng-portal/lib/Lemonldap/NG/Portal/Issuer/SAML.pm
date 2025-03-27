@@ -1335,7 +1335,6 @@ sub _failAuthnRequest {
         ( $params{'msg'} ? ( reason => $params{'msg'} ) : () ),
         portal_error => portalConsts->{$res},
         user         => $user,
-        logLevel     => 'warn',
         %logInfo,
     );
 

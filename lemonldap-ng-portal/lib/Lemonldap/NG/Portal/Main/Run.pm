@@ -495,7 +495,6 @@ sub autoRedirect {
                 code     => "UNAUTHORIZED_REDIRECT",
                 url      => $req->{urldc},
                 user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
-                logLevel => 'warn',
             );
             delete $req->{urldc};
         }
@@ -797,7 +796,6 @@ sub _deleteSession {
             code     => "LOGOUT",
             user     => $user,
             auth     => $mod,
-            logLevel => 'notice',
         );
     }
 
@@ -835,7 +833,6 @@ sub autoPost {
             code     => "UNAUTHORIZED_REDIRECT",
             url      => $req->{urldc},
             user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
-            logLevel => 'warn',
         );
         return PE_BADURL;
     }

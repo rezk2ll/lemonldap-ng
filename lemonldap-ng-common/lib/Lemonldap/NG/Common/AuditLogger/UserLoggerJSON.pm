@@ -22,14 +22,11 @@ sub log {
     my ( $self, $req, %fields ) = @_;
 
     my $message = $fields{message};
-    my $sub     = $fields{logLevel} || 'info';
-    unless ( $sub =~ /^(?:debug|info|notice|warn|error)$/ ) {
-        $fields{message} = "[malformed logLevel $sub] $fields{message}";
-        $sub = 'error';
-    }
     foreach ( keys %fields ) {
         delete $fields{$_} if ref( $fields{$_} );
     }
-    $self->{userLogger}->$sub( $self->{encode}->( \%fields ) );
+    $fields{remote_addr} = $req->address;
+    $self->{userLogger}->notice( $self->{encode}->( \%fields ) );
 }
+
 1;

@@ -35,8 +35,8 @@ subtest "Check Loki API" => sub {
     my $i;
     foreach my $a (@$postedValues) {
         is( $a->{streams}->[0]->{stream}->{job}, 'llng', 'job is llng' );
-        is( $a->{streams}->[0]->{stream}->{level}, 'info',
-            'log level is info' );
+        ok( $a->{streams}->[0]->{stream}->{level} =~ /^(info|notice)$/,
+            "log level is $1" );
         ok( $a->{streams}->[0]->{stream}->{instance}, 'instance exists' );
         is( $a->{streams}->[0]->{stream}->{env}, 'prod', 'env is prod' );
         ok( $a->{streams}->[0]->{values}->[0]->[0] =~ /^\d+$/,

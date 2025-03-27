@@ -154,7 +154,6 @@ sub failHtmlResponse {
         type         => $self->prefix,
         portal_error => $error,
         user         => $uid,
-        logLevel     => 'notice',
     );
 
     return $self->p->sendHtml(
@@ -179,7 +178,6 @@ sub failResponse {
         type         => $self->prefix,
         portal_error => $error,
         user         => $uid,
-        logLevel     => 'notice',
     );
 
     return $self->p->sendError( $req, $error, $code );

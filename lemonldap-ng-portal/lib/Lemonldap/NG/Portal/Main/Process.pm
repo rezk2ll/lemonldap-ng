@@ -176,7 +176,6 @@ sub controlUrl {
                 message  => "Bad URL $tmp",
                 code     => "UNAUTHORIZED_REDIRECT",
                 url      => $tmp,
-                logLevel => 'warn',
             );
             delete $req->{urldc};
             return PE_BADURL;
@@ -218,7 +217,6 @@ sub controlUrl {
                 ),
                 code     => "UNAUTHORIZED_REDIRECT",
                 url      => $tmp,
-                logLevel => 'warn',
             );
             delete $req->{urldc};
             return PE_UNPROTECTEDURL;

@@ -22,13 +22,7 @@ sub log {
         my ( $module, $file, $line ) = caller(2);
         $message =
           "auditLogger internal error: no message provided at $file line $line";
-        $fields{logLevel} = 'error';
     }
-    my $sub = $fields{logLevel} || 'info';
-    unless ( $sub =~ /^(?:debug|info|notice|warn|error)$/ ) {
-        $message = "[malformed logLevel $sub] $message";
-        $sub     = 'error';
-    }
-    $self->{userLogger}->$sub($message);
+    $self->{userLogger}->notice($message);
 }
 1;

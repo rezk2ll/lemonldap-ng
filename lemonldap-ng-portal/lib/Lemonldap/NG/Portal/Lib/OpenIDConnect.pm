@@ -1749,7 +1749,6 @@ sub returnRedirectError {
         oauth_error  => $error,
         portal_error => portalConsts->{PE_REDIRECT},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
-        logLevel     => ( oidcErrorLevel->{$error} || 'notice' ),
     );
 
     my $urldc =

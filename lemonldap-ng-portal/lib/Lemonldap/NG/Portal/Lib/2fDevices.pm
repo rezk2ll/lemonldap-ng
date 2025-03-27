@@ -114,7 +114,6 @@ sub add2fDevice {
         code     => "2FA_DEVICE_REGISTERED",
         user     => $uid,
         device   => display2F($device),
-        logLevel => 'notice',
     );
     $self->p->updatePersistentSession( $req,
         { _2fDevices => to_json($_2fDevices) } );
@@ -175,7 +174,6 @@ sub del2fDevices {
                 code     => "2FA_DEVICE_DELETED",
                 user     => $uid,
                 device   => display2F($device_spec),
-                logLevel => 'notice',
             );
         }
     }
