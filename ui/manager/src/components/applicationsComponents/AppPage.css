@@ -20,7 +20,7 @@
   flex-wrap: wrap;
   height: 75vh;
   overflow-y: scroll;
-  width: 100vw;
+  width: 100%;
 }
 
 .divider {
@@ -60,7 +60,7 @@
 }
 
 .appDesc table {
-  width: 60vw;
+  width: 75%;
   max-width: 100%;
   flex-wrap: wrap;
   border-collapse: collapse;

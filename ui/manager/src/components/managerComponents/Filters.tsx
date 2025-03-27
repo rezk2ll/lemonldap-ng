@@ -17,6 +17,7 @@ function FilterToggle({
           size="small"
           margin="normal"
           variant="outlined"
+          label={t("search")}
           placeholder={t("search")}
           onChange={(e) => setFilters({ ...filters, search: e.target.value })}
         />

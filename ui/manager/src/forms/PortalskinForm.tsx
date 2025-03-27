@@ -67,7 +67,7 @@ export default function PortalskinForm({
               alt={value}
             />
             <TextField
-              value={"" || value}
+              value={value || ""}
               onChange={(e) => {
                 dispatch(
                   updateConfigParams({

@@ -1,8 +1,5 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Accordion,
-  AccordionSummary
-} from "@mui/material";
+import { Accordion, AccordionSummary } from "@mui/material";
 import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateConfigParams } from "../../features/config/configSlice";
@@ -20,7 +17,7 @@ export function SAMLRenderer() {
   return (
     <div>
       <strong className="title2">{t("SAMLParams")}</strong>
-      <div className="appDesc">
+      <div>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {t("samlNameIDFormatMap")}
@@ -129,7 +126,6 @@ export function SAMLRenderer() {
                 />
               </tr>
               <tr>
-                
                 <IntForm
                   fieldName="samlAuthnContextMapPasswordProtectedTransport"
                   value={Number(
@@ -511,7 +507,6 @@ export function SAMLRenderer() {
                   />
                 </tr>
                 <tr>
-                  
                   <TextForm
                     fieldName="samlCommonDomainCookieReader"
                     value={config.samlCommonDomainCookieReader || ""}
@@ -526,7 +521,6 @@ export function SAMLRenderer() {
                   />
                 </tr>
                 <tr>
-                  
                   <TextForm
                     fieldName="samlCommonDomainCookieWriter"
                     value={config.samlCommonDomainCookieWriter || ""}

@@ -107,7 +107,7 @@ export default function TreeRender({
         <div className="top">
           <HomeButton />
           <strong className="title">
-            {t("Tree")} / {selectedItem?.data?.name}{" "}
+            {t("Tree")} / {selectedItem?.data?.name}
             {selectedItem?.data.help ? (
               <Link
                 target="blank"

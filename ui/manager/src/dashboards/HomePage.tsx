@@ -69,9 +69,9 @@ export function HomePage() {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<DownloadIcon />}
-                    onClick={async () =>
-                      await exportData("full", config.data.metadata.cfgNum)
-                    }
+                    onClick={async function () {
+                      await exportData("full", config.data.metadata.cfgNum);
+                    }}
                   >
                     {t("downloadIt")}
                   </Button>
@@ -125,6 +125,7 @@ export function HomePage() {
                   <TextField
                     type="number"
                     size="small"
+                    label={t("search config num")}
                     error={Boolean(aimedConf && aimedConf <= 0)}
                     helperText={`${"Enter only positive and non nul numbers"}`}
                     placeholder={t("search config num")}

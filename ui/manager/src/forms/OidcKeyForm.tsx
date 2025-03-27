@@ -109,6 +109,7 @@ export default function OidcKeyForm({
               <TextField
                 size="small"
                 margin="normal"
+                label={t("oidcServiceKeyIdSig")}
                 variant="filled"
                 className="formInput"
                 value={value.hash || ""}
@@ -171,6 +172,7 @@ export default function OidcKeyForm({
                 margin="normal"
                 multiline
                 fullWidth
+                label={t("oidcServicePrivateKeySig")}
                 variant="filled"
                 rows={5}
                 className="formInput"
@@ -235,6 +237,7 @@ export default function OidcKeyForm({
                 variant="filled"
                 fullWidth
                 rows={5}
+                label={t("oidcServicePublicKeySig")}
                 className="formInput"
                 value={value.pub || ""}
                 onChange={(e) =>

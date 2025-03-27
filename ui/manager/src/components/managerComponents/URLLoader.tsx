@@ -20,6 +20,7 @@ export function URLLoader({
       <TextField
         size="small"
         margin="normal"
+        label={t("url")}
         type="url"
         placeholder={t("url")}
         onChange={(e) => setUrl(e.target.value)}
@@ -27,7 +28,7 @@ export function URLLoader({
       <Button
         variant="outlined"
         sx={{ verticalAlign: "-28px" }}
-        onClick={async () => {
+        onClick={async function () {
           try {
             setLoading(true);
             setError(false);

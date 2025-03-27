@@ -10,7 +10,9 @@ export default function DisplayOidcMetaDataForm({
   return (
     <>
       <Button
-        onClick={async () => await exportOidcMetadata(confNum)}
+        onClick={async function () {
+          await exportOidcMetadata(confNum);
+        }}
         variant="contained"
       >
         {t("downloadMetadata")}

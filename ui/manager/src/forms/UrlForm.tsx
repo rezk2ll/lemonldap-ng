@@ -26,13 +26,14 @@ export default function UrlForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <TextField
           size="small"
           type="url"
           onChange={(e) => updateFunc(e.target.value)}
+          label={t(fieldName)}
           placeholder={t(fieldName)}
           value={
             value !== undefined && value !== null

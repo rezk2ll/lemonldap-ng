@@ -16,7 +16,6 @@ import { push } from "redux-first-history";
 import { useAppDispatch } from "../app/hooks";
 import i18n from "../i18n";
 import "./NavBar.css";
-import logo from "../static/llng-logo-32.png";
 
 function Navbar({
   htmlName,
@@ -29,7 +28,7 @@ function Navbar({
 }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const partial = htmlName=="partial.html"
+  const partial = htmlName == "partial.html";
   return (
     <>
       <Drawer
@@ -51,7 +50,7 @@ function Navbar({
         <div className="navbarOptions">
           <Typography>
             <img
-              src={logo}
+              src={`static/logos/llng-logo-32.png`}
               alt="LemonLogo"
               style={{ backgroundColor: "white" }}
             />
@@ -181,9 +180,15 @@ function OptionMenu() {
             color="secondary"
             aria-label="Basic button group"
           >
-            <Button onClick={() => handleLanguageChange("fr")}>🇫🇷</Button>
-            <Button onClick={() => handleLanguageChange("en")}>🇬🇧</Button>
-            <Button onClick={() => handleLanguageChange("es")}>🇪🇸</Button>
+            {(
+              window as unknown as Record<string, string[]>
+            ).availableLanguages.map((lang: string) => {
+              return (
+                <Button onClick={() => handleLanguageChange(lang)} key={lang}>
+                  <img src={`static/logos/${lang}.png`} />
+                </Button>
+              );
+            })}
           </ButtonGroup>
         </MenuItem>
         <Divider />

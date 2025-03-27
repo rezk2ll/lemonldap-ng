@@ -8,7 +8,7 @@ export default function SMTPForm() {
   const [recipient, setRecipient] = useState<string>();
   const [result, setResult] = useState<Record<string, string>>();
 
-  const next = async () => {
+  const next = async function () {
     const response = await sendTestMail(recipient || "");
     setResult(response.data);
   };

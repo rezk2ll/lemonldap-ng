@@ -26,12 +26,13 @@ export default function IntForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <TextField
           size="small"
           type="number"
+          label={t(fieldName)}
           onChange={(e) => updateFunc(e.target.value)}
           placeholder={t(fieldName)}
           value={

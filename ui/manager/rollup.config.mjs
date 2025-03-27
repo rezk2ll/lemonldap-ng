@@ -17,7 +17,10 @@ import postcssModules from "postcss-modules";
 import postcssPresetEnv from "postcss-preset-env";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
+
+// https://github.com/d3/d3-interpolate/issues/58
+const D3_WARNING = /Circular dependency.*d3-interpolate/;
 
 export default {
   input: ["src/index.tsx"],
@@ -27,6 +30,20 @@ export default {
     sourcemap: true,
     entryFileNames: "static/manager-[hash].js",
     inlineDynamicImports: true,
+    sourcemap: true, // Ensure source maps are generated
+  },
+  onwarn(warning, warn) {
+    if (D3_WARNING.test(warning)) {
+      return;
+    }
+    if (warning.code === "THIS_IS_UNDEFINED") {
+      return;
+    }
+    if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+      return;
+    }
+
+    warn(warning);
   },
   plugins: [
     svgr(),
@@ -70,7 +87,7 @@ export default {
     }),
     html({
       fileName: "index.html",
-      title: "React app built with rollup",
+      title: "Lemonldap react app built with rollup",
       template: ({ attributes, bundle, files, publicPath, title }) => {
         let scripts = "";
         files.js.forEach((bundle) => {
@@ -89,5 +106,5 @@ export default {
       },
     }),
     // terser(),
-  ]
+  ],
 };

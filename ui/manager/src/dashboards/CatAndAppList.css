@@ -1,29 +1,10 @@
 .catCard {
-  background-color: rgb(215, 239, 247);
+  background-color: rgb(245, 245, 245);
   border: 2px solid #acacac;
   border-radius: 15px;
   cursor: pointer;
   text-align: left;
   margin: 2%;
-}
-
-.applications {
-  display: grid;
-  grid-gap: 5px;
-  grid-auto-flow: row;
-  grid-auto-rows: 1fr;
-}
-
-@media only screen and (min-width: 640px) {
-  .applications {
-    grid-template-columns: 45% 45%;
-  }
-}
-
-@media (min-width: 981px) {
-  .applications {
-    grid-template-columns: 30% 30% 30%;
-  }
 }
 
 .catHeader {

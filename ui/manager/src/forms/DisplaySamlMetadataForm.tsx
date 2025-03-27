@@ -10,7 +10,9 @@ export default function DisplaySamlMetaDataForm({
   return (
     <>
       <Button
-        onClick={async () => await exportSamlMetadata(confNum)}
+        onClick={async function () {
+          await exportSamlMetadata(confNum);
+        }}
         variant="contained"
       >
         {t("downloadMetadata")}

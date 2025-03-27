@@ -49,6 +49,7 @@ export default function SelectForm({
               labelId={fieldName}
               size="small"
               label={t(fieldName)}
+              placeholder={t(fieldName)}
               value={currentValue}
               displayEmpty
               sx={{ m: 1, minWidth: 120 }}

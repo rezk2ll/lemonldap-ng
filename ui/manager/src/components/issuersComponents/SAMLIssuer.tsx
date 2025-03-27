@@ -37,7 +37,7 @@ export function SAMLIssuer() {
   const config = useAppSelector((state) => state.config.data.config);
   const dispatch = useAppDispatch();
   const [option, setOption] = useState("basic");
-  const handleGenerateKeys = async () => {
+  const handleGenerateKeys = async function () {
     try {
       const result = await NewCertificate();
 
@@ -57,12 +57,12 @@ export function SAMLIssuer() {
           <IconButton
             size="large"
             color="secondary"
-            onClick={async () =>
+            onClick={async function () {
               await exportData(
                 "samlMetadata",
                 config.cfgNum ? config.cfgNum : 1
-              )
-            }
+              );
+            }}
           >
             <DownloadIcon />
           </IconButton>
@@ -226,6 +226,7 @@ export function SAMLIssuer() {
                   <td>
                     <TextField
                       size="small"
+                      label={t("samlServicePrivateKeySig")}
                       margin="normal"
                       multiline
                       fullWidth
@@ -283,6 +284,7 @@ export function SAMLIssuer() {
                       size="small"
                       margin="normal"
                       multiline
+                      label={t("samlServicePublicKeySig")}
                       fullWidth
                       rows={4}
                       className="formInput"

@@ -26,12 +26,13 @@ export default function LongtextForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <TextField
           size="small"
           type="text"
+          label={t(fieldName)}
           multiline
           rows={4}
           onChange={(e) => updateFunc(e.target.value)}

@@ -26,11 +26,12 @@ export default function PasswordForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <TextField
           size="small"
+          label={t(fieldName)}
           type="password"
           onChange={(e) => updateFunc(e.target.value)}
           placeholder={t(fieldName)}

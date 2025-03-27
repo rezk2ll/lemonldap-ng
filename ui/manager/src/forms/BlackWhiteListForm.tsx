@@ -33,7 +33,7 @@ export default function BlackWhiteListForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <FormControl>
@@ -69,6 +69,7 @@ export default function BlackWhiteListForm({
           onChange={(e) =>
             updateFunc(`${String(value).split(";")[0]};${e.target.value}`)
           }
+          label={t(fieldName)}
           placeholder={t(fieldName)}
           value={
             value.split(";")[1] ||

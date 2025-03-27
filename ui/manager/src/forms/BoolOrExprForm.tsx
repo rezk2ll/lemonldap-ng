@@ -34,7 +34,7 @@ export default function BoolOrExprForm({
           </Markdown>
         }
       >
-        <th >{t(fieldName)}</th>
+        <th>{t(fieldName)}</th>
       </Tooltip>
       <td>
         <FormControl>
@@ -61,6 +61,7 @@ export default function BoolOrExprForm({
           <TextField
             size="small"
             multiline
+            label={t(fieldName)}
             variant="filled"
             rows={4}
             onChange={(e) => updateFunc(e.target.value)}

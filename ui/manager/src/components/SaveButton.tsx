@@ -16,12 +16,13 @@ export default function SaveButton({ partial }: { partial?: boolean }) {
   const dispatch = useAppDispatch();
   const config = useAppSelector((state) => state.config);
   const data = useAppSelector((state) => state.config.data.config);
+
   return (
     <div>
       <Fab
         className="saveButton"
         color="primary"
-        onClick={async () => {
+        onClick={async function () {
           let stateOk = true;
           if (data.oidcRPMetaDataOptions) {
             Object.keys(data.oidcRPMetaDataOptions).forEach((app) => {
