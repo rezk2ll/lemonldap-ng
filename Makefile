@@ -297,7 +297,7 @@ CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 #  - packaging targets
 #  - developper corner
 
-all:	configure common handler manager portal documentation rollup
+all:	configure common handler manager portal documentation
 	@echo
 	@echo "Building succeed. Now run :"
 	@echo " - 'make test' to verify your installation"
@@ -575,7 +575,7 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 nox_e2e_test:
 	xvfb-run -a -s "-screen 0 800x600x16" $(MAKE) e2e_test
 
-prepare_test_server:
+prepare_test_server: rollup
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
 	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
