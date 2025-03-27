@@ -297,7 +297,7 @@ CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 #  - packaging targets
 #  - developper corner
 
-all:	configure common handler manager portal documentation rollup
+all:	configure common handler manager portal documentation
 	@echo
 	@echo "Building succeed. Now run :"
 	@echo " - 'make test' to verify your installation"
