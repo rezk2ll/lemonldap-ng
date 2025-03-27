@@ -145,7 +145,6 @@ sub _getLanguageListFromHeader {
 
 sub auditLog {
     my ( $self, $req, %info ) = @_;
-    $info{remote_addr} = $req->address;
     $self->_auditLogger->log( $req, %info );
 }
 

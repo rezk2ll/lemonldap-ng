@@ -30,6 +30,12 @@ use Lemonldap::NG::Portal::Main::Constants
 
 our $VERSION = '2.21.0';
 
+use constant oidcErrorLevel => {
+    server_error     => 'error',
+    invalid_request  => 'warn',
+    consent_required => 'notice',
+};
+
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
@@ -441,9 +447,9 @@ sub buildAuthorizationCodeAuthnRequest {
         client_id     => $client_id,
         scope         => $scope,
         redirect_uri  => $redirect_uri,
-        ( defined $state ? ( state => $state ) : () ),
-        ( defined $nonce ? ( nonce => $nonce ) : () ),
-        ( defined $login_hint ? ( login_hint => $login_hint) : () ),
+        ( defined $state      ? ( state      => $state )      : () ),
+        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $login_hint ? ( login_hint => $login_hint ) : () ),
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
@@ -1728,6 +1734,7 @@ sub createHash {
 # @param state OAuth 2.0 state value
 # @param fragment Set to true to return fragment component
 # @return void
+
 sub returnRedirectError {
     my ( $self, $req, $redirect_url, $error, $error_description,
         $error_uri, $state, $fragment )

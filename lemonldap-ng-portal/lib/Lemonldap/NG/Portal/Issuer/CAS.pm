@@ -1192,9 +1192,9 @@ sub _failLoginRule {
         $req,
         code => "ISSUER_CAS_LOGIN_FAILED",
         ( $app ? ( app => $app ) : () ),
-        message => ("User $user is not authorized to access to $app"),
-        reason  => "User is not authorized by access rule",
-        user    => $user,
+        message  => ("User $user is not authorized to access to $app"),
+        reason   => "User is not authorized by access rule",
+        user     => $user,
     );
 
     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
