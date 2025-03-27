@@ -1,1 +1,0 @@
-{"test2":"%SERVERENV:B% %SERVERENV:C%","test":"%SERVERENV:A%","%SERVERENV:MYKEY%":{"array":["a","%SERVERENV:B% %SERVERENV:C%"],"test":"Test: %SERVERENV:A%"},"cfgNum":1}
