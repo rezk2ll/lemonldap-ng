@@ -265,10 +265,3 @@ On Debian, you can install rollupjs and the needed dependencies with:
 ::
 
     apt install rollup node-rollup-plugin-babel
-
-
-Debugging
-~~~~~~~~~
-
-$req and req->{env} variables can be dumped by using logParams = 1 in `lemonldap-ng.ini` file.
-High debug level can be enabled in `Manager/Conf/Parser.pm` with `HIGHDEBUG => 1`
