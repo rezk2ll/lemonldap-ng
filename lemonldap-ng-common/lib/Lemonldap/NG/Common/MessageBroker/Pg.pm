@@ -69,6 +69,8 @@ sub _dbh {
     my ($self) = @_;
     return $self->{_dbh} if ( $self->{_dbh} and $self->{_dbh}->ping );
     $self->{_dbh} = undef;
+
+    # This timeout is inspired from example given by DBI(3)
     my $mask = POSIX::SigSet->new(SIGALRM);
     my $action =
       POSIX::SigAction->new( sub { die "connect timeout\n" }, $mask );
@@ -80,6 +82,9 @@ sub _dbh {
             $self->{_dbh} =
               DBI->connect( $self->{dbiChain}, $self->{dbiUser},
                 $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
+
+            # Re subscribe to all channels when reconnecting
+            $self->subscribe($_) foreach ( keys %{ $self->{messages} || {} } );
         };
         alarm(0);
     };
