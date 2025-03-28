@@ -11,6 +11,8 @@
 #   * PUT /sessions/<type>/<session-id>          : update some keys
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
+# Add a "hash=1" parameter in your query if store is hashed and session-id is the user value
+#
 # When the storage is hashed, and if those APIs are called with real IDs, not
 # the storage IDs, it is required to add a "hash=1" parameter in the URL.
 #
