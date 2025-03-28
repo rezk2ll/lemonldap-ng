@@ -70,6 +70,10 @@ Application parameters:
 .. tip::
 
     Categories and applications are displayed in alphabetical order.
+    Applications are displayed based on access rule only to propose the reauthentication mechanism.
+    It means that authentication level is not taken into account.
+    To hide applications depending on authentication level, you have to append an authentication level condition
+    like this: `$uid eq 'dwho' && $authenticationLevel == 5`
 
 |image1|
 
