@@ -263,19 +263,27 @@ Loki
 
 Here are the configuration parameters with their default values:
 
-* ``lokiUrl`` (``http://localhost:3100/loki/api/v1/push``)
-* ``lokiLabel`` (``llng``)
-* ``lokiInstance`` (hostname command result)
-* ``lokiEnv`` (``prod``)
-* ``lokiService`` (``llng``) *(when used as technical logger)*
-* ``lokiUserService`` (``auth``) *(when used as userLogger)*
+===================== ================================================================================================================================================= ==========================================
+Parameter             Comment                                                                                                                                           Default value
+===================== ================================================================================================================================================= ==========================================
+``lokiUrl``           URL of Loki API                                                                                                                                   ``http://localhost:3100/loki/api/v1/push``
+``lokiLabel``         Value of ``label`` field                                                                                                                          ``llng``
+``lokiInstance``      Value of ``instance`` field                                                                                                                       *(hostname command result)*
+``lokiEnv``           Value of ``env`` field                                                                                                                            ``prod``
+``lokiService``       Value of "service" when used as technical logger                                                                                                  ``llng``
+``lokiUserService``   Value of "service" when used as userLogger                                                                                                        ``auth``
+``lokiTenant``        Used to populate ``X-Scope-OrgID`` header
+``lokiTenantHeader``  Used to change default tenant header                                                                                                              ``X-Scope-OrgID``
+``lokiAuthorization`` Set here the whole value to put in the ``Authorization`` header. For example: ``Basic dXNlcjpwYXNzd29yZA==`` *(Base64 encoding of user:password)*
+===================== ================================================================================================================================================= ==========================================
 
-Is it recommended to combine this logger with the audit logger
-``Lemonldap::NG::Common::AuditLogger::UserLoggerJSON`` to have useful logs
-for Grafana.
+Is it recommended to combine this logger with the :ref:`auditLogger <auditlogs>`
+"``Lemonldap::NG::Common::AuditLogger::UserLoggerJSON``" to have useful logs
+for Grafana. Example of ``lemonldap-ng.ini`` file:
 
 .. code-block:: ini
 
+   [ all ]
    logger      = Lemonldap::NG::Common::Logger::Loki
    auditLogger = Lemonldap::NG::Common::AuditLogger::UserLoggerJSON
    lokiUrl     = http://10.1.2.3/loki/api/v1/push

@@ -20,6 +20,7 @@ sub new {
     $self->{env}           = $conf->{lokiEnv}      || 'prod';
     $self->{tenant}        = $conf->{lokiTenant};
     $self->{authorization} = $conf->{lokiAuthorization};
+    $self->{tenantHeader}  = $conf->{lokiTenantHeader} || 'X-Scope-OrgID';
     $self->{service} =
       $args{user}
       ? ( $conf->{lokiUserService} || 'auth' )
@@ -66,7 +67,10 @@ sub log {
                 ? ( 'Authorization' => $self->{authorization} )
                 : ()
             ),
-            ( $self->{tenant} ? ( 'X-Scope-OrgID' => $self->{tenant} ) : () )
+            (
+                $self->{tenant} ? ( $self->{tenantHeader} => $self->{tenant} )
+                : ()
+            )
         ],
         $self->{j}->encode($logEntry)
     );
