@@ -83,10 +83,10 @@ sub _dbh {
         };
         alarm(0);
     };
-    return $self->{_dbh} ||= bless {}, 'DBI::Failed';
+    return $self->{_dbh} ||= bless {}, 'Lemonldap::NG::DBI::Failed';
 }
 
-package DBI::Failed;
+package Lemonldap::NG::DBI::Failed;
 
 sub AUTOLOAD {
     print STDERR "MsgBroker: Unable to load DBI\n";
