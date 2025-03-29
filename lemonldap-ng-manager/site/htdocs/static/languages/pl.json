@@ -1029,7 +1029,7 @@
 "rememberCookieName":"Nazwa ciasteczka",
 "rememberCookieTimeout":"żywotność ciasteczek",
 "rememberDefaultChecked":"Zaznacz domyślnie",
-"rememberTimer":"Zegar przed automatycznym uwierzytelnieniem",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Nazwa ciasteczka",
 "remoteGlobalStorage":"Moduł sesji",
 "remoteGlobalStorageOptions":"Opcje modułu sesji",

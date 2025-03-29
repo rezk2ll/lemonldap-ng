@@ -1029,7 +1029,7 @@
 "rememberCookieName":"Имя файла cookie",
 "rememberCookieTimeout":"время жизни файлов куки",
 "rememberDefaultChecked":"Проверить по умолчанию",
-"rememberTimer":"Таймер перед автоматической аутентификацией",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Имя файла cookie",
 "remoteGlobalStorage":"Модуль сеансов",
 "remoteGlobalStorageOptions":"Параметры модуля сеансов",

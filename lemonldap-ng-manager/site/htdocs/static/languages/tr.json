@@ -1029,7 +1029,7 @@
 "rememberCookieName":"Çerez adı",
 "rememberCookieTimeout":"çerez ömrü",
 "rememberDefaultChecked":"Varsayılan olarak kontrol et",
-"rememberTimer":"Otomatik kimlik doğrulamasından önce zamanlayıcı",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Çerez adı",
 "remoteGlobalStorage":"Oturumlar modülü",
 "remoteGlobalStorageOptions":"Oturumlar modülü seçenekleri",

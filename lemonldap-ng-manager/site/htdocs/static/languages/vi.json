@@ -1029,7 +1029,7 @@
 "rememberCookieName":"Tên cookie",
 "rememberCookieTimeout":"thời gian tồn tại của cookie",
 "rememberDefaultChecked":"Được chọn mặc định",
-"rememberTimer":"Bộ đếm thời gian trước khi xác thực tự động",
+"rememberTimer":"Timer before automatic authentication choice",
 "remoteCookieName":"Tên cookie",
 "remoteGlobalStorage":"Mô-đun phiên",
 "remoteGlobalStorageOptions":"Tùy chọn mô-đun phiên",
