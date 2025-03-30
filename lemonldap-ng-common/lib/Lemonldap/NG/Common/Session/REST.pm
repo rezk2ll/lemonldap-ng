@@ -459,7 +459,7 @@ sub _session {
       or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
-    my $hashed = $req->param('uservalue') ? 1 : 0;
+    my $hashed = $req->param('hash') ? 1 : 0;
     my $apacheSession =
       $self->getApacheSession( $mod, $id, hashStore => $hashed )
       or return $self->sendError( $req, undef, 400 );
