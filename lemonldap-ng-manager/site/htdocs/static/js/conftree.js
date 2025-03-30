@@ -56,6 +56,12 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "title" : "casSrvMetaDataOptionsSamlValidate",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
@@ -750,6 +756,12 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
                   "title" : "oidcRPMetaDataOptionsAllowOffline",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "title" : "oidcRPMetaDataOptionsAllowNativeSso",
                   "type" : "bool"
                },
                {

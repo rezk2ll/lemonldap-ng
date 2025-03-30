@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_REGISTERFORMEMPTY
 );
 
-our $VERSION = '2.18.2';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

@@ -52,6 +52,7 @@ bruteForceProtectionMaxAge                              Max age between current 
 bruteForceProtectionMaxFailed                           Max allowed failed login                                                             ✔
 bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔
 bruteForceProtectionTempo                               Lock time                                                                            ✔
+cacheTagSalt                                            Salt value for cache busting tag                                                     ✔
 captcha                                                 Captcha backend module                                                               ✔      ✔
 captchaOptions                                          Captcha module options                                                               ✔      ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
@@ -175,6 +176,7 @@ decryptValueRule                                        Decrypt value activation
 defaultNewKeySize                                       Default size for new RSA key helper                                                                 ✔       ✔
 demoExportedVars                                        Demo exported variables                                                              ✔
 disablePersistentStorage                                Enabled persistent storage                                                           ✔
+disabledPlugins                                         Disabled plugins                                                                     ✔
 displaySessionId                                        Display _session_id with sessions explorer                                           ✔
 domain                                                  DNS domain                                                                           ✔      ✔
 eventQueueName                                          Event channel name                                                                   ✔
@@ -200,6 +202,7 @@ findUserControl                                         Regular expression to va
 findUserExcludingAttributes                             Attributes used for excluding accounts                                               ✔
 findUserSearchingAttributes                             Attributes used for searching accounts                                               ✔
 findUserWildcard                                        Character used as wildcard                                                           ✔
+floatingCategoryName                                    Name of the category displayed as floating menu                                      ✔
 forceGlobalStorageIssuerOTT                             Force Issuer tokens to be stored into Global Storage                                 ✔                      ✔
 forceGlobalStorageUpgradeOTT                            Force Upgrade tokens be stored into Global Storage                                   ✔                      ✔
 formTimeout                                             Token timeout for forms                                                              ✔
@@ -409,6 +412,7 @@ oidcServiceMetaDataAuthnContext                         OpenID Connect Authentic
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
 oidcServiceMetaDataBackChannelURI                       OpenID Connect Back-Channel logout endpoint                                          ✔
 oidcServiceMetaDataCheckSessionURI                      OpenID Connect check session iframe                                                  ✔
+oidcServiceMetaDataDisallowNoneAlg                                                                                                           ✔
 oidcServiceMetaDataEndSessionURI                        OpenID Connect end session endpoint                                                  ✔
 oidcServiceMetaDataFrontChannelURI                      OpenID Connect Front-Channel logout endpoint                                         ✔
 oidcServiceMetaDataIntrospectionURI                     OpenID Connect introspection endpoint                                                ✔
@@ -417,6 +421,7 @@ oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endp
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
+oidcServiceMetadataTtl                                  OIDC Metadata TTL                                                                    ✔
 oidcServiceNewKeyIdSig                                  Future OpenID Connect Signature Key ID                                               ✔
 oidcServiceNewKeyTypeSig                                                                                                                     ✔
 oidcServiceNewPrivateKeySig                                                                                                                  ✔

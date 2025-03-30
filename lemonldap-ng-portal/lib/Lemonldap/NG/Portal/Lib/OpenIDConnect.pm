@@ -30,6 +30,12 @@ use Lemonldap::NG::Portal::Main::Constants
 
 our $VERSION = '2.21.0';
 
+use constant oidcErrorLevel => {
+    server_error     => 'error',
+    invalid_request  => 'warn',
+    consent_required => 'notice',
+};
+
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
@@ -337,7 +343,7 @@ sub refreshJWKSdata {
 }
 
 sub refreshJWKSdataForOp {
-    my ( $self, $op ) = @_;
+    my ( $self, $op, $force ) = @_;
 
     $self->logger->debug("Attempting to refresh JWKS data for $op");
 
@@ -349,22 +355,27 @@ sub refreshJWKSdataForOp {
       $self->opOptions->{$op}->{oidcOPMetaDataOptionsJWKSTimeout};
     my $jwksUri = $self->opMetadata->{$op}->{conf}->{jwks_uri};
 
-    unless ($jwksTimeout) {
-        $self->logger->debug(
-            "No JWKS refresh timeout defined for $op, skipping...");
-        return;
-    }
-
     unless ($jwksUri) {
         $self->logger->debug("No JWKS URI defined for $op, skipping...");
         return;
     }
 
-    if ( $self->opMetadata->{$op}->{jwks}->{time}
-        && ( $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time ) )
-    {
-        $self->logger->debug("JWKS data still valid for $op, skipping...");
-        return;
+    if ( !$force ) {
+        unless ($jwksTimeout) {
+            $self->logger->debug(
+                "No JWKS refresh timeout defined for $op, skipping...");
+            return;
+        }
+
+        if (
+            $self->opMetadata->{$op}->{jwks}->{time}
+            && (
+                $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time )
+          )
+        {
+            $self->logger->debug("JWKS data still valid for $op, skipping...");
+            return;
+        }
     }
 
     $self->logger->debug("Refresh JWKS data for $op from $jwksUri");
@@ -429,14 +440,16 @@ sub buildAuthorizationCodeAuthnRequest {
     my $max_age       = $self->opOptions->{$op}->{oidcOPMetaDataOptionsMaxAge};
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
+    my $login_hint = $req->data->{suggestedLogin};
 
     my $authorize_request_oauth2_params = {
         response_type => $response_type,
         client_id     => $client_id,
         scope         => $scope,
         redirect_uri  => $redirect_uri,
-        ( defined $state ? ( state => $state ) : () ),
-        ( defined $nonce ? ( nonce => $nonce ) : () ),
+        ( defined $state      ? ( state      => $state )      : () ),
+        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $login_hint ? ( login_hint => $login_hint ) : () ),
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
@@ -1439,7 +1452,7 @@ sub getOpenIDConnectSession {
         if (
             time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            $self->logger->error("Session $id has expired");
+            $self->logger->notice("Session $id has expired");
             return undef;
         }
     }
@@ -1447,7 +1460,7 @@ sub getOpenIDConnectSession {
     # Make sure the token is still valid, we already compensated for
     # different TTLs when storing _utime
     if ( time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) ) {
-        $self->logger->error("Session $id has expired");
+        $self->logger->notice("Session $id has expired");
         return undef;
     }
 
@@ -1538,7 +1551,25 @@ sub decodeJWT {
 
     my $jwks;
     if ($op) {
+
+        # Always refresh JWKS if timeout has elapsed
         $self->refreshJWKSdataForOp($op);
+
+        my $kid = $jwt_header->{kid};
+
+        # If the JWT is signed by an unknown kid, force a refresh
+        if (
+            $kid
+            and !$self->_kid_found_in_jwks(
+                $kid, $self->opMetadata->{$op}->{jwks}
+            )
+          )
+        {
+            $self->logger->debug(
+                "Key ID $kid not found in current JWKS, forcing JWKS refresh");
+            $self->refreshJWKSdataForOp( $op, 1 );
+        }
+
         $jwks = $self->opMetadata->{$op}->{jwks};
     }
     else {
@@ -1611,6 +1642,18 @@ sub decodeJWT {
         return;
     }
     return wantarray ? ( $content, $alg ) : $content;
+}
+
+sub _kid_found_in_jwks {
+    my ( $self, $kid, $jwks ) = @_;
+
+    return 0 if !$kid;
+
+    my @keys = $jwks ? @{ $jwks->{keys} // [] } : ();
+
+    my @found = grep { $_->{kid} and $_->{kid} eq $kid } @keys;
+
+    return @found > 0;
 }
 
 ### HERE
@@ -1691,6 +1734,7 @@ sub createHash {
 # @param state OAuth 2.0 state value
 # @param fragment Set to true to return fragment component
 # @return void
+
 sub returnRedirectError {
     my ( $self, $req, $redirect_url, $error, $error_description,
         $error_uri, $state, $fragment )
@@ -1704,6 +1748,7 @@ sub returnRedirectError {
         ( $error_description ? ( reason => $error_description ) : () ),
         oauth_error  => $error,
         portal_error => portalConsts->{PE_REDIRECT},
+        user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
     );
 
     my $urldc =
@@ -1860,12 +1905,12 @@ sub getEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $scheme );
 
     my $authorization = $req->authorization;
-    if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
+    if ( $authorization and $authorization =~ m#^Basic ([[:alnum:]+/=]+)#i ) {
         $scheme = 'client_secret_basic';
         $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
-              split( /:/, decode_base64($1) );
+              split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
 
@@ -2738,7 +2783,8 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return Digest::SHA::hmac_sha256_base64(
+    return $sessionInfo->{_oidc_sid}
+      || Digest::SHA::hmac_sha256_base64(
         $sessionInfo->{_session_id} . ':' . $rp );
 }
 

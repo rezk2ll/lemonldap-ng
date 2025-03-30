@@ -178,6 +178,7 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'dbiAuthChain', 'dbiAuthUser',
                                         'dbiAuthPassword'
@@ -813,6 +814,7 @@ sub tree {
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
+                                'publicNotifications',
                                 'notificationsExplorer',
                                 'notificationWildcard',
                                 'oldNotifFormat',

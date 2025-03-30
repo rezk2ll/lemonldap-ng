@@ -23,6 +23,6 @@ sub log {
         $message =
           "auditLogger internal error: no message provided at $file line $line";
     }
-    $self->{userLogger}->info($message);
+    $self->{userLogger}->notice($message);
 }
 1;

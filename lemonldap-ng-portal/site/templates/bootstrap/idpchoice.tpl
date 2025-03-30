@@ -15,6 +15,9 @@
     <TMPL_IF NAME="CONFIRMKEY">
       <input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
     </TMPL_IF>
+    <TMPL_IF NAME="LOGIN_HINT">
+      <input type="hidden" name="login_hint" value="<TMPL_VAR NAME="LOGIN_HINT">" />
+    </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
     <div class="card border-info">

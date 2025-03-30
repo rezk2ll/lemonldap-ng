@@ -872,6 +872,9 @@ sub attributes {
             'default' => '',
             'type'    => 'longtext'
         },
+        'casSrvMetaDataOptionsSamlValidate' => {
+            'type' => 'bool'
+        },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'intOrNull'
         },
@@ -2872,6 +2875,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAllowNativeSso' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
             'type'    => 'bool'
@@ -4093,6 +4099,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'publicNotifications' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'radius2fActivation' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
@@ -4403,7 +4413,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'samlService'
         },
         'samlAuthnContextMapExtra' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,
