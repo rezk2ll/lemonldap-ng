@@ -130,7 +130,7 @@ sub tests {
             }
 
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
-                push @pb, $vh if ( grep /^$vh$/, @all_aliases );
+                push @pb, $vh if ( grep { lc($_) eq lc($vh) } @all_aliases );
             }
             return @pb
               ? ( 0, 'Virtual hosts ' . join( ', ', @pb ) . ' match an alias' )
