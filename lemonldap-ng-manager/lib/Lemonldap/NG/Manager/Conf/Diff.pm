@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Manager::Conf::Parser;
 use Lemonldap::NG::Common::Conf::Constants;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 *defaultValue = \&Lemonldap::NG::Manager::Conf::Parser::defaultValue;
 

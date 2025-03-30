@@ -4,7 +4,7 @@ use strict;
 use JSON;
 use POSIX qw(:signal_h);
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;

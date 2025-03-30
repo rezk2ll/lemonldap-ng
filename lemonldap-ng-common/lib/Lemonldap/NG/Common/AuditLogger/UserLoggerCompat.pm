@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::AuditLogger::UserLoggerCompat;
 
 use Scalar::Util qw(weaken);
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 sub new {
     my ( $class, $psgi_or_handler ) = @_;

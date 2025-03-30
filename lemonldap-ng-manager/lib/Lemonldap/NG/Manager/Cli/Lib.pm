@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Manager;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
