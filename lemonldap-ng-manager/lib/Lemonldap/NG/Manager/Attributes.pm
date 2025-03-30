@@ -4099,6 +4099,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'publicNotifications' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'radius2fActivation' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

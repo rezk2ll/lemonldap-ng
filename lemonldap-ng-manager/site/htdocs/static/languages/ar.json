@@ -980,6 +980,7 @@
 "proxySessionService":"رابط اليورال لخدمة الجلسة",
 "proxyUseSoap":"استخدام سواب بدلا من ريست",
 "publicKey":"المفتاح العمومي",
+"publicNotifications":"Public notifications",
 "purgeNotification":"حذف الإشعار نهائيا",
 "radius2f":"Radius second factor",
 "radius2fActivation":"تفعيل",

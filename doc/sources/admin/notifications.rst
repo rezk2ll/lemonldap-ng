@@ -29,6 +29,64 @@ or in ``lemonldap-ng.ini`` [portal] section:
    [portal]
    notification = 1
 
+Public notifications 
+~~~~~~~~~~~~~~~~~~~~
+
+Public notifications allows to display a carousel of messages to all users on the login page.
+This plugin uses the Notification , they will be displayed when he access to the
+portal. 
+
+Disabled by default, you just have to activate it in the
+Manager (``General Parameters`` » ``Plugins`` » ``Notifications`` »
+``Public Notifications``)
+
+or in ``lemonldap-ng.ini`` [portal] section:
+
+.. code-block:: ini
+
+   [portal]
+   notificationsExplorer = 1
+   publicNotification = 1
+
+Usage
+^^^^^
+
+When enabled, create a notification for a "public" recipient. There are 3 types pf publibc recipients, "public-info", "public-warn", "public-error". Each will be displayed with a different color (respectively blue, yellow and red).
+
+Examples
+^^^^^^^^
+
+JSON
+''''
+
+.. code::
+
+   [{
+   "uid": "public-info",
+   "date": "2009-01-27",
+   "reference": "ABC",
+   "title": "Application Maintenance",
+   "subtitle": "Application 1",
+   "text": "Application 1 is scheduled to be in maintenance from 9am to 10 am and won't be available",
+   },
+   {
+   "uid": "public-error",
+   "date": "2009-01-27",
+   "reference": "ABC",
+   "title": "Application Maintenance",
+   "subtitle": "Application 1",
+   "text": "Application 1 is scheduled to be in maintenance from 9am to 10 am and won't be available",
+   },
+   {
+   "uid": "public-warn",
+   "date": "2009-01-27",
+   "reference": "ABC",
+   "title": "Application Maintenance",
+   "subtitle": "Application 1",
+   "text": "Application 1 is scheduled to be in maintenance from 9am to 10 am and won't be available",
+   }] # No comma at the end
+
+
 Explorer
 ~~~~~~~~
 

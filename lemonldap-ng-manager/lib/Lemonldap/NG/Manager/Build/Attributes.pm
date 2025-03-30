@@ -1632,6 +1632,11 @@ sub attributes {
             default       => 'allusers',
             documentation => 'Notification string to match all users',
         },
+        publicNotifications => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable PublicNotification plugin',
+        },
         notificationXSLTfile => {
             type          => 'text',
             documentation => 'Custom XSLT document for notifications',

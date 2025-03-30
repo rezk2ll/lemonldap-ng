@@ -980,6 +980,7 @@
 "proxySessionService":"工作階段服務 URL",
 "proxyUseSoap":"使用 SOAP 而非 REST",
 "publicKey":"公鑰",
+"publicNotifications":"Public notifications",
 "purgeNotification":"明確刪除通知",
 "radius2f":"Radius 第二因素",
 "radius2fActivation":"啟用",

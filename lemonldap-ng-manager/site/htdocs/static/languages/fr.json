@@ -980,6 +980,7 @@
 "proxySessionService":"URL du service de session",
 "proxyUseSoap":"Utiliser SOAP au lieu de REST",
 "publicKey":"Clef publique",
+"publicNotifications":"Notifications publiques",
 "purgeNotification":"Supprimer définitivement la notification",
 "radius2f":"Second facteur Radius",
 "radius2fActivation":"Activation",
