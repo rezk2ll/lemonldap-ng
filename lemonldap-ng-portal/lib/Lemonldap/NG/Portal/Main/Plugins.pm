@@ -13,11 +13,13 @@ use Mouse;
 #
 # Developers: 2FA must be loaded before Notifications
 # Developers: GlobalLogout must be the last loaded plugin
+# Developers: Notifications must be loaded before PublicNotifications
 our @pList = (
     portalDisplayResetPassword          => '::Plugins::MailPasswordReset',
     portalDisplayCertificateResetByMail => '::Plugins::CertificateResetByMail',
     cda                                 => '::Plugins::CDA',
     notification                        => '::Plugins::Notifications',
+    publicNotifications                 => '::Plugins::PublicNotifications',
     rememberAuthChoiceRule              => '::Plugins::RememberAuthChoice',
     stayConnected                       => '::Plugins::StayConnected',
     portalCheckLogins                   => '::Plugins::History',
@@ -74,7 +76,7 @@ sub enabledServices {
     push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
 
     # Portal menu
-    push @res, [ menu         => "::Main::Menu" ];
+    push @res, [ menu => "::Main::Menu" ];
 
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {

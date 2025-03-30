@@ -980,6 +980,7 @@
 "proxySessionService":"Oturum servis URL'si",
 "proxyUseSoap":"REST yerine SOAP kullan",
 "publicKey":"Açık anahtar",
+"publicNotifications":"Public notifications",
 "purgeNotification":"Bildirimi kalıcı olarak sil",
 "radius2f":"Radius ile ikinci faktör",
 "radius2fActivation":"Aktivasyon",

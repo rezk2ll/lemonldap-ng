@@ -814,6 +814,7 @@ sub tree {
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
+                                'publicNotifications',
                                 'notificationsExplorer',
                                 'notificationWildcard',
                                 'oldNotifFormat',

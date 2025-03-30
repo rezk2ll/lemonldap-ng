@@ -980,6 +980,7 @@
 "proxySessionService":"כתובת שירות הפעלה",
 "proxyUseSoap":"להשתמש ב־SOAP במקום ב־REST",
 "publicKey":"מפתח ציבורי",
+"publicNotifications":"Public notifications",
 "purgeNotification":"מחיקת התראה לצמיתות",
 "radius2f":"Radius second factor",
 "radius2fActivation":"הפעלה",

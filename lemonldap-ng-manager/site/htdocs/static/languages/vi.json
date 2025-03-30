@@ -980,6 +980,7 @@
 "proxySessionService":"URL dịch vụ phiên",
 "proxyUseSoap":"Sử dụng SOAP thay vì REST",
 "publicKey":"Khóa công khai",
+"publicNotifications":"Public notifications",
 "purgeNotification":"Xóa thông báo chắc chắn",
 "radius2f":"Yếu tố xác thực thứ hai bằng Radius",
 "radius2fActivation":"Kích hoạt",

@@ -980,6 +980,7 @@
 "proxySessionService":"URL службы сеанса",
 "proxyUseSoap":"Использовать SOAP вместо REST",
 "publicKey":"Открытый ключ",
+"publicNotifications":"Public notifications",
 "purgeNotification":"Окончательно удалить уведомление",
 "radius2f":"Второй фактор Radius",
 "radius2fActivation":"Активация",
