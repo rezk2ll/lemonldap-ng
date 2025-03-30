@@ -835,7 +835,7 @@ sub tests {
                     ->{oidcRPMetaDataOptionsRedirectUris} )
                 {
                     push @msg,
-                      "$oidcRpId: OIDC Relying Party has no redirect URI defined";
+"$oidcRpId: OIDC Relying Party has no redirect URI defined";
                     $res = 0;
                     next;
                 }
@@ -854,8 +854,9 @@ sub tests {
                     ->{oidcRPMetaDataOptionsPublic} )
                 {
                     push @msg,
-                      "$oidcRpId: OIDC Relying Party declared as public without PKCE" unless $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
-                    ->{oidcRPMetaDataOptionsRequirePKCE};
+"$oidcRpId: requiring PKCE is recommended for public OIDC Relying Parties"
+                      unless $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
+                      ->{oidcRPMetaDataOptionsRequirePKCE};
                     next;
                 }
             }
