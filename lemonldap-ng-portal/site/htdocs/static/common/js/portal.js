@@ -398,7 +398,7 @@
   // Initialization
   datas = {};
   $(window).on('load', function () {
-    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword;
+    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword, displaytab;
     // Get application/init variables
     datas = getValues();
     // Keep the currently selected tab
@@ -425,7 +425,8 @@
     menuTabs = $("#menu").tabs({
       active: 0
     });
-    menuIndex = $('#menu a[href="#' + datas['displaytab'] + '"]').parent().index();
+    displaytab = getQueryParam('tab');
+    menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index();
     if (menuIndex < 0) {
       menuIndex = 0;
     }
@@ -434,7 +435,7 @@
     authMenuTabs = $("#authMenu").tabs({
       active: 0
     });
-    authMenuIndex = $('#authMenu a[href="#' + datas['displaytab'] + '"]').parent().index();
+    authMenuIndex = $('#authMenu a[href="#' + displaytab + '"]').parent().index();
     if (authMenuIndex < 0) {
       authMenuIndex = 0;
     }

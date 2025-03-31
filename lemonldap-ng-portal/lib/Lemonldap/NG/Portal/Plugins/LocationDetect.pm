@@ -9,6 +9,8 @@ extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
 );
 
+our $VERSION = '2.21.0';
+
 has reader   => ( is => 'rw' );
 has ipDetail => ( is => 'rw' );
 has uaDetail => ( is => 'rw' );

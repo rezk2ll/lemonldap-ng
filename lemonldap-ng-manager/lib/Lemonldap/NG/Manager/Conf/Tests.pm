@@ -130,7 +130,7 @@ sub tests {
             }
 
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
-                push @pb, $vh if ( grep /^$vh$/, @all_aliases );
+                push @pb, $vh if ( grep { lc($_) eq lc($vh) } @all_aliases );
             }
             return @pb
               ? ( 0, 'Virtual hosts ' . join( ', ', @pb ) . ' match an alias' )
@@ -835,12 +835,32 @@ sub tests {
                     ->{oidcRPMetaDataOptionsRedirectUris} )
                 {
                     push @msg,
-                      "$oidcRpId OpenID Connect RP has no redirect URI defined";
+"$oidcRpId: OIDC Relying Party has no redirect URI defined";
                     $res = 0;
                     next;
                 }
             }
             return ( $res, join( ', ', @msg ) );
+        },
+
+        # OIDC public RP should implement PKCE
+        oidcRPpublicClientWithPKCE => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @msg;
+            foreach my $oidcRpId ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                if ( $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
+                    ->{oidcRPMetaDataOptionsPublic} )
+                {
+                    push @msg,
+"$oidcRpId: requiring PKCE is recommended for public OIDC Relying Parties"
+                      unless $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
+                      ->{oidcRPMetaDataOptionsRequirePKCE};
+                    next;
+                }
+            }
+            return ( 1, join( ', ', @msg ) );
         },
 
         # Test if SAML private and public keys signature keys are set
@@ -925,7 +945,7 @@ sub tests {
                   ->{oidcRPMetaDataOptionsClientID};
                 unless ($clientId) {
                     push @msg,
-                      "$clientConfKey OIDC Relying Party has no Client ID";
+                      "$clientConfKey: OIDC Relying Party has no Client ID";
                     $res = 0;
                     next;
                 }
@@ -977,7 +997,7 @@ sub tests {
                     my ($appHost) = $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
                     unless ($appHost) {
                         push @msg,
-                          "$casConfKey CAS Application has no Service URL";
+                          "$casConfKey: CAS Application has no Service URL";
                         $res = 0;
                         next;
                     }

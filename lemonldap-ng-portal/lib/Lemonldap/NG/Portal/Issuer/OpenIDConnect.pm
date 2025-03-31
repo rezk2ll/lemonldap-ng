@@ -1740,7 +1740,7 @@ sub _handleAuthorizationCodeGrant {
 
     my $codeSession = $self->getAuthorizationCode($code);
     unless ($codeSession) {
-        $self->logger->error("Unable to find OIDC session $code");
+        $self->logger->warn("Unable to find OIDC session $code");
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
@@ -1779,7 +1779,7 @@ sub _handleAuthorizationCodeGrant {
       $self->p->getApacheSession( $codeSession->data->{user_session_id} );
 
     unless ($apacheSession) {
-        $self->userLogger->error("Unable to find user session");
+        $self->userLogger->warn("Unable to find user session");
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
@@ -1963,7 +1963,7 @@ sub _handleRefreshTokenGrant {
     my $refreshSession = $self->getRefreshToken($refresh_token);
 
     unless ($refreshSession) {
-        $self->logger->error("Unable to find OIDC session $refresh_token");
+        $self->logger->warn("Unable to find OIDC session $refresh_token");
         return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
@@ -2274,13 +2274,13 @@ sub _getSessionFromAccessTokenData {
 
         # Get user identifier
         $session = $self->p->getApacheSession( $tokenData->{user_session_id} );
-        $self->logger->error("Unable to find user session") unless ($session);
+        $self->logger->warn("Unable to find user session") unless ($session);
     }
     else {
         my $offline_session_id = $tokenData->{offline_session_id};
         if ($offline_session_id) {
             $session = $self->getRefreshToken($offline_session_id);
-            $self->logger->error("Unable to find refresh session")
+            $self->logger->warn("Unable to find refresh session")
               unless ($session);
         }
     }
@@ -2328,7 +2328,7 @@ sub introspection {
               $oidcSession->{data}->{_utime} + $self->conf->{timeout};
         }
         else {
-            $self->logger->error("Count not find session tied to Access Token");
+            $self->logger->warn("Count not find session tied to Access Token");
         }
     }
     return $self->p->sendJSONresponse( $req, $response );

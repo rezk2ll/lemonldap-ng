@@ -997,6 +997,51 @@ sub attributes {
             documentation => 'Log4Perl logger configuration file',
             flags         => 'hmp',
         },
+        lokiUrl => {
+            type          => 'text',
+            documentation => 'Loki API',
+            flags         => 'hmp',
+        },
+        lokiLabel => {
+            type          => 'text',
+            documentation => 'Loki label, default llng',
+            flags         => 'hmp',
+        },
+        lokiInstance => {
+            type          => 'text',
+            documentation => 'Loki instance, default `hostname` output',
+            flags         => 'hmp',
+        },
+        lokiEnv => {
+            type          => 'text',
+            documentation => 'Loki env, default "prod"',
+            flags         => 'hmp',
+        },
+        lokiTenant => {
+            type          => 'text',
+            documentation => 'Loki Tenant',
+            flags         => 'hmp',
+        },
+        lokiTenantHeader => {
+            type          => 'text',
+            documentation => 'Loki Tenant Header name',
+            flags         => 'hmp',
+        },
+        lokiAuthorization => {
+            type          => 'text',
+            documentation => 'Loki Authorization header value',
+            flags         => 'hmp',
+        },
+        lokiService => {
+            type          => 'text',
+            documentation => 'Loki Service (technical context)',
+            flags         => 'hmp',
+        },
+        lokiUserService => {
+            type          => 'text',
+            documentation => 'Loki (userLogger context)',
+            flags         => 'hmp',
+        },
         sentryDsn => {
             type          => 'text',
             documentation => 'Sentry logger DSN',
@@ -1631,6 +1676,11 @@ sub attributes {
             type          => 'text',
             default       => 'allusers',
             documentation => 'Notification string to match all users',
+        },
+        publicNotifications => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable PublicNotification plugin',
         },
         notificationXSLTfile => {
             type          => 'text',
@@ -3070,7 +3120,7 @@ sub attributes {
         casAppMetaDataOptionsAllowProxy => {
             type          => 'bool',
             documentation => 'Allow CAS proxy',
-            default => 1,
+            default       => 1,
         },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
@@ -3245,7 +3295,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
-            keyTest => qr/\w/,
+            keyTest       => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {

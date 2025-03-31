@@ -28,6 +28,16 @@ for all loggers. Thus if you managed your log level inside the log4perl
 configuration file, you may loose unimportant logs if your ``logLevel`` is
 higher.
 
+"typ" header in JWT
+~~~~~~~~~~~~~~~~~~~
+
+Version earlier than 2.17.0 had a "typ" header in all JWT following OIDC
+specification. In version 2.17.0, this header was wrongly removed when
+JWT library changed. This header has been restored starting from version
+2.21.0. However some application may fail with it, so a
+``Don't insert typ header`` option has been aded into RP/OP options to be
+able to restore 2.17.0 behavior.
+
 
 2.20.2
 ------

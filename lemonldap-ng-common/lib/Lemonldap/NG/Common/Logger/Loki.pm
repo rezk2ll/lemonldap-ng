@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Sys::Hostname;
 use Time::HiRes qw(time);
 
-our $VERSIUON = '2.21.0';
+our $VERSION = '2.21.0';
 
 sub new {
     my ( $class, $conf, %args ) = @_;

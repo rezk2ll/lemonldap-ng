@@ -2212,6 +2212,33 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => {},
             'type'    => 'keyTextContainer'
         },
+        'lokiAuthorization' => {
+            'type' => 'text'
+        },
+        'lokiEnv' => {
+            'type' => 'text'
+        },
+        'lokiInstance' => {
+            'type' => 'text'
+        },
+        'lokiLabel' => {
+            'type' => 'text'
+        },
+        'lokiService' => {
+            'type' => 'text'
+        },
+        'lokiTenant' => {
+            'type' => 'text'
+        },
+        'lokiTenantHeader' => {
+            'type' => 'text'
+        },
+        'lokiUrl' => {
+            'type' => 'text'
+        },
+        'lokiUserService' => {
+            'type' => 'text'
+        },
         'lwpOpts' => {
             'default' => {
                 'timeout' => 10
@@ -4109,6 +4136,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'proxyUseSoap' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'publicNotifications' => {
             'default' => 0,
             'type'    => 'bool'
         },

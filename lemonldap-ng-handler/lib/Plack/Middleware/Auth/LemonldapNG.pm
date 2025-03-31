@@ -1,7 +1,7 @@
 package Plack::Middleware::Auth::LemonldapNG;
 
 our $AUTHORITY = 'cpan:GUIMARD';
-our $VERSION   = '2.0';
+our $VERSION   = '2.21.0';
 our $llclass   = 'Lemonldap::NG::Handler::Server';
 
 use strict;

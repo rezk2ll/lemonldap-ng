@@ -1,15 +1,27 @@
 <TMPL_INCLUDE NAME="header.tpl">
+<TMPL_IF NAME="PUBLIC_NOTIFICATION">
+<script type="application/init">
+<TMPL_VAR NAME="PUBLIC_NOTIFICATION">
+</script>
+</TMPL_IF>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/carousel.js?v=<TMPL_VAR CACHE_TAG>"></script>
 
 <main id="logincontent" class="container">
 
   <TMPL_INCLUDE NAME="customLoginHeader.tpl">
+<TMPL_IF PUBLIC_NOTIFICATION>
+  <div class="message alert alert-secondary">
+    <div id="carousel" class="carousel d-flex justify-content-center">   
+    </div>
+   </div>
+</TMPL_IF>
 
   <div id="errormsg">
     <TMPL_IF NAME="AUTH_ERROR">
       <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
         <TMPL_IF LOCKTIME>
           <TMPL_VAR NAME="LOCKTIME"> <span trspan="seconds">seconds</span>.
-        </TMPL_IF>
+                </TMPL_IF>
       </div>
     </TMPL_IF>
   </div>
@@ -25,7 +37,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Choice tabs -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
