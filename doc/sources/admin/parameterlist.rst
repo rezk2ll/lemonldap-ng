@@ -325,6 +325,15 @@ logLevel                                                Log level, must be set i
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
 loginHistoryEnabled                                     Enable login history                                                                 ✔
 logoutServices                                          Send logout trough GET request to these services                                     ✔
+lokiAuthorization                                       Loki Authorization header value                                                      ✔      ✔       ✔       ✔
+lokiEnv                                                 Loki env, default "prod"                                                             ✔      ✔       ✔       ✔
+lokiInstance                                            Loki instance, default `hostname` output                                             ✔      ✔       ✔       ✔
+lokiLabel                                               Loki label, default llng                                                             ✔      ✔       ✔       ✔
+lokiService                                             Loki Service (technical context)                                                     ✔      ✔       ✔       ✔
+lokiTenant                                              Loki Tenant                                                                          ✔      ✔       ✔       ✔
+lokiTenantHeader                                        Loki Tenant Header name                                                              ✔      ✔       ✔       ✔
+lokiUrl                                                 Loki API                                                                             ✔      ✔       ✔       ✔
+lokiUserService                                         Loki (userLogger context)                                                            ✔      ✔       ✔       ✔
 lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
 lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
 macros                                                  Macros                                                                               ✔
@@ -530,6 +539,7 @@ proxyAuthnLevel                                         Proxy authentication lev
 proxyCookieName                                         Name of the internal portal cookie                                                   ✔
 proxySessionService                                                                                                                          ✔
 proxyUseSoap                                            Use SOAP instead of REST                                                             ✔
+publicNotifications                                     Enable PublicNotification plugin                                                     ✔
 radius2fActivation                                      Radius second factor activation                                                      ✔
 radius2fAuthnLevel                                      Authentication level for users authenticated by Radius second factor                 ✔
 radius2fDictionaryFile                                                                                                                       ✔
