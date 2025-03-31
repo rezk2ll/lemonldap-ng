@@ -66,6 +66,8 @@ has iss => (
     }
 );
 
+has amrRules => ( is => 'rw', default => sub { {} } );
+
 sub get_issuer {
     my ( $self, $req ) = @_;
     if ( $self->iss ) {
@@ -156,6 +158,15 @@ sub init {
         $self->conf->{oidcServiceMetaDataEndSessionURI},
       ) . ')';
     $self->ssoMatchUrl(qr/$m/);
+
+    while ( my ( $amr_value, $rule ) =
+        each %{ $self->conf->{oidcServiceMetaDataAmrRules} || {} } )
+    {
+        $self->logger->debug("Compiling AMR rule for $amr_value");
+        my $compiled_rule = $self->p->buildRule( $rule, "amr rule for $amr_value" );
+        $self->amrRules->{$amr_value} = $compiled_rule if $compiled_rule;
+    }
+
     return 1;
 }
 
@@ -2878,6 +2889,8 @@ sub _generateIDToken {
 
     my $sub = $self->getUserIDForRP( $req, $rp, $sessionInfo );
 
+    my $amr = $self->getAmr( $req, $rp, $sessionInfo );
+
     my $id_token_payload_hash = {
         iss       => $self->get_issuer($req),            # Issuer Identifier
         sub       => $sub,                               # Subject Identifier
@@ -2887,8 +2900,8 @@ sub _generateIDToken {
         auth_time => $sessionInfo->{_lastAuthnUTime},    # Authentication time
         acr       => $id_token_acr,  # Authentication Context Class Reference
         azp       => $client_id,     # Authorized party, this is used for logout
-                                     # TODO amr
-        sid       => $sid,
+        ( @$amr ? ( amr => $amr ) : () ),
+        sid => $sid,
     };
 
     for ( keys %{$extra_claims} ) {
@@ -2929,6 +2942,27 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp );
+}
+
+sub getAmr {
+    my ( $self, $req, $rp, $sessionInfo ) = @_;
+    my $result = [];
+
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
+    for my $amr_value ( sort keys %{ $self->amrRules } ) {
+        my $richSessionInfo = {
+            %{ $sessionInfo || {} },
+            _clientId      => $client_id,
+            _clientConfKey => $rp,
+        };
+
+        if ( $self->amrRules->{$amr_value} and $self->amrRules->{$amr_value}->( $req, $richSessionInfo ) ) {
+            push @$result, $amr_value;
+        }
+    }
+
+    return $result;
 }
 
 sub encryptToken {
