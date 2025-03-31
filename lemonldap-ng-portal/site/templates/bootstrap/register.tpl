@@ -20,21 +20,21 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><label for="firstnamefield" class="mb-0"><trspan hidden>firstname</trspan><i class="fa fa-user"></i></label></span>
+        <span class="input-group-text"><label for="firstnamefield" class="mb-0"><span trspan="firstname" hidden></span><i class="fa fa-user"></i></label></span>
       </div>
       <input id="firstnamefield" name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required aria-required="true" autocomplete="given-name" />
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><label for="lastnamefield" class="mb-0"><trspan hidden>lastname</trspan><i class="fa fa-user"></i></label></span>
+        <span class="input-group-text"><label for="lastnamefield" class="mb-0"><span trspan="lastname" hidden></span><i class="fa fa-user"></i></label></span>
       </div>
       <input id="lastnamefield" name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" autocomplete="family-name" trplaceholder="lastName" required aria-required="true"/>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><label for="mailfield" class="mb-0"><trspan hidden>mail</trspan><i class="fa fa-envelope"></i></label></span>
+        <span class="input-group-text"><label for="mailfield" class="mb-0"><span trspan="mail" hidden></span><i class="fa fa-envelope"></i></label></span>
       </div>
       <input id="mailfield" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required aria-required="true" autocomplete="email" />
     </div>

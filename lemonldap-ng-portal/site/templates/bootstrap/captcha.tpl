@@ -10,7 +10,7 @@
 </div>
 <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text"><label for="captchafield" class="mb-0"><trspan hidden>captcha</trspan><i class="fa fa-eye"></i></label></span>
+    <span class="input-group-text"><label for="captchafield" class="mb-0"><span trspan="captcha" hidden></span><i class="fa fa-eye"></i></label></span>
   </div>
   <input id="captchafield" type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required aria-required="true" autocomplete="off" />
 </div>
