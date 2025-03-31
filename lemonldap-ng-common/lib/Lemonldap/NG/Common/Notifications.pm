@@ -55,7 +55,7 @@ sub getNotifications {
     }
     my $forUser = $self->get($uid);
     if ( $forUser and $forAll ) {
-        return { %$forUser, %$forAll };
+        return ( { %$forUser, %$forAll }, $forUser );
     }
     else {
         return ( ( $forUser ? $forUser : $forAll ), $forUser );
