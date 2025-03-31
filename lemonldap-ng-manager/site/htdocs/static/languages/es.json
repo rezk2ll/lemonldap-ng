@@ -819,6 +819,7 @@
 "oidcServiceKeyTypeEnc":"Key type",
 "oidcServiceKeyTypeSig":"Key type",
 "oidcServiceMetaData":"OpenID Connect Service",
+"oidcServiceMetaDataAmrRules":"Authentication Method Reference rules",
 "oidcServiceMetaDataAuthnContext":"Contexto de autentificación",
 "oidcServiceMetaDataAuthorizeURI":"Autorización",
 "oidcServiceMetaDataBackChannelURI":"URI de Back-Channel",

@@ -118,8 +118,8 @@ sub defaultValues {
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
         'hiddenAttributes'              => '_password _2fDevices',
-        'hideOldPassword'               =>  1,
-        'httpOnly'                      =>  1,
+        'hideOldPassword'               => 1,
+        'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices, _loginHistory',
         'impersonationIdRule'           => 1,
@@ -232,7 +232,13 @@ sub defaultValues {
         'oidcServiceIDTokenExpiration'           => 3600,
         'oidcServiceKeyTypeEnc'                  => 'RSA',
         'oidcServiceKeyTypeSig'                  => 'RSA',
-        'oidcServiceMetaDataAuthnContext'        => {
+        'oidcServiceMetaDataAmrRules'            => {
+            'mfa' => '$_2f',
+            'otp' => '$_2f eq "TOTP"',
+            'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+            'pwd' => '$authenticationLevel == 2'
+        },
+        'oidcServiceMetaDataAuthnContext' => {
             'loa-1' => 1,
             'loa-2' => 2,
             'loa-3' => 3,

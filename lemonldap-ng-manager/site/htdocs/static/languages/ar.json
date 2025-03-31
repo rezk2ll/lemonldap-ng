@@ -819,6 +819,7 @@
 "oidcServiceKeyTypeEnc":"Key type",
 "oidcServiceKeyTypeSig":"Key type",
 "oidcServiceMetaData":"خدمة أوبين أيدي كونيكت",
+"oidcServiceMetaDataAmrRules":"Authentication Method Reference rules",
 "oidcServiceMetaDataAuthnContext":"سياق إثبات الهوية",
 "oidcServiceMetaDataAuthorizeURI":"ترخيص",
 "oidcServiceMetaDataBackChannelURI":"URI قناة الخلفية",

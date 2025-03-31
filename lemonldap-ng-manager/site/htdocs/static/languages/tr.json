@@ -819,6 +819,7 @@
 "oidcServiceKeyTypeEnc":"Anahtar türü",
 "oidcServiceKeyTypeSig":"Anahtar türü",
 "oidcServiceMetaData":"OpenID Connect Servisi",
+"oidcServiceMetaDataAmrRules":"Authentication Method Reference rules",
 "oidcServiceMetaDataAuthnContext":"Doğrulama bağlamı",
 "oidcServiceMetaDataAuthorizeURI":"Yetkilendirme",
 "oidcServiceMetaDataBackChannelURI":"Arka-Kanal URI",

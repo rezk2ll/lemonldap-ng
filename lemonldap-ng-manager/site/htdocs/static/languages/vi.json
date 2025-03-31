@@ -819,6 +819,7 @@
 "oidcServiceKeyTypeEnc":"Key type",
 "oidcServiceKeyTypeSig":"Key type",
 "oidcServiceMetaData":"Dịch vụ Kết nối OpenID",
+"oidcServiceMetaDataAmrRules":"Authentication Method Reference rules",
 "oidcServiceMetaDataAuthnContext":"Ngữ cảnh xác thực",
 "oidcServiceMetaDataAuthorizeURI":"Uỷ quyền",
 "oidcServiceMetaDataBackChannelURI":"URI kênh sau",
