@@ -586,7 +586,6 @@ sub display {
                     AUTH_LOOP            => $authLoop,
                     CHOICE_PARAM         => $self->conf->{authChoiceParam},
                     CHOICE_VALUE         => $req->data->{_authChoice},
-                    DISPLAY_TAB          => scalar( $req->param("tab") ),
                     DISPLAY_FORM         => 0,
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
