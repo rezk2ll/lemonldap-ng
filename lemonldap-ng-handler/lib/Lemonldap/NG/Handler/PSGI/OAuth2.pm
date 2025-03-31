@@ -8,6 +8,6 @@ use strict;
 use base 'Lemonldap::NG::Handler::Lib::OAuth2',
   'Lemonldap::NG::Handler::PSGI::Main';
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.21.0';
 
 1;

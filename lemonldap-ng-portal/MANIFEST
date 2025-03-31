@@ -149,6 +149,7 @@ lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
@@ -575,6 +576,7 @@ t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.t
 t/01-CustomMenu.pm
+t/01-disabledPlugins.t
 t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
@@ -602,6 +604,7 @@ t/04-language-selection.t
 t/05-Hashed-Session.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
+t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
@@ -686,6 +689,7 @@ t/31-Auth-and-issuer-CAS-default.t
 t/31-Auth-and-issuer-CAS-Logout-20.t
 t/31-Auth-and-issuer-CAS-Logout-30.t
 t/31-Auth-and-issuer-CAS-proxied.t
+t/31-Auth-and-issuer-CAS-samlValidate.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/31-Auth-and-issuer-CAS-XSS-on-logout.t
@@ -698,6 +702,7 @@ t/31-CAS-Logout.t
 t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
+t/31-CAS-SamlValidate.t
 t/31-CAS-Security.t
 t/32-Auth-and-issuer-OIDC-authorization_code-different-sub.t
 t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
@@ -735,10 +740,12 @@ t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t
 t/32-OIDC-JWT-type-header.t
+t/32-OIDC-login_hint.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-OP-claims-in-accesstoken.t

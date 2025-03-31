@@ -1632,6 +1632,11 @@ sub attributes {
             default       => 'allusers',
             documentation => 'Notification string to match all users',
         },
+        publicNotifications => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable PublicNotification plugin',
+        },
         notificationXSLTfile => {
             type          => 'text',
             documentation => 'Custom XSLT document for notifications',
@@ -3059,6 +3064,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS application service',
         },
+        casSrvMetaDataOptionsSamlValidate => {
+            type          => 'bool',
+            documentation => 'use SAML validateion',
+        },
         casAppMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation => 'CAS User attribute',
@@ -3241,6 +3250,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
+            keyTest => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {
@@ -5237,6 +5247,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
+        },
+        oidcRPMetaDataOptionsAllowNativeSso => {
+            type          => 'bool',
+            documentation => 'Allow Native SSO for Mobile Apps',
         },
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',

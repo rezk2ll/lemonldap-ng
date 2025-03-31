@@ -31,7 +31,7 @@ Perl
 
 .. code-block:: perl
 
-   print "Connected user: ".$ENV{HTTP_AUTH_USER};
+   print "Connected user: " . $env->{HTTP_AUTH_USER};
 
 PHP
 ~~~

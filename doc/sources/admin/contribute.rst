@@ -15,10 +15,9 @@ applies the following rules:
 
 -  Javascript:
 
-   -  code must be written in
-      `CoffeeScript <http://coffeescript.org/>`__ (in
-      ``<component>/site/coffee``): ``make minify`` will generate JS
-      files
+   -  Javascript code is written in ``<component>/site/js-src`` and
+      bundled using `rollupjs <https://rollupjs.org/>`_: ``make minify`` will
+      generate JS files
 
 Get code
 --------
@@ -106,7 +105,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
+   apt install make devscripts equivs yui-compressor git uglifyjs rollup node-rollup-plugin-babel autopkgtest cpanminus
 
 
 Install dependencies
@@ -187,7 +186,7 @@ Other commands
 
      make clean
 
-* Compile CoffeeScript and minify ::
+* Compile Javascript and minify ::
 
      make minify
 
@@ -249,3 +248,27 @@ You can check the result with:
 
     make documentation
     firefox doc/pages/documentation/current/start.html
+
+Javascript
+~~~~~~~~~~
+
+Javascript code is produced by `rollupjs <https://rollupjs.org/>`_.
+
+Source script must be created in ``lemonldap-ng-portal/site/js-src``, then run this command:
+
+::
+
+    make minify
+
+On Debian, you can install rollupjs and the needed dependencies with:
+
+::
+
+    apt install rollup node-rollup-plugin-babel
+
+
+Debugging
+~~~~~~~~~
+
+$req and req->{env} variables can be dumped by using logParams = 1 in `lemonldap-ng.ini` file.
+High debug level can be enabled in `Manager/Conf/Parser.pm` with `HIGHDEBUG => 1`

@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 has resend_interval => (
     is      => 'rw',

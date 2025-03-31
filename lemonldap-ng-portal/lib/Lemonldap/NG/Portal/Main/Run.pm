@@ -328,6 +328,7 @@ sub unauthLogout {
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
+    $self->processHook( $req, 'unAuthLogout' );
     $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
@@ -490,9 +491,10 @@ sub autoRedirect {
         if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
             $self->auditLog(
                 $req,
-                message => "Redirection to $req->{urldc} blocked",
-                code    => "UNAUTHORIZED_REDIRECT",
-                url     => $req->{urldc},
+                message  => "Redirection to $req->{urldc} blocked",
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $req->{urldc},
+                user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
             );
             delete $req->{urldc};
         }
@@ -791,8 +793,9 @@ sub _deleteSession {
             message => (
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
-            code => "LOGOUT",
-            auth => $mod,
+            code     => "LOGOUT",
+            user     => $user,
+            auth     => $mod,
         );
     }
 
@@ -826,9 +829,10 @@ sub autoPost {
     if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
         $self->auditLog(
             $req,
-            message => "Redirection to $req->{urldc} blocked",
-            code    => "UNAUTHORIZED_REDIRECT",
-            url     => $req->{urldc},
+            message  => "Redirection to $req->{urldc} blocked",
+            code     => "UNAUTHORIZED_REDIRECT",
+            url      => $req->{urldc},
+            user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
         );
         return PE_BADURL;
     }
@@ -1062,6 +1066,10 @@ sub getTrOver {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    if ( $self->conf->{logParams} ) {
+        $self->_dump($req);
+        $self->_dump( \%args );
+    }
 
     my $skin_template_dir = $self->getSkinTplDir( $self->getSkin($req) );
 

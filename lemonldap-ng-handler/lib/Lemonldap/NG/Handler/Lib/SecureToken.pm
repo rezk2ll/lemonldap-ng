@@ -12,7 +12,7 @@ use strict;
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.21.0';
 
 # Shared variables
 our $secureTokenMemcachedConnection;

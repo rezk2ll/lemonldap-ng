@@ -23,6 +23,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
                      libdbi-perl <!nocheck>,
                      libdigest-hmac-perl <!nocheck>,
+                     libemail-address-xs-perl | libemail-address-perl <!nocheck>,
                      libemail-sender-perl <!nocheck>,
                      libgd-securityimage-perl <!nocheck>,
                      libglib-perl <!nocheck>,
@@ -65,7 +66,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      uglifyjs
-Standards-Version: 4.6.2
+Standards-Version: 4.7.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
@@ -235,6 +236,7 @@ Depends: debconf,
 Recommends: libapache-session-browseable-perl,
             libcookie-baker-xs-perl,
             libdbi-perl,
+            libemail-address-xs-perl | libemail-address-perl,
             libemail-sender-perl (>=1.300027) | libemail-sender-transport-smtps-perl,
             libhttp-parser-xs-perl,
             liblwp-protocol-https-perl,
