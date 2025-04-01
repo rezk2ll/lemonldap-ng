@@ -573,6 +573,7 @@
 "logoutServices":"تسجيل الخروج الأمامي",
 "lwpOpts":"خيارات لطلبات الخادم",
 "lwpSslOpts":"خيارات سسل لطلبات الخادم",
+"mTLS":"Mutual TLS authentication",
 "macros":"ماكرو",
 "mail2f":"Mail second factor",
 "mail2fActivation":"تفعيل",
