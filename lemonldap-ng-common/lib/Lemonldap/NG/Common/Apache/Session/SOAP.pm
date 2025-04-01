@@ -153,8 +153,8 @@ sub get {
     my $id   = shift;
 
     # Check cache
-    if ( $self->{localStorage} && $self->cache->get("soap$id") ) {
-        return $self->{data} = $self->cache->get("soap$id");
+    if ( $self->{localStorage} && $self->cache->get($id) ) {
+        return $self->{data} = $self->cache->get($id);
     }
 
     # No cache, use SOAP and set cache
@@ -162,7 +162,7 @@ sub get {
     return 0 unless ( $r or $r->{error} );
     $self->{data} = $r->{attributes};
 
-    $self->cache->set( "soap$id", $self->{data} ) if $self->{localStorage};
+    $self->cache->set( $id, $self->{data} ) if $self->{localStorage};
 
     return $self->{data};
 }

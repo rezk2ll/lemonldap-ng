@@ -435,6 +435,7 @@ sub forbidden {
     }
 
     if ( $session->{_upgrade} ) {
+        $class->localUnlog($req);
         return $class->goToPortal( $req, $uri, undef, '/upgradesession' );
     }
 
@@ -452,6 +453,7 @@ sub forbidden {
     );
     $class->updateStatus( $req, 'REJECT',
         $session->{ $class->tsv->{whatToTrace} } );
+    $class->localUnlog($req);
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} && $vhost ne $portal ) {
