@@ -1,9 +1,7 @@
 {
-	"https": 0,
 	"applicationList": {
 		"0001-cat": {
-			"catname": "Sample applications",
-			"0002-app": {
+			"0001-app": {
 				"options": {
 					"description": "A simple application displaying authenticated user",
 					"display": "auto",
@@ -13,7 +11,7 @@
 				},
 				"type": "application"
 			},
-			"0003-app": {
+			"0002-app": {
 				"options": {
 					"description": "The same simple application displaying authenticated user",
 					"display": "auto",
@@ -23,10 +21,172 @@
 				},
 				"type": "application"
 			},
+			"catname": "Sample applications",
+			"type": "category"
+		},
+		"0002-cat": {
+			"0001-app": {
+				"options": {
+					"description": "App with OIDC auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "OIDC App 1",
+					"uri": "http://oidc-client-1.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0002-app": {
+				"options": {
+					"description": "App with OIDC auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "OIDC App 2",
+					"uri": "http://oidc-client-2.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0003-app": {
+				"options": {
+					"description": "App with OIDC auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "OIDC App 3",
+					"uri": "http://oidc-client-3.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0004-app": {
+				"options": {
+					"description": "App with OIDC auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "OIDC App 4",
+					"uri": "http://oidc-client-4.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0005-app": {
+				"options": {
+					"description": "App with OIDC auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "OIDC App 5",
+					"uri": "http://oidc-client-5.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"catname": "Sample OIDC applications",
+			"type": "category"
+		},
+		"0003-cat": {
+			"0001-app": {
+				"options": {
+					"description": "App with SAML auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "SAML App 1",
+					"uri": "http://saml-client-1.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0002-app": {
+				"options": {
+					"description": "App with SAML auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "SAML App 2",
+					"uri": "http://saml-client-2.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0003-app": {
+				"options": {
+					"description": "App with SAML auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "SAML App 3",
+					"uri": "http://saml-client-3.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0004-app": {
+				"options": {
+					"description": "App with SAML auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "SAML App 4",
+					"uri": "http://saml-client-4.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0005-app": {
+				"options": {
+					"description": "App with SAML auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "SAML App 5",
+					"uri": "http://saml-client-5.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"catname": "Sample SAML applications",
 			"type": "category"
 		},
 		"0004-cat": {
-			"catname": "Administration",
+			"0001-app": {
+				"options": {
+					"description": "App with CAS auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "CAS App 1",
+					"uri": "http://cas-client-1.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0002-app": {
+				"options": {
+					"description": "App with CAS auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "CAS App 2",
+					"uri": "http://cas-client-2.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0003-app": {
+				"options": {
+					"description": "App with CAS auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "CAS App 3",
+					"uri": "http://cas-client-3.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0004-app": {
+				"options": {
+					"description": "App with CAS auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "CAS App 4",
+					"uri": "http://cas-client-4.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"0005-app": {
+				"options": {
+					"description": "App with CAS auth.",
+					"display": "on",
+					"logo": "demo.png",
+					"name": "CAS App 5",
+					"uri": "http://cas-client-5.llng.localhost:3000/"
+				},
+				"type": "application"
+			},
+			"catname": "Sample CAS applications",
+			"type": "category"
+		},
+		"0005-cat": {
 			"0005-app": {
 				"options": {
 					"description": "Configure LemonLDAP::NG WebSSO",
@@ -67,10 +227,10 @@
 				},
 				"type": "application"
 			},
+			"catname": "Administration",
 			"type": "category"
 		},
 		"0008-cat": {
-			"catname": "Documentation",
 			"0009-app": {
 				"options": {
 					"description": "Documentation supplied with LemonLDAP::NG",
@@ -91,10 +251,55 @@
 				},
 				"type": "application"
 			},
+			"catname": "Documentation",
 			"type": "category"
 		}
 	},
 	"authentication": "Demo",
+	"casAuthnLevel": 1,
+	"casAppMetaDataOptions": {
+		"cas-client-1": {
+			"casAppMetaDataOptionsLogout": -1,
+			"casAppMetaDataOptionsUserAttribute": "uid",
+			"casAppMetaDataOptionsService": "http://cas-client-1.llng.localhost:3000/"
+		},
+		"cas-client-2": {
+			"casAppMetaDataOptionsLogout": -1,
+			"casAppMetaDataOptionsUserAttribute": "uid",
+			"casAppMetaDataOptionsService": "http://cas-client-2.llng.localhost:3000/"
+		},
+		"cas-client-3": {
+			"casAppMetaDataOptionsLogout": -1,
+			"casAppMetaDataOptionsUserAttribute": "uid",
+			"casAppMetaDataOptionsService": "http://cas-client-3.llng.localhost:3000/"
+		},
+		"cas-client-4": {
+			"casAppMetaDataOptionsLogout": -1,
+			"casAppMetaDataOptionsUserAttribute": "uid",
+			"casAppMetaDataOptionsService": "http://cas-client-4.llng.localhost:3000/"
+		},
+		"cas-client-5": {
+			"casAppMetaDataOptionsLogout": -1,
+			"casAppMetaDataOptionsUserAttribute": "uid",
+			"casAppMetaDataOptionsService": "http://cas-client-5.llng.localhost:3000/"
+		}
+	},
+	"casSrvMetaDataExportedVars": null,
+	"casAccessControlPolicy": "none",
+	"issuerDBCASRule": 1,
+	"casStorageOptions": {},
+	"casAppMetaDataExportedVars": {
+		"cas-client-1": { "cn": "cn", "mail": "mail", "uid": "uid" },
+		"cas-client-2": { "cn": "cn", "mail": "mail", "uid": "uid" },
+		"cas-client-3": { "cn": "cn", "mail": "mail", "uid": "uid" },
+		"cas-client-4": { "cn": "cn", "mail": "mail", "uid": "uid" },
+		"cas-client-5": { "cn": "cn", "mail": "mail", "uid": "uid" }
+	},
+	"casTicketExpiration": 0,
+	"issuerDBCASPath": "^/cas/",
+	"issuerDBCASActivation": 1,
+	"casAttributes": {},
+	"casSrvMetaDataOptions": {},
 	"cfgAuthor": "The LemonLDAP::NG team",
 	"cfgAuthorIP": "127.0.0.1",
 	"cfgDate": 1428138808,
@@ -103,6 +308,7 @@
 	"cfgVersion": "2.0.0",
 	"cookieName": "lemonldap",
 	"customFunctions": "My::hello My::get_additional_arg",
+	"customToTrace": "mail",
 	"demoExportedVars": {
 		"cn": "cn",
 		"mail": "mail",
@@ -111,13 +317,13 @@
 	"domain": "llng.localhost",
 	"exportedHeaders": {
 		"test1.llng.localhost": {
-			"Auth-User": "$uid",
-			"Ip-Addr": "$ipAddr",
-			"Hello": "hello()",
-			"Uri": "$ENV{REQUEST_URI}",
-			"Macro-Uri": "$UA",
 			"Additional-Arg": "get_additional_arg('header-added')",
-			"Base64": "encode_base64('a:b','')"
+			"Auth-User": "$uid",
+			"Base64": "encode_base64('a:b','')",
+			"Hello": "hello()",
+			"Ip-Addr": "$ipAddr",
+			"Macro-Uri": "$UA",
+			"Uri": "$ENV{REQUEST_URI}"
 		},
 		"test2.llng.localhost": {
 			"Auth-User": "$uid"
@@ -131,6 +337,10 @@
 		"generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
 	},
 	"groups": {},
+	"https": 0,
+	"issuerDBOpenIDConnectActivation": 1,
+	"issuerDBSAMLActivation": 1,
+	"issuerDBSAMLPath": "^/saml/",
 	"key": "qwertyui",
 	"localSessionStorageOptions": {
 		"cache_depth": 3,
@@ -141,8 +351,8 @@
 	},
 	"locationRules": {
 		"auth.llng.localhost": {
-			"(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
 			"(?#checkDevOps)^/checkdevops": "$uid eq \"dwho\"",
+			"(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
 			"(?#errors)^/lmerror/": "accept",
 			"default": "accept"
 		},
@@ -153,26 +363,15 @@
 			"default": "$uid eq \"dwho\" or $uid eq \"rtyler\""
 		},
 		"test1.llng.localhost": {
-			"^/logout": "logout_sso",
-			"^/index.pl\\?logout_app$": "logout_app http://test1.llng.localhost:8080/index.pl?foo=1",
 			"^/index.pl\\?logout_all$": "logout_app_sso http://lemonldap-ng.org/welcome/",
+			"^/index.pl\\?logout_app$": "logout_app http://test1.llng.localhost:8080/index.pl?foo=1",
+			"^/logout": "logout_sso",
 			"^/saml": "unprotect",
 			"default": "accept"
 		},
 		"test2.llng.localhost": {
 			"^/logout": "logout_sso",
 			"default": "accept"
-		}
-	},
-	"vhostOptions": {
-		"manager.llng.localhost": {
-			"vhostMaintenance": 0,
-			"vhostPort": -1,
-			"vhostHttps": -1,
-			"vhostAliases": "",
-			"vhostServiceTokenTTL": -1,
-			"vhostAccessToTrace": "My::accessToTrace, Doctor, Who, _whatToTrace",
-			"vhostType": "Main"
 		}
 	},
 	"loginHistoryEnabled": 1,
@@ -185,6 +384,251 @@
 	"notificationStorageOptions": {
 		"dirName": "/app/dev"
 	},
+	"oidcAuthnLevel": 1,
+	"oidcOPMetaDataExportedVars": {},
+	"oidcOPMetaDataJSON": {},
+	"oidcOPMetaDataJWKS": {},
+	"oidcOPMetaDataOptions": {},
+	"oidcRPCallbackGetParam": "openidconnectcallback",
+	"oidcRPMetaDataExportedVars": {
+		"oidc-client-1": {
+			"email": "mail",
+			"groups": "groups",
+			"name": "cn",
+			"preferred_username": "uid"
+		},
+		"oidc-client-2": {
+			"email": "mail",
+			"groups": "groups",
+			"name": "cn",
+			"preferred_username": "uid"
+		},
+		"oidc-client-3": {
+			"email": "mail",
+			"groups": "groups",
+			"name": "cn",
+			"preferred_username": "uid"
+		},
+		"oidc-client-4": {
+			"email": "mail",
+			"groups": "groups",
+			"name": "cn",
+			"preferred_username": "uid"
+		},
+		"oidc-client-5": {
+			"email": "mail",
+			"groups": "groups",
+			"name": "cn",
+			"preferred_username": "uid"
+		}
+	},
+	"oidcRPMetaDataMacros": {
+		"oidc-client-1": {},
+		"oidc-client-2": {},
+		"oidc-client-3": {},
+		"oidc-client-4": {},
+		"oidc-client-5": {}
+	},
+	"oidcRPMetaDataOptions": {
+		"oidc-client-1": {
+			"oidcRPMetaDataOptionsAccessTokenClaims": 0,
+			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
+			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
+			"oidcRPMetaDataOptionsAllowOffline": 0,
+			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
+			"oidcRPMetaDataOptionsAuthRequiredForAuthorize": 0,
+			"oidcRPMetaDataOptionsAuthnRequireNonce": 0,
+			"oidcRPMetaDataOptionsAuthnRequireState": 0,
+			"oidcRPMetaDataOptionsBypassConsent": 0,
+			"oidcRPMetaDataOptionsClientID": "modauthopenidc-client-1",
+			"oidcRPMetaDataOptionsClientSecret": "modauthopenidc-clientsecret",
+			"oidcRPMetaDataOptionsIDTokenForceClaims": 0,
+			"oidcRPMetaDataOptionsIDTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsIdTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutBypassConfirm": 0,
+			"oidcRPMetaDataOptionsLogoutEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutSessionRequired": 0,
+			"oidcRPMetaDataOptionsLogoutType": "front",
+			"oidcRPMetaDataOptionsPublic": 0,
+			"oidcRPMetaDataOptionsRedirectUris": "http://oidc-client-1.llng.localhost:3000/oidcredirecturi",
+			"oidcRPMetaDataOptionsRefreshToken": 0,
+			"oidcRPMetaDataOptionsRefreshTokenRotation": 0,
+			"oidcRPMetaDataOptionsRequirePKCE": 0,
+			"oidcRPMetaDataOptionsUserInfoEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsUserinfoRequireHeaderToken": 0
+		},
+		"oidc-client-2": {
+			"oidcRPMetaDataOptionsAccessTokenClaims": 0,
+			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
+			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
+			"oidcRPMetaDataOptionsAllowOffline": 0,
+			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
+			"oidcRPMetaDataOptionsAuthRequiredForAuthorize": 0,
+			"oidcRPMetaDataOptionsAuthnRequireNonce": 0,
+			"oidcRPMetaDataOptionsAuthnRequireState": 0,
+			"oidcRPMetaDataOptionsBypassConsent": 0,
+			"oidcRPMetaDataOptionsClientID": "modauthopenidc-client-2",
+			"oidcRPMetaDataOptionsClientSecret": "modauthopenidc-clientsecret",
+			"oidcRPMetaDataOptionsIDTokenForceClaims": 0,
+			"oidcRPMetaDataOptionsIDTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsIdTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutBypassConfirm": 0,
+			"oidcRPMetaDataOptionsLogoutEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutSessionRequired": 0,
+			"oidcRPMetaDataOptionsLogoutType": "front",
+			"oidcRPMetaDataOptionsPublic": 0,
+			"oidcRPMetaDataOptionsRedirectUris": "http://oidc-client-2.llng.localhost:3000/oidcredirecturi",
+			"oidcRPMetaDataOptionsRefreshToken": 0,
+			"oidcRPMetaDataOptionsRefreshTokenRotation": 0,
+			"oidcRPMetaDataOptionsRequirePKCE": 0,
+			"oidcRPMetaDataOptionsUserInfoEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsUserinfoRequireHeaderToken": 0
+		},
+		"oidc-client-3": {
+			"oidcRPMetaDataOptionsAccessTokenClaims": 0,
+			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
+			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
+			"oidcRPMetaDataOptionsAllowOffline": 0,
+			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
+			"oidcRPMetaDataOptionsAuthRequiredForAuthorize": 0,
+			"oidcRPMetaDataOptionsAuthnRequireNonce": 0,
+			"oidcRPMetaDataOptionsAuthnRequireState": 0,
+			"oidcRPMetaDataOptionsBypassConsent": 0,
+			"oidcRPMetaDataOptionsClientID": "modauthopenidc-client-3",
+			"oidcRPMetaDataOptionsClientSecret": "modauthopenidc-clientsecret",
+			"oidcRPMetaDataOptionsIDTokenForceClaims": 0,
+			"oidcRPMetaDataOptionsIDTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsIdTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutBypassConfirm": 0,
+			"oidcRPMetaDataOptionsLogoutEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutSessionRequired": 0,
+			"oidcRPMetaDataOptionsLogoutType": "front",
+			"oidcRPMetaDataOptionsPublic": 0,
+			"oidcRPMetaDataOptionsRedirectUris": "http://oidc-client-3.llng.localhost:3000/oidcredirecturi",
+			"oidcRPMetaDataOptionsRefreshToken": 0,
+			"oidcRPMetaDataOptionsRefreshTokenRotation": 0,
+			"oidcRPMetaDataOptionsRequirePKCE": 0,
+			"oidcRPMetaDataOptionsUserInfoEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsUserinfoRequireHeaderToken": 0
+		},
+		"oidc-client-4": {
+			"oidcRPMetaDataOptionsAccessTokenClaims": 0,
+			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
+			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
+			"oidcRPMetaDataOptionsAllowOffline": 0,
+			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
+			"oidcRPMetaDataOptionsAuthRequiredForAuthorize": 0,
+			"oidcRPMetaDataOptionsAuthnRequireNonce": 0,
+			"oidcRPMetaDataOptionsAuthnRequireState": 0,
+			"oidcRPMetaDataOptionsBypassConsent": 0,
+			"oidcRPMetaDataOptionsClientID": "modauthopenidc-client-4",
+			"oidcRPMetaDataOptionsClientSecret": "modauthopenidc-clientsecret",
+			"oidcRPMetaDataOptionsIDTokenForceClaims": 0,
+			"oidcRPMetaDataOptionsIDTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsIdTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutBypassConfirm": 0,
+			"oidcRPMetaDataOptionsLogoutEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutSessionRequired": 0,
+			"oidcRPMetaDataOptionsLogoutType": "front",
+			"oidcRPMetaDataOptionsPublic": 0,
+			"oidcRPMetaDataOptionsRedirectUris": "http://oidc-client-4.llng.localhost:3000/oidcredirecturi",
+			"oidcRPMetaDataOptionsRefreshToken": 0,
+			"oidcRPMetaDataOptionsRefreshTokenRotation": 0,
+			"oidcRPMetaDataOptionsRequirePKCE": 0,
+			"oidcRPMetaDataOptionsUserInfoEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsUserinfoRequireHeaderToken": 0
+		},
+		"oidc-client-5": {
+			"oidcRPMetaDataOptionsAccessTokenClaims": 0,
+			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
+			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
+			"oidcRPMetaDataOptionsAllowOffline": 0,
+			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
+			"oidcRPMetaDataOptionsAuthRequiredForAuthorize": 0,
+			"oidcRPMetaDataOptionsAuthnRequireNonce": 0,
+			"oidcRPMetaDataOptionsAuthnRequireState": 0,
+			"oidcRPMetaDataOptionsBypassConsent": 0,
+			"oidcRPMetaDataOptionsClientID": "modauthopenidc-client-5",
+			"oidcRPMetaDataOptionsClientSecret": "modauthopenidc-clientsecret",
+			"oidcRPMetaDataOptionsIDTokenForceClaims": 0,
+			"oidcRPMetaDataOptionsIDTokenSignAlg": "RS256",
+			"oidcRPMetaDataOptionsIdTokenEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutBypassConfirm": 0,
+			"oidcRPMetaDataOptionsLogoutEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsLogoutSessionRequired": 0,
+			"oidcRPMetaDataOptionsLogoutType": "front",
+			"oidcRPMetaDataOptionsPublic": 0,
+			"oidcRPMetaDataOptionsRedirectUris": "http://oidc-client-5.llng.localhost:3000/oidcredirecturi",
+			"oidcRPMetaDataOptionsRefreshToken": 0,
+			"oidcRPMetaDataOptionsRefreshTokenRotation": 0,
+			"oidcRPMetaDataOptionsRequirePKCE": 0,
+			"oidcRPMetaDataOptionsUserInfoEncContentEncAlg": "A256GCM",
+			"oidcRPMetaDataOptionsUserinfoRequireHeaderToken": 0
+		}
+	},
+	"oidcRPMetaDataOptionsExtraClaims": {
+		"oidc-client-1": { "membership": "groups" },
+		"oidc-client-2": { "membership": "groups" },
+		"oidc-client-3": { "membership": "groups" },
+		"oidc-client-4": { "membership": "groups" },
+		"oidc-client-5": { "membership": "groups" }
+	},
+	"oidcRPMetaDataScopeRules": {
+		"oidc-client-1": {},
+		"oidc-client-2": {},
+		"oidc-client-3": {},
+		"oidc-client-4": {},
+		"oidc-client-5": {}
+	},
+	"oidcRPStateTimeout": 600,
+	"oidcServiceAccessTokenExpiration": 3600,
+	"oidcServiceAllowAuthorizationCodeFlow": 1,
+	"oidcServiceAuthorizationCodeExpiration": 60,
+	"oidcServiceDynamicRegistrationExportedVars": {},
+	"oidcServiceDynamicRegistrationExtraClaims": {},
+	"oidcServiceEncAlgorithmAlg": "RSA-OAEP",
+	"oidcServiceEncAlgorithmEnc": "A256GCM",
+	"oidcServiceIDTokenExpiration": 3600,
+	"oidcServiceKeyIdEnc": "6hXsBPbnzDBrP5ptE29lfQ",
+	"oidcServiceKeyIdSig": "BNYfvFDaf6v9of5b6nUNpg",
+	"oidcServiceKeyTypeEnc": "RSA",
+	"oidcServiceKeyTypeSig": "RSA",
+	"oidcServiceMetaDataAuthnContext": {
+		"loa-1": 1,
+		"loa-2": 2,
+		"loa-3": 3,
+		"loa-4": 4,
+		"loa-5": 5
+	},
+	"oidcServiceMetaDataAuthorizeURI": "authorize",
+	"oidcServiceMetaDataBackChannelURI": "blogout",
+	"oidcServiceMetaDataCheckSessionURI": "checksession.html",
+	"oidcServiceMetaDataEndSessionURI": "logout",
+	"oidcServiceMetaDataFrontChannelURI": "flogout",
+	"oidcServiceMetaDataIntrospectionURI": "introspect",
+	"oidcServiceMetaDataJWKSURI": "jwks",
+	"oidcServiceMetaDataRegistrationURI": "register",
+	"oidcServiceMetaDataTokenURI": "token",
+	"oidcServiceMetaDataUserInfoURI": "userinfo",
+	"oidcServiceNewKeyTypeSig": "RSA",
+	"oidcServiceOfflineSessionExpiration": 2592000,
+	"oidcServiceOldKeyTypeEnc": "RSA",
+	"oidcServiceOldKeyTypeSig": "RSA",
+	"oidcServicePrivateKeyEnc": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDObeXtYZvUmnn7\n8qLQPc/MwO6XR5svPyPISf6hM4SK28wT/5TiF8bH/bxpw07SYNpt9D4dH3T7ncC7\nVSUPleEeMBn1H+PrU0PToH2Jv9Luv8x+VJI2/0lAsUBqlH9xYBCLMPPKqZg5v+hl\nsfUTo/kbMsZ8n98g24QvSrGzSslArgBnbHY+Q7HxQqw4utpOF6Cx6F1m5fyG2SA6\nfJc1NaICpFabWTaf1Kt9kCUnMNL0YLArjAOCFNeBrv6Yn+bJfCHttUUlw94kujQj\nXjT++CZKR7dsEnSSQBzW6uPgqNX88TNJdAsYmz392id/n9UeOMUsD3Ffyu5y07UB\nkMUsmguHAgMBAAECggEAGfwAcNCUFn95cmr47qCROzNf9R/420ol3WzfBfifqwD+\n39eQrKMUjREV+fQxRE8Xv7Z6aR0QEyoo3AvcNemGZE/mvJHOlU0uYQG3O7MvQIlZ\nGt/XZd/dnyyQsLnPjvxqKLM5RN3zQPW0sbRkZpwB29gY3xAavJ6VNYS/+JMl4SOr\n3e+Qt5WT1Kscbltc44S0eHpwjbOrtVTlmLUx/0TSEpNEWsuEhK9sIqDIqqqvoqeF\nFalatri6Ntjumv/rK+/ujg4jf5vL2riS4arrn1Sf/ht8imDwFa4oXAtSTt4dKmEy\nDRuVVN6zlVAkP4fQStD+P9//Uk0KMb+YIBKp33GK3QKBgQD8Y3xDYPAGgFRrY/Qz\ntVkgF1CV0TE7Ur5RVFDE7df/HqN7QtcmLTKokqksMz2QwHvYS61gJjVdsWZHNDXQ\nfyJNa9C9D+uLMGwVgB1h9/DY0zVZPsOOOKoQFEvKwb+xXFVN0o3Ut++YSA4ynKCI\nHnfutn0LR1Ey9xrK/IAevbQ3hQKBgQDRYg+dMRLUoPRs8cQ1BcXXgPqF5pmatUHl\nPTEfHZYqlQQSIZHNqQTC6YIfzoetGRfCeOAxj769JrBJqiCg6mlkmxG+aj5P/X4v\ncxzpPRwlbShZfsykspwlfJODHu28HHZ1Sgm/A4bAYcErxv0iT2tnchqnsDopv0kz\nwzim/QsWmwKBgQDwgRDh2BcB6voHF8mWGKKkbPMywJSMdk27jIAnGIqypoycodYJ\noBpc/tzMrMtnC7U4KO0+6UoDTVAsW/lIBE44vpu7/daz3WGxn1Lgj3dn9uQodiG9\nfgu4pM6QmM5FgbocHZ9f7CMZ1tgIrK5g57/brvQ7citTSJu0gKbKJHX+TQKBgDAU\nbXNyFlnfD+GIbr6iMbj3tA9VUYZWAuip8YKsn5Ptnf6v2LQ6EI7VYfz9xuf3sB4G\n9axLzsfOf4Ka3100Frl0ZlGsQdzKX9RzgXsJflIVy8MpO8LCBNsSzSi5zGt6ubTb\nKHvFSocYq2vrCKt9QzOA3yAMdn6pnxyUwoiN6KLrAoGBANLA/2BEBbtMUobIS0l/\n53sURBxsCZmts9+siDjABdle7AMN8oIP0XUWzCJ3GXCSBXyIYCfNAbrJvNc8EsAe\nsNYUc1Cydz+bJ1F39Faas2a2IueKzP3YXnzDJ2HzSsBWLsko4J1zXTOopVRlGZdX\nbdVTF5xfUKeZu448PeaGbdrv\n-----END PRIVATE KEY-----\n",
+	"oidcServicePrivateKeySig": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCX01OTz8j/ARm3\nYgwdKQFdOaMKe54NdS4/0pX7x7f0IBUNYaNBYo9/eNm+JKt3UDuXweJHWQkKh0AC\nlenJct2aNXVWZIRjPpYeUUr14fW5+nABXtROexyxNV13Yx8/JUPccy4KnVUo2RNY\nThgL3EWFJ4rj+/vARaEpsoayXqOfwy5PVpoSwOBCqBaLmiUwTaZmRDMNnbcNTewm\nM0GS6w+FV8aRc2zN+3bm+MX7DCIgyQI1flDxVer8M2XxYq8xSmC2xV7XYlYzIVE+\n4gG3EnFIF8nRcfg9/HuNnD8VBDHVHsPZxcQMIfW2in3Wc/h7Zfi+jP/D213p66NB\nx2zhPfKVAgMBAAECggEAAiBhBmFjErlF+NomynNu1Aqw3ykh6qqBFOlC6wVzgjfp\n0Oe/b4oXxu9fI16O8pXyg7q2No1yHDjj5gq0p9A+ois3WG1XfQQHz7xlP6I5fMWb\nyH/MGvOhUFUWQ6FlMw9MpEY5DJ0tWmwHQpXIw0UY9IIRhrBv6KlBAN0XLbaNdaPI\nFlriNk6DG9Br2jOJwbWPy9nJEA+m7jm8P3MFQrdwftdAtjiUwCBGSftYEmFLEf0t\nEad/2aKW3I0fNVJGqJv7ZRS15S/fXTlfLJOVF1AMdySvuUOdzWN6K/buLCbO8zeG\nkkfMvjO7tTEsLildRpkI2RZaRVU6VHXIDG1AclBGaQKBgQDRUWp/a1pPuj0wEHYE\nvOCUonkxs3/vxnleVKlokSv+Eap5bNyPbB8yopTO23OZwBh7a7fwa3qBYo+x1f1D\nC9wdge8M69c4Ms4xGLNHcV9Z5tIRsOomAo1szR2tduX1edqyYPHnRENX27fI1fHT\n3OzhMcF8Yn9D2GzEdwUNBIUUfQKBgQC5r33sQhmjGrwawywiJfHSFeduEeSbmCyT\nQHxs8InnPNoSd3Rz5zXicaB+RvsE0w9JjIQFzIDjvTPvS2SvLp5BDPkAlPE/TU2N\niTABcTzPU2Da+qtEvUXzXfJ66VrL+qLtbsbjK+fYX5AQaKOUxIBzhvmpuQZ7oNam\nNjY4Sakp+QKBgHImUEnEpa+tBQldML9MsbzdDfLIzRBZ0H5c9TYNVUxtHeayM2YT\ntL/MYhKdIuHKHI/SIrF+K4S711lINaGGqjd9UHxfcTM4obGsorhnX3SLqCv1qvun\nkLCw+2pJ2QaRuW5l6AYS+BbFv+hKpGLBrHzywW2v2W+Ka2aI8bwzps+RAoGATGWb\n1ZzMl4Lkac5rVhFukRVaBrtt52aQ0HTzvI6q7mzm/DoRu64hSW2ertXdaXq9C3G4\nz/n3/btWptnKLxlrGzCPMmIVcAoKInWTPsSsVFDlxLLlzH5jTWIV5eQk60/PwQiW\n49iopymKSHYE96xxfRbHmcD6ndrq9a/QVxBXfWECgYEAoEF2y/zxnKEBkEP4Q4i+\nwjj7neqCJouizn3ql8g7xbcINDVYTbmNHciP+Bbuk88EFRrBrR7zHcoqwsRQcuYM\npl9gVptPsmuWfyRu1fNxFaQz7fv8dVgHXPDZHquAJCsiW9E8Cn1gCzojHpiOb2AV\nzzH3J+cWPS2PHSXJQSHwyos=\n-----END PRIVATE KEY-----\n",
+	"oidcServicePublicKeyEnc": "-----BEGIN CERTIFICATE-----\nMIICuTCCAaGgAwIBAgIFAJHvJtQwDQYJKoZIhvcNAQELBQAwHjEcMBoGA1UEAwwT\nYXV0aC5sbG5nLmxvY2FsaG9zdDAeFw0yNDA3MjIxNDE0MDFaFw00NDA3MTcxNDE0\nMDFaMB4xHDAaBgNVBAMME2F1dGgubGxuZy5sb2NhbGhvc3QwggEiMA0GCSqGSIb3\nDQEBAQUAA4IBDwAwggEKAoIBAQDObeXtYZvUmnn78qLQPc/MwO6XR5svPyPISf6h\nM4SK28wT/5TiF8bH/bxpw07SYNpt9D4dH3T7ncC7VSUPleEeMBn1H+PrU0PToH2J\nv9Luv8x+VJI2/0lAsUBqlH9xYBCLMPPKqZg5v+hlsfUTo/kbMsZ8n98g24QvSrGz\nSslArgBnbHY+Q7HxQqw4utpOF6Cx6F1m5fyG2SA6fJc1NaICpFabWTaf1Kt9kCUn\nMNL0YLArjAOCFNeBrv6Yn+bJfCHttUUlw94kujQjXjT++CZKR7dsEnSSQBzW6uPg\nqNX88TNJdAsYmz392id/n9UeOMUsD3Ffyu5y07UBkMUsmguHAgMBAAEwDQYJKoZI\nhvcNAQELBQADggEBAFd8ihoL/9yHHwIkXBMAaIYPhkoPFdZG9AjxFJbusRGhWmDP\nOgRBTpeaOrsNYiHteaxEy8GwymhxfL4l+vZtJrYlHeMb7KKWkA3cLsCzAzgjyz9l\n6jdC23smL95/28ucghN+61yD/08vov+r5RE5gwB8YNN8B+mY9huY93NeGo9IabmZ\nNL1B6pW/Z2YxkreawmeNOTZ9/yl663jEnXpkf9fA9RA0ajaBGqvFAQKR9bC1zGVK\n5qHltbujL8+KCZc2iAkEO1FRiia8dFWL6Je4FI3hW4X9GfX1cfLXdR5jrU0wjGmf\nh5L6QgkWmCYjyraT1dUC2tIoNwzybeYb3QImfNo=\n-----END CERTIFICATE-----\n",
+	"oidcServicePublicKeySig": "-----BEGIN CERTIFICATE-----\nMIICuDCCAaCgAwIBAgIEDCn8ejANBgkqhkiG9w0BAQsFADAeMRwwGgYDVQQDDBNh\ndXRoLmxsbmcubG9jYWxob3N0MB4XDTI0MDcyMjE0MTM1NVoXDTQ0MDcxNzE0MTM1\nNVowHjEcMBoGA1UEAwwTYXV0aC5sbG5nLmxvY2FsaG9zdDCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBAJfTU5PPyP8BGbdiDB0pAV05owp7ng11Lj/SlfvH\nt/QgFQ1ho0Fij3942b4kq3dQO5fB4kdZCQqHQAKV6cly3Zo1dVZkhGM+lh5RSvXh\n9bn6cAFe1E57HLE1XXdjHz8lQ9xzLgqdVSjZE1hOGAvcRYUniuP7+8BFoSmyhrJe\no5/DLk9WmhLA4EKoFouaJTBNpmZEMw2dtw1N7CYzQZLrD4VXxpFzbM37dub4xfsM\nIiDJAjV+UPFV6vwzZfFirzFKYLbFXtdiVjMhUT7iAbcScUgXydFx+D38e42cPxUE\nMdUew9nFxAwh9baKfdZz+Htl+L6M/8PbXenro0HHbOE98pUCAwEAATANBgkqhkiG\n9w0BAQsFAAOCAQEAP2bj9BmeIZAWrpz9NLwj4rCwmDTo+vurih/hCpw5FG5Sit0L\nP+aqo3KBMyMjqJpH0kvHrYZR4KdtEymHEWIhe1SLHXQGHfL1KOiOgTj2IXH08MSD\nmhn+3Ovmp190BGFZxfTwa9cXYffLGV+44BK6MFcumWaYj5qtkOlF84L9z2j5F/Ly\nxCfpMmlMALuYXCgVgqNp1wFqZQwUUdY09EyJy/0A2SYKtxWmxrqJNsD/LbUtW3Zb\nJtgsKMMbv2PlPFx7lmF9uvL/F/5a1R44wXS+UOkgxwcaMmh9FqYiXb5FN+TBq5U6\nzp2r3PsVx6DnCJPT7cD6S+QevsGlygLkxVTjHA==\n-----END CERTIFICATE-----\n",
+	"oidcStorageOptions": {},
 	"passwordDB": "Demo",
 	"persistentStorage": "Apache::Session::File",
 	"persistentStorageOptions": {
@@ -196,27 +640,202 @@
 	"portalSkin": "bootstrap",
 	"portalSkinBackground": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
 	"post": {
-		"test2.llng.localhost": {},
 		"manager.llng.localhost": {},
 		"test1.llng.localhost": {
 			"/form.html": {
+				"buttonSelector": "#bt",
+				"formSelector": "#test",
+				"jqueryUrl": "http://manager.llng.localhost:8080/static/bwr/jquery/dist/jquery.js",
+				"target": "/index.pl",
 				"vars": [
 					["postuid", "$_user"],
 					["postmail", "'x@x.org'"],
 					["poststatic", "'static content'"]
-				],
-				"jqueryUrl": "http://manager.llng.localhost:8080/static/bwr/jquery/dist/jquery.js",
-				"buttonSelector": "#bt",
-				"formSelector": "#test",
-				"target": "/index.pl"
+				]
 			}
-		}
+		},
+		"test2.llng.localhost": {}
 	},
 	"registerDB": "Demo",
+	"sameSite": "Strict",
+	"samlAttributeAuthorityDescriptorAttributeServiceSOAP": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;",
+	"samlAuthnContextMapKerberos": 4,
+	"samlAuthnContextMapPassword": 2,
+	"samlAuthnContextMapPasswordProtectedTransport": 3,
+	"samlAuthnContextMapTLSClient": 5,
+	"samlEntityID": "#PORTAL#/saml/metadata",
+	"samlIDPMetaDataOptions": {},
+	"samlIDPMetaDataXML": {},
+	"samlIDPSSODescriptorArtifactResolutionServiceArtifact": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact",
+	"samlIDPSSODescriptorSingleLogoutServiceHTTPPost": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn",
+	"samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn",
+	"samlIDPSSODescriptorSingleLogoutServiceSOAP": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;",
+	"samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;",
+	"samlIDPSSODescriptorSingleSignOnServiceHTTPPost": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;",
+	"samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;",
+	"samlIDPSSODescriptorWantAuthnRequestsSigned": 1,
+	"samlIDPMetaDataExportedAttributes": null,
+	"samlMetadataForceUTF8": 1,
+	"samlSPMetaDataOptions": {
+		"saml-client-1": {
+			"samlSPMetaDataOptionsNameIDFormat": "",
+			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
+			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
+			"samlSPMetaDataOptionsEncryptionMode": "none",
+			"samlSPMetaDataOptionsSignSLOMessage": -1,
+			"samlSPMetaDataOptionsNotOnOrAfterTimeout": 72000,
+			"samlSPMetaDataOptionsForceUTF8": 1,
+			"samlSPMetaDataOptionsOneTimeUse": 0,
+			"samlSPMetaDataOptionsCheckSLOMessageSignature": 1,
+			"samlSPMetaDataOptionsSignSSOMessage": -1,
+			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
+		},
+		"saml-client-2": {
+			"samlSPMetaDataOptionsNameIDFormat": "",
+			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
+			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
+			"samlSPMetaDataOptionsEncryptionMode": "none",
+			"samlSPMetaDataOptionsSignSLOMessage": -1,
+			"samlSPMetaDataOptionsNotOnOrAfterTimeout": 72000,
+			"samlSPMetaDataOptionsForceUTF8": 1,
+			"samlSPMetaDataOptionsOneTimeUse": 0,
+			"samlSPMetaDataOptionsCheckSLOMessageSignature": 1,
+			"samlSPMetaDataOptionsSignSSOMessage": -1,
+			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
+		},
+		"saml-client-3": {
+			"samlSPMetaDataOptionsNameIDFormat": "",
+			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
+			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
+			"samlSPMetaDataOptionsEncryptionMode": "none",
+			"samlSPMetaDataOptionsSignSLOMessage": -1,
+			"samlSPMetaDataOptionsNotOnOrAfterTimeout": 72000,
+			"samlSPMetaDataOptionsForceUTF8": 1,
+			"samlSPMetaDataOptionsOneTimeUse": 0,
+			"samlSPMetaDataOptionsCheckSLOMessageSignature": 1,
+			"samlSPMetaDataOptionsSignSSOMessage": -1,
+			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
+		},
+		"saml-client-4": {
+			"samlSPMetaDataOptionsNameIDFormat": "",
+			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
+			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
+			"samlSPMetaDataOptionsEncryptionMode": "none",
+			"samlSPMetaDataOptionsSignSLOMessage": -1,
+			"samlSPMetaDataOptionsNotOnOrAfterTimeout": 72000,
+			"samlSPMetaDataOptionsForceUTF8": 1,
+			"samlSPMetaDataOptionsOneTimeUse": 0,
+			"samlSPMetaDataOptionsCheckSLOMessageSignature": 1,
+			"samlSPMetaDataOptionsSignSSOMessage": -1,
+			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
+		},
+		"saml-client-5": {
+			"samlSPMetaDataOptionsNameIDFormat": "",
+			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
+			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
+			"samlSPMetaDataOptionsEncryptionMode": "none",
+			"samlSPMetaDataOptionsSignSLOMessage": -1,
+			"samlSPMetaDataOptionsNotOnOrAfterTimeout": 72000,
+			"samlSPMetaDataOptionsForceUTF8": 1,
+			"samlSPMetaDataOptionsOneTimeUse": 0,
+			"samlSPMetaDataOptionsCheckSLOMessageSignature": 1,
+			"samlSPMetaDataOptionsSignSSOMessage": -1,
+			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
+		}
+	},
+	"samlNameIDFormatMapEmail": "mail",
+	"samlNameIDFormatMapKerberos": "uid",
+	"samlNameIDFormatMapX509": "mail",
+	"samlNameIDFormatMapWindows": "uid",
+	"samlOrganizationDisplayName": "Example",
+	"samlOrganizationName": "Example",
+	"samlOrganizationURL": "http://www.example.com",
+	"samlOverrideIDPEntityID": "",
+	"samlServicePrivateKeySig": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD30hqrVIAmj2Xx\n/8yTeBCFDba9F/IeRVKzHxJJdGNyBMx4UsLXyNnuR2LALU3T5NsVZkiFI5h+0HsT\nicfmeBvoxjewY69nwxNtjtJW2wSK1Opuw5UXw9j/e7N1jqqOrx4gwRUqJHifiDkP\nSBOlqKwDZmn7XacRQzRcNe76OQshTwqRWPDUVbK1hFcNSQOEDrkQRDlaA8Tc6rc5\nxGGqlTY2NtIT0dust3oQxkJOdVA6H8eC9Zer3gr3+nyhNnB+RpQBq/RFqFL8egJG\nDP0p5JgyDOH6CHHFfhtsnhttajNuUdgsk6VxwKkHmlV7+TT6YRPS5KxOV3/TQG2Z\nnarn8H2zAgMBAAECggEADqJLjN56isxg+r9eNz8ZyqGaruPhGkSBs64cCFZlIPCD\nmn9YniFwLQ/uFucV93NGNKdLlQEbGjH5cpfqRAPHsiEyXKomS3xLg2axqQtZ41Db\nXxsRjMu13rBRUpnQHIjewJRmSYzJyrHinLJm5ptlPPYpP/yxxuUvDFrq97+ylo7U\nkz1HVru/y46JtJT6LgyQO7k+kBhR2319pNsJD70UxVmlwMRmKqYYiuLkkvafbph8\nGLb/ziYOKHPCm3/7R+63kR8MKLxzSa3yDEiqUokb3Ym0Fv6csLqEz/HETugOjds2\n33jzsq3ZvXOq18Vw3NLkMTh7PAz8ZBaIgi50zmM+4QKBgQD+QaZqpcAcwWqOib4O\nMJQFgMS1OyxkFuCvly0EUVhFFKCafcoTnaCIp6ZudYavvLQsTAj5ctTZYXm+reFx\nXG6has6D/Eh6zGJ9uHFpLfLjghQnm/K4QOPMnZbe+amHULU1GaRwo9BRPb7LNfzI\nLIopcR+cjJGJrZ9uXZMRlOmsuwKBgQD5hSf3059XShLR9yCr1POazS8w8phGMaRZ\nPbvihfIoqyadj81gImNVXUEz6BFDZxEzJcj+ucXVNYhYZKyHAn0XPz3ux4xLrUxS\nyxR1vYlLd2A2BYen1VugzcycUy7ICWKkOB9JM/jIShhg5pRDYHGjmBm0CbrRsYp3\ncp4MPKofaQKBgEUiXLnK7/3hqbOwSHlbRCRq6xHMUTm17spP9PGjnLjL7w+S/Itw\n5OHDlEGcu061pNgWpKoPS0kAdDYg2ZgVZg+GFzlUM/EP+gftSwkqcUzjZc+PW+Q1\n4LsWbpuajzo3+83AdzIZmN8+Rs7Ck0Vqtvalx86tejVRfHRqBT9WmmNZAoGBAMNU\nof04BTzoF+OWelUJ18oPZioDP4FzyxyxXyvtf6ymjww5TqU7RlfFMQ3ZVepV/Pj1\nU2tVMrG9voa0CPuHzzUrpOgP/pwfhegqYlHpllklkoO3wIJ6W8h+Uvbth2nBLx8v\ncA52SQNCPeNdniNAlLVklHqEQ2N0gNkROPiLZQJBAoGBAPJ3h+fQq1pLH6AqOF5p\njlJFn00aPJqaZue8rtYIaoWwLOJsStHTXaoKdfFWQ+yaNH1BhrqnLdFASQn3VZJs\nTJy0I2GKM+b2p5oNZD3bIk8vaRoMPBQ93WSIiV8+0EWiQaJGyCw0JgVbk7sRYO4E\nTXJ82T/56XKGokApl22/FRj5\n-----END PRIVATE KEY-----\n",
+	"samlServicePublicKeySig": "-----BEGIN CERTIFICATE-----\nMIICuDCCAaCgAwIBAgIEVVRTDzANBgkqhkiG9w0BAQsFADAeMRwwGgYDVQQDDBNh\ndXRoLmxsbmcubG9jYWxob3N0MB4XDTI0MDcyMzEzMjAzNFoXDTQ0MDcxODEzMjAz\nNFowHjEcMBoGA1UEAwwTYXV0aC5sbG5nLmxvY2FsaG9zdDCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBAPfSGqtUgCaPZfH/zJN4EIUNtr0X8h5FUrMfEkl0\nY3IEzHhSwtfI2e5HYsAtTdPk2xVmSIUjmH7QexOJx+Z4G+jGN7Bjr2fDE22O0lbb\nBIrU6m7DlRfD2P97s3WOqo6vHiDBFSokeJ+IOQ9IE6WorANmaftdpxFDNFw17vo5\nCyFPCpFY8NRVsrWEVw1JA4QOuRBEOVoDxNzqtznEYaqVNjY20hPR26y3ehDGQk51\nUDofx4L1l6veCvf6fKE2cH5GlAGr9EWoUvx6AkYM/SnkmDIM4foIccV+G2yeG21q\nM25R2CyTpXHAqQeaVXv5NPphE9LkrE5Xf9NAbZmdqufwfbMCAwEAATANBgkqhkiG\n9w0BAQsFAAOCAQEAcVs+ozxWGRkHNqD4AgcWm/uVieADLrb16ayk2KfMpax8Fb3Q\neGZ9JnNM4SGCkqkR0cyhMeOp7Tbp4IYpA7Al7EqRNq0nq090DFjhHvoau01sN8Qn\nmxjWurUKDYKlUs7fdv+1daZCmTpWg2JawkduQu8MagHq3Kw4XGKLyixawoYcnSMB\nOaKFGA73RjBbHw12C1S2v1Koo5RDkaLDAfbJVdbB0ZhQeSbBzSW6/714Hllblvh5\nA8VM0CTQdAJvgFDoV8K7VjbJ1YIsjJCxygW+FDu4BKxFxpBD7NZ0Xjmf1eB0y26M\nEs1UkeBWMJu6j4qKoXSCzu3er8UxUhRMf2wcQg==\n-----END CERTIFICATE-----\n",
+	"samlServiceSignatureMethod": "RSA_SHA256",
+	"samlRelayStateTimeout": 600,
+	"samlServicePrivateKeyEnc": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDbegv6pFjIY6Dt\nztb7MlWudgqoYZ4GkOqEP0H5ZyJsENxKGD14wHj5F6MISBaKOH+Da2Dq4XKjYk5w\naex7w9vh+Ya/MpkUfs2ibD6ljqkqDpkijN0ONJQeLGC0/ApA0DUBz1QBXzwS2uN6\nxedWI6a4jtT9y2mNmzJFB6fI8wI9kUgn9q7BBLMaIrx/NU8GOoMsGB/gFX0ak8If\n1yNFmAH1fm6yKHDv99IWTXrNqYcyhNtXvLBZSuyNL5LsMUmnMJCrD4ZrKU4KYHMA\nv6ONTvTEV2/rXviLDVUahi3mlVv20WNlLqgH7qVhAgUaDpmUrol0ljBQ4EF8wvj+\nIq5lQde5AgMBAAECggEAGVpuyBJEXcixgksgpzWsM2o4JrWZGkfTCXofukptTefA\nNNB6SGjOiLLP7uDZ9rdaVpF4yYVH14MfjcmUq4Lnc4IeTFexWo5f3Y2MypXxaXX0\nf2rfjdipzBcDCGEto4lRuD7tpLduQnzV5py2MauOYrdAOD2vWK/3BYWh/psA1SDs\ng8oed92bz8GnE6bjg6KkbUULE1SwNFYqLT27B0l9PFETR8Xu5ezZDRrvqlJiDZsg\ng2qzVUxWOeQSsYGdVpbzy2I3TumIYyFpijRknQryyX23W4ELKroqjffYYGhxv8ge\nMuSnEGHLE4XdY4/2jC2SZQqmqc5c7G+IGENZDkkegQKBgQD79rMblPVS9BRcl0xx\nJM4f/q8IAJn5o+gaamravL36hP7tlL6+Uz+u7vqp7CBOzKbqq6RvDgEJhgsfkrm8\nugw/1QKcDBwdndIZjeolCBoFfBEUhpWuIlCi+QweVf4ApMIOeWEGgiq09/P3gwE6\nSiTmNK67jSFXxlH/FawZbi08OQKBgQDe/h5dlIl9/IYx6EY5XJwrhWGKdYTNkFlS\n5UdH3KYOBePpBC4DSE4CkOpLGbnvVkJvGs5U2P0M0dTeWqTysrVUqJYAzIYyyAYR\nzsdqnS3w1evQcwEsJwx/eLOW5W0cw4atiXQQre39RlMivVCIi3iN8lXdAk1tM0ZY\n5ZhZFTh3gQKBgQDsb3Fe/oa+0t+Qi0FmIr1x9JHWlonmYlJZB2dB3z7+qHJ4Cs56\n1q+5vfNmJHekuhIfv/VLaP68KxahCBRW7tazx3TtbcesWv5ekHcZTOLuJp/4fNpU\nT0sPw1gF13fErtaSsn/Dlb3xl4NNzZcHVbAOfX1B7YtOTIGBNpsKOgMksQKBgHjv\nytonz7WTOdhhR4yejFgSG4dzGtY9niQWEuWHZkueqC9cw/OlyCEeJOMcDboexyLo\nn9RmZj8IofEBqgmyICPM1qWSRonN73TC92X73smJyz2e0Zj3iJCtjoCc5uM9q5H8\nRQUyvyqodDgYAlA7i+M39ZdKQ2Gg+FsIEermVlyBAoGBAI/vL5ASebkHCG7qwf9a\nTZfuNR1kaBfQlDW/bTNwvbVtOfd7gwApR6fu+Xx3MuE3ir+Xk1ABhicS4zh6c0J+\nm/RQO4Rf795T8hlDQh9jsQb3X0WXNSNkVwmCJXC4l7jMmJJg2md/nw2u1UPJxicV\nHGBOWFB6lkr0UeejYq2SB4c+\n-----END PRIVATE KEY-----\n",
+	"samlServicePublicKeyEnc": "-----BEGIN CERTIFICATE-----\nMIICuDCCAaCgAwIBAgIETGxncjANBgkqhkiG9w0BAQsFADAeMRwwGgYDVQQDDBNh\ndXRoLmxsbmcubG9jYWxob3N0MB4XDTI0MDcyMzEzMjAzOVoXDTQ0MDcxODEzMjAz\nOVowHjEcMBoGA1UEAwwTYXV0aC5sbG5nLmxvY2FsaG9zdDCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBANt6C/qkWMhjoO3O1vsyVa52CqhhngaQ6oQ/Qfln\nImwQ3EoYPXjAePkXowhIFoo4f4NrYOrhcqNiTnBp7HvD2+H5hr8ymRR+zaJsPqWO\nqSoOmSKM3Q40lB4sYLT8CkDQNQHPVAFfPBLa43rF51YjpriO1P3LaY2bMkUHp8jz\nAj2RSCf2rsEEsxoivH81TwY6gywYH+AVfRqTwh/XI0WYAfV+brIocO/30hZNes2p\nhzKE21e8sFlK7I0vkuwxSacwkKsPhmspTgpgcwC/o41O9MRXb+te+IsNVRqGLeaV\nW/bRY2UuqAfupWECBRoOmZSuiXSWMFDgQXzC+P4irmVB17kCAwEAATANBgkqhkiG\n9w0BAQsFAAOCAQEAKGJ4/l9otZORPHmtPERzLl+yh6VszncJJjgpiUcIuYzuxB/m\nq8BZSZMK/2blbgM2fh66RQRvxmJDMRbqbqrs99Qhz8v9rVQLFPJCPvK6KOCXTjsf\n+lCkT8+BgD7BjWryQL1IH3RhoO1mk9EIlq1e3mhu96EJC08FAuyUWi/D+jVoGEg7\nlaoxO0Rji4g8NvpwnjBkkuSPs7jSSHhy+URiW/ApuQcUKQmn1yoqMMVPHOThekb8\npXEtuKXDXHuXU7SzOW3RStYkSgnUcsX0r9L/wPJYj/969wY0GYko2Ri9fhqD0X2M\n7f092gZ3zbbVKJiEom5fa3jXmSKEWq6ypSsyJw==\n-----END CERTIFICATE-----\n",
+	"samlSPMetaDataMacros": {
+		"saml-client-1": {},
+		"saml-client-2": {},
+		"saml-client-3": {},
+		"saml-client-4": {},
+		"saml-client-5": {}
+	},
+	"samlSPMetaDataXML": {
+		"saml-client-1": {
+			"samlSPMetaDataXML": "<EntityDescriptor entityID=\"urn:saml-client-1\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n  <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\" AuthnRequestsSigned=\"true\">\n    <KeyDescriptor use=\"encryption\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n    <KeyDescriptor use=\"signing\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n\t<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://saml-client-1.llng.localhost:3000/mellon/logout\"/>\n\t<AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://saml-client-1.llng.localhost:3000/mellon/postResponse\" index=\"0\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>"
+		},
+		"saml-client-2": {
+			"samlSPMetaDataXML": "<EntityDescriptor entityID=\"urn:saml-client-2\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n  <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\" AuthnRequestsSigned=\"true\">\n    <KeyDescriptor use=\"encryption\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n    <KeyDescriptor use=\"signing\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n\t<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://saml-client-2.llng.localhost:3000/mellon/logout\"/>\n\t<AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://saml-client-2.llng.localhost:3000/mellon/postResponse\" index=\"0\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>"
+		},
+		"saml-client-3": {
+			"samlSPMetaDataXML": "<EntityDescriptor entityID=\"urn:saml-client-3\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n  <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\" AuthnRequestsSigned=\"true\">\n    <KeyDescriptor use=\"encryption\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n    <KeyDescriptor use=\"signing\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n\t<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://saml-client-3.llng.localhost:3000/mellon/logout\"/>\n\t<AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://saml-client-3.llng.localhost:3000/mellon/postResponse\" index=\"0\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>"
+		},
+		"saml-client-4": {
+			"samlSPMetaDataXML": "<EntityDescriptor entityID=\"urn:saml-client-4\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n  <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\" AuthnRequestsSigned=\"true\">\n    <KeyDescriptor use=\"encryption\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n    <KeyDescriptor use=\"signing\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n\t<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://saml-client-4.llng.localhost:3000/mellon/logout\"/>\n\t<AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://saml-client-4.llng.localhost:3000/mellon/postResponse\" index=\"0\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>"
+		},
+		"saml-client-5": {
+			"samlSPMetaDataXML": "<EntityDescriptor entityID=\"urn:saml-client-5\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n  <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\" AuthnRequestsSigned=\"true\">\n    <KeyDescriptor use=\"encryption\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n    <KeyDescriptor use=\"signing\">\n      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n        <ds:X509Data>\n          <ds:X509Certificate>MIIDyzCCAjMCFGFeuptCnjBm4v3A6YIbhSOCFucdMA0GCSqGSIb3DQEBCwUAMCIx\nIDAeBgNVBAMMF3NhbWwtY2xpZW50LTEubG9jYWxob3N0MB4XDTI0MDcyMzEyNDY1\nMloXDTM0MDcyMzEyNDY1MlowIjEgMB4GA1UEAwwXc2FtbC1jbGllbnQtMS5sb2Nh\nbGhvc3QwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQC5ojFUYKEJzl1Z\nI07BzxSL3gHmiYGdEjFtvWr9fDLsSmUh0N/sIAtTqylLaEkvR59bj/lSZbNutKDC\nVDNlL+IQ17KGY5X9MqECiYxr4r4VJO5TgdfH1E6Yy2o8YkTITq+Ou0kr+vuqaVI+\nXc2p/R2vPShJq+qxtZ1zL71C3ana0Ie4xOPRI6WheN7wk5BvnGqzd0ubgUpxq9Kr\nsGqK6x4kKa00D+HNGpXOvJ0wIVc0cTSOMNnndVjDQ3d6VJgGl2QZ0dmM5iR7kxzo\nqzEFbNs3gzK6v1ToHW9Oqo4/JnMnGv2fSp+YFa/aMyYBv85iYBZBUi+A+e0sDkGF\nz10eJm2ej174Nu9X8DtFoIW/MilogiwN3Aeo0Yj523ep4Upu+37RcVvB61fQS8kG\n1XDXR6XYivm/0KXFnmkRaWpCuS+74JjY1c3UE7bsf1l03c+YsqP7UAwxxPgX4iRk\n+D+iEt1xHo0h0GO/WOz0pRBUVG1JkDqYTm/qiqTpGP4wFJFoYVMCAwEAATANBgkq\nhkiG9w0BAQsFAAOCAYEAOp35iPe1jRSGHMv3daF5kOn15jbrQpPximI7lvV23kuj\n8+kWUq5j0KYalrEE6drw6FT0YGGlNCRY2wMgd5CAs6y/0RL6uYHiChb48sVpcf11\nd7ySsP/5AFEiDEGyE0T0XcoKEtkksyPpaXNcQE5dRHJXWGo712yaRMBfInhZ9S2/\nJy3GpxIl7fSJXOhkiB7RNk/np6uKSr9NZqjGq5B+ijBax1LwlZYDprZhul6pfIfF\ne6Zf08SkuZggeBTWchgu4Fm47PIrUKaZwLbhiD2jrDT00n+ps1q8Slr35ZlvtCHy\nwK5SAqCS4TaIDnV+RhxhlZUpXXIJbk8ld8WDfZVu9EtloElvQe+qa+kb1qGBAE1F\nY7LdgvZquWDOdftjQ7kUL4zyir6XTa8VZOz2XubJ4IFNiYWQNokjOMVPMvVAAPnc\nyuS8Hn6twlduplN5SNqVQaNn6q5dFmW1+QFv8OfrRvlVVBB08SZEvdpx8oyNsTzm\nOyts2o5nlEBj4L6M5nym</ds:X509Certificate>\n        </ds:X509Data>\n      </ds:KeyInfo>\n    </KeyDescriptor>\n\t<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://saml-client-5.llng.localhost:3000/mellon/logout\"/>\n\t<AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://saml-client-5.llng.localhost:3000/mellon/postResponse\" index=\"0\"/>\n  </SPSSODescriptor>\n</EntityDescriptor>"
+		}
+	},
+	"samlSPMetaDataExportedAttributes": {
+		"saml-client-1": {
+			"mail": "1;mail",
+			"groups": "1;groups",
+			"uid": "1;uid",
+			"cn": "1;name"
+		},
+		"saml-client-2": {
+			"mail": "1;mail",
+			"groups": "1;groups",
+			"uid": "1;uid",
+			"cn": "1;name"
+		},
+		"saml-client-3": {
+			"mail": "1;mail",
+			"groups": "1;groups",
+			"uid": "1;uid",
+			"cn": "1;name"
+		},
+		"saml-client-4": {
+			"mail": "1;mail",
+			"groups": "1;groups",
+			"uid": "1;uid",
+			"cn": "1;name"
+		},
+		"saml-client-5": {
+			"mail": "1;mail",
+			"groups": "1;groups",
+			"uid": "1;uid",
+			"cn": "1;name"
+		}
+	},
+	"samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact": "0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact",
+	"samlSPSSODescriptorArtifactResolutionServiceArtifact": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact",
+	"samlSPSSODescriptorAuthnRequestsSigned": 1,
+	"samlSPSSODescriptorAssertionConsumerServiceHTTPPost": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost",
+	"samlSPSSODescriptorSingleLogoutServiceHTTPPost": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn",
+	"samlSPSSODescriptorSingleLogoutServiceHTTPRedirect": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn",
+	"samlSPSSODescriptorSingleLogoutServiceSOAP": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;",
+	"samlSPSSODescriptorWantAssertionsSigned": 1,
+	"samlStorageOptions": {},
 	"securedCookie": 0,
 	"sessionDataToRemember": {},
 	"timeout": 72000,
 	"userDB": "Same",
-	"whatToTrace": "_whatToTrace",
-	"customToTrace": "mail"
+	"vhostOptions": {
+		"manager.llng.localhost": {
+			"vhostAccessToTrace": "My::accessToTrace, Doctor, Who, _whatToTrace",
+			"vhostAliases": "",
+			"vhostHttps": -1,
+			"vhostMaintenance": 0,
+			"vhostPort": -1,
+			"vhostServiceTokenTTL": -1,
+			"vhostType": "Main"
+		}
+	},
+	"whatToTrace": "_whatToTrace"
 }

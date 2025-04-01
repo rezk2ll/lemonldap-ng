@@ -91,7 +91,7 @@ Start container:
 
 ::
 
-	podman run -it -v ./:/app -p 8080:8080 llng-local-dev
+	podman run -it -v ./:/app -p 8080:8080 -p 3000:3000 llng-local-dev
 
 Open http://auth.llng.localhost:8080/ in your browser.
 
