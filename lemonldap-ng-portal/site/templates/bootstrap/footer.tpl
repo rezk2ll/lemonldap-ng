@@ -2,7 +2,7 @@
 
   <TMPL_IF NAME="SCROLL_TOP">
     <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
-      <span trspan="back-to-top" hidden></span>  <i class="fa fa-chevron-up"></i>
+      <span hidden>back-to-top</span>  <i class="fa fa-chevron-up"></i>
     </button>
   </TMPL_IF>
 

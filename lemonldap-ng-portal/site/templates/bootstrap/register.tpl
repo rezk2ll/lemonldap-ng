@@ -20,7 +20,7 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><label for="firstnamefield" class="mb-0"><span trspan="firstname" hidden></span><i class="fa fa-user"></i></label></span>
+        <span class="input-group-text"><label for="firstnamefield" class="mb-0"><span trspan="firstName" hidden></span><i class="fa fa-user"></i></label></span>
       </div>
       <input id="firstnamefield" name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required aria-required="true" autocomplete="given-name" />
     </div>
