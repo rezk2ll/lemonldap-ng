@@ -16,7 +16,6 @@ RUN cpanm "Perl::Tidy@$(make tidyversion)"
 
 WORKDIR /app/
 
-ENV LLNG_DEFAULTCONFFILE="/app/dev/lemonldap-ng.ini"
 ENV PERL5LIB="/app/lemonldap-ng-common/blib/lib/:/app/lemonldap-ng-handler/blib/lib/:/app/lemonldap-ng-portal/blib/lib/:/app/lemonldap-ng-manager/blib/lib/"
 
 COPY docker-entrypoint.sh /usr/local/bin/entrypoint
