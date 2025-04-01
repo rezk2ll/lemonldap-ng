@@ -1187,6 +1187,8 @@ dist:	clean
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "lemonldap-ng-$(VERSION)") lemonldap-ng-$(VERSION)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/docker
+	@rm -rf lemonldap-ng-$(VERSION)/Dockerfile
 	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
