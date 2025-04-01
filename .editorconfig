@@ -1,0 +1,18 @@
+root = true
+
+[*]
+indent_style = space
+max_line_length = 145
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{pl,pm,t}]
+indent_size = 4
+
+[*.js]
+indent_size = 2
+
+[*.tpl]
+indent_size = 2
