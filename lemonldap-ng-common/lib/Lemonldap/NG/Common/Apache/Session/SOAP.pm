@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Apache::Session::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 #parameter proxy Url of SOAP service
 #parameter proxyOptions SOAP::Lite options
@@ -362,9 +362,9 @@ SOAP::transport can use basic authentication by rewriting
 C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
 
   package My::Package;
-  
+
   use base Lemonldap::NG::Handler::SharedConf;
-  
+
   __PACKAGE__->init ( {
       globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
       globalStorageOptions => {
@@ -380,13 +380,13 @@ SOAP::transport provides a simple way to use SSL certificate: you've just to
 set environment variables.
 
   package My::Package;
-  
+
   use base Lemonldap::NG::Handler::SharedConf;
-  
+
   # AUTHENTICATION
   $ENV{HTTPS_CERT_FILE} = 'client-cert.pem';
   $ENV{HTTPS_KEY_FILE}  = 'client-key.pem';
-  
+
   __PACKAGE__->init ( {
       globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
       globalStorageOptions => {
