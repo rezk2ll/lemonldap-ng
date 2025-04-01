@@ -419,7 +419,7 @@ sub attributes {
                     },
                     {
                         'k' => 'SSL',
-                        'v' => 'SSL'
+                        'v' => 'TLS/SSL'
                     },
                     {
                         'k' => 'Twitter',
@@ -597,7 +597,7 @@ sub attributes {
                 },
                 {
                     'k' => 'SSL',
-                    'v' => 'SSL'
+                    'v' => 'TLS/SSL'
                 },
                 {
                     'k' => 'Twitter',
@@ -1128,7 +1128,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 },
                 {
                     'k' => 'SSL',
-                    'v' => 'SSL'
+                    'v' => 'TLS/SSL'
                 },
                 {
                     'k' => 'Twitter',
