@@ -27,7 +27,7 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><label for="lastnamefield" class="mb-0"><span trspan="lastname" hidden></span><i class="fa fa-user"></i></label></span>
+        <span class="input-group-text"><label for="lastnamefield" class="mb-0"><span trspan="lastName" hidden></span><i class="fa fa-user"></i></label></span>
       </div>
       <input id="lastnamefield" name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" autocomplete="family-name" trplaceholder="lastName" required aria-required="true"/>
     </div>
