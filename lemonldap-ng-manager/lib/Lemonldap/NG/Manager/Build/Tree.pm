@@ -1516,6 +1516,7 @@ sub tree {
                     ]
                 },
                 'oidcServiceMetaDataAuthnContext',
+                'oidcServiceMetaDataAmrRules',
                 {
                     title => "oidcServiceDynamicRegistration",
                     help  => 'openidconnectservice.html#dynamic-registration',

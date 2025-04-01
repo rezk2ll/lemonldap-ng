@@ -4836,6 +4836,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
+        oidcServiceMetaDataAmrRules => {
+            type    => 'keyTextContainer',
+            keyTest => qr/\w/,
+            test       => sub { return perlExpr(@_) },
+            default => {
+                'pwd' => '$authenticationLevel == 2',
+                'mfa' => '$_2f',
+                'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+                'otp' => '$_2f eq "TOTP"',
+            },
+            documentation => 'OpenID Connect AMR rules',
+            help => 'openidconnectservice.html#amrrules',
+        },
         oidcServiceHideMetadata => {
             type          => 'bool',
             Documentation => "Don't display OIDC metadata",

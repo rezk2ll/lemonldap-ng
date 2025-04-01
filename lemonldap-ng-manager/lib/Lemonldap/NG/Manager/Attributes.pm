@@ -3546,6 +3546,19 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcServiceMetaDataAmrRules' => {
+            'default' => {
+                'mfa' => '$_2f',
+                'otp' => '$_2f eq "TOTP"',
+                'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+                'pwd' => '$authenticationLevel == 2'
+            },
+            'keyTest' => qr/\w/,
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'oidcServiceMetaDataAuthnContext' => {
             'default' => {
                 'loa-1' => 1,

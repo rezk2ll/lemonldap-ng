@@ -819,6 +819,7 @@
 "oidcServiceKeyTypeEnc":"Key type",
 "oidcServiceKeyTypeSig":"Key type",
 "oidcServiceMetaData":"OpenID 連線服務",
+"oidcServiceMetaDataAmrRules":"Authentication Method Reference rules",
 "oidcServiceMetaDataAuthnContext":"驗證內容",
 "oidcServiceMetaDataAuthorizeURI":"授權",
 "oidcServiceMetaDataBackChannelURI":"反向頻道 URI",

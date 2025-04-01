@@ -232,7 +232,13 @@ sub defaultValues {
         'oidcServiceIDTokenExpiration'           => 3600,
         'oidcServiceKeyTypeEnc'                  => 'RSA',
         'oidcServiceKeyTypeSig'                  => 'RSA',
-        'oidcServiceMetaDataAuthnContext'        => {
+        'oidcServiceMetaDataAmrRules'            => {
+            'mfa' => '$_2f',
+            'otp' => '$_2f eq "TOTP"',
+            'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+            'pwd' => '$authenticationLevel == 2'
+        },
+        'oidcServiceMetaDataAuthnContext' => {
             'loa-1' => 1,
             'loa-2' => 2,
             'loa-3' => 3,

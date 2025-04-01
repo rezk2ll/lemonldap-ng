@@ -21,6 +21,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
 -  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
+-  Authentication Method References (AMR) (Since ``2.21.0``)
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
