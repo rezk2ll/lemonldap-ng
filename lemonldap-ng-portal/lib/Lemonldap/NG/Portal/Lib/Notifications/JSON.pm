@@ -242,7 +242,19 @@ sub getNotifBack {
 
             # Get pending notifications and verify that they have been accepted
           LOOP: foreach my $notif (@$json) {
+
+                # Get the reference
                 my $reference = $notif->{reference};
+                $self->logger->debug("Get reference: $reference");
+
+                # Check it in session
+                if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
+
+                    # The notification was already accepted
+                    $self->logger->debug(
+                        "Notification $reference was already accepted");
+                    next LOOP;
+                }
 
                 # Check date
                 my $date = $notif->{date};
