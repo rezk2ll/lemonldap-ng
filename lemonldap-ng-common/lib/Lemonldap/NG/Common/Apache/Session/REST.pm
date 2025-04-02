@@ -157,15 +157,16 @@ sub get {
     my $id   = shift;
 
     # Check cache
-    if ( $self->{localStorage} && $self->cache->get($id) ) {
-        return $self->{data} = $self->cache->get($id);
+    if ( $self->{localStorage} and my $res = $self->cache->get($id) ) {
+        $res = eval { from_json($res) };
+        return $self->{data} = $res if $res;
     }
 
     # No cache, use REST and set cache
     my $res = $self->getJson($id) or return 0;
     $self->{data} = $res;
 
-    $self->cache->set( $id, $self->{data} ) if $self->{localStorage};
+    $self->cache->set( $id, to_json( $self->{data} ) ) if $self->{localStorage};
 
     return $self->{data};
 }
@@ -200,7 +201,7 @@ sub newSession {
     #    if ( $self->cache->get($id) ) {
     #        $self->cache->remove($id);
     #    }
-    #    $self->cache->set( $id, $self->{data} );
+    #    $self->cache->set( $id, to_json( $self->{data} ) );
     #}
 
     return $self->{data};
@@ -218,7 +219,7 @@ sub save {
         if ( $self->cache->get($id) ) {
             $self->cache->remove($id);
         }
-        $self->cache->set( $id, $self->{data} );
+        $self->cache->set( $id, to_json( $self->{data} ) );
     }
 
     # REST
