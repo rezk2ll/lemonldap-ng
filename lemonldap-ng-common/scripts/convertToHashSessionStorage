@@ -19,12 +19,17 @@ pod2usage(0) if $opts{help};
 
 my @storages = map { s/SSO/global/; lc($_) } hashedKinds;
 
-my $confAcc = Lemonldap::NG::Common::Conf->new( {} ) or die $Lemonldap::NG::Common::Conf::msg;
+# Get config
+my $res = Lemonldap::NG::Common::Conf->new();
+die $Lemonldap::NG::Common::Conf::msg unless ($res);
+my $conf = $res->getConf();
 
-my $cfgNum = $confAcc->lastCfg
-  or die 'No configuration found:' . $Lemonldap::NG::Common::Conf::msg;
+my $localconf = $res->getLocalConf()
+  or die "Unable to get local configuration ($!)";
 
-my $conf = $confAcc->getConf({cfgNum => $cfgNum});
+if ($localconf) {
+    $conf->{$_} = $localconf->{$_} foreach ( keys %$localconf );
+}
 
 my %done;
 foreach my $kind (hashedKinds) {
