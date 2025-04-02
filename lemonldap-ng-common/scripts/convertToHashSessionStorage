@@ -27,39 +27,43 @@ my $conf = $res->getConf();
 my $localconf = $res->getLocalConf()
   or die "Unable to get local configuration ($!)";
 
-if ($localconf) {
-    $conf->{$_} = $localconf->{$_} foreach ( keys %$localconf );
-}
+$conf->{$_} = $localconf->{$_} foreach ( keys %$localconf );
 
 my %done;
 foreach my $kind (hashedKinds) {
-    my $type = shift @storages;
-    my $moduleOptions = $conf->{"${type}StorageOptions"} // $conf->{globalStorageOptions};
-    $moduleOptions->{backend} = $conf->{"${type}Storage"} // $conf->{globalStorage};
-    my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn($moduleOptions, '_session_kind', $kind);
+    my $type          = shift @storages;
+    my $moduleOptions = $conf->{"${type}StorageOptions"}
+      // $conf->{globalStorageOptions};
+    $moduleOptions->{backend} = $conf->{"${type}Storage"}
+      // $conf->{globalStorage};
+    my $sessions =
+      Lemonldap::NG::Common::Apache::Session->searchOn( $moduleOptions,
+        '_session_kind', $kind );
     my $found = 0;
     foreach my $oldId ( keys %$sessions ) {
-        my $oldSession = Lemonldap::NG::Common::Session->new({
-            hashStore => 0,
-            id => $oldId,
-            storageModule => $moduleOptions->{backend},
-            storageModuleOptions => $moduleOptions,
-            kind => $kind,
-        });
+        my $oldSession = Lemonldap::NG::Common::Session->new( {
+                hashStore            => 0,
+                id                   => $oldId,
+                storageModule        => $moduleOptions->{backend},
+                storageModuleOptions => $moduleOptions,
+                kind                 => $kind,
+            }
+        );
         next unless $oldSession;
         next if $oldSession->data->{_session_hashed};
         my $info = $oldSession->data;
         $info->{_session_hashed} = JSON::true;
         delete $info->{_session_id};
-        my $newSession = Lemonldap::NG::Common::Session->new({
-            hashStore => 1,
-            id => $oldId,
-            storageModule => $moduleOptions->{backend},
-            storageModuleOptions => $moduleOptions,
-            kind => $kind,
-            info => $info,
-            force => 1,
-        });
+        my $newSession = Lemonldap::NG::Common::Session->new( {
+                hashStore            => 1,
+                id                   => $oldId,
+                storageModule        => $moduleOptions->{backend},
+                storageModuleOptions => $moduleOptions,
+                kind                 => $kind,
+                info                 => $info,
+                force                => 1,
+            }
+        );
         $found++;
 
         $oldSession->remove;
