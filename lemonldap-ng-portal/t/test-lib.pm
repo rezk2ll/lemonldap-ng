@@ -889,6 +889,7 @@ our $defaultIni = {
         namespace   => 'lemonldap-ng-session',
         cache_root  => $tmpDir,
         cache_depth => 0,
+        allow_cache_for_root => 1,
     },
     logLevel              => 'error',
     cookieName            => 'lemonldap',
