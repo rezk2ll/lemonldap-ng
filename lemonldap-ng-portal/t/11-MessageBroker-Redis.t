@@ -1,6 +1,7 @@
 use strict;
 use Test::More;
 use IO::String;
+use Lemonldap::NG::Common::Session;
 use Time::Fake;
 
 BEGIN {
@@ -10,7 +11,7 @@ BEGIN {
 SKIP: {
     skip( "LLNGTESTREDIS isn't set", 1 ) unless $ENV{LLNGTESTREDIS};
     require 't/redis/redis.pm';
-    skip( 'Redis is missing',        1 ) if $main::noRedis;
+    skip( 'Redis is missing', 1 ) if $main::noRedis;
     &startRedis;
     my $client = LLNG::Manager::Test->new( {
             ini => {
@@ -40,7 +41,8 @@ SKIP: {
         my $id = $client->login('dwho');
         ok(
             unlink(
-                $client->ini->{globalStorageOptions}->{Directory} . "/$id"
+                $client->ini->{globalStorageOptions}->{Directory} . '/'
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
             ),
             'Delete session from global storage'
         );
@@ -62,7 +64,8 @@ SKIP: {
         my $id2 = $client->login('french');
         ok(
             unlink(
-                $client->ini->{globalStorageOptions}->{Directory} . "/$id"
+                $client->ini->{globalStorageOptions}->{Directory} . '/'
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
             ),
             'Delete session from global storage'
         );
@@ -78,7 +81,8 @@ SKIP: {
         expectReject($res);
         ok(
             unlink(
-                $client->ini->{globalStorageOptions}->{Directory} . "/$id2"
+                $client->ini->{globalStorageOptions}->{Directory} . '/'
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id2) : $id2 )
             ),
             'Delete session from global storage'
         );
@@ -100,10 +104,11 @@ SKIP: {
         Time::Fake->offset('+24s');
         ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
             'Reinit Redis connection' );
-        expectAuthenticatedAs($res, 'dwho');
+        expectAuthenticatedAs( $res, 'dwho' );
         ok(
             unlink(
-                $client->ini->{globalStorageOptions}->{Directory} . "/$id"
+                $client->ini->{globalStorageOptions}->{Directory} . '/'
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
             ),
             'Delete session from global storage'
         );
