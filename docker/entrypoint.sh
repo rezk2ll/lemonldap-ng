@@ -13,7 +13,8 @@ export LLNG_DEFAULTCONFFILE="/app/dev/lemonldap-ng.ini"
 
 # Start client apps
 /usr/sbin/apachectl start
-mkdir -p "$(pwd)/dev/sessions/lock" "$(pwd)/dev/sessions/persistents/lock"
+
+mkdir -p "$(pwd)/dev/sessions/lock" "$(pwd)/dev/sessions/persistents/lock" "$(pwd)/dev/notifications"
 
 # Create default conf. if missing
 [ ! -e "$(pwd)/dev/conf/lmConf-1.json" ] && mkdir -p "$(pwd)/dev/conf/" && cp "$(pwd)/dev/lmConf-1.json" "$(pwd)/dev/conf/"

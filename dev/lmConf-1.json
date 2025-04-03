@@ -382,7 +382,7 @@
 	"notification": 1,
 	"notificationStorage": "File",
 	"notificationStorageOptions": {
-		"dirName": "/app/dev"
+		"dirName": "/app/dev/notifications"
 	},
 	"oidcAuthnLevel": 1,
 	"oidcOPMetaDataExportedVars": {},
