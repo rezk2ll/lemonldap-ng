@@ -5,7 +5,7 @@
   <TMPL_INCLUDE NAME="customLoginHeader.tpl">
 
   <TMPL_IF PUBLIC_NOTIFICATION>
-    <div id="carousel" class="carousel d-flex justify-content-center mb-3">
+    <div id="carousel" class="carousel">
     </div>
   </TMPL_IF>
 
