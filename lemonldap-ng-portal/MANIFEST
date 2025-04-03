@@ -205,9 +205,6 @@ site/htdocs/index.psgi
 site/htdocs/static/bootstrap/2f.png
 site/htdocs/static/bootstrap/css/styles.css
 site/htdocs/static/bootstrap/css/styles.min.css
-site/htdocs/static/bootstrap/js/carousel.js
-site/htdocs/static/bootstrap/js/carousel.min.js
-site/htdocs/static/bootstrap/js/carousel.min.js.map
 site/htdocs/static/bootstrap/js/skin.js
 site/htdocs/static/bootstrap/js/skin.min.js
 site/htdocs/static/bootstrap/js/skin.min.js.map
@@ -325,6 +322,9 @@ site/htdocs/static/common/js/autoRenew.min.js.map
 site/htdocs/static/common/js/captcha.js
 site/htdocs/static/common/js/captcha.min.js
 site/htdocs/static/common/js/captcha.min.js.map
+site/htdocs/static/common/js/carousel.js
+site/htdocs/static/common/js/carousel.min.js
+site/htdocs/static/common/js/carousel.min.js.map
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/confirm.min.js.map
@@ -444,6 +444,7 @@ site/js-src/.browserslistrc
 site/js-src/2fregistration.js
 site/js-src/autoRenew.js
 site/js-src/captcha.js
+site/js-src/carousel.js
 site/js-src/confirm.js
 site/js-src/entropy.js
 site/js-src/generic2fregistration.js
