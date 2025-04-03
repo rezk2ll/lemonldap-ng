@@ -163,7 +163,8 @@ sub init {
         each %{ $self->conf->{oidcServiceMetaDataAmrRules} || {} } )
     {
         $self->logger->debug("Compiling AMR rule for $amr_value");
-        my $compiled_rule = $self->p->buildRule( $rule, "amr rule for $amr_value" );
+        my $compiled_rule =
+          $self->p->buildRule( $rule, "amr rule for $amr_value" );
         $self->amrRules->{$amr_value} = $compiled_rule if $compiled_rule;
     }
 
@@ -2957,7 +2958,9 @@ sub getAmr {
             _clientConfKey => $rp,
         };
 
-        if ( $self->amrRules->{$amr_value} and $self->amrRules->{$amr_value}->( $req, $richSessionInfo ) ) {
+        if (    $self->amrRules->{$amr_value}
+            and $self->amrRules->{$amr_value}->( $req, $richSessionInfo ) )
+        {
             push @$result, $amr_value;
         }
     }
@@ -3043,7 +3046,8 @@ sub updateOidcSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve OIDC session $oidc_session");
 
-            my $oidcSession = $self->getOpenIDConnectSession($oidc_session);
+            my $oidcSession = $self->getOpenIDConnectSession( $oidc_session, '',
+                hashStore => 0 );
 
             if ($oidcSession) {
 

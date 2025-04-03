@@ -1406,7 +1406,7 @@ sub getOpenIDConnectSession {
                       $self->conf->{localSessionStorageOptions}
                 )
             ),
-            hashStore => $self->conf->{hashedSessionStore},
+            hashStore => $opts{hashStore} // $self->conf->{hashedSessionStore},
             id        => $id,
             kind      => $self->sessionKind,
             (
@@ -2991,7 +2991,7 @@ Build Logout Request URI
 
 =head2 buildLogoutResponse
 
-Build Logout Response URI 
+Build Logout Response URI
 
 =head2 addRouteFromConf
 
