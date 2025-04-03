@@ -3,12 +3,12 @@
 <script type="application/init">
 <TMPL_VAR NAME="PUBLIC_NOTIFICATION">
 </script>
-</TMPL_IF>
 <!-- //if:jsminified
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/carousel.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/carousel.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
 //else -->
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/carousel.js?v=<TMPL_VAR CACHE_TAG>"></script>
 <!-- //endif -->
+</TMPL_IF>
 
 <main id="logincontent" class="container">
 
