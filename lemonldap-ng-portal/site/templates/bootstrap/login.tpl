@@ -3,12 +3,11 @@
 <main id="logincontent" class="container">
 
   <TMPL_INCLUDE NAME="customLoginHeader.tpl">
-<TMPL_IF PUBLIC_NOTIFICATION>
-  <div class="message alert alert-secondary">
-    <div id="carousel" class="carousel d-flex justify-content-center">   
+
+  <TMPL_IF PUBLIC_NOTIFICATION>
+    <div id="carousel" class="carousel d-flex justify-content-center mb-3">
     </div>
-   </div>
-</TMPL_IF>
+  </TMPL_IF>
 
   <div id="errormsg">
     <TMPL_IF NAME="AUTH_ERROR">
