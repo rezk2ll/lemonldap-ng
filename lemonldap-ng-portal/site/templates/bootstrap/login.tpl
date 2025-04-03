@@ -1,14 +1,4 @@
 <TMPL_INCLUDE NAME="header.tpl">
-<TMPL_IF NAME="PUBLIC_NOTIFICATION">
-<script type="application/init">
-<TMPL_VAR NAME="PUBLIC_NOTIFICATION">
-</script>
-<!-- //if:jsminified
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/carousel.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
-//else -->
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/carousel.js?v=<TMPL_VAR CACHE_TAG>"></script>
-<!-- //endif -->
-</TMPL_IF>
 
 <main id="logincontent" class="container">
 
