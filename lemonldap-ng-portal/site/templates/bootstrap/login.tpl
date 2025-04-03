@@ -4,9 +4,8 @@
 
   <TMPL_INCLUDE NAME="customLoginHeader.tpl">
 
-  <TMPL_IF PUBLIC_NOTIFICATION>
-    <div id="carousel" class="carousel">
-    </div>
+  <TMPL_IF env_DISPLAY_PUBLIC_NOTIFICATIONS>
+    <div id="carousel" class="carousel"></div>
   </TMPL_IF>
 
   <div id="errormsg">
