@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(to_json);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Common::Module';
 

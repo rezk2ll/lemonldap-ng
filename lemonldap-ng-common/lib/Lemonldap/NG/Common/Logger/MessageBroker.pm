@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Logger::MessageBroker;
 
 use strict;
 
-our $VERSION = '2.0.18';
+our $VERSION = '2.21.0';
 
 sub new {
     my $self = bless {}, shift;
