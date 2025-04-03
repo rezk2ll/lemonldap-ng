@@ -150,6 +150,7 @@ lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
@@ -204,6 +205,9 @@ site/htdocs/index.psgi
 site/htdocs/static/bootstrap/2f.png
 site/htdocs/static/bootstrap/css/styles.css
 site/htdocs/static/bootstrap/css/styles.min.css
+site/htdocs/static/bootstrap/js/carousel.js
+site/htdocs/static/bootstrap/js/carousel.min.js
+site/htdocs/static/bootstrap/js/carousel.min.js.map
 site/htdocs/static/bootstrap/js/skin.js
 site/htdocs/static/bootstrap/js/skin.min.js
 site/htdocs/static/bootstrap/js/skin.min.js.map
@@ -816,6 +820,7 @@ t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
 t/40-Notifications-JSON-LDAP.t
 t/40-Notifications-JSON-Server.t
+t/40-Notifications-PublicNotif.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
 t/40-Notifications-XML-Server.t
