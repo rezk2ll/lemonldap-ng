@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -878,6 +878,14 @@ sub localUnlog {
             my $cache = $module->new($options);
             if ( $cache->get($id) ) {
                 $cache->remove($id);
+            }
+
+            # Modules like Apache::Session::REST stores hashed id in cache
+            if ( $class->tsv->{hashedSessionStore} ) {
+                $id = id2storage($id);
+                if ( $cache->get($id) ) {
+                    $cache->remove($id);
+                }
             }
         }
     }
