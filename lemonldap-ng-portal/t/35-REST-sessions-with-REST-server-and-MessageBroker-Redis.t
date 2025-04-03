@@ -22,7 +22,6 @@ LWP::Protocol::PSGI->register(
               . $req->method . " $1"
               . ( $2 ? "?$2" : '' ) . ")"
         );
-        count(1);
         my $url   = $1;
         my $query = $2;
         my $res;
@@ -39,7 +38,6 @@ LWP::Protocol::PSGI->register(
                 ),
                 ' Post request'
             );
-            count(1);
             expectOK($res);
         }
         elsif ( $req->method =~ /^(get|delete)$/i ) {
@@ -56,10 +54,8 @@ LWP::Protocol::PSGI->register(
             ok( ( $res->[0] == 200 or $res->[0] == 400 ),
                 ' Response is 200 or 400' )
               or explain( $res->[0], '200 or 400' );
-            count(2);
         }
         pass(' @ END OF REST REQUEST');
-        count(1);
         return $res;
     }
 );
@@ -91,13 +87,11 @@ SKIP: {
         ),
         'Post user/password'
     );
-    count(2);
     expectRedirection( $res, 'http://auth.sp.com/' );
     $spId = expectCookie($res);
 
     # Test auth
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Auth test' );
-    count(1);
     expectOK($res);
 
     # Logout
@@ -110,7 +104,6 @@ SKIP: {
         ),
         'Ask for logout'
     );
-    count(1);
     expectOK($res);
     Time::Fake->offset('+6s');
 
@@ -121,7 +114,6 @@ SKIP: {
         ),
         'Test if user is reject on IdP'
     );
-    count(1);
     expectReject($res);
 
     # Test if user is reject on SP
@@ -131,14 +123,13 @@ SKIP: {
         ),
         'Test if user is reject on SP'
     );
-    count(1);
     expectReject($res);
     eval { &stopRedis };
 
 }
 
 clean_sessions();
-done_testing( count() );
+done_testing();
 
 sub issuer {
     return LLNG::Manager::Test->new( {
