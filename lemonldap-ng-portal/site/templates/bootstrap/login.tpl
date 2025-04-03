@@ -4,7 +4,11 @@
 <TMPL_VAR NAME="PUBLIC_NOTIFICATION">
 </script>
 </TMPL_IF>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/carousel.js?v=<TMPL_VAR CACHE_TAG>"></script>
+<!-- //if:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/carousel.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+//else -->
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/carousel.js?v=<TMPL_VAR CACHE_TAG>"></script>
+<!-- //endif -->
 
 <main id="logincontent" class="container">
 
