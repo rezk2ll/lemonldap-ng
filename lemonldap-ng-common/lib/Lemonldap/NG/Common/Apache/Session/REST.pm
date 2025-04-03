@@ -197,7 +197,7 @@ sub newSession {
 
     ## Set cache
     #if ( $self->{localStorage} ) {
-    #    my $id = "rest" . $self->{data}->{_session_id};
+    #    my $id = $self->{data}->{_session_id};
     #    if ( $self->cache->get($id) ) {
     #        $self->cache->remove($id);
     #    }
@@ -215,7 +215,7 @@ sub save {
 
     # Update session in cache
     if ( $self->{localStorage} ) {
-        my $id = "rest" . $self->{data}->{_session_id};
+        my $id = $self->{data}->{_session_id};
         if ( $self->cache->get($id) ) {
             $self->cache->remove($id);
         }
@@ -258,7 +258,7 @@ sub delete {
 
     # Remove session from cache
     if ( $self->{localStorage} ) {
-        my $id = "rest" . $self->{data}->{_session_id};
+        my $id = $self->{data}->{_session_id};
         if ( $self->cache->get($id) ) {
             $self->cache->remove($id);
         }
