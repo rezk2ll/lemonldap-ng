@@ -423,7 +423,6 @@ sub display {
             AUTH_URL              => $req->{data}->{_url},
             LOGIN                 => $login,
             ACTIVE_FORM           => 1,
-            PUBLIC_NOTIFICATION   => $req->data->{publicNotifications},
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,

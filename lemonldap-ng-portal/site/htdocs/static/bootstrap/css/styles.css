@@ -287,21 +287,16 @@ div.input-group > p.form-control > label {
 }
 
 .notif-container {
-  color: #14144e;
-  background-color: #c6c6ff;
-  border-color: #fefefe;
-  padding-inline: 10%;
+  padding: 20px;
   height: 200px;
   overflow: auto;
-  scrollbar-width: thin;
-  align-content: center;
-  text-align: center;
 }
-.public_error {
-  color: #381212;
-  background-color: #f58c8c;
+
+.carousel-control-prev,
+.carousel-control-next {
+  filter: invert(100%);
 }
-.public_warn {
-  color: #444017;
-  background-color: #fff5c6;
+
+.carousel-indicators li {
+  filter: invert(50%);
 }

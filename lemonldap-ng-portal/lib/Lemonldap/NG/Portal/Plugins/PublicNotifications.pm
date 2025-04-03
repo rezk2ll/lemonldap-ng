@@ -63,10 +63,17 @@ sub getPublicNotifs {
 
         }
     );
-    $req->data->{publicNotifications} = to_json( {
-            "publicNotifications" => from_json($res)
-        }
-    ) if $res;
+    $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
+
+    $req->data->{customScript} .= <<EOF if $res;
+<script type="application/init">
+{
+  "publicNotifications": $res
+}
+</script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/carousel.js?v=$self->{p}->cacheTag"></script>
+EOF
+
     return PE_OK;
 }
 

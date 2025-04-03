@@ -6566,7 +6566,6 @@ a.close.disabled {
   top: 0;
   bottom: 0;
   z-index: 1;
-  filter: invert(100%);
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -6642,7 +6641,6 @@ a.close.disabled {
 .carousel-indicators li {
   box-sizing: content-box;
   -ms-flex: 0 1 auto;
-  filter: invert(50%);
   flex: 0 1 auto;
   width: 30px;
   height: 3px;
