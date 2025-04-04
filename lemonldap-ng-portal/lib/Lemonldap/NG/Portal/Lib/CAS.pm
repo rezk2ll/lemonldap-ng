@@ -155,7 +155,7 @@ sub sendSoapResponse {
 # Try to recover the CAS session corresponding to id and return session data
 # If id is set to undef, return a new session
 sub getCasSession {
-    my ( $self, $id, $info ) = @_;
+    my ( $self, $id, $info, $hs ) = @_;
 
     my %storage = (
         storageModule        => $self->conf->{casStorage},
@@ -175,6 +175,7 @@ sub getCasSession {
             id                 => $id,
             kind               => $self->sessionKind,
             ( $info ? ( info => $info ) : () ),
+            hashStore => $hs // $self->conf->{hashedSessionStore},
         }
     );
 
@@ -326,7 +327,7 @@ sub updateCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session);
+            my $casSession = $self->getCasSession($cas_session, undef, 0);
 
             # Delete session
             if ($casSession) {
@@ -370,7 +371,7 @@ sub deleteCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session);
+            my $casSession = $self->getCasSession($cas_session, undef, 0);
 
             # Delete session
             $result = $self->deleteCasSession($casSession);
@@ -790,7 +791,7 @@ sub getAttributesFromServiceValidateResponse {
         {
 
             # There should be only on session
-            my $pgtIdSession = $self->getCasSession($id) or next;
+            my $pgtIdSession = $self->getCasSession($id, undef, 0) or next;
             $pgtId = $pgtIdSession->data->{pgtId};
             $pgtIdSession->remove;
         }
