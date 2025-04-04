@@ -417,6 +417,7 @@ oidcServiceKeyIdEnc                                     OpenID Connect Encryptio
 oidcServiceKeyIdSig                                     OpenID Connect Signature Key ID                                                      ✔
 oidcServiceKeyTypeEnc                                                                                                                        ✔
 oidcServiceKeyTypeSig                                                                                                                        ✔
+oidcServiceMetaDataAmrRules                             OpenID Connect AMR rules                                                             ✔
 oidcServiceMetaDataAuthnContext                         OpenID Connect Authentication Context Class Ref                                      ✔
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
 oidcServiceMetaDataBackChannelURI                       OpenID Connect Back-Channel logout endpoint                                          ✔
