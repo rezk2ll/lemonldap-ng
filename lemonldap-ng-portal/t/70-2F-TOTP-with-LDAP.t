@@ -84,9 +84,11 @@ SKIP: {
         'Post code'
     );
 
+    # Some OpenLDAP versions incorrectly report the number of grace logins
+    # https://bugs.openldap.org/show_bug.cgi?id=7596
     like(
         $res->[2]->[0],
-        qr,<h3>1 <span trspan="ppGrace">,,
+        qr,<h3>(?:2|1) <span trspan="ppGrace">,,
         "Found grace info message"
     );
 
