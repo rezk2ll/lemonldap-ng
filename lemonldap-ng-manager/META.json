@@ -45,8 +45,8 @@
             "Convert::PEM" : "0",
             "Crypt::OpenSSL::RSA" : "0",
             "LWP::UserAgent" : "0",
-            "Lemonldap::NG::Common" : "v2.20.2",
-            "Lemonldap::NG::Handler" : "v2.20.2"
+            "Lemonldap::NG::Common" : "v2.21.0",
+            "Lemonldap::NG::Handler" : "v2.21.0"
          }
       }
    },

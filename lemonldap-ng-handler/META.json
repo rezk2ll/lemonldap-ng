@@ -45,7 +45,7 @@
          },
          "requires" : {
             "LWP::UserAgent" : "0",
-            "Lemonldap::NG::Common" : "v2.20.2",
+            "Lemonldap::NG::Common" : "v2.21.0",
             "Mouse" : "0",
             "URI" : "0"
          }
