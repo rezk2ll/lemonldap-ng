@@ -7,6 +7,7 @@ Template updates
 
     * You are using a custom LemonLDAP::NG theme
     * AND you modified some of LemonLDAP::NG's base templates (``login.tpl``, etc.).
+
     Note that templates whose name start with ``custom`` (``customfooter.tpl``, etc.) do NOT count.
 
     In other words, you can safely ignore this entire page if:
@@ -23,7 +24,7 @@ Floating category menu
 
 You can now display an applications category as a floating menu by setting a category name
 in ``General Parameters`` > ``Portal`` > ``Customization`` > ``Floating category name``.
-Apply the following patches to ``menu.tpl`` and ``script.tpl`` to use this new feature:
+Apply the following patches to ``menu.tpl``, ``footer.tpl`` and ``script.tpl`` to use this new feature:
 
 .. code-block:: diff
 

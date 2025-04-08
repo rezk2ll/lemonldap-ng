@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
@@ -1673,7 +1673,7 @@ sub sloRelaySoap {
     # Retrieve the corresponding data from samlStorage
     my $relayInfos = $self->getSamlSession($relayID);
     unless ($relayInfos) {
-        $self->logger->error("Could not get relay session $relayID");
+        $self->logger->warn("Could not get relay session $relayID");
         return $self->imgnok($req);
     }
 
@@ -1904,7 +1904,7 @@ sub sloResume {
     my $logoutContextSession = $self->getSamlSession($ResumeParams);
 
     unless ($logoutContextSession) {
-        $self->logger->error("Could not find logout context session");
+        $self->logger->warn("Could not find logout context session");
         return PE_SLO_ERROR;
     }
 
@@ -2051,7 +2051,7 @@ sub sloServer {
             my $local_session = $self->p->getApacheSession($local_session_id);
 
             unless ($local_session) {
-                $self->logger->error("No local session found");
+                $self->logger->warn("No local session found");
                 return $self->sendSLOErrorResponse( $req, $logout, $method );
             }
 

@@ -27,7 +27,6 @@
 
  <script type="application/init">
  {
- "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
  "choicetab":"<TMPL_VAR NAME="CHOICE_VALUE">",
  "language": "<TMPL_VAR NAME="LANGUAGE">",
  "newwindow":<TMPL_VAR NAME="NEWWINDOW" DEFAULT="0">,

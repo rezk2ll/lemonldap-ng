@@ -149,6 +149,8 @@ lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
@@ -320,6 +322,9 @@ site/htdocs/static/common/js/autoRenew.min.js.map
 site/htdocs/static/common/js/captcha.js
 site/htdocs/static/common/js/captcha.min.js
 site/htdocs/static/common/js/captcha.min.js.map
+site/htdocs/static/common/js/carousel.js
+site/htdocs/static/common/js/carousel.min.js
+site/htdocs/static/common/js/carousel.min.js.map
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/confirm.min.js.map
@@ -439,6 +444,7 @@ site/js-src/.browserslistrc
 site/js-src/2fregistration.js
 site/js-src/autoRenew.js
 site/js-src/captcha.js
+site/js-src/carousel.js
 site/js-src/confirm.js
 site/js-src/entropy.js
 site/js-src/generic2fregistration.js
@@ -575,6 +581,7 @@ t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.t
 t/01-CustomMenu.pm
+t/01-disabledPlugins.t
 t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
@@ -602,6 +609,7 @@ t/04-language-selection.t
 t/05-Hashed-Session.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
+t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
@@ -686,6 +694,7 @@ t/31-Auth-and-issuer-CAS-default.t
 t/31-Auth-and-issuer-CAS-Logout-20.t
 t/31-Auth-and-issuer-CAS-Logout-30.t
 t/31-Auth-and-issuer-CAS-proxied.t
+t/31-Auth-and-issuer-CAS-samlValidate.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/31-Auth-and-issuer-CAS-XSS-on-logout.t
@@ -694,10 +703,12 @@ t/31-CAS-Gateway.t
 t/31-CAS-Hooks.t
 t/31-CAS-jsRedirect.t
 t/31-CAS-Logout-propagate-OIDC.t
+t/31-CAS-Logout-with-hashed-storage.t
 t/31-CAS-Logout.t
 t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
+t/31-CAS-SamlValidate.t
 t/31-CAS-Security.t
 t/32-Auth-and-issuer-OIDC-authorization_code-different-sub.t
 t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
@@ -735,10 +746,12 @@ t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t
 t/32-OIDC-JWT-type-header.t
+t/32-OIDC-login_hint.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-OP-claims-in-accesstoken.t
@@ -770,6 +783,8 @@ t/35-REST-OAuth2.t
 t/35-REST-sessions-with-AuthBasic-handler-hashed-sessions.t
 t/35-REST-sessions-with-AuthBasic-handler-with-2FA.t
 t/35-REST-sessions-with-AuthBasic-handler.t
+t/35-REST-sessions-with-REST-server-and-MessageBroker-Redis-and-hashedStore.t
+t/35-REST-sessions-with-REST-server-and-MessageBroker-Redis.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
@@ -809,6 +824,7 @@ t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
 t/40-Notifications-JSON-LDAP.t
 t/40-Notifications-JSON-Server.t
+t/40-Notifications-PublicNotif.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
 t/40-Notifications-XML-Server.t

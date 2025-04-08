@@ -36,7 +36,7 @@ verify = function() {
   } else {
     return $.ajax({
       type: 'POST',
-      url: `${portal}2fregisters/${prefix}/sendcode`,
+      url: `${scriptname}2fregisters/${prefix}/sendcode`,
       dataType: 'json',
       data: {
         generic: generic
@@ -74,7 +74,7 @@ register = function() {
   } else {
     return $.ajax({
       type: 'POST',
-      url: `${portal}2fregisters/${prefix}/verify`,
+      url: `${scriptname}2fregisters/${prefix}/verify`,
       dataType: 'json',
       data: {
         generic: generic,

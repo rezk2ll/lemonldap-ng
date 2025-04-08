@@ -17,6 +17,27 @@ Known regressions in the latest released version
 
 No known issues.
 
+2.21.0
+------
+
+Log4Perl log level
+~~~~~~~~~~~~~~~~~~
+
+Starting from this version, the global ``logLevel`` parameter is applied
+for all loggers. Thus if you managed your log level inside the log4perl
+configuration file, you may loose unimportant logs if your ``logLevel`` is
+higher.
+
+"typ" header in JWT
+~~~~~~~~~~~~~~~~~~~
+
+Version earlier than 2.17.0 had a "typ" header in all JWT following OIDC
+specification. In version 2.17.0, this header was wrongly removed when
+JWT library changed. This header has been restored starting from version
+2.21.0. However some application may fail with it, so a
+``Don't insert typ header`` option has been aded into RP/OP options to be
+able to restore 2.17.0 behavior.
+
 
 2.20.2
 ------
@@ -44,6 +65,14 @@ page too long before deleting their 2FA. In this situation, the page is
 automatically refreshed. However, to improve user experience, you may want to
 increase the *General Parameters* » *Second factors* » *Global options* »
 *Login timeout* setting to increase the timeout.
+
+Client secrets as GET parameters are no longer allowed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When calling the OIDC ``/oauth2/token`` endpoint, we no longer allow the
+``client_secret`` parameter to be sent as an URL parameter. It has to be sent
+either in the body (*client_secret_post*), or as part of and ``Authentication``
+HTTP header (*client_secret_basic*).
 
 
 U2F is no more supported
@@ -278,7 +307,7 @@ In previous versions of LemonLDAP::NG, a 2FA protected account didn't need to us
 
 If you are *absolutely sure* that you want 2FA protected accounts to access AuthBasic handlers, which are password only, you can add the following test in your 2FA activation rules ::
 
-    and not $ENV{AuthBasic}
+    and not $env->{AuthBasic}
 
 
 2.0.16

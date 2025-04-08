@@ -210,7 +210,7 @@ setKey = function(key, val, success, error) {
   // First request to get token
   return $.ajax({
     type: "GET",
-    url: scriptname + 'mysession/?gettoken',
+    url: `${scriptname}mysession/?gettoken`,
     dataType: 'json',
     error: error,
     // On success, value is set
@@ -222,7 +222,7 @@ setKey = function(key, val, success, error) {
       d[key] = val;
       return $.ajax({
         type: "PUT",
-        url: scriptname + 'mysession/persistent',
+        url: `${scriptname}mysession/persistent`,
         dataType: 'json',
         data: d,
         success: success,
@@ -235,7 +235,7 @@ setKey = function(key, val, success, error) {
 delKey = function(key, sub, success, error) {
   return $.ajax({
     type: "GET",
-    url: scriptname + 'mysession/?gettoken',
+    url: `${scriptname}mysession/?gettoken`,
     dataType: 'json',
     error: error,
     // On success, value is set
@@ -336,7 +336,7 @@ setCookie = function(name, value, exdays) {
 datas = {};
 
 $(window).on('load', function() {
-  var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword;
+  var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword, displaytab;
   // Get application/init variables
   datas = getValues();
   // Keep the currently selected tab
@@ -363,7 +363,8 @@ $(window).on('load', function() {
   menuTabs = $("#menu").tabs({
     active: 0
   });
-  menuIndex = $('#menu a[href="#' + datas['displaytab'] + '"]').parent().index();
+  displaytab = getQueryParam('tab');
+  menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index();
   if (menuIndex < 0) {
     menuIndex = 0;
   }
@@ -372,7 +373,7 @@ $(window).on('load', function() {
   authMenuTabs = $("#authMenu").tabs({
     active: 0
   });
-  authMenuIndex = $('#authMenu a[href="#' + datas['displaytab'] + '"]').parent().index();
+  authMenuIndex = $('#authMenu a[href="#' + displaytab + '"]').parent().index();
   if (authMenuIndex < 0) {
     authMenuIndex = 0;
   }
@@ -653,7 +654,7 @@ $(window).on('load', function() {
     console.log('Send findUser request with parameters', str);
     return $.ajax({
       type: "POST",
-      url: `${portal}finduser`,
+      url: `${scriptname}finduser`,
       dataType: 'json',
       data: str,
       // On success, values are set

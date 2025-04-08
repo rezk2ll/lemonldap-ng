@@ -28,7 +28,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -482,6 +482,7 @@ sub run {
         $req,
         '2fchoice',
         params => {
+            TARGET        => $self->p->relativeUrl( $req, '2fchoice' ),
             CHECKLOGINS   => $checkLogins,
             STAYCONNECTED => $stayconnected,
             TOKEN         => $token,
@@ -665,8 +666,9 @@ sub _displayRegister {
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
-                CODE  => $m->{m}->prefix,
-                URL   => '/2fregisters/' . $m->{m}->prefix,
+                CODE => $m->{m}->prefix,
+                URL  =>
+                  $self->p->relativeUrl( $req, '2fregisters', $m->{m}->prefix ),
                 LOGO  => $m->{m}->logo,
                 LABEL => $m->{m}->label
               };

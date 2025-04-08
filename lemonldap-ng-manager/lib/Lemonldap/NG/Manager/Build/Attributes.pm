@@ -997,6 +997,51 @@ sub attributes {
             documentation => 'Log4Perl logger configuration file',
             flags         => 'hmp',
         },
+        lokiUrl => {
+            type          => 'text',
+            documentation => 'Loki API',
+            flags         => 'hmp',
+        },
+        lokiLabel => {
+            type          => 'text',
+            documentation => 'Loki label, default llng',
+            flags         => 'hmp',
+        },
+        lokiInstance => {
+            type          => 'text',
+            documentation => 'Loki instance, default `hostname` output',
+            flags         => 'hmp',
+        },
+        lokiEnv => {
+            type          => 'text',
+            documentation => 'Loki env, default "prod"',
+            flags         => 'hmp',
+        },
+        lokiTenant => {
+            type          => 'text',
+            documentation => 'Loki Tenant',
+            flags         => 'hmp',
+        },
+        lokiTenantHeader => {
+            type          => 'text',
+            documentation => 'Loki Tenant Header name',
+            flags         => 'hmp',
+        },
+        lokiAuthorization => {
+            type          => 'text',
+            documentation => 'Loki Authorization header value',
+            flags         => 'hmp',
+        },
+        lokiService => {
+            type          => 'text',
+            documentation => 'Loki Service (technical context)',
+            flags         => 'hmp',
+        },
+        lokiUserService => {
+            type          => 'text',
+            documentation => 'Loki (userLogger context)',
+            flags         => 'hmp',
+        },
         sentryDsn => {
             type          => 'text',
             documentation => 'Sentry logger DSN',
@@ -1631,6 +1676,11 @@ sub attributes {
             type          => 'text',
             default       => 'allusers',
             documentation => 'Notification string to match all users',
+        },
+        publicNotifications => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable PublicNotification plugin',
         },
         notificationXSLTfile => {
             type          => 'text',
@@ -3059,6 +3109,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS application service',
         },
+        casSrvMetaDataOptionsSamlValidate => {
+            type          => 'bool',
+            documentation => 'use SAML validateion',
+        },
         casAppMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation => 'CAS User attribute',
@@ -3066,7 +3120,7 @@ sub attributes {
         casAppMetaDataOptionsAllowProxy => {
             type          => 'bool',
             documentation => 'Allow CAS proxy',
-            default => 1,
+            default       => 1,
         },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
@@ -3241,6 +3295,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
+            keyTest       => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {
@@ -4781,6 +4836,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
+        oidcServiceMetaDataAmrRules => {
+            type    => 'keyTextContainer',
+            keyTest => qr/\w/,
+            test       => sub { return perlExpr(@_) },
+            default => {
+                'pwd' => '$authenticationLevel == 2',
+                'mfa' => '$_2f',
+                'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+                'otp' => '$_2f eq "TOTP"',
+            },
+            documentation => 'OpenID Connect AMR rules',
+            help => 'openidconnectservice.html#amrrules',
+        },
         oidcServiceHideMetadata => {
             type          => 'bool',
             Documentation => "Don't display OIDC metadata",
@@ -5237,6 +5305,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
+        },
+        oidcRPMetaDataOptionsAllowNativeSso => {
+            type          => 'bool',
+            documentation => 'Allow Native SSO for Mobile Apps',
         },
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',

@@ -3,14 +3,14 @@
 
   // Launch renew captcha request
   var renewCaptcha;
-  renewCaptcha = function () {
-    console.log('Call URL -> ', `${portal}renewcaptcha`);
+  renewCaptcha = function renewCaptcha() {
+    console.log('Call URL -> ', "".concat(portal, "renewcaptcha"));
     // Request to get new token and image
     return $.ajax({
       type: "GET",
-      url: `${portal}renewcaptcha`,
+      url: "".concat(scriptname, "renewcaptcha"),
       dataType: 'json',
-      error: function (j, status, err) {
+      error: function error(j, status, err) {
         var res;
         if (err) {
           console.log('Error', err);
@@ -23,7 +23,7 @@
         }
       },
       // On success, values are set
-      success: function (data) {
+      success: function success(data) {
         var newimage, newtoken;
         newtoken = data.newtoken;
         console.log('GET new token -> ', newtoken);

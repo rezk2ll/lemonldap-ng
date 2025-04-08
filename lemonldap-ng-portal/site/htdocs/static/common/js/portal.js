@@ -1,6 +1,56 @@
 (function () {
   'use strict';
 
+  function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+      var _s,
+        _e,
+        _x,
+        _r,
+        _arr = [],
+        _n = !0,
+        _d = !1;
+      try {
+        if (_x = (_i = _i.call(arr)).next, 0 === i) {
+          if (Object(_i) !== _i) return;
+          _n = !1;
+        } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+      } catch (err) {
+        _d = !0, _e = err;
+      } finally {
+        try {
+          if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+      return _arr;
+    }
+  }
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+    return arr2;
+  }
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   /*
     LemonLDAP::NG Portal jQuery scripts
     */
@@ -9,7 +59,7 @@
     displayIcon,
     getQueryParam,
     getValues,
-    ping,
+    _ping,
     ppolicyResults,
     removeOidcConsent,
     restoreOrder,
@@ -35,12 +85,12 @@
   //  - trplaceholder: set result in "placeholder" attribute
   //  - localtime    : transform time (in ms)ing translate()
   ppolicyResults = {};
-  setResult = function (field, result) {
+  setResult = function setResult(field, result) {
     var ref, ref1;
     ppolicyResults[field] = result;
     displayIcon(field, result);
     // Compute form validity from all previous results
-    if (Object.values(ppolicyResults).every(value => {
+    if (Object.values(ppolicyResults).every(function (value) {
       return value === "good" || value === "info";
     })) {
       if ((ref = $('#newpassword').get(0)) != null) {
@@ -53,7 +103,7 @@
     }
     return updateBorder();
   };
-  displayIcon = function (field, result) {
+  displayIcon = function displayIcon(field, result) {
     // Clear icon
     $("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary');
     $("#" + field).attr('role', 'status');
@@ -72,7 +122,7 @@
         return $("#" + field).addClass('fa-info-circle text-info');
     }
   };
-  updateBorder = function () {
+  updateBorder = function updateBorder() {
     var ref, ref1;
     if (((ref = $('#newpassword').get(0)) != null ? ref.checkValidity() : void 0) && ((ref1 = $('#confirmpassword').get(0)) != null ? ref1.checkValidity() : void 0)) {
       return $('.ppolicy').removeClass('border-danger').addClass('border-success');
@@ -80,13 +130,13 @@
       return $('.ppolicy').removeClass('border-success').addClass('border-danger');
     }
   };
-  translatePage = function (lang) {
+  translatePage = function translatePage(lang) {
     if (lang) {
       window.currentLanguage = lang;
     } else {
       lang = window.currentLanguage;
     }
-    return $.getJSON(`${window.staticPrefix}languages/${lang}.json`, function (data) {
+    return $.getJSON("".concat(window.staticPrefix, "languages/").concat(lang, ".json"), function (data) {
       var k, ref, ref1, v;
       translationFields = data;
       ref = window.datas.trOver.all;
@@ -113,8 +163,8 @@
       });
       $("[trmsg]").each(function () {
         var msg;
-        $(this).html(translate(`PE${$(this).attr('trmsg')}`));
-        msg = translate(`PE${$(this).attr('trmsg')}`);
+        $(this).html(translate("PE".concat($(this).attr('trmsg'))));
+        msg = translate("PE".concat($(this).attr('trmsg')));
         if (msg.match(/_hide_/)) {
           return $(this).parent().hide();
         }
@@ -124,7 +174,10 @@
         trattributes = $(this).attr('trattribute').trim().split(/\s+/);
         for (i = 0, len = trattributes.length; i < len; i++) {
           trattribute = trattributes[i];
-          [attribute, value] = trattribute.split(':');
+          var _trattribute$split = trattribute.split(':');
+          var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
+          attribute = _trattribute$split2[0];
+          value = _trattribute$split2[1];
           if (attribute && value) {
             $(this).attr(attribute, translate(value));
           }
@@ -146,7 +199,7 @@
   };
 
   // Translate a string
-  translate = function (str) {
+  translate = function translate(str) {
     if (translationFields[str]) {
       return translationFields[str];
     } else {
@@ -161,7 +214,7 @@
 
   // Initialization variables: read all <script type="application/init"> tags and
   // return JSON parsing result. This is set in window.data variable
-  getValues = function () {
+  getValues = function getValues() {
     var values;
     values = {};
     $("script[type='application/init']").each(function () {
@@ -185,7 +238,7 @@
 
   // Gets a query string parametrer
   // We cannot use URLSearchParam because of IE (#2230)
-  getQueryParam = function (name) {
+  getQueryParam = function getQueryParam(name) {
     var match;
     match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
     if (match) {
@@ -200,34 +253,34 @@
   setSelector = "#appslist";
 
   // Function to write the sorted apps list to session (network errors ignored)
-  setOrder = function () {
+  setOrder = function setOrder() {
     return setKey('_appsListOrder', $(setSelector).sortable("toArray").join());
   };
 
   // Function used to remove an OIDC consent
-  removeOidcConsent = function (partner) {
+  removeOidcConsent = function removeOidcConsent(partner) {
     var e;
-    e = function (j, s, e) {
-      return alert(`${s} ${e}`);
+    e = function e(j, s, _e) {
+      return alert("".concat(s, " ").concat(_e));
     };
     // Success
     return delKey("_oidcConsents", partner, function () {
-      return $(`[partner='${partner}']`).hide();
+      return $("[partner='".concat(partner, "']")).hide();
       // Error
     }, e);
   };
 
   // Function used by setOrder() and removeOidcConsent() to push new values
   // For security reason, modification is rejected unless a valid token is given
-  setKey = function (key, val, success, error) {
+  setKey = function setKey(key, val, _success, error) {
     // First request to get token
     return $.ajax({
       type: "GET",
-      url: scriptname + 'mysession/?gettoken',
+      url: "".concat(scriptname, "mysession/?gettoken"),
       dataType: 'json',
       error: error,
       // On success, value is set
-      success: function (data) {
+      success: function success(data) {
         var d;
         d = {
           token: data.token
@@ -235,28 +288,28 @@
         d[key] = val;
         return $.ajax({
           type: "PUT",
-          url: scriptname + 'mysession/persistent',
+          url: "".concat(scriptname, "mysession/persistent"),
           dataType: 'json',
           data: d,
-          success: success,
+          success: _success,
           error: error
         });
       }
     });
   };
-  delKey = function (key, sub, success, error) {
+  delKey = function delKey(key, sub, _success2, error) {
     return $.ajax({
       type: "GET",
-      url: scriptname + 'mysession/?gettoken',
+      url: "".concat(scriptname, "mysession/?gettoken"),
       dataType: 'json',
       error: error,
       // On success, value is set
-      success: function (data) {
+      success: function success(data) {
         return $.ajax({
           type: "DELETE",
-          url: `${scriptname}mysession/persistent/${key}?sub=${sub}&token=${data.token}`,
+          url: "".concat(scriptname, "mysession/persistent/").concat(key, "?sub=").concat(sub, "&token=").concat(data.token),
           dataType: 'json',
-          success: success,
+          success: _success2,
           error: error
         });
       }
@@ -264,7 +317,7 @@
   };
 
   // function that restores the list order from session
-  restoreOrder = function () {
+  restoreOrder = function restoreOrder() {
     var IDs, child, i, item, itemID, items, l, len, len1, list, rebuild, savedOrd, v;
     list = $(setSelector);
     if (!(list != null && datas['appslistorder'])) {
@@ -305,7 +358,7 @@
   // function void ping()
   // Check if session is alive on server side
   // @return nothing
-  ping = function () {
+  _ping = function ping() {
     return $.ajax({
       type: "POST",
       url: scriptname,
@@ -313,28 +366,28 @@
         ping: 1
       },
       dataType: 'json',
-      success: function (data) {
+      success: function success(data) {
         if (data.result != null && data.result === 1) {
-          return setTimeout(ping, datas['pingInterval']);
+          return setTimeout(_ping, datas['pingInterval']);
         } else {
           return location.reload(true);
         }
       },
-      error: function (j, t, e) {
+      error: function error(j, t, e) {
         return location.reload(true);
       }
     });
   };
-  window.ping = ping;
-  setCookie = function (name, value, exdays) {
+  window.ping = _ping;
+  setCookie = function setCookie(name, value, exdays) {
     var cookiestring, d, samesite, secure;
     samesite = datas['sameSite'];
     secure = datas['cookieSecure'];
-    cookiestring = `${name}=${value}; path=/; SameSite=${samesite}`;
+    cookiestring = "".concat(name, "=").concat(value, "; path=/; SameSite=").concat(samesite);
     if (exdays) {
       d = new Date();
       d.setTime(d.getTime() + exdays * 86400000);
-      cookiestring += `; expires=${d.toUTCString()}`;
+      cookiestring += "; expires=".concat(d.toUTCString());
     }
     if (secure) {
       cookiestring += "; Secure";
@@ -345,7 +398,7 @@
   // Initialization
   datas = {};
   $(window).on('load', function () {
-    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword;
+    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, field, hiddenParams, i, lang, langdiv, len, link, menuIndex, menuTabs, method, queryLang, ref, setCookieLang, togglecheckpassword, displaytab;
     // Get application/init variables
     datas = getValues();
     // Keep the currently selected tab
@@ -360,7 +413,7 @@
       opacity: 0.5,
       revert: true,
       items: "> div.category",
-      update: function () {
+      update: function update() {
         return setOrder();
       }
     });
@@ -372,7 +425,8 @@
     menuTabs = $("#menu").tabs({
       active: 0
     });
-    menuIndex = $('#menu a[href="#' + datas['displaytab'] + '"]').parent().index();
+    displaytab = getQueryParam('tab');
+    menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index();
     if (menuIndex < 0) {
       menuIndex = 0;
     }
@@ -381,7 +435,7 @@
     authMenuTabs = $("#authMenu").tabs({
       active: 0
     });
-    authMenuIndex = $('#authMenu a[href="#' + datas['displaytab'] + '"]').parent().index();
+    authMenuIndex = $('#authMenu a[href="#' + displaytab + '"]').parent().index();
     if (authMenuIndex < 0) {
       authMenuIndex = 0;
     }
@@ -475,7 +529,7 @@
     ref = window.availableLanguages;
     for (i = 0, len = ref.length; i < len; i++) {
       al = ref[i];
-      langdiv += `<img class=\"langicon\" src=\"${window.staticPrefix}common/${al}.png\" title=\"${al}\" alt=\"[${al}]\"> `;
+      langdiv += "<img class=\"langicon\" src=\"".concat(window.staticPrefix, "common/").concat(al, ".png\" title=\"").concat(al, "\" alt=\"[").concat(al, "]\"> ");
     }
     $('#languages').html(langdiv);
     $('.langicon').on('click', function () {
@@ -484,7 +538,7 @@
       return translatePage(lang);
     });
     // Password policy
-    checkpassword = function (password, evType) {
+    checkpassword = function checkpassword(password, evType) {
       var e, info;
       e = jQuery.Event("checkpassword");
       info = {
@@ -494,7 +548,7 @@
       };
       return $(document).trigger(e, info);
     };
-    checksamepass = function () {
+    checksamepass = function checksamepass() {
       var ref1, ref2, ref3, ref4, ref5;
       if (((ref1 = $('#confirmpassword').get(0)) != null ? ref1.value : void 0) && ((ref2 = $('#confirmpassword').get(0)) != null ? ref2.value : void 0) === ((ref3 = $('#newpassword').get(0)) != null ? ref3.value : void 0)) {
         if ((ref4 = $('#confirmpassword').get(0)) != null) {
@@ -529,7 +583,7 @@
       });
     }
     // If generating password, disable policy check
-    togglecheckpassword = function (e) {
+    togglecheckpassword = function togglecheckpassword(e) {
       var ref1;
       if (e.target.checked) {
         $('#newpassword').off('keyup');
@@ -558,7 +612,7 @@
     });
     // Ping if asked
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
-      window.setTimeout(ping, datas['pingInterval']);
+      window.setTimeout(_ping, datas['pingInterval']);
     }
     // Functions to show/hide display password button
     if (datas['enablePasswordDisplay']) {
@@ -569,12 +623,12 @@
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
-          return $(`input[name=${field}]`).attr('class', 'form-control');
+          return $("input[name=".concat(field, "]")).attr('class', 'form-control');
         });
         $(".toggle-password").on('mouseup touchend', function () {
           $(this).toggleClass("fa-eye fa-eye-slash");
-          if ($(`input[name=${field}]`).get(0).value) {
-            return $(`input[name=${field}]`).attr('class', 'form-control key');
+          if ($("input[name=".concat(field, "]")).get(0).value) {
+            return $("input[name=".concat(field, "]")).attr('class', 'form-control key');
           }
         });
       } else {
@@ -583,11 +637,11 @@
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
-          return $(`input[name=${field}]`).attr("type", "text");
+          return $("input[name=".concat(field, "]")).attr("type", "text");
         });
         $(".toggle-password").on('mouseup touchend', function () {
           $(this).toggleClass("fa-eye fa-eye-slash");
-          return $(`input[name=${field}]`).attr("type", "password");
+          return $("input[name=".concat(field, "]")).attr("type", "password");
         });
       }
     }
@@ -662,11 +716,11 @@
       console.log('Send findUser request with parameters', str);
       return $.ajax({
         type: "POST",
-        url: `${portal}finduser`,
+        url: "".concat(scriptname, "finduser"),
         dataType: 'json',
         data: str,
         // On success, values are set
-        success: function (data) {
+        success: function success(data) {
           var user;
           document.body.style.cursor = 'default';
           user = data.user;
@@ -682,7 +736,7 @@
             return $('#token').val(data.token);
           }
         },
-        error: function (j, status, err) {
+        error: function error(j, status, err) {
           var res;
           document.body.style.cursor = 'default';
           if (err) {
@@ -717,8 +771,8 @@
         return $(this).data('data-submitted', true);
       }
     });
-    $(`.category[name=\"${datas['floatingCategory']}\"]`).appendTo('#floating-menu').find("i").remove();
-    $(`.category[name=\"${datas['floatingCategory']}\"]`).draggable();
+    $(".category[name=\"".concat(datas['floatingCategory'], "\"]")).appendTo('#floating-menu').find("i").remove();
+    $(".category[name=\"".concat(datas['floatingCategory'], "\"]")).draggable();
     $(document).trigger("portalLoaded");
     return true;
   });

@@ -123,7 +123,13 @@ Set the default rule to what you need.
 
 Other rules:
 
--  Unprotect access to some resources: ``^/share/res => unprotect``
+-  Unprotect access to some resources
+
+  -  ``^/share/s => unprotect``
+  -  ``^/share/res => unprotect``
+  -  ``^/share/noauth => unprotect``
+  -  ``^/share/proxy/alfresco-noauth => unprotect``
+
 -  Catch logout: ``^/share/page/dologout => logout_app_sso``
 
 SAML2

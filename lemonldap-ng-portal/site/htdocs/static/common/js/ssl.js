@@ -3,7 +3,7 @@
 
   // Launch SSL request
   var sendUrl, tryssl;
-  tryssl = function () {
+  tryssl = function tryssl() {
     var e, path;
     path = window.location.pathname;
     console.log('path -> ', path);
@@ -18,7 +18,7 @@
         },
         // If request succeed, posting form to get redirection
         // or menu
-        success: function (data) {
+        success: function success(data) {
           console.log('Success -> ', data);
           e = jQuery.Event("sslSuccess");
           $(document).trigger(e, [data]);
@@ -32,7 +32,7 @@
         },
         // Case else, will display PE_BADCREDENTIALS or fallback to next auth
         // backend
-        error: function (result) {
+        error: function error(result) {
           console.log('Error during AJAX SSL authentication', result);
           e = jQuery.Event("sslFailure");
           $(document).trigger(e, [result]);
@@ -60,7 +60,7 @@
     }
     return false;
   };
-  sendUrl = function (path) {
+  sendUrl = function sendUrl(path) {
     var form_url;
     form_url = $('#lform').attr('action');
     if (form_url.match(/^#$/)) {

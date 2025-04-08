@@ -872,6 +872,9 @@ sub attributes {
             'default' => '',
             'type'    => 'longtext'
         },
+        'casSrvMetaDataOptionsSamlValidate' => {
+            'type' => 'bool'
+        },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'intOrNull'
         },
@@ -2209,6 +2212,33 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => {},
             'type'    => 'keyTextContainer'
         },
+        'lokiAuthorization' => {
+            'type' => 'text'
+        },
+        'lokiEnv' => {
+            'type' => 'text'
+        },
+        'lokiInstance' => {
+            'type' => 'text'
+        },
+        'lokiLabel' => {
+            'type' => 'text'
+        },
+        'lokiService' => {
+            'type' => 'text'
+        },
+        'lokiTenant' => {
+            'type' => 'text'
+        },
+        'lokiTenantHeader' => {
+            'type' => 'text'
+        },
+        'lokiUrl' => {
+            'type' => 'text'
+        },
+        'lokiUserService' => {
+            'type' => 'text'
+        },
         'lwpOpts' => {
             'default' => {
                 'timeout' => 10
@@ -2872,6 +2902,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAllowNativeSso' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
             'type'    => 'bool'
@@ -3513,6 +3546,19 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcServiceMetaDataAmrRules' => {
+            'default' => {
+                'mfa' => '$_2f',
+                'otp' => '$_2f eq "TOTP"',
+                'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+                'pwd' => '$authenticationLevel == 2'
+            },
+            'keyTest' => qr/\w/,
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'oidcServiceMetaDataAuthnContext' => {
             'default' => {
                 'loa-1' => 1,
@@ -4093,6 +4139,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'publicNotifications' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'radius2fActivation' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
@@ -4403,7 +4453,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'samlService'
         },
         'samlAuthnContextMapExtra' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,

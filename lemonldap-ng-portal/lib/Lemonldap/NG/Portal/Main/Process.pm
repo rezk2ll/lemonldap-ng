@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -200,9 +200,9 @@ sub controlUrl {
         if ( $tmp and ( $tmp !~ URIRE ) ) {
             $self->auditLog(
                 $req,
-                message => "Bad URL $tmp",
-                code    => "UNAUTHORIZED_REDIRECT",
-                url     => $tmp,
+                message  => "Bad URL $tmp",
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $tmp,
             );
             delete $req->{urldc};
             return PE_BADURL;
@@ -242,8 +242,8 @@ sub controlUrl {
                         "URL contains an unprotected host (param: urldc"
                       . " | value: $tmp | alias: $vhost)"
                 ),
-                code => "UNAUTHORIZED_REDIRECT",
-                url  => $tmp,
+                code     => "UNAUTHORIZED_REDIRECT",
+                url      => $tmp,
             );
             delete $req->{urldc};
             return PE_UNPROTECTEDURL;
@@ -310,6 +310,30 @@ sub returnPE {
     my ( $self, $req, $code ) = @_;
 
     return $code;
+}
+
+sub eventLogout {
+    my ( $self, $req, $msg ) = @_;
+    bless $req, 'Lemonldap::NG::Portal::Main::Request';
+    $self->logger->debug("Receive a logout event");
+    $self->processHook( $req, 'eventLogout', $msg );
+    if ( $msg->{id} ) {
+        $self->logger->debug(" -> logout asked for $msg->{id}");
+        if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
+            $req->id( $session->{_session_id} );
+            $req->pdata( {} );
+            $self->do( $req,
+                [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ],
+                1 );
+        }
+        else {
+            $self->_unauthLogout($req);
+        }
+    }
+    else {
+        $self->logger->debug('Logout event without id');
+        $self->_unauthLogout($req);
+    }
 }
 
 sub checkCancel {

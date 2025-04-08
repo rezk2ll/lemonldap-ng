@@ -21,6 +21,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
 -  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
+-  Authentication Method References (AMR) (Since ``2.21.0``)
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
@@ -255,6 +256,9 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+   -  **Allow Native SSO for Mobile Apps** (since version ``2.21.0``): Allow
+      relying party to request a **device_secret**. See
+      https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
    -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
       the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
       This feature only works if you have configured a form-based authentication module.

@@ -29,6 +29,11 @@ You have to include them in Apache main configuration, for example:
    include /usr/local/lemonldap-ng/etc/portal-apache2.conf
    include /usr/local/lemonldap-ng/etc/handler-apache2.conf
    include /usr/local/lemonldap-ng/etc/manager-apache2.conf
+
+To include test sites (optional):
+
+.. code-block:: apache
+
    include /usr/local/lemonldap-ng/etc/test-apache2.conf
 
 
@@ -45,6 +50,11 @@ You have to include them in Apache main configuration, for example:
        a2ensite manager-apache2.conf
        a2ensite portal-apache2.conf
        a2ensite handler-apache2.conf
+
+    -  For test sites (optional):
+
+    ::
+
        a2ensite test-apache2.conf
 
 

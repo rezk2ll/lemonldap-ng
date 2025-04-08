@@ -108,7 +108,7 @@ For example, to preselect this server for users coming from 129.168.0.0/16 netwo
 
 ::
 
-   $ENV{REMOTE_ADDR} =~ /^192\.168/
+   $env->{REMOTE_ADDR} =~ /^192\.168/
 
 To preselect this server when the ``MY_SRV`` :doc:`choice <authchoice>` is selected ::
 
