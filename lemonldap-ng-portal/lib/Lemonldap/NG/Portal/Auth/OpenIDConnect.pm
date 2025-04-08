@@ -542,11 +542,17 @@ sub frontLogout {
 
     # Ignore beforeLogout errors
     $req->steps( $self->p->beforeLogout );
-    $self->p->process($req);
+    my $res = $self->p->process($req);
 
     $req->data->{_continueLogout} = 1;
     $req->response($response);
-    return $self->p->do($req, [ 'authLogout', 'deleteSession', [ returnPE => PE_SENDRESPONSE] ]);
+    return $self->p->do(
+        $req,
+        [
+            'authLogout', 'deleteSession',
+            [ returnPE => ( $res ? $res : PE_SENDRESPONSE ) ]
+        ]
+    );
 }
 
 # Implements https://openid.net/specs/openid-connect-backchannel-1_0.html
