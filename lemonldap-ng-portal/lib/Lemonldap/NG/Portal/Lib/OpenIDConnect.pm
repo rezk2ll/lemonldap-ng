@@ -2212,6 +2212,7 @@ sub buildUserInfoResponseFromData {
     $self->logger->debug("Found corresponding user: $user_id");
 
     $userinfo_response->{sub} = $user_id;
+    $userinfo_response->{sid} = $self->getSidFromSession( $rp, $session_data );
 
     # By default, release all exported attributes
     if ( $self->conf->{oidcServiceIgnoreScopeForClaims} ) {

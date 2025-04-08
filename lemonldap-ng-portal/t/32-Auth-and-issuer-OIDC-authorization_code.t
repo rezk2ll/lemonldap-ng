@@ -185,7 +185,8 @@ ok(
 $res = expectJSON($res);
 ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'name => Frédéric Accents' );
-count(2);
+ok( $res->{sid}, "get sid in userinfo" ) or print Dumper($res);
+count(3);
 
 ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
