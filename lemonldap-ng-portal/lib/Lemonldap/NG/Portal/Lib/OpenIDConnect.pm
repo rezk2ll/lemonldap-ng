@@ -453,14 +453,11 @@ sub buildAuthorizationCodeAuthnRequest {
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
-        ( $display ? ( display => $display ) : () ),
-        ( $prompt  ? ( prompt  => $prompt )  : () ),
+        ( $display    ? ( display    => $display )    : () ),
+        ( $prompt     ? ( prompt     => $prompt )     : () ),
+        ( $ui_locales ? ( ui_locales => $ui_locales ) : () ),
         (
             defined($max_age) && length($max_age) ? ( max_age => $max_age ) : ()
-        ),
-        (
-            defined($ui_locales)
-              && length($ui_locales) ? ( ui_locales => $ui_locales ) : ()
         ),
         (
             defined($acr_values)
