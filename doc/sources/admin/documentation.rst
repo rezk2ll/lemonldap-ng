@@ -30,13 +30,19 @@ Installation and configuration
    -  `Version 2.0 </documentation/2.0/>`__ (stable)
    -  `Version 1.9 </documentation/1.9/>`__ (oldstable)
 
--  Archived versions (unmaintained by LL::NG Team )
+Long Term Support
+~~~~~~~~~~~~~~~~~
 
-   -  `Version 1.4 </documentation/1.4/>`__
-   -  `Version 1.3 </documentation/1.3/>`__
-   -  `Version 1.2 </documentation/1.2/>`__
-   -  `Version 1.1 </documentation/1.1/>`__
-   -  `Version 1.0 </documentation/1.0/>`__
+LL::NG Team maintains these versions following a "Long Term Support" policy:
+these versions are maintained without software updates by transposing only
+security fixes.
+
+=========== ======= =========
+Version LTS Secured Limit
+=========== ======= =========
+**2.16.x**  |clean| June 2028
+**2.21.x**  |clean| June 2030
+=========== ======= =========
 
 Packaged versions
 ~~~~~~~~~~~~~~~~~
@@ -51,19 +57,19 @@ Debian
    Following Debian Policy, LL::NG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some minor ones)*.
    See `Security tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
 
-=========== ========================== ======================================== ===================== ============================================================ =================================== =============================================================
-Debian dist                            LL::NG version                             Secured               Maintenance                                                  LTS Limit                           `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
-=========== ========================== ======================================== ===================== ============================================================ =================================== =============================================================
-*6*         *Squeeze*                  *0.9.4.1*                                |maybe| minor issues  *None*                                                       *February 2016*                     *April 2019*
-*7*         *Wheezy*                   *1.1.2*                                  |maybe| minor issues  *None*                                                       *May 2018*                          *June 2020*
-*8*         *Jessie*                   *1.3.3*                                  |maybe| minor issues  *None*                                                       *June 2020*                         *Possibly 2024*
-*9*         *Stretch*                  *1.9.7*                                  |maybe| minor issues  *None*  [1]_                                                 *June 2022*                         *Possibly 2025*
-*10*        *Buster*                   `2.0.2 </documentation/2.0/>`__          |maybe| minor issues  *None*  [1]_                                                 *June 2024*                         Possibly 2026
-**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       August 2026                         Possibly 2028
-**12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|               `Debian Security Team <https://security-team.debian.org/>`__ June 2028                           Possibly 2030
-\           Bookworm-backports         `Latest </documentation/2.0/>`__         |clean|               LL::NG Team, "best effort" [3]_                              July 2026
-**Next**    Testing/Unstable           Latest  [5]_                             |clean|               LL::NG Team
-=========== ========================== ======================================== ===================== ============================================================ =================================== =============================================================
+=========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
+N°          Debian name                LL::NG version                           Secured                                                                                               Maintenance                                                  LTS Limit                           `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
+=========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
+*6*         *Squeeze*                  *0.9.4.1*                                |maybe| *minor issues*                                                                                *None*                                                       *February 2016*
+*7*         *Wheezy*                   *1.1.2*                                  |maybe| *minor issues*                                                                                *None*                                                       *May 2018*
+*8*         *Jessie*                   *1.3.3*                                  |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*                                                       *June 2020*
+*9*         *Stretch*                  *1.9.7*                                  |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*  [1]_                                                 *June 2022*
+*10*        *Buster*                   `2.0.2 </documentation/2.0/>`__          |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*  [1]_                                                 *June 2024*                         Possibly 2026
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                                                               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       August 2026                         Possibly 2028
+**12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|                                                                                               `Debian Security Team <https://security-team.debian.org/>`__ June 2028                           Possibly 2030
+\           Bookworm-backports         `Latest </documentation/2.0/>`__ [3]_    |clean|                                                                                               LL::NG Team, "best effort" [2]_                              July 2026
+**Next**    Testing/Unstable           Latest  [3]_                             |clean|                                                                                               LL::NG Team
+=========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
 
 See `Debian Security
 Tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
@@ -75,7 +81,7 @@ Ubuntu
 
 .. attention::
 
-   Ubuntu version are included in "universe" branch [8]_, so not really security maintained. Prefer to use our repositories or Debian ones
+   Ubuntu version are included in "universe" branch [4]_, so not really security maintained. Prefer to use our repositories or Debian ones
 
 =========== ============= ================================ ==================================================================================================================================== ===========
 Ubuntu dist               LL::NG version                     Secured                                                                                                                            Maintenance
@@ -85,8 +91,8 @@ Ubuntu dist               LL::NG version                     Secured            
 *16.04*     *Xenial*      *1.4.6*                          |bad| **CVE-2019-12046**, ...                                                                                                        None
 *18.04*     *Bionic*      `1.9.16 </documentation/1.9/>`__ |bad| **CVE-2019-12046**, **CVE-2020-24660**, ...                                                                                    None
 *20.04*     *Focal*       `2.0.7 </documentation/2.0/>`__  |bad| **CVE-2020-24660**, **CVE-2021-35472**, ...                                                                                    None
-22.04       Jammy  [9]_   `2.0.13 </documentation/2.0/>`__ |maybe| minor issues: CVE-2021-40874, CVE-2023-28862, CVE-2023-44469, CVE-2024-52946, CVE-2024-52947, CVE-2024-52948, CVE-2025-31510 None
-24.04       Noble  [9]_   `2.18.2 </documentation/2.0/>`__ |maybe| minor issues: CVE-2024-45160, CVE-2024-48933, CVE-2024-52946, CVE-2024-52947, CVE-2024-52948, CVE-2025-31510                 None
+22.04       Jammy *(LTS)* `2.0.13 </documentation/2.0/>`__ |maybe| minor issues: CVE-2021-40874, CVE-2023-28862, CVE-2023-44469, CVE-2024-52946, CVE-2024-52947, CVE-2024-52948, CVE-2025-31510 None
+24.04       Noble *(LTS)* `2.18.2 </documentation/2.0/>`__ |maybe| minor issues: CVE-2024-45160, CVE-2024-48933, CVE-2024-52946, CVE-2024-52947, CVE-2024-52948, CVE-2025-31510                 None
 25.04       Plucky        `2.20.2 </documentation/2.0/>`__ |maybe| minor issue: CVE-2025-31510                                                                                                  None
 =========== ============= ================================ ==================================================================================================================================== ===========
 
@@ -134,23 +140,20 @@ Other
 .. [1]
    Possible `Extended LTS <https://wiki.debian.org/LTS/Extended>`__
 
-.. [3]
+.. [2]
    updated by `LL::NG Team </team>`__ until dependencies are compatible.
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
 
-.. [5]
+.. [3]
    few days after release
 
-.. [8]
+.. [4]
    Ubuntu universe/multiverse branches are community maintained *(so not
    maintained by Canonical)*, but in fact nobody considers LL::NG security
    issues. See `this
    issue <https://bugs.launchpad.net/ubuntu/+source/lemonldap-ng/+bug/1829016>`__
    for example
-
-.. [9]
-   LTS
 
 .. |clean| image:: /icons/clean.png
    :width: 20px
