@@ -888,6 +888,7 @@ t/61-NewLocationWarning-Custom.t
 t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
+t/61-WebCron.t
 t/62-Refresh-plugin.t
 t/62-SingleSession-with-History.t
 t/62-SingleSession-with-Rules.t
