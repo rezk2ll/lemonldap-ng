@@ -36,3 +36,4 @@ Plugins
    status
    trustedbrowser
    viewer
+   webcron
