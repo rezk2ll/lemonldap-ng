@@ -19,9 +19,6 @@ our $opt_d;
 our $opt_f;
 getopts('df');
 
-my $debug = $opt_d;
-my $force = $opt_f;
-
 my $opts = {
     ( $opt_d ? ( logLevel => 'debug' ) : () ),
     ( $opt_f ? ( force    => 1 )       : () ),

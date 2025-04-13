@@ -154,7 +154,7 @@ has backends => (
 has force => ( is => 'ro' );
 
 sub purge {
-    my ( $self, %opts ) = @_;
+    my ($self)    = @_;
     my $nb_purged = 0;
     my $nb_error  = 0;
     $self->logger->debug( __PACKAGE__ . "::purge() called" );
@@ -380,6 +380,20 @@ sub purge {
         "$nb_error sessions remaining, try to purge them with force (option -f)"
     ) if $nb_error;
     return !($nb_error);
+}
+
+sub localPurge {
+    my ($self) = @_;
+    $self->logger->debug( __PACKAGE__ . "::localPurge() called" );
+    my $conf = $self->conf;
+    if ( $conf->{localSessionStorage} ) {
+        eval "require $conf->{localSessionStorage}";
+        die $@ if $@;
+        $conf->{localSessionStorageOptions}->{default_expires_in} ||= 600;
+        my $s = $conf->{localSessionStorage}
+          ->new( $conf->{localSessionStorageOptions} );
+        $s->purge();
+    }
 }
 
 1;
