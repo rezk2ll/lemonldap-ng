@@ -5803,6 +5803,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'webauthnRpName' => {
             'type' => 'text'
         },
+        'webCronSecret' => {
+            'type' => 'text'
+        },
         'webIDAuthnLevel' => {
             'default' => 1,
             'type'    => 'int'

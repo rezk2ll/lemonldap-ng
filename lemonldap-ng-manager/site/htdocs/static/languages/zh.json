@@ -1382,6 +1382,8 @@
 "waitingForDatas":"等待日期",
 "warning":"警告",
 "warnings":"警告",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"驗證等級",
 "webIDExportedVars":"已匯出的變數",
 "webIDWhitelist":"WebID 白名單",

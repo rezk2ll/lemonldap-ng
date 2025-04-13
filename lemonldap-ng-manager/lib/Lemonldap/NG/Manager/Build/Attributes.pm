@@ -619,6 +619,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
         },
+        webCronSecret => {
+            type          => 'text',
+            documentation => 'Secret token for webcron plugin',
+        },
         checkDevOps => {
             default       => 0,
             type          => 'bool',

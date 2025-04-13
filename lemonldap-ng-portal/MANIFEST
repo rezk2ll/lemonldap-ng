@@ -162,6 +162,7 @@ lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/TrustedBrowser.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
+lib/Lemonldap/NG/Portal/Plugins/WebCron.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Base.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm

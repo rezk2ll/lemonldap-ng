@@ -656,6 +656,11 @@ sub tree {
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
+                            title => 'webCron',
+                            form => 'simpleInputContainer',
+                            nodes => [ 'webCronSecret', ],
+                        },
+                        {
                             title => 'portalServers',
                             help  => 'portalservers.html',
                             nodes => [

@@ -1382,6 +1382,8 @@
 "waitingForDatas":"Waiting for datas",
 "warning":"Warning",
 "warnings":"Warnings",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"Authentication level",
 "webIDExportedVars":"Exported variables",
 "webIDWhitelist":"WebID whitelist",

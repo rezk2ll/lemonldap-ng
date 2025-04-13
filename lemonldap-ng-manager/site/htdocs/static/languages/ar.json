@@ -1382,6 +1382,8 @@
 "waitingForDatas":"في انتظار البيانات",
 "warning":"تحذير",
 "warnings":"تحذيرات",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"مستوى إثبات الهوية",
 "webIDExportedVars":"المتغيرات المصدرة",
 "webIDWhitelist":"القائمة البيضاء للويب آي دي",

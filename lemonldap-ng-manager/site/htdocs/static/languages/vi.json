@@ -1382,6 +1382,8 @@
 "waitingForDatas":"Đang chờ dữ liệu",
 "warning":"Cảnh báo",
 "warnings":"Cảnh báo",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"Mức xác thực",
 "webIDExportedVars":"Xuất khẩu biến",
 "webIDWhitelist":"WebID white list",

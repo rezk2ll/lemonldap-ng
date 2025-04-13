@@ -1382,6 +1382,8 @@
 "waitingForDatas":"בהמתנה לנתונים",
 "warning":"אזהרה",
 "warnings":"אזהרות",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"דרגת אימות",
 "webIDExportedVars":"משתנים מיוצאים",
 "webIDWhitelist":"WebID whitelist",
