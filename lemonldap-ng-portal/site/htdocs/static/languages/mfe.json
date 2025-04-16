@@ -249,6 +249,7 @@
 "oidcConsent":"Aplikasion %s bizin:",
 "oidcConsents":"OIDC dakor",
 "oidcConsentsFull":"OpenID Connect dakor",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Seleksionn modil Okta ki ou anvi servi",
 "okta2fpush":"Okta Push",

@@ -249,6 +249,7 @@
 "oidcConsent":"היישום %s מעוניין:",
 "oidcConsents":"הסכמות OIDC",
 "oidcConsentsFull":"הסכמות OpenID Connect",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"נא לבחור את המודול של Okta שבו ברצונך להשתמש",
 "okta2fpush":"Okta Push",

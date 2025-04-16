@@ -249,6 +249,7 @@
 "oidcConsent":"La aplicación %s quisiera:",
 "oidcConsents":"Permisos OIDC",
 "oidcConsentsFull":"Permisos OpenID Connect",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Select the Okta module you want to use",
 "okta2fpush":"Okta Push",

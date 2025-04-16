@@ -249,6 +249,7 @@
 "oidcConsent":"Ứng dụng %s muốn biết:",
 "oidcConsents":"Những sự chấp thuận OIDC",
 "oidcConsentsFull":"Những sự chấp thuận OpenID Connect ",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Select the Okta module you want to use",
 "okta2fpush":"Okta Push",
