@@ -735,6 +735,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"OpenID Connect Provider Name",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"OpenID Connect parameters",
 "oidcRP":"OpenID Connect Relying Party",
 "oidcRPCallbackGetParam":"Callback GET parameter",
