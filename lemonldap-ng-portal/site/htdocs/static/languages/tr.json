@@ -250,6 +250,7 @@
 "oidcConsent":"%s uygulaması şunları yapmak istiyor:",
 "oidcConsents":"OIDC izinleri",
 "oidcConsentsFull":"OpenID Connect izinleri",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Kullanmak istediğiniz Okta modülünü seçin",
 "okta2fpush":"Okta Push",

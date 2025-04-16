@@ -250,6 +250,7 @@
 "oidcConsent":"التطبيق %s هل ترغب في معرفة:",
 "oidcConsents":"موافقات OIDC",
 "oidcConsentsFull":"موافقات OpenID Connect",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"اختر وحدة Okta التي ترغب في استخدامها",
 "okta2fpush":"Okta Push",
