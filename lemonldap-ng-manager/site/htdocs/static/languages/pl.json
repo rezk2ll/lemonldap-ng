@@ -733,6 +733,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Atrybut zawierający identyfikator użytkownika",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"Nazwa dostawcy OpenID Connect",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"Parametry OpenID Connect",
 "oidcRP":"Strona zależna od OpenID Connect",
 "oidcRPCallbackGetParam":"Parametr GET wywołania zwrotnego",

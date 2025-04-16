@@ -969,6 +969,7 @@ sub tree {
                                 'disabledPlugins'
                             ]
                         },
+                        "oidcOfflineTokens",
                     ]
                 },
                 {
