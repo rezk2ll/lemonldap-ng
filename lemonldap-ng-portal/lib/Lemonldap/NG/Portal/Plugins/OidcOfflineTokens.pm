@@ -7,7 +7,6 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Session::REST;
 use Time::Local;
-use Data::Dumper;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -64,11 +63,12 @@ sub display {
             {
                 delete $sessions->{$_};
                 $other++;
-            }$self->logger->debug($_);
-
-        }        
+            }
+        }
         @$activeSessions = map {
             my $epoch;
+            my $regex = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
+
             if ( $sessions->{$_}->{_updateTime} ) {
                 if ( my ( $y, $mo, $d, $h, $mi, $s ) =
                     $sessions->{$_}->{_updateTime} =~ /$regex/ )
