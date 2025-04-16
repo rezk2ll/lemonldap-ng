@@ -56,7 +56,7 @@ ok(
         query  => "$query",
         accept => 'text/html',
     ),
-    "Get authorization code"
+    "Get error=login_required"
 );
 
 my ($code) =
