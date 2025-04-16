@@ -733,6 +733,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Thuộc tính chứa định danh người dùng",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"Tên bộ cung cấp kết nối OpenID",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"Các tham số kết nối OpenID",
 "oidcRP":"OpenID Connect Relying Party",
 "oidcRPCallbackGetParam":"Callback GET tham số",

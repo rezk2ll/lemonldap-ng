@@ -733,6 +733,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"OpenID Connect Provider Name",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"משתני OpenID Connect",
 "oidcRP":"גוף סמך של OpenID Connect",
 "oidcRPCallbackGetParam":"משתנה החזרה של GET",

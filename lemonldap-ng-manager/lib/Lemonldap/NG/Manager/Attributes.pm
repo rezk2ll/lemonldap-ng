@@ -2506,6 +2506,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcDropCspHeaders' => {
             'type' => 'bool'
         },
+        'oidcOfflineTokens' => {
+            'type' => 'bool'
+        },
         'oidcOPMetaDataExportedVars' => {
             'default' => {
                 'cn'   => 'name',

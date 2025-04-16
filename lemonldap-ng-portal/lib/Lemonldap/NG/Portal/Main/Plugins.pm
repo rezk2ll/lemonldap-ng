@@ -40,6 +40,7 @@ our @pList = (
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
+    oidcOfflineTokens                   =>'::Plugins::OidcOfflineTokens',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions     => '::Plugins::Refresh',
