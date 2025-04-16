@@ -948,6 +948,7 @@ sub tree {
                             help  => 'plugincustom.html#plugin-options',
                             nodes => [ 'customPlugins', 'customPluginsParams', 'disabledPlugins' ]
                         },
+                        "oidcOfflineTokens",
                     ]
                 },
                 {

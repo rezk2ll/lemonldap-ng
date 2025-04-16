@@ -729,6 +729,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"اسم موفرأوبين أيدي كونيكت",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"معاييرأوبين أيدي كونيكت",
 "oidcRP":"الطرف المعتمد  لي أوبين أيدي كونيكت",
 "oidcRPCallbackGetParam":"استدعاء معايير GET",

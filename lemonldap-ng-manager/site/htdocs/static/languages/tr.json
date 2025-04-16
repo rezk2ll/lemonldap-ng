@@ -729,6 +729,7 @@
 "oidcOPMetaDataOptionsUserAttribute":"Nitelik kullanıcı kimliği içeriyor",
 "oidcOPMetaDataOptionsUserinfoSource":"User Info source",
 "oidcOPName":"OpenID Connect Sağlayıcı Adı",
+"oidcOfflineTokens":"Offline session tab",
 "oidcParams":"OpenID Connect parametreleri",
 "oidcRP":"OpenID Connect Relying Party",
 "oidcRPCallbackGetParam":"GET parametresini geri çağır",

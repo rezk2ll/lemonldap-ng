@@ -1493,6 +1493,12 @@ sub attributes {
             documentation => 'Ignore Crowdsec errors',
         },
 
+        # OIDC personnal offline token removal
+        oidcOfflineTokens => {
+            type          => 'bool',
+            documentation => 'OIDC personnal offline token removal',
+        },
+
         # History
         failedLoginNumber => {
             default       => 5,
