@@ -250,6 +250,7 @@
 "oidcConsent":"應用程式 %s 想要：",
 "oidcConsents":"OIDC 同意",
 "oidcConsentsFull":"OpenID 連線同意",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Select the Okta module you want to use",
 "okta2fpush":"Okta Push",
