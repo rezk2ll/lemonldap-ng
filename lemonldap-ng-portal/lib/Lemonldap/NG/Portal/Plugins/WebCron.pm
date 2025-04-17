@@ -10,11 +10,15 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 sub init {
     my ($self) = @_;
-    unless ( $self->conf->{webCronSecret} ) {
-        $self->logger->warn(
-            'No secret for webconf, be sure that API is protected by webserver'
-        );
-    }
+
+    # Useless for now, webCronSecret is required by ::Portal::Main::Plugins
+    # to enable this plugin
+
+    #unless ( $self->conf->{webCronSecret} ) {
+    #    $self->logger->warn(
+    #        'No secret for webconf, be sure that API is protected by webserver'
+    #    );
+    #}
     $self->addUnauthRoute(
         webcron => {
             localpurge => 'localPurge',
