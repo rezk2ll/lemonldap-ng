@@ -753,6 +753,7 @@ vhostOptions                                                                    
 viewerAllowBrowser                                      Allow configuration browser                                                          ✔                      ✔
 viewerAllowDiff                                         Allow configuration diff                                                             ✔                      ✔
 viewerHiddenKeys                                        Hidden Conf keys                                                                                    ✔       ✔
+webCronSecret                                           Secret token for webcron plugin                                                      ✔
 webIDAuthnLevel                                         WebID authentication level                                                           ✔
 webIDExportedVars                                       WebID exported variables                                                             ✔
 webIDWhitelist                                                                                                                               ✔

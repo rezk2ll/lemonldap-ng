@@ -1382,6 +1382,8 @@
 "waitingForDatas":"Veriler bekleniyor",
 "warning":"Uyarı",
 "warnings":"Uyarılar",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"Doğrulama seviyesi",
 "webIDExportedVars":"Dışa aktarılan değişkenler",
 "webIDWhitelist":"WebID beyaz listesi",

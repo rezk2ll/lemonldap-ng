@@ -1382,6 +1382,8 @@
 "waitingForDatas":"Oczekiwanie na dane",
 "warning":"Ostrzeżenie",
 "warnings":"Ostrzeżenia",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"Poziom uwierzytelnienia",
 "webIDExportedVars":"Wyeksportowane zmienne",
 "webIDWhitelist":"Biała lista WebID",

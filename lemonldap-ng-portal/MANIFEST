@@ -162,6 +162,7 @@ lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/TrustedBrowser.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
+lib/Lemonldap/NG/Portal/Plugins/WebCron.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Base.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm
@@ -888,6 +889,7 @@ t/61-NewLocationWarning-Custom.t
 t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
+t/61-WebCron.t
 t/62-Refresh-plugin.t
 t/62-SingleSession-with-History.t
 t/62-SingleSession-with-Rules.t

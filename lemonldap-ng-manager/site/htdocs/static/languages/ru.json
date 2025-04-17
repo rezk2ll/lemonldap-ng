@@ -1382,6 +1382,8 @@
 "waitingForDatas":"Ожидаем данные",
 "warning":"Предупреждение",
 "warnings":"Предупреждения",
+"webCron":"WebCron",
+"webCronSecret":"Secret",
 "webIDAuthnLevel":"Уровень аутентификации",
 "webIDExportedVars":"Экспортированные переменные",
 "webIDWhitelist":"Белый список WebID",

@@ -28,6 +28,7 @@ our @pList = (
     upgradeSession                      => '::Plugins::Upgrade',
     autoSigninRules                     => '::Plugins::AutoSignin',
     checkState                          => '::Plugins::CheckState',
+    webCronSecret                       => '::Plugins::WebCron',
     portalForceAuthn                    => '::Plugins::ForceAuthn',
     checkUser                           => '::Plugins::CheckUser',
     checkDevOps                         => '::Plugins::CheckDevOps',
