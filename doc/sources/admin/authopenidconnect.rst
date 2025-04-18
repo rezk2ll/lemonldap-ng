@@ -47,11 +47,11 @@ documentation:
    authopenidconnect_prosanteconnect
 
 
-=============== ================== ==================
-Google          France Connect     Pro Santé Connect
-=============== ================== ==================
-|google|        |franceconnect|    |prosanteconnect|
-=============== ================== ==================
+=============== ================== ================== ==================
+Google          France Connect     Pro Santé Connect  ProConnect
+=============== ================== ================== ==================
+|google|        |franceconnect|    |prosanteconnect|  |proconnect|
+=============== ================== ================== ==================
 
 .. |google| image:: applications/google_logo.png
    :target: authopenidconnect_google.html
@@ -61,6 +61,9 @@ Google          France Connect     Pro Santé Connect
 
 .. |prosanteconnect| image:: applications/prosanteconnect_logo.png
    :target: authopenidconnect_prosanteconnect.html
+
+.. |proconnect| image:: applications/proconnect.svg
+   :target: oidc-proconnect.html#ll-ng-as-relying-party
 
 .. attention::
 
