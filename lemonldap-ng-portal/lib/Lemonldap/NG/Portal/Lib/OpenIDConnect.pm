@@ -1841,7 +1841,8 @@ sub checkEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $method ) =
       $self->getEndPointAuthenticationCredentials($req);
 
-    $self->logger->debug("Authentication method: $method");
+    $self->logger->debug(
+        'Authentication method: ' . ( $method || 'undefined' ) );
 
     unless ($client_id) {
         $self->logger->error(
