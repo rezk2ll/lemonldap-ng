@@ -7,6 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
 );
+use Data::Dumper;
 
 our $VERSION = '2.21.0';
 
@@ -39,9 +40,6 @@ sub init {
 sub getPublicNotifs {
     my ( $self, $req ) = @_;
 
-    # No need to query public notifs on password post
-    return PE_OK if $req->method =~ /^post$/i;
-
     # Here we reuse existing notification getter object:
     #  - $self->notifObject : Plugins::Notifications object
     #  - $self->notifObject->module : librarie depending on chosen format
@@ -63,6 +61,7 @@ sub getPublicNotifs {
 
         }
     );
+    $self->logger->debug( Dumper($res) );
     $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
 
     $req->data->{customScript} .= <<EOF if $res;
