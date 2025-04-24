@@ -120,6 +120,10 @@ The hook's parameters are:
 * A hash of the claims to be contained in the ID Token
 * the configuration key of the relying party which will receive the token
 
+.. versionadded:: 2.22.0
+
+* A hash of session information
+
 Sample code::
 
    use constant hook => {
@@ -127,7 +131,7 @@ Sample code::
    };
 
    sub addClaimToIDToken {
-       my ( $self, $req, $payload, $rp ) = @_;
+       my ( $self, $req, $payload, $rp, $sessionInfo ) = @_;
        $payload->{"id_token_hook"} = 1;
        return PE_OK;
    }

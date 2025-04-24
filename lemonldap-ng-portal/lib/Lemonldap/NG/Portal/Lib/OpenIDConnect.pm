@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -1587,7 +1587,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -2425,13 +2425,14 @@ sub _createJWT {
 # @param rp Internal Relying Party identifier
 # @return String id_token ID Token as JWT
 sub createIDToken {
-    my ( $self, $req, $payload, $rp ) = @_;
+    my ( $self, $req, $payload, $rp, $sessionData ) = @_;
 
     # Get signature algorithm
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
-    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
+    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp,
+        $sessionData );
     return undef if ( $h != PE_OK );
 
     my $id_token = $self->createJWT( $payload, $alg, $rp );

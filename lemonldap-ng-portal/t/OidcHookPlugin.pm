@@ -42,8 +42,10 @@ use constant hook => {
 };
 
 sub addClaimToIDToken {
-    my ( $self, $req, $payload, $rp ) = @_;
-    $payload->{"id_token_hook"} = 1;
+    my ( $self, $req, $payload, $rp, $sessionInfo ) = @_;
+    $payload->{"id_token_hook"}     = 1;
+    $payload->{"id_token_hook_rp"}  = $rp;
+    $payload->{"id_token_hook_uid"} = $sessionInfo->{uid};
     return PE_OK;
 }
 

@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -2981,7 +2981,8 @@ sub _generateIDToken {
     );
 
     # Create ID Token
-    return $self->createIDToken( $req, $id_token_payload_hash, $rp );
+    return $self->createIDToken( $req, $id_token_payload_hash, $rp,
+        $sessionInfo );
 }
 
 sub getAmr {
