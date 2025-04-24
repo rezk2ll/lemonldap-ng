@@ -7,7 +7,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
 );
-use Data::Dumper;
 
 our $VERSION = '2.21.0';
 
@@ -61,7 +60,6 @@ sub getPublicNotifs {
 
         }
     );
-    $self->logger->debug( Dumper($res) );
     $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
 
     $req->data->{customScript} .= <<EOF if $res;
