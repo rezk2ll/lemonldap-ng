@@ -5,12 +5,14 @@ use strict;
 use POSIX;
 use Getopt::Long qw(:config pass_through);
 use Pod::Usage;
+use constant booleanOptions => qr/^(?:json)$/;
 
 our $opt_user  = '__APACHEUSER__';
 our $opt_group = '__APACHEGROUP__';
+our $opt_json;
 GetOptions(
     "user=s"  => \$opt_user,
-    "group=s" => \$opt_group
+    "group=s" => \$opt_group,
 ) or pod2usage("Error in command line arguments");
 
 my $action;
@@ -23,8 +25,10 @@ eval {
 };
 
 for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
-    if ( $ARGV[$i] =~ /^-/ ) {
-        $i++;
+    print STDERR "### DEBUG 1 : $ARGV[$i]\n";
+    my $arg = $ARGV[$i];
+    if ( $arg =~ s/^-+// ) {
+        $i++ unless $arg =~ booleanOptions;
         next;
     }
     $action = $ARGV[$i];

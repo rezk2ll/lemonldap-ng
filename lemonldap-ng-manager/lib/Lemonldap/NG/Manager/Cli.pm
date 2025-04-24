@@ -8,6 +8,8 @@ use JSON;
 use Hash::Merge::Simple;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
+use constant booleanOptions => qr/^(?:json)$/;
+
 our $VERSION = '2.0.12';
 $Data::Dumper::Useperl = 1;
 
@@ -35,12 +37,22 @@ has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
   ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->userLogger } );
 has localConf => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr } );
+has json      => ( is => 'rw' );
+has jsonConverter => (
+    is      => 'rw',
+    default => sub { JSON->new->canonical->pretty },
+);
 
 sub get {
     my ( $self, @keys ) = @_;
+    my $res = {};
     die 'get requires at least one key' unless (@keys);
   L: foreach my $key (@keys) {
         my $value = $self->_getKey($key);
+        if ( $self->json ) {
+            $res->{$key} = $value;
+            next;
+        }
         if ( ref $value eq 'HASH' ) {
             print "$key has the following keys:\n";
             print "   $_\n" foreach ( sort keys %$value );
@@ -67,6 +79,10 @@ sub get {
             print "$key = $value\n";
         }
     }
+    if ( @keys == 1 ) {
+        $res = $res->{ $keys[0] };
+    }
+    print $self->jsonConverter->encode($res) if $self->json;
 }
 
 sub set {
@@ -386,9 +402,8 @@ sub lastCfg {
 
 sub save {
     my ($self) = @_;
-    my $conf   = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
-    my $json   = JSON->new->indent->canonical;
-    print $json->encode($conf);
+    my $conf = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
+    print $self->jsonConverter->encode($conf);
 }
 
 sub restore {
@@ -636,7 +651,7 @@ sub _save {
     my $langMessages;
     if ( open my $json, "<", $langFile ) {
         local $/ = undef;
-        $langMessages = JSON::from_json(<$json>);
+        $langMessages = $self->json->decode(<$json>);
     }
 
     # Display result
@@ -657,7 +672,8 @@ sub run {
     my $args = {};
     while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
-        my $v = shift;
+        my $bool = ($k =~ booleanOptions);
+        my $v = $bool ? 1 : shift;
         if ( ref $self ) {
             eval { $self->$k($v) };
             if ($@) {
