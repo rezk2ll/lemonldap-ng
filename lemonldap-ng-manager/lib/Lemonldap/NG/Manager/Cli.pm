@@ -92,12 +92,27 @@ sub set {
     my @list;
     foreach my $key ( keys %pairs ) {
         my $oldValue = $self->_getKey($key);
+        my $value    = $pairs{$key};
         if ( ref $oldValue ) {
-            die "$key seems to be a hash, modification refused";
+            if ( $self->json ) {
+                $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
+                die "Bad value $pairs{$key}: $@" if $@;
+                $oldValue = $self->jsonConverter->encode($oldValue);
+            }
+            else {
+                die "$key seems to be a hash, modification refused";
+            }
+        }
+        elsif ( $pairs{$key} =~ /\{\[/ ) {
+            $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
+            if ($@) {
+                warn "Unable to decode: $pairs{$key}";
+                $value    = $pairs{$key};
+            }
         }
         $oldValue //= '';
         $self->logger->info("CLI: Set key $key with $pairs{$key}");
-        push @list, [ $key, $oldValue, $pairs{$key} ];
+        push @list, [ $key, $oldValue, $pairs{$key}, $value ];
     }
     unless ( $self->yes ) {
         print "Proposed changes:\n";
@@ -113,8 +128,8 @@ sub set {
     }
     require Clone;
     my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
-    foreach my $key ( keys %pairs ) {
-        $self->_setKey( $new, $key, $pairs{$key} );
+    foreach (@list) {
+        $self->_setKey( $new, $_->[0], $_->[3] );
     }
     return $self->_save($new);
 }
@@ -670,20 +685,28 @@ sub run {
 
     # Options simply call corresponding accessor
     my $args = {};
-    while ( $_[0] =~ s/^--?// ) {
-        my $k = shift;
-        my $bool = ($k =~ booleanOptions);
-        my $v = $bool ? 1 : shift;
-        if ( ref $self ) {
-            eval { $self->$k($v) };
-            if ($@) {
-                die "Unknown option -$k or bad value ($@)";
+    my @REST;
+    for ( my $i = 0 ; $i < @_ ; $i++ ) {
+        if ( $_[$i] =~ s/^--?// ) {
+            my $k    = $_[$i];
+            my $bool = ( $k =~ booleanOptions );
+            my $v    = $bool ? 1 : shift;
+            $i++ unless $bool;
+            if ( ref $self ) {
+                eval { $self->$k($v) };
+                if ($@) {
+                    die "Unknown option -$k or bad value ($@)";
+                }
+            }
+            else {
+                $args->{$k} = $v;
             }
         }
         else {
-            $args->{$k} = $v;
+            push @REST, $_[$i];
         }
     }
+    @_ = @REST;
     unless ( ref $self ) {
         $self = $self->new($args);
     }
