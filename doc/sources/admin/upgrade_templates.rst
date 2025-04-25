@@ -16,6 +16,36 @@ Template updates
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
 
 
+2.22.0
+------
+
+Authentication choice
+^^^^^^^^^^^^^^^^^^^^^
+
+To prevent having a digit as first character of an identifier, the choice id value has been prefixed by ``id_``. This could break the remember auth choice plugin if you have a customized ``login.tpl``
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    @@ -33,7 +33,7 @@
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <ul class="navbar-nav mr-auto">
+             <TMPL_LOOP NAME="AUTH_LOOP">
+    -          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+    +          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#id_<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+             </TMPL_LOOP>
+           </ul>
+         </div>
+    @@ -44,7 +44,7 @@
+           <!-- Forms -->
+           <TMPL_LOOP NAME="AUTH_LOOP">
+
+    -        <div id="<TMPL_VAR NAME="key">">
+    +        <div id="id_<TMPL_VAR NAME="key">">
+
+               <form id="lform<TMPL_VAR NAME="module">" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
+
 2.21.0
 ------
 
