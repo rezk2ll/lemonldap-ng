@@ -1,11 +1,14 @@
 package Lemonldap::NG::Common::Cli;
 
 use strict;
+use JSON;
 use Mouse;
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::EmailTransport;
 
-our $VERSION = '2.0.8';
+use constant booleanOptions => qr/^(?:json)$/;
+
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
@@ -29,6 +32,8 @@ has cfgNum => (
     isa => 'Int',
 );
 
+has json => ( is => 'rw' );
+
 sub info {
     my ($self) = @_;
     my $conf =
@@ -37,7 +42,19 @@ sub info {
     $conf->{cfgAuthorIP} ||= "No IP provided";
     $conf->{cfgDate}     ||= 0;
     $conf->{cfgLog}      ||= "No log provided";
-    print qq{
+    if ( $self->json ) {
+        print JSON->new->pretty->encode( {
+                num      => $conf->{cfgNum},
+                author   => $conf->{cfgAuthor},
+                authorIP => $conf->{cfgAuthorIP},
+                date     => $conf->{cfgDate},
+                version  => $conf->{cfgVersion},
+                log      => $conf->{cfgLog},
+            }
+        );
+    }
+    else {
+        print qq{
 Num      : $conf->{cfgNum}
 Author   : $conf->{cfgAuthor}
 Author IP: $conf->{cfgAuthorIP}
@@ -45,6 +62,7 @@ Date     : } . localtime( $conf->{cfgDate} ) . qq{
 Version  : $conf->{cfgVersion}
 Log      : $conf->{cfgLog}
 };
+    }
 }
 
 sub updateCache {
@@ -77,19 +95,27 @@ sub run {
 
     # Options simply call corresponding accessor
     my $args = {};
-    while ( $_[0] =~ s/^--?// ) {
-        my $k = shift;
-        my $v = shift;
-        if ( ref $self ) {
-            eval { $self->$k($v) };
-            if ($@) {
-                die "Unknown option -$k or bad value ($@)";
+    my @REST;
+    for ( my $i = 0 ; $i < @_ ; $i++ ) {
+        if ( $_[$i] =~ s/^--?// ) {
+            my $k    = $_[$i];
+            my $bool = ( $k =~ booleanOptions );
+            my $v    = $bool ? 1 : $_[ $i++ ];
+            if ( ref $self ) {
+                eval { $self->$k($v) };
+                if ($@) {
+                    die "Unknown option -$k or bad value ($@)";
+                }
+            }
+            else {
+                $args->{$k} = $v;
             }
         }
         else {
-            $args->{$k} = $v;
+            push @REST, $_[$i];
         }
     }
+    @_ = @REST;
     unless ( ref $self ) {
         $self = $self->new($args);
     }

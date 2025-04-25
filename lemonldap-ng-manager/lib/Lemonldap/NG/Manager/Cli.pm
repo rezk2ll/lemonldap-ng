@@ -107,7 +107,7 @@ sub set {
             $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
             if ($@) {
                 warn "Unable to decode: $pairs{$key}";
-                $value    = $pairs{$key};
+                $value = $pairs{$key};
             }
         }
         $oldValue //= '';
@@ -690,7 +690,7 @@ sub run {
         if ( $_[$i] =~ s/^--?// ) {
             my $k    = $_[$i];
             my $bool = ( $k =~ booleanOptions );
-            my $v    = $bool ? 1 : shift;
+            my $v    = $bool ? 1 : $_[ $i + 1 ];
             $i++ unless $bool;
             if ( ref $self ) {
                 eval { $self->$k($v) };
