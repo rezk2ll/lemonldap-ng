@@ -14,11 +14,11 @@ test-lib.pm - Test framework for LLNG portal
   use Test::More;
   use strict;
   use IO::String;
-  
+
   require 't/test-lib.pm';
-  
+
   my $res;
-  
+
   my $client = LLNG::Manager::Test->new( {
       ini => {
           logLevel => 'error',
@@ -26,7 +26,7 @@ test-lib.pm - Test framework for LLNG portal
       }
     }
   );
-  
+
   ok(
       $res = $client->_post(
           '/',
@@ -38,7 +38,7 @@ test-lib.pm - Test framework for LLNG portal
   count(1);
   expectOK($res);
   my $id = expectCookie($res);
-  
+
   clean_sessions();
   done_testing( count() );
 
@@ -536,7 +536,7 @@ sub expectReject {
     ok( not($@), ' Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
     if ( defined $code ) {
-        is( $res->{error}, $code, " Error code is $code" );
+        is( $res->{error}, $code, " Error code is $code" ) or explain( $res->[0], $code );
     }
     else {
         pass("Error code is $res->{error}");
