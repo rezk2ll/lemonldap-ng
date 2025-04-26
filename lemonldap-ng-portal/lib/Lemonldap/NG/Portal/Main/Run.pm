@@ -368,7 +368,10 @@ sub do {
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
-        if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
+        if (   ( $err > 0 and !$req->id )
+            or $err eq PE_SESSIONNOTGRANTED
+            or $err eq PE_SESSIONEXPIRED )
+        {
             my $json = { result => 0, error => $err };
             if ( $req->wantErrorRender ) {
                 $json->{html} = $self->loadTemplate( $req, 'errormsg',
