@@ -71,7 +71,7 @@ sub checkEvent {
                 $ret = $msg->{action};
             }
             else {
-                $class->logger->error("Unkown action $msg->{action}");
+                $class->logger->debug("Unkown action $msg->{action}");
             }
         }
         else {
