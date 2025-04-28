@@ -17,6 +17,11 @@ has alg => (
     default => 'HS512',
 );
 
+has rule => (
+    is      => 'rw',
+    default => '1',
+);
+
 has callCount => (
     is      => 'rw',
     default => 0,
@@ -166,6 +171,7 @@ sub getRp {
             oidcRPMetaDataOptionsAccessTokenExpiration => 120,
             oidcRPMetaDataOptionsBypassConsent         => 1,
             oidcRPMetaDataOptionsRedirectUris          => "http://hook.com/",
+            oidcRPMetaDataOptionsRule                  => $self->rule,
         },
         macros => {
             myfullname => '"I am ". $cn',
