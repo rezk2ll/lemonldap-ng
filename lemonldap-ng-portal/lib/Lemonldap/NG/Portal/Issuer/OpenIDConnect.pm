@@ -200,8 +200,14 @@ sub load_config {
     if (@confKeys) {
         my $confKey = $confKeys[0];
         $self->logger->debug("Loading $client_id from LLNG config $confKey");
-        $self->load_rp_from_llng_conf($confKey);
-        return { info => { confKey => $confKey } };
+        if ( $self->load_rp_from_llng_conf($confKey) ) {
+            return { info => { confKey => $confKey } };
+        }
+        else {
+            # This marks the RP as permanently not loaded
+            # (until next config reload)
+            return {};
+        }
     }
 
     # Not found in config, try to load from hook
@@ -213,11 +219,14 @@ sub load_config {
 
         $self->logger->debug(
             "Loading $config->{confKey} from getOidcRpConfig hook");
-        $info = { confKey => $config->{confKey} };
 
         # Make sure Client ID is correctly set in options
         $config->{options}->{oidcRPMetaDataOptionsClientID} = $client_id;
-        $self->load_rp(%$config);
+
+        # Make sure load_rp succeeds before remembering the confKey
+        if ( $self->load_rp(%$config) ) {
+            $info = { confKey => $config->{confKey} };
+        }
 
     }
 

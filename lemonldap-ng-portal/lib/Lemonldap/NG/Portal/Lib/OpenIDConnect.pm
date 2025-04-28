@@ -313,13 +313,14 @@ sub load_rp {
         $self->rpScopeRules->{$rp} = $compiled_scope_rules;
         $self->rpRules->{$rp}      = $rule;
         $self->rpLevelRules->{$rp} = $levelrule;
+        return 1;
     }
     else {
         $self->logger->debug(" -> RP $rp is NOT valid");
         $self->logger->error(
             "Relying Party $rp has errors and will be ignored");
     }
-    return;
+    return 0;
 }
 
 # Refresh JWKS data if needed
