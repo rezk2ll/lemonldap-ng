@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -303,7 +303,7 @@ sub run {
     return PE_ERROR;
 }
 
-sub _authorizeEndpoint {
+sub _checkErrorsInAuthorizeEndpoint {
     my ( $self, $req ) = @_;
 
     # Get and save parameters
@@ -569,6 +569,38 @@ sub _authorizeEndpoint {
         );
     }
 
+    # Check scope validity
+    # We use a slightly more relaxed version of
+    # https://tools.ietf.org/html/rfc6749#appendix-A.4
+    # To be tolerant of user error (trailing spaces, etc.)
+    # Scope names are restricted to printable ASCII characters,
+    # excluding double quote and backslash
+    unless ( $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ ) {
+        return $self->_failAuthorize( $req,
+            msg => "Submitted scope is not valid" );
+    }
+
+    # Check openid scope
+    unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
+        return $self->_failAuthorize( $req, msg => "No openid scope found" );
+    }
+    $req->data->{_oidc_request} = $oidc_request;
+    $req->data->{_oidc_rp}      = $rp;
+    $req->data->{_oidc_flow}    = $flow;
+    return ();
+}
+
+sub _authorizeEndpoint {
+    my ( $self, $req ) = @_;
+
+    my $res = $self->_checkErrorsInAuthorizeEndpoint($req);
+    return $res if $res;
+    my $oidc_request  = $req->data->{_oidc_request};
+    my $rp            = $req->data->{_oidc_rp};
+    my $flow          = $req->data->{_oidc_flow};
+    my $client_id     = $oidc_request->{client_id};
+    my $response_type = $oidc_request->{'response_type'};
+
     my $spAuthnLevel = $self->rpLevelRules->{$rp}->( $req, $req->sessionInfo );
     $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 
@@ -602,22 +634,6 @@ sub _authorizeEndpoint {
             "Reauthentication required by Relying Party in prompt parameter");
         $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
         return $self->reAuth($req);
-    }
-
-    # Check scope validity
-    # We use a slightly more relaxed version of
-    # https://tools.ietf.org/html/rfc6749#appendix-A.4
-    # To be tolerant of user error (trailing spaces, etc.)
-    # Scope names are restricted to printable ASCII characters,
-    # excluding double quote and backslash
-    unless ( $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ ) {
-        return $self->_failAuthorize( $req,
-            msg => "Submitted scope is not valid" );
-    }
-
-    # Check openid scope
-    unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
-        return $self->_failAuthorize( $req, msg => "No openid scope found" );
     }
 
     # Check id_token_hint
@@ -2313,20 +2329,27 @@ sub introspection {
         my $apacheSession =
           $self->_getSessionFromAccessTokenData( $oidcSession->{data} );
         if ($apacheSession) {
+            $response = {
+                active    => JSON::true,
+                aud       => $self->getAudiences( $oidcSession->data->{rp} ),
+                client_id => $oidcSession->{data}->{client_id},
+                exp   => $oidcSession->data->{_utime} + $self->conf->{timeout},
+                iat   => $oidcSession->data->{iat},
+                iss   => $self->get_issuer($req),
+                nbf   => $oidcSession->data->{nbf},
+                scope => $oidcSession->{data}->{scope},
+                token_type => 'bearer',
 
-            $response->{active} = JSON::true;
-
-        # The ID attribute we choose is the one of the calling webservice,
-        # which might be different from the OIDC client the token was issued to.
-            $response->{sub} =
-              $self->getUserIDForRP( $req, $rp, $apacheSession->data );
-            $response->{scope} = $oidcSession->{data}->{scope}
-              if $oidcSession->{data}->{scope};
-            $response->{client_id} = $oidcSession->{data}->{client_id}
-              if $oidcSession->{data}->{client_id};
-            $response->{iss} = $self->get_issuer($req);
-            $response->{exp} =
-              $oidcSession->{data}->{_utime} + $self->conf->{timeout};
+                # The ID attribute we choose is the one of the calling
+                # webservice, which might be different from the OIDC client the
+                # token was issued to.
+                sub => $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
+            };
+            foreach ( keys %$response ) {
+                delete $response->{$_}
+                  unless defined $response->{$_}
+                  and length( $response->{$_} ) > 0;
+            }
         }
         else {
             $self->logger->warn("Count not find session tied to Access Token");
@@ -2727,6 +2750,12 @@ sub metadata {
 sub exportRequestParameters {
     my ( $self, $req ) = @_;
 
+    if ( my $p = $req->param('prompt') ) {
+        if ( $p eq 'none' ) {
+            return $self->_unauthPromptNone($req);
+        }
+    }
+
     foreach my $param (
         qw/response_type scope client_id state redirect_uri nonce
         response_mode display prompt max_age ui_locales id_token_hint
@@ -2781,6 +2810,23 @@ sub exportRequestParameters {
     }
 
     return PE_OK;
+}
+
+sub _unauthPromptNone {
+    my ( $self, $req ) = @_;
+    my $res = $self->_checkErrorsInAuthorizeEndpoint($req);
+    return $res if $res;
+
+    my $oidc_request = $req->data->{_oidc_request};
+    my $uri          = $oidc_request->{redirect_uri};
+    $uri =
+        $uri
+      . ( $uri =~ /\?/ ? '&' : '?' )
+      . build_urlencoded(
+        error => 'login_required',
+        ( $oidc_request->{state} ? ( state => $oidc_request->{state} ) : () ),
+      );
+    return $self->_redirectToUrl( $req, $uri );
 }
 
 sub _hasScope {
@@ -2942,7 +2988,8 @@ sub _generateIDToken {
     );
 
     # Create ID Token
-    return $self->createIDToken( $req, $id_token_payload_hash, $rp );
+    return $self->createIDToken( $req, $id_token_payload_hash, $rp,
+        $sessionInfo );
 }
 
 sub getAmr {

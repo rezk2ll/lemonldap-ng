@@ -7,7 +7,7 @@ Documentation for LemonLDAP::NG 2.0
    :target: https://www.lemonldap-ng.org
 
 .. toctree::
-   
+
    Documentation index<documentation>
 
 .. toctree::
@@ -144,7 +144,7 @@ Official Backends                                                    Authenticat
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
-:doc:`Passkeys<authwebauthn>` |beta|                                 ✔                                                         
+:doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
@@ -291,8 +291,8 @@ Name                                                                 Description
 :doc:`Global logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
-:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
-:doc:`Notifications system<notifications>`                           Display a message during log in process 
+:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location
+:doc:`Notifications system<notifications>`                           Display a message during log in process
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
 :doc:`Reset certificate by mail<resetcertificate>`  [15]_\ |new|     Allow users to reset their certificate
@@ -301,6 +301,7 @@ Name                                                                 Description
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
+:doc:`Web Cron<webcron>` |new|                                       Add API to trigger scheduled tasks
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 

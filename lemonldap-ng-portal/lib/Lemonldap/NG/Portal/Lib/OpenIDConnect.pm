@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -28,7 +28,7 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.21.1';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -453,11 +453,16 @@ sub buildAuthorizationCodeAuthnRequest {
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
-        ( defined $display    ? ( display    => $display )    : () ),
-        ( defined $prompt     ? ( prompt     => $prompt )     : () ),
-        ( $max_age            ? ( max_age    => $max_age )    : () ),
-        ( defined $ui_locales ? ( ui_locales => $ui_locales ) : () ),
-        ( defined $acr_values ? ( acr_values => $acr_values ) : () )
+        ( $display    ? ( display    => $display )    : () ),
+        ( $prompt     ? ( prompt     => $prompt )     : () ),
+        ( $ui_locales ? ( ui_locales => $ui_locales ) : () ),
+        (
+            defined($max_age) && length($max_age) ? ( max_age => $max_age ) : ()
+        ),
+        (
+            defined($acr_values)
+              && length($acr_values) ? ( acr_values => $acr_values ) : ()
+        )
     };
 
     # Call oidcGenerateAuthenticationRequest
@@ -1582,7 +1587,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -1836,7 +1841,8 @@ sub checkEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $method ) =
       $self->getEndPointAuthenticationCredentials($req);
 
-    $self->logger->debug("Authentication method: $method");
+    $self->logger->debug(
+        'Authentication method: ' . ( $method || 'undefined' ) );
 
     unless ($client_id) {
         $self->logger->error(
@@ -2419,13 +2425,14 @@ sub _createJWT {
 # @param rp Internal Relying Party identifier
 # @return String id_token ID Token as JWT
 sub createIDToken {
-    my ( $self, $req, $payload, $rp ) = @_;
+    my ( $self, $req, $payload, $rp, $sessionData ) = @_;
 
     # Get signature algorithm
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
-    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
+    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp,
+        $sessionData );
     return undef if ( $h != PE_OK );
 
     my $id_token = $self->createJWT( $payload, $alg, $rp );

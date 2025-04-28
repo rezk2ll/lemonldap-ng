@@ -1,3 +1,71 @@
+lemonldap-ng (2.21.0) noble; urgency=medium
+
+  * Bugs:
+    * #2044: Session upgrade with Auth::SAML / Auth::OpenIDConnect
+    * #3169: nginx handler breaks with OpenResty 1.25.3.1
+    * #3259: Errors  in old browsers due to new coffeescript version
+    * #3265: VHost alias is not removed from cache when reloading conf
+    * #3266: Aliases override VHosts
+    * #3272: Notifications condition is not always displayed
+    * #3279: Using private_key_jwt authentication with Azure fails with invalid_client
+    * #3291: Password expiration warning is not shown after 2FA
+    * #3297: Manually uploaded RP JWKS document is not JSON decoded before processing
+    * #3304: JWT "typ" header no more exist
+    * #3308: Secondary sessions are not updated during session upgrade/renew
+    * #3309: LocationDetect tries to lookup city even when country database is used
+    * #3312: Redis as MessageBroker breaks when loosing connection and auth is required
+    * #3314: Configuration diff viewer incorrectly reports modifications on menu entries with the same name
+    * #3318: "Something went wrong in combination" on all requests after a while
+    * #3324: refresh_token should be validated against DB, not cache
+    * #3330: OIDC: Incorrect implementation of client_secret_basic
+    * #3337: Wrong "match an alias" error when saving conf
+    * #3340: lemonldap-ng-cli does not work if enabledModules has been changed in lemonldap-ng.ini
+    * #3341: [Security:Medium][CVE-2025-31510] XSS/HTML Injection through tab parameter when using "Choice" authentication module
+    * #3347: User stuck on /notifback after accepting a notification when an accepted global notification already exists
+    * #3352: unlog events are not working with Lemonldap::NG::Common::Apache::Session::REST
+    * #3355: Unlog events are not working Lemonldap::NG::Common::Apache::Session::REST and hashedSessionStore
+    * #3356: CAS incompatible with hashed storage
+    * #3358: HashedStorage doesn't use good id when calling update
+
+  * New features:
+    * #1772: Append a new plugin to display a custom message on portal
+    * #2902: Implement "OpenID Connect Native SSO for Mobile Apps 1.0"
+    * #2925: Support samlValidate in CAS 3.0 protocol
+    * #3262: Google ReCaptcha v3
+    * #3336: Loki logger
+
+  * Improvements:
+    * #1921: javascript versionning
+    * #3176: Forward OIDC login_hint
+    * #3186: Manage amr claim (Authentication Method Reference) in OpenID Connect
+    * #3239: Append plugin or option to enable a floating menu in Portal to display most used applications
+    * #3244: Add option to drop "none" from OIDC alg list (metadata)
+    * #3268: OpenIDConnect metadata can not be cached
+    * #3278: Allow session variables to be used in notifications
+    * #3280: Render checkState plugin more generic
+    * #3284: ADFS doc is outdated
+    * #3287: Sessions are not sorted in the Second Factors Tab
+    * #3288: SAML identity providers are not displayed correctly in order
+    * #3289: There is no default value for the Use 2FA for session upgrade option.
+    * #3294: Allow required authentication level to be a rule
+    * #3299: Permits to Auth::OpenIDConnect to use claims from id_token and/or access_token
+    * #3302: Prefill user login input with OIDC login_hint parameter
+    * #3305: Allow admins to disable CAS proxy features per-application
+    * #3311: Logger Log4Perl don't follow logLevel
+    * #3313: Allow maintainance mode for portal
+    * #3316: Add an option to disable built-in plugins
+    * #3321: Add functionnality (plugin, extended function,...) to dump %ENV or $env
+    * #3323: purgeCentralCache script fails with empty xxxxStorage keys
+    * #3328: Add short timeout on messageBroker check
+    * #3333: Option to store logs in JSON format
+    * #3339: user field isn't set on auditLog logout events
+    * #3342: Improve random password generation with a shuffle
+
+  * WebServer Confs:
+    * #3306: Simplify Nginx initial configuration
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 07 Apr 2025 15:58:42 +0200
+
 lemonldap-ng (2.20.2) noble; urgency=medium
 
   * Bugs:

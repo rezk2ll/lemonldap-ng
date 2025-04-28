@@ -123,6 +123,10 @@ my $customToken = $json->{custom_token};
 is( $customToken, 'CustomToken', 'Found custom token in token response' );
 my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token" );
+is( $id_token_payload->{id_token_hook_uid},
+    "french", "Found hooked claim in ID token" );
+is( $id_token_payload->{id_token_hook_rp},
+    "rp", "Found hooked claim in ID token" );
 
 # 3084
 my $id_token_header = id_token_header($id_token);

@@ -37,6 +37,8 @@ Example of a protected virtual host for a local application:
 
    </VirtualHost>
 
+.. _vhostapachereverse:
+
 Reverse-Proxy
 ~~~~~~~~~~~~~
 

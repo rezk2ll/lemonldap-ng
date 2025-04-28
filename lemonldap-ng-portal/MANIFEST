@@ -162,6 +162,7 @@ lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/TrustedBrowser.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
+lib/Lemonldap/NG/Portal/Plugins/WebCron.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Base.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm
@@ -419,6 +420,7 @@ site/htdocs/static/common/pt.png
 site/htdocs/static/common/pt_BR.png
 site/htdocs/static/common/ro.png
 site/htdocs/static/common/ru.png
+site/htdocs/static/common/sk.png
 site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
@@ -436,6 +438,7 @@ site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/pt_BR.json
 site/htdocs/static/languages/ru.json
+site/htdocs/static/languages/sk.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
 site/htdocs/static/languages/zh.json
@@ -553,6 +556,7 @@ site/templates/common/mail/pl.json
 site/templates/common/mail/pt.json
 site/templates/common/mail/pt_BR.json
 site/templates/common/mail/ru.json
+site/templates/common/mail/sk.json
 site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh.json
@@ -725,6 +729,7 @@ t/32-Auth-and-issuer-OIDC-PKCE-2.t
 t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-Auth-OIDC-JWKS-Refresh.t
+t/32-OIDC-admin-Back-Channel-Logout-sid.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
@@ -759,6 +764,7 @@ t/32-OIDC-OP-claims-in-idtoken.t
 t/32-OIDC-Opaque-Token.t
 t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Password-Grant.t
+t/32-OIDC-prompt-none.t
 t/32-OIDC-redirect_uri-filter.t
 t/32-OIDC-Refresh-Token.t
 t/32-OIDC-Register-with-bad-redirect-uri.t
@@ -884,6 +890,7 @@ t/61-NewLocationWarning-Custom.t
 t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
+t/61-WebCron.t
 t/62-Refresh-plugin.t
 t/62-SingleSession-with-History.t
 t/62-SingleSession-with-Rules.t

@@ -20,4 +20,5 @@ Mini Howtos
    useoutgoingproxy
    testopenidconnect
    anssi-oidc
-   oidc-agent-connect
+   oidc-proconnect
+   Agent Connect (deprecated) <oidc-agent-connect>

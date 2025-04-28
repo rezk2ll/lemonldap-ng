@@ -419,7 +419,7 @@ sub attributes {
                     },
                     {
                         'k' => 'SSL',
-                        'v' => 'SSL'
+                        'v' => 'mTLS'
                     },
                     {
                         'k' => 'Twitter',
@@ -597,7 +597,7 @@ sub attributes {
                 },
                 {
                     'k' => 'SSL',
-                    'v' => 'SSL'
+                    'v' => 'mTLS'
                 },
                 {
                     'k' => 'Twitter',
@@ -1128,7 +1128,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 },
                 {
                     'k' => 'SSL',
-                    'v' => 'SSL'
+                    'v' => 'mTLS'
                 },
                 {
                     'k' => 'Twitter',
@@ -5801,6 +5801,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'text'
         },
         'webauthnRpName' => {
+            'type' => 'text'
+        },
+        'webCronSecret' => {
             'type' => 'text'
         },
         'webIDAuthnLevel' => {

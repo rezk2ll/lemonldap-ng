@@ -320,6 +320,7 @@ sub eventLogout {
     if ( $msg->{id} ) {
         $self->logger->debug(" -> logout asked for $msg->{id}");
         if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
+            $req->sessionInfo( $req->userData($session) );
             $req->id( $session->{_session_id} );
             $req->pdata( {} );
             $self->do( $req,
@@ -327,6 +328,7 @@ sub eventLogout {
                 1 );
         }
         else {
+            $self->logger->debug('Session not found');
             $self->_unauthLogout($req);
         }
     }

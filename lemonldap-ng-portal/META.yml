@@ -79,7 +79,7 @@ recommends:
   Web::ID: '0'
 requires:
   Clone: '0'
-  Lemonldap::NG::Handler: v2.20.2
+  Lemonldap::NG::Handler: v2.21.0
   Regexp::Assemble: '0'
 resources:
   MailingList: mailto:lemonldap-ng-dev@ow2.org
