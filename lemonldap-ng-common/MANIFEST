@@ -58,6 +58,7 @@ lib/Lemonldap/NG/Common/MessageBroker/MQTT.pm
 lib/Lemonldap/NG/Common/MessageBroker/NoBroker.pm
 lib/Lemonldap/NG/Common/MessageBroker/Pg.pm
 lib/Lemonldap/NG/Common/MessageBroker/Redis.pm
+lib/Lemonldap/NG/Common/MessageBroker/Web.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
 lib/Lemonldap/NG/Common/Notifications/DBI.pm
@@ -97,6 +98,7 @@ scripts/importMetadata
 scripts/lemonldap-ng-cli
 scripts/lemonldap-ng-sessions
 scripts/lmMigrateConfFiles2ini
+scripts/pubsubServer
 scripts/rotateOidcKeys
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t

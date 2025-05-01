@@ -1,0 +1,276 @@
+#!/usr/bin/perl
+
+use strict;
+use Getopt::Long;
+use IO::Select;
+use JSON;
+use POSIX qw(strftime);
+use Protocol::WebSocket::Handshake::Server;
+use Protocol::WebSocket::Frame;
+use Socket;
+use URI;
+
+# 1. Parse options
+
+my ( $token, $port, $addr, $cert, $key, $maxRequestSize, $maxRequestTime,
+    $_debug, $_log );
+
+# HTTP header separator
+use constant HS => qr/(?:\r?\n){2}/;
+
+GetOptions(
+    'token=s'            => \$token,
+    'port=s'             => \$port,
+    'addr=s'             => \$addr,
+    'cert=s'             => \$cert,
+    'key=s'              => \$key,
+    'max-request-size=s' => \$maxRequestSize,
+    'max-request-time=s' => \$maxRequestTime,
+    'debug'              => \$_debug,
+    'log'                => \$_log,
+);
+
+sub debug {
+    print STDERR map { "$_\n" } @_ if $_debug;
+}
+
+sub printWebLog {
+    return unless $_log;
+    my ( $msg, $ip ) = @_;
+    my $date = strftime( "[%d/%b/%Y:%H:%M:%S %z]", localtime );
+    print "$ip - - $date $msg\n";
+    debug "Request: $msg";
+}
+
+$addr  ||= $ENV{PUBSUB_ADDR};
+$token ||= $ENV{PUBSUB_TOKEN};
+$cert  ||= $ENV{PUBSUB_CERT};
+$key   ||= $ENV{PUBSUB_KEY};
+$maxRequestSize ||= $ENV{PUBSUB_MAX_REQUEST_SIZE} || 8192;
+$maxRequestTime ||= $ENV{PUBSUB_MAX_REQUEST_TIME} || 5;
+
+if ( $cert xor $key ) {
+    die '--cert and --key must be used together';
+}
+
+unless ($token) {
+    print STDERR
+      "No token given, this means that anybody can use this server\n";
+}
+
+$port ||=
+  ( $addr and $addr =~ /:/ )
+  ? undef
+  : ( $ENV{PUBSUB_PORT} || ( $cert ? 8443 : 8080 ) );
+
+# 2. Create server
+
+my $server;
+my %args = (
+    ( $addr ? ( LocalAddr => $addr ) : () ),
+    ( $port ? ( LocalPort => $port ) : () ),
+    Listen => 10,
+    Reuse  => 1,
+);
+if ($cert) {
+    require IO::Socket::SSL;
+    $server = IO::Socket::SSL->new(
+        %args,
+        SSL_cert_file => $cert,
+        SSL_key_file  => $key,
+        SSL_server    => 1,
+    );
+}
+else {
+    require IO::Socket::INET;
+    $server = IO::Socket::INET->new( %args, Proto => 'tcp', );
+}
+
+die "Cannot create socket: $!" unless $server;
+
+my $json     = JSON->new->utf8;
+my $selector = IO::Select->new;
+
+$selector->add($server);
+
+# 3. Manage requests
+
+my %clients;
+
+while (1) {
+    for my $sock ( $selector->can_read(0.1) ) {
+        if ( $sock == $server ) {
+            my $client = $server->accept or next;
+            $client->autoflush(1);
+            $selector->add($client);
+        }
+        else {
+            my $fileno = fileno($sock);
+            my $buf    = '';
+            my $n      = sysread( $sock, $buf, 4096 );
+            if ( !defined $n || $n == 0 ) {
+                cleanupClient($sock);
+                next;
+            }
+
+            # Known clients are subscribers, we can discard
+            if ( exists $clients{$fileno} ) {
+                my $frame = $clients{$fileno}->{frame};
+                $frame->append($buf);
+                while ( my $msg = $frame->next ) {
+
+                    # read-only client; we discard messages
+                }
+            }
+
+            else {
+                my $req   = $buf;
+                my $start = time;
+                while ( $req !~ HS ) {
+                    last if length($req) > $maxRequestSize;
+                    last if ( time - $start ) > $maxRequestTime;
+                    my $tmp;
+                    my $r = sysread( $sock, $tmp, 4096 );
+                    $req .= $tmp if $r;
+                }
+
+                # Get headers
+                my ( $headers, $body ) = split( HS, $req, 2 );
+                my @lines   = split /\r?\n/, $headers;
+                my $request = shift @lines;
+                my %hdr;
+                for (@lines) {
+                    if (/^([^:]+):\s*(.+)$/) {
+                        $hdr{ lc $1 } = $2;
+                    }
+                }
+
+                # Auth check
+                if ( $token and $hdr{authorization} ne "Bearer $token" ) {
+                    sendHttp( $sock, 401, "Unauthorized", "Bad token",
+                        $request );
+                    next;
+                }
+
+                # WebSocket GET
+                if ( $request =~ m{^GET\s+(/subscribe\S*)\s+HTTP/1.[01]$} ) {
+                    my %params = eval { URI->new($1)->query_form };
+                    print STDERR "URI parse error: $@\n" if $@;
+                    my @channels = split /,/, ( $params{channels} // '' );
+
+                    unless (@channels) {
+                        print STDERR "Missing channel(s)\n";
+                        sendHttp( $sock, 400, "Bad Request",
+                            "Missing channel(s)", $request );
+                    }
+
+                    my $hs = Protocol::WebSocket::Handshake::Server->new;
+                    $hs->parse($req);
+
+                    if ( $hs->is_done ) {
+                        my $ip  = getIp($sock);
+                        my $res = $hs->to_string;
+                        my $len = length($res);
+                        print $sock $res;
+                        $clients{$fileno} = {
+                            socket   => $sock,
+                            frame    => Protocol::WebSocket::Frame->new,
+                            channels => { map { $_ => 1 } @channels },
+                        };
+                        $request =~ s/\s+HTTP\/1.*$//;
+                        printWebLog( qq("$request" 200 $len), $ip );
+                    }
+                    else {
+                        print STDERR "ERROR: " . $hs->error . "\n";
+                        sendHttp( $sock, 400, "Bad Request",
+                            "WebSocket handshake failed", $request );
+                    }
+                }
+
+                # Publish API
+                elsif ( $request =~ m{^POST\s+/publish\s+HTTP/1.[01]$} ) {
+                    my $len       = $hdr{'content-length'} // length($body);
+                    my $remaining = $len - length($body);
+                    while ( $remaining > 0 ) {
+                        last if length($req) > $maxRequestSize;
+                        last if ( time - $start ) > $maxRequestTime;
+                        my $tmp;
+                        my $r = sysread( $sock, $tmp, $remaining );
+                        last unless $r;
+                        $req  .= $tmp;
+                        $body .= $tmp;
+                        $remaining -= $r;
+                    }
+
+                    if ($remaining) {
+                        sendHttp( $sock, 408, 'Request timeout', $request );
+                        next;
+                    }
+
+                    my $data = eval { $json->decode($body) };
+                    if ( $@ || !defined $data ) {
+                        sendHttp( $sock, 400, "Bad Request",
+                            "Missing or invalid JSON", $request );
+                        next;
+                    }
+
+                    debug "Message to publish: $body";
+
+                    my $channel = $data->{channel};
+                    unless ($channel) {
+                        sendHttp( $sock, 400, "Bad Request",
+                            "Missing channel", $request );
+                        next;
+                    }
+
+                    my $msg   = $body;
+                    my $frame = Protocol::WebSocket::Frame->new;
+                    $frame->append($msg);
+                    my $bytes = $frame->to_bytes;
+
+                    for my $c ( values %clients ) {
+                        next unless $c->{channels}->{$channel};
+                        my $ws_sock = $c->{socket};
+                        print $ws_sock $bytes;
+                    }
+
+                    sendHttp( $sock, 200, "OK", "Message sent", $request );
+                }
+
+                else {
+                    sendHttp( $sock, 404, "Not Found", "Unknown endpoint",
+                        $request );
+                }
+            }
+        }
+    }
+}
+
+sub sendHttp {
+    my ( $sock, $code, $status, $body, $request ) = @_;
+    my $ip  = getIp($sock);
+    my $len = length($body);
+    print $sock "HTTP/1.1 $code $status\r\n"
+      . "Content-Type: text/plain\r\n"
+      . "Content-Length: $len\r\n"
+      . "Connection: close\r\n\r\n"
+      . $body;
+    cleanupClient($sock);
+    $request =~ s/\s+HTTP\/1.*$//;
+    printWebLog( qq("$request" $code $len), $ip );
+}
+
+sub cleanupClient {
+    my ($sock) = @_;
+    $selector->remove($sock);
+    my $fileno = fileno($sock);
+    delete $clients{$fileno};
+    close $sock;
+}
+
+sub getIp {
+    my ($sock) = @_;
+    my $peer = getpeername($sock);
+    my ( $port, $iaddr ) = sockaddr_in($peer);
+    return inet_ntoa($iaddr);
+}
