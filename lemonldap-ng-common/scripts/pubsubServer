@@ -4,7 +4,7 @@ use strict;
 use Getopt::Long;
 use IO::Select;
 use JSON;
-use POSIX qw(strftime);
+use POSIX qw(strftime setsid);
 use Protocol::WebSocket::Handshake::Server;
 use Protocol::WebSocket::Frame;
 use Socket;
@@ -13,7 +13,7 @@ use URI;
 # 1. Parse options
 
 my ( $token, $port, $addr, $cert, $key, $maxRequestSize, $maxRequestTime,
-    $_debug, $_log );
+    $_debug, $_log, $daemon, $accessLog, $pidFile );
 
 # HTTP header separator
 use constant HS => qr/(?:\r?\n){2}/;
@@ -28,7 +28,29 @@ GetOptions(
     'max-request-time=s' => \$maxRequestTime,
     'debug'              => \$_debug,
     'log'                => \$_log,
+    'daemon'             => \$daemon,
+    'access-log=s'       => \$accessLog,
+    'pid-file=s'         => \$pidFile,
 );
+
+$addr           ||= $ENV{PUBSUB_ADDR};
+$token          ||= $ENV{PUBSUB_TOKEN};
+$cert           ||= $ENV{PUBSUB_CERT};
+$key            ||= $ENV{PUBSUB_KEY};
+$maxRequestSize ||= $ENV{PUBSUB_MAX_REQUEST_SIZE} || 8192;
+$maxRequestTime ||= $ENV{PUBSUB_MAX_REQUEST_TIME} || 5;
+$_debug         ||= $ENV{PUBSUB_DEBUG};
+$_log           ||= $ENV{PUBSUB_LOG};
+$accessLog      ||= $ENV{PUBSUG_ACCESS_LOG};
+
+&daemonize if $daemon;
+
+if ($accessLog) {
+    open STDOUT, '>>', $accessLog or die "Unable to write logs: $!";
+    if ($daemon) {
+        open STDERR, '>&', fileno(STDOUT) or die "Can't dup STDERR: $!";
+    }
+}
 
 sub debug {
     print STDERR map { "$_\n" } @_ if $_debug;
@@ -41,13 +63,6 @@ sub printWebLog {
     print "$ip - - $date $msg\n";
     debug "Request: $msg";
 }
-
-$addr  ||= $ENV{PUBSUB_ADDR};
-$token ||= $ENV{PUBSUB_TOKEN};
-$cert  ||= $ENV{PUBSUB_CERT};
-$key   ||= $ENV{PUBSUB_KEY};
-$maxRequestSize ||= $ENV{PUBSUB_MAX_REQUEST_SIZE} || 8192;
-$maxRequestTime ||= $ENV{PUBSUB_MAX_REQUEST_TIME} || 5;
 
 if ( $cert xor $key ) {
     die '--cert and --key must be used together';
@@ -273,4 +288,31 @@ sub getIp {
     my $peer = getpeername($sock);
     my ( $port, $iaddr ) = sockaddr_in($peer);
     return inet_ntoa($iaddr);
+}
+
+sub daemonize {
+    open STDIN,  '<', '/dev/null' or die "Can't read /dev/null: $!";
+    open STDOUT, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+    open STDERR, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+
+    defined(my $pid = fork) or die "Can't fork: $!";
+    exit if $pid;
+
+    setsid() or die "Can't start a new session: $!";
+
+    defined($pid = fork) or die "Can't fork again: $!";
+    exit if $pid;
+
+    umask 0;
+
+    if ($pidFile) {
+        open my $fh, '>', $pidFile or die "Can't write $pidFile: $!";
+        print $fh "$$\n";
+        close $fh;
+        debug "Pid written ($$)";
+        debug `cat $pidFile`;
+    }
+    else {
+        print STDERR "Pid is $$\n";
+    }
 }
