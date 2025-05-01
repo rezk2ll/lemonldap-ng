@@ -681,6 +681,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/convertToHashSessionStorage \
 		${SRCCOMMONDIR}/scripts/encryptTotpSecrets \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
+		${SRCCOMMONDIR}/scripts/pubsubWebServer \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \

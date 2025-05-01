@@ -252,8 +252,8 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 
 # Setup requires filtering
 %{?perl_default_filter}
-%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven|perl\\(Protocol::WebSocket::Client\\)}
-%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)|perl\\(Protocol::WebSocket::Client\\)}
+%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven|perl\\(Protocol::WebSocket}
+%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)|perl\\(Protocol::WebSocket}
 
 
 %description
