@@ -76,7 +76,7 @@ sub printWebLog {
     return if $quiet and !$accessLog;
     my ( $msg, $ip ) = @_;
     my $date = strftime( "[%d/%b/%Y:%H:%M:%S %z]", localtime );
-    print "$ip - - $date $msg\n";
+    print "$ip - - $date $msg -\n";
     debug "Request: $msg";
 }
 
@@ -208,7 +208,7 @@ while (1) {
                             frame    => Protocol::WebSocket::Frame->new,
                             channels => { map { $_ => 1 } @channels },
                         };
-                        $request =~ s/\s+HTTP\/1.*$//;
+                        $request =~ s/[\r\n]//g;
                         printWebLog( qq("$request" 200 $len), $ip );
                     }
                     else {
@@ -281,13 +281,15 @@ sub sendHttp {
     my ( $sock, $code, $status, $body, $request ) = @_;
     my $ip  = getIp($sock);
     my $len = length($body);
-    print $sock "HTTP/1.1 $code $status\r\n"
+    my $resp = "HTTP/1.1 $code $status\r\n"
       . "Content-Type: text/plain\r\n"
       . "Content-Length: $len\r\n"
       . "Connection: close\r\n\r\n"
       . $body;
+    print $sock $resp;
     cleanupClient($sock);
-    $request =~ s/\s+HTTP\/1.*$//;
+    $request =~ s/[\r\n]//g;
+    $len = length($resp);
     printWebLog( qq("$request" $code $len), $ip );
 }
 
