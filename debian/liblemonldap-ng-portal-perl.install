@@ -5,3 +5,4 @@ usr/share/lemonldap-ng/bin/purgeCentralCache
 usr/share/lemonldap-ng/portal
 usr/share/man/man3/Lemonldap::NG::Portal*
 usr/share/perl5/Lemonldap/NG/Portal*
+usr/share/man/man1/downloadSamlMetadata.1p

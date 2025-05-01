@@ -727,6 +727,7 @@ fi
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files portal
+%{_mandir}/man1/downloadSamlMetadata*
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
 %{lm_bindir}/downloadSamlMetadata
@@ -1094,7 +1095,7 @@ fi
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
 
-* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com> 
+* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com>
 - New spec file
 
 * Sun Mar 02 2008 Dag Wieers <dag@wieers.com> - 0.85-1
