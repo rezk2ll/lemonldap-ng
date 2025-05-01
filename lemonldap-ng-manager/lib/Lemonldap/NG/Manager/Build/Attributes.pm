@@ -4803,11 +4803,20 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'register',
             documentation => 'OpenID Connect registration endpoint',
         },
+
+        # Oauth2 endpoints
         oidcServiceMetaDataIntrospectionURI => {
             type          => 'text',
             default       => 'introspect',
             documentation => 'OpenID Connect introspection endpoint',
         },
+        oidcServiceMetaDataRevokeURI => {
+            type          => 'text',
+            default       => 'revoke',
+            documentation => 'OpenID Connect token revocation endpoint',
+        },
+
+        # Logout endpoints
         oidcServiceMetaDataEndSessionURI => {
             type          => 'text',
             default       => 'logout',

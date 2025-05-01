@@ -1290,9 +1290,7 @@ sub makeJWT {
     return undef if ( $h != PE_OK );
 
     # Get signature algorithm
-    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
-    $self->logger->debug("Access Token signature algorithm: $alg");
+    my $alg = $self->getSignAlg($rp);
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
 
@@ -1472,6 +1470,14 @@ sub getOpenIDConnectSession {
     }
 
     return $oidcSession;
+}
+
+sub getSignAlg {
+    my ( $self, $rp ) = @_;
+    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+    $self->logger->debug("Access Token signature algorithm: $alg");
+    return $alg;
 }
 
 # Store information in state database and return

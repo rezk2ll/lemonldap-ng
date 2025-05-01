@@ -3608,6 +3608,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'register',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataRevokeURI' => {
+            'default' => 'revoke',
+            'type'    => 'text'
+        },
         'oidcServiceMetaDataTokenURI' => {
             'default' => 'token',
             'type'    => 'text'

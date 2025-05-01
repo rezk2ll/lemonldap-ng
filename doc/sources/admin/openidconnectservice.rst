@@ -24,6 +24,7 @@ values unless you have a specific need to change them.
 -  **JWKS**
 -  **Registration**
 -  **Introspection**
+-  **Token revocation**
 -  **End of session**
 -  **Check Session**
 -  **Front-Channel URI**
@@ -33,7 +34,7 @@ values unless you have a specific need to change them.
 
     These endpoints are published in JSON metadata.
 
-    
+
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -47,7 +48,7 @@ Authentication Method Reference rules
 When issuing an ID Token, Lemonldap will fill the ``amr`` field according to
 the rules specified in this section. A minimal set of rules is provided. If
 you need particular ``amr`` values to be sent to your applications depending on
-authentication conditions, you can add your own custom rules here. 
+authentication conditions, you can add your own custom rules here.
 
 The key of each entry is the ``amr`` value to be added to the ID token. The
 value is a rule that decides whether or not that value is set.
@@ -67,7 +68,7 @@ For more information on standard AMR values, refer to :rfc:`8176`
 Dynamic registration
 ~~~~~~~~~~~~~~~~~~~~
 
-If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options 
+If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options
 to define attributes and extra claims released when a new relying party is registered through ``/oauth2/register`` endpoint.
 
 -  **Activation**: Set to 1 to allow clients to register themselves
@@ -190,5 +191,5 @@ will be returned.
 
 .. tip::
 
-    This feature requires that the LL::NG cookie is exposed to 
+    This feature requires that the LL::NG cookie is exposed to
     javascript (``httpOnly`` option must be set to ``0``).

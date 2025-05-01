@@ -835,6 +835,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"Khóa",
 "oidcServiceMetaDataRegistrationURI":"Đăng ký",
+"oidcServiceMetaDataRevokeURI":"Token revocation",
 "oidcServiceMetaDataSecurity":"Bảo mật",
 "oidcServiceMetaDataSessions":"Phiên",
 "oidcServiceMetaDataSigKeys":"Signature keys",
