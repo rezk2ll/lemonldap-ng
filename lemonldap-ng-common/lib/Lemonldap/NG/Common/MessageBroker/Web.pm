@@ -174,19 +174,11 @@ sub _connect {
         }
     );
 
-    $client->connect(
-        "/subscribe?$self->{channels}",
-        {
-            Host       => $self->{server},
-            Upgrade    => 'websocket',
-            Connection => 'Upgrade',
-            (
-                $self->{token}
-                ? ( Authorization => "Bearer $self->{token}" )
-                : ()
-            ),
-        }
-    );
+    $client->{hs}->{req}->{headers} =
+      [ Authorization => "Bearer $self->{token}", ]
+      if $self->{token};
+
+    $client->connect();
 
     my $buf;
     $sock->recv( $buf, 4096 );

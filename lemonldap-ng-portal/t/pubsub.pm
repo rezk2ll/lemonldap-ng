@@ -9,7 +9,7 @@ my $pubsub;
 sub startPubsub {
     $pubsub = start [
         '../lemonldap-ng-common/scripts/pubsubServer',
-        #'--token' => $pubsubToken,
+        '--token' => $pubsubToken,
         '--port' => $pubsubPort,
         '--debug',
     ];
