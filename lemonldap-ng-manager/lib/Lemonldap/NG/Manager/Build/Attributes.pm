@@ -1951,6 +1951,7 @@ sub attributes {
                 { k => '::Redis', v => 'Redis' },
                 { k => '::Pg',    v => 'PostgreSQL' },
                 { k => '::MQTT',  v => 'MQTT' },
+                { k => '::Web',   v => 'Web' },
             ],
             flags => 'hp',
         },
@@ -4859,7 +4860,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataAmrRules => {
             type    => 'keyTextContainer',
             keyTest => qr/\w/,
-            test       => sub { return perlExpr(@_) },
+            test    => sub { return perlExpr(@_) },
             default => {
                 'pwd' => '$authenticationLevel == 2',
                 'mfa' => '$_2f',
@@ -4867,7 +4868,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'otp' => '$_2f eq "TOTP"',
             },
             documentation => 'OpenID Connect AMR rules',
-            help => 'openidconnectservice.html#amrrules',
+            help          => 'openidconnectservice.html#amrrules',
         },
         oidcServiceHideMetadata => {
             type          => 'bool',
