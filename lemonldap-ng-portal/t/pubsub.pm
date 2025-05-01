@@ -6,12 +6,18 @@ our $pubsubToken = 'aazz';
 
 my $pubsub;
 
+my $level = $ENV{LLNGLOGLEVEL} || 'error';
+
 sub startPubsub {
     $pubsub = start [
         '../lemonldap-ng-common/scripts/pubsubWebServer',
         '--token' => $pubsubToken,
-        '--port' => $pubsubPort,
-        '--debug',
+        '--port'  => $pubsubPort,
+        (
+              $ENV{LLNGLOGLEVEL} eq 'debug' ? '--debug'
+            : $ENV{LLNGLOGLEVEL} eq 'info'  ? ()
+            :                                 ('--quiet')
+        ),
     ];
     print STDERR "# Pubsub server started\n";
     sleep 1;
