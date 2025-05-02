@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -2470,6 +2470,8 @@ sub _revokeToken {
                 user       => ( $userReq || $rp ),
                 $tokenHint => $token
             );
+            $self->logger->debug(
+                "$tokenHint dropped was " . $oidcSession->id );
             $oidcSession->remove;
         }
         return [ 200, [], [] ];
