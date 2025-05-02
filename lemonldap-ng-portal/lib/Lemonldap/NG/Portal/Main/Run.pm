@@ -566,7 +566,8 @@ sub getApacheSession {
         $self->lmLog(
             $err,
             (
-                $err =~ /(?:Object does not exist|Invalid session ID)/
+                $err =~
+/(?:Object does not exist|Invalid session ID|Session kind mismatch)/
                 ? 'notice'
                 : 'error'
             )
