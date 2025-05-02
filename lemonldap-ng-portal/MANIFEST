@@ -1051,6 +1051,7 @@ t/sendCode.pl
 t/SendHtmlPlugin.pm
 t/sendOTP.pl
 t/separate-handler.pm
+t/SessionExplorer.pm
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101

@@ -66,14 +66,16 @@ LWP::Protocol::PSGI->register(
                 $res = $client->_get(
                     $url,
                     custom => {
-                        HTTP_AUTHORIZATION => $req->header('Authorization'),
+                        HTTP_AUTHORIZATION => $req->header('Authorization')
+                          || '',
+                        HTTP_COOKIE => $req->header('Cookie') || '',
                     }
                 ),
                 '  Execute request'
             );
         }
         ok( $res->[0] == 200, '  Response is 200' );
-        if ( $url !~ /blogout/ ) {
+        if ( $url !~ /(?:blogout|oidcTokenRevoke)/ ) {
             ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
                 '  Content is JSON' )
               or explain( $res->[1], 'Content-Type => application/json' );
@@ -109,6 +111,8 @@ my $metadata = $res->[2]->[0];
 ok( $rp = register( 'rp', sub { rp( $jwks, $metadata ) } ), 'RP portal' );
 
 sub runTest {
+
+    my ( $adminLogout, $useRT ) = @_;
 
     # Query RP for auth
     ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );
@@ -179,25 +183,68 @@ sub runTest {
     my $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
 
     my $i = $op2rpRequestCount;
-    $query = "token=$refresh_token&token_hint=refresh_token";
-    ok(
-        $op->_post(
-            '/oauth2/revoke',
-            IO::String->new($query),
-            length => length($query),
-            query  => 'logout=1',
-            custom => { HTTP_AUTHORIZATION => "Basic cnBpZDpycGlk" }
-        ),
-        'Refresh_token logout'
-    );
+    if ($adminLogout) {
+        my $anotherId = $op->login('french');
+        require t::SessionExplorer;
+        my $se;
+        ok( $se = t::SessionExplorer->new( $op->p->conf ),
+            'Create SessionExplorer object' );
+        expectOK(
+            $se->adminLogout(
+                query => (
+                    $useRT
+                    ? "sessionType=offline&sessionId=$refresh_token"
+                    : "sessionType=global&sessionId=$anotherId"
+                ),
+            )
+        );
+        expectReject( $op->_get( '/', cookie => "lemonldap=$anotherId" ) );
+    }
+    else {
+        $query = "token=$refresh_token&token_hint=refresh_token";
+        ok(
+            $op->_post(
+                '/oauth2/revoke',
+                IO::String->new($query),
+                length => length($query),
+                query  => 'logout=1',
+                custom => { HTTP_AUTHORIZATION => "Basic cnBpZDpycGlk" }
+            ),
+            'Refresh_token logout'
+        );
+    }
     ok( $op2rpRequestCount == $i + 1, 'One request sent ro RP' );
-    is( $lastRpRequest, 'http://auth.rp.com/oauth2/blogout' );
+    is(
+        $lastRpRequest,
+        'http://auth.rp.com/oauth2/blogout',
+        'Last RP request is /oauth2/blogout'
+    );
 
     ok( $res = refreshGrant( $op, 'rpid', $refresh_token ) );
     expectReject( $res, 400, 'invalid_request' );
 }
 
-runTest();
+subtest "Offline Back-Channel-Logout using revoke endpoint" => sub {
+    runTest();
+};
+
+subtest "Offline Back-Channel-Logout using admin logout and SSO session" =>
+  sub {
+  SKIP: {
+        eval { require Lemonldap::NG::Manager::Sessions };
+        skip 'No manager found', 1 if $@;
+        runTest( 1, 0 );
+    }
+  };
+
+subtest "Offline Back-Channel-Logout using admin logout and refresh_token" =>
+  sub {
+  SKIP: {
+        eval { require Lemonldap::NG::Manager::Sessions };
+        skip 'No manager found', 1 if $@;
+        runTest( 1, 1 );
+    }
+  };
 
 clean_sessions();
 done_testing();
@@ -219,6 +266,7 @@ sub op {
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
+                restOidcRevokeSecret                  => 'qwertyui',
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
@@ -290,6 +338,12 @@ sub rp {
                         oidcOPMetaDataOptionsConfigurationURI =>
                           "https://auth.op.com/.well-known/openid-configuration"
                     }
+                },
+                globalStorageOptions => {
+                    Directory      => "$main::tmpDir/saml",
+                    LockDirectory  => "$main::tmpDir/saml/lock",
+                    generateModule =>
+                      'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
                 oidcOPMetaDataJWKS => {
                     op => $jwks,

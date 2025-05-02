@@ -42,7 +42,10 @@ sub oidcTokenRevoke {
         $req,
         sub {
             my ($session) = @_;
-            return $self->getRP( $session->data->{client_id} );
+            return (
+                $self->oidc->getRP( $session->data->{client_id} ),
+                $session->data->{ $self->conf->{whatToTrace} }
+            );
         },
         'OIDCTokenRevokeServer'
     );
