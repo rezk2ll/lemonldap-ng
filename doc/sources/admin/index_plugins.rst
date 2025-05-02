@@ -25,6 +25,7 @@ Plugins
    locationdetect
    loginhistory
    notifications
+   oidcrevokeserver
    public_pages
    refreshsessionapi
    rememberauthchoice
