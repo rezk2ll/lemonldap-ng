@@ -84,7 +84,8 @@ sub userLogout {
       or return $self->sendError( $req, undef, 400 );
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
-    my $session = $self->getApacheSession( $mod, $id );
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->sendError( $req, "session $id not found" );
 
     my $uidKey = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
     my $uid    = $session->data->{$uidKey};
@@ -118,7 +119,8 @@ sub userLogout {
                     {
                         my $s = build_urlencoded(
                             token_hint => $sessions->{$sid}->{_type},
-                            token      => $sid
+                            token      => $sid,
+                            raw        => 1,
                         );
                         $lreq = HTTP::Request->new(
                             POST => "$self->{portal}/oidcTokenRevoke",

@@ -47,7 +47,8 @@ sub oidcTokenRevoke {
                 $session->data->{ $self->conf->{whatToTrace} }
             );
         },
-        'OIDCTokenRevokeServer'
+        'OIDCTokenRevokeServer',
+        $req->param('raw'),
     );
 }
 

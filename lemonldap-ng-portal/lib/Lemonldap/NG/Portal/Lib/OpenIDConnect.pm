@@ -1353,9 +1353,13 @@ sub newRefreshToken {
 # @return new Lemonldap::NG::Common::Session object
 
 sub getRefreshToken {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $raw ) = @_;
 
-    return $self->getOpenIDConnectSession( $id, "refresh_token", noCache => 1 );
+    return $self->getOpenIDConnectSession(
+        $id, "refresh_token",
+        noCache => 1,
+        ( $raw ? ( hashStore => 0 ) : () )
+    );
 }
 
 sub updateRefreshToken {
@@ -1595,7 +1599,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {

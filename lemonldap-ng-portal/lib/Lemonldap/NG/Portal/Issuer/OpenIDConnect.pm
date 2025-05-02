@@ -2431,7 +2431,7 @@ sub authRevokeToken {
 }
 
 sub _revokeToken {
-    my ( $self, $req, $checkRight, $rp ) = @_;
+    my ( $self, $req, $checkRight, $rp, $raw ) = @_;
     my $userReq =
       $rp ? undef : $req->sessionInfo->{ $self->conf->{whatToTrace} };
 
@@ -2450,7 +2450,7 @@ sub _revokeToken {
     }
     if ( !$oidcSession and ( !$tokenHint or $tokenHint eq 'refresh_token' ) ) {
         $self->logger->debug('Try to find a refresh_token to revoke');
-        $oidcSession = $self->getRefreshToken($token);
+        $oidcSession = $self->getRefreshToken($token, $raw);
         $tokenHint   = 'refresh_token';
     }
     if ($oidcSession) {
