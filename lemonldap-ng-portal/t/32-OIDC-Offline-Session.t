@@ -237,7 +237,12 @@ sub runTest {
             'Create SessionExplorer object' );
         expectOK(
             $se->adminLogout(
-                query => "sessionType=offline&sessionId=$refresh_token"
+                query => "sessionType=offline&sessionId="
+                  . (
+                    $ENV{LLNG_HASHED_SESSION_STORE}
+                    ? id2storage($refresh_token)
+                    : $refresh_token
+                  )
             )
         );
     }

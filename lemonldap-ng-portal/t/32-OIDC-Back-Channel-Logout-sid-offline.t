@@ -193,8 +193,18 @@ sub runTest {
             $se->adminLogout(
                 query => (
                     $useRT
-                    ? "sessionType=offline&sessionId=$refresh_token"
-                    : "sessionType=global&sessionId=$anotherId"
+                    ? "sessionType=offline&sessionId="
+                      . (
+                        $ENV{LLNG_HASHED_SESSION_STORE}
+                        ? id2storage($refresh_token)
+                        : $refresh_token
+                      )
+                    : "sessionType=global&sessionId="
+                      . (
+                        $ENV{LLNG_HASHED_SESSION_STORE}
+                        ? id2storage($anotherId)
+                        : $anotherId
+                      )
                 ),
             )
         );
@@ -250,7 +260,8 @@ clean_sessions();
 done_testing();
 
 sub op {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -308,7 +319,8 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',
@@ -343,7 +355,7 @@ sub rp {
                     Directory      => "$main::tmpDir/saml",
                     LockDirectory  => "$main::tmpDir/saml/lock",
                     generateModule =>
-                      'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
                 oidcOPMetaDataJWKS => {
                     op => $jwks,
