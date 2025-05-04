@@ -876,7 +876,7 @@ sub attributes {
             'type' => 'bool'
         },
         'casSrvMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'casSrvMetaDataOptionsTooltip' => {
             'type' => 'text'
@@ -1275,7 +1275,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'crowdsec' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'crowdsecAction' => {
             'default' => 'reject',
@@ -1291,7 +1292,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'crowdsecIgnoreFailures' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'crowdsecKey' => {
             'type' => 'text'
@@ -2674,7 +2676,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'text'
         },
         'oidcOPMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'oidcOPMetaDataOptionsStoreIDToken' => {
             'default' => 0,
@@ -4736,7 +4738,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'samlIDPMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',

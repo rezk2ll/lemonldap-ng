@@ -1472,6 +1472,7 @@ sub attributes {
 
         # CrowdSec plugin
         crowdsec => {
+            default       => 0,
             type          => 'bool',
             documentation => 'CrowdSec plugin activation',
         },
@@ -1493,6 +1494,7 @@ sub attributes {
             documentation => 'CrowdSec API key',
         },
         crowdsecIgnoreFailures => {
+            default       => 0,
             type          => 'bool',
             documentation => 'Ignore Crowdsec errors',
         },
@@ -3603,7 +3605,7 @@ sub attributes {
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
         samlIDPMetaDataOptionsTooltip       => { type => 'text', },
-        samlIDPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
+        samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -4232,7 +4234,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Path of CAS server icon',
         },
         casSrvMetaDataOptionsSortNumber => {
-            type          => 'intOrNull',
+            type          => 'int',
             documentation => 'Number to sort buttons',
         },
         casSrvMetaDataOptionsResolutionRule => {
@@ -5133,7 +5135,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName   => { type => 'text', },
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
-        oidcOPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
+        oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
         oidcOPMetaDataOptionsTooltip       => { type => 'text', },
         oidcOPMetaDataOptionsComment       => { type => 'longtext', },
         oidcOPMetaDataOptionsResolutionRule => {
