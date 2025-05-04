@@ -67,12 +67,10 @@ Then go in ``CAS Service`` to define:
    But the CAS spefications recommends ``300`` (5 minutes).
 -  **Back-channel logout**: (since *2.0.16*) enable CAS back-channel logout,
    which will send SLO requests to CAS applications.
--  **CAS session module name and options**: choose a specific module if
-   you do not want to mix CAS sessions and normal sessions (see
-   :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
 -  **CAS attributes**: list of attributes that will be transmitted by
    default in the validate response. Keys are the name of attribute in
    the CAS response, values are the name of session key.
+
 
 
 .. tip::
@@ -80,6 +78,13 @@ Then go in ``CAS Service`` to define:
     If ``CAS login`` is not set, it uses ``General Parameters`` »
     ``Logs`` » ``REMOTE_USER`` data, which is set to ``uid`` by
     default
+
+
+Sessions
+^^^^^^^^
+Choose a specific module if you do not want to mix CAS sessions and normal
+sessions (see :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
+
 
 .. _idpcas-configuring-the-cas-service:
 

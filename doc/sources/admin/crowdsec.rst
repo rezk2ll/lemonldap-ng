@@ -23,6 +23,7 @@ To configure bouncer plugin, go in ``General Parameters`` > ``Advanced Parameter
 You can then configure:
 
 - **Activation**: enable this plugin *(default: disabled)*
+- **Ignore CrowdSec failures**: avoid to block user in case of CrowdSec error *(default: disabled)*
 - **Action**: reject **or** warn and set ``$env->{CROWDSEC_REJECT} = 1``
 - **Base URL of local API**: base URL of CrowdSec local API
   *(default: http://localhost:8080)*

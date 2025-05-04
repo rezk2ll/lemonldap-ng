@@ -657,7 +657,7 @@ sub tree {
                         },
                         {
                             title => 'webCron',
-                            form => 'simpleInputContainer',
+                            form  => 'simpleInputContainer',
                             nodes => [ 'webCronSecret', ],
                         },
                         {
@@ -951,7 +951,10 @@ sub tree {
                         {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html#plugin-options',
-                            nodes => [ 'customPlugins', 'customPluginsParams', 'disabledPlugins' ]
+                            nodes => [
+                                'customPlugins', 'customPluginsParams',
+                                'disabledPlugins'
+                            ]
                         },
                     ]
                 },
@@ -1185,10 +1188,10 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'crowdsec',
+                                        'crowdsecIgnoreFailures',
                                         'crowdsecAction',
                                         'crowdsecUrl',
                                         'crowdsecKey',
-                                        'crowdsecIgnoreFailures',
                                     ],
                                 },
                                 {
@@ -1464,8 +1467,7 @@ sub tree {
                         'samlRelayStateTimeout',
                         'samlUseQueryStringSpecific',
                         'samlOverrideIDPEntityID',
-                        'samlStorage',
-                        'samlStorageOptions',
+
                         {
                             title => 'samlCommonDomainCookie',
                             form  => 'simpleInputContainer',
@@ -1477,11 +1479,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'samlFederation',
-                            form  => 'simpleInputContainer',
-                            nodes => [ 'samlFederationFiles', ]
-                        },
-                        {
                             title => 'samlDiscoveryProtocol',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -1491,8 +1488,18 @@ sub tree {
                                 'samlDiscoveryProtocolIsPassive'
                             ]
                         },
+                        {
+                            title => 'samlFederation',
+                            form  => 'simpleInputContainer',
+                            nodes => [ 'samlFederationFiles', ]
+                        },
                     ]
-                }
+                },
+                {
+                    title => 'samlServiceMetaDataSessions',
+                    help  => 'samlservice.html#sessions',
+                    nodes => [ 'samlStorage', 'samlStorageOptions', ]
+                },
             ]
         },
         'samlIDPMetaDataNodes',
@@ -1613,9 +1620,12 @@ sub tree {
                 'casStrictMatching',
                 'casTicketExpiration',
                 'casBackChannelSingleLogout',
-                'casStorage',
-                'casStorageOptions',
                 'casAttributes',
+                {
+                    title => "casServiceMetaDataSessions",
+                    help  => 'idpcas.html#sessions',
+                    nodes => [ 'casStorage', 'casStorageOptions' ],
+                },
             ]
         },
         'casSrvMetaDataNodes',

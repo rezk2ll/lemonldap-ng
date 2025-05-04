@@ -205,7 +205,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "title" : "casSrvMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "id" : "casSrvMetaDataOptionsDisplay",
@@ -565,7 +565,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "title" : "oidcOPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authopenidconnect.html#display",
@@ -1859,7 +1859,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "title" : "samlIDPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authsaml.html#display",
