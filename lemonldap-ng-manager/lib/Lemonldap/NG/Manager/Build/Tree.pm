@@ -120,6 +120,7 @@ sub tree {
                         {
                             title => 'portalCaptcha',
                             help  => 'captcha.html#configuration',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'captcha_login_enabled',
                                 'captcha_mail_enabled',
@@ -418,6 +419,7 @@ sub tree {
                         {
                             title => 'remoteParams',
                             help  => 'authremote.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'remotePortal',
                                 'remoteCookieName',
@@ -428,6 +430,7 @@ sub tree {
                         {
                             title => 'slaveParams',
                             help  => 'authslave.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'slaveAuthnLevel',    'slaveUserHeader',
                                 'slaveMasterIP',      'slaveHeaderName',
@@ -438,10 +441,11 @@ sub tree {
                         {
                             title => 'sslParams',
                             help  => 'authssl.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'SSLAuthnLevel', 'SSLVar',
-                                'SSLIssuerVar',  'SSLVarIf',
-                                'sslByAjax',     'sslHost',
+                                'SSLIssuerVar',  'sslByAjax',
+                                'sslHost',       'SSLVarIf',
                             ]
                         },
                         {
@@ -457,6 +461,7 @@ sub tree {
                         {
                             title => 'webidParams',
                             help  => 'authwebid.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'webIDAuthnLevel', 'webIDExportedVars',
                                 'webIDWhitelist'
@@ -508,6 +513,7 @@ sub tree {
                         {
                             title => 'issuerDBOpenID',
                             help  => 'idpopenid.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBOpenIDActivation',
                                 'issuerDBOpenIDPath',
@@ -540,6 +546,7 @@ sub tree {
                         {
                             title => 'issuerDBGet',
                             help  => 'issuerdbget.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBGetActivation',
                                 'issuerDBGetPath',
@@ -550,12 +557,14 @@ sub tree {
                         {
                             title => 'issuerDBJitsiMeetTokens',
                             help  => 'idpjitsimeettokens.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBJitsiMeetTokensActivation',
                                 'issuerDBJitsiMeetTokensPath',
                                 'issuerDBJitsiMeetTokensRule',
                                 {
                                     title => 'jitsiOptions',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'jitsiDefaultServer',
                                         'jitsiAppId',
@@ -611,8 +620,8 @@ sub tree {
                         'timeout',
                         'timeoutActivity',
                         'timeoutActivityInterval',
-                        'grantSessionRules',
                         'appAccessHistoryEnabled',
+                        'grantSessionRules',
                         {
                             title => 'sessionStorage',
                             help  => 'start.html#sessions-database',

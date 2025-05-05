@@ -1,8 +1,8 @@
 Writing rules and headers
 =========================
 
-LL::NG manages applications by their hostname (Apache Virtual Hosts or
-Nginx Block Servers). Rules are used for protecting applications,
+LemonLDAP::NG manages applications by their hostname (Apache Virtual Hosts or
+Nginx Block Servers). Rules are employed for protecting applications,
 and HTTP headers are appended to each request for sending data to protected
 applications (for logs, profiles,...).
 
@@ -14,38 +14,37 @@ applications (for logs, profiles,...).
     :ref:`macro names<macros_and_groups>` except for ``$ENV{<cgi-header>}`` which
     correspond to CGI headers (``$ENV{REMOTE_ADDR}`` for example).
 
-Available $ENV variables
-------------------------
 
-The %ENV hash provides:
+Available %ENV or $env variables
+--------------------------------
+
+The %ENV hash or $env hash reference provide:
 
 -  all headers in CGI format (``User-Agent`` becomes ``HTTP_USER_AGENT``)
 -  some CGI variables depending on the context:
 
    -  For portal: all CGI standard variables (you can add custom
       headers using ``fastcgi_param`` with Nginx),
-   -  For Apache handler: REMOTE_ADDR, QUERY_STRING, REQUEST_URI,
-      SERVER_PORT, REQUEST_METHOD,
-   -  For Nginx handler: all variables given by ``fastcgi_param``
-      commands.
+   -  For Apache handler: REMOTE_ADDR, QUERY_STRING, REQUEST_URI, SERVER_PORT, REQUEST_METHOD,
+   -  For Nginx handler: all variables provided by ``fastcgi_param`` commands.
 
 -  For Portal:
 
-   -  $env->{urldc} : Origin URL before Handler redirection, in cleartext
-   -  $env->{_url} : Origin URL before Handler redirection, base64 encoded
+   -  ``$env->{urldc}``: origin URL before Handler redirection, in cleartext
+   -  ``$env->{_url}``: origin URL before Handler redirection, base64 encoded
 
 See also :doc:`extended functions<extendedfunctions>`.
 
 .. tip::
 
-    You can use %ENV hash or $env hash ref. Both syntaxes are available for compatibity. 
+    You can use %ENV hash or $env hash reference. Both syntaxes are available for retro compatibity. 
 
     ::
 
-       $env->{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
+       $ENV{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
 
-    %env and template variables can be dumped by setting ``logParams = 1``
-    in ``lemonldap-ng.ini`` file.
+    $env and template variables can be dumped by setting ``logParams = 1`` in ``lemonldap-ng.ini`` file.
+    It requires ``logLevel = debug``.
 
 .. _rules:
 
@@ -72,8 +71,7 @@ Makes authentication optional, but authenticated users are seen as such (that is
 Restrict access to the whole site to users that have the LDAP description field set to "LDAP administrator" (must be set in exported variables) default
 =============================================================================================================================================== ================== ======================================
 
-The "**default**" access rule is used if none rule matches the
-current URL.
+The "**default**" access rule is used if none rule matches the current URL.
 
 
 .. tip::

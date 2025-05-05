@@ -24,7 +24,7 @@ There are two possible setups:
   :doc:`Authentication choice <authchoice>` module.
   The main portal VHost (`auth.example.com`) does not require client
   certificates. A secondary VHost is configured to require client certificates,
-  and an AJAX request is performed from the portal to obtain the user identity.
+  and an Ajax request is performed from the portal to obtain the user identity.
 
   .. figure:: mtls-choice.png
      :alt: Using mTLS authentication with a secondary VHost
@@ -225,7 +225,7 @@ If you enable this feature, you must configure 2 portal virtual hosts:
 
 Configure your :doc:`Choice <authchoice>` module, then in `SSL Options`, set
 
-* `Ajax SSL URL` to https://mtls.example.com/authssl
+* `Ajax mTLS URL` to https://mtls.example.com/authssl
 
 Finally, in `General Parameters` > `Advanced Parameters` > `Security` > `Content Security Policy`,
 
@@ -248,7 +248,7 @@ Configuring LemonLDAP::NG with mTLS authentication only
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
-and choose SSL for authentication.
+and choose mTLS for authentication.
 
 
 .. tip::
@@ -256,7 +256,7 @@ and choose SSL for authentication.
     You can then choose any other module for users and
     password.
 
-Then, go in ``SSL parameters``:
+Then, go in ``mTLS parameters``:
 
 -  **Authentication level**: authentication level for this module
 -  **Extracted certificate field**: field of the certificate affected to
@@ -300,7 +300,7 @@ least refresh (F5) the page.
 Apache server
 ^^^^^^^^^^^^^
 
-It is possible with AJAX code and 3 Apache locations to bypass this
+It is possible with Ajax code and 3 Apache locations to bypass this
 limitation.
 
 1. Modify the portal virtual host to match this example:

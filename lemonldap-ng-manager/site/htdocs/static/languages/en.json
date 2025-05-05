@@ -253,7 +253,7 @@
 "confirmFormMethod":"Method for confirm form",
 "connectionTitle":"Connection",
 "content":"Content",
-"contentSecurityPolicy":"Content security policy",
+"contentSecurityPolicy":"Content Pecurity Policy",
 "contextSwitching":"Switch context another user",
 "contextSwitchingAllowed2fModifications":"Allow 2FA modifications",
 "contextSwitchingHiddenAttributes":"Hidden attributes",
