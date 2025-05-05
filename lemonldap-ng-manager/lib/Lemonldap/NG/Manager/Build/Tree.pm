@@ -152,6 +152,7 @@ sub tree {
                         {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'authChoiceParam',     'authChoiceModules',
                                 'authChoiceAuthBasic', 'authChoiceFindUser',

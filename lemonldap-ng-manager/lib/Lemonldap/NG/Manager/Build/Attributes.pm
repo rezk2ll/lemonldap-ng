@@ -4593,6 +4593,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         authChoiceSelectOnly => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Automatically select only available choice',
         },
         authChoiceModules => {

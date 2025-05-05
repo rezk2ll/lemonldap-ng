@@ -543,7 +543,8 @@ sub attributes {
             'type'    => 'text'
         },
         'authChoiceSelectOnly' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'authentication' => {
             'default' => 'Demo',
