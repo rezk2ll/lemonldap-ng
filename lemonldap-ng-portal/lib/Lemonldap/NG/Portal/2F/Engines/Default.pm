@@ -562,7 +562,7 @@ sub _choice {
             reason       => "Token validation failed",
             portal_error => portalConsts->{$tokres},
         );
-        return $self->p->do( $req, [ sub { $tokres } ] );
+        return $self->p->doPE( $req, $tokres );
     }
 
     $req->sessionInfo($session);
@@ -590,8 +590,8 @@ sub _choice {
             return $self->p->do(
                 $req,
                 [
-                    sub { $res },  'controlUrl',
-                    'buildCookie', @{ $self->p->endAuth },
+                    [ returnPE => $res ], 'controlUrl',
+                    'buildCookie',        @{ $self->p->endAuth },
                 ]
             );
         }
@@ -605,7 +605,7 @@ sub _choice {
         portal_error => portalConsts->{PE_ERROR},
         type         => $ch,
     );
-    return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    return $self->p->doPE( $req, PE_ERROR );
 }
 
 sub _redirect {
@@ -863,7 +863,7 @@ sub continueLoginAfterRegistration {
     # Check if registration was done
     if ( !$req->sessionInfo->{_2f} ) {
         $self->logger->error("2FA registration was not completed");
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        return $self->p->doPE( $req, PE_ERROR );
     }
 
     # Else restore session
@@ -888,7 +888,7 @@ sub _continueLogin {
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);
-            return $self->p->do( $req, [ sub { $error } ] );
+            return $self->p->doPE( $req, $error );
         }
         $self->logger->debug("De-duplicate groups...");
         $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
@@ -935,7 +935,7 @@ sub _continueLogin {
             @{ $self->p->afterData },
             $self->p->validSession,
             @{ $self->p->endAuth },
-            sub { PE_OK }
+            [ returnPE => PE_OK ],
         ]
     );
 }
@@ -963,7 +963,7 @@ sub _verify {
             type         => $prefix,
             portal_error => portalConsts->{$tokres},
         );
-        return $self->p->do( $req, [ sub { $tokres } ] );
+        return $self->p->doPE( $req, $tokres );
     }
 
     my $user = $session->{ $self->conf->{whatToTrace} };
@@ -974,7 +974,7 @@ sub _verify {
           $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
         if ( $h != PE_OK ) {
             $req->noLoginDisplay(1);
-            return $self->p->do( $req, [ sub { $h } ] );
+            return $self->p->doPE( $req, $h );
         }
     }
 
@@ -999,7 +999,7 @@ sub _verify {
             $verify_result );
         if ( $h != PE_OK ) {
             $req->noLoginDisplay(1);
-            return $self->p->do( $req, [ sub { $h } ] );
+            return $self->p->doPE( $req, $h );
         }
     }
 
@@ -1030,7 +1030,7 @@ sub _verify {
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
         $req->sessionInfo->{'_2f'} = $prefix;
-        return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
+        return $self->p->do( $req, [ 'storeHistory', [ returnPE => $res ] ] );
     }
     elsif ($res) {
         $req->data->{_2fRetries} = (
@@ -1044,7 +1044,7 @@ sub _verify {
             my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
             if ( $h != PE_OK ) {
                 $req->noLoginDisplay(1);
-                return $self->p->do( $req, [ sub { $h } ] );
+                return $self->p->doPE( $req, $h );
             }
         }
 
@@ -1056,7 +1056,7 @@ sub _verify {
         my $res   = $module->run( $req, $token );
         $req->authResult($res);
 
-        return $self->p->do( $req, [ sub { $res } ] );
+        return $self->p->doPE( $req, $res );
     }
 
     # Else restore session

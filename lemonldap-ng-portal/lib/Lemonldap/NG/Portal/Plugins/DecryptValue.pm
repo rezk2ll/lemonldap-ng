@@ -47,8 +47,7 @@ sub display {
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
         $self->userLogger->warn('decryptValue service NOT authorized');
-        return $self->p->do( $req,
-            [ sub { PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED } ] );
+        return $self->p->doPE( $req, PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED );
     }
 
     # Display form
@@ -75,8 +74,7 @@ sub run {
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
         $self->userLogger->warn('decryptValue service NOT authorized');
-        return $self->p->do( $req,
-            [ sub { PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED } ] );
+        return $self->p->doPE( $req, PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED );
     }
 
     # Check token

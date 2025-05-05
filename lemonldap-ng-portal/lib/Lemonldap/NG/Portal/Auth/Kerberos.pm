@@ -217,7 +217,7 @@ sub _handle_ajax_response {
     }
     else {
         $req->wantErrorRender(1);
-        return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
+        return $self->p->doPE($req, PE_BADCREDENTIALS);
     }
 }
 

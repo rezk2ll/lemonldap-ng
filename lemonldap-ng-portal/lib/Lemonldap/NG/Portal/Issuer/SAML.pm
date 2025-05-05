@@ -2026,7 +2026,7 @@ sub sloServer {
 
         if ($session_index) {
             my $sessionIndexSession = $self->getSamlSession($session_index);
-            return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] )
+            return $self->p->doPE($req, PE_SESSIONEXPIRED)
               unless $sessionIndexSession;
 
             $local_session_id = $sessionIndexSession->data->{_saml_id};
@@ -2201,7 +2201,7 @@ sub sloServer {
             if ($savedInfo) {
                 $logoutContextSession->update( { info => $savedInfo } );
             }
-            return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+            return $self->p->doPE($req, PE_REDIRECT);
         }
 
         $req->info($savedInfo);

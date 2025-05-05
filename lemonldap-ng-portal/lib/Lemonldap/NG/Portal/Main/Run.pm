@@ -261,20 +261,29 @@ sub processRefreshSession {
     # Avoid interferences when refresh is run on multiple sessions
     # in the same request
     $req->sessionInfo( {} );
+
+    # Transmit refreshed session data to setRefreshedSessionData
+    $req->data->{refreshedSessionData} = \%data;
     $req->steps( [
-            'getUser',
-            @{ $self->betweenAuthAndData },
-            'setSessionInfo',
-            sub {
-                $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
-                $_[0]->refresh(1);
-                return PE_OK;
-            },
-            $self->groupsAndMacros,
-            'setLocalGroups',
+            'getUser',              @{ $self->betweenAuthAndData },
+            'setSessionInfo',       'setRefreshedSessionData',
+            $self->groupsAndMacros, 'setLocalGroups',
         ]
     );
-    return $self->process($req);
+    my $res = $self->process($req);
+    delete $req->data->{refreshedSessionData};
+
+    return $res;
+}
+
+sub setRefreshedSessionData {
+    my ( $self, $req ) = @_;
+    my %data = %{ $req->data->{refreshedSessionData} };
+
+    $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
+    $req->refresh(1);
+
+    return PE_OK;
 }
 
 sub refresh {
@@ -302,9 +311,9 @@ sub refresh {
             )
         );
         $req->urldc( $req->portal );
-        return $self->do( $req, [ sub { PE_INFO } ] );
+        return $self->doPE( $req, PE_INFO );
     }
-    return $self->do( $req, [ sub { PE_OK } ] );
+    return $self->doPE( $req, PE_OK );
 }
 
 sub logout {
@@ -324,7 +333,7 @@ sub unauthLogout {
     my ( $self, $req ) = @_;
     my $err = $self->_unauthLogout($req);
     return $self->do( $req,
-        [ 'controlUrl', sub { $err > 0 ? $err : PE_LOGOUT_OK } ] );
+        [ 'controlUrl', [ returnPE => ( $err > 0 ? $err : PE_LOGOUT_OK ) ] ] );
 }
 
 sub _unauthLogout {
@@ -442,6 +451,11 @@ sub do {
 # Utilities
 # ---------
 
+sub doPE {
+    my ( $self, $req, $res ) = @_;
+    return $self->do( $req, [ [ returnPE => $res ] ] );
+}
+
 sub getModule {
     my ( $self, $req, $type ) = @_;
     if ( my $val =
@@ -496,10 +510,11 @@ sub autoRedirect {
         if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
             $self->auditLog(
                 $req,
-                message  => "Redirection to $req->{urldc} blocked",
-                code     => "UNAUTHORIZED_REDIRECT",
-                url      => $req->{urldc},
-                user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+                message => "Redirection to $req->{urldc} blocked",
+                code    => "UNAUTHORIZED_REDIRECT",
+                url     => $req->{urldc},
+                user    => $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  || $req->user,
             );
             delete $req->{urldc};
         }
@@ -799,9 +814,9 @@ sub _deleteSession {
             message => (
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
-            code     => "LOGOUT",
-            user     => $user,
-            auth     => $mod,
+            code => "LOGOUT",
+            user => $user,
+            auth => $mod,
         );
     }
 
@@ -835,10 +850,11 @@ sub autoPost {
     if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
         $self->auditLog(
             $req,
-            message  => "Redirection to $req->{urldc} blocked",
-            code     => "UNAUTHORIZED_REDIRECT",
-            url      => $req->{urldc},
-            user     => $req->sessionInfo->{ $self->conf->{whatToTrace} } || $req->user,
+            message => "Redirection to $req->{urldc} blocked",
+            code    => "UNAUTHORIZED_REDIRECT",
+            url     => $req->{urldc},
+            user    => $req->sessionInfo->{ $self->conf->{whatToTrace} }
+              || $req->user,
         );
         return PE_BADURL;
     }

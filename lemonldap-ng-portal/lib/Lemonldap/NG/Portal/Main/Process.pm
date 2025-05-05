@@ -24,9 +24,22 @@ sub process {
     $req->env->{ipAddr} = $req->address;
     my $err    = PE_OK;
     my $nofail = delete $args{nofail};
+    if ( grep { ref $_ eq "CODE" } @{ $req->steps } ) {
+        $self->logger->debug(
+            "Warning: process pipeline contains non-serializable step");
+    }
     while ( my $sub = shift @{ $req->steps } ) {
         $nofail = 1 if $req->data->{nofail};
-        if ( ref $sub ) {
+        my @args_array;
+
+        # This lets you transmit arguments by storing
+        # [ "method_name", @args_array ] in steps
+        if ( ref($sub) eq "ARRAY" ) {
+            my $sub_name = shift @$sub;
+            @args_array = @$sub;
+            $sub        = $sub_name;
+        }
+        if ( ref $sub eq "CODE" ) {
             $self->logger->debug("Processing code ref");
             my $tmp = $sub->( $req, %args );
             if ($tmp) {
@@ -34,17 +47,31 @@ sub process {
                 last        unless $nofail and $err != PE_SENDRESPONSE;
             }
         }
-        else {
-            $self->logger->debug("Processing $sub");
-            if ( my $as = $self->aroundSub->{$sub} ) {
-                my $tmp = $as->( $req, %args );
+        elsif ( my ( $plugin, $callback ) = $sub =~ /(.*)::(.*)/ ) {
+            $self->logger->debug("Processing ${plugin}::${callback}");
+            my $plugin = $self->loadedModules->{$plugin};
+            if ( ref($plugin) ) {
+                my $tmp = $plugin->$callback( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
                 }
             }
             else {
-                my $tmp = $self->$sub( $req, %args );
+                $self->logger->error("Plugin $plugin is not loaded");
+            }
+        }
+        else {
+            $self->logger->debug("Processing $sub");
+            if ( my $as = $self->aroundSub->{$sub} ) {
+                my $tmp = $as->( $req, @args_array, %args );
+                if ($tmp) {
+                    $err = $tmp unless $err > 0;
+                    last        unless $nofail and $err != PE_SENDRESPONSE;
+                }
+            }
+            else {
+                my $tmp = $self->$sub( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
@@ -230,6 +257,36 @@ sub controlUrl {
     return PE_OK;
 }
 
+sub cleanPdata {
+    my ( $self, $req ) = @_;
+    my $tmp = $req->pdata->{keepPdata} //= [];
+    foreach my $k ( keys %{ $req->pdata } ) {
+        unless ( grep { $_ eq $k } @$tmp ) {
+            $self->logger->debug("Removing $k from pdata");
+            delete $req->pdata->{$k};
+        }
+    }
+    my $user_log    = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $auth_module = $req->{sessionInfo}->{_auth};
+    my $ipAddr      = $req->{sessionInfo}->{ipAddr};
+
+    if ($user_log) {
+        $self->auditLog(
+            $req,
+            message => (
+                "User " . $user_log . " connected from $auth_module ($ipAddr)"
+            ),
+            code => "LOGIN",
+            user => $user_log,
+        );
+    }
+    if (@$tmp) {
+        $self->logger->debug( 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
+        $req->pdata->{keepPdata} = $tmp;
+    }
+    return PE_OK;
+}
+
 sub checkLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
@@ -244,9 +301,15 @@ sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
         $self->_unauthLogout($req);
-        $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
+        $req->steps( [ 'controlUrl', [ returnPE => PE_LOGOUT_OK ] ] );
     }
     return PE_OK;
+}
+
+sub returnPE {
+    my ( $self, $req, $code ) = @_;
+
+    return $code;
 }
 
 sub eventLogout {
@@ -280,7 +343,7 @@ sub checkCancel {
     if ( $req->param('cancel') ) {
         $self->logger->debug('Cancel called, run authCancel calls');
         $req->mustRedirect(1);
-        $req->steps( [ @{ $self->authCancel }, sub { PE_OK } ] );
+        $req->steps( [ @{ $self->authCancel }, [ returnPE => PE_OK ] ] );
         return PE_OK;
     }
     return PE_OK;
@@ -331,7 +394,9 @@ sub deleteSession {
     }
 
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
+    if ( $req->data->{logoutServices}
+        and %{ $req->data->{logoutServices} } )
+    {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
@@ -381,6 +446,10 @@ sub deleteSession {
         $req->steps( [] );
         return PE_OK;
     }
+
+    # You can use the _continueLogout variable to continue the current flow
+    # after deleteSession
+    return PE_OK if $req->data->{_continueLogout};
 
     # Else display "error"
     return PE_LOGOUT_OK;
@@ -479,7 +548,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      [ returnPE => PE_BADCREDENTIALS ],
         ]
     );
 
