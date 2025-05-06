@@ -3,6 +3,22 @@ use ExtUtils::MakeMaker;
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
+
+# Autodiscover needed man1 files
+opendir D, 'scripts' or die $!;
+my $man1 = {};
+while ( my $file = readdir D ) {
+    next if $file =~ /^\./;
+    open my $fh, '<', "scripts/$file" or die $!;
+    while (<$fh>) {
+        print STDERR "Debug $_";
+        if (/^=head1/) {
+            $man1->{"scripts/$file"} = "blib/man1/$file.1p";
+            last;
+        }
+    }
+}
+
 WriteMakefile(
     NAME         => 'Lemonldap::NG::Portal',
     VERSION_FROM => 'lib/Lemonldap/NG/Portal.pm',
@@ -102,4 +118,5 @@ WriteMakefile(
           )
         : ()
     ),
+    MAN1PODS => $man1,
 );
