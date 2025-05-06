@@ -20,6 +20,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 import sphinx_bootstrap_theme
+import datetime
 import os
 
 # -- General configuration ------------------------------------------------
@@ -50,7 +51,7 @@ master_doc = 'start'
 
 # General information about the project.
 project = u'LemonLDAP::NG'
-copyright = u'2022, LemonLDAP::NG'
+copyright = u'2004-'+ str(datetime.datetime.now().year) + u', LemonLDAP::NG'
 author = u'LemonLDAP::NG'
 
 # The version info for the project you're documenting, acts as replacement for
