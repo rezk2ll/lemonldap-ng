@@ -104,6 +104,7 @@ Options:
  -cfgNum NUM                  : set new configuration number (requires -force 1)
  -sep CHAR                    : separator of hierarchical values (by default: /)
  -iniFile FILE                : path to an alternate lemonldap-ng.ini file
+ -json                        : print result in JSON format
 
 Additional options:
 
@@ -284,6 +285,10 @@ Run the script under the I<USER> system user identity
 =item B<-g I<GROUP>, --group=I<GROUP>>
 
 Run the script under the I<GROUP> system group identity
+
+=item B<-json>
+
+Display result in JSON format
 
 =back
 
