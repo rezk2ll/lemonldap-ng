@@ -40,7 +40,7 @@ has localConf => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr } );
 has json      => ( is => 'rw' );
 has jsonConverter => (
     is      => 'rw',
-    default => sub { JSON->new->canonical->pretty },
+    default => sub { JSON->new->allow_nonref->canonical->pretty },
 );
 
 sub get {

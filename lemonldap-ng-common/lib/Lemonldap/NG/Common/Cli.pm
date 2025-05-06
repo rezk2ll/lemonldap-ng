@@ -43,7 +43,7 @@ sub info {
     $conf->{cfgDate}     ||= 0;
     $conf->{cfgLog}      ||= "No log provided";
     if ( $self->json ) {
-        print JSON->new->pretty->encode( {
+        print JSON->new->pretty->allow_nonref->encode( {
                 num      => $conf->{cfgNum},
                 author   => $conf->{cfgAuthor},
                 authorIP => $conf->{cfgAuthorIP},
@@ -81,13 +81,8 @@ sub testEmail {
     eval {
         Lemonldap::NG::Common::EmailTransport::sendTestMail( $conf, $dest );
     };
-    my $error = $@;
-    if ($error) {
-        die $error;
-    }
-    else {
-        print STDERR "Test email successfully sent to $dest\n";
-    }
+    die $@ if $@;
+    print STDERR "Test email successfully sent to $dest\n";
 }
 
 sub run {
@@ -95,7 +90,7 @@ sub run {
 
     # Options simply call corresponding accessor
     my $args = {};
-    my @REST;
+    my @ARGS2;
     for ( my $i = 0 ; $i < @_ ; $i++ ) {
         if ( $_[$i] =~ s/^--?// ) {
             my $k    = $_[$i];
@@ -112,10 +107,10 @@ sub run {
             }
         }
         else {
-            push @REST, $_[$i];
+            push @ARGS2, $_[$i];
         }
     }
-    @_ = @REST;
+    @_ = @ARGS2;
     unless ( ref $self ) {
         $self = $self->new($args);
     }
