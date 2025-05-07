@@ -11,10 +11,6 @@
   <TMPL_INCLUDE NAME="impersonation.tpl">
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
-  <div class="btn btn-success webauthnclick" role="button" id="webauthnbutton">
-    <span class="fa fa-sign-in"></span>
-    <span trspan="connect">Connect</span>
-  </div>
 
 </div>
 
