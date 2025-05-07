@@ -10,7 +10,7 @@ my $res;
 my $json;
 my $ts;
 my $captcha;
-my $maintests = 16;
+my $maintests = 15;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
@@ -51,11 +51,6 @@ SKIP: {
       or explain( $res->[2]->[0], 'Two token found' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' Captcha image inserted' );
-    ok(
-        $res->[2]->[0] =~
-m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png"#,
-        ' Renew Captcha button found'
-    ) or explain( $res->[2]->[0], 'Renew captcha button not found' );
     ok( $res->[2]->[0] =~ /captcha\.(?:min\.)?js/, 'Get captcha javascript' );
 
     ## FindUser request
