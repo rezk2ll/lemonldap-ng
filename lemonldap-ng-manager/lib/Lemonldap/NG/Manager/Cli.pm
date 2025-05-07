@@ -664,9 +664,9 @@ sub _save {
     my $langFile = $self->mgr->templateDir . "/languages/en.json";
     $langFile =~ s/templates/static/;
     my $langMessages;
-    if ( open my $json, "<", $langFile ) {
+    if ( open my $_json, "<", $langFile ) {
         local $/ = undef;
-        $langMessages = $self->json->decode(<$json>);
+        $langMessages = $self->json->decode(<$_json>);
     }
 
     # Display result
