@@ -74,8 +74,9 @@ LWP::Protocol::PSGI->register(
                 '  Execute request'
             );
         }
-        ok( $res->[0] == 200, '  Response is 200' );
-        if ( $url !~ /(?:blogout|oidcTokenRevoke)/ ) {
+        ok( $res->[0] == 200, '  Response is 200' )
+          or explain( $res->[0], 200 );
+        if ( $url !~ /(?:blogout|admintokenrevoke)/ ) {
             ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
                 '  Content is JSON' )
               or explain( $res->[1], 'Content-Type => application/json' );
@@ -260,8 +261,7 @@ clean_sessions();
 done_testing();
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -277,7 +277,7 @@ sub op {
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
-                restOidcRevokeSecret                  => 'qwertyui',
+                adminLogoutServerSecret                  => 'qwertyui',
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
@@ -319,8 +319,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

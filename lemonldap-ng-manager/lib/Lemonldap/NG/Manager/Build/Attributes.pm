@@ -2790,7 +2790,7 @@ sub attributes {
         },
 
         # OIDC revoke token Plugin
-        restOidcRevokeSecret => {
+        adminLogoutServerSecret => {
             type          => 'text',
             documentation => 'REST OIDC token revocation secret',
         },

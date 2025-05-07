@@ -123,6 +123,7 @@ lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
+lib/Lemonldap/NG/Portal/Plugins/AdminLogout.pm
 lib/Lemonldap/NG/Portal/Plugins/AuthOidcPkce.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BasePasswordPolicy.pm
@@ -150,7 +151,6 @@ lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
-lib/Lemonldap/NG/Portal/Plugins/OIDCRevokeServer.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
@@ -406,6 +406,7 @@ site/htdocs/static/common/modules/CustomAuth.png
 site/htdocs/static/common/modules/Facebook.png
 site/htdocs/static/common/modules/GitHub.png
 site/htdocs/static/common/modules/Google.png
+site/htdocs/static/common/modules/GPG.png
 site/htdocs/static/common/modules/Kerberos.png
 site/htdocs/static/common/modules/LinkedIn.png
 site/htdocs/static/common/modules/OpenIDConnect.png

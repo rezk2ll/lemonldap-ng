@@ -47,7 +47,7 @@ our @pList = (
     locationDetect       => '::Plugins::LocationDetect',
     globalLogoutRule     => '::Plugins::GlobalLogout',
     samlFederationFiles  => '::Plugins::SamlFederation',
-    restOidcRevokeSecret => '::Plugins::OIDCRevokeServer',
+    adminLogoutServerSecret => '::Plugins::AdminLogout',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
       '::Plugins::OIDCNativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>

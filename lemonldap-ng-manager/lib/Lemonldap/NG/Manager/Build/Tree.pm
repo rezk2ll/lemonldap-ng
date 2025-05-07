@@ -970,8 +970,8 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'restOidcRevoke',
-                            nodes => [ 'restOidcRevokeSecret' ]
+                            title => 'adminLogoutServer',
+                            nodes => [ 'adminLogoutServerSecret' ]
                         },
                     ]
                 },

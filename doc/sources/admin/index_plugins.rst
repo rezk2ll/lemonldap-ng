@@ -5,6 +5,7 @@ Plugins
    :maxdepth: 1
 
    adaptativeauthenticationlevel
+   adminlogout
    autosignin
    bruteforceprotection
    cda
@@ -25,7 +26,6 @@ Plugins
    locationdetect
    loginhistory
    notifications
-   oidcrevokeserver
    public_pages
    refreshsessionapi
    rememberauthchoice

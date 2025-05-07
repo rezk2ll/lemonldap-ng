@@ -69,7 +69,7 @@ sub init {
     $self->{hiddenAttributes} //= '_password';
     $self->{hiddenAttributes} .= ' _session_id'
       unless $conf->{displaySessionId};
-    $self->{tokenRevokeSecret} = $conf->{restOidcRevokeSecret};
+    $self->{tokenRevokeSecret} = $conf->{adminLogoutServerSecret};
     return 1;
 }
 
@@ -106,40 +106,39 @@ sub userLogout {
                 @keys = keys %$sessions;
                 foreach my $sid (@keys) {
                     my $kind = $sessions->{$sid}->{_session_kind};
-                    my $lreq =
-                      HTTP::Request->new( GET => "$self->{portal}?logout=1" );
-                    my $pl;
-                    if ( $kind eq 'SSO' ) {
-                        $lreq->header( Cookie => "$self->{cookieName}=$sid" );
-                        $pl = 1;
-                    }
-                    elsif ( $kind eq 'OIDCI'
-                        and $self->{tokenRevokeSecret}
-                        and $sessions->{$sid}->{_type} eq 'refresh_token' )
+                    if (
+                        $self->{tokenRevokeSecret}
+                        and (
+                            $kind eq 'SSO'
+                            or (    $kind eq 'OIDCI'
+                                and $sessions->{$sid}->{_type} eq
+                                'refresh_token' )
+                        )
+                      )
                     {
+                        my $type =
+                          $kind eq 'SSO' ? 'SSO' : $sessions->{$sid}->{_type};
                         my $s = build_urlencoded(
-                            token_hint => $sessions->{$sid}->{_type},
+                            token_hint => $type,
                             token      => $sid,
                             raw        => 1,
                         );
-                        $lreq = HTTP::Request->new(
-                            POST => "$self->{portal}/oidcTokenRevoke",
+                        my $lreq = HTTP::Request->new(
+                            POST => "$self->{portal}/admintokenrevoke",
                             [
                                 Authorization =>
                                   "Bearer $self->{tokenRevokeSecret}",
                                 'Content-Length' => length($s),
                                 'Content-Type'   =>
-                                  'application/x-www-form-urlencoded'
+                                  'application/x-www-form-urlencoded',
+                                Accept => 'application/json',
                             ],
                             $s
                         );
-                        $pl = 1;
-                    }
-                    if ($pl) {
                         my $resp = $self->ua->request($lreq);
                         if ( $resp->is_success ) {
                             $self->logger->info(
-                                "Session $sid deleted by portal");
+                                "Session $type/$sid deleted by portal");
                         }
                         else {
                             $self->logger->error(

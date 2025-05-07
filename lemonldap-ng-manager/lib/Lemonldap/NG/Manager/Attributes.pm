@@ -298,6 +298,9 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
+        'adminLogoutServerSecret' => {
+            'type' => 'text'
+        },
         'ADPwdExpireWarning' => {
             'default' => 0,
             'type'    => 'int'
@@ -4422,9 +4425,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'restFindUserDBUrl' => {
             'type' => 'url'
-        },
-        'restOidcRevokeSecret' => {
-            'type' => 'text'
         },
         'restPasswordServer' => {
             'default' => 0,
