@@ -6,7 +6,7 @@ our $pubsubToken = 'aazz';
 
 my $pubsub;
 
-my $level = $ENV{LLNGLOGLEVEL} || 'error';
+my $level = ($ENV{LLNGLOGLEVEL} ||= 'error');
 
 sub startPubsub {
     $pubsub = start [

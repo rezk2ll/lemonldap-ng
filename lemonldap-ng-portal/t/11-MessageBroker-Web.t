@@ -109,6 +109,32 @@ SKIP: {
         expectOK($res);
     };
 
+    # Test to verify that subscribe channels are kept after Redis restart
+    # from pub/sub
+    subtest "Reconnect after server crash" => sub {
+        my $id = $client->login('dwho');
+        &stopPubsub;
+        &startPubsub;
+        my $res;
+        Time::Fake->offset('+24s');
+        ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
+            'Reinit websocket connection' );
+        expectAuthenticatedAs( $res, 'dwho' );
+        ok(
+            unlink(
+                $client->ini->{globalStorageOptions}->{Directory} . '/'
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+            ),
+            'Delete session from global storage'
+        );
+        my $sd = $client->ini->{globalStorageOptions}->{Directory};
+        note "Push unlog event";
+        $pub->publish( 'llng_events', { action => 'unlog', id => $id } );
+        Time::Fake->offset('+30s');
+        ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
+            'Try / after 6 seconds' );
+        expectReject($res);
+    };
     eval { &stopPubsub };
 }
 
