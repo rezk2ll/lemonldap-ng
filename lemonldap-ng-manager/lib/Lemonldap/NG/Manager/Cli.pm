@@ -103,7 +103,7 @@ sub set {
                 die "$key seems to be a hash, modification refused";
             }
         }
-        elsif ( $pairs{$key} =~ /\{\[/ ) {
+        elsif ( $pairs{$key} =~ /^\s*[\{\[]/ ) {
             $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
             if ($@) {
                 warn "Unable to decode: $pairs{$key}";

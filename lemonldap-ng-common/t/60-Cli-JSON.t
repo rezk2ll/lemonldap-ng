@@ -63,7 +63,7 @@ EOF
         );
         chomp $str;
         my $json;
-        ok( $json = eval { JSON::from_json($str) }, 'Valid JSON response' )
+        ok( $json = eval { JSON::from_json("[$str]")->[0] }, 'Valid JSON response' )
           or diag($@);
         $test->($json);
         ok( $test->($json), "$name result matches" ) or diag "$str";
