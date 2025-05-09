@@ -2344,11 +2344,12 @@ sub introspection {
                 active    => JSON::true,
                 aud       => $self->getAudiences( $oidcSession->data->{rp} ),
                 client_id => $oidcSession->{data}->{client_id},
-                exp   => $oidcSession->data->{_utime} + $self->conf->{timeout},
-                iat   => $oidcSession->data->{iat},
-                iss   => $self->get_issuer($req),
-                nbf   => $oidcSession->data->{nbf},
-                scope => $oidcSession->{data}->{scope},
+                exp       =>
+                  int( $oidcSession->data->{_utime} + $self->conf->{timeout} ),
+                iat        => int( $oidcSession->data->{iat} ),
+                iss        => $self->get_issuer($req),
+                nbf        => int( $oidcSession->data->{nbf} ),
+                scope      => $oidcSession->{data}->{scope},
                 token_type => 'bearer',
 
                 # The ID attribute we choose is the one of the calling
@@ -2359,7 +2360,7 @@ sub introspection {
             foreach ( keys %$response ) {
                 delete $response->{$_}
                   unless defined $response->{$_}
-                  and length( $response->{$_} ) > 0;
+                  and $response->{$_} || length( $response->{$_} ) > 0;
             }
         }
         else {
