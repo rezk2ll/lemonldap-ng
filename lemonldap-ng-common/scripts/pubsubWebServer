@@ -57,13 +57,6 @@ if ($help) {
 
 &daemonize if $daemon;
 
-if ( $accessLog and $accessLog ne '-' ) {
-    open STDOUT, '>>', $accessLog or die "Unable to write logs: $!";
-    if ($daemon) {
-        open STDERR, '>&', fileno(STDOUT) or die "Can't dup STDERR: $!";
-    }
-}
-
 sub debug {
     print STDERR map { "$_\n" } @_ if $_debug;
 }
@@ -80,8 +73,22 @@ sub printWebLog {
     return if $quiet and !$accessLog;
     my ( $msg, $ip ) = @_;
     my $date = strftime( "[%d/%b/%Y:%H:%M:%S %z]", localtime );
-    print "$ip - - $date $msg -\n";
+    my $log  = "$ip - - $date $msg -\n";
+    if ( $accessLog eq 'STDERR' ) {
+        print STDERR $log;
+    }
+    else {
+        print $log;
+    }
     debug "Request: $msg";
+}
+
+if ( $accessLog and $accessLog ne '-' and $accessLog ne 'STDERR' ) {
+    debug "Access logs will be written into $accessLog\n";
+    open STDOUT, '>>', $accessLog or die "Unable to write logs: $!";
+    if ($daemon) {
+        open STDERR, '>&', fileno(STDOUT) or die "Can't dup STDERR: $!";
+    }
 }
 
 if ( $cert xor $key ) {
