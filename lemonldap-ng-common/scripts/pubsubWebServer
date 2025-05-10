@@ -4,7 +4,7 @@ use strict;
 use Getopt::Long;
 use IO::Select;
 use JSON;
-use POSIX qw(strftime setsid);
+use POSIX qw(strftime setsid setuid setgid);
 use Protocol::WebSocket::Handshake::Server;
 use Protocol::WebSocket::Frame;
 use Socket;
@@ -12,39 +12,43 @@ use URI;
 
 # 1. Parse options
 
-my ( $token, $port, $addr, $cert, $key, $maxRequestSize, $maxRequestTime,
-    $_debug, $quiet, $daemon, $accessLog, $pidFile, $help );
+my ( $accessLog, $addr, $cert, $daemon, $_debug, $group, $help, $key,
+    $maxRequestSize, $maxRequestTime, $quiet, $pidFile, $port, $token, $user );
 
 # HTTP header separator
 use constant HS => qr/(?:\r?\n){2}/;
 
 GetOptions(
-    'token=s'            => \$token,
-    'port=s'             => \$port,
-    'addr=s'             => \$addr,
+    'access-log=s'       => \$accessLog,
+    'addr|a=s'           => \$addr,
     'cert=s'             => \$cert,
+    'daemon'             => \$daemon,
+    'debug|d'            => \$_debug,
+    'group|g=s'          => \$group,
+    'help|h'             => \$help,
     'key=s'              => \$key,
     'max-request-size=s' => \$maxRequestSize,
     'max-request-time=s' => \$maxRequestTime,
-    'debug'              => \$_debug,
-    'quiet'              => \$quiet,
-    'daemon'             => \$daemon,
-    'access-log=s'       => \$accessLog,
+    'quiet|q'            => \$quiet,
     'pid-file=s'         => \$pidFile,
-    'help|h'             => \$help,
+    'port|p=s'           => \$port,
+    'token=s'            => \$token,
+    'user|u=s'           => \$user,
 );
 
+$accessLog      ||= $ENV{PUBSUB_ACCESS_LOG};
 $addr           ||= $ENV{PUBSUB_ADDR};
-$token          ||= $ENV{PUBSUB_TOKEN};
 $cert           ||= $ENV{PUBSUB_CERT};
+$daemon         ||= $ENV{PUBSUB_DAEMON};
+$_debug         ||= $ENV{PUBSUB_DEBUG};
+$group          ||= $ENV{PUBSUB_GROUP};
 $key            ||= $ENV{PUBSUB_KEY};
 $maxRequestSize ||= $ENV{PUBSUB_MAX_REQUEST_SIZE} || 8192;
 $maxRequestTime ||= $ENV{PUBSUB_MAX_REQUEST_TIME} || 5;
-$_debug         ||= $ENV{PUBSUB_DEBUG};
-$quiet          ||= $ENV{PUBSUB_QUIET};
-$accessLog      ||= $ENV{PUBSUG_ACCESS_LOG};
-$daemon         ||= $ENV{PUBSUB_DAEMON};
 $pidFile        ||= $ENV{PUBSUB_PID_FILE};
+$quiet          ||= $ENV{PUBSUB_QUIET};
+$token          ||= $ENV{PUBSUB_TOKEN};
+$user           ||= $ENV{PUBSUB_USER};
 
 if ($help) {
     require Pod::Usage;
@@ -118,6 +122,16 @@ else {
 }
 
 die "Cannot create socket: $!" unless $server;
+
+if ($group) {
+    my $grp = getgrnam($group) or die "Can't change gid to $group";
+    setgid($grp)               or die "setgid: $!";
+}
+
+if ($user) {
+    my $uid = getpwnam($user) or die "Can't change uid to $user";
+    setuid($uid)              or die "setuid: $!";
+}
 
 my $json     = JSON->new->utf8;
 my $selector = IO::Select->new;
@@ -281,7 +295,8 @@ sub sendHttp {
     my ( $sock, $code, $status, $body, $request ) = @_;
     my $ip  = getIp($sock);
     my $len = length($body);
-    my $resp = "HTTP/1.1 $code $status\r\n"
+    my $resp =
+        "HTTP/1.1 $code $status\r\n"
       . "Content-Type: text/plain\r\n"
       . "Content-Length: $len\r\n"
       . "Connection: close\r\n\r\n"
@@ -407,6 +422,36 @@ Environment variable: B<PUBSUB_MAX_REQUEST_TIME>
 
 =back
 
+=head3 Server options
+
+=over
+
+=item * B<--daemon>
+
+Daemonize the server.
+
+Environment variable: B<PUBSUB_DAEMON>
+
+=item * B<--pid-file E<lt>valueE<gt>>
+
+When B<--daemon> is set, write the processus number into the given file.
+
+Environment variable: B<PUBSUB_PID_FILE>
+
+=item * B<--user> E<lt>valueE<gt>>
+
+Change uid to the given value after opening socket.
+
+Environment variable: B<PUBSUB_USER>
+
+=item * B<--group> E<lt>valueE<gt>>
+
+Change gid to the given value after opening socket.
+
+Environment variable: B<PUBSUB_GROUP>
+
+=back
+
 =head3 Logging options
 
 =over
@@ -432,21 +477,9 @@ Environment variable: B<PUBSUG_ACCESS_LOG>
 
 =back
 
-=head3 Server options
+=head3 Other
 
 =over
-
-=item * B<--daemon>
-
-Daemonize the server.
-
-Environment variable: B<PUBSUB_DAEMON>
-
-=item * B<--pid-file E<lt>valueE<gt>>
-
-When B<--daemon> is set, write the processus number into the given file.
-
-Environment variable: B<PUBSUB_PID_FILE>
 
 =item * B<--help>
 
