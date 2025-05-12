@@ -18,6 +18,7 @@ RUN cpanm "Perl::Tidy@$(make tidyversion)"
 WORKDIR /app/
 
 ENV PERL5LIB="/app/lemonldap-ng-common/blib/lib/:/app/lemonldap-ng-handler/blib/lib/:/app/lemonldap-ng-portal/blib/lib/:/app/lemonldap-ng-manager/blib/lib/"
+ENV LLNG_DEFAULTCONFFILE="/app/dev/lemonldap-ng.ini"
 
 # Install & configure client apps
 RUN apt-get update && \
