@@ -802,7 +802,7 @@ install_uwsgi_server:
 
 # Site install
 
-install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
+install_site:	install_bin install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
 	# Site install
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
