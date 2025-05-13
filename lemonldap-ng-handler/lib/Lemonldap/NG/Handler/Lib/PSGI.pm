@@ -104,6 +104,9 @@ sub reload {
 # response is 200.
 sub _authAndTrace {
     my ( $self, $req, $noCall ) = @_;
+    unless ( eval { $self->api->tsv->{portal} } ) {
+        $self->api->checkConf(1);
+    }
 
     # TODO: handle types
     my $type = $self->api->checkType($req);

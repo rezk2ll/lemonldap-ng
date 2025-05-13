@@ -610,6 +610,7 @@ t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
 t/05-Hashed-Session.t
+t/06-Missing-conf.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
 t/11-MessageBroker-Logout.t
