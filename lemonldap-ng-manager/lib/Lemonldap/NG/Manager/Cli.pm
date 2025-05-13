@@ -687,7 +687,7 @@ sub run {
     my $args = {};
     my @REST;
     for ( my $i = 0 ; $i < @_ ; $i++ ) {
-        if ( $_[$i] =~ s/^--?// ) {
+        if ( $_[$i] =~ s/^--?(\w)/$1/ ) {
             my $k    = $_[$i];
             my $bool = ( $k =~ booleanOptions );
             my $v    = $bool ? 1 : $_[ $i + 1 ];
