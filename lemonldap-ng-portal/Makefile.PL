@@ -11,7 +11,6 @@ while ( my $file = readdir D ) {
     next if $file =~ /^\./;
     open my $fh, '<', "scripts/$file" or die $!;
     while (<$fh>) {
-        print STDERR "Debug $_";
         if (/^=head1/) {
             $man1->{"scripts/$file"} = "blib/man1/$file.1p";
             last;
