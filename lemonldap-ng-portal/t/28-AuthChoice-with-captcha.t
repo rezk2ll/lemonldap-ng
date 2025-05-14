@@ -6,14 +6,13 @@ use strict;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 15;
+my $maintests = 18;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
         skip 'Image::Magick not found', $maintests;
     }
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
@@ -25,6 +24,7 @@ SKIP: {
                 authChoiceModules     => {
                     '1_demo' => 'Demo;Demo;Null',
                     '2_ssl'  => 'SSL;Demo;Null',
+                    '3_gpg'  => 'GPG;Demo;Demo'
                 },
             }
         }
@@ -33,6 +33,9 @@ SKIP: {
     # Try to authenticate with an unknown user
     # -------------------
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
+    ok( $res->[2]->[0] =~ /1_demo/, '1_demo displayed' );
+    ok( $res->[2]->[0] =~ /2_ssl/,  '2_ssl displayed' );
+    ok( $res->[2]->[0] !~ /3_gpg/,  '3_gpg not displayed' );
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'token' );
 
