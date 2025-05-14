@@ -300,7 +300,7 @@
 "customRegister":"自訂註冊模組",
 "customResetCertByMail":"自訂 certificateResetByMail 模組",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"自訂使用者資料庫模組",
+"customUserDB":"Custom users module",
 "databaseLocked":"資料庫被另一個處理程序鎖定",
 "date":"日期",
 "dateTitle":"日期",

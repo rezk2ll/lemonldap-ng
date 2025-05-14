@@ -300,7 +300,7 @@
 "customRegister":"Пользовательский модуль регистрации",
 "customResetCertByMail":"Пользовательский модуль certificateResetByMail",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Пользовательский модуль БД",
+"customUserDB":"Custom users module",
 "databaseLocked":"База данных заблокирована другим процессом",
 "date":"Дата",
 "dateTitle":"Даты",

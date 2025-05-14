@@ -300,7 +300,7 @@
 "customRegister":"Module đăng ký tùy chỉnh",
 "customResetCertByMail":"Tùy chỉnh mô-đun certificateResetByMail",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Mô đun DB người dùng tùy chỉnh",
+"customUserDB":"Custom users module",
 "databaseLocked":"Cơ sở dữ liệu bị khóa bởi một tiến trình khác",
 "date":"Ngày",
 "dateTitle":"Ngày",

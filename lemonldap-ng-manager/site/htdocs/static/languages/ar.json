@@ -300,7 +300,7 @@
 "customRegister":"وحدة تسجيل مخصص",
 "customResetCertByMail":"Custom certificateResetByMail module",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"وحدة قاعدة البيانات المخصصة",
+"customUserDB":"Custom users module",
 "databaseLocked":"قاعدة البيانات مقفلة بواسطة مُعَالَج آخر",
 "date":"تاريخ",
 "dateTitle":"تاريخ",

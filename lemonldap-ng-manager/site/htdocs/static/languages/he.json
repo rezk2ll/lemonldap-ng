@@ -300,7 +300,7 @@
 "customRegister":"Custom register module",
 "customResetCertByMail":"Custom certificateResetByMail module",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Custom user DB module",
+"customUserDB":"Custom users module",
 "databaseLocked":"מסד הנתונים ננעל על ידי תהליך אחר",
 "date":"תאריך",
 "dateTitle":"תאריכים",

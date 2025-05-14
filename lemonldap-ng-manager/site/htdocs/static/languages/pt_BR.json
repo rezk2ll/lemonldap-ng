@@ -300,7 +300,7 @@
 "customRegister":"Módulo de registro personalizado",
 "customResetCertByMail":"Módulo certificateResetByMail personalizado",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Módulo personalizado user DB",
+"customUserDB":"Custom users module",
 "databaseLocked":"Banco de dados travado por outro processo",
 "date":"Data",
 "dateTitle":"Datas",

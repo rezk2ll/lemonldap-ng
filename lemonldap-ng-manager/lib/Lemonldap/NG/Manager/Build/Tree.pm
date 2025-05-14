@@ -471,6 +471,7 @@ sub tree {
                         {
                             title => 'customParams',
                             help  => 'authcustom.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'customAuth',            'customUserDB',
                                 'customPassword',        'customRegister',
@@ -961,6 +962,7 @@ sub tree {
                         {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html#plugin-options',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'customPlugins', 'customPluginsParams',
                                 'disabledPlugins'

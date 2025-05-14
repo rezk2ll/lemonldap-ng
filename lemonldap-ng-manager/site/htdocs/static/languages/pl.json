@@ -300,7 +300,7 @@
 "customRegister":"Niestandardowy moduł rejestru",
 "customResetCertByMail":"Niestandardowy moduł CertificateResetByMail",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Niestandardowy moduł DB użytkownika",
+"customUserDB":"Custom users module",
 "databaseLocked":"Baza danych zablokowana przez inny proces",
 "date":"Data",
 "dateTitle":"Daty",

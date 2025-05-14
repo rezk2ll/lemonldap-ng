@@ -300,7 +300,7 @@
 "customRegister":"Özelleştirilmiş kayıt modülü",
 "customResetCertByMail":"Özelleştirilmiş certificateResetByMail modülü",
 "customToTrace":"REMOTE_CUSTOM",
-"customUserDB":"Özelleştirilmiş kullanıcı veri tabanı modülü",
+"customUserDB":"Custom users module",
 "databaseLocked":"Veri tabanı başka bir işlem tarafından kilitlendi",
 "date":"Tarih",
 "dateTitle":"Tarihler",
