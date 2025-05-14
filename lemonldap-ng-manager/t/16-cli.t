@@ -13,18 +13,14 @@ use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
 &cleanConfFiles;
 
-my $confDir = tempdir( CLEANUP => 1);
-copy('t/conf/lmConf-1.json', $confDir);
-copy('t/lemonldap-ng-cli.ini', $confDir);
-# Change the llng config file so it uses the temp dir as the confDir for test isolation
-confPlaceHolder("$confDir/lemonldap-ng-cli.ini", $confDir);
-
 sub llclient {
-    return Lemonldap::NG::Manager::Cli->new( iniFile => "$confDir/lemonldap-ng-cli.ini" );
+    return Lemonldap::NG::Manager::Cli->new(
+        iniFile => "$main::tmpdir/lemonldap-ng.ini" );
 }
 
 sub llcommonClient {
-    return Lemonldap::NG::Common::Cli->new( iniFile => "$confDir/lemonldap-ng-cli.ini" );
+    return Lemonldap::NG::Common::Cli->new(
+        iniFile => "$main::tmpdir/lemonldap-ng.ini" );
 }
 
 my @cmd;
@@ -147,7 +143,7 @@ done_testing( count() );
 
 sub cleanConfFiles {
     foreach ( 2 .. $tests - 3 ) {
-        unlink "t/conf/lmConf-$_.json";
+        unlink "$main::tmpdir/conf/lmConf-$_.json";
     }
 }
 
@@ -167,19 +163,4 @@ sub genConfFiles {
     for my $config (@configsToStore) {
         $clientConfAcc->store( $config );
     }
-}
-
-# Fill the placeholder value for confDir with the proper value i.e. the temp dir
-sub confPlaceHolder {
-    my ($file, $confDir) = @_;
-    rename($file, $file . '.bak');
-    open(IN, '<' . $file . '.bak') or die $!;
-    open(OUT, '>' . $file) or die $!;
-    while(<IN>)
-    {
-        $_ =~ s/__CONFDIR__/$confDir/;
-        print OUT $_;
-    }
-    close(IN);
-    close(OUT);
 }
