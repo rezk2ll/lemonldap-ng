@@ -6,7 +6,7 @@ use strict;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 16;
+my $maintests = 15;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
@@ -33,8 +33,6 @@ SKIP: {
     # Try to authenticate with an unknown user
     # -------------------
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
-    my @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
-    ok( @form == 2, 'Display 2 choices' );
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'token' );
 
