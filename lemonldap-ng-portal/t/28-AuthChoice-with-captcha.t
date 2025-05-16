@@ -7,13 +7,13 @@ require 't/test-lib.pm';
 
 my $res;
 my $maintests = 15;
+
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
         skip 'Image::Magick not found', $maintests;
     }
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
@@ -102,6 +102,7 @@ SKIP: {
     my $id = expectCookie($res);
     $client->logout($id);
 }
+
 count($maintests);
 clean_sessions();
 done_testing( count() );
