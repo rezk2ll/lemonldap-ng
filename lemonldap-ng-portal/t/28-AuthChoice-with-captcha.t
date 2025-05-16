@@ -7,6 +7,7 @@ require 't/test-lib.pm';
 
 my $res;
 my $maintests = 15;
+
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
@@ -24,7 +25,6 @@ SKIP: {
                 authChoiceModules     => {
                     '1_demo' => 'Demo;Demo;Null',
                     '2_ssl'  => 'SSL;Demo;Null',
-                    '0_gpg'  => 'GPG;Demo;Demo'
                 },
             }
         }
@@ -102,6 +102,7 @@ SKIP: {
     my $id = expectCookie($res);
     $client->logout($id);
 }
+
 count($maintests);
 clean_sessions();
 done_testing( count() );
