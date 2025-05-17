@@ -11,6 +11,14 @@
   <TMPL_INCLUDE NAME="impersonation.tpl">
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
+  <div class="btn btn-success webauthnclick" role="button" id="webauthnbutton">
+    <span class="fa fa-sign-in"></span>
+    <span trspan="connect">Connect</span>
+  </div>
+  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-secondary" role="button">
+    <span class="fa fa-home"></span>
+    <span trspan="cancel">Cancel</span>
+  </a>
 
 </div>
 
