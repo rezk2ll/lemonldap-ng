@@ -1,4 +1,5 @@
 Changes
+eg/pubsubWebServer
 lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
@@ -98,7 +99,6 @@ scripts/importMetadata
 scripts/lemonldap-ng-cli
 scripts/lemonldap-ng-sessions
 scripts/lmMigrateConfFiles2ini
-scripts/pubsubServer
 scripts/rotateOidcKeys
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t

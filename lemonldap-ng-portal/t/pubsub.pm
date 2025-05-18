@@ -10,7 +10,7 @@ my $level = ($ENV{LLNGLOGLEVEL} ||= 'error');
 
 sub startPubsub {
     $pubsub = start [
-        '../lemonldap-ng-common/scripts/pubsubWebServer',
+        '../lemonldap-ng-common/eg/pubsubWebServer',
         '--token' => $pubsubToken,
         '--port'  => $pubsubPort,
         (
