@@ -205,7 +205,7 @@ Web
 LLNG provide a light pub/sub server, named **pubsubWebServer**, designed to be
 used to manage LLNG events.
 
-It accepts two parameters:
+To use it, configure the message broker:
 
 * ``server`` *(default: ``localhost:8080``)*. To enable SSL, use ``https://server:port``
 * ``token``: optional token to be set if the server requires a token
