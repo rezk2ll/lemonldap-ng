@@ -80,6 +80,15 @@ if ( $ENV{LLNGTESTLDAP} ) {
     startLdapServer();
 }
 
+sub resetLdapData {
+
+    stopLdapServer();
+    unlink glob "$main::tmpDir/data/*";
+    system( $slapadd_bin, "-F", "$main::tmpDir/slapd.d", "-n", "1",
+        "-l", "$main::tmpDir/users.ldif" );
+    startLdapServer();
+}
+
 sub waitForLdap {
     my $waitloop = 0;
     note "Waiting for LDAP server to be available";
