@@ -465,6 +465,57 @@ sub rollback {
     }
 }
 
+sub purge {
+    my ( $self, $flag, $flag_value ) = @_;
+    unless ( @_ % 3 == 0  && grep { $_ eq $flag } ( '--keep-last', '--keep-recent' ) ) {
+        die
+'usage: purge --keep-last <value> | --keep-recent <number of seconds to keep>';
+    }
+    my @configs  = $self->mgr->confAcc->available();
+    my $n_config = scalar @configs;
+
+    if ( $flag eq '--keep-last' ) {
+        if ( $n_config < $flag_value ) {
+            $self->logger->warn("The number of configs to keep ($flag_value) is more than the number of available configs ($n_config)");
+        }
+
+        my @to_delete = @configs[ 0 .. $#configs - $flag_value ];
+        if (scalar @to_delete == $n_config) {
+            die 'This would delete all configs';
+        }
+        _config_delete($self, @to_delete);
+    }
+    if ( $flag eq '--keep-recent' ) {
+        # The keep-recent argument is a relative number of seconds to keep. Compute an absolute offset to keep
+        my $absoluteOffset = time() - $flag_value;
+        my @to_delete = grep {
+            $self->mgr->confAcc->getConf( { cfgNum => $_ } )->{cfgDate} <
+              $absoluteOffset
+        } @configs;
+        if (scalar @to_delete == $n_config) {
+            die 'This would delete all configs';
+        }
+        _config_delete($self, @to_delete);
+    }
+}
+
+sub _config_delete {
+    my ($self, @to_delete) =  @_;
+    unless ( $self->yes ) {
+        print "Configs that will be deleted: " . join(", ", @to_delete) . "\n";
+        print "Confirm (N/y)? ";
+        my $c = <STDIN>;
+        unless ( $c =~ /^y(?:es)?$/ ) {
+            die "Aborting";
+        }
+    }
+    for my $config_id (@to_delete) {
+        $self->mgr->confAcc->delete($config_id);
+    }
+    $self->logger->info("CLI: Deleted " . scalar @to_delete . " configs");
+    print STDERR "Deleted " . scalar(@to_delete) . " configs";
+}
+
 sub _getKey {
     my ( $self, $key ) = @_;
     my $sep = $self->sep;
@@ -604,11 +655,11 @@ sub run {
     }
     my $action = shift;
     unless ( $action =~
-/^(?:get|set|del|addKey|delKey|addPostVars|delPostVars|merge|save|restore|rollback)$/
+/^(?:get|set|del|addKey|delKey|addPostVars|delPostVars|merge|save|restore|rollback|purge)$/
       )
     {
         die
-"Unknown action $action. Only get, set, del, addKey, delKey, addPostVars, delPostVars, merge, save, restore, rollback allowed";
+"Unknown action $action. Only get, set, del, addKey, delKey, addPostVars, delPostVars, merge, save, restore, rollback, purge allowed";
     }
 
     unless ( $action eq "restore" ) {
@@ -645,14 +696,14 @@ system.
 =head1 SYNOPSIS
 
   #!/usr/bin/env perl
-  
+
   use warnings;
   use strict;
   use Lemonldap::NG::Manager::Cli;
-  
+
   # Optional: you can specify here some parameters
   my $cli = Lemonldap::NG::Manager::Cli->new(iniFile=>'t/lemonldap-ng.ini');
-  
+
   $cli->run(@ARGV);
 
 or use llng-manager-cli provides with this package.
@@ -721,6 +772,18 @@ subroutine.
 Using get, you can read several keys. Example:
 
   llng-manager-cli get portal cookieName domain
+
+=head4 purge
+
+Use purge to delete configurations
+
+=over
+
+=item * The "B<C<purge --keep-last E<lt>NE<gt>>>" command keeps only the Nth latest configurations.
+
+=item * The "B<C<purge --keep-recent E<lt>NE<gt>>>" command keeps only the configurations that have been created less than N seconds ago.
+
+=back
 
 =head1 SEE ALSO
 
