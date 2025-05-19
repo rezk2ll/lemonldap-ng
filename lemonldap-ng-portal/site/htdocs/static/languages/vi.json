@@ -16,6 +16,7 @@
 "PE109":" URL không được bảo vệ hoặc không đáng tin cậy",
 "PE110":"Second factor validation failed, please retry",
 "PE111":"Password too long",
+"PE112":"Password is about to expire, please change it now",
 "PE2":"Các trường người dùng và mật khẩu phải được điền",
 "PE20":"Không có mật khẩu phụ trợ nào được xác định",
 "PE21":"Tài khoản của bạn bị khóa",

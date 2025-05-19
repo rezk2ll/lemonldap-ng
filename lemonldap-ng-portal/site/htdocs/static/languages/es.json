@@ -16,6 +16,7 @@
 "PE109":"Not a protected or trusted URL",
 "PE110":"Second factor validation failed, please retry",
 "PE111":"Password too long",
+"PE112":"Password is about to expire, please change it now",
 "PE2":"Los campos \"usuario\" y \"password\" deben tener contenido",
 "PE20":"No password backend defined",
 "PE21":"Su cuenta está bloqueada",

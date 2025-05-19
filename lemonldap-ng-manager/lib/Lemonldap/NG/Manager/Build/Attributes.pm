@@ -4023,6 +4023,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'utf-8',
             documentation => 'LDAP password encoding',
         },
+        ldapForcePasswordChangeExpirationWarning => {
+            type          => 'intOrNull',
+            documentation => 'Delay to force password change if password is about to expire',
+        },
         ldapUsePasswordResetAttribute => {
             type          => 'bool',
             default       => 1,

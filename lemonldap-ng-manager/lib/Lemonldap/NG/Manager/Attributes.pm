@@ -1973,6 +1973,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'LDAPFilter' => {
             'type' => 'text'
         },
+        'ldapForcePasswordChangeExpirationWarning' => {
+            'type' => 'intOrNull'
+        },
         'ldapGetUserBeforePasswordChange' => {
             'default' => 0,
             'type'    => 'bool'

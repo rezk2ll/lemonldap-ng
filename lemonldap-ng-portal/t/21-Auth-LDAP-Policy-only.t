@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
-my $maintests = 38;
+my $maintests = 50;
 
 no warnings 'once';
 
@@ -30,17 +30,18 @@ SKIP: {
                 ldapBase                 => 'ou=users,dc=example,dc=com',
                 managerDn       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
                 managerPassword => 'lemonldapng',
-                ldapAllowResetExpiredPassword => 1,
-                ldapPpolicyControl            => 1,
-                passwordPolicyActivation      => 0,
-                passwordPolicyMinSize         => 5,
-                passwordPolicyMinLower        => 1,
-                passwordPolicyMinUpper        => 1,
-                passwordPolicyMinDigit        => 1,
-                passwordPolicyMinSpeChar      => 1,
-                passwordPolicySpecialChar     => '# &',
-                whatToTrace                   => 'uid',
-                macros                        => {
+                ldapAllowResetExpiredPassword            => 1,
+                ldapForcePasswordChangeExpirationWarning => 2 * 86400,
+                ldapPpolicyControl                       => 1,
+                passwordPolicyActivation                 => 0,
+                passwordPolicyMinSize                    => 5,
+                passwordPolicyMinLower                   => 1,
+                passwordPolicyMinUpper                   => 1,
+                passwordPolicyMinDigit                   => 1,
+                passwordPolicyMinSpeChar                 => 1,
+                passwordPolicySpecialChar                => '# &',
+                whatToTrace                              => 'uid',
+                macros                                   => {
                     _whatToTrace => ''    # Test 2377
                 },
             }
@@ -52,8 +53,9 @@ SKIP: {
       PE_BADOLDPASSWORD
       PE_PP_ACCOUNT_LOCKED
       PE_PP_PASSWORD_EXPIRED
-      PE_PP_PASSWORD_TOO_SHORT
+      PE_PP_PASSWORD_EXPIRES_SOON
       PE_PP_CHANGE_AFTER_RESET
+      PE_PP_PASSWORD_TOO_SHORT
     );
 
     my ( $user, $code, $postString, $match );
@@ -109,9 +111,6 @@ SKIP: {
             $match = 'trmsg="' . $code . '"';
             ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
 
-            #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
-            #print F $res->[2]->[0];
-            #close F;
             my ( $host, $url, $query ) =
               expectForm( $res, '#', undef, 'user', 'oldpassword',
                 'newpassword', 'confirmpassword' );
@@ -283,6 +282,96 @@ m%<input id="staticUser" type="text" readonly class="form-control" value="$user"
     );
     $match = 'trmsg="' . PE_PASSWORD_OK . '"';
     ok( $res->[2]->[0] =~ /$match/s, 'Password is changed' );
+
+    # 5 - Password is expiring soon
+    # -----------------------------
+    {
+        $user       = 'expiresoon';
+        $postString = "user=$user&password=$user";
+
+        # Try to authenticate
+        # -------------------
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+        like( $res->[2]->[0],
+            qr/trspan="pwdWillExpire,/, "Found password expiration warning" );
+
+        expectCookie($res) or print STDERR Dumper($res);
+    }
+
+    # 6 - Password is expiring very soon and must be changed now
+    # ----------------------------------------------------------
+    {
+        $user       = 'expireverysoon';
+        $code       = PE_PP_PASSWORD_EXPIRES_SOON;
+        $postString = "user=$user&password=$user";
+
+        # Try to authenticate
+        # -------------------
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+        $match = 'trmsg="' . $code . '"';
+        ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
+
+        my ( $host, $url, $query ) =
+          expectForm( $res, '#', undef, 'user', 'oldpassword',
+            'newpassword', 'confirmpassword' );
+        ok(
+            $res->[2]->[0] =~
+              m%<input name="user" type="hidden" value="$user" />%,
+            ' Hidden user input found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="oldpassword" name="oldpassword" type="hidden" value="\d{10}_\d+" aria-required="true">%,
+            ' oldpassword token found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'oldpassword token' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="staticUser" type="text" readonly class="form-control" value="$user" />%,
+            ' staticUser found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'staticUser' );
+        ok( $res->[2]->[0] !~ m%<span trspan="passwordPolicyMinSize">%,
+            ' passwordPolicyMinSize' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
+        ok( $query =~ /user=$user/, "User is $user" )
+          or explain( $query, "user=$user" );
+
+        $query =~ s/((?:confirm|new)password)=/$1=newp/g;
+
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+            ),
+            'Post new password'
+        );
+        $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+        ok( $res->[2]->[0] =~ /$match/, 'Password is changed' );
+
+        $postString = "user=$user&password=newp";
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+            ),
+            'Auth query'
+        );
+        expectCookie($res) or print STDERR Dumper($res);
+    }
 }
 count($maintests);
 clean_sessions();

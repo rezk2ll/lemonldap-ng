@@ -119,6 +119,7 @@ use constant {
     PE_UNPROTECTEDURL                    => 109,
     PE_RETRY_2FA                         => 110,
     PE_PP_PASSWORD_TOO_LONG              => 111,
+    PE_PP_PASSWORD_EXPIRES_SOON          => 112,
 };
 
 sub portalConsts {
@@ -144,6 +145,7 @@ sub portalConsts {
         '109' => 'PE_UNPROTECTEDURL',
         '110' => 'PE_RETRY_2FA',
         '111' => 'PE_PP_PASSWORD_TOO_LONG',
+        '112' => 'PE_PP_PASSWORD_EXPIRES_SOON',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
@@ -349,7 +351,8 @@ our @EXPORT_OK = (
     'PE_UNAUTHORIZEDURL',
     'PE_UNPROTECTEDURL',
     'PE_RETRY_2FA',
-    'PE_PP_PASSWORD_TOO_LONG'
+    'PE_PP_PASSWORD_TOO_LONG',
+    'PE_PP_PASSWORD_EXPIRES_SOON'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 
