@@ -32,7 +32,7 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
 $action ||= "usage";
 
 if ( $action =~
-/^(?:[gs]et|del|(?:add|del)Key|(?:add|del)PostVars|merge|save|restore|rollback)$/
+/^(?:[gs]et|del|(?:add|del)Key|(?:add|del)PostVars|merge|save|restore|rollback|purge)$/
   )
 {
     eval { require Lemonldap::NG::Manager::Cli; };
