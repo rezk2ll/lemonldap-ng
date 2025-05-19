@@ -436,7 +436,7 @@ portal_test:	portal
 	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCPORTALDIR} test
 
 manager_test:	manager
-	@$(MAKE) -C ${SRCMANAGERDIR} test
+	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCMANAGERDIR} test
 
 autopkgtest: all autopkg_common autopkg_handler autopkg_portal autopkg_manager autopkg_runner
 
