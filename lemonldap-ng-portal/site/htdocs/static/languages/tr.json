@@ -16,6 +16,7 @@
 "PE109":"Korumalı veya güvenli URL değil",
 "PE110":"İkinci faktör doğrulama başarısız, lütfen tekrar deneyin",
 "PE111":"Parola çok uzun",
+"PE112":"Password is about to expire, please change it now",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
 "PE21":"Hesabınız kilitli",

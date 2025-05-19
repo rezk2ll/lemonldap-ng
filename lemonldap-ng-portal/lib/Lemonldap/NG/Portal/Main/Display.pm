@@ -400,7 +400,9 @@ sub display {
             and $req->{error} != PE_FIRSTACCESS
             and $req->{error} != PE_BADCREDENTIALS
             and $req->{error} != PE_PP_CHANGE_AFTER_RESET
-            and $req->{error} != PE_PP_PASSWORD_EXPIRED )
+            and $req->{error} != PE_PP_PASSWORD_EXPIRED
+            and $req->{error} != PE_BADOLDPASSWORD
+            and $req->{error} != PE_PP_PASSWORD_EXPIRES_SOON )
       )
     {
         $skinfile       = 'error';
@@ -507,6 +509,7 @@ sub display {
             or $req->{error} == PE_PASSWORD_MISMATCH
             or $req->{error} == PE_BADOLDPASSWORD
             or $req->{error} == PE_PASSWORDFORMEMPTY
+            or $req->{error} == PE_PP_PASSWORD_EXPIRES_SOON
             or (    $req->{error} == PE_PP_PASSWORD_EXPIRED
                 and $self->conf->{ldapAllowResetExpiredPassword} )
           )

@@ -16,6 +16,7 @@
 "PE109":"URL-osoite ei ole suojattu tai luotettu",
 "PE110":"Toisen vaiheen tunnistustavan vahvistaminen epäonnistui, ole hyvä ja yritä uudestaan",
 "PE111":"Salasana on liian pitkä",
+"PE112":"Password is about to expire, please change it now",
 "PE2":"Käyttäjänimi- ja salasanakentät pitää täyttää",
 "PE20":"Salasanataustaosioita ei ole määritetty",
 "PE21":"Käyttäjätilisi on lukittu",

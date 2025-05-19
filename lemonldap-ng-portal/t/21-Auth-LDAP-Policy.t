@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
-my $maintests = 44;
+my $maintests = 65;
 
 no warnings 'once';
 
@@ -30,28 +30,32 @@ SKIP: {
                 managerDn       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
                 managerPassword => 'lemonldapng',
                 hideOldPassword => 0,
-                ldapAllowResetExpiredPassword => 1,
-                ldapPpolicyControl            => 1,
-                passwordPolicyMinSize         => 4,
-                passwordPolicyMinLower        => 1,
-                passwordPolicyMinUpper        => 1,
-                passwordPolicyMinDigit        => 1,
-                passwordPolicyMinSpeChar      => 1,
-                passwordPolicySpecialChar     => '__ALL__',
-                portalDisplayPasswordPolicy   => 1,
-                whatToTrace                   => 'uid',
-                macros                        => {
+                ldapAllowResetExpiredPassword            => 1,
+                ldapForcePasswordChangeExpirationWarning => 2 * 86400,
+                ldapPpolicyControl                       => 1,
+                passwordPolicyMinSize                    => 4,
+                passwordPolicyMinLower                   => 1,
+                passwordPolicyMinUpper                   => 1,
+                passwordPolicyMinDigit                   => 1,
+                passwordPolicyMinSpeChar                 => 1,
+                passwordPolicySpecialChar                => '__ALL__',
+                portalDisplayPasswordPolicy              => 1,
+                whatToTrace                              => 'uid',
+                macros                                   => {
                     _whatToTrace => ''    # Test 2377
                 },
             }
         }
     );
     use Lemonldap::NG::Portal::Main::Constants qw(
+      PE_PP_GRACE
       PE_PASSWORD_OK
+      PE_BADOLDPASSWORD
       PE_PP_ACCOUNT_LOCKED
       PE_PP_PASSWORD_EXPIRED
+      PE_PP_PASSWORD_EXPIRES_SOON
       PE_PP_CHANGE_AFTER_RESET
-      PE_PP_PASSWORD_TOO_SHORT PE_PP_GRACE
+      PE_PP_PASSWORD_TOO_SHORT
     );
 
     my ( $user, $code, $postString, $match );
@@ -59,6 +63,7 @@ SKIP: {
     # 1 - TEST PE_PP_CHANGE_AFTER_RESET AND PE_PP_PASSWORD_EXPIRED
     # ------------------------------------------------------------
     foreach my $tpl (
+        [ 'reset',  PE_BADOLDPASSWORD ],
         [ 'reset',  PE_PP_CHANGE_AFTER_RESET ],
         [ 'expire', PE_PP_PASSWORD_EXPIRED ]
       )
@@ -77,74 +82,105 @@ SKIP: {
             ),
             'Auth query'
         );
-        $match = 'trmsg="' . $code . '"';
-        ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
 
-        #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
-        #print F $res->[2]->[0];
-        #close F;
-        my ( $host, $url, $query ) =
-          expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
-            'confirmpassword' );
-        ok(
-            $res->[2]->[0] =~
-              m%<input name="user" type="hidden" value="$user" />%,
-            ' Hidden user input found'
-        ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
-        ok(
-            $res->[2]->[0] =~
+        if ( $code == PE_BADOLDPASSWORD ) {
+            $match = 'trmsg="' . PE_PP_CHANGE_AFTER_RESET . '"';
+            ok( $res->[2]->[0] =~ /$match/,
+                'Code is ' . PE_PP_CHANGE_AFTER_RESET );
+
+            my ( $host, $url, $query ) =
+              expectForm( $res, '#', undef, 'user', 'oldpassword',
+                'newpassword', 'confirmpassword' );
+            $query =~ s/((?:confirm|new)password)=/$1=Newp1@/g;
+            $query =~ s/(oldpassword)=$user/$1=xxxx/;
+            ok(
+                $res = $client->_post(
+                    '/', IO::String->new($query),
+                    length => length($query),
+                    accept => 'text/html',
+                ),
+                'Post new password'
+            );
+            $match = 'trmsg="' . $code . '"';
+            ok( $res->[2]->[0] =~ /$match/, 'Password is not changed' );
+            ( $host, $url, $query ) =
+              expectForm( $res, '#', undef, 'user', 'oldpassword',
+                'newpassword', 'confirmpassword' );
+        }
+        else {
+            $match = 'trmsg="' . $code . '"';
+            ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
+
+            my ( $host, $url, $query ) =
+              expectForm( $res, '#', undef, 'user', 'oldpassword',
+                'newpassword', 'confirmpassword' );
+            ok(
+                $res->[2]->[0] =~
+                  m%<input name="user" type="hidden" value="$user" />%,
+                ' Hidden user input found'
+            ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
+            ok(
+                $res->[2]->[0] =~
 m%<input id="oldpassword" name="oldpassword" type="password" value="$user"%,
-            ' oldpassword input found'
-        ) or print STDERR Dumper( $res->[2]->[0], 'oldpassword input' );
-        ok(
-            $res->[2]->[0] =~
+                ' oldpassword input found'
+            ) or print STDERR Dumper( $res->[2]->[0], 'oldpassword input' );
+            ok(
+                $res->[2]->[0] =~
 m%<input id="staticUser" type="text" readonly class="form-control" value="$user" />%,
-            ' staticUser found'
-        ) or print STDERR Dumper( $res->[2]->[0], 'staticUser' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSize">%,
-            ' passwordPolicyMinSize' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinLower">%,
-            ' passwordPolicyMinLower' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinLower' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinUpper">%,
-            ' passwordPolicyMinUpper' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinUpper' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinDigit">%,
-            ' passwordPolicyMinDigit' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinDigit' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">%,
-            ' passwordPolicyMinSpeChar' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
-        ok( $res->[2]->[0] !~ m%<span trspan="passwordPolicySpecialChar">%,
-            ' passwordPolicySpecialChar' )
-          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
-        ok( $query =~ /user=$user/, "User is $user" )
-          or explain( $query, "user=$user" );
+                ' staticUser found'
+            ) or print STDERR Dumper( $res->[2]->[0], 'staticUser' );
+            ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSize">%,
+                ' passwordPolicyMinSize' )
+              or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
+            ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinLower">%,
+                ' passwordPolicyMinLower' )
+              or
+              print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinLower' );
+            ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinUpper">%,
+                ' passwordPolicyMinUpper' )
+              or
+              print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinUpper' );
+            ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinDigit">%,
+                ' passwordPolicyMinDigit' )
+              or
+              print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinDigit' );
+            ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">%,
+                ' passwordPolicyMinSpeChar' )
+              or
+              print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
+            ok(
+                $res->[2]->[0] !~ m%<span trspan="passwordPolicySpecialChar">%,
+                ' passwordPolicySpecialChar'
+              )
+              or print STDERR Dumper( $res->[2]->[0],
+                'passwordPolicySpecialChar' );
+            ok( $query =~ /user=$user/, "User is $user" )
+              or explain( $query, "user=$user" );
 
-    #$query =~ s/(oldpassword)=/$1=$user/g; -> Now old password is defined #2377
-        $query =~ s/((?:confirm|new)password)=/$1=Newp1@/g;
+            $query =~ s/((?:confirm|new)password)=/$1=Newp1@/g;
 
-        ok(
-            $res = $client->_post(
-                '/', IO::String->new($query),
-                length => length($query),
-                accept => 'text/html',
-            ),
-            'Post new password'
-        );
-        $match = 'trmsg="' . PE_PASSWORD_OK . '"';
-        ok( $res->[2]->[0] =~ /$match/, 'Password is changed' );
+            ok(
+                $res = $client->_post(
+                    '/', IO::String->new($query),
+                    length => length($query),
+                    accept => 'text/html',
+                ),
+                'Post new password'
+            );
+            $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+            ok( $res->[2]->[0] =~ /$match/, 'Password is changed' );
 
-        $postString = "user=$user&password=Newp1@";
-        ok(
-            $res = $client->_post(
-                '/', IO::String->new($postString),
-                length => length($postString),
-            ),
-            'Auth query'
-        );
-        expectCookie($res) or print STDERR Dumper($res);
+            $postString = "user=$user&password=Newp1@";
+            ok(
+                $res = $client->_post(
+                    '/',
+                    IO::String->new($postString),
+                    length => length($postString),
+                ),
+                'Auth query'
+            );
+            expectCookie($res) or print STDERR Dumper($res);
+        }
     }
 
     # 2 - TEST PE_PP_GRACE
@@ -166,7 +202,7 @@ m%<input id="staticUser" type="text" readonly class="form-control" value="$user"
     $match = 'trspan="' . $code . '"';
     ok( $res->[2]->[0] =~ /$match/, 'Grace remaining' );
 
-    # Try again to make sur "0" is properly handled
+    # Try again to make sur "0 grace logins left" is properly handled
     ok(
         $res = $client->_post(
             '/', IO::String->new($postString),
@@ -268,6 +304,111 @@ m%<input id="staticUser" type="text" readonly class="form-control" value="$user"
     );
     $match = 'trmsg="' . PE_PASSWORD_OK . '"';
     ok( $res->[2]->[0] =~ /$match/s, 'Password is changed' );
+
+    # 5 - Password is expiring soon
+    # -----------------------------
+    {
+        $user       = 'expiresoon';
+        $postString = "user=$user&password=$user";
+
+        # Try to authenticate
+        # -------------------
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+        like( $res->[2]->[0],
+            qr/trspan="pwdWillExpire,/, "Found password expiration warning" );
+
+        expectCookie($res) or print STDERR Dumper($res);
+    }
+
+    # 6 - Password is expiring very soon and must be changed now
+    # ----------------------------------------------------------
+    {
+        $user       = 'expireverysoon';
+        $code       = PE_PP_PASSWORD_EXPIRES_SOON;
+        $postString = "user=$user&password=$user";
+
+        # Try to authenticate
+        # -------------------
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+        $match = 'trmsg="' . $code . '"';
+        ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
+
+        my ( $host, $url, $query ) =
+          expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
+            'confirmpassword' );
+        ok(
+            $res->[2]->[0] =~
+              m%<input name="user" type="hidden" value="$user" />%,
+            ' Hidden user input found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="oldpassword" name="oldpassword" type="password" value="$user"%,
+            ' oldpassword input found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'oldpassword input' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="staticUser" type="text" readonly class="form-control" value="$user" />%,
+            ' staticUser found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'staticUser' );
+        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSize">%,
+            ' passwordPolicyMinSize' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
+        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinLower">%,
+            ' passwordPolicyMinLower' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinLower' );
+        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinUpper">%,
+            ' passwordPolicyMinUpper' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinUpper' );
+        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinDigit">%,
+            ' passwordPolicyMinDigit' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinDigit' );
+        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">%,
+            ' passwordPolicyMinSpeChar' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
+        ok( $res->[2]->[0] !~ m%<span trspan="passwordPolicySpecialChar">%,
+            ' passwordPolicySpecialChar' )
+          or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
+        ok( $query =~ /user=$user/, "User is $user" )
+          or explain( $query, "user=$user" );
+
+        $query =~ s/((?:confirm|new)password)=/$1=Newp1@/g;
+
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+            ),
+            'Post new password'
+        );
+        $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+        ok( $res->[2]->[0] =~ /$match/, 'Password is changed' );
+
+        $postString = "user=$user&password=Newp1@";
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($postString),
+                length => length($postString),
+            ),
+            'Auth query'
+        );
+        expectCookie($res) or print STDERR Dumper($res);
+    }
 }
 count($maintests);
 clean_sessions();
