@@ -31,6 +31,8 @@ my $client = LLNG::Manager::Test->new( {
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
 ok( $res->[2]->[0] =~ /1_securenull/, '1_securenull displayed' );
 ok( $res->[2]->[0] =~ /2_null/,       '2_null displayed' );
+ok( $res->[2]->[0] =~ /input type="checkbox" id="checkLogins1_securenull"/, '1_securenull checkbox displayed' );
+ok( $res->[2]->[0] =~ /input type="checkbox" id="checkLogins2_null"/,       '2_null checkbox displayed' );
 
 # Authenticate on first choice
 my $postString = 'user=dwho&password=dwho&test=1_securenull';
