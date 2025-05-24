@@ -25,6 +25,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/Backends/Local.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/Overlay.pm
+lib/Lemonldap/NG/Common/Conf/Backends/Patroni.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
