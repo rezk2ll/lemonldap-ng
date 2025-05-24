@@ -64,12 +64,15 @@ sub _dbh {
     };
     if ( $@ and @confDbiHooks ) {
         foreach my $hook (@confDbiHooks) {
-            _launchHook($self, $hook);
-            eval {
-            $self->{_dbh} =
-              DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
-                $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );};
-            last unless $@;
+            if ( _launchHook( $self, $hook ) ) {
+                eval {
+                    $self->{_dbh} =
+                      DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
+                        $self->{dbiPassword},
+                        { RaiseError => 1, AutoCommit => 1, } );
+                };
+                last unless $@;
+            }
         }
     }
     if ($@) {
@@ -130,10 +133,11 @@ sub _execute {
     my $execute = eval { $req->execute(@prms) };
     if ( @confDbiHooks and !$execute ) {
         foreach my $hook (@confDbiHooks) {
-            _launchHook($self, $hook);
-            $req     = $self->_dbh->prepare($query);
-            $execute = eval { $req->execute(@prms) };
-            last unless $@;
+            if ( _launchHook( $self, $hook ) ) {
+                $req     = $self->_dbh->prepare($query);
+                $execute = eval { $req->execute(@prms) };
+                last unless $@;
+            }
         }
     }
     unless ($execute) {
@@ -144,7 +148,7 @@ sub _execute {
 }
 
 sub _launchHook {
-    my ($self, $hook) = @_;
+    my ( $self, $hook ) = @_;
     die "Not a code ref $hook"
       unless ref($hook)
       and ref($hook) eq 'CODE';
