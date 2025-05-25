@@ -147,6 +147,7 @@ Architecture: all
 Section: web
 Depends: libio-socket-ip-perl,
          libprotocol-websocket-perl,
+         libregexp-common-perl,
          ${misc:Depends},
          ${perl:Depends}
 Suggests: libio-socket-ssl-perl
