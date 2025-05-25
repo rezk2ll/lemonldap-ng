@@ -2,7 +2,7 @@ PUBSUB_QUIET=1
 PUBSUB_ACCESS_LOG=/var/log/llng-pubsub/access.log
 
 # Comment this to listen to all interfaces
-PUBSUB_ADDR=localhost
+PUBSUB_ADDR=127.0.0.1
 PUBSUB_USER=nobody
 PUBSUB_GROUP=nogroup
 
