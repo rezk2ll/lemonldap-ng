@@ -18,6 +18,8 @@ my ( $accessLog, $addr, $cert, $daemon, $_debug, $group, $help, $key,
 # HTTP header separator
 use constant HS => qr/(?:\r?\n){2}/;
 
+my @CMDLINE = @ARGV;
+
 GetOptions(
     'access-log=s'       => \$accessLog,
     'addr|a=s'           => \$addr,
@@ -110,9 +112,10 @@ $port ||=
 my $server;
 my %args = (
     ( $addr ? ( LocalAddr => $addr ) : () ),
-    ( $port ? ( LocalPort => $port ) : () ),
-    Listen => 10,
-    Reuse  => 1,
+    LocalPort => $port,
+    Listen    => 10,
+    ReuseAddr => 1,
+    ReusePort => 1,
 );
 if ($cert) {
     require IO::Socket::SSL;
@@ -124,8 +127,8 @@ if ($cert) {
     );
 }
 else {
-    require IO::Socket::INET;
-    $server = IO::Socket::INET->new( %args, Proto => 'tcp', );
+    require IO::Socket::IP;
+    $server = IO::Socket::IP->new( %args, Proto => 'tcp', );
 }
 
 die "Cannot create socket: $!" unless $server;
@@ -355,6 +358,8 @@ sub daemonize {
     else {
         debug "Pid is $$";
     }
+    system "echo $0 > /tmp/cmdline";
+    $0 = join ' ', $0, @CMDLINE;
 }
 
 __END__
@@ -363,11 +368,11 @@ __END__
 
 =head1 NAME
 
-pubsubWebServer - Pub/Sub server based on websockets
+llng-pubsub-server - Pub/Sub server based on websockets
 
 =head1 SYNOPSIS
 
-  pubsubWebServer <option>
+  llng-pubsub-server <option>
 
 Simple client using L<wscat|https://github.com/websockets/wscat>
 
@@ -381,7 +386,7 @@ Note that "channel" is required.
 
 =head1 DESCRIPTION
 
-B<pubsubWebServer> is a web-based pub/sub server designed for L<LemonLDAP::NG|https://lemonldap-ng.org>.
+B<llng-pubsub-server> is a web-based pub/sub server designed for L<LemonLDAP::NG|https://lemonldap-ng.org>.
 
 =head2 Options
 

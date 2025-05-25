@@ -6,11 +6,11 @@ our $pubsubToken = 'aazz';
 
 my $pubsub;
 
-my $level = ($ENV{LLNGLOGLEVEL} ||= 'error');
+my $level = ( $ENV{LLNGLOGLEVEL} ||= 'error' );
 
 sub startPubsub {
     $pubsub = start [
-        '../lemonldap-ng-common/eg/pubsubWebServer',
+        '../lemonldap-ng-common/eg/llng-pubsub-server',
         '--token' => $pubsubToken,
         '--port'  => $pubsubPort,
         (
@@ -24,7 +24,7 @@ sub startPubsub {
 }
 
 sub stopPubsub {
-    $pubsub->kill_kill;
+    $pubsub->kill_kill( grace => 5 );
 }
 
 1;

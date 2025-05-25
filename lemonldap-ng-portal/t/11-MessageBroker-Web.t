@@ -114,6 +114,7 @@ SKIP: {
     subtest "Reconnect after server crash" => sub {
         my $id = $client->login('dwho');
         &stopPubsub;
+        sleep 2;
         &startPubsub;
         my $res;
         Time::Fake->offset('+24s');

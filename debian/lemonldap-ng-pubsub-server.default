@@ -1,0 +1,14 @@
+PUBSUB_QUIET=1
+PUBSUB_ACCESS_LOG=/var/log/llng-pubsub/access.log
+
+# Comment this to listen to all interfaces
+PUBSUB_ADDR=localhost
+PUBSUB_USER=nobody
+PUBSUB_GROUP=nogroup
+
+# It is recommended to set a token here
+#PUBSUB_TOKEN=
+
+#PUBSUB_PORT=8080
+#PUBSUB_MAX_REQUEST_SIZE=8192
+#PUBSUB_MAX_REQUEST_TIME=5

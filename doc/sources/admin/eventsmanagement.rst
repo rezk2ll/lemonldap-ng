@@ -202,7 +202,7 @@ If ``ssl`` is set then these environment variables can be used also:
 Web
 ~~~
 
-LLNG provide a light pub/sub server, named **pubsubWebServer**, designed to be
+LLNG provide a light pub/sub server, named **llng-pubsub-server**, designed to be
 used to manage LLNG events.
 
 To use it, configure the message broker:
@@ -210,4 +210,4 @@ To use it, configure the message broker:
 * ``server`` *(default: ``localhost:8080``)*. To enable SSL, use ``https://server:port``
 * ``token``: optional token to be set if the server requires a token
 
-You can find **pubsubWebServer** documentation into its manpage.
+You can find **llng-pubsub-server** documentation into its manpage.

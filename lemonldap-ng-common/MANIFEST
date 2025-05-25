@@ -1,5 +1,5 @@
 Changes
-eg/pubsubWebServer
+eg/llng-pubsub-server
 lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm

@@ -145,9 +145,11 @@ Description: Lemonldap::NG FastCGI server
 Package: lemonldap-ng-pubsub-server
 Architecture: all
 Section: web
-Depends: libprotocol-websocket-perl,
+Depends: libio-socket-ip-perl,
+         libprotocol-websocket-perl,
          ${misc:Depends},
          ${perl:Depends}
+Suggests: libio-socket-ssl-perl
 Description: Lemonldap::NG Pub/Sub server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -161,6 +163,8 @@ Description: Lemonldap::NG Pub/Sub server
  .
  This package provides the "Web" optional pub/sub server to share events
  between Lemonldap::NG servers.
+ .
+ Install libio-socket-ssl-perl to enable TLS.
 
 Package: liblemonldap-ng-ssoaas-apache-client-perl
 Architecture: all
