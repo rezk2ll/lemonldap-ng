@@ -57,7 +57,8 @@ sub display {
         my $other = 0;
         foreach ( keys %$sessions ) {
             unless ( defined( $sessions->{$_}->{_type} )
-                && $sessions->{$_}->{_type} eq 'refresh_token' )
+                && $sessions->{$_}->{_type} eq 'refresh_token'
+                && $sessions->{$_}->{_session_kind} eq 'OIDCI' )
             {
                 delete $sessions->{$_};
                 $other++;
