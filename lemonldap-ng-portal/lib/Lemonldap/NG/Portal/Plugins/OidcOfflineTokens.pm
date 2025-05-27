@@ -36,10 +36,19 @@ sub display {
 
     $self->logger->debug("Reading OidcOfflineTokens");
     my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
+
     if ($user) {
         $self->logger->debug('Try to retrieve sessions from DB');
-        my $moduleOptions = $self->conf->{globalStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{globalStorage};
+        my $moduleOptions;
+        if ( $self->conf->{oidcStorage} ) {
+            $moduleOptions = $self->conf->{oidcStorageOptions};
+            $moduleOptions->{backend} = $self->conf->{oidcStorage};
+        }
+        else {
+            $moduleOptions = $self->conf->{globalStorageOptions};
+            $moduleOptions->{backend} = $self->conf->{globalStorage};
+        }
+
         $self->logger->debug("Looking for \"$user\" sessions...");
         $sessions =
           $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
@@ -140,7 +149,7 @@ sub delOffline {
         return $self->sendError( $req, "Not authorized" );
     }
     $self->logger->debug("REST request to delete session $id");
-    $session->remove; #TODO : Call BackChannelLogout if needed
+    $session->remove;    #TODO : Call BackChannelLogout if needed
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
 
