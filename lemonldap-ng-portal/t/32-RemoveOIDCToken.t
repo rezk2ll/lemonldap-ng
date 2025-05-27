@@ -11,10 +11,11 @@ my $res;
 my $json;
 my $baseConfig = {
     ini => {
-        logLevel                        => "debug",
+        logLevel                        => "error",
         domain                          => 'op.com',
         portal                          => 'http://auth.op.com/',
         authentication                  => 'Demo',
+        timeoutActivity                 => 3600,
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,
         oidcRPMetaDataExportedVars      => {
@@ -49,7 +50,6 @@ my $baseConfig = {
         oidcServicePrivateKeySig => oidc_key_op_private_sig,
         oidcServicePublicKeySig  => oidc_cert_op_public_sig,
         oidcOfflineTokens        => 1,
-        portalDisplayOfflineTokens =>1,
     }
 };
 
