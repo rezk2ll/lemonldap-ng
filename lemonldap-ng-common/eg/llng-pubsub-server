@@ -14,8 +14,13 @@ use URI;
 
 # 1. Parse options
 
-my ( $accessLog, $addr, $cert, $daemon, $_debug, $group, $help, $key,
-    $maxRequestSize, $maxRequestTime, $quiet, $pidFile, $port, $token, $user );
+my (
+    $accessLog,      $addr,           $cert,          $daemon,
+    $_debug,         $group,          $help,          $key,
+    $maxRequestSize, $maxRequestTime, $maxRestarts,   $quiet,
+    $pidFile,        $port,           $restartWindow, $token,
+    $user,
+);
 
 # HTTP header separator
 use constant HS => qr/(?:\r?\n){2}/;
@@ -33,9 +38,11 @@ GetOptions(
     'key=s'              => \$key,
     'max-request-size=s' => \$maxRequestSize,
     'max-request-time=s' => \$maxRequestTime,
+    'max-restarts'       => \$maxRestarts,
     'quiet|q'            => \$quiet,
     'pid-file=s'         => \$pidFile,
     'port|p=s'           => \$port,
+    'restart-window'     => \$restartWindow,
     'token=s'            => \$token,
     'user|u=s'           => \$user,
 );
@@ -49,8 +56,10 @@ $group          ||= $ENV{PUBSUB_GROUP};
 $key            ||= $ENV{PUBSUB_KEY};
 $maxRequestSize ||= $ENV{PUBSUB_MAX_REQUEST_SIZE} || 8192;
 $maxRequestTime ||= $ENV{PUBSUB_MAX_REQUEST_TIME} || 5;
+$maxRestarts    ||= $ENV{PUBSUB_MAX_RESTARTS}     || 5;
 $pidFile        ||= $ENV{PUBSUB_PID_FILE};
 $quiet          ||= $ENV{PUBSUB_QUIET};
+$restartWindow  ||= $ENV{PUBSUB_RESTART_WINDOW} || 60;
 $token          ||= $ENV{PUBSUB_TOKEN};
 $user           ||= $ENV{PUBSUB_USER};
 
@@ -92,6 +101,7 @@ if ( $accessLog and $accessLog ne '-' and $accessLog ne 'STDERR' ) {
     open STDOUT, '>>', $accessLog or die "Unable to write logs: $!";
     if ($daemon) {
         open STDERR, '>&', fileno(STDOUT) or die "Can't dup STDERR: $!";
+        STDERR->autoflush(1);
     }
 }
 
@@ -364,9 +374,13 @@ sub getIp {
 }
 
 sub daemonize {
-    open STDIN,  '<', '/dev/null' or die "Can't read /dev/null: $!";
-    open STDOUT, '>', '/dev/null' or die "Can't write to /dev/null: $!";
-    open STDERR, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+    open STDIN, '<', '/dev/null' or die "Can't read /dev/null: $!";
+    unless ( $accessLog eq '-' ) {
+        open STDOUT, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+    }
+    unless ( $accessLog eq 'STDERR' ) {
+        open STDERR, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+    }
 
     defined( my $pid = fork ) or die "Can't fork: $!";
     exit if $pid;
@@ -382,14 +396,46 @@ sub daemonize {
         open my $fh, '>', $pidFile or die "Can't write $pidFile: $!";
         print $fh "$$\n";
         close $fh;
-        debug "Pid written ($$)";
-        debug `cat $pidFile`;
+        debug "Master pid written ($$)";
     }
     else {
-        debug "Pid is $$";
+        debug "Master pid is $$";
     }
     system "echo $0 > /tmp/cmdline";
     $0 = join ' ', $0, @CMDLINE;
+
+    my $cpid;
+
+    # Master process code (relaunch webserver in case of failure)
+    if ( $cpid = fork ) {
+        $| = 1;
+        my @restartTimes;
+        my $term;
+        $SIG{CHLD} = 'DEFAULT';
+        $SIG{TERM} = sub {
+            kill 'TERM', $cpid;
+            waitpid( $cpid, 0 );
+            exit 0;
+        };
+        while (1) {
+            my $endedPid   = waitpid( $cpid, 0 );
+            my $exitStatus = $? >> 8;
+            print STDERR "Server $endedPid ended with status $exitStatus\n";
+            @restartTimes = grep { time() - $_ < $restartWindow } @restartTimes;
+            print STDERR "@restartTimes >= $maxRestarts\n";
+            if ( @restartTimes >= $maxRestarts ) {
+                print STDERR "Too many failures in $restartWindow, aborting\n";
+                exit 1;
+            }
+            sleep 1;
+            last unless $cpid = fork;
+            push @restartTimes, time;
+        }
+    }
+    die $! unless defined $cpid;
+
+    # Don't propagate 'TERM' signal to master
+    setpgrp( 0, 0 );
 }
 
 __END__
@@ -504,6 +550,18 @@ Environment variable: B<PUBSUB_USER>
 Change gid to the given value after opening socket.
 
 Environment variable: B<PUBSUB_GROUP>
+
+=item * B<--max-restarts> E<lt>valueE<gt>> I<(default: 5)>
+
+Max failure accepted in the B<--restart-window> delay.
+
+Environment variable: B<PUBSUB_MAX_RESTARTS>
+
+=item * B<restart-window> E<lt>valueE<gt>> I<(default: 60)>
+
+Delay for B<--max-restarts>
+
+Environment variable: B<PUBSUB_RESTART_WINDOW>
 
 =back
 

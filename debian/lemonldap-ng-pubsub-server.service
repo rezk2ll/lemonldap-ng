@@ -11,6 +11,8 @@ ExecStart=/usr/sbin/llng-pubsub-server --daemon --pid-file /run/llng-pubsub-serv
 ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile ${PID}
 KillMode=mixed
 PrivateTmp=yes
+Restart=always
+RestartSec=1
 
 [Install]
 Alias=llng-pubsub-server.service
