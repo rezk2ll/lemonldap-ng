@@ -28,7 +28,7 @@ has req    => ( is => 'ro' );
 has sep    => ( is => 'rw', isa => 'Str',  default => '/' );
 has format => ( is => 'rw', isa => 'Str',  default => "%-25s | %-25s | %-25s" );
 has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
-has safe   => ( is => 'rw', isa => 'Bool', default => 0 );
+has unsafe => ( is => 'rw', isa => 'Bool', default => 0 );
 has force  => ( is => 'rw', isa => 'Bool', default => 0 );
 has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
@@ -568,7 +568,7 @@ sub _save {
     unless ( $parser->testNewConf( $self->localConf ) ) {
         my $msg = "Configuration rejected with message: " . $parser->message;
         $self->logger->error("CLI: $msg");
-        if ( $self->safe ) {
+        unless ( $self->unsafe ) {
             die "$msg";
         }
         else {
