@@ -9,19 +9,111 @@
 #=============================================================================
 
 use strict;
-use Getopt::Std;
+use Getopt::Long;
+use Pod::Usage;
+
 use Lemonldap::NG::Common::Session::Purge;
 
 # Options
 # -d: debug mode
 # -f: force delete of corrupted sessions
-our $opt_d;
-our $opt_f;
-getopts('df');
+# -j: log statistics as JSON
+my %cli_opts;
+my $result = GetOptions( \%cli_opts, 'debug|d', 'force|f', 'help|h', 'json|j' );
+pod2usage(0) if $cli_opts{help};
 
 my $opts = {
-    ( $opt_d ? ( logLevel => 'debug' ) : () ),
-    ( $opt_f ? ( force    => 1 )       : () ),
+    ( $cli_opts{debug} ? ( logLevel => 'debug' ) : () ),
+    ( $cli_opts{force} ? ( force    => 1 )       : () ),
+    ( $cli_opts{json} ? ( json    => 1 )       : () ),
 };
 
-exit 1 unless Lemonldap::NG::Common::Session::Purge->new($opts)->purge();
+
+my $res = Lemonldap::NG::Common::Session::Purge->new($opts)->purge();
+
+exit 1 unless $res->{success};
+
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+purgeCentralCache - Remove expired LemonLDAP::NG sessions from central storage
+
+=head1 SYNOPSIS
+
+  purgeCentralCache [options]
+
+=head1 DESCRIPTION
+
+This script must be run periodically on at least one LemonLDAP::NG hosts.
+It will search for expired SSO sessions, as well as secondary (SAML, CAS, OIDC)
+and utility (Captcha, Token) sessions, and remove them from the session backend.
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--help>, B<-h>
+
+Print a brief help message and exit.
+
+=item B<--debug>, B<-d>
+
+Print additional diagnostics to STDERR
+
+=item B<--force>, B<-f>
+
+Remove sessions if an error happened during their processing
+
+=item B<--json>, B<-j>
+
+Log execution stats as JSON instead of human-readable text
+
+=back
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>
+
+=head1 AUTHORS
+
+=over
+
+=item Xavier Guimard, E<lt>yadd@debian.orgE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<https://lemonldap-ng.org/download>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2024 by Xavier Guimard, E<lt>yadd@debian.orgE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
