@@ -5,12 +5,15 @@ use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
+use JSON;
 use Mouse;
+use Time::HiRes;
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 has logLevel => ( is => 'rw' );
 has force    => ( is => 'rw' );
+has json     => ( is => 'rw' );
 has conf => (
     is      => 'ro',
     default => sub {
@@ -154,14 +157,30 @@ has backends => (
 has force => ( is => 'ro' );
 
 sub purge {
-    my ($self)    = @_;
-    my $nb_purged = 0;
-    my $nb_error  = 0;
-    $self->logger->debug( __PACKAGE__ . "::purge() called" );
-    my $conf = $self->conf;
-    while ( my ( $type, $options ) = each %{ $self->backends } ) {
+    my ($self) = @_;
+
+    my $nb_purged  = {};
+    my $nb_error   = {};
+    my $start_time = {};
+    my $end_time   = {};
+
+  # Compute the list of backends here to avoid having big timing inconsistencies
+    my $backends = $self->backends;
+    my $conf     = $self->conf;
+
+    $self->logger->info( __PACKAGE__ . "::purge() called" );
+    $start_time->{total} = Time::HiRes::time();
+    while ( my ( $type, $options ) = each %$backends ) {
         $self->logger->debug("Cleaning $type sessions");
-        next if ( $options->{backend} eq "Apache::Session::Memcached" );
+        $nb_error->{$type}   = 0;
+        $nb_purged->{$type}  = 0;
+        $start_time->{$type} = Time::HiRes::time();
+
+        if ( $options->{backend} eq "Apache::Session::Memcached" ) {
+            $end_time->{$type} = Time::HiRes::time();
+            next;
+        }
+
         my @t;
         if ( $options->{backend}->can('deleteIfLowerThan') ) {
             $self->logger->debug(
@@ -183,8 +202,9 @@ sub purge {
 
             if ($success) {
                 if ($rows) {
-                    $nb_purged += $rows;
+                    $nb_purged->{$type} += $rows;
                 }
+                $end_time->{$type} = Time::HiRes::time();
                 next;
             }
         }
@@ -245,7 +265,7 @@ sub purge {
             unless ( $session->data ) {
                 $self->logger->debug("Error while opening session $id");
                 print STDERR "Error on session $id\n";
-                $nb_error++;
+                $nb_error->{$type}++;
                 push @errors, $id;
                 next;
             }
@@ -253,12 +273,12 @@ sub purge {
             unless ( $session->remove ) {
                 $self->logger->debug("Error while deleting session $id");
                 print STDERR "Error on session $id\n";
-                $nb_error++;
+                $nb_error->{$type}++;
                 push @errors, $id;
                 next;
             }
             $self->logger->debug("Session $id has been purged");
-            $nb_purged++;
+            $nb_purged->{$type}++;
         }
 
         # Remove lock files for File backend
@@ -284,7 +304,7 @@ sub purge {
                 }
                 else {
                     $self->logger->warn("Session $id removed with force");
-                    $nb_error--;
+                    $nb_error->{$type}--;
                 }
             }
         }
@@ -307,7 +327,7 @@ sub purge {
                 }
                 else {
                     $self->logger->warn("Session $id removed with force");
-                    $nb_error--;
+                    $nb_error->{$type}--;
                 }
             }
         }
@@ -334,7 +354,8 @@ sub purge {
               Net::LDAP->new( \@servers, keepalive => 1, onerror => undef, );
             unless ($ldap) {
                 print STDERR "Unable to connect to LDAP server\n";
-                $nb_error++;
+                $nb_error->{$type}++;
+                $end_time->{$type} = Time::HiRes::time();
                 next;
             }
 
@@ -351,7 +372,8 @@ sub purge {
                     print STDERR "STARTTLS error: "
                       . $start_tls->code . ': '
                       . $start_tls->error;
-                    $nb_error++;
+                    $nb_error->{$type}++;
+                    $end_time->{$type} = Time::HiRes::time();
                     next;
                 }
             }
@@ -370,16 +392,58 @@ sub purge {
                 }
                 else {
                     $self->logger->warn("Session $id removed with force");
-                    $nb_error--;
+                    $nb_error->{$type}--;
                 }
             }
         }
+        $end_time->{$type} = Time::HiRes::time();
     }
-    $self->logger->debug("$nb_purged sessions have been purged");
+    $end_time->{total} = Time::HiRes::time();
+
+    my $total_purged = 0;
+    $total_purged += $_ for values %$nb_purged;
+    $nb_purged->{total} = $total_purged;
+
+    my $total_error = 0;
+    $total_error += $_ for values %$nb_error;
+    $nb_error->{total} = $total_error;
+
+    my $stats;
+    for my $type ( "total", sort keys %{ $self->backends } ) {
+        $stats->{$type}->{errors} = $nb_error->{$type};
+        $stats->{$type}->{purged} = $nb_purged->{$type};
+        $stats->{$type}->{duration_u} =
+          int( 1000000 * ( $end_time->{$type} - $start_time->{$type} ) );
+    }
+
+    my $log = "Session purge completed: ";
+    if ( $self->json ) {
+        $log .= to_json($stats);
+    }
+    else {
+        my @logentries;
+        for my $type ( "total", sort keys %{ $self->backends } ) {
+            my $logentry .= "$type (";
+            $logentry    .= $stats->{$type}->{purged} . " purged, ";
+            $logentry    .= $stats->{$type}->{errors} . " errors in ";
+            $logentry    .= $stats->{$type}->{duration_u} . " us";
+            $logentry    .= ")";
+            push @logentries, $logentry;
+        }
+        $log .= join( ', ', @logentries );
+    }
+
+    $self->logger->info($log);
     $self->logger->warn(
-        "$nb_error sessions remaining, try to purge them with force (option -f)"
-    ) if $nb_error;
-    return !($nb_error);
+"$total_error sessions remaining, try to purge them with force (option -f)"
+    ) if $total_error;
+
+    return {
+        success => !($total_error),
+        purged  => $total_purged,
+        errors  => $total_error,
+        stats   => $stats,
+    };
 }
 
 sub localPurge {

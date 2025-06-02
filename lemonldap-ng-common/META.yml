@@ -66,6 +66,7 @@ requires:
   Net::SSLeay: '0'
   Plack: '0'
   URI: '0'
+  Time::HiRes: '0'
   XML::LibXML: '0'
 resources:
   MailingList: mailto:lemonldap-ng-dev@ow2.org
