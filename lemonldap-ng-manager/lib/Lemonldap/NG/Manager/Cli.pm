@@ -28,6 +28,7 @@ has req    => ( is => 'ro' );
 has sep    => ( is => 'rw', isa => 'Str',  default => '/' );
 has format => ( is => 'rw', isa => 'Str',  default => "%-25s | %-25s | %-25s" );
 has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
+has safe   => ( is => 'rw', isa => 'Bool' );
 has unsafe => ( is => 'rw', isa => 'Bool', default => 0 );
 has force  => ( is => 'rw', isa => 'Bool', default => 0 );
 has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
@@ -467,7 +468,9 @@ sub rollback {
 
 sub purge {
     my ( $self, $flag, $flag_value ) = @_;
-    unless ( @_ % 3 == 0  && grep { $_ eq $flag } ( '--keep-last', '--keep-recent' ) ) {
+    unless ( @_ % 3 == 0 && grep { $_ eq $flag }
+        ( '--keep-last', '--keep-recent' ) )
+    {
         die
 'usage: purge --keep-last <value> | --keep-recent <number of seconds to keep>';
     }
@@ -476,33 +479,37 @@ sub purge {
 
     if ( $flag eq '--keep-last' ) {
         if ( $n_config < $flag_value ) {
-            $self->logger->warn("The number of configs to keep ($flag_value) is more than the number of available configs ($n_config)");
+            $self->logger->warn(
+"The number of configs to keep ($flag_value) is more than the number of available configs ($n_config)"
+            );
         }
 
         my @to_delete = @configs[ 0 .. $#configs - $flag_value ];
-        if (scalar @to_delete == $n_config) {
+        if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
         }
-        _config_delete($self, @to_delete);
+        _config_delete( $self, @to_delete );
     }
     if ( $flag eq '--keep-recent' ) {
-        # The keep-recent argument is a relative number of seconds to keep. Compute an absolute offset to keep
+
+# The keep-recent argument is a relative number of seconds to keep. Compute an absolute offset to keep
         my $absoluteOffset = time() - $flag_value;
-        my @to_delete = grep {
+        my @to_delete      = grep {
             $self->mgr->confAcc->getConf( { cfgNum => $_ } )->{cfgDate} <
               $absoluteOffset
         } @configs;
-        if (scalar @to_delete == $n_config) {
+        if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
         }
-        _config_delete($self, @to_delete);
+        _config_delete( $self, @to_delete );
     }
 }
 
 sub _config_delete {
-    my ($self, @to_delete) =  @_;
+    my ( $self, @to_delete ) = @_;
     unless ( $self->yes ) {
-        print "Configs that will be deleted: " . join(", ", @to_delete) . "\n";
+        print "Configs that will be deleted: "
+          . join( ", ", @to_delete ) . "\n";
         print "Confirm (N/y)? ";
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
@@ -512,7 +519,7 @@ sub _config_delete {
     for my $config_id (@to_delete) {
         $self->mgr->confAcc->delete($config_id);
     }
-    $self->logger->info("CLI: Deleted " . scalar @to_delete . " configs");
+    $self->logger->info( "CLI: Deleted " . scalar @to_delete . " configs" );
     print STDERR "Deleted " . scalar(@to_delete) . " configs";
 }
 
@@ -568,7 +575,7 @@ sub _save {
     unless ( $parser->testNewConf( $self->localConf ) ) {
         my $msg = "Configuration rejected with message: " . $parser->message;
         $self->logger->error("CLI: $msg");
-        unless ( $self->unsafe ) {
+        unless ( $self->unsafe or ( defined $self->safe and !$self->safe ) ) {
             die "$msg";
         }
         else {
