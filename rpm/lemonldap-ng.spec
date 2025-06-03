@@ -728,6 +728,7 @@ fi
 
 %files portal
 %{_mandir}/man1/downloadSamlMetadata*
+%{_mandir}/man1/purgeCentralCache*
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
 %{lm_bindir}/downloadSamlMetadata
