@@ -1,4 +1,5 @@
 Changes
+eg/llng-pubsub-server
 lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
@@ -58,6 +59,7 @@ lib/Lemonldap/NG/Common/MessageBroker/MQTT.pm
 lib/Lemonldap/NG/Common/MessageBroker/NoBroker.pm
 lib/Lemonldap/NG/Common/MessageBroker/Pg.pm
 lib/Lemonldap/NG/Common/MessageBroker/Redis.pm
+lib/Lemonldap/NG/Common/MessageBroker/Web.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
 lib/Lemonldap/NG/Common/Notifications/DBI.pm

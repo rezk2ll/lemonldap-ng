@@ -618,6 +618,7 @@ t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
+t/11-MessageBroker-Web.t
 t/12-EventStatus.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-custom-hash.t
@@ -1039,6 +1040,7 @@ t/PluginEntryPoints/ListeningService.pm
 t/PluginEntryPoints/Target.pm
 t/postgres/init.sql
 t/postgres/pg.pm
+t/pubsub.pm
 t/README.md
 t/redis/redis.conf
 t/redis/redis.pm
