@@ -17,6 +17,16 @@ Known regressions in the latest released version
 
 No known issues.
 
+2.22.0
+------
+
+lemonldap-ng-cli
+~~~~~~~~~~~~~~~~
+
+Starting from this version, the ``lemonldap-ng-cli`` refuses to store
+invalid configurations. If you use it with intermediate steps that are
+invalid before next changes, use the new **--unsafe** option.
+
 2.21.0
 ------
 

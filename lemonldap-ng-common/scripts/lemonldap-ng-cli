@@ -94,7 +94,8 @@ Options:
 
  -yes 0|1                     : accept confirmation prompt automatically
  -log msg                     : set configuration log message
- -safe 0|1                    : fail in case the requested configuration is invalid
+ -safe 1|0                    : fail in case the requested configuration is invalid (default)
+ -unsafe 0|1                  : don't fail in case the requested configuration is invalid
  -force 0|1                   : allow overwrite of existing config number
  -cfgNum NUM                  : set new configuration number (requires -force 1)
  -sep CHAR                    : separator of hierarchical values (by default: /)
@@ -251,9 +252,10 @@ Skip confirmation prompt (default: 0)
 
 Allows you to set the log message that will be displayed in the manager
 
-=item B<-safe I<0|1>>
+=item B<--safe>, B<-unsafe> I<(0|1)>
 
-The configuration change will be aborted if it contains errors (default: 0)
+With B<--unsafe> the configuration change will be stored even if it contains
+errors. By default I<(B<--safe>)>, invalid configuration are rejected.
 
 =item B<-force I<0|1>>
 
