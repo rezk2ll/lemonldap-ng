@@ -164,11 +164,12 @@ sub purge {
     my $start_time = {};
     my $end_time   = {};
 
-  # Compute the list of backends here to avoid having big timing inconsistencies
+    # Compute the list of backends here to avoid having big timing
+    # inconsistencies
     my $backends = $self->backends;
     my $conf     = $self->conf;
 
-    $self->logger->info( __PACKAGE__ . "::purge() called" );
+    $self->logger->info("Session purge started");
     $start_time->{total} = Time::HiRes::time();
     while ( my ( $type, $options ) = each %$backends ) {
         $self->logger->debug("Cleaning $type sessions");
