@@ -64,6 +64,8 @@
 "addSrvCasPartner":"Ajouter un serveur CAS",
 "addTOTPKey":"Ajouter une clef TOTP",
 "addVhost":"Ajouter un hôte virtuel",
+"adminLogoutServer":"Serveur de déconnexion administratif",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"Paramètres avancés",
 "algorithms":"Algorithmes",
 "allowedMarkups":"Balises autorisées :",

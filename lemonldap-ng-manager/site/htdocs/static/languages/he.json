@@ -64,6 +64,8 @@
 "addSrvCasPartner":"הוספת שרת CAS",
 "addTOTPKey":"הוספת מפתח TOTP",
 "addVhost":"הוספת מארח וירטואלי",
+"adminLogoutServer":"Admin logout server",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"משתנים מתקדמים",
 "algorithms":"אלגוריתמים",
 "allowedMarkups":"סימונים מורשים:",

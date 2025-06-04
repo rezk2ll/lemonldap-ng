@@ -302,6 +302,7 @@ Name                                                                 Description
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
 :doc:`Web Cron<webcron>` |new|                                       Add API to trigger scheduled tasks
+:doc:`Admin logout server<adminlogout>` |new|                        Add API to permit Session-Explorer to call portal when using "Global logout" *(to call back-channel-logout)*
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 

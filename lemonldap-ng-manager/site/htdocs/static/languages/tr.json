@@ -64,6 +64,8 @@
 "addSrvCasPartner":"CAS sunucusu ekle",
 "addTOTPKey":"TOTP anahtarı ekle",
 "addVhost":"Sanal konak ekle",
+"adminLogoutServer":"Admin logout server",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"Gelişmiş parametreler",
 "algorithms":"Algoritmalar",
 "allowedMarkups":"İzin verilen biçimlendirmeler:",

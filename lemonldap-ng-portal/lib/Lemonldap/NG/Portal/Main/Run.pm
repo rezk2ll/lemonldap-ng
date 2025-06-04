@@ -379,7 +379,7 @@ sub do {
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
-        if (   ( $err > 0 and !$req->id )
+        if (   ( $err > 0 and !$req->id and !( $err == PE_LOGOUT_OK ) )
             or $err eq PE_SESSIONNOTGRANTED
             or $err eq PE_SESSIONEXPIRED )
         {

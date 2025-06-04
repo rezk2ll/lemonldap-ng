@@ -42,11 +42,12 @@ our @pList = (
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
-    refreshSessions     => '::Plugins::Refresh',
-    crowdsec            => '::Plugins::CrowdSec',
-    locationDetect      => '::Plugins::LocationDetect',
-    globalLogoutRule    => '::Plugins::GlobalLogout',
-    samlFederationFiles => '::Plugins::SamlFederation',
+    refreshSessions      => '::Plugins::Refresh',
+    crowdsec             => '::Plugins::CrowdSec',
+    locationDetect       => '::Plugins::LocationDetect',
+    globalLogoutRule     => '::Plugins::GlobalLogout',
+    samlFederationFiles  => '::Plugins::SamlFederation',
+    adminLogoutServerSecret => '::Plugins::AdminLogout',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
       '::Plugins::OIDCNativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>

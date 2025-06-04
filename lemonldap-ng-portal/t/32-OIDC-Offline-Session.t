@@ -14,8 +14,46 @@ BEGIN {
 my $debug = "error";
 
 sub runTest {
-    my ( $op, $jwt, $refresh_rotation ) = @_;
+    my ( $op, $jwt, $refresh_rotation, $adminLogout ) = @_;
     Time::Fake->reset;
+
+    LWP::Protocol::PSGI->register(
+        sub {
+            my $req = Plack::Request->new(@_);
+            ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#,
+                ' REST request' );
+            my $host = $1;
+            my $url  = $2;
+            my ( $res, $client );
+            if ( $req->method =~ /^post$/i ) {
+                my $s = $req->content;
+                ok(
+                    $res = $op->_post(
+                        $url,
+                        IO::String->new($s),
+                        length => length($s),
+                        type   => $req->header('Content-Type'),
+                        custom => {
+                            HTTP_AUTHORIZATION => $req->header('Authorization'),
+                        }
+                    ),
+                    '  Execute request',
+                );
+            }
+            else {
+                ok(
+                    $res = $op->_get(
+                        $url,
+                        custom => {
+                            HTTP_AUTHORIZATION => $req->header('Authorization'),
+                        }
+                    ),
+                    '  Execute request'
+                );
+            }
+            return $res;
+        }
+    );
 
     my $query;
     my $res;
@@ -192,17 +230,35 @@ sub runTest {
         "Scope contains weird scope name"
     );
 
-    $query = "token=$refresh_token&token_hint=refresh_token";
-    ok(
-        $op->_post(
-            '/oauth2/revoke',
-            IO::String->new($query),
-            length => length($query),
-            query  => 'logout=1',
-            custom => { HTTP_AUTHORIZATION => "Basic cnBpZDpycGlk" }
-        ),
-        'Refresh_token logout'
-    );
+    if ($adminLogout) {
+        require t::SessionExplorer;
+        my $se;
+        ok( $se = t::SessionExplorer->new( $op->p->conf ),
+            'Create SessionExplorer object' );
+        expectOK(
+            $se->adminLogout(
+                query => "sessionType=offline&sessionId="
+                  . (
+                    $ENV{LLNG_HASHED_SESSION_STORE}
+                    ? id2storage($refresh_token)
+                    : $refresh_token
+                  )
+            )
+        );
+    }
+    else {
+        $query = "token=$refresh_token&token_hint=refresh_token";
+        ok(
+            $op->_post(
+                '/oauth2/revoke',
+                IO::String->new($query),
+                length => length($query),
+                query  => 'logout=1',
+                custom => { HTTP_AUTHORIZATION => "Basic cnBpZDpycGlk" }
+            ),
+            'Refresh_token logout'
+        );
+    }
     Time::Fake->offset('+6s');
     $json = expectReject( refreshGrant( $op, 'rpid', $refresh_token ),
         400, "invalid_request" );
@@ -270,6 +326,7 @@ my $baseConfig = {
         portal                          => 'http://auth.op.com/',
         authentication                  => 'Demo',
         timeoutActivity                 => 3600,
+        adminLogoutServerSecret            => 'qwerty',
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,
         oidcRPMetaDataExportedVars      => {
@@ -309,6 +366,15 @@ my $baseConfig = {
 subtest "Run tests with base config" => sub {
     my $op = LLNG::Manager::Test->new($baseConfig);
     runTest($op);
+};
+
+subtest "Session explorer logout using refresh_token" => sub {
+  SKIP: {
+        eval { require Lemonldap::NG::Manager::Sessions };
+        skip 'No manager found', 1 if $@;
+        my $op = LLNG::Manager::Test->new($baseConfig);
+        runTest( $op, 0, 0, 1 );
+    }
 };
 
 subtest "Removed user's offline sessions are no longer valid" => sub {

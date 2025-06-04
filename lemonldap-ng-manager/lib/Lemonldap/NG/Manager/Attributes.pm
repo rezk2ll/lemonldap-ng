@@ -298,6 +298,9 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
+        'adminLogoutServerSecret' => {
+            'type' => 'text'
+        },
         'ADPwdExpireWarning' => {
             'default' => 0,
             'type'    => 'int'

@@ -64,6 +64,8 @@
 "addSrvCasPartner":"Dodaj serwer CAS",
 "addTOTPKey":"Dodaj klucz TOTP",
 "addVhost":"Dodaj virtualhost",
+"adminLogoutServer":"Admin logout server",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"Zaawansowane parametry",
 "algorithms":"Algorytmy",
 "allowedMarkups":"Dozwolone znaczniki:",

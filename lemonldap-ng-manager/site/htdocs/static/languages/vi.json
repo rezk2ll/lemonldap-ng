@@ -64,6 +64,8 @@
 "addSrvCasPartner":"Thêm máy chủ CAS",
 "addTOTPKey":"Thêm khóa TOTP",
 "addVhost":"Thêm host ảo",
+"adminLogoutServer":"Admin logout server",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"Tham số nâng cao",
 "algorithms":"Algorithms",
 "allowedMarkups":"Được phép đánh dấu:",

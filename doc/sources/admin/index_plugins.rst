@@ -5,6 +5,7 @@ Plugins
    :maxdepth: 1
 
    adaptativeauthenticationlevel
+   adminlogout
    autosignin
    bruteforceprotection
    cda

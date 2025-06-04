@@ -64,6 +64,8 @@
 "addSrvCasPartner":"إضافة سرفر كاس",
 "addTOTPKey":"Add TOTP key",
 "addVhost":"إضافة خادم افتراضي",
+"adminLogoutServer":"Admin logout server",
+"adminLogoutServerSecret":"Secret",
 "advancedParams":"المعايير المتقدمة",
 "algorithms":"Algorithms",
 "allowedMarkups":"السماح بالترميز:",

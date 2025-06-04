@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -2431,7 +2431,7 @@ sub authRevokeToken {
 }
 
 sub _revokeToken {
-    my ( $self, $req, $checkRight, $rp ) = @_;
+    my ( $self, $req, $checkRight, $rp, $raw ) = @_;
     my $userReq =
       $rp ? undef : $req->sessionInfo->{ $self->conf->{whatToTrace} };
 
@@ -2450,14 +2450,14 @@ sub _revokeToken {
     }
     if ( !$oidcSession and ( !$tokenHint or $tokenHint eq 'refresh_token' ) ) {
         $self->logger->debug('Try to find a refresh_token to revoke');
-        $oidcSession = $self->getRefreshToken($token);
+        $oidcSession = $self->getRefreshToken($token, $raw);
         $tokenHint   = 'refresh_token';
     }
     if ($oidcSession) {
         $self->logger->debug("token found");
         if ( my ( $_rp, $_uid ) = $checkRight->( $oidcSession, $rp ) ) {
             my $bck =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutType};
+              $self->rpOptions->{$_rp}->{oidcRPMetaDataOptionsLogoutType};
             if ( $tokenHint eq 'refresh_token' and $bck and $bck eq 'back' ) {
                 $self->_backChannelLogout( $req, $_rp, $oidcSession->data );
             }
@@ -2470,6 +2470,8 @@ sub _revokeToken {
                 user       => ( $userReq || $rp ),
                 $tokenHint => $token
             );
+            $self->logger->debug(
+                "$tokenHint dropped was " . $oidcSession->id );
             $oidcSession->remove;
         }
         return [ 200, [], [] ];

@@ -969,6 +969,10 @@ sub tree {
                                 'disabledPlugins'
                             ]
                         },
+                        {
+                            title => 'adminLogoutServer',
+                            nodes => [ 'adminLogoutServerSecret' ]
+                        },
                     ]
                 },
                 {
