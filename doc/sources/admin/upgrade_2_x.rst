@@ -15,7 +15,11 @@ Known issues
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-No known issues.
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+If you use both CAS applications and CAS servers on your LemonLDAP::NG install,
+we recommend waiting for 2.21.1 to be released.
 
 2.22.0
 ------
@@ -26,6 +30,18 @@ lemonldap-ng-cli
 Starting from this version, the ``lemonldap-ng-cli`` refuses to store
 invalid configurations. If you use it with intermediate steps that are
 invalid before next changes, use the new **--unsafe** option.
+
+2.21.1
+------
+
+Make sure no bogus CAS servers have been created
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+Remove all unwanted **CAS Servers** entries from the manager after upgrading to
+version 2.21.1 (or above) if this is the case.
 
 2.21.0
 ------
