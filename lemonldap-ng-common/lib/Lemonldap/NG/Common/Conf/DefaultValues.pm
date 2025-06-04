@@ -118,8 +118,8 @@ sub defaultValues {
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
         'hiddenAttributes'              => '_password _2fDevices',
-        'hideOldPassword'               =>  1,
-        'httpOnly'                      =>  1,
+        'hideOldPassword'               => 1,
+        'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices, _loginHistory',
         'impersonationIdRule'           => 1,
@@ -295,6 +295,7 @@ sub defaultValues {
         'portalDisplayGeneratePassword' => 1,
         'portalDisplayLoginHistory'     => 1,
         'portalDisplayLogout'           => 1,
+        'portalDisplayOfflineTokens'    => 0,
         'portalDisplayOidcConsents'     =>
           '$_oidcConsents && $_oidcConsents =~ /\\w+/',
         'portalDisplayOrder' =>

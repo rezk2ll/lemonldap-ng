@@ -969,7 +969,15 @@ sub tree {
                                 'disabledPlugins'
                             ]
                         },
-                        "oidcOfflineTokens",
+                        {
+                            title => 'oidcOfflineTokensNode',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'oidcOfflineTokens',
+                                'portalDisplayOfflineTokens'
+
+                            ]
+                        },
                     ]
                 },
                 {

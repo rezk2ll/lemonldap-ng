@@ -3986,6 +3986,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayOfflineTokens' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         'portalDisplayOidcConsents' => {
             'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
             'type'    => 'boolOrExpr'
