@@ -4,10 +4,8 @@ use strict;
 use Mouse;
 use Date::Parse;
 use JSON qw(from_json to_json);
-use Lemonldap::NG::Common::Session;
-use Lemonldap::NG::Common::Session::REST;
-use Time::Local;
 use Data::Dumper;
+use Time::Local;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -64,9 +62,8 @@ sub display {
             {
                 delete $sessions->{$_};
                 $other++;
-            }$self->logger->debug($_);
-
-        }        
+            }
+        }
         @$activeSessions = map {
             my $epoch;
             if ( $sessions->{$_}->{_updateTime} ) {
@@ -80,6 +77,13 @@ sub display {
                     delete $sessions->{$_}->{_updateTime};
                 }
             }
+
+            {
+                id        => $sessions->{$_}->{client_id},
+                epoch     => $sessions->{$_}->{_updateTime},
+                sessionid => $_
+            }
+        } keys %$sessions;
 
             {
                 id        => $sessions->{$_}->{client_id},
