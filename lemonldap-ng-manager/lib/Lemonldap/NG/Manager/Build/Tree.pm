@@ -973,6 +973,15 @@ sub tree {
                             title => 'adminLogoutServer',
                             nodes => [ 'adminLogoutServerSecret' ]
                         },
+                        {
+                            title => 'oidcOfflineTokensNode',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'oidcOfflineTokens',
+                                'portalDisplayOfflineTokens'
+
+                            ]
+                        },
                     ]
                 },
                 {

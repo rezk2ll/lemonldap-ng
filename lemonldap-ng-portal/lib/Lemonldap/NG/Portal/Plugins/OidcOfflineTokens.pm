@@ -7,6 +7,7 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Session::REST;
 use Time::Local;
+use Data::Dumper;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -25,7 +26,7 @@ use constant name => "OidcOfflineTokens";
 has rule => (
     is      => "ro",
     lazy    => 1,
-    builder => sub { 1 },    # Always return true to always show the tab
+    builder => sub { $_[0]->conf->{portalDisplayOfflineTokens} },
 );
 with 'Lemonldap::NG::Portal::MenuTab';
 
@@ -33,6 +34,7 @@ sub display {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
+    my $regex          = qr/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
 
     $self->logger->debug("Reading OidcOfflineTokens");
     my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
@@ -62,12 +64,11 @@ sub display {
             {
                 delete $sessions->{$_};
                 $other++;
-            }
-        }
+            }$self->logger->debug($_);
+
+        }        
         @$activeSessions = map {
             my $epoch;
-            my $regex = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
-
             if ( $sessions->{$_}->{_updateTime} ) {
                 if ( my ( $y, $mo, $d, $h, $mi, $s ) =
                     $sessions->{$_}->{_updateTime} =~ /$regex/ )
@@ -89,8 +90,8 @@ sub display {
     }
     return {
         logo => "wrench",
-        name => "OidcOfflineTokens",
-        id   => "OidcOfflineTokens",
+        name => "oidcOfflineTokens",
+        id   => "oidcOfflineTokens",
         html => $self->loadTemplate(
             $req,
             "oidcOfflineTokens",
@@ -136,11 +137,7 @@ sub delOffline {
     # SSO or OIDC
     my $session = $self->Lemonldap::NG::Common::Session::REST::getApacheSession(
         $mod, $id,
-        hashStore => (
-              ( $mod->{kind} =~ reHashedKinds )
-            ? ( $req->param('hash') ) // 0
-            : 0
-        ),
+        hashStore => 0,
     ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it

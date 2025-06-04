@@ -1565,6 +1565,10 @@ sub attributes {
             default       => '$_oidcConsents && $_oidcConsents =~ /\w+/',
             documentation => 'Display OIDC consents tab in portal',
         },
+        'portalDisplayOfflineTokens' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         portalDisplayOrder => {
             type    => 'text',
             default =>
