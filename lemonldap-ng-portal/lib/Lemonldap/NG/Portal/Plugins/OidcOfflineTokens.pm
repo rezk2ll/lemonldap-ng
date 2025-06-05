@@ -27,6 +27,15 @@ has rule => (
 );
 with 'Lemonldap::NG::Portal::MenuTab';
 
+has oidc => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]
+          ->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::OpenIDConnect'};
+    }
+);
+
 sub display {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
@@ -105,7 +114,11 @@ sub init {
     my ( $self, $req, $session ) = @_;
 
     $self->addAuthRoute( myoffline => { ':key' => 'delOffline' }, ['DELETE'] );
-
+    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
+        $self->logger->error(
+            'This plugin can be used only if OIDC server is enabled');
+        return 0;
+    }
     return 1;
 }
 
@@ -131,15 +144,13 @@ sub delOffline {
     # Get session
     # The hashed store is used if explicitly asked and if session type is
     # SSO or OIDC
-    my $session = $self->p->getApacheSession(
-        $id,
-        kind      => "OIDCI",
-        module    => $mod->{module},
-        options   => $mod->{options},
+    my $session = $self->oidc->getOpenIDConnectSession(
+        $id, "refresh_token",
         hashStore => 0
 
-    ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
-    $self->logger->debug('heyo');
+    );
+    return $self->p->sendError( $req, 'Session Id does not exist', 400 )
+      unless $session->{data};
 
     # Delete it
     unless ( $req->userData->{ $self->conf->{whatToTrace} } eq
@@ -147,8 +158,13 @@ sub delOffline {
     {
         return $self->sendError( $req, "Not authorized" );
     }
-    $self->logger->debug("REST request to delete session $id");
-    $session->remove();    #TODO : Call BackChannelLogout if needed
+    $self->logger->debug("Request to delete session $id");
+    $session->remove( {
+            hashStore => 0
+        }
+    );
+
+    #TODO : Call BackChannelLogout if needed
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
 
