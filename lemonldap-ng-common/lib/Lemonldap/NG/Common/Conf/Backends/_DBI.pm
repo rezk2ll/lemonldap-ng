@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::Backends::_DBI;
 
 use strict;
+no strict 'refs';
 use utf8;
 use DBI;
 use Lemonldap::NG::Common::Conf::Constants;
@@ -8,7 +9,6 @@ use Lemonldap::NG::Common::Conf::Constants;
 our $VERSION = '2.18.0';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Constants);
 our ( @EXPORT, %EXPORT_TAGS );
-our @confDbiHooks;
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::_dbh     = \&_dbh;
@@ -62,18 +62,12 @@ sub _dbh {
           DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
             $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
     };
-    if ( $@ and @confDbiHooks ) {
-        foreach my $hook (@confDbiHooks) {
-            if ( _launchHook( $self, $hook ) ) {
-                eval {
-                    $self->{_dbh} =
-                      DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
-                        $self->{dbiPassword},
-                        { RaiseError => 1, AutoCommit => 1, } );
-                };
-                last unless $@;
-            }
-        }
+    if ( $@ and &{ $self->{type} . "::beforeRetry" }($self) ) {
+        eval {
+            $self->{_dbh} =
+              DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
+                $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
+        };
     }
     if ($@) {
         die $@;
@@ -131,14 +125,9 @@ sub _execute {
         return UNKNOWN_ERROR;
     }
     my $execute = eval { $req->execute(@prms) };
-    if ( @confDbiHooks and !$execute ) {
-        foreach my $hook (@confDbiHooks) {
-            if ( _launchHook( $self, $hook ) ) {
-                $req     = $self->_dbh->prepare($query);
-                $execute = eval { $req->execute(@prms) };
-                last unless $@;
-            }
-        }
+    if ( !$execute and &{ $self->{type} . "::beforeRetry" }($self) ) {
+        $req     = $self->_dbh->prepare($query);
+        $execute = eval { $req->execute(@prms) };
     }
     unless ($execute) {
         $self->logError;
@@ -147,12 +136,8 @@ sub _execute {
     return ( 1, $req );
 }
 
-sub _launchHook {
-    my ( $self, $hook ) = @_;
-    die "Not a code ref $hook"
-      unless ref($hook)
-      and ref($hook) eq 'CODE';
-    $hook->($self);
+sub beforeRetry {
+    return !$_[0]->{noRetry};
 }
 
 1;

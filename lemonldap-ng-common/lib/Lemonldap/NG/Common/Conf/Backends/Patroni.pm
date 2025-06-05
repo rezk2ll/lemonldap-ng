@@ -8,7 +8,7 @@ our @ISA = ('Lemonldap::NG::Common::Conf::Backends::CDBI');
 *store = \&Lemonldap::NG::Common::Conf::Backends::CDBI::store;
 *load = \&Lemonldap::NG::Common::Conf::Backends::CDBI::load;
 
-sub checkPatroni {
+sub beforeRetry {
     my ($self) = @_;
     require Lemonldap::NG::Common::UserAgent;
     require JSON;
