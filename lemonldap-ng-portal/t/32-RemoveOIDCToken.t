@@ -47,9 +47,10 @@ my $baseConfig = {
                 oidcRPMetaDataOptionsRedirectUris => 'http://test/',
             }
         },
-        oidcServicePrivateKeySig => oidc_key_op_private_sig,
-        oidcServicePublicKeySig  => oidc_cert_op_public_sig,
-        oidcOfflineTokens        => 1,
+        oidcServicePrivateKeySig   => oidc_key_op_private_sig,
+        oidcServicePublicKeySig    => oidc_cert_op_public_sig,
+        oidcOfflineTokens          => 1,
+        portalDisplayOfflineTokens => 1,
     }
 };
 
@@ -87,7 +88,7 @@ sub runTest {
     my $refresh_token = $json->{refresh_token};
 
     # Make sure refresh token session has no _lastSeen to avoid purge
-    ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
+    ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} , "session has no _lastSeen");
 
     count(1);
 
@@ -117,12 +118,19 @@ sub runTest {
 
     ok( $res->[2]->[0] =~ qr%rpid%, 'OIDCI session displayed' )
       or explain( $res->[2]->[0], 'contains rpid in oidcOfflineTokens ' );
+
+    my $returned_refresh_token;
+    if ( $res->[2]->[0] =~ /"sessionid"\s*:\s*"([a-f0-9]{64})"/i ) {
+        $returned_refresh_token = $1;
+    }
+
+    ok( $returned_refresh_token, "refresh token $returned_refresh_token exists in html" );
+
     ok(
         $res = $op->_delete(
-            "/myoffline/$json->{refresh_token}",
-            cookie => "lemonldap=$idd",
+            "/myoffline/$returned_refresh_token", cookie => "lemonldap=$idd",
         ),
-        "Delete token $json->{refresh_token}"
+        "Delete token $returned_refresh_token"
     );
     expectOK($res);
 
