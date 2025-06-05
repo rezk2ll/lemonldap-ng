@@ -406,7 +406,6 @@ site/htdocs/static/common/modules/CustomAuth.png
 site/htdocs/static/common/modules/Facebook.png
 site/htdocs/static/common/modules/GitHub.png
 site/htdocs/static/common/modules/Google.png
-site/htdocs/static/common/modules/GPG.png
 site/htdocs/static/common/modules/Kerberos.png
 site/htdocs/static/common/modules/LinkedIn.png
 site/htdocs/static/common/modules/OpenIDConnect.png

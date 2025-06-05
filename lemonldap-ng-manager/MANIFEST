@@ -294,7 +294,6 @@ t/jsonfiles/14-bad.json
 t/jsonfiles/15-combination.json
 t/jsonfiles/17-extra2f.json
 t/jsonfiles/70-diff.json
-t/lemonldap-ng-cli.ini
 t/lemonldap-ng-DBI-conf.ini
 t/lemonldap-ng.ini
 t/test-lib.pm
