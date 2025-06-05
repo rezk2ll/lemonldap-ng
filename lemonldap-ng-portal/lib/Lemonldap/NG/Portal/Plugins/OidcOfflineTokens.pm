@@ -36,6 +36,18 @@ has oidc => (
     }
 );
 
+sub init {
+    my ( $self, $req, $session ) = @_;
+
+    $self->addAuthRoute( myoffline => { ':key' => 'delOffline' }, ['DELETE'] );
+    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
+        $self->logger->error(
+            'This plugin can be used only if OIDC server is enabled');
+        return 0;
+    }
+    return 1;
+}
+
 sub display {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
@@ -107,18 +119,6 @@ sub display {
             }
         ),
     };
-}
-
-sub init {
-    my ( $self, $req, $session ) = @_;
-
-    $self->addAuthRoute( myoffline => { ':key' => 'delOffline' }, ['DELETE'] );
-    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
-        $self->logger->error(
-            'This plugin can be used only if OIDC server is enabled');
-        return 0;
-    }
-    return 1;
 }
 
 sub delOffline {
