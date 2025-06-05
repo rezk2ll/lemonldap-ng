@@ -20,8 +20,17 @@ var removeOfflineSession;
       return removeOfflineSession($(this).attr("partner"));
     });
   });
-
-  removeOfflineSession = function (partner) {
+  // Delete
+  const delKey = function (key, success, error) {
+    return $.ajax({
+      type: "DELETE",
+      url: `${scriptname}myoffline/${key}`,
+      dataType: "json",
+      success: success,
+      error: error,
+    });
+  };
+  const removeOfflineSession = function (partner) {
     var e;
     e = function (j, s, e) {
       return alert(`${s} ${e}`);
@@ -37,14 +46,5 @@ var removeOfflineSession;
     );
   };
 
-  // Delete
-  delKey = function (key, success, error) {
-    return $.ajax({
-      type: "DELETE",
-      url: `${scriptname}myoffline/${key}`,
-      dataType: "json",
-      success: success,
-      error: error,
-    });
-  };
+
 })();

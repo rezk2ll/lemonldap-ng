@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var removeOfflineSession;
   (function () {
     $(window).on("load", function () {
       var offlineSessions = window.datas["sessions"] ? window.datas["sessions"] : {};
@@ -14,7 +13,17 @@
         return removeOfflineSession($(this).attr("partner"));
       });
     });
-    removeOfflineSession = function removeOfflineSession(partner) {
+    // Delete
+    var delKey = function delKey(key, success, error) {
+      return $.ajax({
+        type: "DELETE",
+        url: "".concat(scriptname, "myoffline/").concat(key),
+        dataType: "json",
+        success: success,
+        error: error
+      });
+    };
+    var removeOfflineSession = function removeOfflineSession(partner) {
       var e;
       e = function e(j, s, _e) {
         return alert("".concat(s, " ").concat(_e));
@@ -24,17 +33,6 @@
         return $("[partner='".concat(partner, "']")).hide();
         // Error
       }, e);
-    };
-
-    // Delete
-    delKey = function delKey(key, success, error) {
-      return $.ajax({
-        type: "DELETE",
-        url: "".concat(scriptname, "myoffline/").concat(key),
-        dataType: "json",
-        success: success,
-        error: error
-      });
     };
   })();
 

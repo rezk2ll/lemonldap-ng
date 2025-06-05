@@ -982,7 +982,6 @@ sub tree {
 
                             ]
                         },
-                        "oidcOfflineTokens",
                     ]
                 },
                 {
