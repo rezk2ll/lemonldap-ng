@@ -509,7 +509,7 @@ sub _config_delete {
     my ( $self, @to_delete ) = @_;
     unless ( $self->yes ) {
         print "Configs that will be deleted: "
-          . join( ", ", @to_delete ) . "\n";
+          . _format_to_delete(@to_delete) . "\n";
         print "Confirm (N/y)? ";
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
@@ -520,7 +520,21 @@ sub _config_delete {
         $self->mgr->confAcc->delete($config_id);
     }
     $self->logger->info( "CLI: Deleted " . scalar @to_delete . " configs" );
-    print STDERR "Deleted " . scalar(@to_delete) . " configs";
+    print STDERR "Deleted " . scalar(@to_delete) . " configs\n";
+}
+
+sub _format_to_delete {
+    my (@to_delete) = (@_);
+    if ( @to_delete > 100 ) {
+        my @sorted = sort { $a <=> $b } @to_delete;
+        my $min    = join( ", ", @sorted[ 0 .. 4 ] );
+        my $max    = join( ", ", @sorted[ -5 .. -1 ] );
+        my $inter  = @to_delete - 10;
+        return "$min .. [ $inter more ] .. $max";
+    }
+    else {
+        return join( ", ", @to_delete );
+    }
 }
 
 sub _getKey {
