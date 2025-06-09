@@ -214,6 +214,40 @@ function templates(tpl,key) {
    }
 ]
 ;
+  case 'keyNode':
+    return [
+   {
+      "get" : [
+         "keyPrivate",
+         "keyPrivatePwd",
+         "keyPublic"
+      ],
+      "id" : tpl+"s/"+key+"/"+"KeyMaterial",
+      "title" : "KeyMaterial",
+      "type" : "RSACertKey"
+   },
+   {
+      "_nodes" : [
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyId",
+            "id" : tpl+"s/"+key+"/"+"keyId",
+            "title" : "keyId"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyComment",
+            "id" : tpl+"s/"+key+"/"+"keyComment",
+            "title" : "keyComment"
+         }
+      ],
+      "help" : "keys.html#options",
+      "id" : "keyOptions",
+      "title" : "keyOptions",
+      "type" : "simpleInputContainer"
+   }
+]
+;
   case 'oidcOPMetaDataNode':
     return [
    {

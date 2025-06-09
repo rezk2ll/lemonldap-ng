@@ -540,6 +540,9 @@
     $scope.addCasApp = function () {
       return $scope.newTemplateNode('casAppMetaDataNode', 'casPartnerName', 'app-example');
     };
+    $scope.addKey = function () {
+      return $scope.newTemplateNode('keyNode', 'keyName', 'key-example');
+    };
     $scope.newTemplateNode = function (type, title, init) {
       $scope.message = {
         title: title,

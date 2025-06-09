@@ -617,6 +617,11 @@ llapp.controller('TreeCtrl', [
         'casPartnerName',
         'app-example');
     };
+    $scope.addKey = function() {
+      return $scope.newTemplateNode('keyNode',
+  'keyName',
+  'key-example');
+    };
     $scope.newTemplateNode = function(type,
       title,
       init) {

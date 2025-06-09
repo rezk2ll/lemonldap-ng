@@ -1938,6 +1938,32 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'key' => {
             'type' => 'password'
         },
+        'keyComment' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'keyId' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'keyNodes' => {
+            'type' => 'keyNodeContainer'
+        },
+        'keyPrivate' => {
+            'default' => '',
+            'type'    => 'EcOrRSAPrivateKey'
+        },
+        'keyPrivatePwd' => {
+            'default' => '',
+            'type'    => 'password'
+        },
+        'keyPublic' => {
+            'default' => '',
+            'type'    => 'EcOrRSAPublicKeyOrCertificate'
+        },
+        'keys' => {
+            'type' => 'subContainer'
+        },
         'krbAllowedDomains' => {
             'type' => 'text'
         },

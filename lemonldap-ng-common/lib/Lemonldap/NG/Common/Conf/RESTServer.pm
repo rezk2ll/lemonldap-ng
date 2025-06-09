@@ -768,6 +768,39 @@ sub sfExtra {
     return $self->sendJSONresponse( $req, $res );
 }
 
+## Keys
+sub keyNodes {
+    my ( $self, $req, @path ) = @_;
+    {
+        local $" = ",";
+        $self->logger->debug("Keynode @path");
+    }
+
+    return $self->complexNodesRoot( $req, "keys", "keyNode" ) unless (@path);
+
+    my $keyId = shift @path;
+    my $query = shift @path;
+
+    unless ($query) {
+        return $self->sendError( $req,
+            "Bad request: keyNodes query must ask for a key", 400 );
+    }
+
+    # setDefault response for new keyIds
+    return $self->sendError( $req, 'setDefault', 200 )
+      if ( $keyId =~ /^new__/ );
+
+    # Reject unknown keyIds
+    return $self->sendError( $req, "Unknown key ID ($keyId)", 400 )
+      unless ( defined eval { $self->getConfKey( $req, 'keys' )->{$keyId}; } );
+
+    my ( $id, $resp ) = ( 1, [] );
+
+    my $value =
+      eval { $self->getConfKey( $req, "keys" )->{$keyId}->{$query}; } // undef;
+    return $self->sendJSONresponse( $req, { value => $value } );
+}
+
 # 33 - Root queries
 #      -----------
 

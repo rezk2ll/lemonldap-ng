@@ -201,6 +201,7 @@ our \$specialNodeHash = {
     oidcRPMetaDataNodes  => [qw(oidcRPMetaDataOptions oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims oidcRPMetaDataMacros oidcRPMetaDataScopeRules)],
     casSrvMetaDataNodes  => [qw(casSrvMetaDataOptions casSrvMetaDataExportedVars)],
     casAppMetaDataNodes  => [qw(casAppMetaDataOptions casAppMetaDataExportedVars casAppMetaDataMacros)],
+    keyNodes  => [qw(keys)],
 };
 
 EOF
@@ -864,7 +865,7 @@ system.
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Manager::Build;
-  
+
   Lemonldap::NG::Manager::Build->run(
     structFile            => "site/htdocs/static/struct.json",
     confTreeFile          => "site/htdocs/static/js/conftree.js",

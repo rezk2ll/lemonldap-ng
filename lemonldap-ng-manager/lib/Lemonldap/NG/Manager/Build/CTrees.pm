@@ -386,6 +386,18 @@ sub cTrees {
             },
             'casAppMetaDataMacros',
         ],
+        keyNode => [ {
+                title => 'KeyMaterial',
+                form  => 'RSACertKey',
+                group => [ 'keyPrivate', 'keyPrivatePwd', 'keyPublic' ]
+            },
+            {
+                title => 'keyOptions',
+                help  => 'keys.html#options',
+                form  => 'simpleInputContainer',
+                nodes => [ 'keyId', 'keyComment', ],
+            },
+        ],
     };
 }
 

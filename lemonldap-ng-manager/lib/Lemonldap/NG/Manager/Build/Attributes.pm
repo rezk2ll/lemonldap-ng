@@ -5504,6 +5504,23 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
 'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
         },
+
+        # Fake attribute: used by manager REST API to agglomerate all other
+        # nodes
+        keyNodes => {
+            type     => 'keyNodeContainer',
+            help     => 'keys.html',
+            template => 'keyNode',
+        },
+        keys => {
+            type          => 'subContainer',
+            documentation => 'Root of keys',
+        },
+        keyPrivate => { type => 'EcOrRSAPrivateKey', default => "" },
+        keyPrivatePwd => { type => 'password', default => "" },
+        keyPublic => { type => 'EcOrRSAPublicKeyOrCertificate', default => "" },
+        'keyId' => { type => "text", default => "" },
+        'keyComment' => { type => 'text', default => "" },
     };
 }
 

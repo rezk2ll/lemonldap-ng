@@ -51,7 +51,7 @@ sub init {
                   applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
                   casSrvMetaDataNodes casAppMetaDataNodes
                   authChoiceModules grantSessionRules combModules sfExtra
-                  openIdIDPList)
+                  openIdIDPList keyNodes)
             ]
         },
         ['GET']
@@ -119,10 +119,11 @@ sub newRSAKey {
       if (@others);
 
     my $key_size = $self->defaultNewKeySize;
-    my $query = $req->jsonBodyToObj;
+    my $query    = $req->jsonBodyToObj;
     my $password = $query->{password};
 
-    my $keys = Lemonldap::NG::Common::Util::Crypto::genRsaKey($key_size, $password);
+    my $keys =
+      Lemonldap::NG::Common::Util::Crypto::genRsaKey( $key_size, $password );
 
     return $self->sendJSONresponse( $req, $keys );
 }
@@ -148,12 +149,13 @@ sub newEcKeys {
 
 sub _generateX509 {
     my ( $self, $password ) = @_;
-    my $conf = $self->confAcc->getConf();
-    my $key_size = $self->defaultNewKeySize;
+    my $conf        = $self->confAcc->getConf();
+    my $key_size    = $self->defaultNewKeySize;
     my $portal_uri  = new URI::URL( $conf->{portal} || "http://localhost" );
     my $portal_host = $portal_uri->host;
 
-    return Lemonldap::NG::Common::Util::Crypto::genCertKey($key_size, $password, $portal_host);
+    return Lemonldap::NG::Common::Util::Crypto::genCertKey( $key_size,
+        $password, $portal_host );
 }
 
 #      Sending a test Email
@@ -443,7 +445,9 @@ sub newRawConf {
             $self->auditLog(
                 $req,
                 message => (
-                    'User ' . $self->p->userId($req) . " has stored (raw) conf $s"
+                        'User '
+                      . $self->p->userId($req)
+                      . " has stored (raw) conf $s"
                 ),
                 code   => "CONF_STORED_RAW",
                 user   => $self->p->userId($req),
