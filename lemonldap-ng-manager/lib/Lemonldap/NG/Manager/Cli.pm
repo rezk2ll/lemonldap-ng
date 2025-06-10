@@ -42,6 +42,8 @@ has jsonConverter => (
     is      => 'rw',
     default => sub { JSON->new->allow_nonref->canonical->pretty },
 );
+has keep_last   => ( is => 'rw' );
+has keep_recent => ( is => 'rw' );
 
 sub get {
     my ( $self, @keys ) = @_;
@@ -497,36 +499,34 @@ sub rollback {
 }
 
 sub purge {
-    my ( $self, $flag, $flag_value ) = @_;
-    unless ( @_ % 3 == 0 && grep { $_ eq $flag }
-        ( '--keep-last', '--keep-recent' ) )
-    {
+    my ($self) = @_;
+    unless ( $self->keep_last xor $self->keep_recent ) {
         die
 'usage: purge --keep-last <value> | --keep-recent <number of seconds to keep>';
     }
     my @configs  = $self->mgr->confAcc->available();
     my $n_config = scalar @configs;
 
-    if ( $flag eq '--keep-last' ) {
-        if ( $n_config < $flag_value ) {
+    if ( $self->keep_last ) {
+        if ( $n_config < $self->keep_last ) {
             $self->logger->warn(
-"The number of configs to keep ($flag_value) is more than the number of available configs ($n_config)"
+"The number of configs to keep ($self->{keep_last}) is more than the number of available configs ($n_config)"
             );
         }
 
-        my @to_delete = @configs[ 0 .. $#configs - $flag_value ];
+        my @to_delete = @configs[ 0 .. $#configs - $self->keep_last ];
         if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
         }
         _config_delete( $self, @to_delete );
     }
-    if ( $flag eq '--keep-recent' ) {
+    if ( $self->keep_recent ) {
 
 # The keep-recent argument is a relative number of seconds to keep. Compute an absolute offset to keep
-        my $absoluteOffset = time() - $flag_value;
+        my $absoluteOffset = time() - $self->keep_recent;
         my @to_delete      = grep {
-            $self->mgr->confAcc->getConf( { cfgNum => $_ } )->{cfgDate} <
-              $absoluteOffset
+            my $r = $self->mgr->confAcc->getConf( { cfgNum => $_ } );
+            $r && ref $r && $r->{cfgDate} < $absoluteOffset
         } @configs;
         if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
@@ -688,6 +688,7 @@ sub run {
     my @REST;
     for ( my $i = 0 ; $i < @_ ; $i++ ) {
         if ( $_[$i] =~ s/^--?(\w)/$1/ ) {
+            $_[$i] =~ s/-/_/g;
             my $k    = $_[$i];
             my $bool = ( $k =~ booleanOptions );
             my $v    = $bool ? 1 : $_[ $i + 1 ];
