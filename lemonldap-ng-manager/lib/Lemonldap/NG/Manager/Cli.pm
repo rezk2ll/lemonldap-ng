@@ -666,7 +666,7 @@ sub _save {
     my $langMessages;
     if ( open my $_json, "<", $langFile ) {
         local $/ = undef;
-        $langMessages = $self->json->decode(<$_json>);
+        $langMessages = $self->jsonConverter->decode(<$_json>);
     }
 
     # Display result
