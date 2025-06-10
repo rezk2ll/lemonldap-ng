@@ -3990,7 +3990,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'portalDisplayOfflineTokens' => {
-            'default' => 0,
+            'default' => '$_auth eq \'OIDC\'',
             'type'    => 'boolOrExpr'
         },
         'portalDisplayOidcConsents' => {

@@ -23,7 +23,7 @@ use constant name => "OidcOfflineTokens";
 has rule => (
     is      => "ro",
     lazy    => 1,
-    builder => sub { 1 },    # Always return true to always show the tab
+    builder => sub { $_[0]->conf->{portalDisplayOfflineTokens} },
 );
 with 'Lemonldap::NG::Portal::MenuTab';
 
