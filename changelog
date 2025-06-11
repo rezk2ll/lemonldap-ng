@@ -6,6 +6,7 @@ lemonldap-ng (2.21.1) noble; urgency=medium
     * #3367: OIDC doesn't manage "prompt=none" for unauthenticated users
     * #3397: Adding a new CAS application in Manager also add a CAS server with the same name
     * #3399: Internal server error when resending 2FA code if token has expired
+    * #3401: _lastAuthnUTime missing when using "Switch context another user"
 
   * Improvements:
     * #3363: Add Slovak translation into portal
