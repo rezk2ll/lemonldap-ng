@@ -39,7 +39,7 @@ sub tree {
                                         'portalDisplayLoginHistory',
                                         'portalDisplayChangePassword',
                                         'portalDisplayOidcConsents',
-                                        'portalDisplayOfflineTokens'
+                                        'portalDisplayOfflineTokens',
                                         'portalDisplayLogout',
                                         'portalDisplayOrder'
                                     ]

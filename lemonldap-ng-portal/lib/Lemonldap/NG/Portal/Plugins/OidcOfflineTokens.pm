@@ -52,6 +52,7 @@ sub display {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
+    my $regex          = qr/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
 
     $self->logger->debug("Reading OidcOfflineTokens");
     my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
@@ -85,7 +86,6 @@ sub display {
         }
         @$activeSessions = map {
             my $epoch;
-            my $regex = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
 
             if ( $sessions->{$_}->{_updateTime} ) {
                 if ( my ( $y, $mo, $d, $h, $mi, $s ) =

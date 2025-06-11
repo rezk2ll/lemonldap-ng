@@ -1559,15 +1559,15 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Display reset password button in portal',
+        },    
+        portalDisplayOfflineTokens => {
+            'default' => '$_auth eq \'OIDC\'',
+            'type'    => 'boolOrExpr'
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
             default       => '$_oidcConsents && $_oidcConsents =~ /\w+/',
             documentation => 'Display OIDC consents tab in portal',
-        },
-        'portalDisplayOfflineTokens' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
         },
         portalDisplayOrder => {
             type    => 'text',
