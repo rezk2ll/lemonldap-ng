@@ -1,3 +1,17 @@
+lemonldap-ng (2.21.1) noble; urgency=medium
+
+  * Bugs:
+    * #3205: lemonldap scripts fail with permission error when run as root with pg tls backend
+    * #3361: Empty display parameter sent in OIDC authorization request
+    * #3367: OIDC doesn't manage "prompt=none" for unauthenticated users
+    * #3397: Adding a new CAS application in Manager also add a CAS server with the same name
+    * #3399: Internal server error when resending 2FA code if token has expired
+
+  * Improvements:
+    * #3363: Add Slovak translation into portal
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 11 Jun 2025 10:56:27 +0200
+
 lemonldap-ng (2.21.0) noble; urgency=medium
 
   * Bugs:
