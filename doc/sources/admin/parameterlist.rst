@@ -31,6 +31,7 @@ SSLVar                                                                          
 SSLVarIf                                                                                                                                     ✔
 activeTimer                                             Enable timers on portal pages                                                        ✔
 adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
+adminLogoutServerSecret                                 REST OIDC token revocation secret                                                    ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
 appAccessHistoryEnabled                                 Shall OIDC/SAML/CAS protected apps access be recorded to session?                    ✔
 applicationList                                         Applications list                                                                    ✔
@@ -281,6 +282,7 @@ ldapCAFile                                              Location of the certific
 ldapCAPath                                              Location of the CA directory for LDAP connections                                    ✔
 ldapChangePasswordAsUser                                                                                                                     ✔
 ldapExportedVars                                        LDAP exported variables                                                              ✔
+ldapForcePasswordChangeExpirationWarning                Delay to force password change if password is about to expire                        ✔
 ldapGetUserBeforePasswordChange                                                                                                              ✔
 ldapGroupAttributeName                                  LDAP attribute name for member in groups                                             ✔
 ldapGroupAttributeNameGroup                             LDAP attribute name in group entry referenced as member in groups                    ✔
@@ -396,6 +398,7 @@ nullAuthnLevel                                          Null authentication leve
 oidcAuthnLevel                                          OpenID Connect authentication level                                                  ✔
 oidcDropCspHeaders                                      Drop CORS headers from OIDC issuer responses                                         ✔
 oidcOPMetaDataOptions                                                                                                                        ✔                      [1]
+oidcOfflineTokens                                       OIDC personnal offline token removal                                                 ✔
 oidcRPCallbackGetParam                                  OpenID Connect Callback GET URLparameter                                             ✔
 oidcRPMetaDataOptions                                                                                                                        ✔                      [1]
 oidcRPStateTimeout                                      OpenID Connect Timeout of state sessions                                             ✔
@@ -429,6 +432,7 @@ oidcServiceMetaDataIntrospectionURI                     OpenID Connect introspec
 oidcServiceMetaDataIssuer                               OpenID Connect issuer                                                                ✔
 oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endpoint                                                         ✔
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
+oidcServiceMetaDataRevokeURI                            OpenID Connect token revocation endpoint                                             ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
 oidcServiceMetadataTtl                                  OIDC Metadata TTL                                                                    ✔
@@ -510,6 +514,7 @@ portalDisplayChangePassword                             Display password tab in 
 portalDisplayGeneratePassword                           Display password generate box in reset password form                                 ✔
 portalDisplayLoginHistory                               Display login history tab in portal                                                  ✔
 portalDisplayLogout                                     Display logout tab in portal                                                         ✔
+portalDisplayOfflineTokens                                                                                                                   ✔
 portalDisplayOidcConsents                               Display OIDC consents tab in portal                                                  ✔
 portalDisplayOrder                                      List for ordering tabs in portal                                                     ✔
 portalDisplayPasswordPolicy                             Display policy in password form                                                      ✔
