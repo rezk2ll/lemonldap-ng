@@ -122,6 +122,7 @@ t/41-Common-EmailAddress.t
 t/45-importMetadata-config.t
 t/45-importMetadata.t
 t/50-Combination-Parser.t
+t/60-Cli-JSON.t
 t/60-Hashed-Session.t
 t/60-Purge.t
 t/60-Session-Cache.t

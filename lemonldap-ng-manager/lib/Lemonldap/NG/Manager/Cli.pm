@@ -8,7 +8,9 @@ use JSON;
 use Hash::Merge::Simple;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.12';
+use constant booleanOptions => qr/^(?:json)$/;
+
+our $VERSION = '2.22.0';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -35,12 +37,24 @@ has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
   ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->userLogger } );
 has localConf => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr } );
+has json      => ( is => 'rw' );
+has jsonConverter => (
+    is      => 'rw',
+    default => sub { JSON->new->allow_nonref->canonical->pretty },
+);
+has keep_last   => ( is => 'rw' );
+has keep_recent => ( is => 'rw' );
 
 sub get {
     my ( $self, @keys ) = @_;
+    my $res = {};
     die 'get requires at least one key' unless (@keys);
   L: foreach my $key (@keys) {
         my $value = $self->_getKey($key);
+        if ( $self->json ) {
+            $res->{$key} = $value;
+            next;
+        }
         if ( ref $value eq 'HASH' ) {
             print "$key has the following keys:\n";
             print "   $_\n" foreach ( sort keys %$value );
@@ -67,6 +81,10 @@ sub get {
             print "$key = $value\n";
         }
     }
+    if ( @keys == 1 ) {
+        $res = $res->{ $keys[0] };
+    }
+    print $self->jsonConverter->encode($res) if $self->json;
 }
 
 sub set {
@@ -76,12 +94,27 @@ sub set {
     my @list;
     foreach my $key ( keys %pairs ) {
         my $oldValue = $self->_getKey($key);
+        my $value    = $pairs{$key};
         if ( ref $oldValue ) {
-            die "$key seems to be a hash, modification refused";
+            if ( $self->json ) {
+                $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
+                die "Bad value $pairs{$key}: $@" if $@;
+                $oldValue = $self->jsonConverter->encode($oldValue);
+            }
+            else {
+                die "$key seems to be a hash, modification refused";
+            }
+        }
+        elsif ( $pairs{$key} =~ /^\s*[\{\[]/ ) {
+            $value = eval { $self->jsonConverter->decode( $pairs{$key} ) };
+            if ($@) {
+                warn "Unable to decode: $pairs{$key}";
+                $value = $pairs{$key};
+            }
         }
         $oldValue //= '';
         $self->logger->info("CLI: Set key $key with $pairs{$key}");
-        push @list, [ $key, $oldValue, $pairs{$key} ];
+        push @list, [ $key, $oldValue, $pairs{$key}, $value ];
     }
     unless ( $self->yes ) {
         print "Proposed changes:\n";
@@ -97,8 +130,8 @@ sub set {
     }
     require Clone;
     my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
-    foreach my $key ( keys %pairs ) {
-        $self->_setKey( $new, $key, $pairs{$key} );
+    foreach (@list) {
+        $self->_setKey( $new, $_->[0], $_->[3] );
     }
     return $self->_save($new);
 }
@@ -386,9 +419,8 @@ sub lastCfg {
 
 sub save {
     my ($self) = @_;
-    my $conf   = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
-    my $json   = JSON->new->indent->canonical;
-    print $json->encode($conf);
+    my $conf = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
+    print $self->jsonConverter->encode($conf);
 }
 
 sub restore {
@@ -467,36 +499,34 @@ sub rollback {
 }
 
 sub purge {
-    my ( $self, $flag, $flag_value ) = @_;
-    unless ( @_ % 3 == 0 && grep { $_ eq $flag }
-        ( '--keep-last', '--keep-recent' ) )
-    {
+    my ($self) = @_;
+    unless ( $self->keep_last xor $self->keep_recent ) {
         die
 'usage: purge --keep-last <value> | --keep-recent <number of seconds to keep>';
     }
     my @configs  = $self->mgr->confAcc->available();
     my $n_config = scalar @configs;
 
-    if ( $flag eq '--keep-last' ) {
-        if ( $n_config < $flag_value ) {
+    if ( $self->keep_last ) {
+        if ( $n_config < $self->keep_last ) {
             $self->logger->warn(
-"The number of configs to keep ($flag_value) is more than the number of available configs ($n_config)"
+"The number of configs to keep ($self->{keep_last}) is more than the number of available configs ($n_config)"
             );
         }
 
-        my @to_delete = @configs[ 0 .. $#configs - $flag_value ];
+        my @to_delete = @configs[ 0 .. $#configs - $self->keep_last ];
         if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
         }
         _config_delete( $self, @to_delete );
     }
-    if ( $flag eq '--keep-recent' ) {
+    if ( $self->keep_recent ) {
 
 # The keep-recent argument is a relative number of seconds to keep. Compute an absolute offset to keep
-        my $absoluteOffset = time() - $flag_value;
+        my $absoluteOffset = time() - $self->keep_recent;
         my @to_delete      = grep {
-            $self->mgr->confAcc->getConf( { cfgNum => $_ } )->{cfgDate} <
-              $absoluteOffset
+            my $r = $self->mgr->confAcc->getConf( { cfgNum => $_ } );
+            $r && ref $r && $r->{cfgDate} < $absoluteOffset
         } @configs;
         if ( scalar @to_delete == $n_config ) {
             die 'This would delete all configs';
@@ -634,9 +664,9 @@ sub _save {
     my $langFile = $self->mgr->templateDir . "/languages/en.json";
     $langFile =~ s/templates/static/;
     my $langMessages;
-    if ( open my $json, "<", $langFile ) {
+    if ( open my $_json, "<", $langFile ) {
         local $/ = undef;
-        $langMessages = JSON::from_json(<$json>);
+        $langMessages = $self->jsonConverter->decode(<$_json>);
     }
 
     # Display result
@@ -655,19 +685,29 @@ sub run {
 
     # Options simply call corresponding accessor
     my $args = {};
-    while ( $_[0] =~ s/^--?// ) {
-        my $k = shift;
-        my $v = shift;
-        if ( ref $self ) {
-            eval { $self->$k($v) };
-            if ($@) {
-                die "Unknown option -$k or bad value ($@)";
+    my @REST;
+    for ( my $i = 0 ; $i < @_ ; $i++ ) {
+        if ( $_[$i] =~ s/^--?(\w)/$1/ ) {
+            $_[$i] =~ s/-/_/g;
+            my $k    = $_[$i];
+            my $bool = ( $k =~ booleanOptions );
+            my $v    = $bool ? 1 : $_[ $i + 1 ];
+            $i++ unless $bool;
+            if ( ref $self ) {
+                eval { $self->$k($v) };
+                if ($@) {
+                    die "Unknown option -$k or bad value ($@)";
+                }
+            }
+            else {
+                $args->{$k} = $v;
             }
         }
         else {
-            $args->{$k} = $v;
+            push @REST, $_[$i];
         }
     }
+    @_ = @REST;
     unless ( ref $self ) {
         $self = $self->new($args);
     }

@@ -5,26 +5,30 @@ use strict;
 use POSIX;
 use Getopt::Long qw(:config pass_through);
 use Pod::Usage;
+use constant booleanOptions => qr/^(?:json)$/;
 
 our $opt_user  = '__APACHEUSER__';
 our $opt_group = '__APACHEGROUP__';
+our $opt_json;
 GetOptions(
     "user=s"  => \$opt_user,
-    "group=s" => \$opt_group
+    "group=s" => \$opt_group,
 ) or pod2usage("Error in command line arguments");
 
 my $action;
 
 eval {
-    POSIX::setgid( scalar( getgrnam($opt_group) ) );
-    POSIX::setuid( scalar( getpwnam($opt_user) ) );
-    my (undef, undef, undef, undef, undef, undef, undef, $homedir, undef) = getpwnam($opt_user);
+    POSIX::setgid( scalar( getgrnam($opt_group) ) ) if getgrnam($opt_group);
+    POSIX::setuid( scalar( getpwnam($opt_user) ) )  if getpwnam($opt_user);
+    my ( undef, undef, undef, undef, undef, undef, undef, $homedir, undef ) =
+      getpwnam($opt_user);
     $ENV{HOME} = $homedir if $homedir;
 };
 
 for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
-    if ( $ARGV[$i] =~ /^-/ ) {
-        $i++;
+    my $arg = $ARGV[$i];
+    if ( $arg =~ s/^-+// ) {
+        $i++ unless $arg =~ booleanOptions;
         next;
     }
     $action = $ARGV[$i];
@@ -100,6 +104,7 @@ Options:
  -cfgNum NUM                  : set new configuration number (requires -force 1)
  -sep CHAR                    : separator of hierarchical values (by default: /)
  -iniFile FILE                : path to an alternate lemonldap-ng.ini file
+ -json                        : print result in JSON format
 
 Additional options:
 
@@ -280,6 +285,10 @@ Run the script under the I<USER> system user identity
 =item B<-g I<GROUP>, --group=I<GROUP>>
 
 Run the script under the I<GROUP> system group identity
+
+=item B<-json>
+
+Display result in JSON format
 
 =back
 

@@ -128,6 +128,7 @@ is($clientConfAcc->available(), 2, 'Correct number of configurations after purge
 
 # Generate 3 forged configs
 &genConfFiles;
+$client = llclient;
 @cmd = qw(-yes 1 purge --keep-recent 5);
 combined_like(
     sub { $client->run(@cmd) },
