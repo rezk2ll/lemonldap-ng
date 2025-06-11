@@ -25,7 +25,7 @@ SMTPPort                                                Fix SMTP port           
 SMTPServer                                              SMTP Server                                                                          ✔
 SMTPTLS                                                 TLS protocol to use with SMTP                                                        ✔
 SMTPTLSOpts                                             TLS/SSL options for SMTP                                                             ✔
-SSLAuthnLevel                                           SSL authentication level                                                             ✔
+SSLAuthnLevel                                           Mutual TLS authentication level                                                      ✔
 SSLIssuerVar                                                                                                                                 ✔
 SSLVar                                                                                                                                       ✔
 SSLVarIf                                                                                                                                     ✔
@@ -335,7 +335,7 @@ lokiTenantHeader                                        Loki Tenant Header name 
 lokiUrl                                                 Loki API                                                                             ✔      ✔       ✔       ✔
 lokiUserService                                         Loki (userLogger context)                                                            ✔      ✔       ✔       ✔
 lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
-lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
+lwpSslOpts                                              TLS/SSL options passed to LWP::UserAgent                                             ✔
 macros                                                  Macros                                                                               ✔
 mail2fActivation                                        Mail second factor activation                                                        ✔
 mail2fAuthnLevel                                        Authentication level for users authenticated by Mail second factor                   ✔
@@ -701,8 +701,8 @@ slaveUserHeader                                                                 
 soapConfigServer                                        Enable SOAP config server                                                            ✔
 soapProxyUrn                                            SOAP URN for Proxy                                                                   ✔                      ✔
 soapSessionServer                                       Enable SOAP session server                                                           ✔
-sslByAjax                                               Use Ajax request for SSL                                                             ✔
-sslHost                                                 URL for SSL Ajax request                                                             ✔
+sslByAjax                                               Use Ajax request for Mutual TLS Authentication                                       ✔
+sslHost                                                 URL for Mutual TLS Authentication Ajax request                                       ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
 statusQueueName                                         Status channel name                                                                         ✔               ✔
 stayConnected                                           Stay connected activation rule                                                       ✔
