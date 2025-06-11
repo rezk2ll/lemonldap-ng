@@ -151,6 +151,7 @@ lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/OidcOfflineTokens.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
@@ -360,6 +361,9 @@ site/htdocs/static/common/js/notifications.min.js.map
 site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/oidcchecksession.min.js.map
+site/htdocs/static/common/js/oidcOfflineTokens.js
+site/htdocs/static/common/js/oidcOfflineTokens.min.js
+site/htdocs/static/common/js/oidcOfflineTokens.min.js.map
 site/htdocs/static/common/js/password2fregistration.js
 site/htdocs/static/common/js/password2fregistration.min.js
 site/htdocs/static/common/js/password2fregistration.min.js.map
@@ -460,6 +464,7 @@ site/js-src/kerberos.js
 site/js-src/kerberosChoice.js
 site/js-src/notifications.js
 site/js-src/oidcchecksession.js
+site/js-src/oidcOfflineTokens.js
 site/js-src/password2fregistration.js
 site/js-src/portal.js
 site/js-src/ppolicy.js
@@ -510,6 +515,7 @@ site/templates/bootstrap/notifications.tpl
 site/templates/bootstrap/oidcConsents.tpl
 site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
+site/templates/bootstrap/oidcOfflineTokens.tpl
 site/templates/bootstrap/okta2fchoice.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
@@ -778,6 +784,7 @@ t/32-OIDC-strict-JWS-private_key_jwt.t
 t/32-OIDC-Token-Exchange.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
+t/32-RemoveOIDCToken.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
