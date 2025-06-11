@@ -295,6 +295,7 @@ sub defaultValues {
         'portalDisplayGeneratePassword' => 1,
         'portalDisplayLoginHistory'     => 1,
         'portalDisplayLogout'           => 1,
+        'portalDisplayOfflineTokens'    => '$_auth eq \'OIDC\'',
         'portalDisplayOidcConsents'     =>
           '$_oidcConsents && $_oidcConsents =~ /\\w+/',
         'portalDisplayOrder' =>

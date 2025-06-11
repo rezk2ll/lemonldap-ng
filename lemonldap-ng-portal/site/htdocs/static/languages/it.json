@@ -250,6 +250,7 @@
 "oidcConsent":"L'applicazione %s vorrebbe sapere:",
 "oidcConsents":"Consensi OIDC",
 "oidcConsentsFull":"Consensi OpenID Connect",
+"oidcOfflineTokens":"Offline Sessions",
 "okta2f":"Okta",
 "okta2fSelectFactor":"Selezionare il modulo Okta che si desidera utilizzare",
 "okta2fpush":"Okta Push",

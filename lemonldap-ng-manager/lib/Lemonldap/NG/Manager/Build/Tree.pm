@@ -39,6 +39,7 @@ sub tree {
                                         'portalDisplayLoginHistory',
                                         'portalDisplayChangePassword',
                                         'portalDisplayOidcConsents',
+                                        'portalDisplayOfflineTokens',
                                         'portalDisplayLogout',
                                         'portalDisplayOrder'
                                     ]
@@ -973,6 +974,7 @@ sub tree {
                             title => 'adminLogoutServer',
                             nodes => [ 'adminLogoutServerSecret' ]
                         },
+                        'oidcOfflineTokens',
                     ]
                 },
                 {

@@ -16,6 +16,7 @@ LemonLDAP::NG portal menu proposes 5 modules:
 -  **Login history**: display user's last logins and failed logins
 -  **Password change**: form to change password
 -  **OIDC consents**: display user's OpenId Connect consents
+-  **OIDC offline tokens**: display user's OpenId Connect sessions with offline tokens (needs offline session tab plugin to be enabled) 
 -  **Logout**: logout button
 -  **Display order**: list used for sorting modules (default: Appslist ChangePassword LoginHistory OidcConsents Logout)
 

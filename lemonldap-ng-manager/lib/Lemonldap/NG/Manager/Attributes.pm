@@ -2509,6 +2509,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcDropCspHeaders' => {
             'type' => 'bool'
         },
+        'oidcOfflineTokens' => {
+            'type' => 'bool'
+        },
         'oidcOPMetaDataExportedVars' => {
             'default' => {
                 'cn'   => 'name',
@@ -3984,6 +3987,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'portalDisplayLogout' => {
             'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayOfflineTokens' => {
+            'default' => '$_auth eq \'OIDC\'',
             'type'    => 'boolOrExpr'
         },
         'portalDisplayOidcConsents' => {

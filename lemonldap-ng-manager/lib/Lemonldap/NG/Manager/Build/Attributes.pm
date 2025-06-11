@@ -1499,6 +1499,12 @@ sub attributes {
             documentation => 'Ignore Crowdsec errors',
         },
 
+        # OIDC personnal offline token removal
+        oidcOfflineTokens => {
+            type          => 'bool',
+            documentation => 'OIDC personnal offline token removal',
+        },
+
         # History
         failedLoginNumber => {
             default       => 5,
@@ -1553,6 +1559,10 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Display reset password button in portal',
+        },    
+        portalDisplayOfflineTokens => {
+            'default' => '$_auth eq \'OIDC\'',
+            'type'    => 'boolOrExpr'
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
