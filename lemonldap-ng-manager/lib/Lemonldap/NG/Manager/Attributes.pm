@@ -5466,6 +5466,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'syslogFacility' => {
             'type' => 'text'
         },
+        'syslogSockOptions' => {
+            'keyTest' => qr/^(?:type|path|timeout|host|port)$/,
+            'type'    => 'keyTextContainer'
+        },
         'timeout' => {
             'default' => 72000,
             'test'    => sub {

@@ -35,9 +35,9 @@ my @notManagedAttributes = (
     'staticPrefix',
 
     # Loggers
-    'log4perlConfFile', 'userSyslogFacility', 'logger', 'sentryDsn',
-    'syslogFacility',   'userLogger',         'logLevel',
-    'lokiUserService',  'lokiTenant',         'lokiUrl', 'lokiTenantHeader',
+    'log4perlConfFile', 'userSyslogFacility', 'logger',     'sentryDsn',
+    'syslogFacility',   'syslogSockOptions',  'userLogger', 'logLevel',
+    'lokiUserService',  'lokiTenant',         'lokiUrl',    'lokiTenantHeader',
     'lokiLabel', 'lokiService', 'lokiInstance', 'lokiEnv', 'lokiAuthorization',
 
     # Plugins parameters

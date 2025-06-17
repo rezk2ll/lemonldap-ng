@@ -211,6 +211,14 @@ You can also override options. Default values:
          `Sys::Syslog <https://metacpan.org/pod/Sys::Syslog>`__ Perl
          module.
 
+And you can add additional options. Example to send log to another host:
+
+.. code-block:: ini
+
+   syslogSockOptions = { host => "remote.com", port => 6514 }
+
+See `setlogsock() <https://metacpan.org/pod/Sys::Syslog#setlogsock()>`_ for more.
+
 Log4perl
 ~~~~~~~~
 
