@@ -51,18 +51,20 @@ sub getPublicNotifs {
       $self->notifObject->module->notifObject->getNotifications("public-warn");
     my $infos =
       $self->notifObject->module->notifObject->getNotifications("public-info");
-    my $res = to_json( {
-            "public_errors" =>
-              [ map { from_json( $errors->{$_} ) } keys %$errors ],
-            "public_warns" =>
-              [ map { from_json( $warns->{$_} ) } keys %$warns ],
-            "public_infos" => [ map { from_json( $infos->{$_} ) } keys %$infos ]
 
-        }
-    );
-    $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
+    my $public_errors = [ map { from_json( $errors->{$_} ) } keys %$errors ];
+    my $public_warns  = [ map { from_json( $warns->{$_} ) } keys %$warns ];
+    my $public_infos  = [ map { from_json( $infos->{$_} ) } keys %$infos ];
 
-    $req->data->{customScript} .= <<EOF if $res;
+    if ( @$public_errors || @$public_warns || @$public_infos ) {
+        my $res = to_json( {
+                public_errors => $public_errors,
+                public_warns  => $public_warns,
+                public_infos  => $public_infos,
+            }
+        );
+        $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
+        $req->data->{customScript} .= <<EOF if $res;
 <script type="application/init">
 {
   "publicNotifications": $res
@@ -70,7 +72,7 @@ sub getPublicNotifs {
 </script>
 <script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/carousel.js?v=$self->{p}->cacheTag"></script>
 EOF
-
+    }
     return PE_OK;
 }
 
