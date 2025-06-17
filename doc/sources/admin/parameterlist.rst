@@ -720,6 +720,7 @@ storePasswordEncrypted                                  Crypt the password in se
 strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
+syslogSockOptions                                       Option to send to setlogsock()                                                       ✔      ✔       ✔       ✔
 timeout                                                 Session timeout on server side                                                       ✔
 timeoutActivity                                         Session activity timeout on server side                                              ✔
 timeoutActivityInterval                                 Update session timeout interval on server side                                       ✔
