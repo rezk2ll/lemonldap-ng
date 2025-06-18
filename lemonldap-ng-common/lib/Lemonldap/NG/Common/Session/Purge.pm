@@ -5,9 +5,11 @@ use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
+use Lemonldap::NG::Common::Safelib;
 use JSON;
 use Mouse;
 use Time::HiRes;
+use POSIX qw(strftime);
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
@@ -55,6 +57,37 @@ has logger => (
         $logger = $logger->new($conf);
         $logger->error($err) if $err;
         return $logger;
+    },
+    lazy => 1,
+);
+
+has persistent_backend_options => (
+    is      => 'ro',
+    default => sub {
+        my $conf   = $_[0]->conf;
+        my $logger = $_[0]->logger;
+
+        my $type;
+        my $options;
+
+        # sessions
+        if ( $conf->{persistentStorage} ) {
+            $type = 'persistent';
+        }
+        else {
+            $type = 'global';
+        }
+
+        # load module
+        my $module = $conf->{"${type}Storage"};
+        eval "use $module";
+        die $@ if ($@);
+
+        $options = { %{ $conf->{"${type}StorageOptions"} // {} } };
+        $options->{backend} = $module;
+
+        $logger->debug("persistent session backend $module will be used");
+        return $options;
     },
     lazy => 1,
 );
@@ -155,6 +188,43 @@ has backends => (
 );
 
 has force => ( is => 'ro' );
+
+my %PSESSION_FILTERS = (
+    age => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            return ( defined( $entry->{_utime} )
+                  and $entry->{_utime} < ( time - $value ) );
+        }
+    },
+    update => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            my $min_updateTime =
+              strftime( "%Y%m%d%H%M%S", localtime( time - $value ) );
+            my $filter_result = ( defined( $entry->{_updateTime} )
+                  and $entry->{_updateTime} < $min_updateTime );
+        }
+    },
+    login => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            my $lastLogin =
+              $entry->{_loginHistory}->{successLogin}->[0]->{_utime};
+
+            my $filter_result = int(
+                not defined($lastLogin)
+                  or $lastLogin < ( time - $value )
+            );
+        }
+    },
+    sfdevice => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            return !Lemonldap::NG::Common::Safelib::has2f_internal($entry);
+        }
+    },
+);
 
 sub purge {
     my ($self) = @_;
@@ -467,6 +537,156 @@ sub _cleanup_errors {
         }
     }
     return;
+}
+
+sub persistentPurge {
+    my ( $self, $filters ) = @_;
+
+    my $internal_stats;
+
+    $self->logger->info("Persistent session purge started");
+
+    $internal_stats->{start_time}->{total} = Time::HiRes::time();
+
+    $self->_purge_persistent( $filters, $internal_stats );
+
+    $internal_stats->{end_time}->{total} = Time::HiRes::time();
+
+    my $total_purged = 0;
+    $total_purged += $_ for values %{ $internal_stats->{nb_purged} };
+    $internal_stats->{nb_purged}->{total} = $total_purged;
+
+    my $total_error = 0;
+    $total_error += $_ for values %{ $internal_stats->{nb_error} };
+    $internal_stats->{nb_error}->{total} = $total_error;
+
+    my $return_stats;
+    for my $type ( "total", 'Persistent' ) {
+        $return_stats->{$type}->{errors} = $internal_stats->{nb_error}->{$type};
+        $return_stats->{$type}->{purged} =
+          $internal_stats->{nb_purged}->{$type};
+        $return_stats->{$type}->{duration_u} = int(
+            1000000 * (
+                $internal_stats->{end_time}->{$type} -
+                  $internal_stats->{start_time}->{$type}
+            )
+        );
+    }
+
+    my $log = "Persistent session purge completed: ";
+    if ( $self->json ) {
+        $log .= to_json($return_stats);
+    }
+    else {
+        my @logentries;
+        for my $type ( "total", "Persistent" ) {
+            my $logentry .= "$type (";
+            $logentry    .= $return_stats->{$type}->{purged} . " purged, ";
+            $logentry    .= $return_stats->{$type}->{errors} . " errors in ";
+            $logentry    .= $return_stats->{$type}->{duration_u} . " us";
+            $logentry    .= ")";
+            push @logentries, $logentry;
+        }
+        $log .= join( ', ', @logentries );
+    }
+
+    $self->logger->info($log);
+
+    return {
+        success => 1,
+
+        purged => $total_purged,
+        errors => $total_error,
+        stats  => $return_stats,
+    };
+}
+
+sub _purge_persistent {
+    my ( $self, $filters, $internal_stats ) = @_;
+    my $type    = "Persistent";
+    my $conf    = $self->conf;
+    my $options = $self->persistent_backend_options;
+
+    my @t;
+
+    $internal_stats->{nb_error}->{$type}   = 0;
+    $internal_stats->{nb_purged}->{$type}  = 0;
+    $internal_stats->{start_time}->{$type} = Time::HiRes::time();
+
+    # Get all expired sessions
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $options,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            my $time  = time;
+
+            $self->logger->debug("Check session $id");
+
+            unless ($entry) {
+                $self->logger->debug("Session $id is empty");
+                return;
+            }
+
+            # Ignore non-persistent sessions
+            return unless ( $entry->{_session_kind} eq "Persistent" );
+
+            # safety check: do not remove if there are no filters
+            my $remove = keys %$filters ? 1 : 0;
+
+            while ( my ( $filter_type, $value ) = each %$filters ) {
+                if ( my $filter_configuration =
+                    $PSESSION_FILTERS{$filter_type} )
+                {
+                    my $filter_result =
+                      $filter_configuration->{filter}
+                      ->( $self, $entry, $value );
+                    $self->logger->debug(
+                        "$filter_type filter result: " . int($filter_result) );
+                    $remove &&= $filter_result;
+                }
+                else {
+                    $self->logger->debug("Unknown filter $filter_type");
+                    $remove = 0;
+                }
+            }
+
+            push @t, $id if $remove;
+
+        }
+    );
+
+    # Delete sessions
+    my @errors;
+    for my $id (@t) {
+
+        my $session = Lemonldap::NG::Common::Session->new(
+            storageModule        => $options->{backend},
+            storageModuleOptions => $options,
+            cacheModule          => $conf->{localSessionStorage},
+            cacheModuleOptions   => $conf->{localSessionStorageOptions},
+            id                   => $id,
+        );
+
+        unless ( $session->data ) {
+            $self->logger->debug("Error while opening session $id");
+            print STDERR "Error on session $id\n";
+            $internal_stats->{nb_error}->{$type}++;
+            push @errors, $id;
+            next;
+        }
+
+        unless ( $session->remove ) {
+            $self->logger->debug("Error while deleting session $id");
+            print STDERR "Error on session $id\n";
+            $internal_stats->{nb_error}->{$type}++;
+            push @errors, $id;
+            next;
+        }
+        $self->logger->debug("Session $id has been purged");
+        $internal_stats->{nb_purged}->{$type}++;
+    }
+    $internal_stats->{end_time}->{$type} = Time::HiRes::time();
 }
 
 sub localPurge {

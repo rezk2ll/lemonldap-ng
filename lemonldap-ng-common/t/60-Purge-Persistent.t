@@ -178,9 +178,9 @@ subtest "Purge psessions that have no 2FA" => sub {
 
     _storePSession( "persistent", "nokey", 10000, 40000 );
     _storePSession( "persistent", "emptykey", 10000, 20000,
-        { _2fDevices => [] } );
+        { _2fDevices => "[]" } );
     _storePSession( "persistent", "2fauser", 10000, 20000,
-        { _2fDevices => [ { fake => 1 } ] } );
+        { _2fDevices => '[ { "fake": "1" } ]' } );
 
     _test_purge( 50000, { sfdevice => 1 } );
     is_deeply(
