@@ -25,6 +25,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/Backends/Local.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/Overlay.pm
+lib/Lemonldap/NG/Common/Conf/Backends/Patroni.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
@@ -105,6 +106,7 @@ t/02-Common-Conf-File.t
 t/02-Common-Conf-Overlay.t
 t/02-Common-Conf-ServerEnv.t
 t/03-Common-Conf-CDBI.t
+t/03-Common-Conf-Patroni.t
 t/03-Common-Conf-RDBI.t
 t/05-Common-Conf-LDAP.t
 t/10-PSGI-Request.t
