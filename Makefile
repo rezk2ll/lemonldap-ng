@@ -673,6 +673,7 @@ install_bin:	install_conf_dir
 	@cp -f\
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
+		${SRCPORTALDIR}/scripts/purgePersistentSessions \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
 		${SRCPORTALDIR}/scripts/downloadSamlMetadata \

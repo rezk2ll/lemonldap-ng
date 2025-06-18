@@ -729,9 +729,11 @@ fi
 %files portal
 %{_mandir}/man1/downloadSamlMetadata*
 %{_mandir}/man1/purgeCentralCache*
+%{_mandir}/man1/purgePersistentSessions*
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
 %{lm_bindir}/downloadSamlMetadata
+%{lm_bindir}/purgePersistentSessions
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %{_unitdir}/lemonldap-ng-portal.service

@@ -2,8 +2,10 @@ etc/lemonldap-ng/portal-apache2.conf
 etc/lemonldap-ng/portal-nginx.conf
 usr/share/lemonldap-ng/bin/downloadSamlMetadata
 usr/share/lemonldap-ng/bin/purgeCentralCache
+usr/share/lemonldap-ng/bin/purgePersistentSessions
 usr/share/lemonldap-ng/portal
 usr/share/man/man3/Lemonldap::NG::Portal*
 usr/share/perl5/Lemonldap/NG/Portal*
 usr/share/man/man1/downloadSamlMetadata.1p
 usr/share/man/man1/purgeCentralCache.1p
+usr/share/man/man1/purgePersistentSessions.1p
