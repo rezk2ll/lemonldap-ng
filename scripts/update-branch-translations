@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+
+use strict;
+
+open my $f, '-|',
+  'git diff HEAD v2.0 lemonldap-ng-*/site/htdocs/static/languages/'
+  or die $!;
+
+my ($i, $name, %minus, %plus);
+while (<$f>) {
+    if (/^diff/) {
+        $i = 0;
+        if (%minus) {
+            print STDERR "Modifying $name\n";
+            open my $f, '<', $name or die $!;
+            my $new = '';
+            while ( my $line = <$f> ) {
+                my $k = $line;
+                $k =~ s/[\n\r]//g;
+                $k =~ s/^\s*(".*?").*$/$1/;
+                if ($minus{$k} and $plus{$k}) {
+                    if ($line ne $minus{$k}) {
+                        warn "BAD $line";
+                    } else {
+                        $line = $plus{$k};
+                    }
+                }
+                $new .= $line;
+            }
+            $f->close;
+            open $f, '>', $name or die $!;
+            print $f $new;
+            $f->close;
+        }
+        %minus = %plus = ();
+        next;
+    }
+    if (m#^\+\+\+ b/(.*)$#) {
+        $i = 1;
+        $name = $1;
+        next;
+    }
+    if ($i) {
+        next if /^\@\@/;
+        if (s/^\-\s*(".*?"):/$1:/) {
+            $minus{$1} = $_;
+        }
+        elsif (s/^\+\s*(".*?"):/$1:/) {
+            my $k = $1;
+            $plus{$k} = $_;
+        }
+    }
+}
