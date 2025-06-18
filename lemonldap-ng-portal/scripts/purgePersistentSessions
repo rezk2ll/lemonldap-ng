@@ -13,13 +13,14 @@ use Lemonldap::NG::Common::Session::Purge;
 
   my %cli_opts;
 my $result =
-  GetOptions( \%cli_opts, 'debug|d', 'json|j', 'help|h', 'creation=i', 'last-update=i',
+  GetOptions( \%cli_opts, 'debug|d', 'json|j', 'help|h', 'audit|a', 'creation=i', 'last-update=i',
     'recent-login=i', 'no-registered-2fa' );
 pod2usage(0) if $cli_opts{help};
 
 my $opts = {
     ( $cli_opts{debug} ? ( logLevel => 'debug' ) : () ),
     ( $cli_opts{json}  ? ( json     => 1 )       : () ),
+    ( $cli_opts{audit}  ? ( audit     => 1 )       : () ),
 };
 
 my $filters = {
@@ -78,6 +79,10 @@ Print additional diagnostics to STDERR
 =item B<--json>, B<-j>
 
 Log execution stats as JSON instead of human-readable text
+
+=item B<--audit>, B<-j>
+
+Emit an audit log for each removed persistent session
 
 =back
 

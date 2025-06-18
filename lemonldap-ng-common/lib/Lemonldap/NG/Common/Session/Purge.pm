@@ -6,6 +6,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Safelib;
+use Lemonldap::NG::Common::PSGI::Request;
 use JSON;
 use Mouse;
 use Time::HiRes;
@@ -15,6 +16,7 @@ use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 has logLevel => ( is => 'rw' );
 has force    => ( is => 'rw' );
+has audit    => ( is => 'rw' );
 has json     => ( is => 'rw' );
 has conf => (
     is      => 'ro',
@@ -56,6 +58,50 @@ has logger => (
         }
         $logger = $logger->new($conf);
         $logger->error($err) if $err;
+        return $logger;
+    },
+    lazy => 1,
+);
+
+has userLogger => (
+    is      => 'ro',
+    default => sub {
+        my $self = shift;
+        my $conf = $self->conf;
+        my $logger =
+          $self->conf->{userLogger} || $ENV{LLNG_USERLOGGER} || defaultLogger;
+        $logger =~ s/^::/Lemonldap::NG::Common::Logger::/;
+        $logger = defaultLogger
+          if $logger eq 'Lemonldap::NG::Common::Logger::Apache2';
+        eval "require $logger";
+        die $@ if ($@);
+        my $err;
+
+        unless ( $conf->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ ) {
+            $err = "Bad logLevel value $conf->{logLevel}, use 'info'";
+            $conf->{logLevel} = 'info';
+        }
+        $logger = $logger->new($conf);
+        $logger->error($err) if $err;
+        return $logger;
+    },
+    lazy => 1,
+);
+
+has _auditLogger => (
+    is      => 'ro',
+    default => sub {
+        my $self = shift;
+        my $conf = $self->conf;
+        my $logger =
+             $self->conf->{auditLogger}
+          || $ENV{LLNG_AUDITLOGGER}
+          || "Lemonldap::NG::Common::AuditLogger::UserLoggerCompat";
+
+        eval "require $logger";
+        die $@ if ($@);
+
+        $logger = $logger->new($self);
         return $logger;
     },
     lazy => 1,
@@ -684,6 +730,7 @@ sub _purge_persistent {
             next;
         }
         $self->logger->debug("Session $id has been purged");
+        $self->_auditPurgePsession( $session->data ) if $self->audit;
         $internal_stats->{nb_purged}->{$type}++;
     }
     $internal_stats->{end_time}->{$type} = Time::HiRes::time();
@@ -701,6 +748,24 @@ sub localPurge {
           ->new( $conf->{localSessionStorageOptions} );
         $s->purge();
     }
+}
+
+sub auditLog {
+    my ( $self, $req, %info ) = @_;
+    $self->_auditLogger->log( $req, %info );
+}
+
+sub _auditPurgePsession {
+    my ( $self, $session ) = @_;
+    my $dummy_req = Lemonldap::NG::Common::PSGI::Request->new(
+        { PATH_INFO => "", REQUEST_URI => "" } );
+    my $uid = $session->{_session_uid};
+    $self->auditLog(
+        $dummy_req,
+        message => ("Persistent session for $uid was removed"),
+        code    => "PSESSION_REMOVED",
+        user    => $uid,
+    );
 }
 
 1;

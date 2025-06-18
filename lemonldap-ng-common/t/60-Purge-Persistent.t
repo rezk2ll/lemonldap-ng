@@ -5,6 +5,7 @@ use Test::More;
 use Time::Fake;
 use POSIX qw(strftime);
 use t::TestLogger;
+use t::TestAuditLogger;
 BEGIN { use_ok('Lemonldap::NG::Common::Session') }
 
 use File::Temp;
@@ -100,7 +101,7 @@ sub _getSessionsNames {
 sub _test_purge {
     my ( $time, $purge_opts, $extra_conf, $creation_opts ) = @_;
     $extra_conf    //= {};
-    $creation_opts //= [];
+    $creation_opts //= {};
     $purge_opts    //= {};
 
     # Help with debugging unit tests
@@ -108,11 +109,13 @@ sub _test_purge {
     # my $logger =
     #  Lemonldap::NG::Common::Logger::Std->new( { logLevel => "debug" } );
 
-    my $logger = t::TestLogger->new;
-    my $purge  = Lemonldap::NG::Common::Session::Purge->new(
-        conf   => { %$conf, %$extra_conf },
-        logger => $logger,
-        @$creation_opts
+    my $logger      = t::TestLogger->new;
+    my $auditLogger = t::TestAuditLogger->new;
+    my $purge       = Lemonldap::NG::Common::Session::Purge->new(
+        conf         => { %$conf, %$extra_conf },
+        logger       => $logger,
+        _auditLogger => $auditLogger,
+        %$creation_opts
     );
     Time::Fake->offset($time);
     my $result = $purge->persistentPurge($purge_opts);
@@ -142,6 +145,8 @@ sub _test_purge {
 
     # Log sent at info level
     $logger->contains( "info", qr/Persistent session purge completed/ );
+
+    $result->{auditLogger} = $auditLogger;
     return $result;
 }
 
@@ -158,6 +163,23 @@ subtest "Purge psessions that are too old" => sub {
         _getSessionsNames('persistent'), ['rtyler'], "Expected remaining
         psession"
     );
+};
+
+subtest "test audit logger" => sub {
+    _cleanSessions;
+
+    _storePSession( "persistent", "dwho", 10000, 40000 );
+
+    my $result = _test_purge( 50000, { age => "30000" } );
+    is_deeply( $result->{auditLogger}->logs, [], "No audit logs generated" );
+
+    _cleanSessions;
+
+    _storePSession( "persistent", "dwho", 10000, 40000 );
+
+    $result = _test_purge( 50000, { age => "30000" }, {}, { audit => 1 } );
+    $result->{auditLogger}
+      ->contains( 'code' => 'PSESSION_REMOVED', 'user' => 'dwho' );
 };
 
 subtest "Purge psessions that are inactive" => sub {
