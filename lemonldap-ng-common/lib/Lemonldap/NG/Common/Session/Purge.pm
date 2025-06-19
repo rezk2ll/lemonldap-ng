@@ -258,9 +258,9 @@ my %PSESSION_FILTERS = (
             my $lastLogin =
               $entry->{_loginHistory}->{successLogin}->[0]->{_utime};
 
-            my $filter_result = int(
+            my $filter_result = (
                 not defined($lastLogin)
-                  or $lastLogin < ( time - $value )
+                  or ( defined($value) and ( $lastLogin < ( time - $value ) ) )
             );
         }
     },

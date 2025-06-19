@@ -11,16 +11,20 @@ use Pod::Usage;
 
 use Lemonldap::NG::Common::Session::Purge;
 
-  my %cli_opts;
-my $result =
-  GetOptions( \%cli_opts, 'debug|d', 'json|j', 'help|h', 'audit|a', 'creation=i', 'last-update=i',
-    'recent-login=i', 'no-registered-2fa' );
+my %cli_opts;
+my $result = GetOptions(
+    \%cli_opts,         'debug|d',
+    'json|j',           'help|h',
+    'audit|a',          'creation=i',
+    'last-update=i',    'recent-login=i',
+    'no-login-success', 'no-registered-2fa'
+);
 pod2usage(0) if $cli_opts{help};
 
 my $opts = {
     ( $cli_opts{debug} ? ( logLevel => 'debug' ) : () ),
     ( $cli_opts{json}  ? ( json     => 1 )       : () ),
-    ( $cli_opts{audit}  ? ( audit     => 1 )       : () ),
+    ( $cli_opts{audit} ? ( audit    => 1 )       : () ),
 };
 
 my $filters = {
@@ -35,10 +39,16 @@ my $filters = {
         ? ( login => $cli_opts{'recent-login'} )
         : ()
     ),
+    (
+        defined( $cli_opts{'no-login-success'} ) ? ( login => undef )
+        : ()
+    ),
+
     ( defined( $cli_opts{'no-registered-2fa'} ) ? ( sfdevice => 1 ) : () ),
 };
 
-my $res = Lemonldap::NG::Common::Session::Purge->new($opts)->persistentPurge($filters);
+my $res =
+  Lemonldap::NG::Common::Session::Purge->new($opts)->persistentPurge($filters);
 
 exit 1 unless $res->{success};
 
@@ -107,11 +117,19 @@ ago
 
 =item B<--recent-login=I<SECONDS>>
 
-The persistent session will be deleted if the login history's most recent,
-successfull login attempt happened more than SECONDS ago.
+The persistent session will be deleted if the login history's most recent
+successful login happened more than SECONDS ago.
 
 If there are no successful logins at all, the persistent session will also be
 deleted.
+
+=item B<--no-login-success>
+
+The persistent session will be deleted if its login history does not contain
+any successful logins.
+
+This is useful to remove persistent sessions created when a user inputs an
+non-existing username in the login form.
 
 =item B<--no-registered-2fa>
 

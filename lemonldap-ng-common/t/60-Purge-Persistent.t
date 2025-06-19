@@ -211,7 +211,33 @@ subtest "Purge psessions that have no 2FA" => sub {
     );
 };
 
-subtest "Purge psessions without a recent login" => sub {
+subtest "Purge psessions without a recent successful login" => sub {
+    _cleanSessions;
+
+    # No login history, should not be purged
+    _storePSession( "persistent", "nologin", 10000, 40000 );
+
+    # empty login history, should be purged
+    _storePSession( "persistent", "emptylogin", 10000, 20000,
+        { _loginHistory => {} } );
+
+    # recent login success, should not be purged
+    _storePSession( "persistent", "recentlogin", 10000, 20000,
+        { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
+
+    # old login success, should be purged
+    _storePSession( "persistent", "oldlogin", 10000, 20000,
+        { _loginHistory => { successLogin => [ { _utime => "20000" } ] } } );
+
+    _test_purge( 50000, { login => "20000" } );
+    is_deeply(
+        _getSessionsNames('persistent'), ["recentlogin"], "Expected remaining
+        psession"
+    );
+
+};
+
+subtest "Purge psessions without a successful login" => sub {
     _cleanSessions;
 
     # No login history, should not be purged
@@ -229,11 +255,13 @@ subtest "Purge psessions without a recent login" => sub {
     _storePSession( "persistent", "oldlogin", 10000, 20000,
         { _loginHistory => { successLogin => [ { _utime => "20000" } ] } } );
 
-    _test_purge( 50000, { login => "20000" } );
+    _test_purge( 50000, { login => undef } );
     is_deeply(
-        _getSessionsNames('persistent'), ["recentlogin"], "Expected remaining
+        _getSessionsNames('persistent'), [ "oldlogin", "recentlogin" ],
+        "Expected remaining
         psession"
     );
+
 };
 
 subtest "Combining filters" => sub {
