@@ -93,7 +93,7 @@ export default function SamlAttributeContainerForm({
                         )
                       }
                       type="text"
-                      value={key}
+                      value={key || ""}
                     />
                   </td>
                   <td>
@@ -112,7 +112,7 @@ export default function SamlAttributeContainerForm({
                         )
                       }
                       type="text"
-                      value={name}
+                      value={name || ""}
                     />
                   </td>
                   <td>
@@ -131,7 +131,7 @@ export default function SamlAttributeContainerForm({
                         )
                       }
                       type="text"
-                      value={friendlyName}
+                      value={friendlyName || ""}
                     />
                   </td>
                   <td>

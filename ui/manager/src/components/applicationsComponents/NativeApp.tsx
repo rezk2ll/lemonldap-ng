@@ -228,7 +228,7 @@ function NativeRule(
                 })
               )
             }
-            value={locationRules["default"]}
+            value={locationRules["default"]||""}
           />
         </td>
         <td>
@@ -274,7 +274,7 @@ function NativPost(
                 variant="filled"
                 className="form"
                 type="text"
-                value={link}
+                value={link||""}
                 onChange={() =>
                   dispatch(
                     updateVhostPost({
@@ -292,7 +292,7 @@ function NativPost(
                 variant="filled"
                 className="form"
                 type="text"
-                value={post[link].target}
+                value={post[link].target||""}
                 onChange={() =>
                   dispatch(
                     updateVhostPost({
@@ -310,7 +310,7 @@ function NativPost(
                 variant="filled"
                 className="form"
                 type="text"
-                value={post[link].jqueryUrl}
+                value={post[link].jqueryUrl||""}
                 onChange={() =>
                   dispatch(
                     updateVhostPost({
@@ -328,7 +328,7 @@ function NativPost(
                 variant="filled"
                 className="form"
                 type="text"
-                value={post[link].formSelector}
+                value={post[link].formSelector||""}
                 onChange={() =>
                   dispatch(
                     updateVhostPost({
@@ -346,7 +346,7 @@ function NativPost(
                 variant="filled"
                 className="form"
                 type="text"
-                value={post[link].buttonSelector}
+                value={post[link].buttonSelector||""}
                 onChange={() =>
                   dispatch(
                     updateVhostPost({
@@ -497,7 +497,7 @@ export function NativeApp({ name }: { name: string }) {
                             })
                           )
                         }
-                        value={locationRules["default"]}
+                        value={locationRules["default"]||""}
                       />
                     </td>
                     <td>

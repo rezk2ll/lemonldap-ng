@@ -18,7 +18,7 @@ import postcssPresetEnv from "postcss-preset-env";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
 import terser from "@rollup/plugin-terser";
-import progress from 'rollup-plugin-progress';
+import progress from "rollup-plugin-progress";
 
 // https://github.com/d3/d3-interpolate/issues/58
 const D3_WARNING = /Circular dependency.*d3-interpolate/;
@@ -89,20 +89,27 @@ export default {
     }),
     html({
       fileName: "index.html",
-      title: "Lemonldap react app built with rollup",
+      title: "Lemonldap react Manager built with rollup",
       template: ({ attributes, bundle, files, publicPath, title }) => {
         let scripts = "";
         files.js.forEach((bundle) => {
           scripts += `<script src="${bundle.fileName}"></script>`;
         });
+
+        const makeAttrs = (attrs = {}) =>
+          Object.entries(attrs)
+            .map(([key, value]) => `${key}="${value}"`)
+            .join(" ");
+
         return `<!DOCTYPE html>
-<html ${JSON.stringify(attributes)}>
+<html ${makeAttrs(attributes.html)}>
   <head>
     <title>${title}</title>
+    <link rel="icon" href="/static/logos/favicon.ico" />
   </head>
   <body>
-   <div id="root" />
-   ${scripts}
+    <div id="root" />
+    ${scripts}
   </body>
 </html>`;
       },

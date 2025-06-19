@@ -45,6 +45,8 @@ describe("Application Dashboard", () => {
     clickOption("samlSPMetaDataXML");
 
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      statusText: "OK",
       json: () => Promise.resolve({ key: "value" }),
     });
 

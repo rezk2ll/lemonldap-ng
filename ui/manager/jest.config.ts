@@ -55,9 +55,9 @@ const config: Config = {
       transformIgnorePatterns: ["/node_modules/"],
     },
   ],
-  // collectCoverage: true,
-  // collectCoverageFrom: ["./src/**"],
-  // coverageProvider: "babel",
+  collectCoverage: true,
+  collectCoverageFrom: ["./src/**"],
+  coverageProvider: "babel",
 };
 
 export default config;
