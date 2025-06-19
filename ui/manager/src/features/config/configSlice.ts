@@ -32,8 +32,6 @@ export const initialState: ConfigState = {
 export const getConfigAsync = createAsyncThunk(
   "config/fetchConfig",
   async (num?: number): Promise<Object> => {
-       console.log("latestMetaresponse")
-
     const latestMetaresponse = await getMetadataConfig();
     if (latestMetaresponse.redirected) {
       window.location.assign(latestMetaresponse.url);
