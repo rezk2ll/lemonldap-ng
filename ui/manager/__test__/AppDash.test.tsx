@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -10,18 +11,21 @@ import {
   changeSelectbis,
   clickOption,
   clickSubOption,
-} from "./Configuration.test";
+} from "../src/utils/test-utils";
+import { debug } from "jest-preview";
 
 global.fetch = jest.fn();
 
 describe("Application Dashboard", () => {
-  it('should render ApplicationDashboard for app type "native"', () => {
+  it('should render ApplicationDashboard for app type "native"', async () => {
     const location = {
       type: "app",
       info: { name: "native.example.com", type: "native" },
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
 
     expect(screen.getAllByText("native.example.com")[0]).toBeInTheDocument();
     expect(screen.getByText("native")).toBeInTheDocument();
@@ -34,6 +38,7 @@ describe("Application Dashboard", () => {
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     expect(screen.getAllByText("saml_test")[0]).toBeInTheDocument();
     expect(screen.getByText("SPsaml")).toBeInTheDocument();
@@ -56,36 +61,40 @@ describe("Application Dashboard", () => {
     });
   });
 
-  it('should render ApplicationDashboard for app type "oidc"', () => {
+  it('should render ApplicationDashboard for app type "oidc"', async () => {
     const location = {
       type: "app",
       info: { name: "oidc_test", type: "RPoidc" },
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     expect(screen.getAllByText("oidc_test")[0]).toBeInTheDocument();
     expect(screen.getByText("RPoidc")).toBeInTheDocument();
   });
 
-  it('should render ApplicationDashboard for app type "cas"', () => {
+  it('should render ApplicationDashboard for app type "cas"', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     expect(screen.getAllByText("cas_test")[0]).toBeInTheDocument();
     expect(screen.getByText("AppCas")).toBeInTheDocument();
   });
-  it('should render ApplicationDashboard for app type "native" and change data', () => {
+  it('should render ApplicationDashboard for app type "native" and change data', async () => {
     const location = {
       type: "app",
       info: { name: "native.example.com", type: "native" },
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
     expect(screen.getByText(t("Basic Option"))).toBeInTheDocument();
     expect(screen.getByText(t("locationRules"))).toBeInTheDocument();
     expect(
@@ -137,12 +146,14 @@ describe("Application Dashboard", () => {
     changeInput(1, "alias");
   });
 
-  it("should trigger navigation when clicking on Breadcrumbs link", () => {
+  it("should trigger navigation when clicking on Breadcrumbs link", async () => {
     const location = {
       type: "app",
       info: { name: "oidc_test", type: "RPoidc" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
     fireEvent.click(
       screen.getByText(location.info.name, { selector: ".MuiLink-root" })
     );
@@ -150,13 +161,15 @@ describe("Application Dashboard", () => {
       screen.getByText(location.info.name, { selector: ".title" })
     ).toBeInTheDocument();
   });
-  it('should render ApplicationDashboard for app type "cas" and navigate through data', () => {
+  it('should render ApplicationDashboard for app type "cas" and navigate through data', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
     fireEvent.click(
       screen.getByText(t("casAppMetaDataExportedVars"), { selector: ".option" })
     );
@@ -178,34 +191,39 @@ describe("Application Dashboard", () => {
     ).toBeInTheDocument();
   });
 
-  test('should render ApplicationDashboard for app type "cas" and adds new exported variable', () => {
+  test('should render ApplicationDashboard for app type "cas" and adds new exported variable', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     expect(screen.getByDisplayValue("new")).toBeInTheDocument();
   });
-  test('should render ApplicationDashboard for app type "cas" and adds new macro', () => {
+  test('should render ApplicationDashboard for app type "cas" and adds new macro', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
     fireEvent.click(
       screen.getByText(t("casAppMetaDataMacros"), { selector: ".option" })
     );
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     expect(screen.getByDisplayValue("new")).toBeInTheDocument();
   });
-  test('should render ApplicationDashboard for app type "cas" and change datas', () => {
+  test('should render ApplicationDashboard for app type "cas" and change datas', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
+
     fireEvent.click(
       screen.getByText(t("casAppMetaDataOptions"), { selector: ".option" })
     );
@@ -241,6 +259,7 @@ describe("Application Dashboard", () => {
       info: { name: "oidc_test", type: "RPoidc" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     clickOption(t("oidcRPMetaDataOptionsBasic"));
 
@@ -337,6 +356,7 @@ describe("Application Dashboard", () => {
       info: { name: "saml_test", type: "SPsaml" },
     };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     clickOption("samlSPMetaDataXML");
     const file = new File(["file content"], "file.txt", { type: "text/plain" });
@@ -380,7 +400,7 @@ describe("Application Dashboard", () => {
     clickSubOption("samlSPMetaDataOptionsSignature");
     changeRadio(0);
 
-    changeSelect("Default", 0, "RSA_SHA256");
+    changeSelect(t("default"), 0, "RSA_SHA256");
     expect(screen.getByText(t("RSA SHA256"))).toBeDefined();
     changeRadio(1);
     changeRadio(2);
@@ -391,12 +411,12 @@ describe("Application Dashboard", () => {
     changeInput(1, 2);
     changeRadio(0);
 
-    changeSelect("None", 0, "nameid");
+    changeSelect(t("None"), 0, "nameid");
     expect(screen.getByText(t("Name ID"))).toBeDefined();
 
     clickSubOption("samlSPMetaDataOptionsFederation");
 
-    changeSelect("Keep", 0, "ignore");
-    expect(screen.getByText(t("Ignore"))).toBeDefined();
+    changeSelect(t("keep"), 0, "ignore");
+    expect(screen.getByText(t("ignore"))).toBeDefined();
   });
 });

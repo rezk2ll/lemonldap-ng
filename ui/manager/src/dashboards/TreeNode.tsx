@@ -65,7 +65,7 @@ export function TreeNodeType({
 }) {
   const dispatch = useAppDispatch();
   const data = findElementInConf(config, node.data);
-  console.log(`node ${node.id} data :  ${JSON.stringify(data)}`);
+  console.debug(`node ${node.id} data :  ${JSON.stringify(data)}`);
   let i = 0;
   switch (node.data.type) {
     case "RSACertKey":

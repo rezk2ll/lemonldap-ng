@@ -16,7 +16,8 @@ import "./AppPage.css";
 import { OptionSaml, SubObtionSelector } from "./OptionSaml";
 import { TableVars } from "./TableVars";
 import FileForm from "../../forms/FileForm";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeButton from "../HomeButton";
 
 export function SAMLApp({

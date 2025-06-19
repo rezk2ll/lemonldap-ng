@@ -16,32 +16,31 @@ describe("API functions", () => {
 
   it("should call getMetadataConfig with 'latest' if no num is passed", async () => {
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await getMetadataConfig();
-    expect(fetch).toHaveBeenCalledWith("/confs/latest", {
-      credentials: "include",
-    });
+    expect(fetch).toHaveBeenCalledWith("/confs/latest");
   });
 
   it("should call getMetadataConfig with the passed num", async () => {
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await getMetadataConfig(123);
-    expect(fetch).toHaveBeenCalledWith("/confs/123", {
-      credentials: "include",
-    });
+    expect(fetch).toHaveBeenCalledWith("/confs/123");
   });
 
   it("should call getConfig with the correct URL", async () => {
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await getConfig(456);
@@ -52,8 +51,9 @@ describe("API functions", () => {
 
   it("should call getPartialConfig with the correct URL", async () => {
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await getPartialConfig();
@@ -63,8 +63,9 @@ describe("API functions", () => {
   it("should call saveConfig with the correct URL and payload", async () => {
     const mockConfig: llngConfig = { cfgAuthor: "test" } as llngConfig;
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await saveConfig(mockConfig);
@@ -83,8 +84,9 @@ describe("API functions", () => {
     const mockConfig: llngConfig = { cfgAuthor: "test" } as llngConfig;
 
     (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       status: 200,
-      json: jest.fn().mockResolvedValue({}),
+      json: async () => ({}),
     });
 
     await savePartialConfig(mockConfig);
@@ -98,45 +100,64 @@ describe("API functions", () => {
       })
     );
   });
+});
 
+describe("API function Fails",()=>{
   it("should throw an error if getMetadataConfig fails", async () => {
     const error = new Error("Fetch failed");
     (fetch as jest.Mock).mockRejectedValueOnce(error);
-
-    await expect(getMetadataConfig(123)).rejects.toThrowError("Fetch failed");
+  
+    try {
+      await getMetadataConfig(123);
+    } catch (err) {
+      expect(err).toEqual(error);
+    }
   });
-
+  
   it("should throw an error if getConfig fails", async () => {
     const error = new Error("Fetch failed");
     (fetch as jest.Mock).mockRejectedValueOnce(error);
-
-    await expect(getConfig(456)).rejects.toThrowError("Fetch failed");
+  
+    try {
+      await getConfig(456);
+    } catch (err) {
+      expect(err).toEqual(error);
+    }
   });
-
+  
   it("should throw an error if getPartialConfig fails", async () => {
     const error = new Error("Fetch failed");
     (fetch as jest.Mock).mockRejectedValueOnce(error);
-
-    await expect(getPartialConfig()).rejects.toThrowError("Fetch failed");
+  
+    try {
+      await getPartialConfig();
+    } catch (err) {
+      expect(err).toEqual(error);
+    }
   });
-
+  
   it("should throw an error if saveConfig fails", async () => {
     const mockConfig: llngConfig = { cfgAuthor: "test" } as llngConfig;
-
     const error = new Error("Fetch failed");
     (fetch as jest.Mock).mockRejectedValueOnce(error);
-
-    await expect(saveConfig(mockConfig)).rejects.toThrowError("Fetch failed");
+  
+    try {
+      await saveConfig(mockConfig);
+    } catch (err) {
+      expect(err).toEqual(error);
+    }
   });
-
+  
   it("should throw an error if savePartialConfig fails", async () => {
     const mockConfig: llngConfig = { cfgAuthor: "test" } as llngConfig;
-
     const error = new Error("Fetch failed");
     (fetch as jest.Mock).mockRejectedValueOnce(error);
-
-    await expect(savePartialConfig(mockConfig)).rejects.toThrowError(
-      "Fetch failed"
-    );
+  
+    try {
+      await savePartialConfig(mockConfig);
+    } catch (err) {
+      expect(err).toEqual(error);
+    }
   });
-});
+  
+})

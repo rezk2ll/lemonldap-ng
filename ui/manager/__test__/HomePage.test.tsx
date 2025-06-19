@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { HomePage } from "../src/dashboards/HomePage";
 import { renderWithProviders } from "../src/utils/test-utils";
-
+import {debug} from "jest-preview"
 global.fetch = jest.fn();
 
 describe("HomePage", () => {
@@ -43,7 +43,10 @@ describe("HomePage", () => {
 
   it("renders the pie chart with correct data", () => {
     renderWithProviders(<HomePage />);
-    expect(screen.getByText("SAML (1)")).toBeDefined();
+    
+    expect(screen.getByText("appNum (4)")).toBeDefined();
+
+    expect(screen.getByText("saml (1)")).toBeDefined();
     expect(screen.getByText("oidc (1)")).toBeDefined();
     expect(screen.getByText("cas (1)")).toBeDefined();
   });

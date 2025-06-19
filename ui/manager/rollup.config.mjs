@@ -18,6 +18,7 @@ import postcssPresetEnv from "postcss-preset-env";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
 import terser from "@rollup/plugin-terser";
+import progress from 'rollup-plugin-progress';
 
 // https://github.com/d3/d3-interpolate/issues/58
 const D3_WARNING = /Circular dependency.*d3-interpolate/;
@@ -46,6 +47,7 @@ export default {
     warn(warning);
   },
   plugins: [
+    progress(),
     svgr(),
     image(),
     nodeResolve({
@@ -105,6 +107,6 @@ export default {
 </html>`;
       },
     }),
-    // terser(),
+    terser(),
   ],
 };

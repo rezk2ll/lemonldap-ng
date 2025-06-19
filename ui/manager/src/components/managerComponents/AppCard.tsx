@@ -80,7 +80,6 @@ function AppCard({
                 <div
                   data-testid={`maintenanceButton.${info.name}`}
                   onClick={(e) => {
-                    setOpenName(true);
                     e.stopPropagation();
                   }}
                 >

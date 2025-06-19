@@ -1,5 +1,11 @@
 import type { RenderOptions } from "@testing-library/react";
-import { render } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import React, { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Provider } from "react-redux";
@@ -8,6 +14,7 @@ import "../i18n";
 import { MemoryRouter } from "react-router-dom";
 import type { AppStore, RootState } from "../app/store";
 import { setupStore } from "../app/store";
+import { t } from "i18next";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
   preloadedState?: Partial<RootState>;
@@ -98,7 +105,7 @@ export function renderWithProviders(
       },
       router: {
         location: {
-          pathname: "/manager.html",
+          pathname: "/manager.new.html",
           search: "",
           hash: "#conf/14",
           state: null,
@@ -125,3 +132,92 @@ export function renderWithProviders(
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
 }
+
+export const changeInput = async (index: number, value: string | number) => {
+  const input = screen.getAllByText("", {
+    selector: ".MuiInputBase-input",
+  })[index];
+
+  act(() => {
+    fireEvent.change(input, { target: { value } });
+  });
+
+  await waitFor(() =>
+    expect(
+      screen.getAllByText("", { selector: ".MuiInputBase-input" })[index]
+    ).toHaveDisplayValue(value.toString())
+  );
+};
+
+export const changeRadio = async (index: number) => {
+  const radioInput = screen.getAllByLabelText(t("on"))[index];
+
+  act(() => {
+    fireEvent.click(radioInput);
+  });
+
+  await waitFor(() => {
+    expect(radioInput).toBeChecked();
+  });
+};
+
+export const changeSelect = async (
+  text: string,
+  index: number,
+  value: string | number | string[] | null | undefined
+) => {
+  const selectInput = screen.getAllByText(text, {
+    selector: ".MuiSelect-select",
+  })[index]; // eslint-disable-next-line testing-library/no-node-access
+  const selectElement = selectInput.parentElement?.querySelector("input");
+
+  act(() => {
+    fireEvent.change(selectElement!, { target: { value: value } });
+  });
+
+  await waitFor(() => {
+    expect(selectElement).toHaveValue(value?.toString() || "");
+  });
+};
+
+export const changeSelectbis = async (
+  index: number,
+  value: string | number | string[] | null | undefined
+) => {
+  const selectInput = screen.getAllByText("", {
+    selector: ".MuiSelect-select",
+  })[index]; // eslint-disable-next-line testing-library/no-node-access
+  const selectElement = selectInput.parentElement?.querySelector("input");
+
+  act(() => {
+    fireEvent.change(selectElement!, { target: { value: value } });
+  });
+
+  await waitFor(() => {
+    expect(selectElement).toHaveValue(value?.toString() || "");
+  });
+};
+
+export const clickOption = async (optionText: any | string | string[]) => {
+  const option = screen.getByText(t(optionText), { selector: ".option" });
+
+  act(() => {
+    fireEvent.click(option);
+  });
+
+  await waitFor(() => {
+    expect(option).toHaveClass("selected");
+  });
+};
+
+export const clickSubOption = async (optionText: any | string | string[]) => {
+  const option = screen.getByTestId(optionText);
+
+  act(() => {
+    fireEvent.click(option);
+  });
+
+  await waitFor(() => {
+    expect(option).toHaveClass("selected");
+  });
+};

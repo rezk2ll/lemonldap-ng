@@ -62,7 +62,7 @@ export function findElementInConf(config: llngConfig, node: treeFormat): any {
 
     for (const el of appfields) {
       if (el && Object.keys(el).includes(searchedId)) {
-        console.log("found: ", el);
+        console.debug("found: ", el);
         return el[searchedId];
       }
 

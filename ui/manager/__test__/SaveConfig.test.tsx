@@ -80,6 +80,7 @@ it("should restore the configuration when a valid file is uploaded", async () =>
   const dispatch = jest.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
   renderWithProviders(<HomePage />);
+  await screen.findAllByText("14");
   fireEvent.change(screen.getAllByLabelText(t("restore"))[0], {
     target: { files: [file] },
   });
@@ -93,10 +94,11 @@ it("should lauch search for number", async () => {
   const dispatch = jest.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
   renderWithProviders(<HomePage />);
+  await screen.findAllByText("14");
   fireEvent.change(screen.getAllByPlaceholderText(t("search config num"))[0], {
     target: { value: 2 },
   });
-  fireEvent.click(screen.getByText("go"));
+  fireEvent.click(screen.getAllByText("go")[0]);
   await waitFor(() => {
     expect(dispatch).toHaveBeenCalledTimes(1);
   });
@@ -108,7 +110,7 @@ it("should go to latest", async () => {
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
 
   renderWithProviders(<HomePage />);
-
+  await screen.findAllByText("14");
   fireEvent.click(screen.getAllByRole("button")[2]);
   await waitFor(() => {
     expect(dispatch).toHaveBeenCalledTimes(1);

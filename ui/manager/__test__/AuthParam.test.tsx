@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -8,14 +9,16 @@ import {
   changeRadio,
   changeSelect,
   clickOption,
-} from "./Configuration.test";
+} from "../src/utils/test-utils";
+import { debug } from "jest-preview";
 
 describe("AuthParam Dashboard", () => {
-  it("should render simple authparam Dashboard", () => {
+  it("should render simple authparam Dashboard", async () => {
     const location = { type: "authParams", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
-    expect(screen.getByText("Demonstration parameters")).toBeDefined();
+    expect(screen.getByText(t("demoParams"))).toBeDefined();
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     changeInput(0, "New Key");
     changeInput(1, "New Value");
@@ -25,14 +28,15 @@ describe("AuthParam Dashboard", () => {
     expect(screen.getByText("AD")).toBeDefined();
     expect(screen.getByText("Kerberos")).toBeDefined();
     fireEvent.click(screen.getByText("LDAP"));
-    expect(screen.getByText("LDAP parameters")).toBeDefined();
+    expect(screen.getByText(t("ldapParams"))).toBeDefined();
 
-    fireEvent.click(screen.getByText("Groups"));
-    expect(screen.getByText("Search base")).toBeVisible();
+    fireEvent.click(screen.getByText(t("ldapGroups")));
+    expect(screen.getAllByText(t("ldapGroupBase"))[0]).toBeVisible();
+    debug()
     fireEvent.click(
-      screen.getByText("Password", { selector: ".MuiAccordionSummary-content" })
+      screen.getByText(t("ldapPassword"), { selector: ".MuiAccordionSummary-content" })
     );
-    expect(screen.getAllByText("Password policy control")[0]).toBeVisible();
+    expect(screen.getAllByText(t("ldapPpolicyControl"))[0]).toBeVisible();
     changeRadio(0);
     changeRadio(1);
     changeRadio(2);
@@ -48,7 +52,7 @@ describe("AuthParam Dashboard", () => {
     changeInput(0, "test1");
     changeInput(1, "test2");
     changeSelect("Active Directory + Kerberos", 0, "LDAP");
-    expect(screen.getByText("LDAP parameters")).toBeDefined();
+    expect(screen.getByText(t("ldapParams"))).toBeDefined();
     changeInput(0, "test1");
     changeInput(1, "test2");
     changeInput(2, "test3");
@@ -62,6 +66,7 @@ describe("AuthParam Dashboard", () => {
     const location = { type: "authParams", info: { name: "latest" } };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
 
     expect(
       screen.queryByText("", { selector: ".optionNavbar" })

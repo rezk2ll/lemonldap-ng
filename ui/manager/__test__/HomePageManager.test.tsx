@@ -4,51 +4,56 @@ import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
 import { renderWithProviders } from "../src/utils/test-utils";
 import { llngConfig } from "../src/utils/types";
-import preview from "jest-preview";
-import { changeInput } from "./Configuration.test";
+import { changeInput } from "../src/utils/test-utils";
+import { debug } from "jest-preview";
 global.fetch = jest.fn();
 
 describe("Manager homepage", () => {
   it("New app", async () => {
     const location = { type: "conf", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
-
+    await screen.findAllByText("14");
     fireEvent.click(screen.getByTestId("AddIcon"));
-    fireEvent.click(screen.getByText("Next"));
-    fireEvent.click(screen.getByText("confirm"));
+  fireEvent.click(screen.getByText(t("next")));
+    fireEvent.click(screen.getByText(t("confirm")));
 
     expect(screen.getByText(".example.com")).toBeDefined();
   });
   it("del app", async () => {
     const location = { type: "conf", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
+
+    await screen.findAllByText("14");
     fireEvent.click(screen.getAllByTestId("DeleteOutlineOutlinedIcon")[0]);
-    fireEvent.click(screen.getByText("Confirm"));
+    fireEvent.click(screen.getByText(t("confirm")));
 
     expect(screen.queryByText("native.example.com")).not.toBeInTheDocument();
   });
   it("rename app", async () => {
     const location = { type: "conf", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
+
+    await screen.findAllByText("14");
     fireEvent.click(screen.getAllByTestId("DriveFileRenameOutlineIcon")[0]);
-    const input = screen.getByPlaceholderText("Hostname");
+    const input = screen.getByPlaceholderText(t("hostname"));
     fireEvent.change(input, { target: { value: "test" } });
     expect(input).toHaveDisplayValue("test");
 
-    fireEvent.click(screen.getByText("Confirm"));
+    fireEvent.click(screen.getByText(t("confirm")));
     expect(screen.getByText("test")).toBeInTheDocument();
   });
   it("dup app", async () => {
     const location = { type: "conf", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
     fireEvent.click(
       screen.getAllByTestId("ControlPointDuplicateOutlinedIcon")[0]
     );
-    const input = screen.getByPlaceholderText("Hostname");
+    const input = screen.getByPlaceholderText(t("hostname"));
     fireEvent.change(input, { target: { value: "test" } });
     expect(input).toHaveDisplayValue("test");
 
-    fireEvent.click(screen.getByText("Confirm"));
+    fireEvent.click(screen.getByText(t("confirm")));
     expect(screen.getByText("test")).toBeInTheDocument();
   });
   it("change data to be savebale and save", async () => {
@@ -102,6 +107,7 @@ describe("Manager homepage", () => {
     };
     (fetch as jest.Mock).mockResolvedValueOnce(mockResponse);
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
     const samlSwitch = screen.getByTestId("issuer.toggle.saml");
 
     // eslint-disable-next-line testing-library/no-node-access
@@ -114,12 +120,10 @@ describe("Manager homepage", () => {
     }
 
     fireEvent.click(screen.getByText(t("doItTogether")));
-    preview.debug();
     changeInput(4, "public");
     changeInput(1, "private");
     changeInput(2, "hash");
     fireEvent.click(screen.getByText(t("finish")));
-    preview.debug();
 
     expect(screen.getByTestId("issuer.toggle.saml")).toHaveClass("Mui-checked");
 
@@ -134,26 +138,26 @@ describe("Manager homepage", () => {
       fireEvent.click(casSwitchInput);
     }
     fireEvent.click(screen.getAllByTestId("DeleteOutlineOutlinedIcon")[2]);
-    fireEvent.click(screen.getByText("Confirm"));
+    fireEvent.click(screen.getByText(t("confirm")));
 
     fireEvent.click(screen.getAllByTestId("SaveIcon")[0]);
-    expect(screen.getByText("Save report")).toBeDefined();
-    preview.debug();
+    debug();
+    expect(screen.getByText(t("saveReport"))).toBeDefined();
     expect((fetch as jest.Mock).mock.calls[0][0]).toBe(
       "/manager.fcgi/confs/raw"
     );
     expect(
       JSON.parse((fetch as jest.Mock).mock.calls[0][1].body)
     ).toStrictEqual(mockConfig);
-    fireEvent.click(screen.getByText("close"));
+    fireEvent.click(screen.getByText(t("close")));
   });
   it("travel though configs", async () => {
     const location = { type: "conf", info: { name: "latest" } };
     renderWithProviders(<Configuration location={location} />);
     fireEvent.click(screen.getAllByText("14")[1]);
 
-    expect(screen.getByText("Previous")).toBeInTheDocument();
-    expect(screen.getByText("Next")).toHaveClass(
+    expect(screen.getByText(t("previous"))).toBeInTheDocument();
+    expect(screen.getByText(t("next"))).toHaveClass(
       "MuiButtonBase-root MuiMenuItem-root Mui-disabled MuiMenuItem-gutters Mui-disabled MuiMenuItem-root Mui-disabled MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
     );
   });

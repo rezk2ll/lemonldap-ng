@@ -18,7 +18,8 @@ import { TableVars } from "./TableVars";
 import BoolForm from "../../forms/BoolForm";
 import PasswordForm from "../../forms/PasswordForm";
 import TextForm from "../../forms/TextForm";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeButton from "../HomeButton";
 
 export function OIDCApp({ name }: { name: string }) {

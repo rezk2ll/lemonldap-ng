@@ -18,7 +18,7 @@ describe("GenerateKeys function", () => {
     renderWithProviders(
       <URLLoader appName="testApp" loadFunction={mockLoadFunction} />
     );
-
+    await screen.findAllByText(t("url"));
     fireEvent.change(screen.getByPlaceholderText(t("url")), {
       target: { value: "http://example.com" },
     });

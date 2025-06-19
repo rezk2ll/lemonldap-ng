@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -7,7 +8,7 @@ import {
   changeRadio,
   changeSelect,
   clickOption,
-} from "./Configuration.test";
+} from "../src/utils/test-utils";
 
 beforeAll(() => {
   global.fetch = jest.fn();
@@ -22,32 +23,33 @@ describe("Issuer Dashboard", () => {
       })
     );
     renderWithProviders(<Configuration location={location} />);
-    expect(screen.getByText("SAML2 Service")).toBeDefined();
+    await screen.findAllByText("14");
+    expect(screen.getByText(t("samlServiceMetaData"))).toBeDefined();
 
     changeInput(0, "New Key");
     changeRadio(0);
-    fireEvent.click(screen.getByText("Organization"));
+    fireEvent.click(screen.getByText(t("samlOrganization")));
     changeInput(1, "display");
     changeInput(2, "display1");
     changeInput(3, "display2");
-    clickOption("samlServiceSecurity");
+    clickOption(t("samlServiceSecurity"));
 
     fireEvent.click(screen.getByText(t("newRSAKey")));
-    await screen.findByDisplayValue("public");
-    expect(await screen.findByDisplayValue("public")).toBeDefined();
-    expect(await screen.findByDisplayValue("private")).toBeDefined();
+    await screen.findByDisplayValue(t("public"));
+    expect(await screen.findByDisplayValue(t("public"))).toBeDefined();
+    expect(await screen.findByDisplayValue(t("private"))).toBeDefined();
     const file = new File(["file content"], "file.txt", { type: "text/plain" });
     fireEvent.change(screen.getAllByLabelText(t("upload"))[0], {
       target: { files: [file] },
     });
     jest.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
-    clickOption("providerOptions");
+    clickOption(t("providerOptions"));
     changeRadio(0);
     changeRadio(1);
     changeRadio(2);
 
-    clickOption("samlAdvanced");
+    clickOption(t("samlAdvanced"));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     changeInput(0, "display");
     changeInput(1, "display1");
@@ -65,7 +67,8 @@ describe("Issuer Dashboard", () => {
     const location = { type: "issuer", info: { name: "cas" } };
 
     renderWithProviders(<Configuration location={location} />);
-    expect(screen.getByText("CAS Service")).toBeDefined();
+    await screen.findAllByText("14");
+    expect(screen.getByText(t("casServiceMetadata"))).toBeDefined();
 
     changeRadio(0);
     changeRadio(1);
@@ -96,20 +99,21 @@ describe("Issuer Dashboard", () => {
     });
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
     expect(screen.getByText("OIDCServiceMetaData")).toBeDefined();
 
     changeRadio(0);
 
     clickOption("oidcServiceDynamicRegistration");
     changeRadio(0);
-    fireEvent.click(screen.getByText("Exported vars"));
+    fireEvent.click(screen.getByText(t("oidcServiceDynamicRegistrationExportedVars")));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     expect(screen.getAllByDisplayValue("new")[0]).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Extra claims"));
+    fireEvent.click(screen.getByText(t("oidcServiceDynamicRegistrationExtraClaims")));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[1]);
     expect(screen.getAllByDisplayValue("new")[1]).toBeInTheDocument();
 
-    clickOption("oidcServiceMetaDataSecurity");
+    clickOption(t("oidcServiceMetaDataSecurity"));
     changeRadio(0);
     changeRadio(1);
     changeRadio(2);
@@ -147,6 +151,7 @@ describe("Issuer Dashboard", () => {
     const location = { type: "issuer", info: { name: "oid" } };
 
     renderWithProviders(<Configuration location={location} />);
+    await screen.findAllByText("14");
     expect(screen.getByText("issuerDBOIDParameters")).toBeDefined();
 
     changeRadio(0);
@@ -162,7 +167,8 @@ describe("Issuer Dashboard", () => {
     const location = { type: "issuer", info: { name: "get" } };
 
     renderWithProviders(<Configuration location={location} />);
-    expect(screen.getByText("GET parameters")).toBeDefined();
+    await screen.findAllByText("14");
+    expect(screen.getByText(t("issuerDBGetParameters"))).toBeDefined();
 
     changeRadio(0);
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);

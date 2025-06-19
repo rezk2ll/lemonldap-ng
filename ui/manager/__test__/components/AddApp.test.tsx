@@ -7,24 +7,28 @@ import { CreationAssistant } from "../../src/components/managerComponents/Creati
 import { renderWithProviders } from "../../src/utils/test-utils";
 
 describe("AddApp component", () => {
-  it("renders without crashing", () => {
+  it("renders without crashing", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
   });
 
   it("toggles the popup when Button is clicked", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     expect(screen.queryByRole("dialog")).toBeNull();
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     expect(screen.getByRole("dialog")).toBeVisible();
   });
-  it("closes dialog when closed by user on click", () => {
+  it("closes dialog when closed by user on click", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     fireEvent.click(screen.getByText(t("cancel")));
     expect(screen.queryByRole("dialog")).not.toBeVisible();
   });
-  it("does not closes dialog when closed by user on escape", () => {
+  it("does not closes dialog when closed by user on escape", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     fireEvent.keyDown(screen.getByText(t("cancel")), { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeVisible();
@@ -32,8 +36,9 @@ describe("AddApp component", () => {
 });
 
 describe("CreationAssistant", () => {
-  it("allows user to change app type and name", () => {
+  it("allows user to change app type and name", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -46,29 +51,31 @@ describe("CreationAssistant", () => {
     });
     expect(screen.getByDisplayValue("New Name")).toBeInTheDocument();
   });
-  it("allows user to navigate through pages", () => {
+  it("allows user to navigate through pages", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
     // eslint-disable-next-line testing-library/no-node-access
     const selectElement = selectInput.parentElement?.querySelector("input");
     fireEvent.change(selectElement!, { target: { value: "SPsaml" } });
-    fireEvent.click(screen.getByText("Next"));
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Previous"));
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    fireEvent.click(screen.getByText(t("next")));
+    expect(screen.getByText(t("cancel"))).toBeInTheDocument();
+    fireEvent.click(screen.getByText(t("previous")));
+    expect(screen.getByText(t("cancel"))).toBeInTheDocument();
 
     // Move to next page again
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
     fireEvent.change(screen.getAllByRole("textbox")[0], {
       target: { value: "New Name" },
     });
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
     expect(screen.getByText("confirm")).toBeInTheDocument();
   });
-  it("forbid user to continue withour app name", () => {
+  it("forbid user to continue withour app name", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -80,21 +87,22 @@ describe("CreationAssistant", () => {
     fireEvent.change(screen.getByRole("textbox"), {
       target: { value: "" },
     });
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
     expect(screen.getByText(t("cancel"))).toBeInTheDocument();
   });
   it("allows user to confirm and close the modal", () => {
     const closeModal = jest.fn();
     renderWithProviders(<CreationAssistant closeModal={closeModal} />);
-    fireEvent.click(screen.getByText("Next")); // Move to the last page
+    fireEvent.click(screen.getByText(t("next"))); // Move to the last page
     fireEvent.click(screen.getByText("confirm"));
     expect(closeModal).toHaveBeenCalledTimes(1);
   });
 });
 
 describe("MandatoryFields component", () => {
-  it("updates state correctly when SAML XML field is changed", () => {
+  it("updates state correctly when SAML XML field is changed", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -102,15 +110,16 @@ describe("MandatoryFields component", () => {
     const selectElement = selectInput.parentElement?.querySelector("input");
     fireEvent.change(selectElement!, { target: { value: "SPsaml" } });
     expect(screen.getByDisplayValue("sp-example")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
 
     const clientIdInput = screen.getByPlaceholderText(t("samlSPMetaDataXML"));
     fireEvent.change(clientIdInput, { target: { value: "test-xml-metadata" } });
 
     expect(clientIdInput).toHaveValue("test-xml-metadata");
   });
-  it("updates state correctly when Client ID field is changed", () => {
+  it("updates state correctly when Client ID field is changed", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -118,7 +127,7 @@ describe("MandatoryFields component", () => {
     const selectElement = selectInput.parentElement?.querySelector("input");
     fireEvent.change(selectElement!, { target: { value: "RPoidc" } });
     expect(screen.getByDisplayValue("rp-example")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
 
     const clientIdInput = screen.getByPlaceholderText(
       t("oidcRPMetaDataOptionsClientID")
@@ -128,8 +137,9 @@ describe("MandatoryFields component", () => {
     expect(clientIdInput).toHaveValue("test-client-id");
   });
 
-  it("updates state correctly when Client Secret field is changed", () => {
+  it("updates state correctly when Client Secret field is changed", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -137,7 +147,7 @@ describe("MandatoryFields component", () => {
     const selectElement = selectInput.parentElement?.querySelector("input");
     fireEvent.change(selectElement!, { target: { value: "RPoidc" } });
     expect(screen.getByDisplayValue("rp-example")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
     const clientSecretInput = screen.getByPlaceholderText(
       t("oidcRPMetaDataOptionsClientSecret")
     );
@@ -150,6 +160,7 @@ describe("MandatoryFields component", () => {
 
   it("updates state correctly when Public Client radio button is changed", async () => {
     renderWithProviders(<AddApp />);
+    await screen.findAllByText("", { selector: ".addButton" });
     fireEvent.click(screen.getByText("", { selector: ".addButton" }));
     // eslint-disable-next-line testing-library/no-node-access
     const selectInput = screen.getByLabelText(t("chooseType"));
@@ -157,7 +168,7 @@ describe("MandatoryFields component", () => {
     const selectElement = selectInput.parentElement?.querySelector("input");
     fireEvent.change(selectElement!, { target: { value: "RPoidc" } });
     expect(screen.getByDisplayValue("rp-example")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("Next"));
+    fireEvent.click(screen.getByText(t("next")));
     const publicClientOn = screen.getByLabelText(t("on"));
     fireEvent.click(publicClientOn);
 

@@ -19,7 +19,6 @@ import { exportData } from "../utils/exportData";
 import { handleChangeFile } from "../utils/readFiles";
 import { llngConfig } from "../utils/types";
 import "./HomePage.css";
-import logo from "./../static/logo_llng_400px.png";
 
 export function HomePage() {
   const [openSavePopup, setOpenSavePopup] = useState(false);
