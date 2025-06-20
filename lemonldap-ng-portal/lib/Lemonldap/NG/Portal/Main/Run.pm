@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -1105,7 +1105,7 @@ sub sendHtml {
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
-      'X-XSS-Protection'       => '1; mode=block',
+      'X-XSS-Protection'       => '0',
       'X-Content-Type-Options' => 'nosniff',
       'Cache-Control' => 'no-cache, no-store, must-revalidate',    # HTTP 1.1
       'Pragma'        => 'no-cache',                               # HTTP 1.0
