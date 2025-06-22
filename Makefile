@@ -276,10 +276,15 @@ PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.j
 MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
 PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
 JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
-UIMANAGERDIR=ui/manager
 # Minified files
 JSMINFILES=$(JSSRCFILES:.js=.min.js)
 CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
+
+# New manager
+UIMANAGERDIR=ui/manager
+NEW_MGR_SRC_FILES=$(shell find $(UIMANAGERDIR)/src ui/manager/*.*s $(UIMANAGERDIR)/src ui/manager/*.json -type f)
+NEW_MGR_TMP_DIST=$(UIMANAGERDIR)/dist
+NEW_MGR_DST=$(SRCMANAGERDIR)/site/htdocs/manager.new.html
 
 # -------
 # TARGETS
@@ -534,12 +539,23 @@ portal:		portal_conf handler
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
-rollup:
-	@set -ex; cd ui/manager/;\
-		npm i; \
-		rollup -c
+# New manager targets
+
+rollup_clean:
+	@rm -rf $(NEW_MGR_TMP_DIST) \
+		$(SRCMANAGERDIR)/site/htdocs/manager.new.html \
+		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
+	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
+
+$(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	cp $(UIMANAGERDIR)/dist/static/*.js  $(SRCMANAGERDIR)/site/htdocs/static;
 	cp $(UIMANAGERDIR)/dist/index.html	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
+
+$(NEW_MGR_TMP_DIST):
+	@$(MAKE) rollup_clean
+	@set -ex; cd $(UIMANAGERDIR);\
+		npm ci || npm i; \
+		rollup -c
 
 # Test targets
 # ------------
@@ -575,7 +591,7 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 nox_e2e_test:
 	xvfb-run -a -s "-screen 0 800x600x16" $(MAKE) e2e_test
 
-prepare_test_server: rollup
+prepare_test_server: $(NEW_MGR_DST)
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
 	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
@@ -1286,7 +1302,7 @@ ubuntu-install-for-nginx:
 distclean:	clean
 
 clean:
-	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
+	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server rollup_clean
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
 	@if [ ! "$(SKIP_DOCUMENTATION)" ]; then rm -rf doc/pages/documentation/current/*; fi
@@ -1294,11 +1310,6 @@ clean:
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-portal/t/sessions/tmpSession*
-	@rm -rf $(UIMANAGERDIR)/node_modules
-	@rm -rf $(UIMANAGERDIR)/dist
-	@find . -wholename "$(UIMANAGERDIR)/src/*.css.json" -type f -delete
-	@rm -rf	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
-	@rm -rf $(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
 	@echo "Cleaned"
 
 common_clean:
