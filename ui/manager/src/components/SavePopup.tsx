@@ -1,17 +1,8 @@
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
-} from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle, Divider } from "@mui/material";
 import { t } from "i18next";
-import {
-  ConfigState,
-  getConfigAsync,
-  getPartialConfigAsync,
-} from "../features/config/configSlice";
+import { ConfigState, getConfigAsync, getPartialConfigAsync } from "../features/config/configSlice";
 import "./SaveButton.css";
+import { push } from "redux-first-history";
 
 export function SavePopup({
   config,
@@ -37,11 +28,9 @@ export function SavePopup({
               <>
                 <strong>{t("warnings")}</strong>
                 <span>
-                  {config.saveResponse.details.__warnings__?.map(
-                    (el: Record<string, string>) => (
-                      <ul key={el.message}>{el.message}</ul>
-                    )
-                  )}
+                  {config.saveResponse.details.__warnings__?.map((el: Record<string, string>) => (
+                    <ul key={el.message}>{el.message}</ul>
+                  ))}
                 </span>
               </>
             ) : (
@@ -51,11 +40,9 @@ export function SavePopup({
               <>
                 <strong>{t("errors")}</strong>
                 <span>
-                  {config.saveResponse.details.__errors__?.map(
-                    (el: Record<string, string>) => (
-                      <ul key={el.message}>{el.message}</ul>
-                    )
-                  )}
+                  {config.saveResponse.details.__errors__?.map((el: Record<string, string>) => (
+                    <ul key={el.message}>{el.message}</ul>
+                  ))}
                 </span>
               </>
             ) : (
@@ -72,6 +59,7 @@ export function SavePopup({
         onClick={() => {
           if (!config.saveResponse?.details.__errors__) {
             dispatch(partial ? getPartialConfigAsync() : getConfigAsync());
+            dispatch(push("#conf/latest"));
           }
           setOpenSavePopup(false);
         }}
