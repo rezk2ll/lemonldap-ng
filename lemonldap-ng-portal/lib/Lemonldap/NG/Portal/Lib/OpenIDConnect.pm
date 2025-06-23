@@ -1340,6 +1340,7 @@ sub newRefreshToken {
         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsOfflineSessionExpiration}
           || $self->conf->{oidcServiceOfflineSessionExpiration} )
       : $self->conf->{timeout};
+    $info->{_oidcRtUpdate} = time;
 
     return $self->getOpenIDConnectSession(
         undef, "refresh_token",
@@ -1363,8 +1364,9 @@ sub getRefreshToken {
 }
 
 sub updateRefreshToken {
-    my $self = shift;
-    return $self->updateToken(@_);
+    my ( $self, $id, $infos ) = @_;
+    $infos->{_oidcRtUpdate} = time;
+    return $self->updateToken( $id, $infos );
 }
 
 sub updateToken {
