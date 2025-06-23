@@ -56,7 +56,7 @@ export function CasApp({ name }: { name: string }) {
             className={`option ${optionSelected === "basic" ? "selected" : ""}`}
             onClick={() => setOptionSelected("basic")}
           >
-            {t("Basic Option")}
+            {t("basicOptions")}
           </label>
           <label
             className={`option ${

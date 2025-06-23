@@ -32,7 +32,7 @@ export function OIDCIssuer() {
     <div>
       <div className="top">
         <HomeButton />
-        <strong className="title">{t("OIDCServiceMetaData")}</strong>
+        <strong className="title">{t("oidcServiceMetaData")}</strong>
       </div>
       <div className="app">
         <div className="optionNavbar">
@@ -42,7 +42,7 @@ export function OIDCIssuer() {
               setOption("basic");
             }}
           >
-            {t("Basic Option")}
+            {t("basicOptions")}
           </label>
           <label
             className={`option ${

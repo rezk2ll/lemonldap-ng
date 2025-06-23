@@ -34,7 +34,7 @@ export function CasIssuer() {
               setOption("basic");
             }}
           >
-            {t("Basic Option")}
+            {t("basicOptions")}
           </label>
           <label
             className={`option ${
