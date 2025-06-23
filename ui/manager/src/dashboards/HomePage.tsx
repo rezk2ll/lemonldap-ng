@@ -75,6 +75,24 @@ export function HomePage() {
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
+                    startIcon={<OtherHousesIcon />}
+                    onClick={async function () {
+                      (window as any).menulinks.map((el: { title: string; target: string }) => {
+                        if (el.title === "conf") {
+                          window.location.assign(el.target);
+                        }
+                      });
+                    }}
+                  >
+                    {t("oldManager")}
+                  </Button>
+                </div>
+                <div className="search">
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
                     startIcon={<DownloadIcon />}
                     onClick={async function () {
                       await exportData("full", config.data.metadata.cfgNum);
