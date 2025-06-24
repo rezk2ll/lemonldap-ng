@@ -1530,7 +1530,7 @@ sub extractRelayState {
         # Push values in $self
         foreach ( keys %{ $samlSessionInfo->data } ) {
             next if $_ =~ /(type|_session_id|_utime)/;
-            if ( $_ eq 'issuerUrldc' ) {
+            if ( $_ eq 'issuerNextUrl' ) {
                 $req->urldc( $samlSessionInfo->data->{$_} );
             }
             else {
@@ -1703,7 +1703,7 @@ sub createLogoutRequest {
 
     # Set RelayState
     if ( my $relaystate =
-        $self->storeRelayState( $req, 'urldc', 'issuerUrldc' ) )
+        $self->storeRelayState( $req, 'urldc', 'issuerNextUrl' ) )
     {
         $logout->msg_relayState($relaystate);
         $self->logger->debug("Set $relaystate in RelayState");

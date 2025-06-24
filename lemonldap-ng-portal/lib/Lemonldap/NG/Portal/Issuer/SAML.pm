@@ -2159,7 +2159,7 @@ sub sloServer {
 
             # In case we have to redirect to the IDP, save current state
             # to allow resumption. This needs to be done here because
-            # issuerUrldc will be put in the IdP logout's RelayState
+            # issuerNextUrl will be put in the IdP logout's RelayState
             my $logoutInfos = {
                 logout      => $logout->dump,
                 spConfKey   => $spConfKey,
@@ -2176,7 +2176,7 @@ sub sloServer {
                 )
             );
             $uri->query_param( ResumeParams => $logoutContextSession->id );
-            $req->{issuerUrldc} = $uri->as_string;
+            $req->{issuerNextUrl} = $uri->as_string;
         }
 
         # We don't want info to interfere with the auth logout process
