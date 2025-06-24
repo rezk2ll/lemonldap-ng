@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Yêu cầu PKCE",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcRPMetaDataOptionsScopes":"Phạm vi",
 "oidcRPMetaDataOptionsTimeouts":"Hết thời gian chờ",

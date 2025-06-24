@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Unieważnij tokeny odświeżania po użyciu",
 "oidcRPMetaDataOptionsRequestUris":"Dozwolone adresy URL do pobierania obiektu żądania",
 "oidcRPMetaDataOptionsRequirePKCE":"Wymagaj PKCE",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"Reguła dostępu",
 "oidcRPMetaDataOptionsScopes":"Zakres",
 "oidcRPMetaDataOptionsTimeouts":"Limit czasu",

@@ -2013,6 +2013,20 @@ sub _handleRefreshTokenGrant {
               . $refreshSession->data->{client_id} );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
+    if ( my $delay = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRtActivity} ) {
+        if ( ( $refreshSession->data->{_oidcRtUpdate} + $delay ) < time ) {
+            my $user = $refreshSession->data->{_whatToTrace};
+            $self->auditLog(
+                $req,
+                code => 'ISSUER_OIDC_INACTIVE_REFRESH_TOKEN',
+                rp => $rp,
+                message => "User $user tried to use an inactive refresh_token",
+                user => $user,
+            );
+            $refreshSession->remove;
+            return $self->sendOIDCError( $req, 'invalid_grant', 401 );
+        }
+    }
 
     my $access_token;
     my $userData;

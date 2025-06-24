@@ -310,6 +310,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsIDTokenExpiration',
                             'oidcRPMetaDataOptionsAccessTokenExpiration',
                             'oidcRPMetaDataOptionsOfflineSessionExpiration',
+                            'oidcRPMetaDataOptionsRtActivity',
                         ]
                     },
                     {

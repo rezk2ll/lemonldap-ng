@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"İstek Nesnesini getirmek için izin verilen URL'ler",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE gerektir",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
 "oidcRPMetaDataOptionsScopes":"Kapsam",
 "oidcRPMetaDataOptionsTimeouts":"Zaman aşımları",

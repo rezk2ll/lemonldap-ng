@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"לדרוש PKCE",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"כלל גישה",
 "oidcRPMetaDataOptionsScopes":"היקף",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",

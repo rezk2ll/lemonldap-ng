@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"需要 PKCE",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"存取規則",
 "oidcRPMetaDataOptionsScopes":"範圍",
 "oidcRPMetaDataOptionsTimeouts":"逾時",
