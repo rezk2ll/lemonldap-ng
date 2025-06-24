@@ -388,8 +388,10 @@ sub run {
             }
         }
 
-        # Delete local session
-        if ( my $session = $self->p->getApacheSession($session_id) ) {
+        # Legacy code without logout propagation for CAS 2.0
+        if ($logout_url) {
+            my $session = $self->p->getApacheSession($session_id);
+            return PE_LOGOUT_OK unless ($session);
 
            # This will call Issuer logout methods, incluing our own
            # TODO: call authLogout and deleteSession instead of duplicating code
@@ -422,7 +424,26 @@ sub run {
             }
         }
         else {
-            $self->logger->info("Unknown session $session_id");
+
+            $req->{issuerNextUrl} = $logout_service if $logout_service;
+            $req->data->{nofail} = 1;
+            $req->steps(
+                [ @{ $self->p->beforeLogout }, "authLogout", "deleteSession" ]
+            );
+            my $res = $self->p->process($req);
+
+            $req->error($res);
+            if ( $res and $res != PE_LOGOUT_OK ) {
+                if ( $res > 0 ) {
+                    $self->logger->error(
+                        "Logout process returns error code $res");
+                }
+                return $res;
+            }
+            if ($logout_service) {
+                return $self->_redirectUser( $req, $logout_service );
+            }
+
         }
 
         return PE_LOGOUT_OK;

@@ -2149,11 +2149,11 @@ sub sloServer {
         my $doAuthLogout = 0;
         my $logoutContextSession;
 
-        # TODO: for now, we only try authLogout to disconnect an
-        # external IDP if the current session has been opened on a
-        # SAML IDP. We only propagate logout to the IDP our SP is SAML
-        # AND our IDP is SAML too
-        if ( $req->sessionInfo->{_lassoSessionDump} ) {
+        # TODO: only propagation to SAML or OIDC issuers is supported
+        # at the moment
+        if (   $req->sessionInfo->{_lassoSessionDump}
+            or $req->sessionInfo->{_oidc_OP} )
+        {
 
             $doAuthLogout = 1;
 
