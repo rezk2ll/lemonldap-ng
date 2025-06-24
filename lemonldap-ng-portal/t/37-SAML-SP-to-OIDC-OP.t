@@ -12,8 +12,6 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 10;
-my $debug     = 'error';
 my ( $op, $proxy, $sp, $res );
 
 LWP::Protocol::PSGI->register(
@@ -67,11 +65,9 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-SKIP: {
-    eval "use Lasso";
-    if ($@) {
-        skip 'Lasso not found', $maintests;
-    }
+sub test {
+    my ( $method, $hashStorage ) = @_;
+    reset_tmpdir;
 
     # Initialization
     $op = register( 'op', \&op );
@@ -90,9 +86,8 @@ SKIP: {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    $sp = register( 'sp', \&sp );
-
-    $proxy = register( 'proxy', sub { proxy( $jwks, $metadata ) } );
+    $sp    = register( 'sp',    sub { sp($method) } );
+    $proxy = register( 'proxy', sub { proxy( $jwks, $metadata, $method ) } );
 
     # SAML
     ok(
@@ -101,18 +96,38 @@ SKIP: {
         ),
         'Try SAML SP'
     );
-    my ( $host, $url, $query ) =
-      expectForm( $res, 'auth.proxy.com', '/saml/singleSignOn', 'SAMLRequest' );
+    my ( $host, $url, $query );
 
-    # Push SAML request to IdP
-    ok(
-        $res = $proxy->_post(
-            $url, IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-        ),
-        'Launch SAML request to IdP'
-    );
+    if ( $method eq "Redirect" ) {
+        ( $url, $query ) = expectRedirection( $res,
+            qr#^http://auth.proxy.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
+
+        # Push SAML request to IdP
+        ok(
+            $res = $proxy->_get(
+                $url,
+                query  => $query,
+                accept => 'text/html',
+            ),
+            'Launch SAML request to IdP'
+        );
+    }
+    else {
+        ( $host, $url, $query ) =
+          expectForm( $res, 'auth.proxy.com', '/saml/singleSignOn',
+            'SAMLRequest' );
+
+        # Push SAML request to IdP
+        ok(
+            $res = $proxy->_post(
+                $url, IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+            ),
+            'Launch SAML request to IdP'
+        );
+    }
+
     my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ( $url, $query ) =
       expectRedirection( $res,
@@ -176,6 +191,7 @@ SKIP: {
     ok(
         $res = $proxy->_get(
             $url,
+            query  => $query,
             accept => 'text/html',
             cookie => "lemonldap=$proxyId;$proxyPdata",
         ),
@@ -207,49 +223,165 @@ SKIP: {
         ),
         'Query SP for logout'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, 'auth.proxy.com', '/saml/singleLogout', 'SAMLRequest' );
+    if ( $method eq "Redirect" ) {
+        ( $url, $query ) = expectRedirection( $res,
+            qr#^http://auth.proxy.com(/saml/singleLogout)\?(SAMLRequest=.+)# );
 
-    # Push SAML logout request to proxy
-    ok(
-        $res = $proxy->_post(
-            $url, IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie => "lemonldap=$proxyId",
-        ),
-        'Launch SAML logout request to IdP'
-    );
-    ( $host, $url, $query ) =
-      expectForm( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn',
-        'SAMLResponse' );
+        # Push SAML logout request to proxy
+        ok(
+            $res = $proxy->_get(
+                $url,
+                query  => $query,
+                accept => 'text/html',
+                cookie => "lemonldap=$proxyId",
+            ),
+            'Launch SAML logout request to IdP'
+        );
+    }
+    else {
+        ( $host, $url, $query ) =
+          expectForm( $res, 'auth.proxy.com', '/saml/singleLogout',
+            'SAMLRequest' );
+
+        # Push SAML logout request to proxy
+        ok(
+            $res = $proxy->_post(
+                $url, IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+                cookie => "lemonldap=$proxyId",
+            ),
+            'Launch SAML logout request to IdP'
+        );
+    }
+
+    ( $url, $query ) =
+      expectRedirection( $res, qr#^http://auth.op.com(/oauth2/logout)\?(.+)# );
 
     my $removedCookie = expectCookie($res);
     is( $removedCookie, 0, "SSO cookie removed" );
 
-    # Forward logout to SP
+    # Push OIDC logout request to op
     ok(
-        $res = $sp->_post(
-            $url, IO::String->new($query),
-            length => length($query),
+        $res = $op->_get(
+            $url,
+            query  => $query,
             accept => 'text/html',
-            cookie => "lemondap=$spId",
+            cookie => "lemonldap=$opId",
         ),
-        'Forward logout response to SP'
+        'Push OIDC logout request to op'
     );
-    expectRedirection( $res, 'http://auth.sp.com/?logout=1' );
 
-    #print STDERR Dumper($res);
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+    ok(
+        $res = $op->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$opId",
+            length => length($query),
+        ),
+        "Post logout confirmation",
+    );
+
+    ( $url, $query ) = expectRedirection( $res,
+        qr#^http://auth.proxy.com(/oauth2/rlogoutreturn)\?(.+)# );
+    ok(
+        $res = $proxy->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$proxyId",
+        ),
+        'Follow OIDC logout response to proxy'
+    );
+
+    ( $url, $query ) = expectRedirection( $res,
+        qr#^http://auth.proxy.com(/saml/singleLogoutResume)\?(.+)# );
+    ok(
+        $res = $proxy->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$proxyId",
+        ),
+        'Switch to SAML logout resumption URL'
+    );
+
+    if ( $method eq "Redirect" ) {
+        ( $url, $query ) = expectRedirection( $res,
+qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
+        );
+
+        # Forward logout to SP
+        ok(
+            $res = $sp->_get(
+                $url,
+                query  => $query,
+                accept => 'text/html',
+                cookie => "lemondap=$spId",
+            ),
+            'Forward logout response to SP'
+        );
+    }
+    else {
+        ( $host, $url, $query ) =
+          expectForm( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn',
+            'SAMLResponse' );
+
+        # Forward logout to SP
+        ok(
+            $res = $sp->_post(
+                $url, IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+                cookie => "lemondap=$spId",
+            ),
+            'Forward logout response to SP'
+        );
+    }
+
+    # TODO
+    if ( $method eq "Redirect" ) {
+        expectOK($res);
+    }
+    else {
+        expectRedirection( $res, 'http://auth.sp.com/?logout=1' );
+    }
+
+    is_deeply( getSession($spId)->data,    {}, "SP session was removed" );
+    is_deeply( getSession($opId)->data,    {}, "OP session was removed" );
+    is_deeply( getSession($proxyId)->data, {}, "Proxy session was removed" );
+
 }
 
-count($maintests);
+SKIP: {
+    eval "use Lasso";
+    if ($@) {
+        skip 'Lasso not found';
+    }
+
+    subtest "Test with Redirect binding" => sub {
+        test("Redirect");
+    };
+
+    subtest "Test with POST binding" => sub {
+        test("POST");
+    };
+    subtest "Test with POST binding and hashStorage" => sub {
+        test( "POST", 1 );
+    };
+}
+
 clean_sessions();
-done_testing( count() );
+done_testing();
 
 sub op {
+    my ($hashStorage) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                        => $debug,
+                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
                 domain                          => 'op.com',
                 portal                          => 'http://auth.op.com/',
                 authentication                  => 'Demo',
@@ -282,6 +414,8 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsRedirectUris          =>
                           'http://auth.proxy.com/?openidconnectcallback=1',
+                        oidcRPMetaDataOptionsPostLogoutRedirectUris =>
+                          "http://auth.proxy.com/oauth2/rlogoutreturn",
                     }
                 },
                 oidcOPMetaDataOptions           => {},
@@ -302,10 +436,10 @@ sub op {
 }
 
 sub proxy {
-    my ( $jwks, $metadata ) = @_;
+    my ( $jwks, $metadata, $method, $hashStorage ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => $debug,
+                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
                 domain                     => 'proxy.com',
                 portal                     => 'http://auth.proxy.com/',
                 authentication             => 'OpenIDConnect',
@@ -365,7 +499,7 @@ sub proxy {
                 samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML =>
-                          samlSPMetaDataXML( 'sp', 'HTTP-POST' )
+                          samlSPMetaDataXML( 'sp', "HTTP-$method" )
                     },
                 },
             }
@@ -374,9 +508,10 @@ sub proxy {
 }
 
 sub sp {
+    my ( $method, $hashStorage ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                          => $debug,
+                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
                 domain                            => 'sp.com',
                 portal                            => 'http://auth.sp.com/',
                 authentication                    => 'SAML',
@@ -393,8 +528,8 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'post',
-                        samlIDPMetaDataOptionsSLOBinding     => 'post',
+                        samlIDPMetaDataOptionsSSOBinding     => lc($method),
+                        samlIDPMetaDataOptionsSLOBinding     => lc($method),
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
@@ -411,7 +546,7 @@ sub sp {
                 samlIDPMetaDataXML => {
                     idp => {
                         samlIDPMetaDataXML =>
-                          samlIDPMetaDataXML( 'proxy', 'HTTP-POST' )
+                          samlIDPMetaDataXML( 'proxy', "HTTP-$method" )
                     }
                 },
                 samlOrganizationDisplayName => "SP",
