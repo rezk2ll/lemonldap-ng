@@ -24,6 +24,7 @@ export function SavePopup({
       <DialogContent>
         {config.saveResponse ? (
           <>
+            {!config.saveResponse.details.__errors__ && <p>{t("successfullySaved")}</p>}
             {config.saveResponse.details.__warnings__ ? (
               <>
                 <strong>{t("warnings")}</strong>
