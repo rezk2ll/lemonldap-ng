@@ -1565,7 +1565,7 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Display reset password button in portal',
-        },    
+        },
         portalDisplayOfflineTokens => {
             'default' => '$_auth eq \'OIDC\'',
             'type'    => 'boolOrExpr'
@@ -4048,7 +4048,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         ldapForcePasswordChangeExpirationWarning => {
             type          => 'intOrNull',
-            documentation => 'Delay to force password change if password is about to expire',
+            documentation =>
+              'Delay to force password change if password is about to expire',
         },
         ldapUsePasswordResetAttribute => {
             type          => 'bool',
@@ -4866,6 +4867,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             default       => 'flogout',
             documentation => 'OpenID Connect Front-Channel logout endpoint',
+        },
+        oidcServiceMetaDataRpLogoutReturnURI => {
+            type          => 'text',
+            default       => 'rlogoutreturn',
+            documentation =>
+              'OpenID Connect RP-Initiated logout return endpoint',
         },
         oidcServiceMetaDataAuthnContext => {
             type    => 'keyTextContainer',

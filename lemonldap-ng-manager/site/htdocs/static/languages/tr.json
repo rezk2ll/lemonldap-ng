@@ -842,6 +842,7 @@
 "oidcServiceMetaDataKeys":"Anahtarlar",
 "oidcServiceMetaDataRegistrationURI":"Kayıt",
 "oidcServiceMetaDataRevokeURI":"Token revocation",
+"oidcServiceMetaDataRpLogoutReturnURI":"Logout return endpoint",
 "oidcServiceMetaDataSecurity":"Güvenlik",
 "oidcServiceMetaDataSessions":"Oturumlar",
 "oidcServiceMetaDataSigKeys":"Signature keys",

@@ -842,6 +842,7 @@
 "oidcServiceMetaDataKeys":"المفاتيح",
 "oidcServiceMetaDataRegistrationURI":"التسجيل",
 "oidcServiceMetaDataRevokeURI":"Token revocation",
+"oidcServiceMetaDataRpLogoutReturnURI":"Logout return endpoint",
 "oidcServiceMetaDataSecurity":"الحماية",
 "oidcServiceMetaDataSessions":"الجلسات",
 "oidcServiceMetaDataSigKeys":"Signature keys",
