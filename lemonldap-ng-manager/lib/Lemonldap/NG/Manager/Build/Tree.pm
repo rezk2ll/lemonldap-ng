@@ -308,7 +308,7 @@ sub tree {
                                         'ldapPasswordResetAttributeValue',
                                         'ldapAllowResetExpiredPassword',
                                         'ldapGetUserBeforePasswordChange',
-                                        'ldapForcePasswordChangeExpirationWarning',
+'ldapForcePasswordChangeExpirationWarning',
                                         'ldapITDS'
                                     ]
                                 },
@@ -972,7 +972,7 @@ sub tree {
                         },
                         {
                             title => 'adminLogoutServer',
-                            nodes => [ 'adminLogoutServerSecret' ]
+                            nodes => ['adminLogoutServerSecret']
                         },
                         'oidcOfflineTokens',
                     ]
@@ -1545,6 +1545,7 @@ sub tree {
                         'oidcServiceMetaDataCheckSessionURI',
                         'oidcServiceMetaDataFrontChannelURI',
                         'oidcServiceMetaDataBackChannelURI',
+                        'oidcServiceMetaDataRpLogoutReturnURI',
                     ]
                 },
                 'oidcServiceMetaDataAuthnContext',

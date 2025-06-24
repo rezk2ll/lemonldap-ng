@@ -2149,17 +2149,17 @@ sub sloServer {
         my $doAuthLogout = 0;
         my $logoutContextSession;
 
-        # TODO: for now, we only try authLogout to disconnect an
-        # external IDP if the current session has been opened on a
-        # SAML IDP. We only propagate logout to the IDP our SP is SAML
-        # AND our IDP is SAML too
-        if ( $req->sessionInfo->{_lassoSessionDump} ) {
+        # TODO: only propagation to SAML or OIDC issuers is supported
+        # at the moment
+        if (   $req->sessionInfo->{_lassoSessionDump}
+            or $req->sessionInfo->{_oidc_OP} )
+        {
 
             $doAuthLogout = 1;
 
             # In case we have to redirect to the IDP, save current state
             # to allow resumption. This needs to be done here because
-            # issuerUrldc will be put in the IdP logout's RelayState
+            # issuerNextUrl will be put in the IdP logout's RelayState
             my $logoutInfos = {
                 logout      => $logout->dump,
                 spConfKey   => $spConfKey,
@@ -2176,7 +2176,7 @@ sub sloServer {
                 )
             );
             $uri->query_param( ResumeParams => $logoutContextSession->id );
-            $req->{issuerUrldc} = $uri->as_string;
+            $req->{issuerNextUrl} = $uri->as_string;
         }
 
         # We don't want info to interfere with the auth logout process

@@ -3628,6 +3628,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'revoke',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataRpLogoutReturnURI' => {
+            'default' => 'rlogoutreturn',
+            'type'    => 'text'
+        },
         'oidcServiceMetaDataTokenURI' => {
             'default' => 'token',
             'type'    => 'text'

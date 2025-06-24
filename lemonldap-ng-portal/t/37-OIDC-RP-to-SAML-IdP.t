@@ -12,8 +12,6 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 17;
-my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
 
 LWP::Protocol::PSGI->register(
@@ -23,7 +21,6 @@ LWP::Protocol::PSGI->register(
         my $host = $1;
         my $url  = $2;
         my ( $res, $client );
-        count(1);
         if ( $host eq 'sp' ) {
             pass("  Request from RP to OP(sp),     endpoint $url");
             $client = $sp;
@@ -62,20 +59,18 @@ LWP::Protocol::PSGI->register(
         ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
             '  Content is JSON' )
           or explain( $res->[1], 'Content-Type => application/json' );
-        count(4);
         return $res;
     }
 );
 
-SKIP: {
-    eval "use Lasso";
-    if ($@) {
-        skip 'Lasso not found', $maintests;
-    }
+sub test {
+    main::reset_tmpdir();
+
+    my ( $method, $wayf ) = @_;
 
     # Initialization
-    $idp = register( 'idp', \&idp );
-    $sp  = register( 'sp',  \&sp );
+    $idp = register( "idp$method", sub { idp($method) } );
+    $sp  = register( "sp$method",  sub { sp( $method, $wayf ) } );
 
     ok(
         $res = $sp->_get('/oauth2/jwks'),
@@ -91,7 +86,7 @@ SKIP: {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    $rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
+    $rp = register( "rp$method", sub { rp( $jwks, $metadata ) } );
 
     # Query RP for auth
     ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
@@ -110,35 +105,56 @@ SKIP: {
     );
     my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    ( $url, $query ) =
-      expectRedirection( $res, qr#^http://discovery.example.com/# );
+    if ($wayf) {
+        ( $url, $query ) =
+          expectRedirection( $res, qr#^http://discovery.example.com/# );
 
-    # Return from WAYF
-    ok(
-        $res = $sp->_get(
-            "/",
-            query  => "idp=" . uri_escape("http://auth.idp.com/saml/metadata"),
-            accept => 'text/html',
-            cookie => $spPdata,
-        ),
-        "Return from WAYF"
-    );
+        # Return from WAYF
+        ok(
+            $res = $sp->_get(
+                "/",
+                query => "idp="
+                  . uri_escape("http://auth.idp.com/saml/metadata"),
+                accept => 'text/html',
+                cookie => $spPdata,
+            ),
+            "Return from WAYF"
+        );
 
-    $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+        $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
+    }
     my ( $host, $tmp );
-    ( $url, $query ) = expectRedirection( $res,
-        qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
+    if ( $method eq "Redirect" ) {
+        ( $url, $query ) = expectRedirection( $res,
+            qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
-    # Push SAML request to IdP
-    ok(
-        $res = $idp->_get(
-            $url,
-            query  => $query,
-            accept => 'text/html',
-        ),
-        'Launch SAML request to IdP'
-    );
+        # Push SAML request to IdP
+        ok(
+            $res = $idp->_get(
+                $url,
+                query  => $query,
+                accept => 'text/html',
+            ),
+            'Launch SAML request to IdP'
+        );
+    }
+    else {
+        ( $host, $url, $query ) =
+          expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
+            'SAMLRequest' );
+
+        # Post SAML request to IdP
+        ok(
+            $res = $idp->_post(
+                $url,
+                IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+            ),
+            'Launch SAML request to IdP'
+        );
+    }
     my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP
@@ -172,7 +188,7 @@ SKIP: {
             $url, IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => "$spPdata"
+            cookie => "$spPdata",
         ),
         'POST SAML response'
     );
@@ -191,10 +207,10 @@ SKIP: {
         'Follow internal redirection from SAML-SP to OIDC-OP'
     );
 
-    $spPdata = expectCookie( $res, 'lemonldappdata' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, qr#/oauth2/authorize#, 'confirm' );
+    $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    ( $host, $tmp, $query ) =
-      expectForm( $res, undef, qr#^/oauth2/authorize#, 'confirm' );
     ok(
         $res = $sp->_get(
             '/oauth2/authorize',
@@ -245,48 +261,113 @@ SKIP: {
         ),
         "Confirm logout,                endpoint $url"
     );
-    ( $url, $query ) = expectRedirection( $res,
-        qr#http://auth.idp.com/*(/saml/singleLogout)\?(.*)# );
+    if ( $method eq "Redirect" ) {
+        ( $url, $query ) = expectRedirection( $res,
+            qr#http://auth.idp.com/*(/saml/singleLogout)\?(.*)# );
 
-    # Push logout to SAML IdP
-    ok(
-        $res = $idp->_get(
-            $url,
-            query  => $query,
-            cookie => "lemonldap=$idpId",
-            accept => 'text/html',
-        ),
-        'Push logout to SAML IdP'
-    );
-    ( $url, $query ) = expectRedirection( $res,
-        qr#http://auth.sp.com/*(/saml/proxySingleLogoutReturn)\?(.*)$# );
+        # Push logout to SAML IdP
+        ok(
+            $res = $idp->_get(
+                $url,
+                query  => $query,
+                cookie => "lemonldap=$idpId",
+                accept => 'text/html',
+            ),
+            'Push logout to SAML IdP'
+        );
+    }
+    else {
+        ( $host, $url, $query ) =
+          expectForm( $res, 'auth.idp.com', '/saml/singleLogout',
+            'SAMLRequest' );
+
+        # Push logout to SAML IdP
+        ok(
+            $res = $idp->_post(
+                $url, IO::String->new($query),
+                length => length($query),
+                cookie => "lemonldap=$idpId",
+                accept => 'text/html',
+            ),
+            'Push logout to SAML IdP'
+        );
+    }
 
     my $removedCookie = expectCookie($res);
     is( $removedCookie, 0, "SSO cookie removed" );
 
-    # Push logout to SAML SP
+    if ( $method eq "Redirect" ) {
+
+        ( $url, $query ) = expectRedirection( $res,
+            qr#http://auth.sp.com/*(/saml/proxySingleLogoutReturn)\?(.*)$# );
+
+        # Push logout to SAML SP
+        ok(
+            $res = $sp->_get(
+                $url,
+                query  => $query,
+                cookie => "lemonldap=$spId",
+                accept => 'text/html',
+            ),
+            'Push logout to SAML IdP'
+        );
+    }
+    else {
+
+        ( $host, $url, $query ) =
+          expectForm( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn' );
+
+        # Push logout to SAML SP
+        ok(
+            $res = $sp->_post(
+                $url, IO::String->new($query),
+                length => length($query),
+                cookie => "lemonldap=$spId",
+                accept => 'text/html',
+            ),
+            'Push logout to SAML IdP'
+        );
+
+    }
+
+    expectRedirection( $res, "http://auth.rp.com/oauth2/rlogoutreturn" );
     ok(
-        $res = $sp->_get(
-            $url,
-            query  => $query,
-            cookie => "lemonldap=$spId",
-            accept => 'text/html',
+        $res = $rp->_get(
+            "oauth2/rlogoutreturn", accept => 'text/html',
         ),
-        'Push logout to SAML IdP'
+        'Follow post-logout redirection'
     );
 
-    #print STDERR Dumper($res);
+    expectRedirection( $res, "http://auth.rp.com/?logout=1" );
+
+    is_deeply( getSession($spId)->data,  {}, "SP session was removed" );
+    is_deeply( getSession($idpId)->data, {}, "IDP session was removed" );
+    is_deeply( getSession($rpId)->data,  {}, "RP session was removed" );
 }
 
-count($maintests);
+SKIP: {
+    eval "use Lasso";
+    if ($@) {
+        skip 'Lasso not found';
+    }
+    subtest "Test OIDC-LLNG-SAML proxy with redirect binding" => sub {
+        test("Redirect");
+    };
+    subtest "Test OIDC-LLNG-SAML proxy with redirect binding and WAYF" => sub {
+        test( "Redirect", 1 );
+    };
+    subtest "Test OIDC-LLNG-SAML proxy with post binding" => sub {
+        test("POST");
+    };
+}
+
 clean_sessions();
-done_testing( count() );
+done_testing();
 
 sub idp {
-    return LLNG::Manager::Test->new(
-        {
+    my ($method) = @_;
+    return LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => $debug,
                 domain                 => 'idp.com',
                 portal                 => 'http://auth.idp.com/',
                 authentication         => 'Demo',
@@ -319,7 +400,7 @@ sub idp {
                 samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML =>
-                          samlSPMetaDataXML( 'sp', 'HTTP-Redirect' )
+                          samlSPMetaDataXML( 'sp', "HTTP-$method" )
                     },
                 },
             }
@@ -328,19 +409,24 @@ sub idp {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    my ( $method, $wayf ) = @_;
+    return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                        => $debug,
                 domain                          => 'sp.com',
                 portal                          => 'http://auth.sp.com/',
                 authentication                  => 'SAML',
                 userDB                          => 'Same',
                 issuerDBSAMLActivation          => 0,
                 issuerDBOpenIDConnectActivation => 1,
-                samlDiscoveryProtocolURL => 'http://discovery.example.com/',
-                samlDiscoveryProtocolActivation => 1,
-
+                (
+                    $wayf
+                    ? (
+                        samlDiscoveryProtocolURL =>
+                          'http://discovery.example.com/',
+                        samlDiscoveryProtocolActivation => 1,
+                      )
+                    : ()
+                ),
                 oidcRPMetaDataExportedVars => {
                     rp => {
                         email       => "mail",
@@ -365,8 +451,10 @@ sub sp {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsRedirectUris          =>
+                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
+                        oidcRPMetaDataOptionsPostLogoutRedirectUris =>
+                          "http://auth.rp.com/oauth2/rlogoutreturn",
+                        oidcRPMetaDataOptionsRedirectUris =>
                           'http://auth.rp.com/?openidconnectcallback=1',
                     }
                 },
@@ -387,28 +475,13 @@ sub sp {
                         mail => "0;mail;;",
                         uid  => "1;uid",
                         cn   => "0;cn"
-                    },
-                    idp2 => {
-                        mail => "0;mail;;",
-                        uid  => "1;uid",
-                        cn   => "0;cn"
                     }
                 },
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'redirect',
-                        samlIDPMetaDataOptionsSLOBinding     => 'redirect',
-                        samlIDPMetaDataOptionsSignSSOMessage => 1,
-                        samlIDPMetaDataOptionsSignSLOMessage => 1,
-                        samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
-                        samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
-                    },
-                    idp2 => {
-                        samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'redirect',
-                        samlIDPMetaDataOptionsSLOBinding     => 'redirect',
+                        samlIDPMetaDataOptionsSSOBinding     => lc($method),
+                        samlIDPMetaDataOptionsSLOBinding     => lc($method),
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
@@ -421,19 +494,11 @@ sub sp {
                         "uid" => "0;uid;;",
                         "cn"  => "1;cn;;",
                     },
-                    idp2 => {
-                        "uid" => "0;uid;;",
-                        "cn"  => "1;cn;;",
-                    },
                 },
                 samlIDPMetaDataXML => {
                     idp => {
                         samlIDPMetaDataXML =>
-                          samlIDPMetaDataXML( 'idp', 'HTTP-Redirect' )
-                    },
-                    idp2 => {
-                        samlIDPMetaDataXML =>
-                          samlIDPMetaDataXML( 'idp2', 'HTTP-Redirect' )
+                          samlIDPMetaDataXML( 'idp', "HTTP-$method" )
                     }
                 },
                 samlOrganizationDisplayName => "SP",
@@ -451,10 +516,8 @@ sub sp {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => $debug,
                 domain                     => 'rp.com',
                 portal                     => 'http://auth.rp.com/',
                 authentication             => 'OpenIDConnect',

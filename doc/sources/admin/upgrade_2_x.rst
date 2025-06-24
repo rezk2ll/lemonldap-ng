@@ -31,6 +31,26 @@ Starting from this version, the ``lemonldap-ng-cli`` refuses to store
 invalid configurations. If you use it with intermediate steps that are
 invalid before next changes, use the new **--unsafe** option.
 
+Stricter check on OIDC post-logout redirect URIs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In logout scenarios involving disconnecting from a remote IDP, you may start to
+encouter error messages that warn about unauthorized URIs.
+
+This happens because the `post_logout_redirect_uri` is now more strictly
+enforced in those scenarios.  Make sure you have allowed the value of that
+parameter in *OpenID Connect Relying Parties* > XXX > *Options* > *Logout* >
+*Allowed redirection addresses for logout*
+
+Change in post-logout redirect URI when LLNG is an OIDC client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use :doc:`authopenidconnect`, to delegate authentication to an external
+OpenID Connect provider, you have to update your provider's configuration in
+order to allow a new *post-logout* redirect URIs::
+
+    https://<portal>/oauth2/rlogoutreturn
+
 2.21.1
 ------
 

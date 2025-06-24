@@ -1261,6 +1261,25 @@ sub _rpInitiatedLogout {
     my $state                    = $oidc_request->{'state'};
     my $bypassConfirm            = 0;
 
+    my $post_logout_redirect_uri_with_state;
+    if ($post_logout_redirect_uri) {
+
+        unless (
+            $self->findRPFromUri(
+                $post_logout_redirect_uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            )
+          )
+        {
+            $self->logger->error("$post_logout_redirect_uri is not allowed");
+            return PE_UNAUTHORIZEDURL;
+        }
+
+        # Build Response
+        $post_logout_redirect_uri_with_state =
+          $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
+    }
+
     # Check if we can bypass confirm using token_hint
     if ($id_token_hint) {
 
@@ -1285,6 +1304,11 @@ sub _rpInitiatedLogout {
             or $bypassConfirm
           )
         {
+
+            # Save the target URL in case authLogout has external steps
+            $req->{issuerNextUrl} = $post_logout_redirect_uri_with_state
+              if $post_logout_redirect_uri_with_state;
+
             $req->steps(
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
@@ -1299,26 +1323,11 @@ sub _rpInitiatedLogout {
             }
         }
 
-        if ($post_logout_redirect_uri) {
-
-            unless (
-                $self->findRPFromUri(
-                    $post_logout_redirect_uri,
-                    'oidcRPMetaDataOptionsPostLogoutRedirectUris'
-                )
-              )
-            {
-                $self->logger->error(
-                    "$post_logout_redirect_uri is not allowed");
-                return PE_UNAUTHORIZEDURL;
-            }
-
-            # Build Response
-            my $response_url =
-              $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
-
-            return $self->_redirectToUrl( $req, $response_url );
+        if ($post_logout_redirect_uri_with_state) {
+            return $self->_redirectToUrl( $req,
+                $post_logout_redirect_uri_with_state );
         }
+
         return $req->param('confirm') == 1
           ? ( $err ? $err : PE_LOGOUT_OK )
           : PE_OK;

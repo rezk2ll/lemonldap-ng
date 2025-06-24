@@ -842,6 +842,7 @@
 "oidcServiceMetaDataKeys":"Khóa",
 "oidcServiceMetaDataRegistrationURI":"Đăng ký",
 "oidcServiceMetaDataRevokeURI":"Token revocation",
+"oidcServiceMetaDataRpLogoutReturnURI":"Logout return endpoint",
 "oidcServiceMetaDataSecurity":"Bảo mật",
 "oidcServiceMetaDataSessions":"Phiên",
 "oidcServiceMetaDataSigKeys":"Signature keys",

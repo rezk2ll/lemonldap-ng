@@ -125,7 +125,7 @@ Register LL::NG to an OpenID Connect Provider
 To register LL::NG, you will need to give some information like
 application name or logo.
 
-You will be prompted to provide a *Redirect URI* for LL::NG, which is built 
+You will be prompted to provide a *Redirect URI* for LL::NG, which is built
 by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:
@@ -149,6 +149,8 @@ You may also be prompted for lougout type. LL::NG supports both *back* and
 
     Front Channel use requires "iss" and "sid" parameters in requests (See
     `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
+
+- https://<portal>/oauth2/rlogoutreturn should be allowed as a *post-logout* redirect URI
 
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.

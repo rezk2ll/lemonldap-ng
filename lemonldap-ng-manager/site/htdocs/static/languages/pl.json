@@ -842,6 +842,7 @@
 "oidcServiceMetaDataKeys":"Klucze",
 "oidcServiceMetaDataRegistrationURI":"Rejestracja",
 "oidcServiceMetaDataRevokeURI":"Token revocation",
+"oidcServiceMetaDataRpLogoutReturnURI":"Logout return endpoint",
 "oidcServiceMetaDataSecurity":"Bezpieczeństwo",
 "oidcServiceMetaDataSessions":"Sesje",
 "oidcServiceMetaDataSigKeys":"Klucze podpisu",

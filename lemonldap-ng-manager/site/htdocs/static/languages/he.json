@@ -842,6 +842,7 @@
 "oidcServiceMetaDataKeys":"מפתחות",
 "oidcServiceMetaDataRegistrationURI":"רישום",
 "oidcServiceMetaDataRevokeURI":"Token revocation",
+"oidcServiceMetaDataRpLogoutReturnURI":"Logout return endpoint",
 "oidcServiceMetaDataSecurity":"אבטחה",
 "oidcServiceMetaDataSessions":"הפעלות",
 "oidcServiceMetaDataSigKeys":"Signature keys",
