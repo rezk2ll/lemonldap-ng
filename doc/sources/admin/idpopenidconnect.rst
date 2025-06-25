@@ -316,6 +316,8 @@ Options
    -  **Offline sessions** *(default: one month)*: Lifetime of the
       refresh token obtained with the **offline_access** scope.
       This parameter only applies if offline sessions are enabled.
+   -  **refresh_token activity timeout** *(default: none)*: Expiration time
+      of inactives refresh tokens. if no value is set, activity isn't tracked.
 
 -  **Logout**
 
