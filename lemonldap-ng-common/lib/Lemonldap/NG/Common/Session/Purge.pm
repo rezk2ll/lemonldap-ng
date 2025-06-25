@@ -359,6 +359,30 @@ sub _purge_for_backend {
     }
 
     my @t;
+
+    # Memorize some OIDC parameters
+    my ( $rpActivity, $rtMinTimeout );
+    foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+        my $v = $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsRtActivity};
+        next unless $v;
+
+        # Store the mapping ClientID -> RT timeout
+        $rpActivity->{ $conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsClientID} } = $v;
+        $rtMinTimeout = $v if !$rpActivity or $v < $rpActivity;
+    }
+
+    my $checkRtExpiration = sub {
+        my ($id, $session) = @_;
+        return unless $session->{_session_kind} eq 'OIDCI';
+        return unless $session->{_type} eq 'refresh_token';
+        my $v = $session->{_oidcRtUpdate} or return;
+        my $timeout = $rpActivity->{ $session->{client_id} } or return;
+        push @t, $id if $v + $timeout < time;
+    };
+
+    # Real purge
     if ( $options->{backend}->can('deleteIfLowerThan') ) {
         $self->logger->debug("Found deleteIfLowerThan() in backend, using it");
         my ( $success, $rows ) = $options->{backend}->deleteIfLowerThan(
@@ -381,50 +405,64 @@ sub _purge_for_backend {
                 $internal_stats->{nb_purged}->{$type} += $rows;
             }
             $internal_stats->{end_time}->{$type} = Time::HiRes::time();
-            return;
+            if ($rtMinTimeout) {
+                my $rtSessions = $options->{backend}
+                  ->searchLt( $options, '_oidcRtUpdate', time - $rtMinTimeout );
+                if ($rtSessions) {
+                    foreach my $id ( keys %$rtSessions ) {
+                        $checkRtExpiration->( $id, $rtSessions->{$id} );
+                    }
+                }
+            }
+            return unless @t;
         }
     }
 
-    # Get all expired sessions
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $options,
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            my $time  = time;
+    else {
+        # Get all expired sessions
+        Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+            $options,
+            sub {
+                my $entry = shift;
+                my $id    = shift;
+                my $time  = time;
 
-            $self->logger->debug("Check session $id");
+                $self->logger->debug("Check session $id");
 
-            # Empty session need to be removed
-            unless ($entry) {
-                push @t, $id;
-                $self->logger->debug(
-                    "Session $id is empty (corrupted?), delete forced");
+                # Empty session need to be removed
+                unless ($entry) {
+                    push @t, $id;
+                    $self->logger->debug(
+                        "Session $id is empty (corrupted?), delete forced");
+                }
+
+                # Do net check sessions without _utime
+                return undef unless $entry->{_utime};
+
+                # Do not expire persistent sessions
+                return undef if ( $entry->{_session_kind} eq "Persistent" );
+
+                # Session expired
+                if ( $time - $entry->{_utime} > $conf->{timeout} ) {
+                    push @t, $id;
+                    $self->logger->debug("Session $id expired");
+                }
+
+                # User has no activity, so considere the session has expired
+                elsif ( $conf->{timeoutActivity}
+                    and $entry->{_lastSeen}
+                    and $time - $entry->{_lastSeen} > $conf->{timeoutActivity} )
+                {
+                    push @t, $id;
+                    $self->logger->debug("Session $id inactive");
+                }
+                elsif ($rtMinTimeout) {
+                    $checkRtExpiration->( $id, $entry );
+                }
+                undef;
             }
-
-            # Do net check sessions without _utime
-            return undef unless $entry->{_utime};
-
-            # Do not expire persistent sessions
-            return undef if ( $entry->{_session_kind} eq "Persistent" );
-
-            # Session expired
-            if ( $time - $entry->{_utime} > $conf->{timeout} ) {
-                push @t, $id;
-                $self->logger->debug("Session $id expired");
-            }
-
-            # User has no activity, so considere the session has expired
-            elsif ( $conf->{timeoutActivity}
-                and $entry->{_lastSeen}
-                and $time - $entry->{_lastSeen} > $conf->{timeoutActivity} )
-            {
-                push @t, $id;
-                $self->logger->debug("Session $id inactive");
-            }
-            undef;
-        }
-    );
+        );
+    }
 
     # Delete sessions
     my @errors;
