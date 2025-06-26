@@ -32,17 +32,18 @@ ok( (
 ok( $client->login('dwho') );
 Time::Fake->offset('+1m');
 ok( $client->login('dwho') );
+&insertRt;
 &insertRt(time);
 &insertRt( time - 7200 );
 
-ok( &sessionNumber == 4, 'Two sessions in db' ) or explain( &sessionNumber, 4 );
+ok( &sessionNumber == 5, '5 sessions in db' ) or explain( &sessionNumber, 4 );
 my $res = $client->_post(
     '/webcron/purge',
     IO::String->new('secret=secret'),
     length => 13,
 );
 expectOK($res);
-ok( &sessionNumber == 2, 'One sessions in db' ) or explain( &sessionNumber, 2 );
+ok( &sessionNumber == 3, '3 sessions in db' ) or explain( &sessionNumber, 2 );
 
 sub sessionNumber {
     my $r = 0;
@@ -64,13 +65,13 @@ sub insertRt {
       or die $!;
     print F JSON::to_json( {
             _utime        => time + ( 86400 * 200 ),
-            _oidcRtUpdate => $lastSeen,
             _session_kind => 'OIDCI',
             _type         => 'refresh_token',
             _session_uid  => 'dwho',
             _whatToTrace  => 'dwho',
             client_id     => 'rpid',
             _session_id   => $sid,
+            ( defined $lastSeen ? ( _oidcRtUpdate => $lastSeen ) : () ),
         }
     );
     close F;
