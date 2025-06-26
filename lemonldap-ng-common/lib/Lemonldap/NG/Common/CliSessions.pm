@@ -63,7 +63,12 @@ sub _search {
         $self->opts->{where} ||= ISREFRESHTOKEN;
     }
 
-    $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
+    unless ( $self->conf->{$backendStorage} ) {
+        print STDERR "Backend "
+          . $self->opts->{backend}
+          . " was not found, falling back to global\n";
+        $backendStorage = "globalStorage";
+    }
 
     my $args = $self->conf->{"${backendStorage}Options"};
     $args->{backend} = $self->conf->{$backendStorage};
@@ -238,7 +243,12 @@ sub _get_one_session {
     }
 
     # In any case, fall back to global storage if we couldn't find the backend
-    $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
+    unless ( $self->conf->{$backendStorage} ) {
+        print STDERR "Backend "
+          . $self->opts->{backend}
+          . " was not found, falling back to global\n";
+        $backendStorage = "globalStorage";
+    }
 
     my $as = Lemonldap::NG::Common::Session->new( {
             hashStore            => 0,
