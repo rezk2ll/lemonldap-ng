@@ -404,7 +404,6 @@ sub _purge_for_backend {
             if ($rows) {
                 $internal_stats->{nb_purged}->{$type} += $rows;
             }
-            $internal_stats->{end_time}->{$type} = Time::HiRes::time();
             if ($rtMinTimeout) {
                 my $rtSessions = $options->{backend}
                   ->searchLt( $options, '_oidcRtUpdate', time - $rtMinTimeout );
@@ -414,6 +413,7 @@ sub _purge_for_backend {
                     }
                 }
             }
+            $internal_stats->{end_time}->{$type} = Time::HiRes::time();
             return unless @t;
         }
     }
