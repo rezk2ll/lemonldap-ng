@@ -2013,18 +2013,28 @@ sub _handleRefreshTokenGrant {
               . $refreshSession->data->{client_id} );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
-    if ( my $delay = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRtActivity} ) {
-        if ( ( $refreshSession->data->{_oidcRtUpdate} + $delay ) < time ) {
-            my $user = $refreshSession->data->{_whatToTrace};
-            $self->auditLog(
-                $req,
-                code => 'ISSUER_OIDC_INACTIVE_REFRESH_TOKEN',
-                rp => $rp,
-                message => "User $user tried to use an inactive refresh_token",
-                user => $user,
+    if ( my $delay =
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRtActivity} )
+    {
+        my $user = $refreshSession->data->{_whatToTrace};
+        if ( defined $refreshSession->data->{_oidcRtUpdate} ) {
+            if ( ( $refreshSession->data->{_oidcRtUpdate} + $delay ) < time ) {
+                $self->auditLog(
+                    $req,
+                    code    => 'ISSUER_OIDC_INACTIVE_REFRESH_TOKEN',
+                    rp      => $rp,
+                    message =>
+                      "User $user tried to use an inactive refresh_token",
+                    user => $user,
+                );
+                $refreshSession->remove;
+                return $self->sendOIDCError( $req, 'invalid_grant', 401 );
+            }
+        }
+        else {
+            $self->logger->info(
+"$user use a refresh_token without previous _oidcRtUpdate ($refresh_token), considered as active"
             );
-            $refreshSession->remove;
-            return $self->sendOIDCError( $req, 'invalid_grant', 401 );
         }
     }
 
@@ -2473,7 +2483,7 @@ sub _revokeToken {
     }
     if ( !$oidcSession and ( !$tokenHint or $tokenHint eq 'refresh_token' ) ) {
         $self->logger->debug('Try to find a refresh_token to revoke');
-        $oidcSession = $self->getRefreshToken($token, $raw);
+        $oidcSession = $self->getRefreshToken( $token, $raw );
         $tokenHint   = 'refresh_token';
     }
     if ($oidcSession) {
