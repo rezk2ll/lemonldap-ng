@@ -401,27 +401,18 @@ sub run {
                 $self->logger->error("Fail to delete session $session_id ");
             }
 
-            if ($logout_url) {
+            # Display a link to the provided URL
+            $self->logger->debug("Logout URL $logout_url will be displayed");
 
-                # Display a link to the provided URL
-                $self->logger->debug(
-                    "Logout URL $logout_url will be displayed");
+            $req->info(
+                $self->loadTemplate(
+                    $req, 'casBack2Url', params => { url => $logout_url }
+                )
+            );
+            $req->data->{activeTimer} = 0;
 
-                $req->info(
-                    $self->loadTemplate(
-                        $req, 'casBack2Url',
-                        params => { url => $logout_url }
-                    )
-                );
-                $req->data->{activeTimer} = 0;
-
-                delete $req->pdata->{_url};
-                return PE_INFO;
-            }
-
-            if ($logout_service) {
-                return $self->_redirectUser( $req, $logout_service );
-            }
+            delete $req->pdata->{_url};
+            return PE_INFO;
         }
         else {
 
