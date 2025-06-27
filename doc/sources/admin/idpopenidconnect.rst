@@ -316,6 +316,16 @@ Options
    -  **Offline sessions** *(default: one month)*: Lifetime of the
       refresh token obtained with the **offline_access** scope.
       This parameter only applies if offline sessions are enabled.
+   -  **refresh_token activity timeout** *(default: none)*: Expiration time
+      of inactives refresh tokens. if no value is set, activity isn't tracked.
+
+.. important::
+
+    When enabling **refresh_token activity timeout**, a refresh_token created
+    with a version of LLNG previous to 2.22.0 and never used after update
+    is considered as active *(because it has no activity field)*.
+    Such totally inactive refresh_token will be purged normally at their
+    normal end-of-life. Any use of a refresh_token updates the activity field.
 
 -  **Logout**
 

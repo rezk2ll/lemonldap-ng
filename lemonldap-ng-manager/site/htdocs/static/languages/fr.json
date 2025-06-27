@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalider les jetons de rafraichissement après utilisation",
 "oidcRPMetaDataOptionsRequestUris":"URLs autorisées pour récupérer les paramètres de la requête",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE requis",
+"oidcRPMetaDataOptionsRtActivity":"Expiration des refresh_token inactifs",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
 "oidcRPMetaDataOptionsScopes":"Scope",
 "oidcRPMetaDataOptionsTimeouts":"Expirations",

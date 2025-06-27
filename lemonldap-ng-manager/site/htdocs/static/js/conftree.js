@@ -759,6 +759,7 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
                   "title" : "oidcRPMetaDataOptionsAllowNativeSso",
@@ -1391,6 +1392,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "type" : "intOrNull"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "title" : "oidcRPMetaDataOptionsRtActivity",
+                  "type" : "int"
                }
             ],
             "id" : "oidcRPMetaDataOptionsTimeouts",

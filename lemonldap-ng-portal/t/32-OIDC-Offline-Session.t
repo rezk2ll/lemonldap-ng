@@ -14,7 +14,7 @@ BEGIN {
 my $debug = "error";
 
 sub runTest {
-    my ( $op, $jwt, $refresh_rotation, $adminLogout ) = @_;
+    my ( $op, $jwt, $refresh_rotation, $adminLogout, $inactive ) = @_;
     Time::Fake->reset;
 
     LWP::Protocol::PSGI->register(
@@ -246,6 +246,10 @@ sub runTest {
             )
         );
     }
+    elsif ($inactive) {
+        Time::Fake->offset('+24d');
+        expectReject( refreshGrant( $op, 'rpid', $refresh_token ) );
+    }
     else {
         $query = "token=$refresh_token&token_hint=refresh_token";
         ok(
@@ -326,7 +330,7 @@ my $baseConfig = {
         portal                          => 'http://auth.op.com/',
         authentication                  => 'Demo',
         timeoutActivity                 => 3600,
-        adminLogoutServerSecret            => 'qwerty',
+        adminLogoutServerSecret         => 'qwerty',
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,
         oidcRPMetaDataExportedVars      => {
@@ -356,6 +360,7 @@ my $baseConfig = {
                 oidcRPMetaDataOptionsAdditionalAudiences =>
                   "http://my.extra.audience/test urn:extra2",
                 oidcRPMetaDataOptionsRedirectUris => 'http://test/',
+                oidcRPMetaDataOptionsRtActivity   => 1036800,          # 12 days
             }
         },
         oidcServicePrivateKeySig => oidc_key_op_private_sig,
@@ -375,6 +380,11 @@ subtest "Session explorer logout using refresh_token" => sub {
         my $op = LLNG::Manager::Test->new($baseConfig);
         runTest( $op, 0, 0, 1 );
     }
+};
+
+subtest "Inactive refresh_token" => sub {
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTest( $op, 0, 0, 0, 1 );
 };
 
 subtest "Removed user's offline sessions are no longer valid" => sub {

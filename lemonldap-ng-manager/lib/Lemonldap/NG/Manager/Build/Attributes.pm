@@ -5345,6 +5345,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Invalidate refresh token after use',
         },
+        oidcRPMetaDataOptionsRtActivity => {
+            type          => 'int',
+            test          => sub { $_[0] >= 0 },
+            default       => 0,
+            documentation => 'refresh_token activity timeout',
+        },
         oidcRPMetaDataOptionsAuthnLevel => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },

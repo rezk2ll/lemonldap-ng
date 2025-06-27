@@ -2919,7 +2919,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAllowNativeSso' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
@@ -3260,6 +3261,13 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsRtActivity' => {
+            'default' => 0,
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsRule' => {
             'test' => sub {

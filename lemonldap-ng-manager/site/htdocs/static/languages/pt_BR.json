@@ -793,6 +793,7 @@
 "oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"URL's permitidas para buscar Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Exigir PKCE",
+"oidcRPMetaDataOptionsRtActivity":"refresh_token activity timeout",
 "oidcRPMetaDataOptionsRule":"Regra de acesso",
 "oidcRPMetaDataOptionsScopes":"Escopo",
 "oidcRPMetaDataOptionsTimeouts":"Expirações",
