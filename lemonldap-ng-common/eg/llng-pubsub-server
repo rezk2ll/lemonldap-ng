@@ -401,7 +401,6 @@ sub daemonize {
     else {
         debug "Master pid is $$";
     }
-    system "echo $0 > /tmp/cmdline";
     $0 = join ' ', $0, @CMDLINE;
 
     my $cpid;
