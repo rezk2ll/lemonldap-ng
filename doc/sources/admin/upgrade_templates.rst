@@ -16,6 +16,69 @@ Template updates
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
 
 
+2.22.0
+------
+
+Prevent 2FA multiple submit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The way we prevent multiple submit of a form has changed.
+
+We now catch the `submit` event of the form instead of the `click` event of the submit button.
+
+This means the CSS class `btn-single-submit` must be removed from the submit button, and the `data-property="single-submit"` must be added to the form.
+
+We also add the `required` property to code input to avoid submitting an empty form.
+
+.. code-block:: diff
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+   @@ -10,7 +10,7 @@
+
+    <div class="card">
+
+   -<form action="<TMPL_IF "TARGET"><TMPL_VAR NAME="TARGET"><TMPL_ELSE>/ext2fcheck</TMPL_IF>" method="post" class="password" role="form">
+   +<form action="<TMPL_IF "TARGET"><TMPL_VAR NAME="TARGET"><TMPL_ELSE>/ext2fcheck</TMPL_IF>" method="post" class="password" role="form" data-property="single-submit">
+      <div class="form">
+        <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+        <input type="hidden" id="checkLogins" name="checkLogins" value="<TMPL_VAR NAME="CHECKLOGINS">" />
+   @@ -20,7 +20,7 @@
+          <div class="input-group-prepend">
+            <span class="input-group-text"><label for="extcode" class="mb-0"><i class="fa fa-lock"></i></label></span>
+          </div>
+   -      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />
+   +      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code"  required />
+        </div>
+      </div>
+      <div class="buttons">
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+   @@ -10,7 +10,7 @@
+
+   <div class="card">
+
+   -<form action="<TMPL_VAR NAME="TARGET">" method="post" class="password" role="form">
+   +<form action="<TMPL_VAR NAME="TARGET">" method="post" class="password" role="form" data-property="single-submit">
+      <div class="form">
+        <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+        <input type="hidden" id="checkLogins" name="checkLogins" value="<TMPL_VAR NAME="CHECKLOGINS">" />
+   @@ -20,11 +20,11 @@
+          <div class="input-group-prepend">
+            <span class="input-group-text"><label for="extcode" class="mb-0"><i class="fa fa-lock"></i></label></span>
+          </div>
+   -      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />
+   +      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" required />
+        </div>
+      </div>
+      <div class="buttons mb-3">
+   -    <button type="submit" class="btn btn-success btn-single-submit">
+   +    <button type="submit" class="btn btn-success">
+          <span class="fa fa-sign-in"></span>
+          <span trspan="connect">Connect</span>
+        </button>
+
 2.21.0
 ------
 
