@@ -94,7 +94,8 @@ base32tohex = function(base32) {
   bits = "";
   hex = "";
   base32 = base32.replace(/=+$/, "");
-  for (i = j = 0, ref = base32.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
+  for (i = j = 0, ref = base32.length - 1;
+    (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
     val = base32chars.indexOf(base32.charAt(i).toUpperCase());
     if (val === -1) {
       throw new Error("Invalid base32 character in key");

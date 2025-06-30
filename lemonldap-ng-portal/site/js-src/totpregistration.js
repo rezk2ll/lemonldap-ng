@@ -109,11 +109,9 @@ verify = function() {
           }
         } else {
           e = jQuery.Event("mfaAdded");
-          $(document).trigger(e, [
-            {
-              "type": "totp"
-            }
-          ]);
+          $(document).trigger(e, [{
+            "type": "totp"
+          }]);
           if (!e.isDefaultPrevented()) {
             return window.location.href = window.portal + "2fregisters?continue=1";
           }

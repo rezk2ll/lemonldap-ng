@@ -65,7 +65,7 @@ filterFunctions = {
               }
             }
           }
-        // Case "Combination"
+          // Case "Combination"
         } else if (node.nodes[0].data === 'Combination' && n.id === 'combinationParams') {
           console.debug('Combination is selected');
           if (nd[1].cnodes) {

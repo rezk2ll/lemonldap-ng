@@ -72,12 +72,10 @@ delete2F = function(device, epoch, prefix) {
       } else if (resp.result) {
         $(`#delete-${epoch}`).hide();
         e = jQuery.Event("mfaDeleted");
-        $(document).trigger(e, [
-          {
-            "type": device,
-            "epoch": epoch
-          }
-        ]);
+        $(document).trigger(e, [{
+          "type": device,
+          "epoch": epoch
+        }]);
         if (!e.isDefaultPrevented()) {
           setMsg('yourKeyIsUnregistered', 'positive');
         }

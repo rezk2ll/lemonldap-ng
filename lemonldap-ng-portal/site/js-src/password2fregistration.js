@@ -56,11 +56,9 @@ register = function() {
           }
         } else {
           e = jQuery.Event("mfaAdded");
-          $(document).trigger(e, [
-            {
-              "type": "password"
-            }
-          ]);
+          $(document).trigger(e, [{
+            "type": "password"
+          }]);
           if (!e.isDefaultPrevented()) {
             return window.location.href = window.portal + "2fregisters?continue=1";
           }

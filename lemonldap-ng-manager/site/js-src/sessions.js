@@ -51,7 +51,7 @@ schemes = {
       return `${t}=${v}&groupBy=_whatToTrace`;
     },
     function(t, v,
-    q) {
+      q) {
       return q.replace(/\&groupBy.*$/, '') + `&_whatToTrace=${v}`;
     }
   ],
@@ -160,8 +160,7 @@ categories = {
 
 // Menu entries
 menu = {
-  session: [
-    {
+  session: [{
       title: 'deleteSession',
       icon: 'trash'
     },
@@ -183,14 +182,14 @@ llapp.controller('SessionsExplorerCtrl', [
   '$q',
   '$http',
   function($scope,
-  $translator,
-  $location,
-  $q,
-  $http) {
+    $translator,
+    $location,
+    $q,
+    $http) {
     var autoId,
-  c,
-  pathEvent,
-  sessionType;
+      c,
+      pathEvent,
+      sessionType;
     $scope.links = links;
     $scope.menulinks = menulinks;
     $scope.staticPrefix = staticPrefix;
@@ -242,42 +241,42 @@ llapp.controller('SessionsExplorerCtrl', [
       items = document.querySelectorAll(`.data-${epoch}`);
       $scope.waiting = true;
       $http['delete'](`${scriptname}sessions/OIDCConsent/${sessionType}/${$scope.currentSession.id}?rp=${rp}&epoch=${epoch}`).then(function(response) {
-        var e, i, len, results;
-        $scope.waiting = false;
-        results = [];
-        for (i = 0, len = items.length; i < len; i++) {
-          e = items[i];
-          results.push(e.remove());
-        }
-        return results;
-      },
-  function(resp) {
-        return $scope.waiting = false;
-      });
+          var e, i, len, results;
+          $scope.waiting = false;
+          results = [];
+          for (i = 0, len = items.length; i < len; i++) {
+            e = items[i];
+            results.push(e.remove());
+          }
+          return results;
+        },
+        function(resp) {
+          return $scope.waiting = false;
+        });
       return $scope.showT = false;
     };
     // Delete
     $scope.deleteSession = function() {
       $scope.waiting = true;
       return $http['delete'](`${scriptname}sessions/${sessionType}/${$scope.currentSession.id}`).then(function(response) {
-        $scope.currentSession = null;
-        $scope.currentScope.remove();
-        return $scope.waiting = false;
-      },
-  function(resp) {
-        return $scope.waiting = false;
-      });
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        },
+        function(resp) {
+          return $scope.waiting = false;
+        });
     };
     $scope.globalLogout = function() {
       $scope.waiting = true;
       return $http['post'](`${scriptname}sessions/glogout/${sessionType}/${$scope.currentSession.id}`).then(function(response) {
-        $scope.currentSession = null;
-        $scope.currentScope.remove();
-        return $scope.waiting = false;
-      },
-  function(resp) {
-        return $scope.waiting = false;
-      });
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        },
+        function(resp) {
+          return $scope.waiting = false;
+        });
     };
     // Open node
     $scope.stoggle = function(scope) {
@@ -285,11 +284,11 @@ llapp.controller('SessionsExplorerCtrl', [
       node = scope.$modelValue;
       if (node.nodes.length === 0) {
         $scope.updateTree(node.value,
-  node.nodes,
-  node.level,
-  node.over,
-  node.query,
-  node.count);
+          node.nodes,
+          node.level,
+          node.over,
+          node.query,
+          node.count);
       }
       return scope.toggle();
     };
@@ -302,7 +301,7 @@ llapp.controller('SessionsExplorerCtrl', [
       transformSession = function(session) {
         var _insert, array, attr, attrs, category, cv, element, epoch, i, j, k, key, l, len, len1, len2, len3, len4, len5, m, name, o, oidcConsent, p, real, ref, ref1, res, sfDevice, spoof, subres, tab, time, title, tmp, value;
         _insert = function(re,
-  title) {
+          title) {
           var cv, i, key, len, reg, tab, tmp, val, value, vk;
           tmp = [];
           reg = new RegExp(re);
@@ -334,7 +333,7 @@ llapp.controller('SessionsExplorerCtrl', [
           }
         };
         time = session._utime;
-// 1. Replace values if needed
+        // 1. Replace values if needed
         for (key in session) {
           value = session[key];
           if (!value) {
@@ -355,7 +354,7 @@ llapp.controller('SessionsExplorerCtrl', [
           }
         }
         res = [];
-// 2. Push session keys in result, grouped by categories
+        // 2. Push session keys in result, grouped by categories
         for (category in categories) {
           attrs = categories[category];
           subres = [];
@@ -648,43 +647,43 @@ llapp.controller('SessionsExplorerCtrl', [
       }
       // Launch HTTP query
       $http.get(`${scriptname}sessions/${sessionType}?${query}`).then(function(response) {
-        var data, i, len, n, ref;
-        data = response.data;
-        if (data.result) {
-          ref = data.values;
-          for (i = 0, len = ref.length; i < len; i++) {
-            n = ref[i];
-            autoId++;
-            n.id = `node${autoId}`;
-            if (level < scheme.length - 1) {
-              n.nodes = [];
-              n.level = level + 1;
-              n.query = query;
-              n.over = over;
-              // Date display in tree
-              if ($scope.type.match(/^(?:start|update)Time$/)) {
-                // 12 digits -> 12:34
-                n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/,
-  // 11 digits -> 12:30
-  '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/,
-  // 10 digits -> 12h
-  '$2:$30').replace(/^(\d{8})(\d{2})$/,
-  //  8 digits -> 2016-03-15
-  '$2h').replace(/^(\d{4})(\d{2})(\d{2})/,
-  '$1-$2-$3');
+          var data, i, len, n, ref;
+          data = response.data;
+          if (data.result) {
+            ref = data.values;
+            for (i = 0, len = ref.length; i < len; i++) {
+              n = ref[i];
+              autoId++;
+              n.id = `node${autoId}`;
+              if (level < scheme.length - 1) {
+                n.nodes = [];
+                n.level = level + 1;
+                n.query = query;
+                n.over = over;
+                // Date display in tree
+                if ($scope.type.match(/^(?:start|update)Time$/)) {
+                  // 12 digits -> 12:34
+                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/,
+                    // 11 digits -> 12:30
+                    '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/,
+                    // 10 digits -> 12h
+                    '$2:$30').replace(/^(\d{8})(\d{2})$/,
+                    //  8 digits -> 2016-03-15
+                    '$2h').replace(/^(\d{4})(\d{2})(\d{2})/,
+                    '$1-$2-$3');
+                }
               }
+              node.push(n);
             }
-            node.push(n);
+            if (value === '') {
+              $scope.total = data.total;
+            }
           }
-          if (value === '') {
-            $scope.total = data.total;
-          }
-        }
-        return $scope.waiting = false;
-      },
-  function(resp) {
-        return $scope.waiting = false;
-      });
+          return $scope.waiting = false;
+        },
+        function(resp) {
+          return $scope.waiting = false;
+        });
       // Highlight current selection
       console.debug("Selection", sessionType);
       $scope.navssoStyle = {
@@ -721,15 +720,16 @@ llapp.controller('SessionsExplorerCtrl', [
       $scope.currentScope = null;
       $scope.currentSession = null;
       $q.all([$translator.init($scope.lang),
-  $scope.updateTree('',
-  $scope.data,
-  0,
-  0)]).then(function() {
-        return $scope.waiting = false;
-      },
-  function(resp) {
-        return $scope.waiting = false;
-      });
+        $scope.updateTree('',
+          $scope.data,
+          0,
+          0)
+      ]).then(function() {
+          return $scope.waiting = false;
+        },
+        function(resp) {
+          return $scope.waiting = false;
+        });
       // Colorized link
       $scope.activeModule = "sessions";
       return $scope.myStyle = {

@@ -1298,15 +1298,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	@find e2e-tests/ \
-		  -type f \
-		  -name '*.js' \
-		! -name 'jq*' \
-		! -name 'bootstrap*' \
-		! -name '*.min.js' \
-		! -name conftree.js \
-		  -print \
-		  -exec js_beautify -o -s=2 {} \;
+	@for i in lemonldap-ng-*/site/js-src/*.js; do js-beautify -s 2 -r -f $$i; done
 
 html_spelling:
 	@for i in $$(find doc/ -type f -name '*.html'); do \

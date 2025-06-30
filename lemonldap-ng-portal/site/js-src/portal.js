@@ -22,8 +22,8 @@ setResult = function(field, result) {
   displayIcon(field, result);
   // Compute form validity from all previous results
   if (Object.values(ppolicyResults).every((value) => {
-    return value === "good" || value === "info";
-  })) {
+      return value === "good" || value === "info";
+    })) {
     if ((ref = $('#newpassword').get(0)) != null) {
       ref.setCustomValidity('');
     }
@@ -67,9 +67,9 @@ updateBorder = function() {
 translatePage = function(lang) {
 
   if (lang) {
-      window.currentLanguage = lang
+    window.currentLanguage = lang
   } else {
-      lang = window.currentLanguage
+    lang = window.currentLanguage
   }
 
   return $.getJSON(`${window.staticPrefix}languages/${lang}.json`, function(data) {
@@ -199,7 +199,7 @@ removeOidcConsent = function(partner) {
   // Success
   return delKey("_oidcConsents", partner, function() {
     return $(`[partner='${partner}']`).hide();
-  // Error
+    // Error
   }, e);
 };
 
@@ -713,7 +713,7 @@ $(window).on('load', function() {
   const parent = document.getElementById('floating-menu');
   const divs = parent.querySelectorAll('.col-md-4');
   divs.forEach(
-    ( div , index ) => {
+    (div, index) => {
       div.classList.remove("col-md-4");
       div.classList.add("col-md-12");
     }
