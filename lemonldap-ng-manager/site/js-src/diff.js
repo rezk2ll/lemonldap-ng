@@ -71,7 +71,7 @@ llapp.controller('DiffCtrl', [
             $scope[button.action]();
             break;
           default:
-            console.log(typeof button.action);
+            console.warn('Unknown action type', typeof button.action);
         }
       }
       return $scope.showM = false;
@@ -87,8 +87,7 @@ llapp.controller('DiffCtrl', [
 
     //@param b local conf (0 or 1)
     //@param n cfgNumber
-    getCfg = function(b,
-  n) {
+    getCfg = function(b, n) {
       var d;
       d = $q.defer();
       if (($scope.cfg[b] == null) || $scope.cfg[b] !== n) {
@@ -98,14 +97,13 @@ llapp.controller('DiffCtrl', [
             $scope.cfg[b] = response.data;
             date = new Date(response.data.cfgDate * 1000);
             $scope.cfg[b].date = date.toLocaleString();
-            console.log(`Metadatas of cfg ${n} loaded`);
+            console.debug(`Metadatas of cfg ${n} loaded`);
             return d.resolve('OK');
           } else {
             return d.reject(response);
           }
         },
-  function(response) {
-          console.log(response);
+        function(response) {
           return d.reject('NOK');
         });
       } else {
@@ -123,7 +121,7 @@ llapp.controller('DiffCtrl', [
         $translator.init($scope.lang),
         $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
           response.data;
-          return console.log("Structure loaded");
+          return console.debug("Structure loaded");
         })
       ]).then(function() {
         $q.defer();
@@ -203,9 +201,7 @@ llapp.controller('DiffCtrl', [
             if (v.constructor === 'array') {
               tmp.newvalue = v;
             } else {
-              console.log("Iteration");
-              tmp.newnodes = toNodes(v,
-  'new');
+              tmp.newnodes = toNodes(v, 'new');
             }
           } else {
             tmp.newvalue = v;
@@ -317,7 +313,7 @@ llapp.controller('DiffCtrl', [
           $translator.init($scope.lang),
           $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
             reverseTree = response.data;
-            return console.log("Structure loaded");
+            return console.debug("Structure loaded");
           }),
           getCfg(0,
           n[1]),

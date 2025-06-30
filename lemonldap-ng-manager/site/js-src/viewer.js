@@ -95,7 +95,7 @@ llapp.controller('TreeCtrl', [
           items: []
         };
       } else if (e === 401) {
-        console.log('Authentication needed');
+        console.debug('Authentication needed');
         $scope.message = {
           title: 'authenticationNeeded',
           message: '__waitOrF5__',
@@ -187,7 +187,7 @@ llapp.controller('TreeCtrl', [
             $scope[button.action]();
             break;
           default:
-            console.log(typeof button.action);
+            console.warn('Unknown action type', typeof button.action);
         }
       }
       return $scope.showM = false;
@@ -374,7 +374,7 @@ llapp.controller('TreeCtrl', [
       d = $q.defer();
       d.notify('Trying to get datas');
       $scope.waiting = true;
-      console.log(`Trying to get key ${node.cnodes}`);
+      console.debug(`Trying to get key ${node.cnodes}`);
       uri = encodeURI(node.cnodes);
       $http.get(`${window.viewPrefix}${$scope.currentCfg.cfgNum}/${uri}`).then(function(response) {
         var a,
@@ -528,10 +528,10 @@ llapp.controller('TreeCtrl', [
         } else {
           uri = '';
           if (node.get) {
-            console.log(`Trying to get key ${node.get}`);
+            console.debug(`Trying to get key ${node.get}`);
             uri = encodeURI(node.get);
           } else {
-            console.log(`Trying to get title ${node.title}`);
+            console.debug(`Trying to get title ${node.title}`);
           }
           $http.get(`${window.viewPrefix}${$scope.currentCfg.cfgNum}/${node.get ? uri : node.title}`).then(function(response) {
             var data;
@@ -588,7 +588,7 @@ llapp.controller('TreeCtrl', [
       if (n === null) {
         return $location.path('/view/latest');
       } else {
-        console.log(`Trying to get cfg number ${n[1]}`);
+        console.debug(`Trying to get cfg number ${n[1]}`);
         return $scope.getCfg(n[1]);
       }
     };
@@ -603,7 +603,7 @@ llapp.controller('TreeCtrl', [
           $scope.currentCfg = response.data;
           d = new Date($scope.currentCfg.cfgDate * 1000);
           $scope.currentCfg.date = d.toLocaleString();
-          console.log(`Metadatas of cfg ${n} loaded`);
+          console.debug(`Metadatas of cfg ${n} loaded`);
           $location.path(`/view/${n}`);
           return $scope.init();
         },
@@ -642,10 +642,10 @@ llapp.controller('TreeCtrl', [
         $translator.init($scope.lang),
         $http.get(`${window.staticPrefix}struct.json`).then(function(response) {
           tmp = response.data;
-          return console.log("Structure loaded");
+          return console.debug("Structure loaded");
         })
       ]).then(function() {
-        console.log("Starting structure binding");
+        console.debug("Starting structure binding");
         $scope.data = tmp;
         tmp = null;
         if ($scope.currentCfg.cfgNum !== 0) {
@@ -669,7 +669,7 @@ llapp.controller('TreeCtrl', [
     };
     c = $location.path().match(new RegExp('^/view/(latest|[0-9]+)'));
     if (!c) {
-      console.log("Redirecting to /view/latest");
+      console.debug("Redirecting to /view/latest");
       return $location.path('/view/latest');
     }
   }

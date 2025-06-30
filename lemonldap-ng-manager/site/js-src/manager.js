@@ -97,7 +97,7 @@ llapp.controller('TreeCtrl', [
           items: []
         };
       } else if (e === 401) {
-        console.log('Authentication needed');
+        console.debug('Authentication needed');
         $scope.message = {
           title: 'authenticationNeeded',
           message: '__waitOrF5__',
@@ -189,7 +189,7 @@ llapp.controller('TreeCtrl', [
             $scope[button.action]();
             break;
           default:
-            console.log(typeof button.action);
+            console.warn('Unknown action type', typeof button.action);
         }
       }
       return $scope.showM = false;
@@ -227,21 +227,19 @@ llapp.controller('TreeCtrl', [
                 message: m,
                 items: data.details[m]
               });
-              console.log('NeedConfirmation:',
-  $scope.message.itemsNC);
+              console.debug('NeedConfirmation:', $scope.message.itemsNC);
             } else if (m === '__warnings__') {
               $scope.message.itemsW.push({
                 message: m,
                 items: data.details[m]
               });
-              console.log('Warnings:',
-  $scope.message.itemsW);
+              console.debug('Warnings:', $scope.message.itemsW);
             } else {
               $scope.message.itemsE.push({
                 message: m,
                 items: data.details[m]
               });
-              console.log('Errors:',
+              console.debug('Errors:',
   $scope.message.itemsE);
             }
           }
@@ -290,7 +288,7 @@ llapp.controller('TreeCtrl', [
         });
       },
   function() {
-        return console.log('Saving canceled');
+        return console.debug('Saving canceled');
       });
       return $scope.showM = false;
     };
@@ -498,8 +496,7 @@ llapp.controller('TreeCtrl', [
     $scope.newChoiceOver = function() {
       var d;
       d = $scope.currentNode.data;
-      console.log("data",
-  d);
+      console.debug("data", d);
       if (!d[5]) {
         d[5] = [];
       }
@@ -893,7 +890,7 @@ llapp.controller('TreeCtrl', [
       d = $q.defer();
       d.notify('Trying to get datas');
       $scope.waiting = true;
-      console.log(`Trying to get key ${node.cnodes}`);
+      console.debug(`Trying to get key ${node.cnodes}`);
       uri = encodeURI(node.cnodes);
       $http.get(`${window.confPrefix}${$scope.currentCfg.cfgNum}/${uri}`).then(function(response) {
         var a,
@@ -932,7 +929,7 @@ llapp.controller('TreeCtrl', [
             }
             node.nodes.push(a);
             if (a.type.match(/^rule$/)) {
-              console.log("Parse rule AuthnLevel as integer");
+              console.debug("Parse rule AuthnLevel as integer");
               if (a.level && typeof a.level === 'string') {
                 a.level = parseInt(a.level,
   10);
@@ -1064,7 +1061,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.log('Error sending test email');
+        return console.error('Error sending test email');
       });
     };
     // RSA keys generation
@@ -1087,7 +1084,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.log('New key cancelled');
+        return console.debug('New key cancelled');
       });
     };
     $scope.newEcKeys = function() {
@@ -1151,7 +1148,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.log('New key cancelled');
+        return console.debug('New key cancelled');
       });
     };
     // - return a promise with the data:
@@ -1192,10 +1189,10 @@ llapp.controller('TreeCtrl', [
         } else {
           uri = '';
           if (node.get) {
-            console.log(`Trying to get key ${node.get}`);
+            console.debug(`Trying to get key ${node.get}`);
             uri = encodeURI(node.get);
           } else {
-            console.log(`Trying to get title ${node.title}`);
+            console.debug(`Trying to get title ${node.title}`);
           }
           $http.get(`${window.confPrefix}${$scope.currentCfg.cfgNum}/${node.get ? uri : node.title}`).then(function(response) {
             var data;
@@ -1247,7 +1244,7 @@ llapp.controller('TreeCtrl', [
       if (n === null) {
         return $location.path('/confs/latest');
       } else {
-        console.log(`Trying to get cfg number ${n[1]}`);
+        console.debug(`Trying to get cfg number ${n[1]}`);
         return $scope.getCfg(n[1]);
       }
     };
@@ -1262,7 +1259,7 @@ llapp.controller('TreeCtrl', [
           $scope.currentCfg = response.data;
           d = new Date($scope.currentCfg.cfgDate * 1000);
           $scope.currentCfg.date = d.toLocaleString();
-          console.log(`Metadatas of cfg ${n} loaded`);
+          console.debug(`Metadatas of cfg ${n} loaded`);
           $location.path(`/confs/${n}`);
           return $scope.init();
         },
@@ -1301,10 +1298,10 @@ llapp.controller('TreeCtrl', [
         $translator.init($scope.lang),
         $http.get(`${window.staticPrefix}struct.json`).then(function(response) {
           tmp = response.data;
-          return console.log("Structure loaded");
+          return console.debug("Structure loaded");
         })
       ]).then(function() {
-        console.log("Starting structure binding");
+        console.debug("Starting structure binding");
         $scope.data = tmp;
         tmp = null;
         if ($scope.currentCfg.cfgNum !== 0) {
@@ -1328,7 +1325,7 @@ llapp.controller('TreeCtrl', [
     };
     c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'));
     if (!c) {
-      console.log("Redirecting to /confs/latest");
+      console.debug("Redirecting to /confs/latest");
       $location.path('/confs/latest');
     }
     // File form function

@@ -16,11 +16,11 @@ setMsg = function(msg, level) {
 
 displayError = function(j, status, err) {
   var res;
-  console.log('Error', err);
+  console.error('Error', err);
   res = JSON.parse(j.responseText);
   if (res && res.error) {
     res = res.error.replace(/.* /, '');
-    console.log('Returned error', res);
+    console.error('Returned error', res);
     return setMsg(res, 'danger');
   }
 };

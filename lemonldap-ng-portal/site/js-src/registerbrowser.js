@@ -50,7 +50,7 @@ go = function() {
 };
 
 tryFingerprint = function() {
-  console.log("Trying fingerprint");
+  console.debug("Trying fingerprint");
   if (window.Fingerprint2) {
     return Fingerprint2.get(function(components) {
       var result, values;

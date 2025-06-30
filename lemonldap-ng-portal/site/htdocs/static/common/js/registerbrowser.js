@@ -50,7 +50,7 @@
     return setTimeout(tryFingerprint, 1000);
   };
   tryFingerprint = function tryFingerprint() {
-    console.log("Trying fingerprint");
+    console.debug("Trying fingerprint");
     if (window.Fingerprint2) {
       return Fingerprint2.get(function (components) {
         var result, values;

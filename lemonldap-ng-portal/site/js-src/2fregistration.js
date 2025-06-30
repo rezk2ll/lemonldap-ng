@@ -17,11 +17,11 @@ setMsg = function(msg, level) {
 
 displayError = function(j, status, err) {
   var refresh, res;
-  console.log('Error', err);
+  console.error('Error', err);
   res = JSON.parse(j.responseText);
   if (res && res.error) {
     res = res.error.replace(/.* /, '');
-    console.log('Returned error', res);
+    console.error('Returned error', res);
     if (res.match(/module/)) {
       return setMsg('notAuthorized', 'warning');
     } else if (res === 'csrfToken') {

@@ -38,14 +38,14 @@ llapp.provider('$translator', function() {
     }
     for (j = 0, len = nlangs.length; j < len; j++) {
       nl = nlangs[j];
-      console.log('Navigator lang', nl);
+      console.debug('Navigator lang', nl);
       ref = window.availableLanguages;
       for (k = 0, len1 = ref.length; k < len1; k++) {
         al = ref[k];
-        console.log(' Available lang', al);
+        console.debug(' Available lang', al);
         re = new RegExp('^' + al + '-?');
         if (nl.match(re)) {
-          console.log('  Matching lang =', al);
+          console.debug('  Matching lang =', al);
           langs.push(al);
         } else if (al.substring(0, 1) === nl.substring(0, 1)) {
           langs2.push(al);
@@ -56,7 +56,7 @@ llapp.provider('$translator', function() {
   } else {
     res.lang = 'en';
   }
-  console.log('Selected lang ->', res.lang);
+  console.debug('Selected lang ->', res.lang);
   // Internal properties
   res.deferredTr = [];
   res.translationFields = {};
@@ -190,18 +190,14 @@ llapp.directive('script', [
     return {
       restrict: 'E',
       terminal: true,
-      compile: function(element,
-  attr) {
-        var e,
-  t;
+      compile: function(element, attr) {
+        var e, t;
         if (attr.type && (t = attr.type.match(/text\/(menu|parameters)/))) {
           try {
-            return $htmlParams.set(t[1],
-  JSON.parse(element[0].text));
+            return $htmlParams.set(t[1], JSON.parse(element[0].text));
           } catch (error) {
             e = error;
-            console.log("Parsing error:",
-  e);
+            console.error("Parsing error:", e);
           }
         }
       }
