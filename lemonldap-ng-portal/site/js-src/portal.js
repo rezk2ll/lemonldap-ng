@@ -708,6 +708,14 @@ $(window).on('load', function() {
       return $(this).data('data-submitted', true);
     }
   });
+  $('form[data-property=single-submit]').on('submit', function(event) {
+    if ($(this).data('data-submitted') === true) {
+      event.preventDefault();
+      return $(this).find(':submit').prop('disabled', true);
+    } else {
+      return $(this).data('data-submitted', true);
+    }
+  });
   $(`.category[name=\"${datas['floatingCategory']}\"]`).appendTo('#floating-menu').find("i").remove();
   $(`.category[name=\"${datas['floatingCategory']}\"]`).draggable();
   const parent = document.getElementById('floating-menu');
