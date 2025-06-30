@@ -252,7 +252,7 @@
           return $scope.data.pop();
         });
       }, function () {
-        return console.debug('Saving canceled');
+        console.debug('Saving canceled');
       });
       return $scope.showM = false;
     };
@@ -919,7 +919,7 @@
           return $scope.showModal('message.html');
         }, readError);
       }, function () {
-        return console.error('Error sending test email');
+        console.error('Error sending test email');
       });
     };
     // RSA keys generation
@@ -938,7 +938,7 @@
           return $scope.waiting = false;
         }, readError);
       }, function () {
-        return console.debug('New key cancelled');
+        console.debug('New key cancelled');
       });
     };
     $scope.newEcKeys = function () {
@@ -992,7 +992,7 @@
           return $scope.waiting = false;
         }, readError);
       }, function () {
-        return console.debug('New key cancelled');
+        console.debug('New key cancelled');
       });
     };
     // - return a promise with the data:
@@ -1125,7 +1125,7 @@
       $scope.forceSave = false;
       $q.all([$translator.init($scope.lang), $http.get(`${window.staticPrefix}struct.json`).then(function (response) {
         tmp = response.data;
-        return console.debug("Structure loaded");
+        console.debug("Structure loaded");
       })]).then(function () {
         console.debug("Starting structure binding");
         $scope.data = tmp;

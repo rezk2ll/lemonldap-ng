@@ -554,7 +554,7 @@
       $scope.forceSave = false;
       $q.all([$translator.init($scope.lang), $http.get(`${window.staticPrefix}struct.json`).then(function (response) {
         tmp = response.data;
-        return console.debug("Structure loaded");
+        console.debug("Structure loaded");
       })]).then(function () {
         console.debug("Starting structure binding");
         $scope.data = tmp;

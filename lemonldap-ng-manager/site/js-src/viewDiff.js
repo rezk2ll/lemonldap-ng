@@ -122,7 +122,7 @@ llapp.controller('DiffCtrl', [
         $translator.init($scope.lang),
         $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
           response.data;
-          return console.debug("Structure loaded");
+          console.debug("Structure loaded");
         })
       ]).then(function() {
         $q.defer();
@@ -316,7 +316,7 @@ llapp.controller('DiffCtrl', [
           $translator.init($scope.lang),
           $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
             reverseTree = response.data;
-            return console.debug("Structure loaded");
+            console.debug("Structure loaded");
           }),
           getCfg(0,
           n[1]),

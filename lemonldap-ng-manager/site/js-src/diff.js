@@ -121,20 +121,19 @@ llapp.controller('DiffCtrl', [
         $translator.init($scope.lang),
         $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
           response.data;
-          return console.debug("Structure loaded");
+          console.debug("Structure loaded");
         })
       ]).then(function() {
         $q.defer();
         return $http.get(`${scriptname}diff/${$scope.cfg[0].cfgNum}/${$scope.cfg[1].cfgNum}`).then(function(response) {
           var data;
           data = [];
-          data = readDiff(response.data[0],
-  response.data[1]);
+          data = readDiff(response.data[0], response.data[1]);
           $scope.data = buildTree(data);
           $scope.message = '';
           return $scope.waiting = false;
         },
-  function(response) {
+        function(response) {
           return $scope.message = `${$scope.translate('error')} : ${response.statusLine}`;
         });
       });
@@ -300,9 +299,7 @@ llapp.controller('DiffCtrl', [
     $scope.newDiff = function() {
       return $location.path(`/${$scope.cfg[0].cfgNum}/${$scope.cfg[1].cfgNum}`);
     };
-    pathEvent = function(event,
-  next,
-  current) {
+    pathEvent = function(event, next, current) {
       var n;
       n = next.match(new RegExp('#!?/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'));
       if (n === null) {
@@ -313,7 +310,7 @@ llapp.controller('DiffCtrl', [
           $translator.init($scope.lang),
           $http.get(`${staticPrefix}reverseTree.json`).then(function(response) {
             reverseTree = response.data;
-            return console.debug("Structure loaded");
+            console.debug("Structure loaded");
           }),
           getCfg(0,
           n[1]),
@@ -325,8 +322,7 @@ llapp.controller('DiffCtrl', [
           } else {
             if ($scope.cfg[0].prev) {
               $scope.cfg[1] = $scope.cfg[0];
-              return getCfg(0,
-  $scope.cfg[1].prev).then(function() {
+              return getCfg(0, $scope.cfg[1].prev).then(function() {
                 return init();
               });
             } else {
@@ -335,14 +331,13 @@ llapp.controller('DiffCtrl', [
             }
           }
         },
-  function() {
+        function() {
           $scope.message = $scope.translate('error');
           return $scope.waiting = false;
         });
       }
       return true;
     };
-    return $scope.$on('$locationChangeSuccess',
-  pathEvent);
+    return $scope.$on('$locationChangeSuccess', pathEvent);
   }
 ]);

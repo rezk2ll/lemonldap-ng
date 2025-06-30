@@ -97,7 +97,7 @@
       $scope.currentNode = null;
       $q.all([$translator.init($scope.lang), $http.get(`${staticPrefix}reverseTree.json`).then(function (response) {
         response.data;
-        return console.debug("Structure loaded");
+        console.debug("Structure loaded");
       })]).then(function () {
         $q.defer();
         return $http.get(`${scriptname}view/diff/${$scope.cfg[0].cfgNum}/${$scope.cfg[1].cfgNum}`).then(function (response) {
@@ -257,7 +257,7 @@
         $scope.waiting = true;
         $q.all([$translator.init($scope.lang), $http.get(`${staticPrefix}reverseTree.json`).then(function (response) {
           reverseTree = response.data;
-          return console.debug("Structure loaded");
+          console.debug("Structure loaded");
         }), getCfg(0, n[1]), n[2] != null ? getCfg(1, n[2]) : void 0]).then(function () {
           if (n[2] != null) {
             return init();

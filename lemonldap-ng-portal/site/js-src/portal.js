@@ -163,7 +163,7 @@ getValues = function() {
     } catch (error1) {
       e = error1;
       console.error('Parsing error', e);
-      return console.debug('JSON', $(this).text());
+      console.debug('JSON', $(this).text());
     }
   });
   return values;
@@ -683,7 +683,7 @@ $(window).on('load', function() {
           res = JSON.parse(j.responseText);
         }
         if (res && res.error) {
-          return console.error('Returned error', res);
+          console.error('Returned error', res);
         }
       }
     });

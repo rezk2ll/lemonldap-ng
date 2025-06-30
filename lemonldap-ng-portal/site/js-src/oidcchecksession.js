@@ -16,7 +16,7 @@ $(document).ready(function() {
     } catch (error) {
       //console.debug 'values=', values[k]
       e = error;
-      return console.error('Parsing error', e);
+      console.error('Parsing error', e);
     }
   });
   // Initialize JS communication channel

@@ -96,7 +96,7 @@ $(document).on('checkpassword', function(event, context) {
             res = JSON.parse(j.responseText);
           }
           if (res && res.error) {
-            return console.debug('checkentropy: returned error: ', res);
+            console.debug('checkentropy: returned error: ', res);
           }
         }
       });

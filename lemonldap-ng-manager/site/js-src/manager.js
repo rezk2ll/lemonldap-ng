@@ -288,7 +288,7 @@ llapp.controller('TreeCtrl', [
         });
       },
   function() {
-        return console.debug('Saving canceled');
+        console.debug('Saving canceled');
       });
       return $scope.showM = false;
     };
@@ -1061,7 +1061,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.error('Error sending test email');
+        console.error('Error sending test email');
       });
     };
     // RSA keys generation
@@ -1084,7 +1084,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.debug('New key cancelled');
+        console.debug('New key cancelled');
       });
     };
     $scope.newEcKeys = function() {
@@ -1148,7 +1148,7 @@ llapp.controller('TreeCtrl', [
   readError);
       },
   function() {
-        return console.debug('New key cancelled');
+        console.debug('New key cancelled');
       });
     };
     // - return a promise with the data:
@@ -1298,7 +1298,7 @@ llapp.controller('TreeCtrl', [
         $translator.init($scope.lang),
         $http.get(`${window.staticPrefix}struct.json`).then(function(response) {
           tmp = response.data;
-          return console.debug("Structure loaded");
+          console.debug("Structure loaded");
         })
       ]).then(function() {
         console.debug("Starting structure binding");

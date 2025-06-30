@@ -17,7 +17,7 @@ renewCaptcha = function() {
         res = JSON.parse(j.responseText);
       }
       if (res && res.error) {
-        return console.error('Returned error', res);
+        console.error('Returned error', res);
       }
     },
     // On success, values are set

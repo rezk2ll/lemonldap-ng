@@ -48,7 +48,7 @@
                 res = JSON.parse(j.responseText);
               }
               if (res && res.error) {
-                return console.error('checkhibp: returned error: ', res);
+                console.error('checkhibp: returned error: ', res);
               }
             }
           });

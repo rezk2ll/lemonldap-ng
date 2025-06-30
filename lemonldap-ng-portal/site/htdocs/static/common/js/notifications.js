@@ -18,7 +18,7 @@
   };
   displayError = function displayError(j, status, err) {
     setMsg('notificationRetrieveFailed', 'warning');
-    return console.error('Error:', err, 'Status:', status);
+    console.error('Error:', err, 'Status:', status);
   };
   toggle_eye = function toggle_eye(slash) {
     if (slash) {

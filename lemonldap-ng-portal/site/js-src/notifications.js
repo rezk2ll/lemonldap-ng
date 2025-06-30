@@ -18,7 +18,7 @@ setMsg = function(msg, level) {
 
 displayError = function(j, status, err) {
   setMsg('notificationRetrieveFailed', 'warning');
-  return console.error('Error:', err, 'Status:', status);
+  console.error('Error:', err, 'Status:', status);
 };
 
 toggle_eye = function(slash) {
