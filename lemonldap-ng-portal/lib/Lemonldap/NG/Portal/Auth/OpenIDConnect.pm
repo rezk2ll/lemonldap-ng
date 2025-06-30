@@ -445,7 +445,7 @@ sub authLogout {
             $self->conf->{oidcServiceMetaDataRpLogoutReturnURI} );
 
         my $state;
-        if ( my $next_url = $req->{issuerNextUrl} ) {
+        if ( my $next_url = ( $req->{issuerNextUrl} || $req->urldc ) ) {
             $state = $self->state_ott->createToken( { next_url => $next_url } );
         }
 
