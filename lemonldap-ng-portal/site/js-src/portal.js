@@ -703,8 +703,8 @@ $(window).on('load', function() {
   $('form[data-property=single-submit]').on('submit', function(event) {
     if ($(this).data('data-submitted') === true) {
       event.preventDefault();
-      return $(this).find(':submit').prop('disabled', true);
     } else {
+      $(this).find(':submit').prop('disabled', true);
       return $(this).data('data-submitted', true);
     }
   });
