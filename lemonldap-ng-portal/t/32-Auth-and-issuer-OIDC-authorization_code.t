@@ -421,9 +421,80 @@ ok(
 count(1);
 $idpId = expectCookie($res);
 
-#expectRedirection( $res, qr#^http://auth.rp.com/# );
+($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
-#print STDERR Dumper($res);
+# Push OP response to RP
+ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
+    'Call openidconnectcallback on RP' );
+count(1);
+$spId = expectCookie($res);
+
+# Test logout with target URL
+ok(
+    $res = $rp->_get(
+        '/',
+        query => {
+            'logout' => 1,
+            url      => encodeUrl("http://test1.example.com"),
+        },
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query RP for logout'
+);
+count(1);
+( $url, $query ) = expectRedirection( $res,
+    qr#http://auth.op.com(/oauth2/logout)\?.*(post_logout_redirect_uri=.+)$# );
+
+$removedCookie = expectCookie($res);
+is( $removedCookie, 0, "SSO cookie removed (RP)" );
+
+# Push logout to OP
+
+ok(
+    $res = $op->_get(
+        $url,
+        query  => $query,
+        cookie => "lemonldap=$idpId",
+        accept => 'text/html'
+    ),
+    "Push logout request to OP,     endpoint $url"
+);
+count(1);
+
+( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+ok(
+    $res = $op->_post(
+        $url, IO::String->new($query),
+        length => length($query),
+        cookie => "lemonldap=$idpId",
+        accept => 'text/html',
+    ),
+    "Confirm logout,                endpoint $url"
+);
+count(1);
+
+( $url, $query ) = expectRedirection( $res,
+    qr,http://auth.rp.com(/oauth2/rlogoutreturn)\?(.*), );
+
+$removedCookie = expectCookie($res);
+is( $removedCookie, 0, "SSO cookie removed (OP)" );
+count(1);
+
+# Push return to RP
+ok(
+    $res = $rp->_get(
+        $url,
+        query  => $query,
+        accept => 'text/html',
+    ),
+    "Confirm logout,                endpoint $url"
+);
+count(1);
+expectRedirection( $res, "http://test1.example.com", "Correctly redirected" );
+
+count(1);
 
 clean_sessions();
 done_testing( count() );
