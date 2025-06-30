@@ -1529,13 +1529,13 @@ sub extractRelayState {
 
         # Push values in $self
         foreach ( keys %{ $samlSessionInfo->data } ) {
-            next if $_ =~ /(type|_session_id|_utime)/;
-            if ( $_ eq 'issuerNextUrl' ) {
-                $req->urldc( $samlSessionInfo->data->{$_} );
-            }
-            else {
-                $req->{$_} = $samlSessionInfo->data->{$_};
-            }
+            next if $_ =~ /(type|_session_id|_utime|issuerNextUrl)/;
+            $req->{$_} = $samlSessionInfo->data->{$_};
+        }
+
+        # issuerNextUrl has priority over urldc if both are set
+        if ( $samlSessionInfo->data->{issuerNextUrl} ) {
+            $req->urldc( $samlSessionInfo->data->{issuerNextUrl} );
         }
 
         # delete relaystate session
