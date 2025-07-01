@@ -142,12 +142,19 @@ sub updateToken {
         return $id;
     }
     else {
-        $self->p->getApacheSession(
-            $id,
-            kind => "TOKEN",
-            info => { $k => $v }
-        );
-        return $id;
+        if (
+            $self->p->getApacheSession(
+                $id,
+                kind => "TOKEN",
+                info => { $k => $v }
+            )
+          )
+        {
+            return $id;
+        }
+        else {
+            return undef;
+        }
     }
 }
 
