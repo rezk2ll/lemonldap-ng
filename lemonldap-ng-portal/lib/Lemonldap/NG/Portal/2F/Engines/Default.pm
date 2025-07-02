@@ -54,8 +54,7 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
-              || $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
@@ -454,10 +453,10 @@ sub run {
     delete $req->{authResult};
 
     $req->data->{_2fRetries} = $self->conf->{sfRetries};
-    my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
 
     # If only one 2F is authorized, display it
     unless ($#am) {
+        my $token = $am[0]->ott->createToken( $self->save2faSessionInfo($req) );
         $self->auditLog(
             $req,
             message => (
@@ -477,6 +476,7 @@ sub run {
     }
 
     # More than 1 2F has been found, display choice
+    my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
     $self->logger->debug("Prepare 2F choice");
     my $res = $self->p->sendHtml(
         $req,
@@ -552,7 +552,7 @@ sub display2fRegisters {
 sub _choice {
     my ( $self, $req ) = @_;
 
-    my ( $tokres, $session ) = $self->_check_token($req);
+    my ( $tokres, $session ) = $self->_check_token( $req, $self->ott );
     if ( $tokres != PE_OK ) {
         $self->auditLog(
             $req,
@@ -584,7 +584,7 @@ sub _choice {
             );
 
             # New token
-            my $token = $self->ott->createToken( $req->sessionInfo );
+            my $token = $m->{m}->ott->createToken( $req->sessionInfo );
             my $res   = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
@@ -950,7 +950,7 @@ sub _verify {
       unless $m;
     my $module = $m->{m};
 
-    my ( $tokres, $session ) = $self->_check_token($req);
+    my ( $tokres, $session ) = $self->_check_token( $req, $module->ott );
     if ( $tokres != PE_OK ) {
         $self->auditLog(
             $req,
@@ -1052,8 +1052,9 @@ sub _verify {
             "Retrying 2FA: " . $req->data->{_2fRetries} . " retries left" );
 
         $req->error(PE_RETRY_2FA);
-        my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
-        my $res   = $module->run( $req, $token );
+        my $token =
+          $module->ott->createToken( $self->save2faSessionInfo($req) );
+        my $res = $module->run( $req, $token );
         $req->authResult($res);
 
         return $self->p->doPE( $req, $res );
@@ -1278,7 +1279,7 @@ sub get2fTplParams {
 }
 
 sub _check_token {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $ott ) = @_;
 
     my $token;
     unless ( $token = $req->param('token') ) {
@@ -1288,7 +1289,7 @@ sub _check_token {
     }
 
     my $session;
-    unless ( $session = $self->ott->getToken($token) ) {
+    unless ( $session = $ott->getToken($token) ) {
         $self->logger->error('Invalid 2F choice form token');
         $req->noLoginDisplay(1);
         return PE_TOKENEXPIRED;
