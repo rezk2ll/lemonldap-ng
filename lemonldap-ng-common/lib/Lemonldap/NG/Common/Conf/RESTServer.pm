@@ -5,7 +5,6 @@ use JSON 'from_json';
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
-use URI::Escape;
 
 our $VERSION = '2.19.0';
 
@@ -156,7 +155,7 @@ sub virtualHosts {
     return $self->complexNodesRoot( $req, 'locationRules', 'virtualHost' )
       unless (@path);
 
-    my $vh = uri_unescape( shift @path );
+    my $vh = shift @path;
     my $query;
     unless ( $query = shift @path ) {
         return $self->sendError( $req,
