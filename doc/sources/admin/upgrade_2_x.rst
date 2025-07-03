@@ -170,7 +170,7 @@ SAML federations
 
 The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
 
-Switching to this method should improve performnace.
+Switching to this method should improve performance.
 
 Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
 
