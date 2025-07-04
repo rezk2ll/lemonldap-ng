@@ -559,6 +559,12 @@ Max failure accepted in the B<--restart-window> delay.
 
 Environment variable: B<PUBSUB_MAX_RESTARTS>
 
+=item * B<--max-waiting-conn> E<lt>valueE<gt>> I<(default: 10)>
+
+Max client waiting for a response.
+
+Environment variable: B<PUBSUB_MAX_WAITING_CONN>
+
 =item * B<restart-window> E<lt>valueE<gt>> I<(default: 60)>
 
 Delay for B<--max-restarts>
