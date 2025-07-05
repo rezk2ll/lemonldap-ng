@@ -27,9 +27,10 @@ binding on 127.0.0.1:8183
      --die-on-term \
      --http-socket 127.0.0.1:8183
 
-Note : you can create a systemd unit, but as Traefik is mainly used in a
-containers context, you can use a command similar to the previous one as
-an entrypoint.
+.. note::
+   you can create a systemd unit, but as Traefik is mainly used in a
+   containers context, you can use a command similar to the previous one as
+   an entrypoint.
 
 Then, to configure Traefik's middleware to use it, you can use this
 configuration fragment:
@@ -41,7 +42,16 @@ configuration fragment:
        lemonldap:
          forwardAuth:
            address: http://127.0.0.1:8183
-           authResponseHeadersRegex: '^.*$'
+           authResponseHeaders:
+             - Cookie
+           authResponseHeadersRegex: '^Auth-'
+
+.. danger::
+   With this configuration, only HTTP headers starting with ``Auth-`` will be
+   protected from injection by malicious users. When you use Traefik, it is
+   highly recommended to only export headers that start with this prefix, unless
+   you have a very good understanding of how the ``authResponseHeaders`` and
+   ``authResponseHeadersRegex`` options in Traefik work.
 
 Then to protect an app with Lemonldap::NG:
 
