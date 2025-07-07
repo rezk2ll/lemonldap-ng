@@ -2246,8 +2246,12 @@ sub userInfo {
     my $accessTokenSession = $self->getAccessToken($access_token);
 
     unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to validate access token $access_token");
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_ACCESS_TOKEN_INVALID',
+            message => 'Invalid or expired access_token',
+            ip      => $req->address,
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
     }
