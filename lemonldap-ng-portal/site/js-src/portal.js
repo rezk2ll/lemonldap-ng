@@ -700,11 +700,11 @@ $(window).on('load', function() {
       return $('#btn-back-to-top').css("display", "none");
     }
   });
-  $('.btn-single-submit').on('click', function(event) {
+  $('form[data-property=single-submit]').on('submit', function(event) {
     if ($(this).data('data-submitted') === true) {
       event.preventDefault();
-      return $(this).prop('disabled', true);
     } else {
+      $(this).find(':submit').prop('disabled', true);
       return $(this).data('data-submitted', true);
     }
   });
