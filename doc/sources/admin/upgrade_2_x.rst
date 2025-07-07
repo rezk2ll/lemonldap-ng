@@ -51,6 +51,21 @@ order to allow a new *post-logout* redirect URIs::
 
     https://<portal>/oauth2/rlogoutreturn
 
+Change in timeout behavior for 2FA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Contrary to previous versions, resending a 2FA code no longer extends the 2FA timeout anymore.
+
+If your users start having issues with timeouts after upgrading, make sure you have set
+
+*General parameters* » *Second factors* » *Global options* » *Login timeout* to a high enough value
+
+In the particular case of email-based code delivery, you can override this parameter with
+
+*General parameters* » *Second factors* » *Mail second factor* » *Code timeout*
+
+
+
 2.21.1
 ------
 
@@ -155,7 +170,7 @@ SAML federations
 
 The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
 
-Switching to this method should improve performnace.
+Switching to this method should improve performance.
 
 Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
 

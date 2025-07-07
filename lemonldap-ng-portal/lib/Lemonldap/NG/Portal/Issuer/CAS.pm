@@ -58,6 +58,7 @@ sub init {
             serviceValidate => 'serviceValidate',
             relayLogout     => 'relayLogout',
             validate        => 'validate',
+            logout          => 'unauthlogout',
             proxyValidate   => 'proxyValidate',
             proxy           => 'proxy',
             p3              => {
@@ -415,7 +416,6 @@ sub run {
             return PE_INFO;
         }
         else {
-
             $req->{issuerNextUrl} = $logout_service if $logout_service;
             $req->data->{nofail} = 1;
             $req->steps(
@@ -1233,6 +1233,52 @@ sub _redirectUser {
     $req->{urldc} = $destination;
     $req->steps( [] );
     return PE_OK;
+}
+
+sub unauthlogout {
+    my ( $self, $req ) = @_;
+    $self->logger->debug(
+        "URL " . $req->path_info . " detected as an CAS LOGOUT URL" );
+
+    # GET parameters
+    my $logout_url     = $req->param('url');        # CAS 2.0
+    my $logout_service = $req->param('service');    # CAS 3.0
+    $logout_service = ''
+      if ( $self->p->checkXSSAttackUrldc( 'service', $logout_service ) );
+
+    # If we use access control, check that the service URL is trusted
+    if ( $self->conf->{casAccessControlPolicy} =~ /^(error|faketicket)$/i ) {
+        if ( $logout_service
+            and not $self->p->isTrustedUrl($logout_service) )
+        {
+            $self->userLogger->error(
+                    "Untrusted service URL $logout_service"
+                  . "specified for CAS Logout" );
+            return $self->p->do( $req, [ [ returnPE => PE_UNAUTHORIZEDURL ] ] );
+        }
+    }
+
+    # Legacy code without logout propagation for CAS 2.0
+    if ($logout_url) {
+
+        # Display a link to the provided URL
+        $self->logger->debug("Logout URL $logout_url will be displayed");
+
+        $req->info(
+            $self->loadTemplate(
+                $req, 'casBack2Url', params => { url => $logout_url }
+            )
+        );
+        $req->data->{activeTimer} = 0;
+
+        delete $req->pdata->{_url};
+        return $self->p->do( $req, [ [ returnPE => PE_INFO ] ] );
+    }
+    elsif ($logout_service) {
+        $self->_redirectUser( $req, $logout_service );
+    }
+
+    return $self->p->unauthLogout($req);
 }
 
 1;
