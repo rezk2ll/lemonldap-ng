@@ -1,0 +1,290 @@
+#!/usr/bin/perl
+
+use strict;
+use Getopt::Long;
+use POSIX;
+use HTTP::Request;
+use JSON;
+use LWP::UserAgent;
+use Pod::Usage;
+use Sys::Syslog;
+
+our $VERSION = "2.22.0";
+
+# Options
+my $opts = {};
+my $help;
+my $opt_user  = '__APACHEUSER__';
+my $opt_group = '__APACHEGROUP__';
+
+my @CMDLINE = @ARGV;
+
+GetOptions(
+    'daemon'          => \$opts->{daemon},
+    'defer-dir=s'     => \$opts->{deferDir},
+    'debug'           => \$opts->{debug},
+    'delay=s'         => \$opts->{delay},
+    'group|g=s'       => \$opts->{group},
+    'help|h'          => \$help,
+    'ini-file=s'      => \$opts->{iniFile},
+    'max-restarts=s'  => \$opts->{maxRestarts},
+    'restart-window'  => \$opts->{restartWindow},
+    'syslog-facility' => \$opts->{syslogFacility},
+    'user|u=s'        => \$opts->{user},
+) or pod2usage( -exitcode => 1, -verbose => 0 );
+
+foreach my $opt ( keys %$opts ) {
+    $opts->{$opt} //= $ENV{ 'LLNG_LOKI_' . uc($opt) };
+}
+
+$opts->{delay} ||= 60 if $opts->{daemon};
+
+pod2usage( -exitcode => 0, -verbose => 2 ) if $help;
+
+# Change owner if asked
+POSIX::nice(10);
+if ( $opts->{group} || $opts->{user} ) {
+    eval {
+        no warnings;
+        POSIX::setgid( scalar( getgrnam( $opts->{group} ) ) ) if $opts->{group};
+        POSIX::setuid( scalar( getpwnam( $opts->{user} ) ) )  if $opts->{user};
+        my ( undef, undef, undef, undef, undef, undef, undef, $homedir, undef )
+          = getpwnam($opt_user);
+        $ENV{HOME} = $homedir if $homedir;
+    };
+}
+
+&daemonize if $opts->{daemon};
+
+$opts->{deferDir} ||= &_getDeferDir;
+die 'Missing --defer-dir' unless $opts->{deferDir};
+
+my $j = JSON->new->canonical;
+
+my $syslogOpened;
+
+sub _log {
+    my ( $level, $msg ) = @_;
+    if ( $opts->{daemon} ) {
+        unless ($syslogOpened) {
+            openlog( 'LLNG-Loki', 'cons,pid,ndelay',
+                $opts->{syslogFacility} || 'daemon' );
+            $syslogOpened++;
+        }
+        syslog( $level, $msg );
+    }
+    else {
+        print STDERR "[$level] $msg\n";
+    }
+}
+
+sub debug {
+    map { _log( 'debug', $_ ) } @_ if $opts->{debug};
+}
+
+sub warning {
+    map { _log( 'warning', $_ ) } @_;
+}
+
+sub error {
+    map { _log( 'err', $_ ) } @_;
+}
+
+sub _getDeferDir {
+
+    require Lemonldap::NG::Common::Conf;
+    my $ca = Lemonldap::NG::Common::Conf->new( { (
+                $opts->{iniFile}
+                ? ( confFile => $opts->{iniFile} )
+                : ()
+            )
+        }
+    );
+
+    no warnings;
+    die $Lemonldap::NG::Common::Conf::msg unless ($ca);
+    my $conf      = $ca->getConf('all');
+    my $localConf = $ca->getLocalConf( 'all', $_[0]->{iniFile} );
+    $conf = { %$conf, %$localConf };
+
+    unless ( $conf->{lokiDeferDir} ) {
+        die 'Missing lokiDeferDir';
+    }
+    debug "Conf downloaded from Lemonldap::NG::Common::Conf: $conf->{cfgNum}";
+    return $conf->{lokiDeferDir};
+}
+
+mkdir $opts->{deferDir}                   unless -e $opts->{deferDir};
+die "Missing directory $opts->{deferDir}" unless -d $opts->{deferDir};
+die "Cannot write into $opts->{deferDir}" unless -w $opts->{deferDir};
+
+sub sendLogs {
+    my $i;
+    my $ret = 1;
+    if ( opendir my $dh, $opts->{deferDir} ) {
+        debug "Checking for logs into $opts->{deferDir}";
+        my $i = 0;
+        my ( %logs, %filesToDel, @headers, $hdr_done, %streams, %urls );
+        while ( my $name = readdir($dh) ) {
+            $i++;
+            my $fn = "$opts->{deferDir}/$name";
+            next if $name =~ m#^\.# or !-f $fn;
+            my $fh;
+            unless ( open $fh, '<', $fn ) {
+                error "Unable to open $fn: $!";
+                $ret = 0;
+                goto END;
+            }
+            my $tmp = <$fh>;
+            unless ($tmp) {
+                warning "Empty file $fn";
+                goto END;
+            }
+            chomp $tmp;
+            my ( $meth, $url ) = split( /\s+/, $tmp, 2 );
+            unless ( $meth and $url and $meth eq 'POST' ) {
+                warning "Not a valid file $fn";
+                goto END;
+            }
+
+            # Get headers;
+            while ( my $line = <$fh> ) {
+                chomp $line;
+                $line =~ s/\r//g;
+                unless ($line) {
+                    $hdr_done = 1;
+                    last;
+                }
+                next if $hdr_done;
+                my ( $k, $v ) = split( /:\s+/, $line );
+                push @headers, $k, $v if $v and lc($k) ne 'content-length';
+            }
+
+            # Get content
+            my $content;
+            {
+                local $/ = undef;
+                while ( my $line = <$fh> ) {
+                    chomp $line;
+                    $line =~ s/[\r\n]//g;
+                    next unless $line;
+                    $content = eval { $j->decode($line)->{streams} };
+                    if ( $@ or not $content ) {
+                        warning "Malformed line ($fn): $line";
+                        last;
+                    }
+                }
+            }
+            next unless $content;
+            foreach my $stream (@$content) {
+                my $k = $j->encode( $stream->{stream} );
+                push @{ $logs{$k} },       @{ $stream->{values} };
+                push @{ $filesToDel{$k} }, $fn;
+                $streams{$k} ||= $stream->{stream};
+                $urls{$k}    ||= $url;
+            }
+          END: close $fh;
+        }
+        my $ua = LWP::UserAgent->new;
+        $ua->env_proxy;
+        foreach my $key ( keys %logs ) {
+            my $req = HTTP::Request->new(
+                POST => $urls{$key},
+                \@headers,
+
+                #HTTP::Headers->new(@{$headers{$key}}),
+                $j->encode( {
+                        streams => [ {
+                                stream => $streams{$key},
+                                values => $logs{$key},
+                            },
+                        ]
+                    }
+                )
+            );
+            my $resp = $ua->request($req);
+            if ( $resp->is_success ) {
+                debug "Logs $key sent";
+                unlink( @{ $filesToDel{$key} } ) or warning $!;
+            }
+            else {
+                $ret = 0;
+                error "Fail to send logs: " . $resp->status_line;
+            }
+        }
+    }
+    else {
+        error "Unable to open $opts->{deferDir}: $!";
+    }
+    return $ret;
+}
+
+sub daemonize {
+    open STDIN,  '<', '/dev/null' or die "Can't read /dev/null: $!";
+    open STDOUT, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+    open STDERR, '>', '/dev/null' or die "Can't write to /dev/null: $!";
+
+    defined( my $pid = fork ) or die "Can't fork: $!";
+    exit if $pid;
+
+    setsid() or die "Can't start a new session: $!";
+
+    defined( $pid = fork ) or die "Can't fork again: $!";
+    exit if $pid;
+
+    umask 0;
+
+    if ( $opts->{pidFile} ) {
+        open my $fh, '>', $opts->{pidFile}
+          or die "Can't write $opts->{pidFile} $!";
+        print $fh "$$\n";
+        close $fh;
+    }
+    $0 = join ' ', $0, @CMDLINE;
+
+    my $cpid;
+
+    # Master process code (relaunch webserver in case of failure)
+    if ( $cpid = fork ) {
+        $| = 1;
+        my @restartTimes;
+        my $term;
+        $SIG{CHLD} = 'DEFAULT';
+        $SIG{TERM} = sub {
+            kill 'TERM', $cpid;
+            waitpid( $cpid, 0 );
+            exit 0;
+        };
+        while (1) {
+            my $endedPid   = waitpid( $cpid, 0 );
+            my $exitStatus = $? >> 8;
+            error "Server $endedPid ended with status $exitStatus";
+            @restartTimes =
+              grep { time() - $_ < $opts->{restartWindow} } @restartTimes;
+            error "@restartTimes >= $opts->{maxRestarts}";
+            if ( @restartTimes >= $opts->{maxRestarts} ) {
+                error "Too many failures in $opts->{restartWindow}, aborting";
+                exit 1;
+            }
+            sleep 1;
+            last unless $cpid = fork;
+            push @restartTimes, time;
+        }
+    }
+    die $! unless defined $cpid;
+
+    # Don't propagate 'TERM' signal to master
+    setpgrp( 0, 0 );
+}
+
+## MAIN
+
+if ( $opts->{delay} ) {
+    while (1) {
+        &sendLogs;
+        sleep $opts->{delay};
+    }
+}
+else {
+    &sendLogs || exit 1;
+}
