@@ -38,7 +38,7 @@ GetOptions(
     'key=s'              => \$key,
     'max-request-size=s' => \$maxRequestSize,
     'max-request-time=s' => \$maxRequestTime,
-    'max-restarts'       => \$maxRestarts,
+    'max-restarts=s'     => \$maxRestarts,
     'max-waiting-conn=s' => \$maxWaitingConn,
     'quiet|q'            => \$quiet,
     'pid-file=s'         => \$pidFile,
