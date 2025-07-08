@@ -2236,7 +2236,11 @@ sub userInfo {
     my ( $access_token, $authMethod ) = $self->getEndPointAccessToken($req);
 
     unless ($access_token) {
-        $self->logger->error("Unable to get access_token");
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Missing access_token',
+        );
         return $self->returnBearerError( 'invalid_request',
             "Access token not found in request", 401 );
     }
@@ -2248,9 +2252,8 @@ sub userInfo {
     unless ($accessTokenSession) {
         $self->auditLog(
             $req,
-            code    => 'ISSUER_OIDC_ACCESS_TOKEN_INVALID',
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Invalid or expired access_token',
-            ip      => $req->address,
         );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
@@ -2269,8 +2272,11 @@ sub userInfo {
         ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
         and $authMethod ne 'header' )
     {
-        $self->userLogger->error(
-            'Endpoint authentication without using header');
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Missing required authentication header',
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 400 );
     }
@@ -2283,6 +2289,11 @@ sub userInfo {
     my $session =
       $self->_getSessionFromAccessTokenData( $accessTokenSession->data );
     unless ($session) {
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Unable to get session corresponding to access-token',
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
     }
