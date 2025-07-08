@@ -250,7 +250,10 @@ Protocol
    ``openid`` scope is mandatory.
 -  **Display**: Value of display parameter (example: page)
 -  **Prompt**: Value of prompt parameter (example: consent)
--  **Max age**: Value of max_age parameter (example: 3600)
+-  **Max age**: Value of ``max_age`` parameter (example: 3600). A value of
+   ``0`` disables the ``max_age`` parameter. If you want to force
+   reauthentication, you can set **Prompt** to ``login`` or use a very short,
+   non-null value.
 -  **Locales UI**: Value of ui_locales parameter (example: en-GB en fr-FR fr)
 -  **ACR values**: Space-separated list of acceptable ACR values (example:
    'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
