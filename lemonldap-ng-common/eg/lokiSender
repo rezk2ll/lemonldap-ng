@@ -37,27 +37,43 @@ foreach my $opt ( keys %$opts ) {
     $opts->{$opt} //= $ENV{ 'LLNG_LOKI_' . uc($opt) };
 }
 
-$opts->{delay} ||= 60 if $opts->{daemon};
-
 pod2usage( -exitcode => 0, -verbose => 2 ) if $help;
+
+$opts->{delay}    ||= 60 if $opts->{daemon};
+$opts->{deferDir} ||= &_getDeferDir;
+mkdir $opts->{deferDir}                   unless -e $opts->{deferDir};
+die "Missing directory $opts->{deferDir}" unless -d $opts->{deferDir};
+die "Cannot write into $opts->{deferDir}" unless -w $opts->{deferDir};
+
+die 'Missing --defer-dir' unless $opts->{deferDir};
 
 # Change owner if asked
 POSIX::nice(10);
 if ( $opts->{group} || $opts->{user} ) {
     eval {
         no warnings;
-        POSIX::setgid( scalar( getgrnam( $opts->{group} ) ) ) if $opts->{group};
-        POSIX::setuid( scalar( getpwnam( $opts->{user} ) ) )  if $opts->{user};
-        my ( undef, undef, undef, undef, undef, undef, undef, $homedir, undef )
-          = getpwnam($opt_user);
-        $ENV{HOME} = $homedir if $homedir;
+        my ( $gid, $uid );
+        if ( $opts->{group} ) {
+            $gid = getgrnam( $opts->{group} );
+            POSIX::setgid($gid);
+        }
+        if ( $opts->{user} ) {
+            $uid = getpwnam( $opts->{user} );
+            chown( $uid, ( $gid // [ stat( $opts->{deferDir} ) ]->[5] ),
+                $opts->{deferDir} )
+              and chmod( 0700, $opts->{deferDir} );
+            POSIX::setuid( scalar( getpwnam( $opts->{user} ) ) )
+              if $opts->{user};
+            my (
+                undef, undef, undef,    undef, undef,
+                undef, undef, $homedir, undef
+            ) = getpwnam( $opts->{user} );
+            $ENV{HOME} = $homedir if $homedir;
+        }
     };
 }
 
 &daemonize if $opts->{daemon};
-
-$opts->{deferDir} ||= &_getDeferDir;
-die 'Missing --defer-dir' unless $opts->{deferDir};
 
 my $j = JSON->new->canonical;
 
@@ -113,10 +129,6 @@ sub _getDeferDir {
     debug "Conf downloaded from Lemonldap::NG::Common::Conf: $conf->{cfgNum}";
     return $conf->{lokiDeferDir};
 }
-
-mkdir $opts->{deferDir}                   unless -e $opts->{deferDir};
-die "Missing directory $opts->{deferDir}" unless -d $opts->{deferDir};
-die "Cannot write into $opts->{deferDir}" unless -w $opts->{deferDir};
 
 sub sendLogs {
     my $i;
@@ -280,6 +292,12 @@ sub daemonize {
 ## MAIN
 
 if ( $opts->{delay} ) {
+    $SIG{$_} = \&sendLogs foreach (qw(ALRM USR1 USR2));
+    $SIG{$_} = sub {
+        debug "End asked";
+        exit( &sendLogs ? 0 : 1 );
+      }
+      foreach (qw(INT TERM QUIT KILL ABRT HUP));
     while (1) {
         &sendLogs;
         sleep $opts->{delay};
