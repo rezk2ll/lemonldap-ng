@@ -1953,10 +1953,7 @@ sub getEndPointAuthenticationCredentials {
                 and $payload->{iss} eq $_clientId )
             {
                 # client_id must match to a known relying party
-                my ($rp) = grep {
-                    $self->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} eq
-                      $_clientId
-                } keys %{ $self->rpOptions || {} };
+                my $rp = $self->getRP($_clientId);
                 if ($rp) {
 
                     # RP must have a signature key registered
