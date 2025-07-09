@@ -3,11 +3,7 @@
 use strict;
 use Getopt::Long;
 use POSIX;
-use HTTP::Request;
-use JSON;
-use LWP::UserAgent;
 use Pod::Usage;
-use Sys::Syslog;
 
 our $VERSION = "2.22.0";
 
@@ -75,6 +71,11 @@ if ( $opts->{group} || $opts->{user} ) {
 
 &daemonize if $opts->{daemon};
 
+require HTTP::Request;
+require JSON;
+require LWP::UserAgent;
+require Sys::Syslog;
+
 my $j = JSON->new->canonical;
 
 my $syslogOpened;
@@ -83,11 +84,11 @@ sub _log {
     my ( $level, $msg ) = @_;
     if ( $opts->{daemon} ) {
         unless ($syslogOpened) {
-            openlog( 'LLNG-Loki', 'cons,pid,ndelay',
+            Sys::Syslog::openlog( 'LLNG-Loki', 'cons,pid,ndelay',
                 $opts->{syslogFacility} || 'daemon' );
             $syslogOpened++;
         }
-        syslog( $level, $msg );
+        Sys::Syslog::syslog( $level, $msg );
     }
     else {
         print STDERR "[$level] $msg\n";
@@ -253,40 +254,6 @@ sub daemonize {
         close $fh;
     }
     $0 = join ' ', $0, @CMDLINE;
-
-    my $cpid;
-
-    # Master process code (relaunch webserver in case of failure)
-    if ( $cpid = fork ) {
-        $| = 1;
-        my @restartTimes;
-        my $term;
-        $SIG{CHLD} = 'DEFAULT';
-        $SIG{TERM} = sub {
-            kill 'TERM', $cpid;
-            waitpid( $cpid, 0 );
-            exit 0;
-        };
-        while (1) {
-            my $endedPid   = waitpid( $cpid, 0 );
-            my $exitStatus = $? >> 8;
-            error "Server $endedPid ended with status $exitStatus";
-            @restartTimes =
-              grep { time() - $_ < $opts->{restartWindow} } @restartTimes;
-            error "@restartTimes >= $opts->{maxRestarts}";
-            if ( @restartTimes >= $opts->{maxRestarts} ) {
-                error "Too many failures in $opts->{restartWindow}, aborting";
-                exit 1;
-            }
-            sleep 1;
-            last unless $cpid = fork;
-            push @restartTimes, time;
-        }
-    }
-    die $! unless defined $cpid;
-
-    # Don't propagate 'TERM' signal to master
-    setpgrp( 0, 0 );
 }
 
 ## MAIN
