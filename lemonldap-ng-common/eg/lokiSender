@@ -23,8 +23,6 @@ GetOptions(
     'group|g=s'       => \$opts->{group},
     'help|h'          => \$help,
     'ini-file=s'      => \$opts->{iniFile},
-    'max-restarts=s'  => \$opts->{maxRestarts},
-    'restart-window'  => \$opts->{restartWindow},
     'syslog-facility' => \$opts->{syslogFacility},
     'user|u=s'        => \$opts->{user},
 ) or pod2usage( -exitcode => 1, -verbose => 0 );
@@ -273,3 +271,159 @@ if ( $opts->{delay} ) {
 else {
     &sendLogs || exit 1;
 }
+
+__END__
+
+=encoding UTF-8
+
+=head1 NAME
+
+lokiSender - daemon I<(or cron job)> to send to L<Loki> API the logs stored in
+a temporary directory by L<Lemonldap-ng|https://lemonldap-ng.org/> Loki logger.
+
+=head1 SYNOPSIS
+
+  $ lokiSender --defer-dir /tmp/loki --daemon --delay 60
+
+=head1 DESCRIPTION
+
+B<lokiSender> is a web-based pub/sub server designed for L<LemonLDAP::NG|https://lemonldap-ng.org>
+when the Loki logger is configured to store logs into a temporary directory.
+
+=head2 Options
+
+All options except B<--help> can have default value overriden by an
+environment variable.
+
+=head3 Start options
+
+When launched without B<--delay> or B<--daemon>, lokiSender just send all logs
+to Loki API I<(grouped)>. This can be used as cron task.
+
+=over
+
+=item * B<--daemon>
+
+Daemonize the server.
+
+Environment variable: B<LLNG_LOKI_DAEMON>
+
+=item * B<--delay E<lt>valueE<gt>>
+
+With or without B<--daemon>, send all pending logs to Loki API every
+E<lt>valueE<gt> seconds.
+
+Environment variable: B<LLNG_LOKI_DELAY>
+
+=item * B<--defer-dir E<lt>valueE<gt>>
+
+Define the directory where B<Lemonldap-NG> stores its Loki logs
+I<(option B<lokiDeferDir>)>. When not given, B<lokiSender> tries to find it
+inside Lemonldap-NG configuration.
+
+Environment variable: B<LLNG_LOKI_DEFERDIR>
+
+=item * B<--ini-file E<lt>valueE<gt>>
+
+When B<--defer-dir> isn't defined, you can override here the default place of
+B<lemonldap-ng.ini> file to find the B<lokiDeferDir> parameter.
+
+Environment variable: B<LLNG_LOKI_INIFILE>
+
+=back
+
+=head3 Daemon options
+
+=over
+
+=item * B<--pid-file E<lt>valueE<gt>>
+
+When B<--daemon> is set, write the processus number into the given file.
+
+Environment variable: B<LLNG_LOKI_PID_FILE>
+
+=item * B<--user> E<lt>valueE<gt>>
+
+Change uid to the given value after opening socket.
+
+Environment variable: B<LLNG_LOKI_USER>
+
+=item * B<--group> E<lt>valueE<gt>>
+
+Change gid to the given value after opening socket.
+
+Environment variable: B<LLNG_LOKI_GROUP>
+
+=back
+
+=head3 Logging options
+
+=over
+
+
+=item * B<--debug>
+
+Display additional information.
+
+Environment variable: B<LLNG_LOKI_DEBUG>
+
+=item * B<--syslog-facility E<lt>valueE<gt>>
+
+When launched as daemon, logs are sent to syslog instead of stderr.
+
+Environment variable: B<LLNG_LOKI_SYSLOGFACILITY
+
+=back
+
+=head3 Other
+
+=over
+
+=item * B<--help>
+
+Display this.
+
+=back
+
+=head1 SEE ALSO
+
+=over
+
+=item * L<Lemonldap::NG logs|https://lemonldap-ng.org/documentation/latest/logs.html>
+
+=item * L<http://lemonldap-ng.org/>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+
+=head1 AUTHORS
+
+=over
+
+=item Xavier Guimard, E<lt>yadd@debian.orgE<gt>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+See COPYING file for details.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
