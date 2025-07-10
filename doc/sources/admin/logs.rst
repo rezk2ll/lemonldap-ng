@@ -283,6 +283,8 @@ Parameter             Comment                                                   
 ``lokiTenant``        Used to populate ``X-Scope-OrgID`` header
 ``lokiTenantHeader``  Used to change default tenant header                                                                                                              ``X-Scope-OrgID``
 ``lokiAuthorization`` Set here the whole value to put in the ``Authorization`` header. For example: ``Basic dXNlcjpwYXNzd29yZA==`` *(Base64 encoding of user:password)*
+``lokiDeferDir``      Temporary directory to store logs (see :ref:`async options <async-opts>`)
+``lokiProxy``         Buffer-Proxy to be used (see :ref:`async options <async-opts>`)
 ===================== ================================================================================================================================================= ==========================================
 
 Is it recommended to combine this logger with the :ref:`auditLogger <auditlogs>`
@@ -296,6 +298,44 @@ for Grafana. Example of ``lemonldap-ng.ini`` file:
    auditLogger = Lemonldap::NG::Common::AuditLogger::UserLoggerJSON
    lokiUrl     = http://10.1.2.3/loki/api/v1/push
 
+
+.. _async-opts:
+
+Async options
+^^^^^^^^^^^^^
+
+.. attention::
+
+    This logger uses synchronous process, so it can cause latency in
+    heavily loaded systems. To avoid this, you can use an asynchronous
+    mechanism.
+
+LLNG proposes 2 options:
+
+* use a :ref:`transitional directory to store logs formated for Loki<lokideferdir>`.
+
+* use a :ref:`reverse-proxy that will bufferize messages<lokiproxy>`.
+
+.. _lokideferdir:
+
+**Using a transitional directory**
+""""""""""""""""""""""""""""""""""
+
+When option ``lokiDeferDir`` is set, the Loki logger no more send directly logs
+to Loki API but write them into this transitional directory. You can use the
+`lokiSender <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/blob/v2.0/lemonldap-ng-common/eg/lokiSender>`_
+program to pick logs from the transitional directory and push then to Loki
+API. It can be used as daemon or as cron task.
+
+.. _lokiproxy:
+
+**Using a custom reverse-proxy**
+""""""""""""""""""""""""""""""""
+
+When using ``lokiProxy`` optiion, Loki logger simply send Loki requests to this
+URL instead of using ``lokiUrl`` value but keeps ``Host`` header. This permits
+one to write a simple proxy, faster than loki API which will group message to
+send them asynchronously.
 
 Sentry
 ~~~~~~
