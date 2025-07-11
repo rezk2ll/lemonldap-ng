@@ -12,7 +12,7 @@
 "LDAPFilter":"Varsayılan filtre",
 "OpenIDConnect":"OpenID Connect",
 "OptionalTitle":"İsteğe bağlı başlık",
-"PE112":"Password is about to expire, please change it now",
+"PE112":"Parolanızın süresi dolmak üzere, lütfen hemen değiştirin",
 "SMTP":"SMTP",
 "SMTPAuthPass":"Parola",
 "SMTPAuthUser":"Kullanıcı",
