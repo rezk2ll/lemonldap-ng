@@ -433,6 +433,7 @@ oidcServiceMetaDataIssuer                               OpenID Connect issuer   
 oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endpoint                                                         ✔
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
 oidcServiceMetaDataRevokeURI                            OpenID Connect token revocation endpoint                                             ✔
+oidcServiceMetaDataRpLogoutReturnURI                    OpenID Connect RP-Initiated logout return endpoint                                   ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
 oidcServiceMetadataTtl                                  OIDC Metadata TTL                                                                    ✔
