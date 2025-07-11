@@ -1,5 +1,6 @@
 Changes
 eg/llng-pubsub-server
+eg/lokiSender
 lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
@@ -126,6 +127,7 @@ t/45-importMetadata.t
 t/50-Combination-Parser.t
 t/60-Cli-JSON.t
 t/60-Hashed-Session.t
+t/60-Purge-Persistent.t
 t/60-Purge.t
 t/60-Session-Cache.t
 t/60-Session-Cli.t
