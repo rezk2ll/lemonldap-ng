@@ -594,7 +594,10 @@ sub load_config {
     my ( $self, $entityID ) = @_;
 
     my $config = {};
-    $self->p->processHook( {}, 'getSamlConfig', $entityID, $config );
+    my $res = $self->p->processHook( {}, 'getSamlConfig', $entityID, $config );
+    if ( $res != PE_OK ) {
+        return;
+    }
 
     my $info;
     if ( $config->{sp_metadata} ) {

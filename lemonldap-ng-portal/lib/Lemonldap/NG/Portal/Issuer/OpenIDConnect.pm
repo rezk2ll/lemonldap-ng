@@ -215,7 +215,11 @@ sub load_config {
 
     # Not found in config, try to load from hook
     my $config = {};
-    $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
+    my $res =
+      $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
+    if ( $res != PE_OK ) {
+        return;
+    }
 
     my $info;
     if ( $config->{confKey} ) {
