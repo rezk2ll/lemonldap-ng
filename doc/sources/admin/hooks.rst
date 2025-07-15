@@ -386,10 +386,12 @@ the RP configuration ::
            extraClaims => # hashref of additional scopes to consider
        );
 
-       # Set the TTL even if nothing was found in DB to prevent LLNG from
-       # calling the hook too often
+       # If you don't set a TTL, the returned configuration is considered
+       # permanently valid. Even if nothing was returned.
        $config->{ttl} = 3600;
 
+       # If you return a non-OK status, the hook will be called again
+       # on the next attempt to resolve the same entityID
        return PE_OK;
    }
 
@@ -430,12 +432,15 @@ the IDP or SP information::
            idp_options => #hashref of options
        );
 
-       # Set the TTL even if nothing was found in DB to prevent LLNG from
-       # calling the hook too often
+       # If you don't set a TTL, the returned configuration is considered
+       # permanently valid. Even if nothing was returned.
        $config->{ttl} = 3600;
 
+       # If you return a non-OK status, the hook will be called again
+       # on the next attempt to resolve the same entityID
        return PE_OK;
    }
+
 
 SAML Issuer hooks
 -----------------
