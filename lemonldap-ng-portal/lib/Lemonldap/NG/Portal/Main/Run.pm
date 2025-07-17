@@ -207,6 +207,7 @@ sub authenticatedRequest {
 
 sub postAuthenticatedRequest {
     my ( $self, $req ) = @_;
+    $req->data->{alreadyAuthenticated} = 1;
     return $self->do(
         $req,
         [
