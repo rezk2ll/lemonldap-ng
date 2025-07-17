@@ -10,7 +10,7 @@ Presentation
 containers.
 
 You can find a Docker image for LemonLDAP::NG in this repository:
-https://hub.docker.com/r/lemonldapng/lemonldap-ng
+`<https://hub.docker.com/r/lemonldapng/lemonldap-ng>`_
 
 See also this github project:
 https://github.com/LemonLDAPNG/lemonldap-ng-docker
