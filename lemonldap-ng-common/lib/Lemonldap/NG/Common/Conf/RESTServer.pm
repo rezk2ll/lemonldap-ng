@@ -163,7 +163,8 @@ sub virtualHosts {
     }
 
     # Send setDefault for new vhosts
-    return $self->sendError( $req, 'setDefault', 200 ) if ( $vh =~ /^new__/ );
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
+      if ( $vh =~ /^new__/ );
 
     # Reject unknown vhosts
     return $self->sendError( $req, "Unknown virtualhost ($vh)", 400 )
@@ -255,7 +256,7 @@ sub _samlMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -382,7 +383,7 @@ sub _oidcMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -506,7 +507,7 @@ sub _casMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -949,7 +950,7 @@ sub getKey {
 
     # When "hash"
     if ( $key =~ qr/^$simpleHashKeys$/o ) {
-        return $self->sendError( $req, 'setDefault', 200 )
+        return $self->sendJSONresponse( $req, { error => 'setDefault' } )
           unless defined($value);
 
         # If a hash key is asked return its value
@@ -987,7 +988,7 @@ sub getKey {
     # When scalar
     return $self->sendError( $req, "Key $key is not a hash", 400 )
       if ($subkey);
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       unless defined($value);
     return $self->sendJSONresponse( $req, { value => $value } );
 
