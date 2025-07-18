@@ -144,7 +144,7 @@ pages:
     - master
 
 sonar-inspect:
-  image: buildpkg/debian:buster
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
   stage: build
   script:
     - scripts/sonar
