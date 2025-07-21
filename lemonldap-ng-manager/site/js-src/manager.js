@@ -1209,7 +1209,8 @@ llapp.controller('TreeCtrl', [
           for (i = o = 0, len = ref.length; o < len; i = ++o) {
             n = ref[i];
             node.data[i] = {
-              title: n,
+              title: n.split("/").pop(),
+              get: n,
               id: n
             };
             tmp.push($scope.getKey(node.data[i]));

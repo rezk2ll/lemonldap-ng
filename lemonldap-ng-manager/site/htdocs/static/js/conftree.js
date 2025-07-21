@@ -218,9 +218,9 @@ function templates(tpl,key) {
     return [
    {
       "get" : [
-         "keyPrivate",
-         "keyPrivatePwd",
-         "keyPublic"
+         tpl+"s/"+key+"/"+"keyPrivate",
+         tpl+"s/"+key+"/"+"keyPrivatePwd",
+         tpl+"s/"+key+"/"+"keyPublic"
       ],
       "id" : tpl+"s/"+key+"/"+"KeyMaterial",
       "title" : "KeyMaterial",

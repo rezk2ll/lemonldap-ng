@@ -657,7 +657,7 @@ sub scanTree {
                 id    => "$prefix$leaf->{title}",
                 title => $leaf->{title},
                 type  => $leaf->{form},
-                get   => $leaf->{group}
+                get   => [ map { "${prefix}$_" } @{ $leaf->{group} } ]
               };
         }
 
