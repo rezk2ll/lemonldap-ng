@@ -189,7 +189,7 @@ DBI
 Parameters for DBI backend are the same as
 :doc:`DBI configuration backend<sqlconfbackend>`.
 
-You can find the database schema in ``/usr/share/lemonldap-ng/ressources/sessions.*.sql``.
+You can find the database schema in ``/usr/share/lemonldap-ng/ressources/notifications.*.sql``.
 
 To summary available options:
 
