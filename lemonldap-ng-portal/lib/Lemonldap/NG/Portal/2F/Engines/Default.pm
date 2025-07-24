@@ -914,6 +914,7 @@ sub _continueLogin {
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
                 _2f                 => $prefix,
+                _lastAuthnUTime     => time,
                 %macros
             }
         );
@@ -923,7 +924,8 @@ sub _continueLogin {
         $self->p->updateSession(
             $req,
             {
-                _2f => $prefix,
+                _lastAuthnUTime => time,
+                _2f             => $prefix,
             }
         );
     }
