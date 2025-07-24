@@ -639,7 +639,7 @@ sub run {
             if (
                 $force_authn
                 and (
-                    time - $req->sessionInfo->{_utime} >
+                    time - $req->sessionInfo->{_lastAuthnUTime} >
                     $self->conf->{portalForceAuthnInterval} )
               )
             {

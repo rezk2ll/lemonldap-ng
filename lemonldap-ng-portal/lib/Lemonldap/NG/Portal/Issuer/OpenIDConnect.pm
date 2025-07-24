@@ -637,7 +637,7 @@ sub _authorizeEndpoint {
             $prompt
         and $prompt =~ /\blogin\b/
         and (
-            time - $req->sessionInfo->{_utime} >
+            time - $req->sessionInfo->{_lastAuthnUTime} >
             $self->conf->{portalForceAuthnInterval} )
       )
     {

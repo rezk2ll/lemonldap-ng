@@ -235,7 +235,7 @@ sub run {
         # Renew
         if (    $renew
             and $renew eq 'true'
-            and time - $req->sessionInfo->{_utime} >
+            and time - $req->sessionInfo->{_lastAuthnUTime} >
             $self->conf->{portalForceAuthnInterval} )
         {
 
