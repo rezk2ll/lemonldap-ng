@@ -1120,3 +1120,11 @@ Sample code::
         }
         return PE_OK;
     }
+
+unauthLogout
+~~~~~~~~~~~~
+
+.. versionadded:: 2.22.0
+
+This hook is called just before any logout. It receive only one parameter, the
+`̀`$req`` object.
