@@ -378,13 +378,51 @@ sub sessions {
         # Substrings
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
             my ( $field, $length, $start ) = ( $1, $2, $3 );
+
+            # Previously we may have this in sessionExplorer:
+            # - d (300)
+            #   -> dw (300)
+            #      -> dwho (300)
+            #         -> dwho (300)
+            #            -> dwho (300)
+            #               ...sessions
+            #
+            # Now we have
+            # -d (300)
+            #    -> dwho (300)
+            #       ... sessions
+            #
+            # "next" is a try with $length+1, if only one account, $length++
             $start ||= 0;
             $length = 1 if ( $length < 1 );
-            foreach my $k ( keys %$res ) {
-                $r->{ substr $res->{$k}->{$field}, $start, $length }++
-                  if ( $res->{$k}->{$field} );
+            while (1) {
+                my $next = {};
+                my $stop;
+                foreach my $k ( keys %$res ) {
+                    my $subk = substr $res->{$k}->{$field}, $start, $length + 1;
+                    $next->{$subk}++
+                      if ( $res->{$k}->{$field} );
+
+                    # End of the loop if we reached the length of uid
+                    $stop++
+                      if $start + $length >= length( $res->{$k}->{$field} );
+                }
+
+                # Loop if only one result
+                my @k = keys %$next;
+                if ( @k == 1 and !$stop ) {
+                    $length++;
+                    next;
+                }
+
+                # Result calculation
+                foreach my $k ( keys %$res ) {
+                    $r->{ substr $res->{$k}->{$field}, $start, $length }++
+                      if ( $res->{$k}->{$field} );
+                }
+                $group = $field;
+                last;
             }
-            $group = $field;
         }
 
         # Subnets IPv4
