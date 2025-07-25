@@ -2,7 +2,7 @@
 #=============================================================================
 # Cleaner for LemonLDAP::NG: removes old persistent sessions
 #
-# This is part of LemonLDAP::NG product, released under GPL
+# This is part of LemonLDAP::NG product, released under GPL-2+
 #=============================================================================
 
 use strict;
