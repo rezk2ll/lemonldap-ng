@@ -347,6 +347,10 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
+    mkdir "$main::tmpDir/rp";
+    mkdir "$main::tmpDir/rp/lock";
+    mkdir "$main::tmpDir/rp/oidc";
+    mkdir "$main::tmpDir/rp/oidc/lock";
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
@@ -379,8 +383,14 @@ sub rp {
                     }
                 },
                 globalStorageOptions => {
-                    Directory      => "$main::tmpDir/saml",
-                    LockDirectory  => "$main::tmpDir/saml/lock",
+                    Directory      => "$main::tmpDir/rp",
+                    LockDirectory  => "$main::tmpDir/rp/lock",
+                    generateModule =>
+'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+                },
+                oidcStorageOptions => {
+                    Directory      => "$main::tmpDir/rp/oidc",
+                    LockDirectory  => "$main::tmpDir/rp/oidc/lock",
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
