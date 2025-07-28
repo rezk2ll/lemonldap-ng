@@ -379,20 +379,12 @@ sub sessions {
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
             my ( $field, $length, $start ) = ( $1, $2, $3 );
 
-            # Previously we may have this in sessionExplorer:
-            # - d (300)
-            #   -> dw (300)
-            #      -> dwho (300)
-            #         -> dwho (300)
-            #            -> dwho (300)
-            #               ...sessions
-            #
-            # Now we have
+            # "next" is a try with $length+1, if only one account, $length++
+            # This permits UI to jump directly to the uid
             # -d (300)
             #    -> dwho (300)
             #       ... sessions
             #
-            # "next" is a try with $length+1, if only one account, $length++
             $start ||= 0;
             $length = 1 if ( $length < 1 );
             while (1) {
