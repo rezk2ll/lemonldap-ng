@@ -1663,12 +1663,13 @@ sub _handlePasswordGrant {
         }
     }
 
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
     # Resolve scopes
     my $scope = $self->getScope( $req, $rp, $req_scope );
     unless ($scope) {
-        $self->userLogger->warn( 'User '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-              . " was not granted any requested scopes ($req_scope) for $rp" );
+        $self->userLogger->warn( "User $user was not granted"
+              . "  any requested scopes ($req_scope) for $rp" );
         return $self->sendOIDCError( $req, 'invalid_scope', 400 );
     }
 
@@ -1704,10 +1705,11 @@ sub _handlePasswordGrant {
         my $refreshTokenSession = $self->_generateRefreshToken(
             $req, $rp,
             {
-                scope           => $scope,
-                client_id       => $client_id,
-                user_session_id => $req->id,
-                grant_type      => "password",
+                scope                      => $scope,
+                client_id                  => $client_id,
+                user_session_id            => $req->id,
+                grant_type                 => "password",
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -1847,7 +1849,8 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $sid  = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $user = $apacheSession->data->{ $self->conf->{whatToTrace} };
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1870,11 +1873,10 @@ sub _handleAuthorizationCodeGrant {
                 redirect_uri => $codeSession->data->{redirect_uri},
                 scope        => $scope,
                 client_id    => $client_id,
-                _session_uid =>
-                  $apacheSession->data->{ $self->conf->{whatToTrace} },
-                auth_time  => $apacheSession->data->{_lastAuthnUTime},
-                grant_type => "authorizationcode",
-                _oidc_sid  => $sid,
+                _session_uid => $user,
+                auth_time    => $apacheSession->data->{_lastAuthnUTime},
+                grant_type   => "authorizationcode",
+                _oidc_sid    => $sid,
             },
             1,
         );
@@ -1905,6 +1907,7 @@ sub _handleAuthorizationCodeGrant {
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -2514,7 +2517,7 @@ sub _revokeToken {
         if ( my ( $_rp, $_uid ) = $checkRight->( $oidcSession, $rp ) ) {
             my $bck =
               $self->rpOptions->{$_rp}->{oidcRPMetaDataOptionsLogoutType};
-            if ( $tokenHint eq 'refresh_token' and $bck and $bck eq 'back' ) {
+            if ( $bck and $bck eq 'back' ) {
                 $self->_backChannelLogout( $req, $_rp, $oidcSession->data );
             }
             $self->auditLog(

@@ -88,7 +88,7 @@ sub userLogout {
       or return $self->sendError( $req, "session $id not found" );
 
     my $uidKey = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
-    my $uid    = $session->data->{$uidKey};
+    my $uid    = $session->data->{$uidKey} || $session->data->{_session_uid};
 
     my $count = 0;
     foreach my $storage (qw(oidcStorage sessionStorage)) {
