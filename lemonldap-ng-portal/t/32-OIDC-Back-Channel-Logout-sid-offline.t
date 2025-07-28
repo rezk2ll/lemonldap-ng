@@ -186,6 +186,26 @@ sub runTest {
     my $i = $op2rpRequestCount;
     if ($adminLogout) {
         my $anotherId = $op->login('french');
+
+        # Additional refresh token
+        my $code = codeAuthorize(
+            $op,
+            $anotherId,
+            {
+                response_type => 'code',
+                scope         => 'openid profile email offline_access',
+                client_id     => 'rpid',
+                state         => 'af0ifjsldkj',
+                redirect_uri  => 'http://auth.rp.com/?openidconnectcallback=1',
+            }
+        );
+        my $json = expectJSON(
+            codeGrant(
+                $op,   'rpid',
+                $code, 'http://auth.rp.com/?openidconnectcallback=1'
+            )
+        );
+
         require t::SessionExplorer;
         my $se;
         ok( $se = t::SessionExplorer->new( $op->p->conf ),
@@ -209,6 +229,12 @@ sub runTest {
                 ),
             )
         );
+
+        # Verify that second session is invalidated
+        ok( getUserinfo( $op, $json->{access_token} )->[0] == 401,
+            'access_token invalid' );
+        $json = expectBadRequest(
+            refreshGrant( $op, 'rpid', $json->{refresh_token} ) );
         expectReject( $op->_get( '/', cookie => "lemonldap=$anotherId" ) );
     }
     else {
@@ -224,7 +250,9 @@ sub runTest {
             'Refresh_token logout'
         );
     }
-    ok( $op2rpRequestCount == $i + 1, 'One request sent ro RP' );
+    my $nbCall = $adminLogout ? 3 : 1;
+    ok( $op2rpRequestCount == ($i + $nbCall), "$nbCall request sent ro RP" )
+      or explain( $op2rpRequestCount, ($i+$nbCall) );
     is(
         $lastRpRequest,
         'http://auth.rp.com/oauth2/blogout',
@@ -277,7 +305,7 @@ sub op {
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
-                adminLogoutServerSecret                  => 'qwertyui',
+                adminLogoutServerSecret               => 'qwertyui',
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
@@ -319,6 +347,10 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
+    mkdir "$main::tmpDir/rp";
+    mkdir "$main::tmpDir/rp/lock";
+    mkdir "$main::tmpDir/rp/oidc";
+    mkdir "$main::tmpDir/rp/oidc/lock";
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
@@ -351,8 +383,14 @@ sub rp {
                     }
                 },
                 globalStorageOptions => {
-                    Directory      => "$main::tmpDir/saml",
-                    LockDirectory  => "$main::tmpDir/saml/lock",
+                    Directory      => "$main::tmpDir/rp",
+                    LockDirectory  => "$main::tmpDir/rp/lock",
+                    generateModule =>
+'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+                },
+                oidcStorageOptions => {
+                    Directory      => "$main::tmpDir/rp/oidc",
+                    LockDirectory  => "$main::tmpDir/rp/oidc/lock",
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
