@@ -73,6 +73,7 @@ lib/Lemonldap/NG/Portal/Lib/Code2F.pm
 lib/Lemonldap/NG/Portal/Lib/CrowdsecFilter.pm
 lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
+lib/Lemonldap/NG/Portal/Lib/Key.pm
 lib/Lemonldap/NG/Portal/Lib/LazyLoadedConfiguration.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
