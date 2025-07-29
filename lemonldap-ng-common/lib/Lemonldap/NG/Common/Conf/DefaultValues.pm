@@ -305,7 +305,7 @@ sub defaultValues {
         'portalDisplayRegister'        => 1,
         'portalErrorOnExpiredSession'  => 1,
         'portalFavicon'                => 'common/favicon.ico',
-        'portalForceAuthnInterval'     => 300,
+        'portalForceAuthnInterval'     => 30,
         'portalMainLogo'               => 'common/logos/logo_llng_400px.png',
         'portalPingInterval'           => 60000,
         'portalRequireOldPassword'     => 1,
