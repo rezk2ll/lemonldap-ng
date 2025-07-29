@@ -22,7 +22,7 @@ sub run {
     if (    $req->env->{HTTP_HOST}
         and $req->portal =~ /\Q$req->{env}->{HTTP_HOST}/ )
     {
-        my $delta = time - $req->{sessionInfo}->{_utime};
+        my $delta = time - $req->{sessionInfo}->{_lastAuthnUTime};
         $self->logger->debug( "Delta with last Authn -> " . $delta );
 
         return $delta <= $self->conf->{portalForceAuthnInterval}
