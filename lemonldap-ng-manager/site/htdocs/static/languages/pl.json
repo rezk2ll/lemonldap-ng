@@ -267,6 +267,7 @@
 "cookieExpiration":"Czas ważności pliku cookie",
 "cookieName":"Nazwa ciasteczka",
 "cookieParams":"Pliki cookie",
+"copyPath":"Copy location",
 "corsAllow_Credentials":"Access-Control-Allow-Credentials",
 "corsAllow_Headers":"Access-Control-Allow-Headers",
 "corsAllow_Methods":"Access-Control-Allow-Methods",

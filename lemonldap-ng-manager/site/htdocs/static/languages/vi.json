@@ -267,6 +267,7 @@
 "cookieExpiration":"Thời gian hết hạn cookie",
 "cookieName":"Tên cookie",
 "cookieParams":"Cookie",
+"copyPath":"Copy location",
 "corsAllow_Credentials":" Truy cập-Kiểm soát -Cho phép-Thông tin đăng nhập",
 "corsAllow_Headers":"Truy cập-Kiểm soát-Cho phép-Tiêu đề",
 "corsAllow_Methods":"Truy cập - Kiểm soát - Cho phép - Phương thức",
