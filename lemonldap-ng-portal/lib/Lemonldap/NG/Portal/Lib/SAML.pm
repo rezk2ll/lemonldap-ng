@@ -180,9 +180,8 @@ sub loadService {
     my ($self) = @_;
 
     # Check if certificate is available
-    unless ($self->conf->{samlServicePublicKeySig}
-        and $self->conf->{samlServicePrivateKeySig} )
-    {
+    my $signing_key = $self->get_private_key("default-saml-sig");
+    unless ($signing_key) {
         $self->logger->error(
             'SAML private and public key not found in configuration');
         return 0;
@@ -190,9 +189,9 @@ sub loadService {
 
     my $serviceCertificate;
     if (    $self->conf->{samlServiceUseCertificateInResponse}
-        and $self->conf->{samlServicePublicKeySig} =~ /CERTIFICATE/ )
+        and $signing_key->{public} =~ /CERTIFICATE/ )
     {
-        $serviceCertificate = $self->conf->{samlServicePublicKeySig};
+        $serviceCertificate = $signing_key->{public};
         $self->logger->debug('Certificate will be used in SAML responses');
 
     }
@@ -201,6 +200,8 @@ sub loadService {
     $self->logger->debug("Get Metadata for this service");
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
 
+    my $encryption_key = $self->get_private_key("default-saml-enc");
+
     # Create Lasso server with service metadata
     my $server = $self->createServer(
         $service_metadata->serviceToXML( {
@@ -208,20 +209,14 @@ sub loadService {
             },
             ''
         ),
-        $self->conf->{samlServicePrivateKeySig},
-        $self->conf->{samlServicePrivateKeySigPwd},
+        $signing_key->{private},
+        $signing_key->{password},
 
         # use signature cert for encryption unless defined
         (
-            $self->conf->{samlServicePrivateKeyEnc}
-            ? (
-                $self->conf->{samlServicePrivateKeyEnc},
-                $self->conf->{samlServicePrivateKeyEncPwd}
-              )
-            : (
-                $self->conf->{samlServicePrivateKeySig},
-                $self->conf->{samlServicePrivateKeySigPwd}
-            )
+            $encryption_key
+            ? ( $encryption_key->{private}, $encryption_key->{password}, )
+            : ( $signing_key->{private}, $signing_key->{password}, )
         ),
         $serviceCertificate
     );
@@ -3532,11 +3527,13 @@ sub getSignatureMethod {
 sub setProviderSignatureMethod {
     my ( $self, $provider, $signature_method ) = @_;
 
+    my $default_key = $self->get_private_key("default-saml-sig");
+
     # We have to use an intermediate variable to avoid interferences between
     # Lasso binding and tied hashes (#3105)
-    my $priv = $self->conf->{samlServicePrivateKeySig};
-    my $pass = $self->conf->{samlServicePrivateKeySigPwd} || '';
-    my $cert = $self->conf->{samlServicePublicKeySig};
+    my $priv = $default_key->{private};
+    my $pass = $default_key->{password};
+    my $cert = $default_key->{public};
 
     eval {
         my $key = Lasso::Key::new_for_signature_from_file( $priv, $pass,
