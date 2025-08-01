@@ -227,7 +227,7 @@ sub loadService {
     }
 
     # Signature method
-    my $method = $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
+    my $method = $self->getDefaultSignatureMethod();
     $server->signature_method( $self->getSignatureMethod($method) );
     $self->logger->debug("Set $method as SAML server signature method ");
 
@@ -3543,25 +3543,24 @@ sub metadata {
 sub getSignatureMethod {
     my ( $self, $signature_method ) = @_;
 
-    my $signature_method_rsa_sha1 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1';
-    my $signature_method_rsa_sha256 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256';
-    my $signature_method_rsa_sha384 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA384';
-    my $signature_method_rsa_sha512 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA512';
-    my $signature_method_none = eval 'Lasso::Constants::SIGNATURE_METHOD_NONE';
+    $signature_method ||= $self->getDefaultSignatureMethod();
 
-    return $signature_method_rsa_sha1
-      if ( $signature_method =~ /^RSA_SHA1$/i );
-    return $signature_method_rsa_sha256
-      if ( $signature_method =~ /^RSA_SHA256$/i );
-    return $signature_method_rsa_sha384
-      if ( $signature_method =~ /^RSA_SHA384$/i );
-    return $signature_method_rsa_sha512
-      if ( $signature_method =~ /^RSA_SHA512$/i );
-    return $signature_method_none;
+    if ( my $const =
+        Lasso::Constants->can( "SIGNATURE_METHOD_" . uc($signature_method) ) )
+    {
+        return $const->();
+    }
+    else {
+        return 0;
+    }
+}
+
+sub getDefaultSignatureMethod {
+    my ($self) = @_;
+
+    my $signature_method =
+      $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
+    return $signature_method;
 }
 
 ## @method boolean setProviderSignatureMethod(Lasso::Provider provider, int signature_method)
