@@ -1,4 +1,5 @@
 -I .
+-I ../lemonldap-ng-common/
 -I ../lemonldap-ng-common/blib/lib
 -I ../lemonldap-ng-handler/blib/lib
 --blib
