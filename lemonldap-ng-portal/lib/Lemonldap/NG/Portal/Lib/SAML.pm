@@ -339,26 +339,9 @@ sub load_idp_metadata {
 
     # Set signature method if overridden
     my $signature_method = $options->{samlIDPMetaDataOptionsSignatureMethod};
-    if ($signature_method) {
-        my $lasso_signature_method =
-          $self->getSignatureMethod($signature_method);
-
-        unless (
-            $self->setProviderSignatureMethod(
-                $self->lassoServer->get_provider($entityID),
-                $lasso_signature_method
-            )
-          )
-        {
-            $self->logger->error(
-"Unable to set signature method $signature_method on IDP $idpConfKey"
-            );
-            delete $self->idpList->{$entityID};
-            return;
-        }
-        $self->logger->debug(
-            "Set signature method $signature_method on IDP $idpConfKey");
-    }
+    my $signature_key    = $options->{samlIDPMetaDataOptionsSignatureKey};
+    $self->_override_signature_or_key( $entityID, "IDP $idpConfKey",
+        $signature_method, $signature_key );
 
     # Set display options
     $self->idpList->{$entityID}->{displayName} =
@@ -543,25 +526,9 @@ sub load_sp_metadata {
 
     # Set signature method if overridden
     my $signature_method = $options->{samlSPMetaDataOptionsSignatureMethod};
-    if ($signature_method) {
-        my $lasso_signature_method =
-          $self->getSignatureMethod($signature_method);
-
-        unless (
-            $self->setProviderSignatureMethod(
-                $self->lassoServer->get_provider($entityID),
-                $lasso_signature_method
-            )
-          )
-        {
-            $self->logger->error(
-"Unable to set signature method $signature_method on SP $spConfKey"
-            );
-            return;
-        }
-        $self->logger->debug(
-            "Set signature method $signature_method on SP $spConfKey");
-    }
+    my $signature_key    = $options->{samlSPMetaDataOptionsSignatureKey};
+    $self->_override_signature_or_key( $entityID, "SP $spConfKey",
+        $signature_method, $signature_key );
 }
 
 sub lazy_load_message {
@@ -3571,14 +3538,19 @@ sub getDefaultSignatureMethod {
 sub setProviderSignatureMethod {
     my ( $self, $provider, $signature_method ) = @_;
 
-    my $default_key =
-      $self->get_private_key( $self->_get_default_signing_key_name );
+    my $key = $self->get_private_key( $self->_get_default_signing_key_name );
+    return $self->setProviderSignatureOptions( $provider, $signature_method,
+        $key );
+}
+
+sub setProviderSignatureOptions {
+    my ( $self, $provider, $signature_method, $key ) = @_;
 
     # We have to use an intermediate variable to avoid interferences between
     # Lasso binding and tied hashes (#3105)
-    my $priv = $default_key->{private};
-    my $pass = $default_key->{password};
-    my $cert = $default_key->{public};
+    my $priv = $key->{private};
+    my $pass = $key->{password};
+    my $cert = $key->{public};
 
     eval {
         my $key = Lasso::Key::new_for_signature_from_file( $priv, $pass,
@@ -3587,6 +3559,45 @@ sub setProviderSignatureMethod {
     };
 
     return $self->checkLassoError($@);
+}
+
+sub _override_signature_or_key {
+    my ( $self, $entityID, $log_description, $signature_method,
+        $signature_key_list )
+      = @_;
+    if ( $signature_method or $signature_key_list ) {
+        $signature_key_list //= "";
+        my $signature_key = ( split( /\s*,\s*/, $signature_key_list ) )[0];
+
+        $signature_method ||= $self->getDefaultSignatureMethod;
+        my $lasso_signature_method =
+          $self->getSignatureMethod($signature_method);
+
+        $signature_key ||= $self->_get_default_signing_key_name;
+        my $key = $self->get_private_key($signature_key);
+
+        # Fallback to default key if custom key was not found
+        if ( !$key ) {
+            $signature_key = $self->_get_default_signing_key_name;
+            $key           = $self->get_private_key($signature_key);
+        }
+
+        $self->logger->debug( "Setting signature key $signature_key"
+              . " and signature method $signature_method"
+              . " on $log_description" );
+
+        unless (
+            $self->setProviderSignatureOptions(
+                $self->lassoServer->get_provider($entityID),
+                $lasso_signature_method, $key
+            )
+          )
+        {
+            $self->logger->error(
+                "Unable to set signature options on $log_description");
+            return;
+        }
+    }
 }
 
 # The default signing key is the first key listed in samlServiceSignatureKey, with
