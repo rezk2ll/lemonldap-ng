@@ -10,6 +10,7 @@ Applications
    applications/apache_apisix
    applications/aws
    applications/awx
+   applications/bluemind
    applications/bugzilla
    applications/bigbluebutton
    applications/confluence
@@ -105,6 +106,7 @@ Application                                                       Configuration 
 .. image:: applications/apache_apisix_logo.png                    :doc:`Apache Apisix<applications/apache_apisix>`                                            ✔
 .. image:: applications/logo-awx.png                              :doc:`AWX (Ansible Tower)<applications/awx>`                                           ✔
 .. image:: applications/bigbluebutton-logo.png                    :doc:`BigBlueButton<applications/bigbluebutton>`                                            ✔
+.. image:: applications/bluemind_logo.png                         :doc:`Bluemind<applications/bluemind>`                                             ✔        ✔
 .. image:: applications/bugzilla_logo.png                         :doc:`Bugzilla<applications/bugzilla>`               ✔
 .. image:: applications/confluence.png                            :doc:`Confluence<applications/confluence>`                                             ✔    ✔
 .. image:: applications/csod_logo.png                             :doc:`Cornerstone<applications/cornerstone>`                                           ✔
