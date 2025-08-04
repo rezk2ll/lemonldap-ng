@@ -296,7 +296,7 @@ sub cTrees {
                         ],
                     },
                     {
-                        title => 'keys',
+                        title => 'oidcRpKeys',
                         nodes => [
                             'oidcRPMetaDataOptionsJwksUri',
                             'oidcRPMetaDataOptionsJwks',

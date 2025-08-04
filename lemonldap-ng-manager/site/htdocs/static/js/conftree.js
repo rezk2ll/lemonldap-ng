@@ -1364,8 +1364,8 @@ function templates(tpl,key) {
                   "type" : "file"
                }
             ],
-            "id" : "keys",
-            "title" : "keys"
+            "id" : "oidcRpKeys",
+            "title" : "oidcRpKeys"
          },
          {
             "_nodes" : [
