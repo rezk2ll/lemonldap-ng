@@ -89,6 +89,8 @@
       // "v.length > over" avoids a loop if one user opened more than "max"
       // sessions
       console.debug('overScheme => level', level, 'over', over);
+
+      // no overScheme when over reached the length of previous result
       if (v.length >= level + over) return null;
       if (level === 1 && v.length > over) {
         return `${t}=${v}*&groupBy=substr(${t},${level + over + 1})`;
