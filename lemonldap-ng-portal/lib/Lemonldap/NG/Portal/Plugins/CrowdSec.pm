@@ -2,7 +2,6 @@ package Lemonldap::NG::Portal::Plugins::CrowdSec;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -15,9 +14,10 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::CrowdSec';
 
 # Entrypoint
-use constant beforeAuth => 'check';
+use constant beforeAuth => 'checkRejections';
+use constant afterSub   => { setPersistentSessionInfo => 'checkIpStatus' };
 
-sub check {
+sub checkIpStatus {
     my ( $self, $req ) = @_;
     my $ip = $req->address;
     my ( $ok, $err ) = $self->bouncer($ip);
@@ -48,6 +48,10 @@ sub check {
         }
     }
     return $err ? $err : PE_OK;
+}
+
+sub checkRejections {
+    return PE_OK;
 }
 
 1;

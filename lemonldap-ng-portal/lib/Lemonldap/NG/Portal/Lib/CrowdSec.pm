@@ -1,26 +1,53 @@
 package Lemonldap::NG::Portal::Lib::CrowdSec;
 
 use strict;
-use JSON qw(from_json);
+use Date::Parse;
+use JSON qw(from_json to_json);
 use Mouse::Role;
+use POSIX qw(strftime);
+use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
   PE_SESSIONNOTGRANTED
 );
 
+our $VERSION = '2.22.0';
+
+our $defaultBanValues = {
+    events_count     => 1,
+    scenario         => 'llng',
+    scenario_hash    => 'llng',
+    scenario_version => $VERSION,
+    leakspeed        => '1s',
+    remediation      => JSON::true,
+    simulated        => JSON::false,
+    capacity         => 1,
+};
+
 has ua => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-
-        # TODO : LWP options to use a proxy for example
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
+        $ua->agent( 'LLNG-CrowdsecAgent/' . $VERSION );
+        $ua->default_headers->header( 'Accept'       => 'application/json' );
+        $ua->default_headers->header( 'Content-Type' => 'application/json' );
         return $ua;
     }
 );
+
+has token    => ( is => 'rw' );
+has tokenExp => ( is => 'rw', default => 0 );
+
 has crowdsecUrl => ( is => 'rw' );
+
+has scenario => ( is => 'rw', default => 'llng' );
+has scenarioHash => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->scenario }
+);
 
 sub init {
     my ($self) = @_;
@@ -80,6 +107,103 @@ sub bouncer {
         $self->userLogger->info("$ip not banned by CrowdSec");
         return ( 1, PE_OK );
     }
+}
+
+sub ban {
+    my $self = shift;
+    my ( $ip, $msg, $data ) = @_;
+    if ( my $token = $self->getToken ) {
+        my $request = HTTP::Request->new(
+            POST => $self->crowdsecUrl . '/v1/alerts',
+            [
+                'Content-Type'  => 'application/json',
+                'Authorization' => "Bearer " . $self->token,
+            ],
+            $self->_banPayload(@_)
+        );
+        my $resp = $self->ua->request($request);
+        unless ( $resp->is_success ) {
+            $self->logger->error(
+                join ' ',           'Unable to push decision',
+                $resp->status_line, $resp->decoded_content
+            );
+            return;
+        }
+        $self->logger->notice(
+            "Push new Crowdsec decision: ban $ip with '$msg'");
+        return 1;
+    }
+    else {
+        $self->logger->error('Unable to push Crowdsec decision');
+        return;
+    }
+}
+
+sub _banPayload {
+    my ( $self, $ip, $msg, $data ) = @_;
+    $msg ||= 'Banned by LLNG Crowdsec plugin';
+    foreach my $k ( keys %$defaultBanValues ) {
+        $data->{$k} //= $defaultBanValues->{$k};
+    }
+    my $timestamp = strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime );
+    $data->{start_at} ||= $timestamp;
+    $data->{stop_at}  ||= $timestamp;
+    $data->{source}   ||= { scope => 'ip', value => $ip };
+    my $reason = delete( $data->{reason} ) || 'Banned by LLNG';
+    return to_json( [ {
+                %$data,
+                message => $msg,
+                events  => [ {
+                        timestamp => $data->{start_at},
+                        meta      => [
+                            { key => 'log_type', value => 'llng-auth' },
+                            { key => 'reason',   value => $reason }
+                        ],
+                        source => $data->{source},
+                    }
+                ],
+            }
+        ]
+    );
+}
+
+sub getToken {
+    my ($self) = @_;
+
+    # Use token if available
+    return $self->token if $self->token and $self->tokenExp < time - 10;
+
+    # Get new token
+    my ( $user, $pwd ) =
+      map { $self->conf->{$_} } qw(crowdsecMachineId crowdsecPassword);
+    unless ( $user and $pwd ) {
+        $self->logger->error('Missing crowdsec credentials, aborting');
+        return;
+    }
+    my $request = HTTP::Request->new(
+        POST => $self->crowdsecUrl . '/v1/watchers/login',
+        [ 'Content-Type' => 'application/json' ],
+        to_json( {
+                machine_id => $user,
+                password   => $pwd,
+            }
+        )
+    );
+    my $resp = $self->ua->request($request);
+    unless ( $resp->is_success ) {
+        $self->logger->error( join ' ', 'Unable to connect to Crowdsec:',
+            $resp->status_line, $resp->decoded_content );
+        return;
+    }
+    my $json = eval { from_json( $resp->decoded_content ) };
+    if ( $@ or !$json ) {
+        $self->logger->error( join ' ', 'Unable to read Crowdsec response:',
+            $@, $resp->decoded_content );
+        return;
+    }
+    $self->tokenExp( str2time( $json->{expire} ) );
+    $self->logger->debug("Get Crowdsec token");
+    return $self->token( $json->{token} );
 }
 
 1;
