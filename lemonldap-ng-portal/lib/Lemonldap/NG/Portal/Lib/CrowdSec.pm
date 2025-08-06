@@ -49,7 +49,7 @@ has scenarioHash => (
     default => sub { $_[0]->scenario }
 );
 
-sub init {
+sub _init {
     my ($self) = @_;
     if ( $self->conf->{crowdsecUrl} ) {
         my $tmp = $self->conf->{crowdsecUrl};
@@ -61,8 +61,6 @@ sub init {
             "crowdsecUrl isn't set, fallback to http://localhost:8080");
         $self->crowdsecUrl('http://localhost:8080');
     }
-    $self->logger->info(
-        'CrowdSec policy is: ' . ( $self->conf->{crowdsecAction} || 'warn' ) );
     return 1;
 }
 
@@ -124,14 +122,67 @@ sub ban {
         my $resp = $self->ua->request($request);
         unless ( $resp->is_success ) {
             $self->logger->error(
-                join ' ',           'Unable to push decision',
+                join ' ',           'Unable to push alert',
                 $resp->status_line, $resp->decoded_content
             );
             return;
         }
-        $self->logger->notice(
-            "Push new Crowdsec decision: ban $ip with '$msg'");
+        $self->logger->notice("Push new Crowdsec alert for $ip: $msg");
         return 1;
+    }
+    else {
+        $self->logger->error('Unable to push Crowdsec decision');
+        return;
+    }
+}
+
+sub alert {
+    my $self = shift;
+    my ( $ip, $msg, $data ) = @_;
+    $data ||= {};
+    my $max   = $self->conf->{crowdsecMaxFailures};
+    my $count = $self->getAlertsByIp($ip) || 0;
+    $data->{remediation} =
+      ( $max and $count >= ( $max - 1 ) ) ? JSON::true : JSON::false;
+    $self->logger->debug("Crowdsec alerts count is $count for $ip");
+    $data->{reason} ||= 'Reported by LLNG';
+    $msg ||= 'Reported by LLNG';
+    return $self->ban( $ip, $msg, $data );
+}
+
+sub getAlertsByIp {
+    my ( $self, $ip, $scenario ) = @_;
+    $scenario ||= $defaultBanValues->{scenario};
+    if ( my $token = $self->getToken ) {
+        my $url     = $self->crowdsecUrl . '/v1/alerts';
+        my $request = HTTP::Request->new(
+            GET => $url,
+            [
+                'Authorization' => "Bearer " . $self->token,
+            ],
+        );
+        my $resp = $self->ua->request($request);
+        unless ( $resp->is_success ) {
+            $self->logger->error(
+                join ' ',           'Unable to get alerts',
+                $resp->status_line, $resp->decoded_content
+            );
+            return;
+        }
+        my $alerts = eval { from_json( $resp->decoded_content ) };
+        if ( $@ or !$alerts ) {
+            $self->logger->error( join ' ', 'Unable to read Crowdsec response:',
+                $@, $resp->decoded_content );
+            return;
+        }
+        my $timeLimit = time - ( $self->conf->{crowdsecBlockDelay} || 180 );
+        my @ipAlerts =
+          grep {
+                  $_->{source}->{value} eq $ip
+              and $_->{scenario} eq $scenario
+              and str2time( $_->{start_at} ) > $timeLimit
+          } @$alerts;
+        return ( scalar @ipAlerts );
     }
     else {
         $self->logger->error('Unable to push Crowdsec decision');

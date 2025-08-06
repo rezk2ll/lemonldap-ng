@@ -13,16 +13,17 @@ BEGIN {
 my $ban = 0;
 
 my $res;
+my $lastAlertTypeIsBan;
 
 LWP::Protocol::PSGI->register(
     sub {
         my $req = Lemonldap::NG::Portal::Main::Request->new(@_);
         if ( $req->path_info eq '/v1/watchers/login' ) {
-            my $json;
-            subtest 'Request to login', sub {
-                ok( $json = $req->jsonBodyToObj,    'Content is JSON' );
-                ok( $json->{machine_id} eq 'llng',  'Good machine_id' );
-                ok( $json->{password} eq 'llngpwd', 'Good machine password' );
+            my $obj;
+            subtest 'Request to login to Crowdsec server', sub {
+                ok( $obj = $req->jsonBodyToObj,    'Content is JSON' );
+                ok( $obj->{machine_id} eq 'llng',  'Good machine_id' );
+                ok( $obj->{password} eq 'llngpwd', 'Good machine password' );
             };
             return [
                 200,
@@ -37,15 +38,37 @@ LWP::Protocol::PSGI->register(
             ];
         }
         elsif ( $req->path_info eq '/v1/alerts' ) {
-            subtest 'Request to push alert', sub {
-                ok( $req->header('Authorization') eq 'Bearer aaabbb',
-                    'Authentified request' );
-            };
-            $ban++;
+            if ( $req->method eq 'POST' ) {
+                subtest 'Request to push alert', sub {
+                    ok( $req->header('Authorization') eq 'Bearer aaabbb',
+                        'Authentified request' );
+                    my $obj;
+                    ok( $obj = $req->jsonBodyToObj, 'Content is JSON' );
+                    if ($obj) {
+                        ok( (
+                                      defined $obj->[0]
+                                  and defined $obj->[0]->{remediation}
+                            ),
+                            'Type of alert is '
+                              . ( $obj->[0]->{remediation} ? 'ban' : 'alert' )
+                        );
+                        $lastAlertTypeIsBan = $obj->[0]->{remediation};
+                    }
+                    $ban++;
+                };
+            }
+            else {
+                subtest 'Request to get alerts list', sub {
+                    pass("Ask for alert list");
+                };
+            }
             return [ 200, [], [] ];
         }
-        fail('Unknown request');
-        return [ 500, [], [$res] ];
+        elsif ( $req->path_info eq '/v1/decisions' ) {
+            return [ 200, [], [''] ];
+        }
+        fail( 'Unknown request ' . $req->path_info );
+        return [ 500, [], [] ];
     }
 );
 
@@ -54,18 +77,50 @@ my $client = LLNG::Manager::Test->new( {
             logLevel          => 'error',
             authentication    => 'Demo',
             userDB            => 'Same',
-            crowdsec          => 1,
             crowdsecMachineId => 'llng',
             crowdsecPassword  => 'llngpwd',
+            crowdsecAgent     => 1,
         }
     }
 );
 
-my $crowdsec =
-  $client->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::CrowdSec'};
+subtest 'Crowdsec ban function', sub {
+    my $crowdsec =
+      $client->p->loadedModules->{
+        'Lemonldap::NG::Portal::Plugins::CrowdSecAgent'};
 
-ok( $crowdsec->ban( '1.2.3.4', 'Test ban' ), 'Call to ban()' );
-ok( $ban == 1,                               'Ban received' );
+    ok( $crowdsec->ban( '1.2.3.4', 'Test ban' ), 'Call to ban()' );
+    ok( $ban == 1,                               'Ban received' );
+    ok( $lastAlertTypeIsBan,                     'Alert type is "ban"' );
+};
+
+subtest 'Report auth failures to Crowdsec', sub {
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=bad'),
+            length => 22,
+        ),
+        'Bad auth query'
+    );
+    expectReject($res);
+    ok( $ban == 2,            'Alert received' );
+    ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+};
+
+subtest 'Report unknown user to Crowdsec', sub {
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=jdoe&password=bad'),
+            length => 22,
+        ),
+        'Bad auth query'
+    );
+    expectReject($res);
+    ok( $ban == 3,            'Alert received' );
+    ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+};
 
 clean_sessions();
 

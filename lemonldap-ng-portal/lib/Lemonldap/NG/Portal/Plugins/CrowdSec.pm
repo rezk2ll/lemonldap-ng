@@ -4,7 +4,6 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
-  PE_ERROR
   PE_SESSIONNOTGRANTED
 );
 
@@ -14,8 +13,19 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::CrowdSec';
 
 # Entrypoint
-use constant beforeAuth => 'checkRejections';
-use constant afterSub   => { setPersistentSessionInfo => 'checkIpStatus' };
+use constant beforeAuth => 'checkIpStatus';
+
+sub init {
+    my ($self) = @_;
+    $self->_init or return 0;
+    unless ( $self->conf->{crowdsecKey} ) {
+        $self->logger->error('Missing Crowdsec Bouncer key');
+        return 0;
+    }
+    $self->logger->info(
+        'CrowdSec policy is: ' . ( $self->conf->{crowdsecAction} || 'warn' ) );
+    return 1;
+}
 
 sub checkIpStatus {
     my ( $self, $req ) = @_;
@@ -48,10 +58,6 @@ sub checkIpStatus {
         }
     }
     return $err ? $err : PE_OK;
-}
-
-sub checkRejections {
-    return PE_OK;
 }
 
 1;
