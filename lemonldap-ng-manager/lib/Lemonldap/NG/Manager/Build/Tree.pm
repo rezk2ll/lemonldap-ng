@@ -1202,15 +1202,30 @@ sub tree {
                                 'strictTransportSecurityMax_Age',
                                 'hashedSessionStore',
                                 {
-                                    title => 'CrowdSecPlugin',
+                                    title => 'Crowdsec',
                                     help  => 'crowdsec.html',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'crowdsec',
-                                        'crowdsecIgnoreFailures',
-                                        'crowdsecAction',
-                                        'crowdsecUrl',
-                                        'crowdsecKey',
+                                    nodes => [ {
+                                            title => 'CrowdSecBouncer',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'crowdsec',
+                                                'crowdsecIgnoreFailures',
+                                                'crowdsecAction',
+                                                'crowdsecUrl',
+                                                'crowdsecKey',
+                                            ],
+                                        },
+                                        {
+                                            title => 'CrowdSecAgent',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'crowdsecAgent',
+                                                'crowdsecMachineId',
+                                                'crowdsecPassword',
+                                                'crowdsecMaxFailures',
+                                                'crowdsecBlockDelay',
+                                            ],
+                                        },
                                     ],
                                 },
                                 {

@@ -1295,11 +1295,26 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'crowdsecAgent' => {
+            'type' => 'bool'
+        },
+        'crowdsecBlockDelay' => {
+            'type' => 'int'
+        },
         'crowdsecIgnoreFailures' => {
             'default' => 0,
             'type'    => 'bool'
         },
         'crowdsecKey' => {
+            'type' => 'text'
+        },
+        'crowdsecMachineId' => {
+            'type' => 'text'
+        },
+        'crowdsecMaxFailures' => {
+            'type' => 'int'
+        },
+        'crowdsecPassword' => {
             'type' => 'text'
         },
         'crowdsecUrl' => {
