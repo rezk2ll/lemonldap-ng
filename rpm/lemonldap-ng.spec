@@ -716,6 +716,7 @@ fi
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
+%{lm_bindir}/crowdsecBan
 %{lm_bindir}/lmConfigEditor
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
