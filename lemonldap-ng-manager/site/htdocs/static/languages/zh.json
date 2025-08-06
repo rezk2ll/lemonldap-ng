@@ -267,6 +267,7 @@
 "cookieExpiration":"Cookie 效期",
 "cookieName":"Cookie 名稱",
 "cookieParams":"Cookies",
+"copyPath":"Copy location",
 "corsAllow_Credentials":"存取控制允許憑證",
 "corsAllow_Headers":"存取控制允許標頭",
 "corsAllow_Methods":"存取控制允許方法",

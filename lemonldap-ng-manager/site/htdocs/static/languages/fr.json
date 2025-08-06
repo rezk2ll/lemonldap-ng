@@ -267,6 +267,7 @@
 "cookieExpiration":"Durée de vie du cookie",
 "cookieName":"Nom du cookie",
 "cookieParams":"Cookies",
+"copyPath":"Copier l'emplacement",
 "corsAllow_Credentials":"Access-Control-Allow-Credentials",
 "corsAllow_Headers":"Access-Control-Allow-Headers",
 "corsAllow_Methods":"Access-Control-Allow-Methods",

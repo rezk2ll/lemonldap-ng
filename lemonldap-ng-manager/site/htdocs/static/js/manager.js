@@ -17,7 +17,7 @@
   /*
   Main AngularJS controller
   */
-  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', '$htmlParams', function ($scope, $http, $location, $q, $uibModal, $translator, $cookies, $htmlParams) {
+  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', '$htmlParams', '$timeout', function ($scope, $http, $location, $q, $uibModal, $translator, $cookies, $htmlParams, $timeout) {
     var _checkSaveResponse, _download, _getAll, _stoggle, c, idinc, pathEvent, readError, setDefault, setHelp;
     $scope.links = window.links;
     $scope.menu = $htmlParams.menu;
@@ -30,6 +30,7 @@
     $scope.showT = false;
     $scope.form = 'home';
     $scope.currentCfg = {};
+    $scope.clipboardAvailable = Boolean(navigator.clipboard);
     $scope.confPrefix = window.confPrefix;
     $scope.message = {};
     $scope.result = '';
@@ -818,6 +819,17 @@
         return scope.toggle();
       });
     };
+    $scope.copyPath = function () {
+      var text = $scope.breadCrumb.join(" » ");
+      navigator.clipboard.writeText(text).then(function () {
+        $scope.$apply(function () {
+          $scope.copySuccess = true;
+          $timeout(function () {
+            $scope.copySuccess = false;
+          }, 400);
+        });
+      });
+    };
     setHelp = function (scope) {
       while (!scope.$modelValue.help && scope.$parentNodeScope) {
         scope = scope.$parentNodeScope;
@@ -834,6 +846,21 @@
     //	- launch getKeys to set `node.data`
     //	- hide tree when in XS size
 
+    $scope.getTrPath = function (scope) {
+      var path = [];
+      var trpath = [];
+      var current = scope;
+      var safetycount = 0;
+      while (current && current.$modelValue && safetycount < 100) {
+        safetycount = safetycount + 1;
+        if (current.$modelValue.title && current.$modelValue.title != path[0]) {
+          trpath.unshift(scope.translate(current.$modelValue.title));
+          path.unshift(current.$modelValue.title);
+        }
+        current = current.$parent;
+      }
+      return trpath;
+    };
     $scope.displayForm = function (scope) {
       var f, len, n, node, o, ref;
       node = scope.$modelValue;
@@ -861,6 +888,7 @@
         }
       }
       $scope.showT = false;
+      $scope.breadCrumb = $scope.getTrPath(scope);
       return setHelp(scope);
     };
     $scope.keyWritable = function (scope) {
@@ -1120,6 +1148,7 @@
       var tmp;
       tmp = null;
       $scope.waiting = true;
+      $scope.breadCrumb = null;
       $scope.data = [];
       $scope.confirmNeeded = false;
       $scope.forceSave = false;
