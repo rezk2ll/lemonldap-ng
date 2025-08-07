@@ -15,20 +15,29 @@ with 'Lemonldap::NG::Portal::Lib::CrowdSec';
 # Entrypoint
 use constant beforeAuth => 'checkIpStatus';
 
+has rule => ( is => 'rw', default => sub { 0 } );
+
 sub init {
     my ($self) = @_;
     $self->_init or return 0;
+
+    # Parse activation rule
     unless ( $self->conf->{crowdsecKey} ) {
         $self->logger->error('Missing Crowdsec Bouncer key');
         return 0;
     }
     $self->logger->info(
         'CrowdSec policy is: ' . ( $self->conf->{crowdsecAction} || 'warn' ) );
+    $self->rule( $self->p->buildRule( $self->conf->{crowdsec}, 'crowdsec' ) );
     return 1;
 }
 
 sub checkIpStatus {
     my ( $self, $req ) = @_;
+    if ( !$self->rule->( $req, $req->sessionInfo ) ) {
+        $self->logger->debug('Crowdsec disabled for this env');
+        return PE_OK;
+    }
     my $ip = $req->address;
     my ( $ok, $err ) = $self->bouncer($ip);
 
