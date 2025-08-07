@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Lib::CrowdSec;
+package Lemonldap::NG::Common::CrowdSec;
 
 use strict;
 use Date::Parse;

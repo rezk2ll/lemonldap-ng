@@ -24,7 +24,7 @@ our @ALERTS = (
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
-with 'Lemonldap::NG::Portal::Lib::CrowdSec';
+with 'Lemonldap::NG::Common::CrowdSec';
 
 has rule => ( is => 'rw', default => sub { 0 } );
 

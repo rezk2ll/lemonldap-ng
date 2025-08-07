@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
-with 'Lemonldap::NG::Portal::Lib::CrowdSec';
+with 'Lemonldap::NG::Common::CrowdSec';
 
 # Entrypoint
 use constant beforeAuth => 'checkIpStatus';

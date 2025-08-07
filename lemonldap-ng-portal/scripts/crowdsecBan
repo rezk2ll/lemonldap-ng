@@ -3,10 +3,10 @@
 use strict;
 use Getopt::Long;
 use Lemonldap::NG::Portal;
-use Lemonldap::NG::Portal::Lib::CrowdSec;
 use Regexp::Common qw(net);
 
-use constant VALIDIP => qr/^(?:$RE{net}{IPv4}|$RE{net}{IPv6})$/;
+use constant CROWDSECPLUGIN => 'Lemonldap::NG::Portal::Plugins::CrowdSec';
+use constant VALIDIP        => qr/^(?:$RE{net}{IPv4}|$RE{net}{IPv6})$/;
 
 sub usage {
     print STDERR "Tool to push a IP-ban decision to CrowdSec
@@ -71,7 +71,6 @@ $p->init( {
     }
 ) or error('Unable to create portal');
 
-use constant CROWDSECPLUGIN => 'Lemonldap::NG::Portal::Plugins::CrowdSec';
 unless ( $p->loadedModules->{&CROWDSECPLUGIN} ) {
     $p->loadModule(CROWDSECPLUGIN)
       or error( 'Unable to load ' . CROWDSECPLUGIN );
