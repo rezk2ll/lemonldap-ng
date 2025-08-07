@@ -138,6 +138,7 @@ lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
 lib/Lemonldap/NG/Portal/Plugins/CrowdSec.pm
+lib/Lemonldap/NG/Portal/Plugins/CrowdSecAgent.pm
 lib/Lemonldap/NG/Portal/Plugins/DecryptValue.pm
 lib/Lemonldap/NG/Portal/Plugins/FindUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
@@ -471,6 +472,7 @@ site/js-src/oidcOfflineTokens.js
 site/js-src/password2fregistration.js
 site/js-src/portal.js
 site/js-src/ppolicy.js
+site/js-src/recaptchav3.js
 site/js-src/redirect.js
 site/js-src/registerbrowser.js
 site/js-src/rollup.config.cjs
