@@ -1476,11 +1476,11 @@ sub attributes {
             documentation => 'TLS/SSL options passed to LWP::UserAgent',
         },
 
-        # CrowdSec plugin
+        # CrowdSec plugins
         crowdsec => {
             default       => 0,
             type          => 'bool',
-            documentation => 'CrowdSec plugin activation',
+            documentation => 'CrowdSec bouncer activation',
         },
         crowdsecAction => {
             type   => 'select',
@@ -1503,6 +1503,28 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Ignore Crowdsec errors',
+        },
+        crowdsecAgent => {
+            type          => 'bool',
+            documentation =>
+'Enable plugin to report auth failures to Crowdsec (simple alert)',
+        },
+        crowdsecMachineId => {
+            type          => 'text',
+            documentation => 'Crowdsec machine ID to send alerts',
+        },
+        crowdsecPassword => {
+            type          => 'text',
+            documentation => 'Crowdsec password to send alerts',
+        },
+        crowdsecMaxFailures => {
+            type          => 'int',
+            documentation =>
+              'Crowdesc-Agent maximum failures allowed during delay',
+        },
+        crowdsecBlockDelay => {
+            type          => 'int',
+            documentation => 'Crowdsec-Agent check delay',
         },
 
         # OIDC personnal offline token removal

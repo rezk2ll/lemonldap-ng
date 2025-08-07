@@ -1367,6 +1367,18 @@ sub tests {
             }
             return 1;
         },
+        crowdSecBouncer => sub {
+            return 1 unless $conf->{crowdsec};
+            return 1 if $conf->{crowdsecKey};
+            return ( 0, 'Crowdsec Bouncer enabled without API key' );
+        },
+        crowdSecAgent => sub {
+            return 1 unless $conf->{crowdsecAgent};
+            return 1
+              if $conf->{crowdsecMachineId} and $conf->{crowdsecPassword};
+            return ( 0,
+                'Crowdsec Agent enabled without machine_id and password' );
+        },
     };
 }
 

@@ -36,6 +36,7 @@ my $client = LLNG::Manager::Test->new(
             authentication => 'Demo',
             userDB         => 'Same',
             crowdsec       => 1,
+            crowdsecKey    => 'aaa',
             crowdsecAction => 'reject',
         }
     }
