@@ -1006,6 +1006,7 @@ t/81-MostViewedApplications.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t
+t/91-no-console.log.t
 t/92-Required-Auth-Methods.t
 t/92-Required-Issuer-Methods.t
 t/92-Required-UserDB-Methods.t
