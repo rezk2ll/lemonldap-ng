@@ -222,9 +222,12 @@ The hook's parameters are:
 * The configuration key of the requested RP
 * The redirect URI to validate
 * The name of the endpoint that received the URI, such as
-   - ``authorization``
-   - ``end_session``
+
+  * ``authorization``
+  * ``end_session``
+
 * A state object used to return the result of validation. Its subkeys are
+
   * ``result``: boolean result of the URI validation
 
 .. warning::
@@ -905,7 +908,7 @@ the user.
 
 The hook's only parameter is a context hash which you can modify. Its subkeys are
 
-  * ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
+* ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
 
 Sample code::
 
