@@ -1213,18 +1213,6 @@ sub newAccessToken {
     );
 
     if ($session) {
-
-        my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
-        $self->auditLog(
-            $req,
-            code    => "ISSUER_OIDC_ACCESS_TOKEN",
-            rp      => $rp,
-            message =>
-              ("Access Token for $user generated for $rp with TTL $ttl"),
-            user => $user,
-            ttl  => $ttl,
-        );
-
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
               $self->makeJWT( $req, $session->id, $sessionInfo, $at_info,
@@ -1242,6 +1230,16 @@ sub newAccessToken {
             return $at_jwt;
         }
         else {
+            my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+            $self->auditLog(
+                $req,
+                code    => "ISSUER_OIDC_ACCESS_TOKEN",
+                rp      => $rp,
+                message =>
+                  ("Access Token for $user generated for $rp with TTL $ttl"),
+                user => $user,
+                ttl  => $ttl,
+            );
             return $session->id;
         }
     }
@@ -1276,15 +1274,16 @@ sub makeJWT {
       $self->buildUserInfoResponseFromData( $req, $at_info->{scope}, $rp,
         $sessionInfo );
 
+    my $sub = $access_token_payload->{sub} = delete $claims->{sub};
+    my %extra_attr;
+
     # Release claims, or only sub
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenClaims} ) {
         foreach ( keys %$claims ) {
-            $access_token_payload->{$_} = $claims->{$_}
-              unless $access_token_payload->{$_};
+            unless ( $access_token_payload->{$_} ) {
+                $extra_attr{$_} = $access_token_payload->{$_} = $claims->{$_};
+            }
         }
-    }
-    else {
-        $access_token_payload->{sub} = $claims->{sub};
     }
 
     # Call hook to let the user modify payload
@@ -1297,6 +1296,25 @@ sub makeJWT {
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
 
+    my $attr_str = (
+        %extra_attr
+        ? ( " with attributes " . join( ',', sort( keys %extra_attr ) ) )
+        : ''
+    );
+
+    my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_ACCESS_TOKEN",
+        rp      => $rp,
+        message => (
+"Access Token for $user generated for $rp as $sub with TTL $ttl$attr_str"
+        ),
+        user       => $user,
+        ttl        => $ttl,
+        oidc_sub   => $sub,
+        attributes => \%extra_attr,
+    );
     return $jwt;
 }
 
