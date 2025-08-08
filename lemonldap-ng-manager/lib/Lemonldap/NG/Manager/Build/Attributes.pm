@@ -1479,7 +1479,7 @@ sub attributes {
         # CrowdSec plugins
         crowdsec => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'CrowdSec bouncer activation',
         },
         crowdsecAction => {
@@ -1505,7 +1505,8 @@ sub attributes {
             documentation => 'Ignore Crowdsec errors',
         },
         crowdsecAgent => {
-            type          => 'bool',
+            default       => 0,
+            type          => 'boolOrExpr',
             documentation =>
 'Enable plugin to report auth failures to Crowdsec (simple alert)',
         },

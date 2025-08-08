@@ -39,6 +39,7 @@ lib/Lemonldap/NG/Common/Conf/RESTServer.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
 lib/Lemonldap/NG/Common/Conf/Wrapper.pm
+lib/Lemonldap/NG/Common/CrowdSec.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/EmailAddress.pm
 lib/Lemonldap/NG/Common/EmailTransport.pm

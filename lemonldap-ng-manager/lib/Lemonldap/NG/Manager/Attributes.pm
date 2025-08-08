@@ -1280,7 +1280,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'crowdsec' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'crowdsecAction' => {
             'default' => 'reject',
@@ -1296,7 +1296,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'crowdsecAgent' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'boolOrExpr'
         },
         'crowdsecBlockDelay' => {
             'type' => 'int'

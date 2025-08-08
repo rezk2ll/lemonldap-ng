@@ -24,7 +24,9 @@ our @ALERTS = (
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
-with 'Lemonldap::NG::Portal::Lib::CrowdSec';
+with 'Lemonldap::NG::Common::CrowdSec';
+
+has rule => ( is => 'rw', default => sub { 0 } );
 
 # Entrypoint
 use constant aroundSub =>
@@ -40,6 +42,8 @@ sub init {
             'Crowdsec report enabled without machine_id and password');
         return 0;
     }
+    $self->rule(
+        $self->p->buildRule( $self->conf->{crowdsecAgent}, 'crowdsecAgent' ) );
     return 1;
 }
 
@@ -47,8 +51,17 @@ sub sendIpAlerts {
     my ( $self, $sub, $req ) = @_;
     my $ret = $sub->($req);
 
+    if ( !$self->rule->( $req, $req->sessionInfo ) ) {
+        $self->logger->debug('Crowdsec-agent disabled for this env');
+        return $ret;
+    }
+
     # Nothing to do if config doesn't allow alerts or if auth is OK
-    return $ret unless grep { $_ == $ret } @ALERTS;
+    unless ( grep { $_ == $ret } @ALERTS ) {
+        $self->logger->debug(
+            "Crowdsec-Agent: not an authentication error: code $ret");
+        return $ret;
+    }
     my $msg = 'Authentication failed: '
       . &Lemonldap::NG::Portal::Main::Constants::portalConsts->{$ret};
     $self->alert( $req->address, $msg )

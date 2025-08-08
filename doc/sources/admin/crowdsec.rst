@@ -9,16 +9,22 @@ automation tool leveraging local IP behavior detection and a
 community-powered IP reputation system.
 
 LL::NG provides two **Crowdsec** plugins:
+
 * a bouncer that can reject CrowdSec banned IP requests or just provide an
   environment variable that can be used inanother plugin rule. For example,
   a second factor may be required if user'si IP is CrowdSec banned.
-* an agent that push alerts to Crowdsec server for each authentication failure.
-  It can also push "ban" decisions if limits are reached
+* an agent that push alerts to Crowdsec server for each authentication
+  failure. It can also push "ban" decisions if limits are reached
 
 You can also find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`__.
 
 Configuration
 -------------
+
+.. important::
+
+   If you need to whitelist something, you can use a rule in "activation" using
+   ``$env->{REMOTE_ADDR}`` for example.
 
 Bouncer
 ~~~~~~~
