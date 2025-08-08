@@ -8,6 +8,7 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
   PE_OK
+  PE_DONE
   PE_ERROR
   PE_CONFIRM
   PE_REDIRECT
@@ -491,8 +492,8 @@ sub _checkErrorsInAuthorizeEndpoint {
     # Check redirect_uri
     my $redirect_uri = $oidc_request->{'redirect_uri'};
     if (
-        !$self->isUriAllowedForRP(
-            $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
+        !$self->_validateRedirectUri(
+            $req, $rp, $redirect_uri, "authorization"
         )
       )
     {
@@ -1301,7 +1302,7 @@ sub _rpInitiatedLogout {
 
         unless (
             $self->_validatePostLogoutRedirectUri(
-                $req, $rp, $post_logout_redirect_uri
+                $req, $rp, $post_logout_redirect_uri, "end_session"
             )
           )
         {
@@ -1399,10 +1400,30 @@ sub _check_bypass_confirm {
 
 }
 
+sub _validateRedirectUri {
+    my ( $self, $req, $rp, $uri, $current_endpoint ) = @_;
+
+    return unless $rp;
+
+    my $state = {};
+    my $h     = $self->p->processHook( $req, 'oidcValidateRedirectUri',
+        $rp, $uri, $current_endpoint, $state );
+    return $state->{result} if ( $h == PE_DONE );
+
+    return $self->isUriAllowedForRP( $uri, $rp,
+        'oidcRPMetaDataOptionsRedirectUris' );
+}
+
 sub _validatePostLogoutRedirectUri {
-    my ( $self, $req, $rp, $uri ) = @_;
+    my ( $self, $req, $rp, $uri, $current_endpoint ) = @_;
 
     if ($rp) {
+
+        my $state = {};
+        my $h     = $self->p->processHook( $req, 'oidcValidateRedirectUri',
+            $rp, $uri, $current_endpoint, $state );
+        return $state->{result} if ( $h == PE_DONE );
+
         return $self->isUriAllowedForRP( $uri, $rp,
             'oidcRPMetaDataOptionsPostLogoutRedirectUris' );
     }
@@ -2814,7 +2835,7 @@ sub endSessionDone {
 
         unless (
             $self->_validatePostLogoutRedirectUri(
-                $req, $rp, $post_logout_redirect_uri
+                $req, $rp, $post_logout_redirect_uri, "end_session"
             )
           )
         {
