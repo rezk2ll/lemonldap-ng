@@ -1249,7 +1249,9 @@ sub _rpInitiatedLogout {
 
     # Set hidden fields
     my $oidc_request = {};
-    foreach my $param (qw/id_token_hint post_logout_redirect_uri state/) {
+    foreach
+      my $param (qw/id_token_hint post_logout_redirect_uri state client_id/)
+    {
         if ( $oidc_request->{$param} = $req->param($param) ) {
             $self->logger->debug(
                 "OIDC request parameter $param: " . $oidc_request->{$param} );
@@ -1258,16 +1260,48 @@ sub _rpInitiatedLogout {
 
     my $post_logout_redirect_uri = $oidc_request->{'post_logout_redirect_uri'};
     my $id_token_hint            = $oidc_request->{'id_token_hint'};
+    my $client_id                = $oidc_request->{'client_id'};
     my $state                    = $oidc_request->{'state'};
     my $bypassConfirm            = 0;
 
     my $post_logout_redirect_uri_with_state;
+    my $rp;
+
+    # Check if we can bypass confirm using token_hint
+    if ($id_token_hint) {
+
+        # TODO: we should check JWT signature here to avoid DoS by
+        # logging the user out, however, as long as there is no logout
+        # confirmation when accessing ?logout=1, such a protection is
+        # trivial to bypass
+        my $payload = getJWTPayload($id_token_hint);
+
+        if ( my $azp = $payload->{azp} ) {
+            if ( !$client_id or $client_id eq $azp ) {
+                $rp = $self->getRP( $payload->{azp} );
+            }
+            else {
+                $self->logger->error(
+                        "Provided client ID $client_id does not match"
+                      . " id_token_hint azp $azp" );
+                return PE_ERROR;
+            }
+        }
+
+        $bypassConfirm = $self->_check_bypass_confirm( $req, $rp, $payload );
+
+    }
+
+    if ( not $rp and $client_id ) {
+        $rp = $self->getRP($client_id);
+    }
+
+    # Validate post_logout_redirect_uri
     if ($post_logout_redirect_uri) {
 
         unless (
-            $self->findRPFromUri(
-                $post_logout_redirect_uri,
-                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            $self->_validatePostLogoutRedirectUri(
+                $req, $rp, $post_logout_redirect_uri
             )
           )
         {
@@ -1278,20 +1312,6 @@ sub _rpInitiatedLogout {
         # Build Response
         $post_logout_redirect_uri_with_state =
           $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
-    }
-
-    # Check if we can bypass confirm using token_hint
-    if ($id_token_hint) {
-
-        # TODO: we should check JWT signature here to avoid DoS by
-        # logging the user out, however, as long as there is no logout
-        # confirmation when accessing ?logout=1, such a protection is
-        # trivial to bypass
-        my $payload = getJWTPayload($id_token_hint);
-        my $rp;
-        $rp = $self->getRP( $payload->{azp} ) if $payload->{azp};
-
-        $bypassConfirm = $self->_check_bypass_confirm( $req, $rp, $payload );
     }
 
     # Ask consent for logout
@@ -1377,6 +1397,21 @@ sub _check_bypass_confirm {
     }
     return 0;
 
+}
+
+sub _validatePostLogoutRedirectUri {
+    my ( $self, $req, $rp, $uri ) = @_;
+
+    if ($rp) {
+        return $self->isUriAllowedForRP( $uri, $rp,
+            'oidcRPMetaDataOptionsPostLogoutRedirectUris' );
+    }
+    else {
+        return (
+            $self->findRPFromUri( $uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris' ) ? 1 : 0
+        );
+    }
 }
 
 sub findRPFromUri {
@@ -2751,13 +2786,35 @@ sub endSessionDone {
 
     my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
     my $state                    = $req->param('state');
+    my $client_id                = $req->param('client_id');
+    my $id_token_hint            = $req->param('id_token_hint');
+    my $rp;
+
+    if ($id_token_hint) {
+        my $payload = getJWTPayload($id_token_hint);
+
+        if ( my $azp = $payload->{azp} ) {
+            if ( !$client_id or $client_id eq $azp ) {
+                $rp = $self->getRP( $payload->{azp} );
+            }
+            else {
+                $self->logger->error(
+                        "Provided client ID $client_id does not match"
+                      . " id_token_hint azp $azp" );
+                return $self->p->login($req);
+            }
+        }
+    }
+
+    if ( not $rp and $client_id ) {
+        $rp = $self->getRP($client_id);
+    }
 
     if ($post_logout_redirect_uri) {
 
         unless (
-            $self->findRPFromUri(
-                $post_logout_redirect_uri,
-                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            $self->_validatePostLogoutRedirectUri(
+                $req, $rp, $post_logout_redirect_uri
             )
           )
         {
