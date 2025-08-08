@@ -15,6 +15,15 @@ use JSON;
 use Getopt::Std;
 use IO::String;
 
+my %peOkValues = (
+    PE_2FWAIT       => 'Wait for second factor',
+    PE_IDPCHOICE    => 'Prompt to choose identity provider',
+    PE_SENDRESPONSE => 'Send response given in $req->response',
+    PE_INFO         => 'Prompt to display $req->info',
+    PE_REDIRECT     => 'Redirect user to $req->urldc',
+    PE_DONE         => "Don't launch next steps",
+);
+
 has structFile                 => ( isa => 'Str', is => 'ro', required => 1 );
 has confTreeFile               => ( isa => 'Str', is => 'ro', required => 1 );
 has managerConstantsFile       => ( isa => 'Str', is => 'ro', required => 1 );
@@ -61,12 +70,12 @@ $Data::Dumper::Sortkeys = sub {
         ( defined $hash->{title} ? ( 'title', ) : () ),
         (
             grep { /^(?:id|title)$/ ? 0 : 1 }
-              sort {
+            sort {
                 return 1
                   if ( $a =~ /node/ and $b !~ /node/ );
                 return -1 if ( $b =~ /node/ );
                 lc($a) cmp lc($b);
-              } keys %$hash
+            } keys %$hash
         )
     ];
 };
@@ -597,8 +606,17 @@ EOF
             "    ``"
           . $key . "``,"
           . $portalConstants{$key} . ','
-          . ( %details ? '"' . $details{"PE$portalConstants{$key}"} . '"' : '' )
-          . "\n";
+          . (
+            %details
+            ? '"'
+              . (
+                     $details{"PE$portalConstants{$key}"}
+                  || $peOkValues{$key}
+                  || [ $key =~ /PE_(.*)$/ ]->[0]
+              )
+              . '"'
+            : ''
+          ) . "\n";
     }
 
     open( F, '>', $self->docConstantsFile ) or die($!);
