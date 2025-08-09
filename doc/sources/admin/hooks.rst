@@ -210,6 +210,59 @@ Sample code::
        return PE_OK;
    }
 
+oidcValidateRedirectUri
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.22.0
+
+This hook lets you override the built-in URI validation logic
+
+The hook's parameters are:
+
+* The configuration key of the requested RP
+* The redirect URI to validate
+* The name of the endpoint that received the URI, such as
+
+  * ``authorization``
+  * ``end_session``
+
+* A state object used to return the result of validation. Its subkeys are
+
+  * ``result``: boolean result of the URI validation
+
+.. warning::
+
+    This hook must return ``PE_DONE`` in order to indicate that it performed
+    URI validation. The result of validation must be set in ``$state->{result}``.
+
+Sample code ::
+
+    use URI;
+    use constant hook => { oidcValidateRedirectUri => 'allowLocalhost' };
+
+    sub allowLocalhost {
+        my ( $self, $req, $rp, $uri, $endpoint, $state ) = @_;
+
+        # If this RP is used by devs, allow all localhost urls
+        if ( $rp =~ /^dev-/ ) {
+
+            my $parsed_uri = URI->new($uri);
+            if ( $parsed_uri->host eq "localhost" ) {
+
+                # Force validation to succeed even if the URI
+                # is not declared in LemonLDAP::NG config
+                $state->{result} = 1;
+                return PE_DONE;
+            }
+        }
+
+        # Returning PE_OK means that we defer the decision to
+        # LemonLDAP::NG's built-in logic, which is to only allow
+        # explicitely declared URIs
+
+        return PE_OK;
+    }
+
 
 oidcGotOnlineRefresh
 ~~~~~~~~~~~~~~~~~~~~
@@ -855,7 +908,7 @@ the user.
 
 The hook's only parameter is a context hash which you can modify. Its subkeys are
 
-  * ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
+* ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
 
 Sample code::
 
