@@ -105,8 +105,13 @@ $(document).on( "portalLoaded", { }, function( event, info ) {
             else
             {
                 // launch authentication choice defined in cookie
-              var choiceform = "#id_" + $.cookie(rememberCookieName) + " form";
-              $( choiceform ).submit();
+              var sslform = $("#id_" + $.cookie(rememberCookieName) + " form .sslclick");
+              if (sslform.length) {
+                  sslform.click();
+              } else {
+                  var choiceform = $("#id_" + $.cookie(rememberCookieName) + " form");
+                  choiceform?.submit();
+              }
             }
         }
 
