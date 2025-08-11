@@ -147,6 +147,25 @@ file (section configuration):
 
    We recommend adding the `tcp_user_timeout` and `keepalives_idle` options to the DBI string
 
+Patroni support
+~~~~~~~~~~~~~~~
+
+If you use a PostgreSQL cluster based on Patroni, you can add the list of
+Patroni API urls to get a native high-availability without needing any
+load-balancer. In case of error, LLNG will try to get the Patroni leader
+and update its "dbiChain":
+
+.. code-block:: ini
+
+   [configuration]
+   type = Patroni
+   dbiChain    = DBI:Pg:database=lemonldap-ng;host=1.2.3.4
+   patroniUrl  = http://1.2.3.2:8008/cluster, http://1.2.3.3:8008/cluster, http://1.2.3.4:8008/cluster
+   dbiUser     = lemonldaprw
+   dbiPassword = mypassword
+   ; optional
+   dbiTable    = mytablename
+
 RDBI (deprecated)
 ------------------
 

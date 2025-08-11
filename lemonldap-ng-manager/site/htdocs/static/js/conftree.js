@@ -56,12 +56,6 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
-            "title" : "casSrvMetaDataOptionsSamlValidate",
-            "type" : "bool"
-         },
-         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
@@ -167,6 +161,12 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "title" : "casSrvMetaDataOptionsSamlValidate",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "title" : "casSrvMetaDataOptionsComment",
@@ -205,7 +205,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "title" : "casSrvMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "id" : "casSrvMetaDataOptionsDisplay",
@@ -565,7 +565,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "title" : "oidcOPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authopenidconnect.html#display",
@@ -759,6 +759,7 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
                   "title" : "oidcRPMetaDataOptionsAllowNativeSso",
@@ -1391,6 +1392,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "type" : "intOrNull"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "title" : "oidcRPMetaDataOptionsRtActivity",
+                  "type" : "int"
                }
             ],
             "id" : "oidcRPMetaDataOptionsTimeouts",
@@ -1859,7 +1867,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "title" : "samlIDPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authsaml.html#display",

@@ -93,7 +93,7 @@ sub load {
 sub delete {
     my ( $self, $cfgNum ) = @_;
     die "cfgNum required" unless ($cfgNum);
-    $self->_mongoColl->remove( { _id => $cfgNum } );
+    $self->_mongoColl->delete_one( { _id => $cfgNum } );
 }
 
 1;

@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.21.0
+Version:        2.21.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -252,8 +252,8 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 
 # Setup requires filtering
 %{?perl_default_filter}
-%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven}
-%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)}
+%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven|perl\\(Protocol::WebSocket}
+%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)|perl\\(Protocol::WebSocket}
 
 
 %description
@@ -716,6 +716,7 @@ fi
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
+%{lm_bindir}/crowdsecBan
 %{lm_bindir}/lmConfigEditor
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
@@ -727,9 +728,13 @@ fi
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files portal
+%{_mandir}/man1/downloadSamlMetadata*
+%{_mandir}/man1/purgeCentralCache*
+%{_mandir}/man1/purgePersistentSessions*
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
 %{lm_bindir}/downloadSamlMetadata
+%{lm_bindir}/purgePersistentSessions
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %{_unitdir}/lemonldap-ng-portal.service
@@ -773,6 +778,12 @@ fi
 
 
 %changelog
+* Fri Jul 11 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.2-1
+- Update to 2.21.2
+
+* Wed Jun 11 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.1-1
+- Update to 2.21.1
+
 * Mon Apr 07 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.0-1
 - Update to 2.21.0
 
@@ -1094,7 +1105,7 @@ fi
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
 
-* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com> 
+* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com>
 - New spec file
 
 * Sun Mar 02 2008 Dag Wieers <dag@wieers.com> - 0.85-1

@@ -25,5 +25,5 @@ plackup \
 	-I "$(pwd)/lemonldap-ng-handler/lib/" \
 	-I "$(pwd)/lemonldap-ng-manager/lib/" \
 	-I "$(pwd)/lemonldap-ng-portal/lib/" \
-	--Reload "$(pwd)/lemonldap-ng-common/lib/,$(pwd)/lemonldap-ng-handler/lib/,$(pwd)/lemonldap-ng-manager/lib/,$(pwd)/lemonldap-ng-portal/lib/,$(pwd)/dev/conf/" \
+	--Reload "$(pwd)/lemonldap-ng-common/lib/,$(pwd)/lemonldap-ng-common/scripts/,$(pwd)/lemonldap-ng-handler/lib/,$(pwd)/lemonldap-ng-manager/lib/,$(pwd)/lemonldap-ng-portal/lib/,$(pwd)/dev/conf/" \
 	--app "$(pwd)/dev/llng.psgi"

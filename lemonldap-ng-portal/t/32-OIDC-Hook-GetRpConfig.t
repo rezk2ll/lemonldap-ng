@@ -6,6 +6,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
+use Crypt::JWT qw(encode_jwt);
 use JSON;
 
 BEGIN {
@@ -127,6 +128,72 @@ subtest "Test persistent behavior" => sub {
         # Provider is known again because config was reloaded
         authorizeWorks( $op, $idpId );
         is( plugin($op)->callCount, 1, "Plugin was called" );
+    };
+};
+
+subtest "Check broken config" => sub {
+    my $op    = op();
+    my $idpId = $op->login("french");
+    Time::Fake->reset;
+    plugin($op)->rule("brokenrule'");
+
+    authorizeFails( $op, $idpId, 107 );
+    is( plugin($op)->callCount, 1, "Called once" );
+
+    Time::Fake->offset("+5m");
+    authorizeFails( $op, $idpId, 107 );
+    is( plugin($op)->callCount, 1, "Not called again" );
+
+    plugin($op)->rule(1);
+    Time::Fake->offset("+15m");
+    authorizeWorks( $op, $idpId );
+    is( plugin($op)->callCount, 2, "Called again" );
+};
+
+subtest "Make sure token endpoint loads RP" => sub {
+    subtest "client id + password" => sub {
+        my $op  = op();
+        my $res = $op->_post(
+            "/oauth2/token",
+            {
+                grant_type    => "client_credentials",
+                client_id     => 'hookclient',
+                client_secret => 'hookclient',
+                scope         => "openid",
+            }
+        );
+        my $json = expectJSON($res);
+        ok( $json->{access_token}, "Found access token" );
+    };
+
+    subtest "JWT auth" => sub {
+        my $op = op();
+
+        my $key = oidc_key_op_private_sig;
+        my $jwt = encode_jwt(
+            payload => {
+                iss => "hookclient",
+                sub => "hookclient",
+                aud => "auth.example.com",
+                exp => ( time + 100 ),
+            },
+            alg => "RS256",
+            key => \$key,
+        );
+
+        my $res = $op->_post(
+            "/oauth2/token",
+            {
+                grant_type            => "client_credentials",
+                client_id             => "hookclient",
+                client_assertion_type =>
+                  'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+                client_assertion => $jwt,
+                scope            => "openid",
+            }
+        );
+        my $json = expectJSON($res);
+        ok( $json->{access_token}, "Found access token" );
     };
 };
 

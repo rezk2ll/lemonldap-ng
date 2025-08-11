@@ -15,7 +15,68 @@ Known issues
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-No known issues.
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+If you use both CAS applications and CAS servers on your LemonLDAP::NG install,
+we recommend waiting for 2.21.1 to be released.
+
+2.22.0
+------
+
+lemonldap-ng-cli
+~~~~~~~~~~~~~~~~
+
+Starting from this version, the ``lemonldap-ng-cli`` refuses to store
+invalid configurations. If you use it with intermediate steps that are
+invalid before next changes, use the new **--unsafe** option.
+
+Stricter check on OIDC post-logout redirect URIs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In logout scenarios involving disconnecting from a remote IDP, you may start to
+encouter error messages that warn about unauthorized URIs.
+
+This happens because the `post_logout_redirect_uri` is now more strictly
+enforced in those scenarios.  Make sure you have allowed the value of that
+parameter in *OpenID Connect Relying Parties* > XXX > *Options* > *Logout* >
+*Allowed redirection addresses for logout*
+
+Change in post-logout redirect URI when LLNG is an OIDC client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use :doc:`authopenidconnect`, to delegate authentication to an external
+OpenID Connect provider, you have to update your provider's configuration in
+order to allow a new *post-logout* redirect URIs::
+
+    https://<portal>/oauth2/rlogoutreturn
+
+Change in timeout behavior for 2FA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Contrary to previous versions, resending a 2FA code no longer extends the 2FA timeout anymore.
+
+If your users start having issues with timeouts after upgrading, make sure you have set
+
+*General parameters* » *Second factors* » *Global options* » *Login timeout* to a high enough value
+
+In the particular case of email-based code delivery, you can override this parameter with
+
+*General parameters* » *Second factors* » *Mail second factor* » *Code timeout*
+
+
+
+2.21.1
+------
+
+Make sure no bogus CAS servers have been created
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+Remove all unwanted **CAS Servers** entries from the manager after upgrading to
+version 2.21.1 (or above) if this is the case.
 
 2.21.0
 ------
@@ -109,7 +170,7 @@ SAML federations
 
 The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
 
-Switching to this method should improve performnace.
+Switching to this method should improve performance.
 
 Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
 

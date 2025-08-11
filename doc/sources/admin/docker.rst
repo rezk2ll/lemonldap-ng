@@ -10,7 +10,7 @@ Presentation
 containers.
 
 You can find a Docker image for LemonLDAP::NG in this repository:
-https://hub.docker.com/r/lemonldapng/lemonldap-ng
+`<https://hub.docker.com/r/lemonldapng/lemonldap-ng>`_
 
 See also this github project:
 https://github.com/LemonLDAPNG/lemonldap-ng-docker
@@ -207,7 +207,7 @@ Restoring existing configuration can be done by either placing the lmConf-X.json
 
   docker cp lmConf-X.json lemonldap-ng:/var/lib/lemonldap-ng/lmConfig.json
   docker exec -it lemonldap-ng bash
-  /usr/share/lemonldap-ng/bing/lemonldap-ng-cli restore - < /var/lib/lemonldap-ng/lmConfig.json
+  /usr/share/lemonldap-ng/bin/lemonldap-ng-cli restore - < /var/lib/lemonldap-ng/lmConfig.json
   rm /var/lib/lemonldap-ng/lmConfig.json
 
 Exporting configuration is simple when copied directly from the mounted folder /var/lib/lemonldap-ng/ or following these commands:
@@ -215,7 +215,7 @@ Exporting configuration is simple when copied directly from the mounted folder /
 ::
 
   docker exec -it lemonldap-ng bash
-  /usr/share/lemonldap-ng/bing/lemonldap-ng-cli backup > /var/lib/lemonldap-ng/lmConfig.json
+  /usr/share/lemonldap-ng/bin/lemonldap-ng-cli save > /var/lib/lemonldap-ng/lmConfig.json
   docker cp lemonldap-ng:/var/lib/lemonldap-ng/lmConfig.json lmConfig.json
 
 Reverse Proxy

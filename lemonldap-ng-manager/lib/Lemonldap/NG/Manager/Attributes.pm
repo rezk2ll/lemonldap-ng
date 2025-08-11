@@ -298,6 +298,9 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
+        'adminLogoutServerSecret' => {
+            'type' => 'text'
+        },
         'ADPwdExpireWarning' => {
             'default' => 0,
             'type'    => 'int'
@@ -543,7 +546,8 @@ sub attributes {
             'type'    => 'text'
         },
         'authChoiceSelectOnly' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'authentication' => {
             'default' => 'Demo',
@@ -876,7 +880,7 @@ sub attributes {
             'type' => 'bool'
         },
         'casSrvMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'casSrvMetaDataOptionsTooltip' => {
             'type' => 'text'
@@ -1275,7 +1279,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'crowdsec' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'boolOrExpr'
         },
         'crowdsecAction' => {
             'default' => 'reject',
@@ -1290,10 +1295,27 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'crowdsecAgent' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'crowdsecBlockDelay' => {
+            'type' => 'int'
+        },
         'crowdsecIgnoreFailures' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'crowdsecKey' => {
+            'type' => 'text'
+        },
+        'crowdsecMachineId' => {
+            'type' => 'text'
+        },
+        'crowdsecMaxFailures' => {
+            'type' => 'int'
+        },
+        'crowdsecPassword' => {
             'type' => 'text'
         },
         'crowdsecUrl' => {
@@ -1970,6 +1992,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'LDAPFilter' => {
             'type' => 'text'
         },
+        'ldapForcePasswordChangeExpirationWarning' => {
+            'type' => 'intOrNull'
+        },
         'ldapGetUserBeforePasswordChange' => {
             'default' => 0,
             'type'    => 'bool'
@@ -2370,6 +2395,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => '::MQTT',
                     'v' => 'MQTT'
+                },
+                {
+                    'k' => '::Web',
+                    'v' => 'Web'
                 }
             ],
             'type' => 'select'
@@ -2494,6 +2523,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'int'
         },
         'oidcDropCspHeaders' => {
+            'type' => 'bool'
+        },
+        'oidcOfflineTokens' => {
             'type' => 'bool'
         },
         'oidcOPMetaDataExportedVars' => {
@@ -2674,7 +2706,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'text'
         },
         'oidcOPMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'oidcOPMetaDataOptionsStoreIDToken' => {
             'default' => 0,
@@ -2903,7 +2935,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAllowNativeSso' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
@@ -3244,6 +3277,13 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsRtActivity' => {
+            'default' => 0,
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsRule' => {
             'test' => sub {
@@ -3608,6 +3648,14 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'register',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataRevokeURI' => {
+            'default' => 'revoke',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataRpLogoutReturnURI' => {
+            'default' => 'rlogoutreturn',
+            'type'    => 'text'
+        },
         'oidcServiceMetaDataTokenURI' => {
             'default' => 'token',
             'type'    => 'text'
@@ -3969,6 +4017,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayOfflineTokens' => {
+            'default' => '$_auth eq \'OIDC\'',
+            'type'    => 'boolOrExpr'
+        },
         'portalDisplayOidcConsents' => {
             'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
             'type'    => 'boolOrExpr'
@@ -4015,7 +4067,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'portalForceAuthnInterval' => {
-            'default' => 300,
+            'default' => 30,
             'type'    => 'int'
         },
         'portalMainLogo' => {
@@ -4732,7 +4784,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'samlIDPMetaDataOptionsSortNumber' => {
-            'type' => 'intOrNull'
+            'type' => 'int'
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',
@@ -5441,6 +5493,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'syslogFacility' => {
             'type' => 'text'
+        },
+        'syslogSockOptions' => {
+            'keyTest' => qr/^(?:type|path|timeout|host|port)$/,
+            'type'    => 'keyTextContainer'
         },
         'timeout' => {
             'default' => 72000,

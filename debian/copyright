@@ -178,7 +178,7 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Parry_Pe
 Copyright: EpicV27
 License: CC-BY-SA-4.0 or CC-BY-3.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_*
 Copyright: Jo Simon
 License: CC-BY-SA-4.0
 
@@ -225,7 +225,7 @@ License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/fingerprintjs2/*
 Copyright: 2015, Valentin Vasilyev <valentin.vasilyev@outlook.com>
-License: Expat or Apache-2.0
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/font-awesome/css/*
 Copyright: Font Awesome Team <hello@fontawesome.com>
@@ -241,7 +241,7 @@ License: CC-BY-3.0
 
 Files: lemonldap-ng-*/site/htdocs/static/bwr/jquery/*
 Copyright: 2010, The jQuery project and the jQuery UI team
-License: GPL-2 or Expat
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery.cookie/*
 Copyright: 2010, Klaus Hartl (stilbuero.de)
@@ -263,6 +263,8 @@ Files: lemonldap-ng-portal/site/htdocs/static/bwr/qrious/*
 Copyright: 2017, Alasdair Mercer
  2010, Tom Zerucha
 License: GPL-3+
+Comment:
+ Contains code covered by MIT license, same author
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
  doc/sources/admin/icons/*

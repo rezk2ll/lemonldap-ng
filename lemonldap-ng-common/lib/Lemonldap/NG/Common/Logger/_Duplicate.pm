@@ -14,6 +14,22 @@ sub new {
     return $self;
 }
 
+sub setRequestObj {
+    my $self = shift;
+    if ($self->{logger}->can('setRequestObj')) {
+        return $self->{logger}->setRequestObj(@_);
+    }
+    return;
+}
+
+sub clearRequestObj {
+    my $self = shift;
+    if ($self->{logger}->can('clearRequestObj')) {
+        return $self->{logger}->clearRequestObj(@_);
+    }
+    return;
+}
+
 sub AUTOLOAD {
     my $self = shift;
     no strict;

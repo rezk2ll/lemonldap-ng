@@ -339,6 +339,17 @@ all languages.
 .. versionchanged:: 2.0.15
    Translations in lemonldap-ng.ini now take priority over translations from skin files
 
+Additional error details
+------------------------
+
+When a particular error happens, it can be useful to display some detailed
+instructions to the user, you can do this using the ``TMPL_ERROR_NNN`` variable::
+
+    <!-- Account has been locked: PE21 -->
+    <TMPL_IF NAME="AUTH_ERROR_21">
+    <div trspan="custom_error_message_for_locked_account"></div>
+    </TMPL_IF>
+
 Adding messages in your templates
 ---------------------------------
 
@@ -454,7 +465,7 @@ Password Policy
 -  **Minimal special characters**: leave 0 to bypass the check
 -  **Allowed special characters**: list of allowed special characters. Set the ``__ALL__`` value to allow ALL special characters.
    A blank value forbids ALL special characters. The ``space`` character can not be
-   specified at the begin or at the end of the list to prevent trimming.  
+   specified at the begin or at the end of the list to prevent trimming.
 
 .. _portalcustom-other-parameters:
 

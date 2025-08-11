@@ -1529,13 +1529,13 @@ sub extractRelayState {
 
         # Push values in $self
         foreach ( keys %{ $samlSessionInfo->data } ) {
-            next if $_ =~ /(type|_session_id|_utime)/;
-            if ( $_ eq 'issuerUrldc' ) {
-                $req->urldc( $samlSessionInfo->data->{$_} );
-            }
-            else {
-                $req->{$_} = $samlSessionInfo->data->{$_};
-            }
+            next if $_ =~ /(type|_session_id|_utime|issuerNextUrl)/;
+            $req->{$_} = $samlSessionInfo->data->{$_};
+        }
+
+        # issuerNextUrl has priority over urldc if both are set
+        if ( $samlSessionInfo->data->{issuerNextUrl} ) {
+            $req->urldc( $samlSessionInfo->data->{issuerNextUrl} );
         }
 
         # delete relaystate session
@@ -1703,7 +1703,7 @@ sub createLogoutRequest {
 
     # Set RelayState
     if ( my $relaystate =
-        $self->storeRelayState( $req, 'urldc', 'issuerUrldc' ) )
+        $self->storeRelayState( $req, 'urldc', 'issuerNextUrl' ) )
     {
         $logout->msg_relayState($relaystate);
         $self->logger->debug("Set $relaystate in RelayState");
@@ -2723,7 +2723,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->logger->warn( "Could not build a logout response for provider "
               . $logout->remote_providerID
               . ", staying on portal" );
-        return $self->p->do( $req, [ sub { PE_LOGOUT_OK } ] );
+        return $self->p->doPE($req, PE_LOGOUT_OK);
     }
 
     # Send response depending on request method

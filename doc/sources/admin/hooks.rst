@@ -890,24 +890,28 @@ You can use this hook to implement :ref:`custom password policies <pluginppolicy
 
 The hook's parameters are:
 
-* The main user identifier
+* The main user identifier (warning: can be an email during the password reset flow)
 * The new password
 * The old password, if relevant
 
 Sample code::
 
-   use constant hook => {
-       passwordBeforeChange => 'blacklistPassword',
-   };
+    use constant hook => { passwordBeforeChange => 'blacklistPassword', };
 
-   sub blacklistPassword {
-       my ( $self, $req, $user, $password, $old ) = @_;
-       if ( $password eq "12345" ) {
-           $self->logger->error("I've got the same combination on my luggage");
-           return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
-       }
-       return PE_OK;
-   }
+    sub blacklistPassword {
+        my ( $self, $req, $_user, $password, $old ) = @_;
+
+        # Note: because $_user can be either a username or an email,
+        # using an explicit attribute from sessionInfo is more reliable
+        my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+        if ( $password eq "12345" ) {
+            $self->logger->error( "Password change refused for $user : "
+                  . "I've got the same combination on my luggage" );
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+        return PE_OK;
+    }
 
 
 passwordAfterChange
@@ -919,22 +923,27 @@ This hook is triggered after LemonLDAP::NG has changed the user's password succe
 
 The hook's parameters are:
 
-* The main user identifier
+* The main user identifier (warning: can be an email during the password reset flow)
 * The new password
 * The old password, if relevant
 
 Sample code::
 
-   use constant hook => {
-       passwordAfterChange  => 'logPasswordChange',
-   };
+    use constant hook => { passwordAfterChange => 'logPasswordChange', };
 
-   sub logPasswordChange {
-       my ( $self, $req, $user, $password, $old ) = @_;
-       $old ||= "";
-       $self->userLogger->info("Password changed for $user: $old -> $password");
-       return PE_OK;
-   }
+    sub logPasswordChange {
+        my ( $self, $req, $_user, $password, $old ) = @_;
+        $old ||= "";
+
+        # Note: because $_user can be either a username or an email,
+        # using an explicit attribute from sessionInfo is more reliable
+        my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+        # This is just an example, don't actually log a password!
+        $self->userLogger->info(
+            "Password changed for $user: $old -> $password");
+        return PE_OK;
+    }
 
 
 Second factor hooks
@@ -1120,3 +1129,11 @@ Sample code::
         }
         return PE_OK;
     }
+
+unauthLogout
+~~~~~~~~~~~~
+
+.. versionadded:: 2.22.0
+
+This hook is called just before any logout. It receive only one parameter, the
+`̀`$req`` object.

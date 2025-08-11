@@ -1,3 +1,34 @@
+lemonldap-ng (2.21.2) noble; urgency=medium
+
+  * Bugs:
+    * #3338: Can't edit wildcard vhosts using % after creation
+    * #3405: Issue with viewing psessions in Manager when using Oracle backend (hard-coded tablename)
+    * #3406: Choice Kerberos + LDAP causes a page reload loop
+    * #3427: When Auth::OpenIDConnect returns an error, the user cannot try again
+    * #3429: max_age=0 sent in Auth::OpenIDConnect authorization request since 2.21.1
+    * #3430: [Security:low] bad CORS check allows Origins that are a prefix of the Portal URL
+    * #3433: Dynamic RPs (via hook) can't be used with JWT-based auth
+
+  * Improvements:
+    * #3416: [OIDC]: renew of offline session allowed even if offline right was dropped to this app
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 11 Jul 2025 10:52:21 +0200
+
+lemonldap-ng (2.21.1) noble; urgency=medium
+
+  * Bugs:
+    * #3205: lemonldap scripts fail with permission error when run as root with pg tls backend
+    * #3361: Empty display parameter sent in OIDC authorization request
+    * #3367: OIDC doesn't manage "prompt=none" for unauthenticated users
+    * #3397: Adding a new CAS application in Manager also add a CAS server with the same name
+    * #3399: Internal server error when resending 2FA code if token has expired
+    * #3401: _lastAuthnUTime missing when using "Switch context another user"
+
+  * Improvements:
+    * #3363: Add Slovak translation into portal
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 11 Jun 2025 10:56:27 +0200
+
 lemonldap-ng (2.21.0) noble; urgency=medium
 
   * Bugs:

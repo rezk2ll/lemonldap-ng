@@ -40,13 +40,16 @@ our @pList = (
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
+    oidcOfflineTokens                   => '::Plugins::OidcOfflineTokens',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
-    refreshSessions     => '::Plugins::Refresh',
-    crowdsec            => '::Plugins::CrowdSec',
-    locationDetect      => '::Plugins::LocationDetect',
-    globalLogoutRule    => '::Plugins::GlobalLogout',
-    samlFederationFiles => '::Plugins::SamlFederation',
+    refreshSessions         => '::Plugins::Refresh',
+    crowdsec                => '::Plugins::CrowdSec',
+    crowdsecAgent           => '::Plugins::CrowdSecAgent',
+    locationDetect          => '::Plugins::LocationDetect',
+    globalLogoutRule        => '::Plugins::GlobalLogout',
+    samlFederationFiles     => '::Plugins::SamlFederation',
+    adminLogoutServerSecret => '::Plugins::AdminLogout',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
       '::Plugins::OIDCNativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>

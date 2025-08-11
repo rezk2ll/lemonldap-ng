@@ -178,20 +178,8 @@ ok(
     ),
     "Push logout request to OP,     endpoint $url"
 );
+count(1);
 
-( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
-
-ok(
-    $res = $op->_post(
-        $url, IO::String->new($query),
-        length => length($query),
-        cookie => "lemonldap=$idpId",
-        accept => 'text/html',
-    ),
-    "Confirm logout,                endpoint $url"
-);
-
-count(2);
 expectPortalError( $res, 108, "Unauthorized URL" );
 
 clean_sessions();
@@ -229,7 +217,7 @@ sub op {
                         oidcRPMetaDataOptionsLogoutSessionRequired  => 0,
                         oidcRPMetaDataOptionsLogoutBypassConfirm    => 0,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rpother.com/?logout=1",
+                          "http://auth.rpother.com/oauth2/rlogoutreturn",
                         oidcRPMetaDataOptionsRedirectUris =>
                           'http://auth.rp.com/?openidconnectcallback=1',
                     }

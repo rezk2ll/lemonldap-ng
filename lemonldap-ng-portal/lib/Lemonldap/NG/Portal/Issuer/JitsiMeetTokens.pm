@@ -276,7 +276,7 @@ sub jitsi {
     };
     if ($@) {
         $self->logger->error("Could not encode JWT: $@");
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        return $self->p->doPE($req, PE_ERROR);
     }
 
     $u->query_form( jwt => $jwt );

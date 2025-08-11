@@ -25,12 +25,13 @@ SMTPPort                                                Fix SMTP port           
 SMTPServer                                              SMTP Server                                                                          ✔
 SMTPTLS                                                 TLS protocol to use with SMTP                                                        ✔
 SMTPTLSOpts                                             TLS/SSL options for SMTP                                                             ✔
-SSLAuthnLevel                                           SSL authentication level                                                             ✔
+SSLAuthnLevel                                           Mutual TLS authentication level                                                      ✔
 SSLIssuerVar                                                                                                                                 ✔
 SSLVar                                                                                                                                       ✔
 SSLVarIf                                                                                                                                     ✔
 activeTimer                                             Enable timers on portal pages                                                        ✔
 adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
+adminLogoutServerSecret                                 REST OIDC token revocation secret                                                    ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
 appAccessHistoryEnabled                                 Shall OIDC/SAML/CAS protected apps access be recorded to session?                    ✔
 applicationList                                         Applications list                                                                    ✔
@@ -281,6 +282,7 @@ ldapCAFile                                              Location of the certific
 ldapCAPath                                              Location of the CA directory for LDAP connections                                    ✔
 ldapChangePasswordAsUser                                                                                                                     ✔
 ldapExportedVars                                        LDAP exported variables                                                              ✔
+ldapForcePasswordChangeExpirationWarning                Delay to force password change if password is about to expire                        ✔
 ldapGetUserBeforePasswordChange                                                                                                              ✔
 ldapGroupAttributeName                                  LDAP attribute name for member in groups                                             ✔
 ldapGroupAttributeNameGroup                             LDAP attribute name in group entry referenced as member in groups                    ✔
@@ -335,7 +337,7 @@ lokiTenantHeader                                        Loki Tenant Header name 
 lokiUrl                                                 Loki API                                                                             ✔      ✔       ✔       ✔
 lokiUserService                                         Loki (userLogger context)                                                            ✔      ✔       ✔       ✔
 lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
-lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
+lwpSslOpts                                              TLS/SSL options passed to LWP::UserAgent                                             ✔
 macros                                                  Macros                                                                               ✔
 mail2fActivation                                        Mail second factor activation                                                        ✔
 mail2fAuthnLevel                                        Authentication level for users authenticated by Mail second factor                   ✔
@@ -396,6 +398,7 @@ nullAuthnLevel                                          Null authentication leve
 oidcAuthnLevel                                          OpenID Connect authentication level                                                  ✔
 oidcDropCspHeaders                                      Drop CORS headers from OIDC issuer responses                                         ✔
 oidcOPMetaDataOptions                                                                                                                        ✔                      [1]
+oidcOfflineTokens                                       OIDC personnal offline token removal                                                 ✔
 oidcRPCallbackGetParam                                  OpenID Connect Callback GET URLparameter                                             ✔
 oidcRPMetaDataOptions                                                                                                                        ✔                      [1]
 oidcRPStateTimeout                                      OpenID Connect Timeout of state sessions                                             ✔
@@ -429,6 +432,8 @@ oidcServiceMetaDataIntrospectionURI                     OpenID Connect introspec
 oidcServiceMetaDataIssuer                               OpenID Connect issuer                                                                ✔
 oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endpoint                                                         ✔
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
+oidcServiceMetaDataRevokeURI                            OpenID Connect token revocation endpoint                                             ✔
+oidcServiceMetaDataRpLogoutReturnURI                    OpenID Connect RP-Initiated logout return endpoint                                   ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
 oidcServiceMetadataTtl                                  OIDC Metadata TTL                                                                    ✔
@@ -510,6 +515,7 @@ portalDisplayChangePassword                             Display password tab in 
 portalDisplayGeneratePassword                           Display password generate box in reset password form                                 ✔
 portalDisplayLoginHistory                               Display login history tab in portal                                                  ✔
 portalDisplayLogout                                     Display logout tab in portal                                                         ✔
+portalDisplayOfflineTokens                                                                                                                   ✔
 portalDisplayOidcConsents                               Display OIDC consents tab in portal                                                  ✔
 portalDisplayOrder                                      List for ordering tabs in portal                                                     ✔
 portalDisplayPasswordPolicy                             Display policy in password form                                                      ✔
@@ -701,8 +707,8 @@ slaveUserHeader                                                                 
 soapConfigServer                                        Enable SOAP config server                                                            ✔
 soapProxyUrn                                            SOAP URN for Proxy                                                                   ✔                      ✔
 soapSessionServer                                       Enable SOAP session server                                                           ✔
-sslByAjax                                               Use Ajax request for SSL                                                             ✔
-sslHost                                                 URL for SSL Ajax request                                                             ✔
+sslByAjax                                               Use Ajax request for Mutual TLS Authentication                                       ✔
+sslHost                                                 URL for Mutual TLS Authentication Ajax request                                       ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
 statusQueueName                                         Status channel name                                                                         ✔               ✔
 stayConnected                                           Stay connected activation rule                                                       ✔
@@ -715,6 +721,7 @@ storePasswordEncrypted                                  Crypt the password in se
 strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
+syslogSockOptions                                       Option to send to setlogsock()                                                       ✔      ✔       ✔       ✔
 timeout                                                 Session timeout on server side                                                       ✔
 timeoutActivity                                         Session activity timeout on server side                                              ✔
 timeoutActivityInterval                                 Update session timeout interval on server side                                       ✔

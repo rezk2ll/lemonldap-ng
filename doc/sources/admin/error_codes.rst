@@ -123,3 +123,4 @@ Error codes list
     ``PE_UNPROTECTEDURL``,109,"Not a protected or trusted URL"
     ``PE_RETRY_2FA``,110,"Second factor validation failed, please retry"
     ``PE_PP_PASSWORD_TOO_LONG``,111,"Password too long"
+    ``PE_PP_PASSWORD_EXPIRES_SOON``,112,"Password is about to expire, please change it now"

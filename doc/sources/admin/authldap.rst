@@ -187,7 +187,7 @@ Groups
     If your LDAP countains over a thousand groups, you
     should avoid using group processing, check out
     :ref:`the performance page<performances-ldap-performances>` for
-    alternatives 
+    alternatives
 
 Password
 ~~~~~~~~
@@ -217,6 +217,9 @@ Password
    change module to search for the user again, refreshing its DN. This feature
    is only useful in rare cases when you use LDAP as the password module, but
    not as the UserDB module. (default: enabled)
+-  **Delay to force password change before expiration**: if this value is set,
+   users will be forced to change their password if it expires in less than
+   the given number of seconds.
 -  **IBM Tivoli DS support**: enable this option if you use ITDS. LL::NG
    will then scan error message to return a more precise error to the
    user.

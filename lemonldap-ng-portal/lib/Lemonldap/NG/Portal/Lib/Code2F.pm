@@ -117,9 +117,8 @@ sub _resend {
             type         => $self->prefix,
         );
 
-        eval { $self->setSecurity($req) };
-        $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+        $req->noLoginDisplay(1);
+        return $self->p->doPE($req, PE_NOTOKEN);
     }
 
     my $session;
@@ -135,8 +134,8 @@ sub _resend {
             portal_error => portalConsts->{PE_TOKENEXPIRED},
             type         => $self->prefix,
         );
-        $self->setSecurity($req);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+        $req->noLoginDisplay(1);
+        return $self->p->doPE($req, PE_TOKENEXPIRED);
     }
 
     my $code = $session->{ '__' . $self->prefix . '2fcode' };
@@ -158,7 +157,7 @@ sub _resend {
 
         # Resend code and update last retry
         unless ( $self->sendCode( $req, $req->sessionInfo, $code ) ) {
-            return $self->p->do( $req, [ sub { PE_ERROR } ] );
+            return $self->p->doPE($req, PE_ERROR);
         }
         $self->ott->updateToken( $token, __lastRetry => time );
     }

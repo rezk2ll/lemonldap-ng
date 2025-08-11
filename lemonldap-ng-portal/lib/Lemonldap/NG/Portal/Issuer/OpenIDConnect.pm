@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -128,6 +128,7 @@ sub init {
         oidcServiceMetaDataJWKSURI          => 'jwks',
         oidcServiceMetaDataRegistrationURI  => 'registration',
         oidcServiceMetaDataIntrospectionURI => 'introspection',
+        oidcServiceMetaDataRevokeURI        => 'unauthRevokeToken',
     );
 
     # Manage user requests
@@ -139,6 +140,7 @@ sub init {
         oidcServiceMetaDataJWKSURI          => 'jwks',
         oidcServiceMetaDataRegistrationURI  => 'registration',
         oidcServiceMetaDataIntrospectionURI => 'introspection',
+        oidcServiceMetaDataRevokeURI        => 'authRevokeToken',
     );
 
     # Metadata (.well-known/openid-configuration)
@@ -200,8 +202,14 @@ sub load_config {
     if (@confKeys) {
         my $confKey = $confKeys[0];
         $self->logger->debug("Loading $client_id from LLNG config $confKey");
-        $self->load_rp_from_llng_conf($confKey);
-        return { info => { confKey => $confKey } };
+        if ( $self->load_rp_from_llng_conf($confKey) ) {
+            return { info => { confKey => $confKey } };
+        }
+        else {
+            # This marks the RP as permanently not loaded
+            # (until next config reload)
+            return {};
+        }
     }
 
     # Not found in config, try to load from hook
@@ -213,11 +221,14 @@ sub load_config {
 
         $self->logger->debug(
             "Loading $config->{confKey} from getOidcRpConfig hook");
-        $info = { confKey => $config->{confKey} };
 
         # Make sure Client ID is correctly set in options
         $config->{options}->{oidcRPMetaDataOptionsClientID} = $client_id;
-        $self->load_rp(%$config);
+
+        # Make sure load_rp succeeds before remembering the confKey
+        if ( $self->load_rp(%$config) ) {
+            $info = { confKey => $config->{confKey} };
+        }
 
     }
 
@@ -626,7 +637,7 @@ sub _authorizeEndpoint {
             $prompt
         and $prompt =~ /\blogin\b/
         and (
-            time - $req->sessionInfo->{_utime} >
+            time - $req->sessionInfo->{_lastAuthnUTime} >
             $self->conf->{portalForceAuthnInterval} )
       )
     {
@@ -1250,6 +1261,25 @@ sub _rpInitiatedLogout {
     my $state                    = $oidc_request->{'state'};
     my $bypassConfirm            = 0;
 
+    my $post_logout_redirect_uri_with_state;
+    if ($post_logout_redirect_uri) {
+
+        unless (
+            $self->findRPFromUri(
+                $post_logout_redirect_uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            )
+          )
+        {
+            $self->logger->error("$post_logout_redirect_uri is not allowed");
+            return PE_UNAUTHORIZEDURL;
+        }
+
+        # Build Response
+        $post_logout_redirect_uri_with_state =
+          $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
+    }
+
     # Check if we can bypass confirm using token_hint
     if ($id_token_hint) {
 
@@ -1274,6 +1304,11 @@ sub _rpInitiatedLogout {
             or $bypassConfirm
           )
         {
+
+            # Save the target URL in case authLogout has external steps
+            $req->{issuerNextUrl} = $post_logout_redirect_uri_with_state
+              if $post_logout_redirect_uri_with_state;
+
             $req->steps(
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
@@ -1288,26 +1323,11 @@ sub _rpInitiatedLogout {
             }
         }
 
-        if ($post_logout_redirect_uri) {
-
-            unless (
-                $self->findRPFromUri(
-                    $post_logout_redirect_uri,
-                    'oidcRPMetaDataOptionsPostLogoutRedirectUris'
-                )
-              )
-            {
-                $self->logger->error(
-                    "$post_logout_redirect_uri is not allowed");
-                return PE_UNAUTHORIZEDURL;
-            }
-
-            # Build Response
-            my $response_url =
-              $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
-
-            return $self->_redirectToUrl( $req, $response_url );
+        if ($post_logout_redirect_uri_with_state) {
+            return $self->_redirectToUrl( $req,
+                $post_logout_redirect_uri_with_state );
         }
+
         return $req->param('confirm') == 1
           ? ( $err ? $err : PE_LOGOUT_OK )
           : PE_OK;
@@ -1643,12 +1663,13 @@ sub _handlePasswordGrant {
         }
     }
 
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
     # Resolve scopes
     my $scope = $self->getScope( $req, $rp, $req_scope );
     unless ($scope) {
-        $self->userLogger->warn( 'User '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-              . " was not granted any requested scopes ($req_scope) for $rp" );
+        $self->userLogger->warn( "User $user was not granted"
+              . "  any requested scopes ($req_scope) for $rp" );
         return $self->sendOIDCError( $req, 'invalid_scope', 400 );
     }
 
@@ -1684,10 +1705,11 @@ sub _handlePasswordGrant {
         my $refreshTokenSession = $self->_generateRefreshToken(
             $req, $rp,
             {
-                scope           => $scope,
-                client_id       => $client_id,
-                user_session_id => $req->id,
-                grant_type      => "password",
+                scope                      => $scope,
+                client_id                  => $client_id,
+                user_session_id            => $req->id,
+                grant_type                 => "password",
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -1827,7 +1849,8 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $sid  = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $user = $apacheSession->data->{ $self->conf->{whatToTrace} };
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1850,11 +1873,10 @@ sub _handleAuthorizationCodeGrant {
                 redirect_uri => $codeSession->data->{redirect_uri},
                 scope        => $scope,
                 client_id    => $client_id,
-                _session_uid =>
-                  $apacheSession->data->{ $self->conf->{whatToTrace} },
-                auth_time  => $apacheSession->data->{_lastAuthnUTime},
-                grant_type => "authorizationcode",
-                _oidc_sid  => $sid,
+                _session_uid => $user,
+                auth_time    => $apacheSession->data->{_lastAuthnUTime},
+                grant_type   => "authorizationcode",
+                _oidc_sid    => $sid,
             },
             1,
         );
@@ -1885,6 +1907,7 @@ sub _handleAuthorizationCodeGrant {
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -1993,6 +2016,30 @@ sub _handleRefreshTokenGrant {
               . $refreshSession->data->{client_id} );
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
+    if ( my $delay =
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRtActivity} )
+    {
+        my $user = $refreshSession->data->{_whatToTrace};
+        if ( defined $refreshSession->data->{_oidcRtUpdate} ) {
+            if ( ( $refreshSession->data->{_oidcRtUpdate} + $delay ) < time ) {
+                $self->auditLog(
+                    $req,
+                    code    => 'ISSUER_OIDC_INACTIVE_REFRESH_TOKEN',
+                    rp      => $rp,
+                    message =>
+                      "User $user tried to use an inactive refresh_token",
+                    user => $user,
+                );
+                $refreshSession->remove;
+                return $self->sendOIDCError( $req, 'invalid_grant', 401 );
+            }
+        }
+        else {
+            $self->logger->info(
+"$user use a refresh_token without previous _oidcRtUpdate ($refresh_token), considered as active"
+            );
+        }
+    }
 
     my $access_token;
     my $userData;
@@ -2036,6 +2083,14 @@ sub _handleRefreshTokenGrant {
 
     # Else, we are in an offline session
     else {
+
+        unless ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline} )
+        {
+            $self->logger->error(
+                'Got a offline refresh_token for an application no more allowed'
+            );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
+        }
 
         # Lookup attributes and macros for user
         $self->getAttributesForUser( $req, $refreshSession )
@@ -2184,7 +2239,11 @@ sub userInfo {
     my ( $access_token, $authMethod ) = $self->getEndPointAccessToken($req);
 
     unless ($access_token) {
-        $self->logger->error("Unable to get access_token");
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Missing access_token',
+        );
         return $self->returnBearerError( 'invalid_request',
             "Access token not found in request", 401 );
     }
@@ -2194,8 +2253,11 @@ sub userInfo {
     my $accessTokenSession = $self->getAccessToken($access_token);
 
     unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to validate access token $access_token");
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Invalid or expired access_token',
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
     }
@@ -2213,8 +2275,11 @@ sub userInfo {
         ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
         and $authMethod ne 'header' )
     {
-        $self->userLogger->error(
-            'Endpoint authentication without using header');
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Missing required authentication header',
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 400 );
     }
@@ -2227,6 +2292,11 @@ sub userInfo {
     my $session =
       $self->_getSessionFromAccessTokenData( $accessTokenSession->data );
     unless ($session) {
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_USERINFO_FAILED',
+            message => 'Unable to get session corresponding to access-token',
+        );
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
     }
@@ -2307,7 +2377,7 @@ sub _getSessionFromAccessTokenData {
 sub introspection {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
-    $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
+    $self->logger->debug("URL detected as an Oauth2 INTROSPECTION URL");
 
     my ( $rp, $authMethod ) =
       $self->checkEndPointAuthenticationCredentials($req);
@@ -2329,26 +2399,154 @@ sub introspection {
         my $apacheSession =
           $self->_getSessionFromAccessTokenData( $oidcSession->{data} );
         if ($apacheSession) {
+            $response = {
+                active    => JSON::true,
+                aud       => $self->getAudiences( $oidcSession->data->{rp} ),
+                client_id => $oidcSession->{data}->{client_id},
+                exp       =>
+                  int( $oidcSession->data->{_utime} + $self->conf->{timeout} ),
+                iat        => int( $oidcSession->data->{iat} ),
+                iss        => $self->get_issuer($req),
+                nbf        => int( $oidcSession->data->{nbf} ),
+                scope      => $oidcSession->{data}->{scope},
+                token_type => 'bearer',
 
-            $response->{active} = JSON::true;
-
-        # The ID attribute we choose is the one of the calling webservice,
-        # which might be different from the OIDC client the token was issued to.
-            $response->{sub} =
-              $self->getUserIDForRP( $req, $rp, $apacheSession->data );
-            $response->{scope} = $oidcSession->{data}->{scope}
-              if $oidcSession->{data}->{scope};
-            $response->{client_id} = $oidcSession->{data}->{client_id}
-              if $oidcSession->{data}->{client_id};
-            $response->{iss} = $self->get_issuer($req);
-            $response->{exp} =
-              $oidcSession->{data}->{_utime} + $self->conf->{timeout};
+                # The ID attribute we choose is the one of the calling
+                # webservice, which might be different from the OIDC client the
+                # token was issued to.
+                sub => $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
+            };
+            foreach ( keys %$response ) {
+                delete $response->{$_}
+                  unless defined $response->{$_}
+                  and $response->{$_} || length( $response->{$_} ) > 0;
+            }
         }
         else {
             $self->logger->warn("Count not find session tied to Access Token");
         }
     }
     return $self->p->sendJSONresponse( $req, $response );
+}
+
+sub unauthRevokeToken {
+    my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    $self->logger->debug("URL detected as an Oauth2 TOKEN REVOCATION URL");
+
+    my ( $rp, $authMethod ) =
+      $self->checkEndPointAuthenticationCredentials($req);
+    return $self->invalidClientResponse($req) unless ($rp);
+
+    return $self->_revokeToken(
+        $req,
+        sub {
+            my ($session) = @_;
+            my $_rp = $self->getRP( $session->data->{client_id} );
+            my $rpClientId =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+            unless ( $session->data->{client_id} eq $rpClientId ) {
+                my @aud = $self->getAudiences($_rp);
+                unless ( grep { $_ eq $rpClientId } $self->getAudiences($_rp) )
+                {
+                    $self->auditLog(
+                        $req,
+                        code    => 'ISSUER_OIDC_UNAUTHORIZED_REVOKE_REQUEST',
+                        rp      => $rp,
+                        message =>
+                          "RP $rp tried to remove a token issued from $_rp",
+                    );
+                    return ();
+                }
+            }
+            my $_uid = $session->data->{ $self->conf->{whatToTrace} };
+            return ( $_rp, $_uid );
+        },
+        $rp
+    );
+}
+
+sub authRevokeToken {
+    my ( $self, $req ) = @_;
+    my $uid = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    return $self->_revokeToken(
+        $req,
+        sub {
+            my ( $session, $rp ) = @_;
+            my $_uid = $session->data->{ $self->conf->{whatToTrace} };
+            unless ( $uid eq $_uid ) {
+                $self->auditLog(
+                    $req,
+                    code    => 'ISSUER_OIDC_UNAUTHORIZED_REVOKE_REQUEST',
+                    user    => $uid,
+                    message =>
+                      "User $uid tried to remove a token issued for $_uid",
+                );
+                return ();
+            }
+            return ( $rp, $uid );
+        }
+    );
+}
+
+sub _revokeToken {
+    my ( $self, $req, $checkRight, $rp, $raw ) = @_;
+    my $userReq =
+      $rp ? undef : $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+    return $self->sendOIDCError( $req, 'invalid_request', 400 )
+      unless ( $req->method =~ /^POST$/i );
+
+    my $token = $req->param('token');
+    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($token);
+
+    my $tokenHint = $req->param('token_hint');
+    my $oidcSession;
+    if ( !$tokenHint or $tokenHint eq 'access_token' ) {
+        $self->logger->debug('Try to find an access_token to revoke');
+        $oidcSession = $self->getAccessToken($token);
+        $tokenHint   = 'access_token' if $oidcSession;
+    }
+    if ( !$oidcSession and ( !$tokenHint or $tokenHint eq 'refresh_token' ) ) {
+        $self->logger->debug('Try to find a refresh_token to revoke');
+        $oidcSession = $self->getRefreshToken( $token, $raw );
+        $tokenHint   = 'refresh_token';
+    }
+    if ($oidcSession) {
+        $self->logger->debug("token found");
+        if ( my ( $_rp, $_uid ) = $checkRight->( $oidcSession, $rp ) ) {
+            my $bck =
+              $self->rpOptions->{$_rp}->{oidcRPMetaDataOptionsLogoutType};
+            if ( $bck and $bck eq 'back' ) {
+                $self->_backChannelLogout( $req, $_rp, $oidcSession->data );
+            }
+            $self->auditLog(
+                $req,
+                code    => 'ISSUER_OIDC_' . uc($tokenHint) . '_REVOKE',
+                rp      => $_rp,
+                message => ( $userReq ? "User $userReq" : "OIDC RP $rp" )
+                  . " dropped a $tokenHint owned by $_uid",
+                user       => ( $userReq || $rp ),
+                $tokenHint => $token
+            );
+            $self->logger->debug(
+                "$tokenHint dropped was " . $oidcSession->id );
+            $oidcSession->remove;
+        }
+        return [ 200, [], [] ];
+    }
+    else {
+        $self->auditLog(
+            $req,
+            code    => 'ISSUER_OIDC_' . uc($tokenHint) . '_REVOKE_NOT_FOUND',
+            rp      => $rp,
+            message => ( $userReq ? "User $userReq" : "OIDC RP $rp" )
+              . " tried to drop an unexistent $tokenHint",
+            user       => ( $userReq || $rp ),
+            $tokenHint => $token
+        );
+    }
+    return [ 200, [], [] ];
 }
 
 # Endpoint JWKS is implemented in Lib/OpenIDConnect
@@ -2636,90 +2834,9 @@ sub logout {
 
                 # BACK CHANNEL
                 elsif ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'back' ) {
-
-                    # Logout token must contain:
-                    #  - iss: issuer identifier
-                    #  - sub: subject id (user id)
-                    #  OR/AND
-                    #  - sid: OP session id given to the RP
-                    #  - aud: audience
-                    #  - iat: issue at time
-                    #  - jti: JWT token id
-                    #  - events: should be :
-                    #   { 'http://schemas.openid.net/event/backchannel-logout"
-                    #     => {} } # or a JSON object
-                    #
-                    # Logout token should be send using a POST request:
-                    #
-                    #   POST /backChannelUri HTTP/1.1
-                    #   Host: rp
-                    #   Content-Type: application/x-www-form-urlencoded
-                    #
-                    #   logout_token=<JWT value>
-                    #
-                    # RP response should be 200 (204 accepted) or 400 for errors
-                    my $alg =
-                      $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-                      || (
-                        $self->conf->{oidcServiceKeyTypeSig} eq 'EC'
-                        ? 'ES256'
-                        : 'RS256'
-                      );
-                    $self->logger->debug(
-                        "Access Token signature algorithm: $alg");
-                    my $userId =
-                      $self->getUserIDForRP( $req, $rp, $req->userData );
-                    my $logoutToken = {
-                        iss => $self->get_issuer($req),
-                        sub => $userId,
-                        aud => $self->getAudiences($rp),
-                        iat => time,
-
-                        # Random string: no response expected from RP
-                        jti => join( "",
-                            map { [ "0" .. "9", 'A' .. 'Z' ]->[ rand 36 ] }
-                              1 .. 8 ),
-                        events => { $self->BACKCHANNEL_EVENTSKEY => {} },
-                    };
-                    if ( $self->rpOptions->{$rp}
-                        ->{oidcRPMetaDataOptionsLogoutSessionRequired} )
-                    {
-                        $logoutToken->{sid} =
-                          $self->getSidFromSession( $rp, $req->{sessionInfo} );
-                    }
-                    $self->logger->debug( "Logout token content: "
-                          . JSON::to_json($logoutToken) );
-                    my $jwt = $self->encryptToken(
-                        $rp,
-                        $self->createJWT( $logoutToken, $alg, $rp ),
-                        $self->rpOptions->{$rp}
-                          ->{oidcRPMetaDataOptionsLogoutEncKeyMgtAlg},
-                        $self->rpOptions->{$rp}
-                          ->{oidcRPMetaDataOptionsLogoutEncContentEncAlg},
-                    );
-                    my $resp = $self->ua->post(
-                        $url,
-                        { logout_token => $jwt },
-                        'Content-Type' => 'application/x-www-form-urlencoded',
-                    );
-                    if ( $resp->is_error ) {
-                        $self->logger->warn(
-                                "OIDC back channel: unable to unlog"
-                              . " $userId from $rp: "
-                              . $resp->message );
-                        $self->logger->debug("Logout token: $jwt");
-                        $self->logger->debug(
-                            'Upstream status: ' . $resp->status_line );
-                        $self->logger->debug(
-                            'Upstream response: ' . ( $resp->content // '' ) );
-                        $code = PE_SLO_ERROR;
-                    }
-                    else {
-                        $self->logger->info(
-                            "OIDC back channel: user $userId unlogged from $rp"
-                        );
-                    }
+                    my $c =
+                      $self->_backChannelLogout( $req, $rp, $req->userData );
+                    $code = $c if $c;
                 }
             }
         }
@@ -2728,6 +2845,76 @@ sub logout {
 }
 
 # Internal methods
+sub _backChannelLogout {
+    my ( $self, $req, $rp, $sessionInfo ) = @_;
+
+    # Logout token must contain:
+    #  - iss: issuer identifier
+    #  - sub: subject id (user id)
+    #  OR/AND
+    #  - sid: OP session id given to the RP
+    #  - aud: audience
+    #  - iat: issue at time
+    #  - jti: JWT token id
+    #  - events: should be :
+    #   { 'http://schemas.openid.net/event/backchannel-logout"
+    #     => {} } # or a JSON object
+    #
+    # Logout token should be send using a POST request:
+    #
+    #   POST /backChannelUri HTTP/1.1
+    #   Host: rp
+    #   Content-Type: application/x-www-form-urlencoded
+    #
+    #   logout_token=<JWT value>
+    #
+    # RP response should be 200 (204 accepted) or 400 for errors
+    my $alg         = $self->getSignAlg($rp);
+    my $userId      = $self->getUserIDForRP( $req, $rp, $sessionInfo );
+    my $logoutToken = {
+        iss => $self->get_issuer($req),
+        sub => $userId,
+        aud => $self->getAudiences($rp),
+        iat => time,
+
+        # Random string: no response expected from RP
+        jti =>
+          join( "", map { [ "0" .. "9", 'A' .. 'Z' ]->[ rand 36 ] } 1 .. 8 ),
+        events => { $self->BACKCHANNEL_EVENTSKEY => {} },
+    };
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutSessionRequired} )
+    {
+        $logoutToken->{sid} = $self->getSidFromSession( $rp, $sessionInfo );
+    }
+    $self->logger->debug(
+        "Logout token content: " . JSON::to_json($logoutToken) );
+    my $jwt = $self->encryptToken(
+        $rp,
+        $self->createJWT( $logoutToken, $alg, $rp ),
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutEncKeyMgtAlg},
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutEncContentEncAlg},
+    );
+    my $resp = $self->ua->post(
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutUrl},
+        { logout_token => $jwt },
+        'Content-Type' => 'application/x-www-form-urlencoded',
+    );
+    if ( $resp->is_error ) {
+        $self->logger->warn( "OIDC back channel: unable to unlog"
+              . " $userId from $rp: "
+              . $resp->message );
+        $self->logger->debug("Logout token: $jwt");
+        $self->logger->debug( 'Upstream status: ' . $resp->status_line );
+        $self->logger->debug(
+            'Upstream response: ' . ( $resp->content // '' ) );
+        return PE_SLO_ERROR;
+    }
+    else {
+        $self->logger->info(
+            "OIDC back channel: user $userId unlogged from $rp");
+    }
+    return PE_OK;
+}
 
 sub metadata {
     my ( $self, $req ) = @_;
@@ -2742,6 +2929,10 @@ sub metadata {
 # Store request parameters in %ENV
 sub exportRequestParameters {
     my ( $self, $req ) = @_;
+
+    unless ( $self->ssoMatch($req) ) {
+        return PE_OK;
+    }
 
     if ( my $p = $req->param('prompt') ) {
         if ( $p eq 'none' ) {

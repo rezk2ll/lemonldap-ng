@@ -123,6 +123,7 @@ lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
+lib/Lemonldap/NG/Portal/Plugins/AdminLogout.pm
 lib/Lemonldap/NG/Portal/Plugins/AuthOidcPkce.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BasePasswordPolicy.pm
@@ -136,6 +137,7 @@ lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
 lib/Lemonldap/NG/Portal/Plugins/CrowdSec.pm
+lib/Lemonldap/NG/Portal/Plugins/CrowdSecAgent.pm
 lib/Lemonldap/NG/Portal/Plugins/DecryptValue.pm
 lib/Lemonldap/NG/Portal/Plugins/FindUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
@@ -150,6 +152,7 @@ lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/OidcOfflineTokens.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
@@ -193,6 +196,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/crowdsecBan
 scripts/downloadSamlMetadata
 scripts/lemonldap-ng-portal.preset
 scripts/lemonldap-ng-portal.service
@@ -201,6 +205,7 @@ scripts/llngDeleteSession
 scripts/llngUserAttributes
 scripts/purgeCentralCache
 scripts/purgeCentralCache.cron.d
+scripts/purgePersistentSessions
 site/htdocs/index.fcgi
 site/htdocs/index.psgi
 site/htdocs/static/bootstrap/2f.png
@@ -359,6 +364,9 @@ site/htdocs/static/common/js/notifications.min.js.map
 site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/oidcchecksession.min.js.map
+site/htdocs/static/common/js/oidcOfflineTokens.js
+site/htdocs/static/common/js/oidcOfflineTokens.min.js
+site/htdocs/static/common/js/oidcOfflineTokens.min.js.map
 site/htdocs/static/common/js/password2fregistration.js
 site/htdocs/static/common/js/password2fregistration.min.js
 site/htdocs/static/common/js/password2fregistration.min.js.map
@@ -459,9 +467,11 @@ site/js-src/kerberos.js
 site/js-src/kerberosChoice.js
 site/js-src/notifications.js
 site/js-src/oidcchecksession.js
+site/js-src/oidcOfflineTokens.js
 site/js-src/password2fregistration.js
 site/js-src/portal.js
 site/js-src/ppolicy.js
+site/js-src/recaptchav3.js
 site/js-src/redirect.js
 site/js-src/registerbrowser.js
 site/js-src/rollup.config.cjs
@@ -509,6 +519,7 @@ site/templates/bootstrap/notifications.tpl
 site/templates/bootstrap/oidcConsents.tpl
 site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
+site/templates/bootstrap/oidcOfflineTokens.tpl
 site/templates/bootstrap/okta2fchoice.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
@@ -591,6 +602,7 @@ t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-Mail-Tpl.t
+t/01-OneTimeToken.t
 t/01-pdata.t
 t/01-PluginEntrypoints.t
 t/01-Reject-Hashes-in-URL.t
@@ -611,12 +623,14 @@ t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
 t/05-Hashed-Session.t
+t/06-Missing-conf.t
 t/06-portal-maintainance.t
 t/10-AuthCustom.t
 t/11-MessageBroker-Logout.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
+t/11-MessageBroker-Web.t
 t/12-EventStatus.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-custom-hash.t
@@ -628,8 +642,6 @@ t/21-Auth-and-password-LDAP.t
 t/21-Auth-LDAP-attributes.t
 t/21-Auth-LDAP-group-with-group-filter.t
 t/21-Auth-LDAP-group-without-group-filter.t
-t/21-Auth-LDAP-Policy-Combination.t
-t/21-Auth-LDAP-Policy-only.t
 t/21-Auth-LDAP-Policy.t
 t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
@@ -729,8 +741,11 @@ t/32-Auth-and-issuer-OIDC-PKCE-2.t
 t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-Auth-OIDC-JWKS-Refresh.t
+t/32-Auth-OIDC-Parameters.t
+t/32-OIDC-admin-Back-Channel-Logout-sid.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
+t/32-OIDC-Back-Channel-Logout-sid-offline.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid.t
 t/32-OIDC-bad-auth-method.t
@@ -775,6 +790,7 @@ t/32-OIDC-strict-JWS-private_key_jwt.t
 t/32-OIDC-Token-Exchange.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
+t/32-RemoveOIDCToken.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
@@ -802,7 +818,6 @@ t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination-with-TOTP.t
 t/36-Combination.t
-t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
 t/37-Issuer-Display-Rule.t
 t/37-Issuer-Timeout.t
@@ -811,15 +826,11 @@ t/37-Logout-from-OIDC-RP-to-SAML-IDP-Redirect.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
 t/37-OIDC-and-DBI-with-choice-and-override.t
-t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
-t/37-OIDC-RP-to-SAML-IdP-GET.t
-t/37-OIDC-RP-to-SAML-IdP-POST.t
-t/37-SAML-SP-GET-to-OIDC-OP.t
+t/37-OIDC-RP-to-SAML-IdP.t
 t/37-SAML-SP-GET-to-SAML-with-Logout.t
 t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
-t/37-SAML-SP-POST-to-OIDC-OP-hashStorage.t
-t/37-SAML-SP-POST-to-OIDC-OP.t
+t/37-SAML-SP-to-OIDC-OP.t
 t/38-No-persistent-session.t
 t/39-Failing-RP-Logout.t
 t/40-Notifications-Explorer-JSON-File.t
@@ -880,6 +891,7 @@ t/61-AdaptativeAuthenticationLevel.t
 t/61-BruteForceProtection-with-Incremental-lockTimes-and-TOTP.t
 t/61-BruteForceProtection-with-Incremental-lockTimes.t
 t/61-BruteForceProtection.t
+t/61-CrowdSec-ban.t
 t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
 t/61-ForceAuthn.t
@@ -1038,6 +1050,7 @@ t/PluginEntryPoints/ListeningService.pm
 t/PluginEntryPoints/Target.pm
 t/postgres/init.sql
 t/postgres/pg.pm
+t/pubsub.pm
 t/README.md
 t/redis/redis.conf
 t/redis/redis.pm
@@ -1047,6 +1060,7 @@ t/sendCode.pl
 t/SendHtmlPlugin.pm
 t/sendOTP.pl
 t/separate-handler.pm
+t/SessionExplorer.pm
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101

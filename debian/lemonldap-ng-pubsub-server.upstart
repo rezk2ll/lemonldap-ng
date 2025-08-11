@@ -1,0 +1,14 @@
+description "FastCGI server for Lemonldap::NG websso system"
+
+start on filesystem and static-network-up
+stop on runlevel [016]
+
+expect fork
+respawn
+
+pre-start script
+        [ -x /usr/sbin/llng-pubsub-server ] || { stop; exit 0; }
+end script
+
+exec mkdir /var/run/llng-pubsub-server; chown www-data:www-data /var/run/llng-pubsub-server && /usr/sbin/llng-pubsub-server --user nobody --group nogroup --pid-file /var/run/llng-pubsub-server/llng-pubsub-server.pid
+

@@ -50,6 +50,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libnet-openid-server-perl <!nocheck>,
                      libnet-ssleay-perl <!nocheck>,
                      libplack-perl <!nocheck>,
+                     libprotocol-websocket-perl <!nocheck>,
                      libregexp-assemble-perl,
                      libregexp-common-perl,
                      libsoap-lite-perl <!nocheck>,
@@ -140,6 +141,31 @@ Description: Lemonldap::NG FastCGI server
  .
  Lemonldap::NG FastCGI server provides a Nginx auth_request server that handles
  also LLNG Portal and Manager.
+
+Package: lemonldap-ng-pubsub-server
+Architecture: all
+Section: web
+Depends: libio-socket-ip-perl,
+         libprotocol-websocket-perl,
+         libregexp-common-perl,
+         ${misc:Depends},
+         ${perl:Depends}
+Suggests: libio-socket-ssl-perl
+Description: Lemonldap::NG Pub/Sub server
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application webservers. It can be used in conjunction with
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorizations are built by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorized.
+ .
+ This package provides the "Web" optional pub/sub server to share events
+ between Lemonldap::NG servers.
+ .
+ Install libio-socket-ssl-perl to enable TLS.
 
 Package: liblemonldap-ng-ssoaas-apache-client-perl
 Architecture: all

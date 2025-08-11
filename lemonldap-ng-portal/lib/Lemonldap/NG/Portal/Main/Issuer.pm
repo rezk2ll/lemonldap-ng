@@ -123,17 +123,21 @@ sub _redirect {
             @{ $self->p->endAuth },
             (
                 $restore
-                ? sub {
-
+                ? (
                     # Restore urldc if auth doesn't need to dial with browser
-                    $self->restoreRequest( $_[0], $ir );
-                    $self->cleanPdata( $_[0] );
-                    return $self->run( @_, @path );
-                  }
+                    [ ref($self) . "::resumeProcess", $ir, @path ],
+                  )
                 : ()
             )
         ]
     );
+}
+
+sub resumeProcess {
+    my ( $self, $req, $ir, @path ) = @_;
+    $self->restoreRequest( $req, $ir );
+    $self->cleanPdata($req);
+    return $self->run( $req, @path );
 }
 
 # Case 3: authentified user, launch
@@ -168,7 +172,7 @@ sub _forAuthUser {
     if ( $restore_failed and !@path ) {
         $self->logger->error("Unable to restore issuer context");
         $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+        return $self->p->doPE($req, PE_TOKENEXPIRED);
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here
@@ -180,12 +184,8 @@ sub _forAuthUser {
     return $self->p->do(
         $req,
         [
-            'importHandlerData',
-            'controlUrl',
-            @{ $self->p->forAuthUser },
-            sub {
-                return $self->run( @_, @path );
-            },
+            'importHandlerData',        'controlUrl',
+            @{ $self->p->forAuthUser }, [ ref($self) . "::run", @path ],
         ]
     );
 }

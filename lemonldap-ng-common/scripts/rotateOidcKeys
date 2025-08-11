@@ -4,7 +4,7 @@
 #
 # This script is written to be used by cron to rotate keys.
 #
-# This is part of LemonLDAP::NG product, released under GPL
+# This is part of LemonLDAP::NG product, released under GPL-2+
 #=============================================================================
 
 use strict;
@@ -35,6 +35,8 @@ eval {
     no warnings;
     POSIX::setgid( scalar( getgrnam($opt_group) ) );
     POSIX::setuid( scalar( getpwnam($opt_user) ) );
+    my (undef, undef, undef, undef, undef, undef, undef, $homedir, undef) = getpwnam($opt_user);
+    $ENV{HOME} = $homedir if $homedir;
 };
 
 my $debug = $opts->{debug};

@@ -313,13 +313,14 @@ sub load_rp {
         $self->rpScopeRules->{$rp} = $compiled_scope_rules;
         $self->rpRules->{$rp}      = $rule;
         $self->rpLevelRules->{$rp} = $levelrule;
+        return 1;
     }
     else {
         $self->logger->debug(" -> RP $rp is NOT valid");
         $self->logger->error(
             "Relying Party $rp has errors and will be ignored");
     }
-    return;
+    return 0;
 }
 
 # Refresh JWKS data if needed
@@ -453,11 +454,14 @@ sub buildAuthorizationCodeAuthnRequest {
     };
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
-        ( $display    ? ( display    => $display )    : () ),
-        ( $prompt     ? ( prompt     => $prompt )     : () ),
-        ( $ui_locales ? ( ui_locales => $ui_locales ) : () ),
+        ( $display ? ( display => $display ) : () ),
+        ( $prompt  ? ( prompt  => $prompt )  : () ),
+        # MaxAge is defined as an int type in LLNG config,
+        # so 0 means undefined
+        ( $max_age    ? ( max_age    => $max_age )    : () ),
         (
-            defined($max_age) && length($max_age) ? ( max_age => $max_age ) : ()
+            defined($ui_locales)
+              && length($ui_locales) ? ( ui_locales => $ui_locales ) : ()
         ),
         (
             defined($acr_values)
@@ -1194,6 +1198,8 @@ sub newAccessToken {
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
+        iat       => time,
+        nbf       => time,
         %{$info},
     };
 
@@ -1207,21 +1213,10 @@ sub newAccessToken {
     );
 
     if ($session) {
-
-        my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
-        $self->auditLog(
-            $req,
-            code    => "ISSUER_OIDC_ACCESS_TOKEN",
-            rp      => $rp,
-            message =>
-              ("Access Token for $user generated for $rp with TTL $ttl"),
-            user => $user,
-            ttl  => $ttl,
-        );
-
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
-              $self->makeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
+              $self->makeJWT( $req, $session->id, $sessionInfo, $at_info,
+                $ttl );
             $at_jwt = $self->encryptToken(
                 $rp,
                 $at_jwt,
@@ -1235,6 +1230,16 @@ sub newAccessToken {
             return $at_jwt;
         }
         else {
+            my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+            $self->auditLog(
+                $req,
+                code    => "ISSUER_OIDC_ACCESS_TOKEN",
+                rp      => $rp,
+                message =>
+                  ("Access Token for $user generated for $rp with TTL $ttl"),
+                user => $user,
+                ttl  => $ttl,
+            );
             return $session->id;
         }
     }
@@ -1249,37 +1254,36 @@ sub _wantJWT {
 }
 
 sub makeJWT {
-    my ( $self, $req, $rp, $scope, $id, $sessionInfo ) = @_;
+    my ( $self, $req, $id, $sessionInfo, $at_info, $ttl ) = @_;
 
-    my $exp =
-         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
-      || $self->conf->{oidcServiceAccessTokenExpiration};
-    $exp += time;
+    my $rp        = $at_info->{rp};
+    my $exp       = $ttl + time;
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
-        iss       => $self->get_issuer($req),     # Issuer Identifier
-        exp       => $exp,                        # expiration
-        aud       => $self->getAudiences($rp),    # Audience
-        client_id => $client_id,                  # Client ID
-        iat       => time,                        # Issued time
-        jti       => $id,                         # Access Token session ID
-        scope     => $scope,                      # Scope
-        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
+        iss => $self->get_issuer($req),     # Issuer Identifier
+        exp => $exp,                        # expiration
+        aud => $self->getAudiences($rp),    # Audience
+        jti => $id,                         # Access Token session ID
+        sid => $self->getSidFromSession( $rp, $sessionInfo ),    # Session id
     };
+    $access_token_payload->{$_} = $at_info->{$_}
+      foreach (qw(scope client_id iat));
 
     my $claims =
-      $self->buildUserInfoResponseFromData( $req, $scope, $rp, $sessionInfo );
+      $self->buildUserInfoResponseFromData( $req, $at_info->{scope}, $rp,
+        $sessionInfo );
+
+    my $sub = $access_token_payload->{sub} = delete $claims->{sub};
+    my %extra_attr;
 
     # Release claims, or only sub
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenClaims} ) {
         foreach ( keys %$claims ) {
-            $access_token_payload->{$_} = $claims->{$_}
-              unless $access_token_payload->{$_};
+            unless ( $access_token_payload->{$_} ) {
+                $extra_attr{$_} = $access_token_payload->{$_} = $claims->{$_};
+            }
         }
-    }
-    else {
-        $access_token_payload->{sub} = $claims->{sub};
     }
 
     # Call hook to let the user modify payload
@@ -1288,12 +1292,29 @@ sub makeJWT {
     return undef if ( $h != PE_OK );
 
     # Get signature algorithm
-    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
-    $self->logger->debug("Access Token signature algorithm: $alg");
+    my $alg = $self->getSignAlg($rp);
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
 
+    my $attr_str = (
+        %extra_attr
+        ? ( " with attributes " . join( ',', sort( keys %extra_attr ) ) )
+        : ''
+    );
+
+    my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_ACCESS_TOKEN",
+        rp      => $rp,
+        message => (
+"Access Token for $user generated for $rp as $sub with TTL $ttl$attr_str"
+        ),
+        user       => $user,
+        ttl        => $ttl,
+        oidc_sub   => $sub,
+        attributes => \%extra_attr,
+    );
     return $jwt;
 }
 
@@ -1340,6 +1361,7 @@ sub newRefreshToken {
         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsOfflineSessionExpiration}
           || $self->conf->{oidcServiceOfflineSessionExpiration} )
       : $self->conf->{timeout};
+    $info->{_oidcRtUpdate} = time;
 
     return $self->getOpenIDConnectSession(
         undef, "refresh_token",
@@ -1353,14 +1375,19 @@ sub newRefreshToken {
 # @return new Lemonldap::NG::Common::Session object
 
 sub getRefreshToken {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $raw ) = @_;
 
-    return $self->getOpenIDConnectSession( $id, "refresh_token", noCache => 1 );
+    return $self->getOpenIDConnectSession(
+        $id, "refresh_token",
+        noCache => 1,
+        ( $raw ? ( hashStore => 0 ) : () )
+    );
 }
 
 sub updateRefreshToken {
-    my $self = shift;
-    return $self->updateToken(@_);
+    my ( $self, $id, $infos ) = @_;
+    $infos->{_oidcRtUpdate} = time;
+    return $self->updateToken( $id, $infos );
 }
 
 sub updateToken {
@@ -1470,6 +1497,14 @@ sub getOpenIDConnectSession {
     }
 
     return $oidcSession;
+}
+
+sub getSignAlg {
+    my ( $self, $rp ) = @_;
+    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+    $self->logger->debug("Access Token signature algorithm: $alg");
+    return $alg;
 }
 
 # Store information in state database and return
@@ -1587,7 +1622,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -1951,10 +1986,7 @@ sub getEndPointAuthenticationCredentials {
                 and $payload->{iss} eq $_clientId )
             {
                 # client_id must match to a known relying party
-                my ($rp) = grep {
-                    $self->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} eq
-                      $_clientId
-                } keys %{ $self->rpOptions || {} };
+                my $rp = $self->getRP($_clientId);
                 if ($rp) {
 
                     # RP must have a signature key registered
@@ -2218,6 +2250,7 @@ sub buildUserInfoResponseFromData {
     $self->logger->debug("Found corresponding user: $user_id");
 
     $userinfo_response->{sub} = $user_id;
+    $userinfo_response->{sid} = $self->getSidFromSession( $rp, $session_data );
 
     # By default, release all exported attributes
     if ( $self->conf->{oidcServiceIgnoreScopeForClaims} ) {

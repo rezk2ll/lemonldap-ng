@@ -436,7 +436,7 @@ portal_test:	portal
 	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCPORTALDIR} test
 
 manager_test:	manager
-	@$(MAKE) -C ${SRCMANAGERDIR} test
+	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCMANAGERDIR} test
 
 autopkgtest: all autopkg_common autopkg_handler autopkg_portal autopkg_manager autopkg_runner
 
@@ -673,6 +673,8 @@ install_bin:	install_conf_dir
 	@cp -f\
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
+		${SRCPORTALDIR}/scripts/purgePersistentSessions \
+		${SRCPORTALDIR}/scripts/crowdsecBan \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
 		${SRCPORTALDIR}/scripts/downloadSamlMetadata \
@@ -802,7 +804,7 @@ install_uwsgi_server:
 
 # Site install
 
-install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
+install_site:	install_bin install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
 	# Site install
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
@@ -1189,6 +1191,7 @@ dist:	clean
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)/docker
 	@rm -rf lemonldap-ng-$(VERSION)/Dockerfile
+	@rm -rf lemonldap-ng-$(VERSION)/dev
 	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
@@ -1203,6 +1206,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/dev
 	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
@@ -1295,15 +1299,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	@find e2e-tests/ \
-		  -type f \
-		  -name '*.js' \
-		! -name 'jq*' \
-		! -name 'bootstrap*' \
-		! -name '*.min.js' \
-		! -name conftree.js \
-		  -print \
-		  -exec js_beautify -o -s=2 {} \;
+	@for i in lemonldap-ng-*/site/js-src/*.js; do js-beautify -s 2 -r -f $$i; done
 
 html_spelling:
 	@for i in $$(find doc/ -type f -name '*.html'); do \
