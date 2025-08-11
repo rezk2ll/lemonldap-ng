@@ -100,7 +100,7 @@ $(window).on("load", function() {
           else
           {
               // launch authentication choice defined in cookie
-              var choiceform = "#" + $.cookie(rememberCookieName) + " form";
+              var choiceform = "#id_" + $.cookie(rememberCookieName) + " form";
               $( choiceform ).submit();
           }
       }
