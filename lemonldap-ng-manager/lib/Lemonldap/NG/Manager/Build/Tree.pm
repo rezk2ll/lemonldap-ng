@@ -1224,6 +1224,7 @@ sub tree {
                                                 'crowdsecPassword',
                                                 'crowdsecMaxFailures',
                                                 'crowdsecBlockDelay',
+                                                'crowdsecFilters',
                                             ],
                                         },
                                     ],

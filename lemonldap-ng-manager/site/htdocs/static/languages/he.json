@@ -283,6 +283,7 @@
 "crowdsecAction":"פעולה",
 "crowdsecAgent":"Activation",
 "crowdsecBlockDelay":"Check delay",
+"crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"מפתח API",
 "crowdsecMachineId":"Crowdsec agent ID",

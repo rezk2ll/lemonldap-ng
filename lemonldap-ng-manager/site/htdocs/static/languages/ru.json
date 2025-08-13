@@ -283,6 +283,7 @@
 "crowdsecAction":"Действие",
 "crowdsecAgent":"Activation",
 "crowdsecBlockDelay":"Check delay",
+"crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"Ключ API",
 "crowdsecMachineId":"Crowdsec agent ID",

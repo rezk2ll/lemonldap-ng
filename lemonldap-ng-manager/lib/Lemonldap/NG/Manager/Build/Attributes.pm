@@ -1527,6 +1527,10 @@ sub attributes {
             type          => 'int',
             documentation => 'Crowdsec-Agent check delay',
         },
+        crowdsecFilters => {
+            type          => 'text',
+            documentation => 'Crowdsec filters directory',
+        },
 
         # OIDC personnal offline token removal
         oidcOfflineTokens => {
