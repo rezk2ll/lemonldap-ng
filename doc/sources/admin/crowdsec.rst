@@ -54,8 +54,68 @@ You can then configure:
   If reached, the plugin will send a Crowdsec decision *(ban)*. 0 means that
   no ban decision will be pushed
 - **Check delay**: number of seconds to consider failures. Default: 180
+- **Filters directory**: directory where Crowdsec can find its filters. If
+  not defined or empty, filters are disabled. See :ref:`Filters`
 
 Note that:
 
 - Agent just push alerts, it never block anything. You must enable **Bouncer** to do this
 - **Base URL of local API** has to be configured into ``Bouncer``.
+
+.. _Filters:
+
+Filters
+^^^^^^^
+
+When this feature is enabled, the **CrowdsecAgent** plugin parse the directory
+given in **Filters directory** to find files. A file must refer to:
+
+* a :ref:`category<Categories>`
+* a :ref:`type<Formats>`
+
+The category is the scope of the filter *(example: "url")* and the type is the
+format of the file *(example: "txt")*.
+The type is the suffix of the file, there are two ways to define the category:
+either by setting the category as second suffix in the main directory, either
+by storing the file into a subdirectory with a name starting by the category.
+Examples:
+
+- ``bad.url.txt`` is a file formatted as "txt" and owned by category "url"
+- ``url1/bad.re`` is a file formatted as "re" and owned by category "url"
+
+.. _Formats:
+
+**Formats**
+***********
+
+* **txt**: list of substring
+* **re**: list of regular expression
+
+An empty line or a line started by ``#`` is ignored.
+
+Examples:
+
+* **txt**
+
+  .. code-block::
+
+   phpinfo.php
+   config.php
+   /.htaccess
+
+* **re**
+
+  .. code-block::
+
+   /php(my|pg|ldap)admin
+   \.exe(\?.*)?$
+
+.. _Categories:
+
+**Categories**
+**************
+
+* **url**, if the required URI matches a given expression, then:
+
+  * an alert is sent to local Crowdsec server
+  * the portal sends a ``404 Not found`` response
