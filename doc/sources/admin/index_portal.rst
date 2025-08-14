@@ -13,6 +13,7 @@ Portal configuration
    public_pages
    recaptcha
    secondfactor
+   keys
    index_protocols
    index_authdb
    index_idp
