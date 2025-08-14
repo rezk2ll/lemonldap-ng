@@ -283,6 +283,7 @@
 "crowdsecAction":"Hành động",
 "crowdsecAgent":"Activation",
 "crowdsecBlockDelay":"Check delay",
+"crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"khóa API",
 "crowdsecMachineId":"Crowdsec agent ID",

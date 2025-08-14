@@ -283,6 +283,7 @@
 "crowdsecAction":"Acción",
 "crowdsecAgent":"Activation",
 "crowdsecBlockDelay":"Check delay",
+"crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"Clave API",
 "crowdsecMachineId":"Crowdsec agent ID",

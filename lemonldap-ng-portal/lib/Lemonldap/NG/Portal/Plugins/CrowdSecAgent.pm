@@ -11,6 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_OPENID_BADID
   PE_SAML_SIGNATURE_ERROR
+  PE_SENDRESPONSE
   PE_USERNOTFOUND
 );
 
@@ -28,9 +29,18 @@ with 'Lemonldap::NG::Common::CrowdSec';
 
 has rule => ( is => 'rw', default => sub { 0 } );
 
+has filters => ( is => 'rw', default => sub { {} } );
+
 # Entrypoint
-use constant aroundSub =>
-  { getUser => 'sendIpAlerts', authenticate => 'sendIpAlerts' };
+use constant aroundSub => {
+
+    # Filter function (if crowdsecFilters is set)
+    controlUrl => 'controlUrl',
+
+    # Generate alerts for bad credentials
+    getUser      => 'sendIpAlerts',
+    authenticate => 'sendIpAlerts'
+};
 
 sub init {
     my ($self) = @_;
@@ -44,6 +54,18 @@ sub init {
     }
     $self->rule(
         $self->p->buildRule( $self->conf->{crowdsecAgent}, 'crowdsecAgent' ) );
+
+    if ( $self->conf->{crowdsecFilters} ) {
+        if ( -d $self->conf->{crowdsecFilters} ) {
+            with 'Lemonldap::NG::Portal::Lib::CrowdsecFilter';
+            $self->initializeFilters;
+        }
+        else {
+            $self->logger->error(
+                'Crowdsec filter directory not found, ignoring');
+        }
+    }
+
     return 1;
 }
 
@@ -73,6 +95,39 @@ sub sendIpAlerts {
       )
       : $self->logger->error(
         "Unable to send alert to Crowdsec (was '$msg' for " . $req->address );
+    return $ret;
+}
+
+sub controlUrl {
+    my ( $self, $sub, $req ) = @_;
+    my $ret = $sub->($req);
+    return $ret if $ret;
+
+    if ( !$self->rule->( $req, $req->sessionInfo ) ) {
+        $self->logger->debug('Crowdsec-agent disabled for this env');
+        return $ret;
+    }
+
+    return $ret unless $self->filters;
+    if (    $self->filters->{url}
+        and $req->env->{REQUEST_URI} =~ $self->filters->{url} )
+    {
+        my $msg = 'Bad URI detected: ' . $req->env->{REQUEST_URI};
+        $self->alert( $req->address, $msg, { reason => "LLNG bad URL" } )
+          ? $self->auditLog(
+            $req,
+            code         => 200,
+            message      => "Alert sent to Crowdsec: $msg",
+            ip           => $req->address,
+            uri          => $req->env->{REQUEST_URI},
+            matchingPart => $&,
+          )
+          : $self->logger->error(
+            "Unable to send alert to Crowdsec (was '$msg' for "
+              . $req->address );
+        $req->response( [ 404, [], ['Not found'] ] );
+        return PE_SENDRESPONSE;
+    }
     return $ret;
 }
 

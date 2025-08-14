@@ -1302,6 +1302,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'crowdsecBlockDelay' => {
             'type' => 'int'
         },
+        'crowdsecFilters' => {
+            'type' => 'text'
+        },
         'crowdsecIgnoreFailures' => {
             'default' => 0,
             'type'    => 'bool'

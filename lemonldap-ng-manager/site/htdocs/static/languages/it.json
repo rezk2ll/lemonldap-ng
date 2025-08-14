@@ -283,6 +283,7 @@
 "crowdsecAction":"Azione",
 "crowdsecAgent":"Activation",
 "crowdsecBlockDelay":"Check delay",
+"crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"Chiave API",
 "crowdsecMachineId":"Crowdsec agent ID",

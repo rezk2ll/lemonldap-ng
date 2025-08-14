@@ -80,6 +80,7 @@ my $client = LLNG::Manager::Test->new( {
             crowdsecMachineId => 'llng',
             crowdsecPassword  => 'llngpwd',
             crowdsecAgent     => 1,
+            crowdsecFilters   => 't/crowdsec-filters',
         }
     }
 );
@@ -120,6 +121,23 @@ subtest 'Report unknown user to Crowdsec', sub {
     expectReject($res);
     ok( $ban == 3,            'Alert received' );
     ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+};
+
+our %badUrls = (
+    'Filter in a sub-directory named url1' => '/bb/.htaccess',
+    'Filter type re in main directory'     => '/aa/phpmyadmin',
+    'Filter type txt in main directory'    => '/config.php',
+);
+subtest 'Report bad urls to Crowdsec', sub {
+    my $prevBan = $ban;
+    foreach my $subtest ( sort keys %badUrls ) {
+        my $url = $badUrls{$subtest};
+        subtest $subtest => sub {
+            ok( $res = $client->_get($url), "Test bad url $url" );
+            ok( $res->[0] == 404,           '404 not found' );
+            ok( $ban == ++$prevBan,         "Bad url detected" );
+        };
+    }
 };
 
 clean_sessions();
