@@ -10,11 +10,14 @@ community-powered IP reputation system.
 
 LL::NG provides two **Crowdsec** plugins:
 
-* a bouncer that can reject CrowdSec banned IP requests or just provide an
-  environment variable that can be used inanother plugin rule. For example,
+* a :ref:`Bouncer` that can reject CrowdSec banned IP requests or just provide
+  an environment variable that can be used inanother plugin rule. For example,
   a second factor may be required if user'si IP is CrowdSec banned.
-* an agent that push alerts to Crowdsec server for each authentication
-  failure. It can also push "ban" decisions if limits are reached
+* an :ref:`Agent` that push alerts to Crowdsec server and ban IP addresses if
+  limits are reached:
+
+  * for each authentication failure
+  * if filters are set, for each filter alert (see :ref:`Filters<Agent>`)
 
 You can also find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`__.
 
@@ -25,6 +28,8 @@ Configuration
 
    If you need to whitelist something, you can use a rule in "activation" using
    ``$env->{REMOTE_ADDR}`` for example.
+
+.. _Bouncer:
 
 Bouncer
 ~~~~~~~
@@ -39,6 +44,8 @@ You can then configure:
 - **Base URL of local API**: base URL of CrowdSec local API
   *(default: http://localhost:8080)*
 - **API key**: API key, usually given by ``cscli bouncers add mylemon``
+
+.. _Agent:
 
 Agent
 ~~~~~
