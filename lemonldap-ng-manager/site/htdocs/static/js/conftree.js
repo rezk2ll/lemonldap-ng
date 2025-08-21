@@ -224,7 +224,7 @@ function templates(tpl,key) {
       ],
       "id" : tpl+"s/"+key+"/"+"KeyMaterial",
       "title" : "KeyMaterial",
-      "type" : "RSACertKey"
+      "type" : "KeyMaterial"
    },
    {
       "_nodes" : [

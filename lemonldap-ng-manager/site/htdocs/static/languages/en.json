@@ -655,6 +655,7 @@
 "newChain":"New chain",
 "newCmbMod":"New module",
 "newCmbOver":"New parameter",
+"newEcCertificate":"New EC Certificate",
 "newEcKeys":"New EC keys",
 "newEntry":"New entry",
 "newGrantRule":"New grant rule",

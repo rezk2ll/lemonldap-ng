@@ -388,7 +388,7 @@ sub cTrees {
         ],
         keyNode => [ {
                 title => 'KeyMaterial',
-                form  => 'RSACertKey',
+                form  => 'KeyMaterial',
                 group => [ 'keyPrivate', 'keyPrivatePwd', 'keyPublic' ]
             },
             {

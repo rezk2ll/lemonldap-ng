@@ -1125,6 +1125,27 @@ llapp.controller('TreeCtrl', [
           console.debug('New key cancelled');
         });
     };
+    $scope.newEcCertificate = function() {
+      return $scope.showModal('password.html').then(function() {
+          var currentNode,
+            password;
+          $scope.waiting = true;
+          currentNode = $scope.currentNode;
+          password = $scope.result;
+          return $http.post(`${window.confPrefix}/newEcCertificate`, {
+            "password": password
+          }).then(function(response) {
+              currentNode.data[0].data = response.data.private;
+              currentNode.data[1].data = password;
+              currentNode.data[2].data = response.data.public;
+              return $scope.waiting = false;
+            },
+            readError);
+        },
+        function() {
+          console.debug('New key cancelled');
+        });
+    };
     $scope.newEcKeys = function() {
       var currentNode;
       $scope.waiting = true;
