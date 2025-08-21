@@ -139,7 +139,7 @@ sub newRSAKey {
 sub newEcKeys {
     my ( $self, $req, @others ) = @_;
 
-    my $keys = Lemonldap::NG::Common::Util::Crypto::genEcKey('secp256r1');
+    my $keys = Lemonldap::NG::Common::Util::Crypto::genEcKey('prime256v1');
     return $self->sendJSONresponse( $req, $keys );
 }
 

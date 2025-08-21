@@ -98,7 +98,7 @@ SKIP: {
 
         my ( $result, $checkpriv, $checkpub );
 
-        $result    = Lemonldap::NG::Common::Util::Crypto::genEcKey('secp256r1');
+        $result = Lemonldap::NG::Common::Util::Crypto::genEcKey('prime256v1');
         $checkpriv = Crypt::PK::ECC->new( \$result->{private} );
         $checkpub  = Crypt::PK::ECC->new( \$result->{public} );
         is(
