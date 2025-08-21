@@ -109,39 +109,45 @@ SKIP: {
         ok( $result->{hash}, "Hash is non empty" );
     };
 
-    subtest "Check genEcCertKey" => sub {
+  SKIP: {
+        skip "Net::SSLeay too old", 1 if $Net::SSLeay::VERSION < 1.75;
+        subtest "Check genEcCertKey" => sub {
 
-        my ( $result, $checkpriv, $checkpub );
+            my ( $result, $checkpriv, $checkpub );
 
-        $result =
-          Lemonldap::NG::Common::Util::Crypto::genEcCertKey('prime256v1');
-        $checkpriv = Crypt::PK::ECC->new( \$result->{private} );
-        $checkcert = Crypt::OpenSSL::X509->new_from_string( $result->{public},
-            Crypt::OpenSSL::X509::FORMAT_PEM );
-        $checkpub = Crypt::PK::ECC->new( \( $checkcert->pubkey() ) );
-        is(
-            $checkpriv->export_key_pem('public'),
-            $checkpub->export_key_pem('public'),
-            "Public and private keys match"
-        );
-        ok( $result->{hash}, "Hash is non empty" );
-        is( $checkcert->subject(), "CN=localhost", "Correct subject" );
+            $result =
+              Lemonldap::NG::Common::Util::Crypto::genEcCertKey('prime256v1');
+            $checkpriv = Crypt::PK::ECC->new( \$result->{private} );
+            $checkcert =
+              Crypt::OpenSSL::X509->new_from_string( $result->{public},
+                Crypt::OpenSSL::X509::FORMAT_PEM );
+            $checkpub = Crypt::PK::ECC->new( \( $checkcert->pubkey() ) );
+            is(
+                $checkpriv->export_key_pem('public'),
+                $checkpub->export_key_pem('public'),
+                "Public and private keys match"
+            );
+            ok( $result->{hash}, "Hash is non empty" );
+            is( $checkcert->subject(), "CN=localhost", "Correct subject" );
 
-        $result =
-          Lemonldap::NG::Common::Util::Crypto::genEcCertKey( 'prime256v1',
-            "mytestkey" );
-        $checkpriv = Crypt::PK::ECC->new( \$result->{private}, "mytestkey" );
-        $checkcert = Crypt::OpenSSL::X509->new_from_string( $result->{public},
-            Crypt::OpenSSL::X509::FORMAT_PEM );
-        $checkpub = Crypt::PK::ECC->new( \( $checkcert->pubkey() ) );
-        is(
-            $checkpriv->export_key_pem('public'),
-            $checkpub->export_key_pem('public'),
-            'Public key matches private key'
-        );
-        is( $checkcert->subject(), "CN=localhost", "Correct subject" );
-        ok( $result->{hash}, "Hash is non empty" );
-    };
+            $result =
+              Lemonldap::NG::Common::Util::Crypto::genEcCertKey( 'prime256v1',
+                "mytestkey" );
+            $checkpriv =
+              Crypt::PK::ECC->new( \$result->{private}, "mytestkey" );
+            $checkcert =
+              Crypt::OpenSSL::X509->new_from_string( $result->{public},
+                Crypt::OpenSSL::X509::FORMAT_PEM );
+            $checkpub = Crypt::PK::ECC->new( \( $checkcert->pubkey() ) );
+            is(
+                $checkpriv->export_key_pem('public'),
+                $checkpub->export_key_pem('public'),
+                'Public key matches private key'
+            );
+            is( $checkcert->subject(), "CN=localhost", "Correct subject" );
+            ok( $result->{hash}, "Hash is non empty" );
+        };
+    }
 }
 
 genCertKey
