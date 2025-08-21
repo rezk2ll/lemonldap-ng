@@ -296,7 +296,7 @@ sub cTrees {
                         ],
                     },
                     {
-                        title => 'keys',
+                        title => 'oidcRpKeys',
                         nodes => [
                             'oidcRPMetaDataOptionsJwksUri',
                             'oidcRPMetaDataOptionsJwks',
@@ -385,6 +385,18 @@ sub cTrees {
                 nodes => [ 'casAppMetaDataOptionsDisplayName', ],
             },
             'casAppMetaDataMacros',
+        ],
+        keyNode => [ {
+                title => 'KeyMaterial',
+                form  => 'KeyMaterial',
+                group => [ 'keyPrivate', 'keyPrivatePwd', 'keyPublic' ]
+            },
+            {
+                title => 'keyOptions',
+                help  => 'keys.html#options',
+                form  => 'simpleInputContainer',
+                nodes => [ 'keyId', 'keyComment', ],
+            },
         ],
     };
 }

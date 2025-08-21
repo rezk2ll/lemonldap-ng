@@ -494,8 +494,7 @@ sub _scanNodes {
                         }
                     }
                     elsif ( $target =~
-                        /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/
-                      )
+                        /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/ )
                     {
                         $self->set(
                             $optKey, [ $oldName, $key ],
@@ -573,8 +572,7 @@ sub _scanNodes {
                         }
                     }
                     elsif ( $target =~
-                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/
-                      )
+                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/ )
                     {
                         $self->set(
                             $optKey, [ $oldName, $key ],
@@ -591,6 +589,30 @@ sub _scanNodes {
                     push @{ $self->errors },
                       { message => "Unknown CAS option $target" };
                     return 0;
+                }
+                next;
+            }
+            elsif ( $base eq 'keyNodes' ) {
+                hdebug('Keys');
+                hdebug("target $target");
+                hdebug("key $key");
+                if ( $target eq "KeyMaterial" ) {
+                    if ( $leaf->{data} ) {
+                        hdebug('    opened');
+                        for my $data ( @{ $leaf->{data} } ) {
+                            $self->set( "keys", $key, $data->{title},
+                                $data->{data} );
+                        }
+                    }
+                    else {
+                        hdebug('    unopened');
+                        for my $opt (qw/keyPrivate keyPrivatePwd keyPublic/) {
+                            $self->set( "keys", $key, $opt, undef );
+                        }
+                    }
+                }
+                else {
+                    $self->set( "keys", $key, $leaf->{title}, $leaf->{data} );
                 }
                 next;
             }

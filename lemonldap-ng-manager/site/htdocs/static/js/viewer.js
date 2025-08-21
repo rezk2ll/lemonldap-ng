@@ -473,7 +473,8 @@
           for (i = l = 0, len = ref.length; l < len; i = ++l) {
             n = ref[i];
             node.data[i] = {
-              title: n,
+              title: n.split("/").pop(),
+              get: n,
               id: n
             };
             tmp.push($scope.getKey(node.data[i]));

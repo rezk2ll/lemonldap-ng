@@ -617,6 +617,11 @@ llapp.controller('TreeCtrl', [
         'casPartnerName',
         'app-example');
     };
+    $scope.addKey = function() {
+      return $scope.newTemplateNode('keyNode',
+  'keyName',
+  'key-example');
+    };
     $scope.newTemplateNode = function(type,
       title,
       init) {
@@ -1120,6 +1125,27 @@ llapp.controller('TreeCtrl', [
           console.debug('New key cancelled');
         });
     };
+    $scope.newEcCertificate = function() {
+      return $scope.showModal('password.html').then(function() {
+          var currentNode,
+            password;
+          $scope.waiting = true;
+          currentNode = $scope.currentNode;
+          password = $scope.result;
+          return $http.post(`${window.confPrefix}/newEcCertificate`, {
+            "password": password
+          }).then(function(response) {
+              currentNode.data[0].data = response.data.private;
+              currentNode.data[1].data = password;
+              currentNode.data[2].data = response.data.public;
+              return $scope.waiting = false;
+            },
+            readError);
+        },
+        function() {
+          console.debug('New key cancelled');
+        });
+    };
     $scope.newEcKeys = function() {
       var currentNode;
       $scope.waiting = true;
@@ -1204,7 +1230,8 @@ llapp.controller('TreeCtrl', [
           for (i = o = 0, len = ref.length; o < len; i = ++o) {
             n = ref[i];
             node.data[i] = {
-              title: n,
+              title: n.split("/").pop(),
+              get: n,
               id: n
             };
             tmp.push($scope.getKey(node.data[i]));

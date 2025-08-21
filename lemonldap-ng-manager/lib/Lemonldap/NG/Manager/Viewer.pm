@@ -58,7 +58,7 @@ sub init {
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
       casSrvMetaDataNodes casAppMetaDataNodes sfExtra
       authChoiceModules grantSessionRules combModules
-      openIdIDPList);
+      openIdIDPList keyNodes);
 
     foreach (@keys) {
 

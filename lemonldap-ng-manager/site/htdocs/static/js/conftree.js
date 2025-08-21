@@ -214,6 +214,40 @@ function templates(tpl,key) {
    }
 ]
 ;
+  case 'keyNode':
+    return [
+   {
+      "get" : [
+         tpl+"s/"+key+"/"+"keyPrivate",
+         tpl+"s/"+key+"/"+"keyPrivatePwd",
+         tpl+"s/"+key+"/"+"keyPublic"
+      ],
+      "id" : tpl+"s/"+key+"/"+"KeyMaterial",
+      "title" : "KeyMaterial",
+      "type" : "KeyMaterial"
+   },
+   {
+      "_nodes" : [
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyId",
+            "id" : tpl+"s/"+key+"/"+"keyId",
+            "title" : "keyId"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyComment",
+            "id" : tpl+"s/"+key+"/"+"keyComment",
+            "title" : "keyComment"
+         }
+      ],
+      "help" : "keys.html#options",
+      "id" : "keyOptions",
+      "title" : "keyOptions",
+      "type" : "simpleInputContainer"
+   }
+]
+;
   case 'oidcOPMetaDataNode':
     return [
    {
@@ -1364,8 +1398,8 @@ function templates(tpl,key) {
                   "type" : "file"
                }
             ],
-            "id" : "keys",
-            "title" : "keys"
+            "id" : "oidcRpKeys",
+            "title" : "oidcRpKeys"
          },
          {
             "_nodes" : [
