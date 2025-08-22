@@ -121,6 +121,7 @@ t/30-Common-Safelib.t
 t/35-Common-Crypto.t
 t/36-Common-Regexp.t
 t/37-Common-TOTP.t
+t/38-SAML-Metadata.t
 t/40-Common-Session.t
 t/41-Common-EmailAddress.t
 t/45-importMetadata-config.t
@@ -142,6 +143,8 @@ t/log4perl.ini
 t/overlay_test/lmConf-1.json
 t/overlay_test/overlay/globalStorage
 t/overlay_test/overlay/globalStorageOptions
+t/schema/saml-schema-assertion-2.0.xsd
+t/schema/saml-schema-metadata-2.0.xsd
 t/TestAuditLogger.pm
 t/TestConfBackend.pm
 t/TestLogger.pm
