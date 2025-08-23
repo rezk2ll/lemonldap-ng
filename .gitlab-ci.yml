@@ -99,6 +99,13 @@ build_rocky_9:
     - ci-build-pkg
     - dnf -y install ${CI_PROJECT_DIR}/result/rocky/9/*.noarch.rpm
 
+build_rocky_10:
+  extends: .build_job
+  image: quay.io/rockylinux/rockylinux:10
+  script:
+    - scripts/ci-build-rpm
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/10/*.noarch.rpm
+
 sign:
   image: buildpkg/debian:bullseye
   stage: sign
