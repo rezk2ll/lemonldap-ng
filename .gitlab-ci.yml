@@ -12,11 +12,7 @@
 .debian_build_job:
   extends: .build_job
   script:
-    - apt-get update --allow-releaseinfo-change && apt-get -y dist-upgrade
-    - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-    - DEBIAN_FRONTEND=noninteractive apt install -y libgeoip2-perl || true
-    - DEBIAN_FRONTEND=noninteractive apt install -y libhttp-browserdetect-perl || true
-    - ci-build-pkg
+    - scripts/ci-build-deb
   before_script:
     - env | grep ^CI_
     # Converting to native package...
@@ -26,7 +22,6 @@
 
 stages:
   - build
-  - sign
   - deploy
 
 before_script:
@@ -34,117 +29,57 @@ before_script:
 
 build_bullseye:
   extends: .debian_build_job
-  image: buildpkg/debian:bullseye
+  image: debian:bullseye
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bullseye/*_all.deb
 
 build_bookworm:
   extends: .debian_build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
+  image: debian:bookworm
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bookworm/*_all.deb
 
 build_focal:
   extends: .debian_build_job
-  image: buildpkg/ubuntu:focal
+  image: ubuntu:focal
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/focal/*_all.deb
 
 build_jammy:
   extends: .debian_build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
+  image: ubuntu:jammy
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/jammy/*_all.deb
 
 build_noble:
   extends: .debian_build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:noble
+  image: ubuntu:noble
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
 
 build_centos_7:
   extends: .build_job
-  image: buildpkg/centos:7
+  image: quay.io/centos/centos:7
   script:
-    - yum-config-manager --disable base,updates,extras
-    - yum-config-manager --add-repo=rpm/el7-vault.repo
-    - yum clean all
-    - yum makecache
-    - yum -y update
-    - yum -y install epel-release
-    - make dist
-    - yum -y install openssl openssl-libs
-    - ci-build-pkg
+    - scripts/ci-build-rpm
     - yum -y install ${CI_PROJECT_DIR}/result/centos/7/*.noarch.rpm
 
 build_rocky_8:
   extends: .build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
+  image: quay.io/rockylinux/rockylinux:8
   script:
-    - dnf -y update
-    - dnf config-manager --enable powertools
-    - dnf -y install epel-release
-    - make dist
-    - ci-build-pkg
+    - scripts/ci-build-rpm
     - dnf -y install ${CI_PROJECT_DIR}/result/rocky/8/*.noarch.rpm
 
 build_rocky_9:
   extends: .build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:9
+  image: quay.io/rockylinux/rockylinux:9
   script:
-    - dnf -y update
-    - dnf config-manager --enable crb
-    - dnf -y install epel-release
-    - make dist
-    - ci-build-pkg
+    - scripts/ci-build-rpm
     - dnf -y install ${CI_PROJECT_DIR}/result/rocky/9/*.noarch.rpm
 
-sign:
-  image: buildpkg/debian:bullseye
-  stage: sign
-  # variables:
-  # SIGN_USER: firstname.lastname@orange.com
-  # GPG_PRIVATE_KEY:
-  script:
-    - cd $CI_PROJECT_DIR
-    - ci-sign-pkg
-  dependencies:
-    - build_bullseye
-    - build_centos_7
-    - build_rocky_8
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - result/*
-  only:
-    - master
-
-pages:
-  image: buildpkg/debian:bullseye
-  stage: deploy
-  variables:
-    # Default page dir
-    # PAGES_DIR: public
-    PAGES_HOST: ow2.io
-  environment:
-    name: PPA
-    url: http://${CI_PROJECT_NAMESPACE}.${PAGES_HOST}/${CI_PROJECT_NAME}
-  script:
-    - cd $CI_PROJECT_DIR
-    - ci-pages-ppa
-    - ci-pages-home
-    - ci-pages-tree
-  dependencies:
-    - sign
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - public
-  only:
-    - master
-
 sonar-inspect:
-  image: buildpkg/debian:buster
+  image: debian:bookworm
   stage: build
   script:
     - scripts/sonar
