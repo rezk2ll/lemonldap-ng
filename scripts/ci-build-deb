@@ -1,0 +1,17 @@
+#!/bin/sh
+set -xe
+
+. /etc/os-release
+dist=${ID:-unknown}
+ver=${VERSION_ID:-unknown}
+
+apt update --allow-releaseinfo-change
+apt -y install devscripts dpkg-dev
+mk-build-deps --install --remove \
+    --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
+    debian/control
+
+make debian-packages
+
+mkdir -p "result/$dist/$ver/"
+cp /tmp/*deb  "result/$dist/$ver/"
