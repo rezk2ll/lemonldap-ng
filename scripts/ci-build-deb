@@ -5,11 +5,18 @@ set -xe
 dist=${ID:-unknown}
 ver=${VERSION_ID:-unknown}
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt update --allow-releaseinfo-change
 apt -y install devscripts dpkg-dev
 mk-build-deps --install --remove \
     --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
     debian/control
+
+# Install additional libs
+apt install -y tzdata
+apt install -y libgeoip2-perl || true
+apt install -y libhttp-browserdetect-perl || true
 
 make debian-packages
 
