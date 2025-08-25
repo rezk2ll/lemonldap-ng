@@ -32,7 +32,7 @@ PERLTIDY_VERSION=20220217
 # External commands
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
-export PERL5LIB=$(CURDIR)/${SRCCOMMONDIR}/blib/lib:$(CURDIR)/${SRCHANDLERDIR}/blib/lib:$(CURDIR)/${SRCMANAGERDIR}/blib/lib/:$(CURDIR)/${SRCPORTALDIR}/blib/lib/:$(CURDIR)/${SRCCOMMONDIR}
+export PERL5LIB=$(CURDIR)/${SRCCOMMONDIR}/blib/lib:$(CURDIR)/${SRCHANDLERDIR}/blib/lib:$(CURDIR)/${SRCMANAGERDIR}/blib/lib/:$(CURDIR)/${SRCPORTALDIR}/blib/lib/
 SU=su -c
 COMPRESS=tar czf
 UNCOMPRESS=tar xzf
