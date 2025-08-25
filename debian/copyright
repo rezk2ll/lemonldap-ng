@@ -275,9 +275,13 @@ Files: lemonldap-ng-portal/t/geoip/*
 Copyright: 2013 - 2024 by MaxMind, Inc.
 License: Expat or Apache-2.0
 
-Files: lemonldap-ng-common/t/saml-schemas/*
+Files: lemonldap-ng-common/t/saml-schemas/saml-*
 Copyright: OASIS Open 2005
 License: OASIS
+
+Files: lemonldap-ng-common/t/saml-schemas/x*
+Copyright: W3C
+License: W3C
 
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
