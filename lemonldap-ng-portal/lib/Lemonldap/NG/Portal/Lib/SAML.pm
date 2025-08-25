@@ -198,17 +198,15 @@ sub loadService {
 
     # Get metadata from configuration
     $self->logger->debug("Get Metadata for this service");
-    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+    my $metadata = $self->_get_metadata_xml( undef, "all" );
+
+    $self->logger->debug("Create Lasso server");
 
     my $encryption_key = $self->get_private_key("default-saml-enc");
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( {
-                %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->()
-            },
-            ''
-        ),
+        $metadata,
         $signing_key->{private},
         $signing_key->{password},
 
@@ -3471,21 +3469,42 @@ sub importRealSession {
     $req->user( $ssoSession->data->{ $self->conf->{whatToTrace} } );
 }
 
+sub _get_metadata_xml {
+    my ( $self, $req_or_undef, $type ) = @_;
+
+    require Lemonldap::NG::Common::Conf::SAML::Metadata;
+
+    my $encryption_key = $self->get_public_key("default-saml-enc");
+
+    if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
+        my $portal =
+            $req_or_undef
+          ? $req_or_undef->portal
+          : $self->p->HANDLER->tsv->{portal}->();
+        return $metadata->serviceToXML(
+            $self->conf,
+            $type,
+            portal       => $portal,
+            signing_keys => [ $self->get_public_key("default-saml-sig") ],
+            (
+                $encryption_key ? ( encryption_keys => [$encryption_key] ) : ()
+            ),
+        );
+    }
+    return;
+}
+
 sub metadata {
     my ( $self, $req ) = @_;
     my $type = $req->param('type') || 'all';
-    require Lemonldap::NG::Common::Conf::SAML::Metadata;
-    if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s =
-          $metadata->serviceToXML( { %{ $self->conf }, portal => $req->portal },
-            $type );
+    if ( my $metadata = $self->_get_metadata_xml( $req, $type ) ) {
         return [
             200,
             [
                 'Content-Type'   => 'application/xml',
-                'Content-Length' => length($s),
+                'Content-Length' => length($metadata),
             ],
-            [$s]
+            [$metadata]
         ];
     }
     return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
