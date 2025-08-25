@@ -3617,6 +3617,10 @@ sub attributes {
             ],
             default => '',
         },
+        samlIDPMetaDataOptionsSignatureKey => {
+            type   => 'text',
+            default => '',
+        },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
             default => 1,
@@ -3804,6 +3808,10 @@ sub attributes {
                 { k => 'RSA_SHA384', v => 'RSA SHA384' },
                 { k => 'RSA_SHA512', v => 'RSA SHA512' },
             ],
+            default => '',
+        },
+        samlSPMetaDataOptionsSignatureKey => {
+            type   => 'text',
             default => '',
         },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {

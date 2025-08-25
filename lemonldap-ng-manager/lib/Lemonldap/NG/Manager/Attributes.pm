@@ -4765,6 +4765,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '',
             'type'    => 'longtext'
         },
+        'samlIDPMetaDataOptionsSignatureKey' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'samlIDPMetaDataOptionsSignatureMethod' => {
             'default' => '',
             'select'  => [ {
@@ -5158,6 +5162,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => {
             'default' => 72000,
             'type'    => 'int'
+        },
+        'samlSPMetaDataOptionsSignatureKey' => {
+            'default' => '',
+            'type'    => 'text'
         },
         'samlSPMetaDataOptionsSignatureMethod' => {
             'default' => '',
