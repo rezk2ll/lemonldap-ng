@@ -39,6 +39,12 @@ build_bookworm:
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bookworm/*_all.deb
 
+build_trixie:
+  extends: .debian_build_job
+  image: debian:trixie
+  after_script:
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/trixie/*_all.deb
+
 build_focal:
   extends: .debian_build_job
   image: ubuntu:focal
