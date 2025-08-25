@@ -1482,7 +1482,7 @@ sub expectMetadataCerts {
 
     my @signing_keys = map { $_->data } getXPath(
         $doc,
-'//md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+'(//md:IDPSSODescriptor | //md:SPSSODescriptor)[1]/md:KeyDescriptor[@use="signing"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
     );
 
     is_deeply(
@@ -1493,7 +1493,7 @@ sub expectMetadataCerts {
 
     my @encryption_keys = map { $_->data } getXPath(
         $doc,
-'//md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+'(//md:IDPSSODescriptor | //md:SPSSODescriptor)[1]/md:KeyDescriptor[@use="encryption"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
     );
 
     is_deeply(
