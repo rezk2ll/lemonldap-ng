@@ -3,12 +3,12 @@ set -xe
 
 . /etc/os-release
 dist=${ID:-unknown}
-ver=${VERSION_ID:-unknown}
+ver=${VERSION_CODENAME:-unknown}
 
 export DEBIAN_FRONTEND=noninteractive
 
 apt update --allow-releaseinfo-change
-apt -y install devscripts dpkg-dev
+apt -y install devscripts dpkg-dev equivs
 mk-build-deps --install --remove \
     --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
     debian/control
