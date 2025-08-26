@@ -1299,6 +1299,26 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'crowdSecAgentResponseCode' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => 200,
+                    'v' => 200
+                },
+                {
+                    'k' => 302,
+                    'v' => 302
+                },
+                {
+                    'k' => '',
+                    'v' => 404
+                }
+            ],
+            'type' => 'select'
+        },
+        'crowdSecAgentResponseValue' => {
+            'type' => 'text'
+        },
         'crowdsecBlockDelay' => {
             'type' => 'int'
         },

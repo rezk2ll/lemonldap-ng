@@ -281,6 +281,8 @@
 "corsMax_Age":"Access-Control-Max-Age",
 "create":"Создать",
 "crossOrigineResourceSharing":"Совместное использование ресурсов между источниками",
+"crowdSecAgentResponseCode":"Ban response code",
+"crowdSecAgentResponseValue":"Ban response content,",
 "crowdsec":"Активация",
 "crowdsecAction":"Действие",
 "crowdsecAgent":"Activation",

@@ -281,6 +281,8 @@
 "corsMax_Age":"Access-Control-Max-Age",
 "create":"Créer",
 "crossOrigineResourceSharing":"Partage des ressources entre origines multiples",
+"crowdSecAgentResponseCode":"Code de réponse pour les rejets",
+"crowdSecAgentResponseValue":"Contenu de la réponse",
 "crowdsec":"Activation",
 "crowdsecAction":"Action",
 "crowdsecAgent":"Activation",

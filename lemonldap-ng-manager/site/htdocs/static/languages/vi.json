@@ -281,6 +281,8 @@
 "corsMax_Age":" Truy cập- Kiểm soát- Tối đa - Tuổi",
 "create":"Tạo",
 "crossOrigineResourceSharing":"Chia sẻ tài nguyên nguồn gốc chéo",
+"crowdSecAgentResponseCode":"Ban response code",
+"crowdSecAgentResponseValue":"Ban response content,",
 "crowdsec":"Kích hoạt",
 "crowdsecAction":"Hành động",
 "crowdsecAgent":"Activation",
