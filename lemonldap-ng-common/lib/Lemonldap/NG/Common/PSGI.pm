@@ -30,6 +30,17 @@ has _auditLogger    => ( is => 'rw' );
 # is not available in the current context to compute the dynamic portal URL
 has portal => ( is => 'rw', isa => 'Str' );
 
+use constant DEFAULT_HTTP_TITLE => {
+    200 => 'OK',
+    302 => 'Found',
+    401 => 'Authentication required',
+    403 => 'Forbidden',
+    404 => 'Not found',
+    500 => 'Server error',
+    502 => 'Bad gateway',
+    503 => 'Gateway timeout',
+};
+
 # INITIALIZATION
 
 sub init {
@@ -235,7 +246,7 @@ sub sendJSONresponse {
 
 sub sendError {
     my ( $self, $req, $err, $code ) = @_;
-    $err  ||= $req->error;
+    $err  ||= $req->error || '';
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
 
@@ -269,13 +280,7 @@ sub sendError {
 
     # Default response: HTML
     else {
-        my $title = (
-              $code >= 500 ? 'Server error'
-            : $code == 403 ? 'Forbidden'
-            : $code == 401 ? 'Authentication required'
-            : $code == 400 ? 'Bad request'
-            :                'Error'
-        );
+        my $title = DEFAULT_HTTP_TITLE->{$code} || 'Error';
 
         # TODO: this should probably use a template instead
         my $s = "<html><head><title>$title</title>

@@ -1536,7 +1536,12 @@ sub attributes {
             select => [
                 { k => 200, v => 200 },
                 { k => 302, v => 302 },
+                { k => 401, v => 401 },
+                { k => 403, v => 403 },
                 { k => '',  v => 404 },
+                { k => 500, v => 500 },
+                { k => 502, v => 502 },
+                { k => 503, v => 503 },
             ],
             default       => '',
             documentation => 'Crowdsec ban response code',

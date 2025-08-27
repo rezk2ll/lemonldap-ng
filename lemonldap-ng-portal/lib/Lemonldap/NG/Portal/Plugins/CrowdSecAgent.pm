@@ -31,8 +31,6 @@ has rule => ( is => 'rw', default => sub { 0 } );
 
 has filters => ( is => 'rw', default => sub { {} } );
 
-has banResponse => ( is => 'rw' );
-
 # Entrypoint
 use constant aroundSub => {
 
@@ -67,13 +65,7 @@ sub init {
                 'Crowdsec filter directory not found, ignoring');
         }
     }
-
-    $self->banResponse(
-        $self->_banResponse(
-            $self->conf->{crowdSecAgentResponseCode},
-            $self->conf->{crowdSecAgentResponseValue}
-        )
-    );
+    $self->conf->{crowdSecAgentResponseCode} ||= 404;
 
     return 1;
 }
@@ -134,25 +126,41 @@ sub controlUrl {
           : $self->logger->error(
             "Unable to send alert to Crowdsec (was '$msg' for "
               . $req->address );
-        $req->response( $self->banResponse );
+
+        $req->response(
+
+        # Case "redirection", crowdSecAgentResponseValue is the "location" value
+            $self->conf->{crowdSecAgentResponseCode} =~ /^3/
+            ? $self->p->sendRawHtml(
+                $req,
+                $self->conf->{crowdSecAgentResponseValue},
+                {
+                    code    => $self->conf->{crowdSecAgentResponseCode},
+                    headers => [
+                        Location => (
+                            $self->conf->{crowdSecAgentResponseValue}
+                              || 'https://somewhere.else'
+                        )
+                    ],
+                }
+              )
+
+            # Case "custom response
+            : $self->conf->{crowdSecAgentResponseValue}
+            ? $self->p->sendRawHtml(
+                $req,
+                $self->conf->{crowdSecAgentResponseValue},
+                { code => $self->conf->{crowdSecAgentResponseCode} }
+              )
+
+            # Case "default Lemon response
+            : $self->sendError(
+                $req, '', $self->conf->{crowdSecAgentResponseCode}
+            )
+        );
         return PE_SENDRESPONSE;
     }
     return $ret;
-}
-
-sub _banResponse {
-    my ( $self, $code, $value ) = @_;
-    if ( $code == 200 ) {
-        return [
-            200,
-            [ 'Content-Type' => 'text/html' ],
-            [ $value || '<html><body>dummy</body></html>' ]
-        ];
-    }
-    if ( $code == 302 ) {
-        return [ 302, [ Location => $value || 'https://somewhere.else' ], [] ];
-    }
-    return [ 404, [], [ $value || 'Not found' ] ];
 }
 
 1;
