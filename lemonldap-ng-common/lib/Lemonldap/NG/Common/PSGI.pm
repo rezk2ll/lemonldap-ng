@@ -2,6 +2,7 @@ package Lemonldap::NG::Common::PSGI;
 
 use strict;
 use Mouse;
+use HTTP::Status;
 use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
@@ -29,17 +30,6 @@ has _auditLogger    => ( is => 'rw' );
 # portal only stores the "default" portal URL, in case a request
 # is not available in the current context to compute the dynamic portal URL
 has portal => ( is => 'rw', isa => 'Str' );
-
-use constant DEFAULT_HTTP_TITLE => {
-    200 => 'OK',
-    302 => 'Found',
-    401 => 'Authentication required',
-    403 => 'Forbidden',
-    404 => 'Not found',
-    500 => 'Server error',
-    502 => 'Bad gateway',
-    503 => 'Gateway timeout',
-};
 
 # INITIALIZATION
 
@@ -280,7 +270,8 @@ sub sendError {
 
     # Default response: HTML
     else {
-        my $title = DEFAULT_HTTP_TITLE->{$code} || 'Error';
+        my $title = eval { HTTP::Status::status_message($code) } || 'Error';
+        print STDERR $@ if $@;
 
         # TODO: this should probably use a template instead
         my $s = "<html><head><title>$title</title>

@@ -133,9 +133,12 @@ subtest 'Report bad urls to Crowdsec', sub {
     foreach my $subtest ( sort keys %badUrls ) {
         my $url = $badUrls{$subtest};
         subtest $subtest => sub {
-            ok( $res = $client->_get($url), "Test bad url $url" );
-            ok( $res->[0] == 404,           '404 not found' );
-            ok( $ban == ++$prevBan,         "Bad url detected" );
+            ok( $res = $client->_get( $url, accept => 'text/html' ),
+                "Test bad url $url" );
+            ok( $res->[0] == 404, '404 not found' );
+            ok( $res->[2]->[0] =~ /Not found/i )
+              or explain( $res->[2], 'Not found' );
+            ok( $ban == ++$prevBan, "Bad url detected" );
         };
     }
 };
