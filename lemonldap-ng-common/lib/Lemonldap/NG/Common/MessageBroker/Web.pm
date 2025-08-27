@@ -24,7 +24,7 @@ sub new {
     }
     elsif ( $args->{server} =~ m#^(?:(?:http|ws)(s)?://)?([^/:]+:[^/:]+)/?$# ) {
         $args->{server} = $2;
-        $ssl = 1 if $1;
+        $ssl = 's' if $1;
     }
     else {
         $logger->error("$pr unparsable server '$args->{server}'");
