@@ -133,7 +133,7 @@ sub newDevice {
             $req->response(
                 $self->p->sendHtml(
                     $req,
-                    '../common/registerBrowser',
+                    'registerBrowser',
                     params => {
                         TOTPSEC => $totpSecret,
                         USETOTP => $self->use_totp,
@@ -382,7 +382,7 @@ sub challenge {
     $req->response(
         $self->p->sendHtml(
             $req,
-            '../common/registerBrowser',
+            'registerBrowser',
             params => {
                 TOKEN   => $token,
                 USETOTP => $self->use_totp,
