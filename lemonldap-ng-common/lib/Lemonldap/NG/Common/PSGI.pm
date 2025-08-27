@@ -2,6 +2,7 @@ package Lemonldap::NG::Common::PSGI;
 
 use strict;
 use Mouse;
+use HTTP::Status;
 use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
@@ -235,7 +236,7 @@ sub sendJSONresponse {
 
 sub sendError {
     my ( $self, $req, $err, $code ) = @_;
-    $err  ||= $req->error;
+    $err  ||= $req->error || '';
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
 
@@ -269,13 +270,8 @@ sub sendError {
 
     # Default response: HTML
     else {
-        my $title = (
-              $code >= 500 ? 'Server error'
-            : $code == 403 ? 'Forbidden'
-            : $code == 401 ? 'Authentication required'
-            : $code == 400 ? 'Bad request'
-            :                'Error'
-        );
+        my $title = eval { HTTP::Status::status_message($code) } || 'Error';
+        print STDERR $@ if $@;
 
         # TODO: this should probably use a template instead
         my $s = "<html><head><title>$title</title>

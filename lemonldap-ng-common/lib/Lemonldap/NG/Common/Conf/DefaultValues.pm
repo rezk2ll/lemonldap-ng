@@ -69,6 +69,7 @@ sub defaultValues {
         'crowdsec'                       => 0,
         'crowdsecAction'                 => 'reject',
         'crowdsecAgent'                  => 0,
+        'crowdSecAgentResponseCode'      => '',
         'cspConnect'                     => '\'self\'',
         'cspDefault'                     => '\'self\'',
         'cspFont'                        => '\'self\'',

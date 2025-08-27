@@ -1225,6 +1225,8 @@ sub tree {
                                                 'crowdsecMaxFailures',
                                                 'crowdsecBlockDelay',
                                                 'crowdsecFilters',
+                                                'crowdSecAgentResponseCode',
+                                                'crowdSecAgentResponseValue',
                                             ],
                                         },
                                     ],

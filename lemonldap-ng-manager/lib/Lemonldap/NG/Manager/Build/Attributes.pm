@@ -1531,6 +1531,25 @@ sub attributes {
             type          => 'text',
             documentation => 'Crowdsec filters directory',
         },
+        crowdSecAgentResponseCode => {
+            type   => 'select',
+            select => [
+                { k => 200, v => 200 },
+                { k => 302, v => 302 },
+                { k => 401, v => 401 },
+                { k => 403, v => 403 },
+                { k => '',  v => 404 },
+                { k => 500, v => 500 },
+                { k => 502, v => 502 },
+                { k => 503, v => 503 },
+            ],
+            default       => '',
+            documentation => 'Crowdsec ban response code',
+        },
+        crowdSecAgentResponseValue => {
+            type          => 'text',
+            documentation => 'Crowdsec ban response text',
+        },
 
         # OIDC personnal offline token removal
         oidcOfflineTokens => {
@@ -5516,10 +5535,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'subContainer',
             documentation => 'Root of keys',
         },
-        keyPrivate => { type => 'EcOrRSAPrivateKey', default => "" },
-        keyPrivatePwd => { type => 'password', default => "" },
+        keyPrivate    => { type => 'EcOrRSAPrivateKey', default => "" },
+        keyPrivatePwd => { type => 'password',          default => "" },
         keyPublic => { type => 'EcOrRSAPublicKeyOrCertificate', default => "" },
-        'keyId' => { type => "text", default => "" },
+        'keyId'   => { type => "text",                          default => "" },
         'keyComment' => { type => 'text', default => "" },
     };
 }

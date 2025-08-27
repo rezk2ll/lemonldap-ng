@@ -63,6 +63,12 @@ You can then configure:
 - **Check delay**: number of seconds to consider failures. Default: 180
 - **Filters directory**: directory where Crowdsec can find its filters. If
   not defined or empty, filters are disabled. See :ref:`Filters`
+- **Ban response code**: code for rejections based on filters *(default: 404)*
+- **Ban response content**: content of rejection responses. Default:
+
+  - ``Not found`` for 404
+  - ``http://somewhere.else`` for 302 *(used in "Location" field)*
+  - ``<html><body>dummy</body></html>`` for 200
 
 Note that:
 

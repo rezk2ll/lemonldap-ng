@@ -281,6 +281,8 @@
 "corsMax_Age":"Access-Control-Max-Age",
 "create":"יצירה",
 "crossOrigineResourceSharing":"שיתוף משאבי Cross-Origin ‏(CORS)",
+"crowdSecAgentResponseCode":"Ban response code",
+"crowdSecAgentResponseValue":"Ban response content,",
 "crowdsec":"הפעלה",
 "crowdsecAction":"פעולה",
 "crowdsecAgent":"Activation",

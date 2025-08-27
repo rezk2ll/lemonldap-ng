@@ -281,6 +281,8 @@
 "corsMax_Age":"存取控制最大時間",
 "create":"建立",
 "crossOrigineResourceSharing":"跨來源資源共享",
+"crowdSecAgentResponseCode":"Ban response code",
+"crowdSecAgentResponseValue":"Ban response content,",
 "crowdsec":"啟用",
 "crowdsecAction":"動作",
 "crowdsecAgent":"Activation",

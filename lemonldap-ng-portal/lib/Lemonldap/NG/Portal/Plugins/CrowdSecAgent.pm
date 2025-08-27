@@ -65,6 +65,7 @@ sub init {
                 'Crowdsec filter directory not found, ignoring');
         }
     }
+    $self->conf->{crowdSecAgentResponseCode} ||= 404;
 
     return 1;
 }
@@ -125,7 +126,38 @@ sub controlUrl {
           : $self->logger->error(
             "Unable to send alert to Crowdsec (was '$msg' for "
               . $req->address );
-        $req->response( [ 404, [], ['Not found'] ] );
+
+        $req->response(
+
+        # Case "redirection", crowdSecAgentResponseValue is the "location" value
+            $self->conf->{crowdSecAgentResponseCode} =~ /^3/
+            ? $self->p->sendRawHtml(
+                $req,
+                $self->conf->{crowdSecAgentResponseValue},
+                {
+                    code    => $self->conf->{crowdSecAgentResponseCode},
+                    headers => [
+                        Location => (
+                            $self->conf->{crowdSecAgentResponseValue}
+                              || 'https://somewhere.else'
+                        )
+                    ],
+                }
+              )
+
+            # Case "custom response
+            : $self->conf->{crowdSecAgentResponseValue}
+            ? $self->p->sendRawHtml(
+                $req,
+                $self->conf->{crowdSecAgentResponseValue},
+                { code => $self->conf->{crowdSecAgentResponseCode} }
+              )
+
+            # Case "default Lemon response
+            : $self->sendError(
+                $req, '', $self->conf->{crowdSecAgentResponseCode}
+            )
+        );
         return PE_SENDRESPONSE;
     }
     return $ret;
