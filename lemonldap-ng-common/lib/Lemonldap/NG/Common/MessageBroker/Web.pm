@@ -22,7 +22,7 @@ sub new {
         $args->{server} = DEFAULTWS;
         $logger->info("$pr no server given");
     }
-    elsif ( $args->{server} =~ m#^(?:(?:http|ws)(s)?://)?([^/:]+:[^/:]+)/?$# ) {
+    elsif ( $args->{server} =~ m#^(?:(?:http|ws)(s)?://)?(.+?)/*$# ) {
         $args->{server} = $2;
         $ssl = 's' if $1;
     }
