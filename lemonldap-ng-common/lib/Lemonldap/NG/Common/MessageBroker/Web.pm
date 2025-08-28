@@ -22,9 +22,9 @@ sub new {
         $args->{server} = DEFAULTWS;
         $logger->info("$pr no server given");
     }
-    elsif ( $args->{server} =~ m#^(?:(?:http|ws)(s)?://)?([^/:]+:[^/:]+)/?$# ) {
+    elsif ( $args->{server} =~ m#^(?:(?:http|ws)(s)?://)?(.+?)/*$# ) {
         $args->{server} = $2;
-        $ssl = 1 if $1;
+        $ssl = 's' if $1;
     }
     else {
         $logger->error("$pr unparsable server '$args->{server}'");
@@ -107,7 +107,12 @@ sub waitForNextMessage {
 
 sub _connect {
     my ($self) = @_;
-    my ( $host, $port ) = split /:/, $self->{server};
+    my ( $host, $port ) = split /:/, $self->{server}, 2;
+
+    # If port is not defined, use 80 or 443
+    $port =
+      ( $port && $port =~ /^(\d+)/ ) ? $1 : $self->{ssl} eq 's' ? 443 : 80;
+    $host =~ s|/.*$||;
     my $sock = IO::Socket::INET->new(
         PeerHost => $host,
         PeerPort => $port,
@@ -181,7 +186,7 @@ sub _connect {
     $client->connect();
 
     my $buf;
-    $sock->recv( $buf, 4096 );
+    $sock->sysread( $buf, 4096 );
     $client->read($buf);
 
     $self->{socket}    = $sock;
