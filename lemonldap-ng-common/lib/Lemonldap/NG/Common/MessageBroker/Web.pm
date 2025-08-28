@@ -181,7 +181,7 @@ sub _connect {
     $client->connect();
 
     my $buf;
-    $sock->recv( $buf, 4096 );
+    $sock->sysread( $buf, 4096 );
     $client->read($buf);
 
     $self->{socket}    = $sock;
