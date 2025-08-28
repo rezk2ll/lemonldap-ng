@@ -1533,7 +1533,7 @@ sub attributes {
         },
         crowdSecAgentResponseCode => {
             type          => 'int',
-            default       => '',
+            default       => 404,
             documentation => 'Crowdsec ban response code',
         },
         crowdSecAgentResponseValue => {

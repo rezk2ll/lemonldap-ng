@@ -1300,7 +1300,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'crowdSecAgentResponseCode' => {
-            'default' => '',
+            'default' => 404,
             'type'    => 'int'
         },
         'crowdSecAgentResponseValue' => {
