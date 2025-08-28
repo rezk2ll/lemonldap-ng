@@ -107,7 +107,12 @@ sub waitForNextMessage {
 
 sub _connect {
     my ($self) = @_;
-    my ( $host, $port ) = split /:/, $self->{server};
+    my ( $host, $port ) = split /:/, $self->{server}, 2;
+
+    # If port is not defined, use 80 or 443
+    $port =
+      ( $port && $port =~ /^(\d+)/ ) ? $1 : $self->{ssl} eq 's' ? 443 : 80;
+    $host =~ s|/.*$||;
     my $sock = IO::Socket::INET->new(
         PeerHost => $host,
         PeerPort => $port,
