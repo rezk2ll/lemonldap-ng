@@ -63,13 +63,6 @@ build_noble:
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
 
-build_centos_7:
-  extends: .build_job
-  image: quay.io/centos/centos:7
-  script:
-    - scripts/ci-build-rpm
-    - yum -y install ${CI_PROJECT_DIR}/result/centos/7/*.noarch.rpm
-
 build_rocky_8:
   extends: .build_job
   image: quay.io/rockylinux/rockylinux:8
