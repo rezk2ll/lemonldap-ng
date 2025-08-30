@@ -11,14 +11,31 @@
 
 .debian_build_job:
   extends: .build_job
+  image: debian:${CODENAME}
+  variables:
+    DISTRO: debian
   script:
     - scripts/ci-build-deb
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/${DISTRO}/${CODENAME}/*_all.deb
   before_script:
     - env | grep ^CI_
     # Converting to native package...
     - sed -i "1{s/-1) /$suffix) /}" debian/changelog
     - sed -i "1{s/-2) /$suffix) /}" debian/changelog
     - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
+
+.ubuntu_build_job:
+  extends: .debian_build_job
+  variables:
+    DISTRO: ubuntu
+  image: ubuntu:${CODENAME}
+
+.rocky_build_job:
+  extends: .build_job
+  image: quay.io/rockylinux/rockylinux:${MAJOR}
+  script:
+    - scripts/ci-build-rpm
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/${MAJOR}/*.noarch.rpm
 
 stages:
   - build
@@ -27,55 +44,53 @@ stages:
 before_script:
   - env | grep ^CI_
 
+# EOLTS: 2026-08-31
 build_bullseye:
   extends: .debian_build_job
-  image: debian:bullseye
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bullseye/*_all.deb
+  variables:
+    CODENAME: bullseye
 
+# EOLTS: 2028-06-30
 build_bookworm:
   extends: .debian_build_job
-  image: debian:bookworm
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/bookworm/*_all.deb
+  variables:
+    CODENAME: bookworm
 
+# EOLTS: 2030-06-30
 build_trixie:
   extends: .debian_build_job
-  image: debian:trixie
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/debian/trixie/*_all.deb
+  variables:
+    CODENAME: trixie
 
+# EOL: May 2025
 build_focal:
-  extends: .debian_build_job
-  image: ubuntu:focal
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/focal/*_all.deb
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: focal
 
+# EOL: Apr 2027
 build_jammy:
-  extends: .debian_build_job
-  image: ubuntu:jammy
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/jammy/*_all.deb
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: jammy
 
+# EOL: Apr 2029
 build_noble:
-  extends: .debian_build_job
-  image: ubuntu:noble
-  after_script:
-    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: noble
 
+# EOL: 31 May 2029
 build_rocky_8:
-  extends: .build_job
-  image: quay.io/rockylinux/rockylinux:8
-  script:
-    - scripts/ci-build-rpm
-    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/8/*.noarch.rpm
+  extends: .rocky_build_job
+  variables:
+    MAJOR: 8
 
+# EOL: 31 May 2032
 build_rocky_9:
-  extends: .build_job
-  image: quay.io/rockylinux/rockylinux:9
-  script:
-    - scripts/ci-build-rpm
-    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/9/*.noarch.rpm
+  extends: .rocky_build_job
+  variables:
+    MAJOR: 9
 
 sonar-inspect:
   image: debian:bookworm
