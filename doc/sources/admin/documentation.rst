@@ -24,11 +24,19 @@ Installation and configuration
 
 |image1|
 
--  Maintained versions:
+Supported distributions
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   -  `Version 3.0 </documentation/3.0/>`__ (dev)
-   -  `Version 2.0 </documentation/2.0/>`__ (stable)
-   -  `Version 1.9 </documentation/1.9/>`__ (oldstable)
+The LemonLDAP::NG team supports running our software in the following distributions:
+
+* Debian
+* Ubuntu
+* RHEL and derivatives (Rocky Linux, AlmaLinux, etc.)
+
+We release new versions of LemonLDAP::NG for all, currently community-supported
+versions of these distributions. If you need LemonLDAP::NG to work on a
+different distribution, or on an older version, please contact one of `our
+contributing sponsors <https://lemonldap-ng.org/sponsors.html>`_.
 
 Long Term Support
 ~~~~~~~~~~~~~~~~~
@@ -64,10 +72,11 @@ N°          Debian name                LL::NG version                          
 *7*         *Wheezy*                   *1.1.2*                                  |maybe| *minor issues*                                                                                *None*                                                       *May 2018*
 *8*         *Jessie*                   *1.3.3*                                  |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*                                                       *June 2020*
 *9*         *Stretch*                  *1.9.7*                                  |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*  [1]_                                                 *June 2022*
-*10*        *Buster*                   `2.0.2 </documentation/2.0/>`__          |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*  [1]_                                                 *June 2024*                         Possibly 2026
-**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                                                               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       August 2026                         Possibly 2028
-**12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|                                                                                               `Debian Security Team <https://security-team.debian.org/>`__ June 2028                           Possibly 2030
+*10*        *Buster*                   `2.0.2 </documentation/2.0/>`__          |maybe| `minor issues <https://deb.freexian.com/extended-lts/tracker/source-package/lemonldap-ng>`__  *None*  [1]_                                                 *June 2024*                         Possibly 2029
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                                                               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       August 2026                         Possibly 2031
+**12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|                                                                                               `Debian Security Team <https://security-team.debian.org/>`__ June 2028                           Possibly 2033
 \           Bookworm-backports         `Latest </documentation/2.0/>`__ [3]_    |clean|                                                                                               LL::NG Team, "best effort" [2]_                              July 2026
+**13**      Trixie                     `2.21.2 </documentation/2.0/>`_          |clean|                                                                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2030                           Possibly 2035
 **Next**    Testing/Unstable           Latest  [3]_                             |clean|                                                                                               LL::NG Team
 =========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
 
@@ -95,6 +104,22 @@ Ubuntu dist               LL::NG version                     Secured            
 24.04       Noble *(LTS)* `2.18.2 </documentation/2.0/>`__ |maybe| minor issues: CVE-2024-45160, CVE-2024-48933, CVE-2024-52946, CVE-2024-52947, CVE-2024-52948, CVE-2025-31510                 None
 25.04       Plucky        `2.20.2 </documentation/2.0/>`__ |maybe| minor issue: CVE-2025-31510                                                                                                  None
 =========== ============= ================================ ==================================================================================================================================== ===========
+
+RHEL and derivatives
+^^^^^^^^^^^^^^^^^^^^
+
+The LemonLDAP::NG development team provides packages for the latest version of
+LemonLDAP::NG directly in `EPEL <https://docs.fedoraproject.org/en-US/epel/>`__
+repositories.
+
+===========  ================== ========= ============ ==============
+N°           LL::NG version     Secured   Maintenance  End of life
+===========  ================== ========= ============ ==============
+*8*          *latest*           |clean|   LL::NG Team  *June 2029*
+*9*          *latest*           |clean|   LL::NG Team  *June 2032*
+*10*         *latest*           |clean|   LL::NG Team  *June 2035*
+===========  ================== ========= ============ ==============
+
 
 Bug report
 ----------
