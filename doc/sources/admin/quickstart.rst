@@ -1,4 +1,4 @@
-uick start tutorial
+Quick start tutorial
 ====================
 
 
