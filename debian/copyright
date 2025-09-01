@@ -275,6 +275,14 @@ Files: lemonldap-ng-portal/t/geoip/*
 Copyright: 2013 - 2024 by MaxMind, Inc.
 License: Expat or Apache-2.0
 
+Files: lemonldap-ng-common/t/saml-schemas/saml-*
+Copyright: OASIS Open 2005
+License: OASIS
+
+Files: lemonldap-ng-common/t/saml-schemas/x*
+Copyright: W3C
+License: W3C
+
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
  2004, Florent Monnier
@@ -2364,3 +2372,20 @@ License: unDraw
  assets in packs or otherwise. This extends to automated and non-automated
  ways to link, embed, scrape, search or download the assets included on the
  website without our consent.
+
+License: OASIS
+ Copyright © OASIS Open 2005. All Rights Reserved.
+ This document and translations of it may be copied and furnished to others, and derivative works that
+ comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and
+ distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and
+ this paragraph are included on all such copies and derivative works. However, this document itself may
+ not be modified in any way, such as by removing the copyright notice or references to OASIS, except as
+ needed for the purpose of developing OASIS specifications, in which case the procedures for copyrights
+ defined in the OASIS Intellectual Property Rights document must be followed, or as required to translate it
+ into languages other than English.
+ The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors
+ or assigns.
+ This document and the information contained herein is provided on an “AS IS” basis and OASIS
+ DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+ WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR
+ ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.

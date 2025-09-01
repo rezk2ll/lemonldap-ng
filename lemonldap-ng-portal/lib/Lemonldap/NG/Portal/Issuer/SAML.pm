@@ -197,7 +197,8 @@ sub storeEnv {
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
             # Store target authentication level in pdata
-            my $targetAuthnLevel = $self->spLevelRules->{$spConfKey}->( $req, {} );
+            my $targetAuthnLevel =
+              $self->spLevelRules->{$spConfKey}->( $req, {} );
 
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
@@ -563,7 +564,8 @@ sub run {
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
                 $self->logger->debug(
-                    "Get NameID format $nameIDFormat from request") if defined($nameIDFormat);
+                    "Get NameID format $nameIDFormat from request")
+                  if defined($nameIDFormat);
             }
 
             # Get default NameID Format from configuration
@@ -2026,7 +2028,7 @@ sub sloServer {
 
         if ($session_index) {
             my $sessionIndexSession = $self->getSamlSession($session_index);
-            return $self->p->doPE($req, PE_SESSIONEXPIRED)
+            return $self->p->doPE( $req, PE_SESSIONEXPIRED )
               unless $sessionIndexSession;
 
             $local_session_id = $sessionIndexSession->data->{_saml_id};
@@ -2201,7 +2203,7 @@ sub sloServer {
             if ($savedInfo) {
                 $logoutContextSession->update( { info => $savedInfo } );
             }
-            return $self->p->doPE($req, PE_REDIRECT);
+            return $self->p->doPE( $req, PE_REDIRECT );
         }
 
         $req->info($savedInfo);

@@ -86,6 +86,31 @@ eQIDAQAB
 -----END PUBLIC KEY-----";
 }
 
+sub saml_key_proxy_cert_sig {
+    "-----BEGIN CERTIFICATE-----
+MIIDbTCCAlWgAwIBAgIUFscP0cOkJ/U2YuZkgeHTxh0o4BgwDQYJKoZIhvcNAQEL
+BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAgFw0yNTA4MDExNDAyMjJaGA8yMTI1
+MDcwODE0MDIyMlowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx
+ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAM7Zm9SWZP2oJGGJttw+Hami0uBChyq4zuHgb8LV
+mS3sQBkdSg6XKx6i8qiaGpfquAPHayO5cRJUresUSieAyMUDNY6kXJhOhM3S+gX0
+2kWnHt8yLoYw0kFGSXbRbZScp0E9XCW8eWWIamW2ADZvTWUXGGeYFnshfZ5eNcQO
+/QDLmJabe3lg0fHJ0CV8Fe/dPfdRUPcgNgQYE3UipBame9j+JVruLIc9yQhn+Ycq
+tN4Qh0O27H6YAHQq20D07iTRbUuffQpTLvgHEXMCXEtt96R3d9Oj0Rwl59xGqauo
+BKB8YC1TafpbgCIUQPRGjp2dJ1ZBcBSp97y181dNYk5YjHkCAwEAAaNTMFEwHQYD
+VR0OBBYEFA4wi6itTPYB2iQ3nSCAys3qp8iZMB8GA1UdIwQYMBaAFA4wi6itTPYB
+2iQ3nSCAys3qp8iZMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB
+AKzSKAeAq5/9iypK67rJbEidZjoID9v8IgyzmOmrCG4dwJhmmN7ZdJuwFE50x9id
+mdTCJMJg4ZMKAcFDEHGNKi/YIDQglnF8E3fG5sJ7nGJc44fAlkpp01LSsjYLRB+j
+X3ax2PDbYRc/qnkrMVXcqj19PYY/cBCn2epyWuG7Za6RuLXT35aEkvrnmZpvfBgl
+drcvJIwl29yZRpjNp3xLTdc5F1tF3OD2i5TQiYmdMpM4qSZ2Tz4IT3PKs45ZtjdS
+lWJX7ivL+rq+TbiY680PL69IyTxWphBy9YYmGHVUTZJUxMMSKiI7CpDPQQ13F1wX
+FnQH+J3thbkj8O6gqWZ5X3E=
+-----END CERTIFICATE-----";
+
+}
+
 sub saml_key_idp_private_enc {
     "-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAnfKBDG/K0TnGT7Xu8q1N45sNWvIK91SqNg8nvN2uVeKoHADT
@@ -170,6 +195,30 @@ ywIDAQAB
 -----END PUBLIC KEY----- ";
 }
 
+sub saml_key_idp_cert_sig {
+    "-----BEGIN CERTIFICATE-----
+MIIDbTCCAlWgAwIBAgIUXsAX6Z/sTIq+w08CtE4HRuEdf2EwDQYJKoZIhvcNAQEL
+BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAgFw0yNTA4MDExNDAzMzVaGA8yMTI1
+MDcwODE0MDMzNVowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx
+ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBALUf8IA6lgeDGoaOVek43C/zWzX44CIexnIJKweU
+WXFU9Rk3oyZTI1EHYASgbmV0Dfu/9vT+lHBqtZGGpVEaukvEqXidaH6eawRKA/0y
+JL1NCTnIneucKfn3c1xl7H4mbx62lO+I0goIz/8Kn1RkcgSEMwdEiMUqZ67IoKjb
+BNRPeLaAzMeMKL4x7v/QAQCJkRFe0s/NznhRdNP7IIa40xCTg/4B39OCQp/TIDTq
+r0k8rK/S11oP6FCkAxGHk6vbseqav6Kr9TMcDjW0mT7Tecg+NZovoU/EYflvCXvK
+7IjC+FTMc7G9Zfd9N2rMOrLqOWy0yEijUm7tZ7dTZKTcc8sCAwEAAaNTMFEwHQYD
+VR0OBBYEFNBDjE4qyY/dQTYHuG83e+nfiyXyMB8GA1UdIwQYMBaAFNBDjE4qyY/d
+QTYHuG83e+nfiyXyMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB
+AD25y0JCSM42jZkkikqxL1alyW7KRm8llH3iw9uo9YqoUFZJCbF4dyVbjzTOGVIH
+1d/felt2q5Ntcl+VtccODIjg2GpM6QteY4hq0mFy2Kwp8drR4HPryFOfhkxruPD4
+Pp4BI9HbFZouc9lpEPxsfiWrqbpKSrPFsxCnq2gfz7LiM4K7/chXl1nvBsk2jfpp
+qHx6YO+btmJX4VQnkYaAMENA93FtXZASqt3dNI7GuqOi/7NmUAEDx+Gh2XF6WB3Q
+7ZugYlhGdFm/idQidpf5zNwNk2WMQ8RBlROKecgqEfUhpLeDziOek4cbsWbG2voz
+yf+fBOtOrWK7VpWeIkMLJZY=
+-----END CERTIFICATE-----";
+}
+
 sub saml_key_sp_public_sig {
     "-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu4iToYAEmWQxgZDihGVz
@@ -252,6 +301,30 @@ zO0njuqGHkwEpy8rUWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtY
 XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
 +wIDAQAB
 -----END PUBLIC KEY-----";
+}
+
+sub saml_key_sp_cert_sig {
+    "-----BEGIN CERTIFICATE-----
+MIIDbTCCAlWgAwIBAgIUXDHeTxgAdIpOp2++gWrRaBr9CxwwDQYJKoZIhvcNAQEL
+BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAgFw0yNTA4MDExNDA0NDFaGA8yMTI1
+MDcwODE0MDQ0MVowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx
+ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBALuIk6GABJlkMYGQ4oRlczDKpdXpT59+3aJlnL13
+lNhOMrdoYeY5EB4hY4KHXzpTXkSMOUCVZVAcK/gkL22ikRV3ewazoUCAwtE2T0VQ
+dFx2q1LbArg3pDeP9hiksx7KE6ClFT1qvbYbLnpN8ZKbCRmTV+24JXxHPfkEKWE6
+jda5HTdT1VNHqTTKJBRRoaOaS0ai1FefiP0FwC+PY3042ksbKeFJ3UyPP/phkkUq
+vp609s8kETP75I+b0fWVc+uxzv/lpNzMekQMJFXDHYDAKgqvKHZmyNMgkWYky/cm
+ylkSqliaCidKefkNnzxAT7qUGUdPSbfyT7i1UrBnwsYvTasCAwEAAaNTMFEwHQYD
+VR0OBBYEFEWmfbeUIDfMp28Nm5ZoYCBww1NnMB8GA1UdIwQYMBaAFEWmfbeUIDfM
+p28Nm5ZoYCBww1NnMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB
+ALA5okXVSvdIb0GtYhon2d22X5Hpd16n3UHxFcEfRClz/fR1t42BjJeVsjoB9gdq
+ded8X3Wx5Ufmx+IcP5MkItA4X3poctULnScyraL8Bjyiry2mmMwssS7dxfKtq0kb
+Cjkt9aKdVg/K4IpjfAL2yWN7dLhyKC8iFQTGZQLEYSoWllU6O0mY1G3yESnd3ZhM
+pm6Hj4As5CxdlhRC3wFe0WSsXctXZXnig5Vu8aXvuJdGCmeimLmmVUN6XoKs04km
+GpOaw66yU3Q2Bkj0Q32V6eoXHxeMmJzRFjlAlFX8ouaTXIJlla1zQ6EEVhhHyIJx
+qkDlp/EbsA5pW9bJpalb0hA=
+-----END CERTIFICATE-----";
 }
 
 sub samlSPMetaDataXML {
@@ -1254,16 +1327,22 @@ Match a XPath expression against the provided string, and verify that the correc
 
 =cut
 
-sub expectXPath {
+sub getXPath {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my ( $xml_string, $xpath, $value, $message ) = @_;
-    my $dom = XML::LibXML->load_xml( string => $xml_string );
+    my ( $string_or_dom, $xpath ) = @_;
+
+    my $dom =
+      ref($string_or_dom)
+      ? $string_or_dom
+      : XML::LibXML->load_xml( string => $string_or_dom );
     return unless ok( $dom, 'XML successfully parsed' );
 
     my $xpc        = XML::LibXML::XPathContext->new($dom);
     my $namespaces = {
         samlp => 'urn:oasis:names:tc:SAML:2.0:protocol',
         saml  => 'urn:oasis:names:tc:SAML:2.0:assertion',
+        md    => 'urn:oasis:names:tc:SAML:2.0:metadata',
+        sig   => 'http://www.w3.org/2000/09/xmldsig#',
     };
     if ( ref($namespaces) eq "HASH" ) {
         for my $key ( keys %{$namespaces} ) {
@@ -1271,7 +1350,14 @@ sub expectXPath {
         }
     }
 
-    my ($match1) = $xpc->findnodes($xpath);
+    return $xpc->findnodes($xpath);
+}
+
+sub expectXPath {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $xml_string, $xpath, $value, $message ) = @_;
+
+    my ($match1) = getXPath( $xml_string, $xpath );
     return unless ok( $match1, 'Found a match for XPath Expression ' . $xpath );
 
     if ( ref($match1) eq 'XML::LibXML::Attr' ) {

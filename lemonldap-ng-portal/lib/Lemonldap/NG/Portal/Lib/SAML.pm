@@ -2726,7 +2726,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->logger->warn( "Could not build a logout response for provider "
               . $logout->remote_providerID
               . ", staying on portal" );
-        return $self->p->doPE($req, PE_LOGOUT_OK);
+        return $self->p->doPE( $req, PE_LOGOUT_OK );
     }
 
     # Send response depending on request method
