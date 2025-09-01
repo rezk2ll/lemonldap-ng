@@ -160,6 +160,9 @@ sub _getKeyInfoFromPem {
 
     my $str;
 
+    if ( defined $val and ref($val) eq "HASH" and exists $val->{public} ) {
+        $val = $val->{public};
+    }
     if ( defined $val && length $val gt 0 ) {
 
         # Public Key ?
