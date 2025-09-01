@@ -534,6 +534,7 @@ site/templates/bootstrap/public/test.tpl
 site/templates/bootstrap/pwdWillExpire.tpl
 site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
+site/templates/bootstrap/registerBrowser.tpl
 site/templates/bootstrap/removeOther.tpl
 site/templates/bootstrap/samlRedirectToIdp.tpl
 site/templates/bootstrap/samlSpLogout.tpl
@@ -586,7 +587,6 @@ site/templates/common/mail_register_done.tpl
 site/templates/common/notification.xsl
 site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
-site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/00-Switch.t
 t/01-AuthDemo.t
@@ -688,6 +688,7 @@ t/30-Auth-ResolutionRule.t
 t/30-Auth-Saml-Reauth.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
+t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-Macros.t

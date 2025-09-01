@@ -143,8 +143,12 @@ t/log4perl.ini
 t/overlay_test/lmConf-1.json
 t/overlay_test/overlay/globalStorage
 t/overlay_test/overlay/globalStorageOptions
-t/schema/saml-schema-assertion-2.0.xsd
-t/schema/saml-schema-metadata-2.0.xsd
+t/saml-lib.pm
+t/saml-schemas/saml-schema-assertion-2.0.xsd
+t/saml-schemas/saml-schema-metadata-2.0.xsd
+t/saml-schemas/xenc-schema.xsd
+t/saml-schemas/xml.xsd
+t/saml-schemas/xmldsig-core-schema.xsd
 t/TestAuditLogger.pm
 t/TestConfBackend.pm
 t/TestLogger.pm
