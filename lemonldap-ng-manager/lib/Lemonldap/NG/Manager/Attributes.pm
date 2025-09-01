@@ -4935,6 +4935,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 600,
             'type'    => 'int'
         },
+        'samlServiceEncryptionKey' => {
+            'default' => 'default-saml-enc',
+            'type'    => 'text'
+        },
         'samlServicePrivateKeyEnc' => {
             'default' => '',
             'type'    => 'RSAPrivateKey'
@@ -4957,6 +4961,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlServicePublicKeySig' => {
             'default' => '',
             'type'    => 'RSAPublicKeyOrCertificate'
+        },
+        'samlServiceSignatureKey' => {
+            'default' => 'default-saml-sig',
+            'type'    => 'text'
         },
         'samlServiceSignatureMethod' => {
             'default' => 'RSA_SHA256',

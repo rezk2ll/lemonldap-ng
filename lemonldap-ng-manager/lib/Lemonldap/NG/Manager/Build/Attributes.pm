@@ -3339,6 +3339,16 @@ sub attributes {
             ],
             default => 'RSA_SHA256',
         },
+        samlServiceSignatureKey => {
+            type   => 'text',
+            default => 'default-saml-sig',
+            documentation => 'Key to use for SAML signature',
+        },
+        samlServiceEncryptionKey => {
+            type   => 'text',
+            default => 'default-saml-enc',
+            documentation => 'Key to use for SAML encryption',
+        },
         samlServiceUseCertificateInResponse => {
             type          => 'bool',
             default       => 0,
