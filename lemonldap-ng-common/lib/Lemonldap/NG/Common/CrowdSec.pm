@@ -139,11 +139,17 @@ sub ban {
 sub alert {
     my $self = shift;
     my ( $ip, $msg, $data ) = @_;
+
+    # No new ban decision for already banned IPs
+    my ($notBanned) = $self->bouncer($ip);
+
     $data ||= {};
     my $max   = $self->conf->{crowdsecMaxFailures};
     my $count = $self->getAlertsByIp($ip) || 0;
     $data->{remediation} =
-      ( $max and $count >= ( $max - 1 ) ) ? JSON::true : JSON::false;
+      ( $max and $count >= ( $max - 1 ) and $notBanned )
+      ? JSON::true
+      : JSON::false;
     $self->logger->debug("Crowdsec alerts count is $count for $ip");
     $data->{reason} ||= 'Reported by LLNG';
     $msg ||= 'Reported by LLNG';
