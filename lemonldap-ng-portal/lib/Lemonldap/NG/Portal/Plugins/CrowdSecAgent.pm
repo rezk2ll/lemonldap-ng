@@ -57,7 +57,7 @@ sub init {
 
     if ( $self->conf->{crowdsecFilters} ) {
         if ( -d $self->conf->{crowdsecFilters} ) {
-            with 'Lemonldap::NG::Portal::Lib::CrowdsecFilter';
+            with 'Lemonldap::NG::Portal::Lib::CrowdSecFilter';
             $self->initializeFilters;
         }
         else {
