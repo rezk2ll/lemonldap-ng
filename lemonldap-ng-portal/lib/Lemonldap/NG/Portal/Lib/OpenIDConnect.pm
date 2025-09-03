@@ -781,10 +781,14 @@ sub getAccessTokenFromTokenEndpoint {
             my $alg = $self->opOptions->{$op}
               ->{oidcOPMetaDataOptionsTokenEndpointAuthSigAlg};
             if ( !$alg ) {
+                my $default_signing_key_type =
+                  $self->_getKeyType(
+                    $self->get_public_key("default-oidc-sig") );
+
                 $alg =
-                    $auth_method eq 'client_secret_jwt'          ? 'HS256'
-                  : $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256'
-                  :                                                'RS256';
+                    $auth_method eq 'client_secret_jwt' ? 'HS256'
+                  : $default_signing_key_type eq 'EC'   ? 'ES256'
+                  :                                       'RS256';
             }
             my $time = time;
             my $jws  = $self->createJWTForOP( {
@@ -1508,8 +1512,13 @@ sub getOpenIDConnectSession {
 
 sub getSignAlg {
     my ( $self, $rp ) = @_;
-    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+    my $alg =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg};
+    if ( !$alg ) {
+        my $default_signing_key_type =
+          $self->_getKeyType( $self->get_public_key("default-oidc-sig") );
+        $alg = ( $default_signing_key_type eq 'EC' ? 'ES256' : 'RS256' );
+    }
     $self->logger->debug("Access Token signature algorithm: $alg");
     return $alg;
 }
@@ -2881,6 +2890,26 @@ sub decryptJwt {
         $self->logger->debug("Decrypted JWT: $jwt");
     }
     return $jwt;
+}
+
+sub _getKeyType {
+    my ( $self, $key ) = @_;
+
+    require Crypt::PK::RSA;
+
+    my $rsa_pub = eval { Crypt::PK::RSA->new( \( $key->{public} ) ) };
+    if ($rsa_pub) {
+        return "RSA";
+    }
+
+    require Crypt::PK::ECC;
+
+    my $ecc_pub = eval { Crypt::PK::ECC->new( \( $key->{public} ) ) };
+    if ($ecc_pub) {
+        return "EC";
+    }
+
+    return;
 }
 
 1;
