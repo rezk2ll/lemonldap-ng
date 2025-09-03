@@ -430,11 +430,19 @@ sub tests {
         # Test if SAML private and public keys signature keys are set
         samlSecretKeys => sub {
             return 1 unless ( $conf->{issuerDBSAMLActivation} );
+
+            if (   $conf->{samlServicePrivateKeySig}
+                && $conf->{samlServicePublicKeySig} )
+            {
+                return 1;
+            }
+            elsif ( $conf->{keys}->{"default-saml-sig"} ) {
+                return 1;
+            }
+
             return ( 0,
-                'SAML service private and public keys signature must be set' )
-              unless ( $conf->{samlServicePrivateKeySig}
-                && $conf->{samlServicePublicKeySig} );
-            return 1;
+                'SAML service private and public keys signature must be set' );
+
         },
 
         samlSignatureOverrideNeedsCertificate => sub {
