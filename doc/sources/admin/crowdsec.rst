@@ -12,14 +12,16 @@ LL::NG provides two **Crowdsec** plugins:
 
 * a :ref:`Bouncer` that can reject CrowdSec banned IP requests or just provide
   an environment variable that can be used inanother plugin rule. For example,
-  a second factor may be required if user'si IP is CrowdSec banned.
+  a second factor may be required if user'si IP is CrowdSec banned
 * an :ref:`Agent` that push alerts to Crowdsec server and ban IP addresses if
   limits are reached:
 
-  * for each authentication failure
-  * if filters are set, for each filter alert (see :ref:`Filters<Agent>`)
+  * for each authentication failure *(Crowdsec scenario: llng/badcredentials)*
+  * if filters are set, for each filter alert, see :ref:`Filters<Agent>`
+    *(Crowdsec scenario: llng/urlscan)*
 
-You can also find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`__.
+You can also find **CrowdSec** agents to parse webserver logs in
+`CrowdSec hub <https://hub.crowdsec.net>`__.
 
 Configuration
 -------------
