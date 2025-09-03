@@ -1086,7 +1086,6 @@ t/test-yubikey.pm
 t/Test2FA.pm
 t/Test2FRegister.pm
 t/TestMail.pm
-t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
 t/TestStdLogger.pm
