@@ -34,7 +34,8 @@ extends qw(
 );
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
-  'Lemonldap::NG::Common::OpenIDConnect::Metadata';
+  'Lemonldap::NG::Common::OpenIDConnect::Metadata',
+  'Lemonldap::NG::Portal::Lib::Key';
 
 # INTERFACE
 
