@@ -1929,7 +1929,7 @@ sub checkEndPointAuthenticationCredentials {
             unless ( $method eq
                 $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} )
             {
-                $self->logger->error("Wrong authetication method for $rp");
+                $self->logger->error("Wrong authentication method for $rp");
                 return undef;
             }
         }
