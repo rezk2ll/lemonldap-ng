@@ -28,6 +28,8 @@ our $VERSION = '2.21.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
+with 'Lemonldap::NG::Portal::Lib::Key';
+
 has rule           => ( is => 'rw' );
 has ssoUrlRe       => ( is => 'rw' );
 has ssoUrlArtifact => ( is => 'rw' );

@@ -51,8 +51,6 @@ my $conf = {
     'samlSPSSODescriptorSingleLogoutServiceSOAP' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
     'samlSPSSODescriptorWantAssertionsSigned' => 1,
-    'samlServicePrivateKeyEnc'                => saml_key_idp_private_enc(),
-    'samlServicePrivateKeySig'                => saml_key_idp_private_sig(),
     'samlServicePublicKeyEnc'                 => saml_key_idp_public_enc(),
     'samlServicePublicKeySig'                 => saml_key_idp_public_sig(),
 };
@@ -95,9 +93,7 @@ subtest 'Default metadata with two different keys' => sub {
 
 subtest 'Default metadata with only one key' => sub {
     my $doc = getMetadataDocument( {
-            %$conf,
-            samlServicePrivateKeyEnc => undef,
-            samlServicePublicKeyEnc  => undef
+            %$conf, samlServicePublicKeyEnc => undef
         },
         "idp"
     );
@@ -124,38 +120,42 @@ subtest 'Default metadata with only one key' => sub {
 subtest 'Use certificate' => sub {
     my $doc = getMetadataDocument( {
             %$conf,
-            samlServicePrivateKeyEnc => undef,
-            samlServicePublicKeyEnc  => undef,
-            samlServicePrivateKeySig => saml_key_idp_private_sig(),
-            samlServicePublicKeySig  => saml_key_idp_cert_sig(),
+            samlServicePublicKeyEnc => undef,
+            samlServicePublicKeySig => saml_key_idp_cert_sig(),
         },
         "idp"
     );
 
-    my @encryption_certs = getXPath(
+    expectMetadataCerts(
         $doc,
-'//md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+        [ saml_key_idp_cert_sig() ],
+        [ saml_key_idp_cert_sig() ]
     );
-    is( scalar(@encryption_certs), 1, "Found one encryption key" );
+};
 
-    my @signing_certs = getXPath(
+subtest 'Override signing or encryption keys' => sub {
+    my $doc = getMetadataDocument( {
+            %$conf,
+            samlServicePublicKeyEnc => undef,
+            samlServicePublicKeySig => saml_key_idp_cert_sig(),
+        },
+        "idp",
+
+        # As LLNG structs with a "public => " field
+        signing_keys => [
+            { public => saml_key_proxy_cert_sig() },
+            { public => saml_key_sp_cert_sig() }
+        ],
+
+        # As a plain string
+        encryption_keys => [ saml_key_sp_cert_sig() ],
+    );
+
+    expectMetadataCerts(
         $doc,
-'//md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+        [ saml_key_proxy_cert_sig(), saml_key_sp_cert_sig() ],
+        [ saml_key_sp_cert_sig() ]
     );
-    is( scalar(@signing_certs), 1, "Found one signing key" );
-
-    is(
-        normalizeX509Data( $signing_certs[0]->data ),
-        normalizeX509Data( saml_key_idp_cert_sig() ),
-        "Correct certificate found for signature"
-    );
-
-    is(
-        normalizeX509Data( $encryption_certs[0]->data ),
-        normalizeX509Data( saml_key_idp_cert_sig() ),
-        "Correct certificate found for encryption"
-    );
-
 };
 
 done_testing();
@@ -180,6 +180,32 @@ sub expectValidSchema {
     my $result = eval { $xmlschema->validate($doc); };
     is( $result, 0, "Metadata validates SAML 2.0 schema" ) or diag $@;
 
+}
+
+sub expectMetadataCerts {
+    my ( $doc, $expected_signing_keys, $expected_encryption_keys ) = @_;
+
+    my @signing_keys = map { $_->data } getXPath(
+        $doc,
+'//md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+    );
+
+    is_deeply(
+        [ map { normalizeX509Data($_) } @signing_keys ],
+        [ map { normalizeX509Data($_) } @$expected_signing_keys ],
+        "Offered signing certs match excepted ones"
+    );
+
+    my @encryption_keys = map { $_->data } getXPath(
+        $doc,
+'//md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+    );
+
+    is_deeply(
+        [ map { normalizeX509Data($_) } @encryption_keys ],
+        [ map { normalizeX509Data($_) } @$expected_encryption_keys ],
+        "Offered encryption certs match excepted ones"
+    );
 }
 
 sub normalizeX509Data {

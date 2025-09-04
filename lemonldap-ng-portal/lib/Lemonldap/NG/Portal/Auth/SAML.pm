@@ -32,6 +32,8 @@ extends qw(
   Lemonldap::NG::Portal::Lib::SAML
 );
 
+with 'Lemonldap::NG::Portal::Lib::Key';
+
 # INTERFACE
 
 has ssoAssConsumerRe => ( is => 'rw' );
