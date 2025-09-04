@@ -134,10 +134,18 @@ corsAllow_Origin                                        Allowed origine for Cros
 corsEnabled                                             Enable Cross-Origin Resource Sharing                                                 ✔
 corsExpose_Headers                                      Exposed headers for Cross-Origin Resource Sharing                                    ✔
 corsMax_Age                                             Max-age for Cross-Origin Resource Sharing                                            ✔
-crowdsec                                                CrowdSec plugin activation                                                           ✔
+crowdSecAgentResponseCode                               Crowdsec ban response code                                                           ✔
+crowdSecAgentResponseValue                              Crowdsec ban response text                                                           ✔
+crowdsec                                                CrowdSec bouncer activation                                                          ✔
 crowdsecAction                                          CrowdSec action                                                                      ✔
+crowdsecAgent                                           Enable plugin to report auth failures to Crowdsec (simple alert)                     ✔
+crowdsecBlockDelay                                      Crowdsec-Agent check delay                                                           ✔
+crowdsecFilters                                         Crowdsec filters directory                                                           ✔
 crowdsecIgnoreFailures                                  Ignore Crowdsec errors                                                               ✔
 crowdsecKey                                             CrowdSec API key                                                                     ✔
+crowdsecMachineId                                       Crowdsec machine ID to send alerts                                                   ✔
+crowdsecMaxFailures                                     Crowdesc-Agent maximum failures allowed during delay                                 ✔
+crowdsecPassword                                        Crowdsec password to send alerts                                                     ✔
 crowdsecUrl                                             Base URL of CrowdSec local API                                                       ✔
 cspConnect                                              Authorized Ajax destination for Content-Security-Policy                              ✔
 cspDefault                                              Default value for Content-Security-Policy                                            ✔
@@ -270,6 +278,12 @@ jitsiNameAttribute                                      Jitsi attribute for name
 jitsiSigningAlg                                         Jitsi JWT signature method                                                           ✔
 jsRedirect                                              Use javascript for redirections                                                      ✔
 key                                                     Secret key                                                                           ✔
+keyComment                                                                                                                                   ✔                      ✔
+keyId                                                                                                                                        ✔                      ✔
+keyPrivate                                                                                                                                   ✔                      ✔
+keyPrivatePwd                                                                                                                                ✔                      ✔
+keyPublic                                                                                                                                    ✔                      ✔
+keys                                                    Root of keys                                                                         ✔                      ✔
 krbAllowedDomains                                       Allowed domains                                                                      ✔
 krbAuthnLevel                                           Null authentication level                                                            ✔
 krbByJs                                                 Launch Kerberos authentication by Ajax                                               ✔
