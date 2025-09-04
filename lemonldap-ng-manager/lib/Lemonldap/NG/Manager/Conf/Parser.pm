@@ -26,7 +26,7 @@ use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Manager::Attributes;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Common::Conf::Compact';
 

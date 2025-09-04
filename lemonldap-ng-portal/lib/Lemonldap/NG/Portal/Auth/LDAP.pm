@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_PASSWORD_EXPIRES_SOON
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.22.0';
 
 # Inheritance: UserDB::LDAP provides all needed ldap functions
 extends qw(

@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_USERNOTFOUND
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 our @ALERTS = (
     PE_USERNOTFOUND,         PE_BADCREDENTIALS,

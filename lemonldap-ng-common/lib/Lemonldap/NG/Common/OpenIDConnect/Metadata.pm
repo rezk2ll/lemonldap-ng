@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::OpenIDConnect::Constants;
 use JSON;
 use Mouse::Role;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 sub metadataDoc {
     my ( $self, $issuer, $conf, $path ) = @_;

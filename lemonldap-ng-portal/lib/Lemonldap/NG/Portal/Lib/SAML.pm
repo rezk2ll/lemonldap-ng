@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 # PROPERTIES
 

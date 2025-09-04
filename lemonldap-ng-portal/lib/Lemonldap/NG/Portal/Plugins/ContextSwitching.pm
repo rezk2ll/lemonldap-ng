@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

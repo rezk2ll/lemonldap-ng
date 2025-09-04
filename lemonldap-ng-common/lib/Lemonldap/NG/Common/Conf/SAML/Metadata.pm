@@ -14,7 +14,7 @@ use MIME::Base64;
 use Safe;
 use Encode;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.22.0';
 
 my $dataStart = tell(DATA);
 

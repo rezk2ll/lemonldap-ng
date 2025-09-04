@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Session::Purge;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

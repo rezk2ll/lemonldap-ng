@@ -4,7 +4,7 @@ use warnings;
 
 require Exporter;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 our @ISA     = qw(Exporter);
 our @EXPORT_OK = qw(genRsaKey);
 

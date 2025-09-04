@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Logger::_Duplicate;
 
 use strict;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 sub new {
     my $self = bless {}, shift;

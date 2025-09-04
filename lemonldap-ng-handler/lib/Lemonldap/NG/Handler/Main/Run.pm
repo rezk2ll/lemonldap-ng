@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -71,7 +71,7 @@ sub checkEvent {
                 $ret = $msg->{action};
             }
             else {
-                $class->logger->debug("Unkown action $msg->{action}");
+                $class->logger->debug("Unknown action $msg->{action}");
             }
         }
         else {
