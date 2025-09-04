@@ -23,6 +23,7 @@ here
 =head1 METHODS
 =cut
 
+use strict;
 use Mouse::Role;
 
 our $VERSION = '2.22.0';
