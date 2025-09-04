@@ -1,14 +1,53 @@
 package Lemonldap::NG::Portal::Lib::Key;
-use Mouse::Role;
-
 =pod
 
 =head1 NAME
-Lemonldap::NG::Portal::Lib::Key - A role for private key management in Portal plugins
 
+Lemonldap::NG::Portal::Lib::Key - A role for private key management in Portal
+plugins
+
+=head1 SYNOPSIS
+
+use Mouse;
+
+with 'Lemonldap::NG::Portal::Lib::Key';
+
+=head1 DESCRIPTION
+
+This role is meant to be composed into portal modules to give them the ability
+to lookup private/public keys from the General parameters > Keys interface
+
+All asymetric key retrieval should be performed through the functions provided
+here
+
+=head1 METHODS
 =cut
 
+use Mouse::Role;
+
+our $VERSION = '2.22.0';
+
 requires qw(conf);
+
+=pod
+
+=head2 get_private_key
+
+This method returns a private key structure containing the following fields
+
+=over
+
+=item private: PEM private key
+
+=item password: optional password for key decryption
+
+=item public: PEM public key or certificate
+
+=item external_id: optional external key identified (kid)
+
+=back
+
+=cut
 
 sub get_private_key {
     my ( $self, $key_id ) = @_;
@@ -89,3 +128,40 @@ sub _get_key_config {
 }
 
 1;
+
+__END__
+
+=head1 AUTHORS
+
+=over
+
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<https://lemonldap-ng.org/download>
+
+=head1 COPYRIGHT AND LICENSE
+
+See COPYING file for details.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
