@@ -2,7 +2,8 @@ package Lemonldap::NG::Common::CrowdSec;
 
 use strict;
 use Date::Parse;
-use JSON qw(from_json to_json);
+use Digest::SHA qw(sha256_hex);
+use JSON        qw(from_json to_json);
 use Mouse::Role;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::UserAgent;
@@ -17,7 +18,6 @@ our $VERSION = '2.22.0';
 our $defaultBanValues = {
     events_count     => 1,
     scenario         => 'llng',
-    scenario_hash    => 'llng',
     scenario_version => $VERSION,
     leakspeed        => '1s',
     remediation      => JSON::true,
@@ -41,13 +41,6 @@ has token    => ( is => 'rw' );
 has tokenExp => ( is => 'rw', default => 0 );
 
 has crowdsecUrl => ( is => 'rw' );
-
-has scenario => ( is => 'rw', default => 'llng' );
-has scenarioHash => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub { $_[0]->scenario }
-);
 
 sub _init {
     my ($self) = @_;
@@ -207,6 +200,7 @@ sub _banPayload {
     $data->{stop_at}  ||= $timestamp;
     $data->{source}   ||= { scope => 'ip', value => $ip };
     my $reason = delete( $data->{reason} ) || 'Banned by LLNG';
+    $data->{scenario_hash} = sha256_hex( $data->{scenario} );
     return to_json( [ {
                 %$data,
                 message => $msg,

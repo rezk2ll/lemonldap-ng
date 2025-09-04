@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Lib::CrowdsecFilter;
+package Lemonldap::NG::Portal::Lib::CrowdSecFilter;
 
 use strict;
 use Mouse::Role;

@@ -5,5 +5,6 @@ Attacks and Protection
    :maxdepth: 1
 
    bruteforceprotection
+   crowdsec
    newlocationwarning
    safejail
