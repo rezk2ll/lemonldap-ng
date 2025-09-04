@@ -145,9 +145,19 @@ To define keys, you can:
 
 
 
+-  **Signature method**: set the signature algorithm
 -  **Use certificate in response**: Certificate will be sent inside SAML
    responses.
--  **Signature method**: set the signature algorithm
+-  **Signing key name**: By default, the key specified in *Security Parameters*
+   will be used for signature. You can use :doc:`anonther key <keys>` instead in
+   order to better manage key rotation. If you declare a comma-separated list,
+   only the first declared key will be used for signature, but all listed keys
+   will be published in SAML metadata.
+-  **Encryption key name**: By default, the key specified in *Security Parameters*
+   will be used for encryption. You can use :doc:`anonther key <keys>` instead in
+   order to better manage key rotation. If you declare a comma-separated list,
+   only the first declared key will be used for encryption, but all listed keys
+   will be published in SAML metadata.
 
 .. versionchanged:: 2.0.10
 
