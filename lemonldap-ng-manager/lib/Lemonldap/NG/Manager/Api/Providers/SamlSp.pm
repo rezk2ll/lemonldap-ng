@@ -338,36 +338,41 @@ sub _readSamlSpExportedAttributes {
         "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     ];
     foreach ( keys %{$attrs} ) {
-        return { res => "ko", msg => "Exported attribute $_ has no name" }
-          unless ( defined $attrs->{$_}->{name} );
-        my $mandatory    = 0;
-        my $name         = $attrs->{$_}->{name};
-        my $format       = '';
-        my $friendlyName = '';
+        if ( defined( $attrs->{$_} ) ) {
+            return { res => "ko", msg => "Exported attribute $_ has no name" }
+              unless ( defined $attrs->{$_}->{name} );
+            my $mandatory    = 0;
+            my $name         = $attrs->{$_}->{name};
+            my $format       = '';
+            my $friendlyName = '';
 
-        ( $mandatory, $name, $format, $friendlyName ) =
-          split( /;/, $mergeWith->{$_} )
-          if ( defined $mergeWith->{$_} );
+            ( $mandatory, $name, $format, $friendlyName ) =
+              split( /;/, $mergeWith->{$_} )
+              if ( defined $mergeWith->{$_} );
 
-        if ( defined $attrs->{$_}->{mandatory} ) {
-            $mandatory = (
-                     $attrs->{$_}->{mandatory} eq '1'
-                  or $attrs->{$_}->{mandatory} eq 'true'
-            ) ? 1 : 0;
+            if ( defined $attrs->{$_}->{mandatory} ) {
+                $mandatory = (
+                         $attrs->{$_}->{mandatory} eq '1'
+                      or $attrs->{$_}->{mandatory} eq 'true'
+                ) ? 1 : 0;
+            }
+
+            if ( defined $attrs->{$_}->{format} ) {
+                $format = $attrs->{$_}->{format};
+                return {
+                    res => "ko",
+                    msg => "Exported attribute $_ format does not exist."
+                  }
+                  unless ( length( grep { /^$format$/ } @{$allowedFormats} ) );
+            }
+
+            $friendlyName = $attrs->{$_}->{friendlyName}
+              if ( defined $attrs->{$_}->{friendlyName} );
+            $mergeWith->{$_} = "$mandatory;$name;$format;$friendlyName";
         }
-
-        if ( defined $attrs->{$_}->{format} ) {
-            $format = $attrs->{$_}->{format};
-            return {
-                res => "ko",
-                msg => "Exported attribute $_ format does not exist."
-              }
-              unless ( length( grep { /^$format$/ } @{$allowedFormats} ) );
+        else {
+            delete $mergeWith->{$_};
         }
-
-        $friendlyName = $attrs->{$_}->{friendlyName}
-          if ( defined $attrs->{$_}->{friendlyName} );
-        $mergeWith->{$_} = "$mandatory;$name;$format;$friendlyName";
     }
 
     return { res => "ok", exportedAttributes => $mergeWith };
@@ -402,19 +407,15 @@ sub _pushSamlSp {
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
             'samlSPMetaDataNode' );
         return $res unless ( $res->{res} eq 'ok' );
-        foreach ( keys %{$translatedOptions} ) {
-            $conf->{samlSPMetaDataOptions}->{$confKey}->{$_} =
-              $translatedOptions->{$_};
-        }
+        $self->_merge_hash( $conf, 'samlSPMetaDataOptions', $confKey,
+            $translatedOptions );
 
     }
 
     if ( defined $push->{macros} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
-            foreach ( keys %{ $push->{macros} } ) {
-                $conf->{samlSPMetaDataMacros}->{$confKey}->{$_} =
-                  $push->{macros}->{$_};
-            }
+            $self->_merge_hash( $conf, 'samlSPMetaDataMacros', $confKey,
+                $push->{macros} );
         }
         else {
             return {
