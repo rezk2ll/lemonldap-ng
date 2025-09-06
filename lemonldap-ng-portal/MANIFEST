@@ -603,6 +603,7 @@ t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
+t/01-Keys.t
 t/01-Mail-Tpl.t
 t/01-OneTimeToken.t
 t/01-pdata.t
