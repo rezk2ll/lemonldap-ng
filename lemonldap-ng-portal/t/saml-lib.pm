@@ -1501,5 +1501,6 @@ sub expectMetadataCerts {
         [ map { normalizeX509Data($_) } @$expected_encryption_keys ],
         "Offered encryption certs match excepted ones"
     );
+    count(2);
 }
 1;
