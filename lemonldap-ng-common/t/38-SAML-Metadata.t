@@ -216,4 +216,6 @@ sub normalizeX509Data {
 
     # Remove heading/trailing ws
     $data =~ s/(?:^\s+|\s+$)//g;
+
+    return $data;
 }
