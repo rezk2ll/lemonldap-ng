@@ -1,4 +1,5 @@
 package Lemonldap::NG::Portal::Lib::Key;
+
 =pod
 
 =head1 NAME
@@ -52,10 +53,12 @@ This method returns a private key structure containing the following fields
 
 sub get_private_key {
     my ( $self, $key_id ) = @_;
+    $self->logger->debug("Looking up private key $key_id");
 
     my $key_config = $self->_get_key_config($key_id);
 
     if ($key_config) {
+        $self->logger->debug("Found private key $key_id");
         return {
             private     => $key_config->{keyPrivate},
             public      => $key_config->{keyPublic},
@@ -64,21 +67,25 @@ sub get_private_key {
         };
     }
 
+    $self->logger->debug("Private key $key_id not found");
     return;
 }
 
 sub get_public_key {
     my ( $self, $key_id ) = @_;
+    $self->logger->debug("Looking up public key $key_id");
 
     my $key_config = $self->_get_key_config($key_id);
 
     if ($key_config) {
+        $self->logger->debug("Found public key $key_id");
         return {
             public      => $key_config->{keyPublic},
             external_id => ( $key_config->{keyId} || $key_id ),
         };
     }
 
+    $self->logger->debug("Public key $key_id not found");
     return;
 }
 
