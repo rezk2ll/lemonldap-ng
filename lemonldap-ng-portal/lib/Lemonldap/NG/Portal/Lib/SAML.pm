@@ -3439,13 +3439,33 @@ sub importRealSession {
 }
 
 sub _get_metadata_xml {
-    my ( $self, $req_or_undef, $type ) = @_;
+    my ( $self, $req_or_undef, $type, $sp, $idp ) = @_;
 
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
 
-    my @signing_keys =
-      $self->_get_keys_from_config( $self->conf->{samlServiceSignatureKey}
-          || "default-saml-sig" );
+    my @signing_keys;
+    if ($sp) {
+        $self->lazy_load_entityid($sp);
+        if ( my $key_list =
+            $self->spOptions->{$sp}->{samlSPMetaDataOptionsSignatureKey} )
+        {
+            @signing_keys = $self->_get_keys_from_config($key_list);
+        }
+
+    }
+    elsif ($idp) {
+        $self->lazy_load_entityid($idp);
+        if ( my $key_list =
+            $self->idpOptions->{$idp}->{samlIDPMetaDataOptionsSignatureKey} )
+        {
+            @signing_keys = $self->_get_keys_from_config($key_list);
+        }
+    }
+    if ( !@signing_keys ) {
+        @signing_keys =
+          $self->_get_keys_from_config( $self->conf->{samlServiceSignatureKey}
+              || "default-saml-sig" );
+    }
 
     my @encryption_keys =
       $self->_get_keys_from_config( $self->conf->{samlServiceEncryptionKey}
@@ -3490,7 +3510,9 @@ sub _get_keys_from_config {
 sub metadata {
     my ( $self, $req ) = @_;
     my $type = $req->param('type') || 'all';
-    if ( my $metadata = $self->_get_metadata_xml( $req, $type ) ) {
+    my $idp  = $req->param('idp');
+    my $sp   = $req->param('sp');
+    if ( my $metadata = $self->_get_metadata_xml( $req, $type, $sp, $idp ) ) {
         return [
             200,
             [
