@@ -180,7 +180,8 @@ sub loadService {
     my ($self) = @_;
 
     # Check if certificate is available
-    my $signing_key = $self->get_private_key("default-saml-sig");
+    my $signing_key =
+      $self->get_private_key( $self->_get_default_signing_key_name );
     unless ($signing_key) {
         $self->logger->error(
             'SAML private and public key not found in configuration');
@@ -202,7 +203,8 @@ sub loadService {
 
     $self->logger->debug("Create Lasso server");
 
-    my $encryption_key = $self->get_private_key("default-saml-enc");
+    my $encryption_key =
+      $self->get_private_key( $self->_get_default_encryption_key_name );
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
@@ -3474,7 +3476,13 @@ sub _get_metadata_xml {
 
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
 
-    my $encryption_key = $self->get_public_key("default-saml-enc");
+    my @signing_keys =
+      $self->_get_keys_from_config( $self->conf->{samlServiceSignatureKey}
+          || "default-saml-sig" );
+
+    my @encryption_keys =
+      $self->_get_keys_from_config( $self->conf->{samlServiceEncryptionKey}
+          || "default-saml-enc" );
 
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
         my $portal =
@@ -3485,13 +3493,31 @@ sub _get_metadata_xml {
             $self->conf,
             $type,
             portal       => $portal,
-            signing_keys => [ $self->get_public_key("default-saml-sig") ],
+            signing_keys => \@signing_keys,
             (
-                $encryption_key ? ( encryption_keys => [$encryption_key] ) : ()
+                @encryption_keys ? ( encryption_keys => \@encryption_keys ) : ()
             ),
         );
     }
     return;
+}
+
+sub _get_keys_from_config {
+    my ( $self, $list_of_keys ) = @_;
+    my @keys;
+
+    if ($list_of_keys) {
+        for my $key_id ( split( /\s*,\s*/, $list_of_keys ) ) {
+            my $key = $self->get_public_key($key_id);
+            if ($key) {
+                push @keys, $key;
+            }
+            else {
+                $self->logger->debug("Could not publish $key_id in metadata");
+            }
+        }
+    }
+    return @keys;
 }
 
 sub metadata {
@@ -3546,7 +3572,8 @@ sub getSignatureMethod {
 sub setProviderSignatureMethod {
     my ( $self, $provider, $signature_method ) = @_;
 
-    my $default_key = $self->get_private_key("default-saml-sig");
+    my $default_key =
+      $self->get_private_key( $self->_get_default_signing_key_name );
 
     # We have to use an intermediate variable to avoid interferences between
     # Lasso binding and tied hashes (#3105)
@@ -3561,6 +3588,26 @@ sub setProviderSignatureMethod {
     };
 
     return $self->checkLassoError($@);
+}
+
+# The default signing key is the first key listed in samlServiceSignatureKey, with
+# fallback to default-saml-sig
+sub _get_default_signing_key_name {
+    my ($self) = @_;
+    my @key_list =
+      split( /\s*,\s*/, ( $self->conf->{samlServiceSignatureKey} || "" ) );
+
+    return ( $key_list[0] || "default-saml-sig" );
+}
+
+# The default encryption key is the first key listed in samlServiceEncryptionKey, with
+# fallback to default-saml-enc
+sub _get_default_encryption_key_name {
+    my ($self) = @_;
+    my @key_list =
+      split( /\s*,\s*/, ( $self->conf->{samlServiceEncryptionKey} || "" ) );
+
+    return ( $key_list[0] || "default-saml-enc" );
 }
 
 1;
