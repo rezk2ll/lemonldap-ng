@@ -1393,4 +1393,42 @@ sub expectSamlResponse {
     return decode_base64( uri_unescape($sr) );
 }
 
+sub normalizeX509Data {
+    my ($data) = @_;
+
+    # Remove heading lines
+    $data =~ s/^---.*---$//mg;
+
+    # Remove heading/trailing ws
+    $data =~ s/(?:^\s+|\s+$)//g;
+
+    return $data;
+}
+
+sub expectMetadataCerts {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $doc, $expected_signing_keys, $expected_encryption_keys ) = @_;
+
+    my @signing_keys = map { $_->data } getXPath(
+        $doc,
+'//md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+    );
+
+    is_deeply(
+        [ map { normalizeX509Data($_) } @signing_keys ],
+        [ map { normalizeX509Data($_) } @$expected_signing_keys ],
+        "Offered signing certs match excepted ones"
+    );
+
+    my @encryption_keys = map { $_->data } getXPath(
+        $doc,
+'//md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"]/sig:KeyInfo/sig:X509Data/sig:X509Certificate/text()',
+    );
+
+    is_deeply(
+        [ map { normalizeX509Data($_) } @encryption_keys ],
+        [ map { normalizeX509Data($_) } @$expected_encryption_keys ],
+        "Offered encryption certs match excepted ones"
+    );
+}
 1;
