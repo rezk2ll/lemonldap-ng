@@ -197,6 +197,7 @@ is( $id_token_payload->{id_token_hook_rp},
 # 3084
 my $id_token_header = id_token_header($id_token);
 ok( !exists $id_token_header->{kid}, "HS** ID token has no kid header" );
+is( $id_token_header->{id_token_hook_header}, 1, "Found hooked JWT header" );
 
 # Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
@@ -220,6 +221,8 @@ is( $json->{email}, 'fa@badwolf.org',
 like( $json->{_scope}, qr/\bopenid\b/, "Scopes are visible in hook" );
 
 expectJWT( $token, access_token_hook => 1 );
+
+is( getJWTHeader($token)->{typ}, "at+JWT+hook", "hooked access token type" );
 
 # Reset conf to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);
