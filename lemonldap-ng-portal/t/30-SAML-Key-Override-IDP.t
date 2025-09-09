@@ -41,11 +41,13 @@ sub runTest {
       expectAutoPost( $res, "auth.$sp.com", '/saml/singleSignOn',
         'SAMLRequest' );
 
-    my $sr = expectSamlRequest($s);
-    my $expected_stripped_cert =
-      join( "\n", grep { !/^--/ } split( "\n", $expected_cert ) ) . "\n";
-    expectXPath( $sr, '//sig:X509Certificate/text()',
-        $expected_stripped_cert, "Expected key was used" );
+    my $sr       = expectSamlRequest($s);
+    my $sig_cert = getXPath( $sr, '//sig:X509Certificate/text()' )->pop->data;
+    is(
+        normalizeX509Data($sig_cert),
+        normalizeX509Data($expected_cert),
+        "Expected key was used"
+    );
 
     expectXPath(
         $sr,
