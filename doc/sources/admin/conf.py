@@ -133,6 +133,7 @@ html_theme_options = {
         'globaltoc_depth': 0,
         'navbar_fixed_top': "false",
         'navbar_class': "hidden",
+        'nosidebar': True,
         }
 
 if 'LLNGSPHINXWEBSITE' in os.environ:
