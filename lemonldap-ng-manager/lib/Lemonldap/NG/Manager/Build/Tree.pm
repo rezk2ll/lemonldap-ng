@@ -1531,6 +1531,7 @@ sub tree {
                         {
                             title => 'samlFederation',
                             form  => 'simpleInputContainer',
+                            help => 'samlfederation.html',
                             nodes => [ 'samlFederationFiles', ]
                         },
                     ]
