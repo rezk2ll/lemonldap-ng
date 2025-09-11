@@ -56,6 +56,7 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     'samlIDPMetaDataOptionsSignatureMethod',
+                    'samlIDPMetaDataOptionsSignatureKey',
                     'samlIDPMetaDataOptionsSignSSOMessage',
                     'samlIDPMetaDataOptionsCheckSSOMessageSignature',
                     'samlIDPMetaDataOptionsSignSLOMessage',
@@ -135,6 +136,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'samlSPMetaDataOptionsSignatureMethod',
+                            'samlSPMetaDataOptionsSignatureKey',
                             'samlSPMetaDataOptionsSignSSOMessage',
                             'samlSPMetaDataOptionsCheckSSOMessageSignature',
                             'samlSPMetaDataOptionsSignSLOMessage',

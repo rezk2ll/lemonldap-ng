@@ -1388,8 +1388,10 @@ sub tree {
                                 'samlServicePublicKeyEnc'
                             ]
                         },
+                        'samlServiceSignatureMethod',
                         'samlServiceUseCertificateInResponse',
-                        'samlServiceSignatureMethod'
+                        'samlServiceSignatureKey',
+                        'samlServiceEncryptionKey',
                     ]
                 },
                 {

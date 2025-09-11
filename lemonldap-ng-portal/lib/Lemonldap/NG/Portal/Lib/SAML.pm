@@ -180,7 +180,8 @@ sub loadService {
     my ($self) = @_;
 
     # Check if certificate is available
-    my $signing_key = $self->get_private_key("default-saml-sig");
+    my $signing_key =
+      $self->get_private_key( $self->_get_default_signing_key_name );
     unless ($signing_key) {
         $self->logger->error(
             'SAML private and public key not found in configuration');
@@ -202,7 +203,8 @@ sub loadService {
 
     $self->logger->debug("Create Lasso server");
 
-    my $encryption_key = $self->get_private_key("default-saml-enc");
+    my $encryption_key =
+      $self->get_private_key( $self->_get_default_encryption_key_name );
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
@@ -225,7 +227,7 @@ sub loadService {
     }
 
     # Signature method
-    my $method = $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
+    my $method = $self->getDefaultSignatureMethod();
     $server->signature_method( $self->getSignatureMethod($method) );
     $self->logger->debug("Set $method as SAML server signature method ");
 
@@ -337,26 +339,9 @@ sub load_idp_metadata {
 
     # Set signature method if overridden
     my $signature_method = $options->{samlIDPMetaDataOptionsSignatureMethod};
-    if ($signature_method) {
-        my $lasso_signature_method =
-          $self->getSignatureMethod($signature_method);
-
-        unless (
-            $self->setProviderSignatureMethod(
-                $self->lassoServer->get_provider($entityID),
-                $lasso_signature_method
-            )
-          )
-        {
-            $self->logger->error(
-"Unable to set signature method $signature_method on IDP $idpConfKey"
-            );
-            delete $self->idpList->{$entityID};
-            return;
-        }
-        $self->logger->debug(
-            "Set signature method $signature_method on IDP $idpConfKey");
-    }
+    my $signature_key    = $options->{samlIDPMetaDataOptionsSignatureKey};
+    $self->_override_signature_or_key( $entityID, "IDP $idpConfKey",
+        $signature_method, $signature_key );
 
     # Set display options
     $self->idpList->{$entityID}->{displayName} =
@@ -541,25 +526,9 @@ sub load_sp_metadata {
 
     # Set signature method if overridden
     my $signature_method = $options->{samlSPMetaDataOptionsSignatureMethod};
-    if ($signature_method) {
-        my $lasso_signature_method =
-          $self->getSignatureMethod($signature_method);
-
-        unless (
-            $self->setProviderSignatureMethod(
-                $self->lassoServer->get_provider($entityID),
-                $lasso_signature_method
-            )
-          )
-        {
-            $self->logger->error(
-"Unable to set signature method $signature_method on SP $spConfKey"
-            );
-            return;
-        }
-        $self->logger->debug(
-            "Set signature method $signature_method on SP $spConfKey");
-    }
+    my $signature_key    = $options->{samlSPMetaDataOptionsSignatureKey};
+    $self->_override_signature_or_key( $entityID, "SP $spConfKey",
+        $signature_method, $signature_key );
 }
 
 sub lazy_load_message {
@@ -3470,11 +3439,37 @@ sub importRealSession {
 }
 
 sub _get_metadata_xml {
-    my ( $self, $req_or_undef, $type ) = @_;
+    my ( $self, $req_or_undef, $type, $sp, $idp ) = @_;
 
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
 
-    my $encryption_key = $self->get_public_key("default-saml-enc");
+    my @signing_keys;
+    if ($sp) {
+        $self->lazy_load_entityid($sp);
+        if ( my $key_list =
+            $self->spOptions->{$sp}->{samlSPMetaDataOptionsSignatureKey} )
+        {
+            @signing_keys = $self->_get_keys_from_config($key_list);
+        }
+
+    }
+    elsif ($idp) {
+        $self->lazy_load_entityid($idp);
+        if ( my $key_list =
+            $self->idpOptions->{$idp}->{samlIDPMetaDataOptionsSignatureKey} )
+        {
+            @signing_keys = $self->_get_keys_from_config($key_list);
+        }
+    }
+    if ( !@signing_keys ) {
+        @signing_keys =
+          $self->_get_keys_from_config( $self->conf->{samlServiceSignatureKey}
+              || "default-saml-sig" );
+    }
+
+    my @encryption_keys =
+      $self->_get_keys_from_config( $self->conf->{samlServiceEncryptionKey}
+          || "default-saml-enc" );
 
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
         my $portal =
@@ -3485,19 +3480,39 @@ sub _get_metadata_xml {
             $self->conf,
             $type,
             portal       => $portal,
-            signing_keys => [ $self->get_public_key("default-saml-sig") ],
+            signing_keys => \@signing_keys,
             (
-                $encryption_key ? ( encryption_keys => [$encryption_key] ) : ()
+                @encryption_keys ? ( encryption_keys => \@encryption_keys ) : ()
             ),
         );
     }
     return;
 }
 
+sub _get_keys_from_config {
+    my ( $self, $list_of_keys ) = @_;
+    my @keys;
+
+    if ($list_of_keys) {
+        for my $key_id ( split( /\s*,\s*/, $list_of_keys ) ) {
+            my $key = $self->get_public_key($key_id);
+            if ($key) {
+                push @keys, $key;
+            }
+            else {
+                $self->logger->debug("Could not publish $key_id in metadata");
+            }
+        }
+    }
+    return @keys;
+}
+
 sub metadata {
     my ( $self, $req ) = @_;
     my $type = $req->param('type') || 'all';
-    if ( my $metadata = $self->_get_metadata_xml( $req, $type ) ) {
+    my $idp  = $req->param('idp');
+    my $sp   = $req->param('sp');
+    if ( my $metadata = $self->_get_metadata_xml( $req, $type, $sp, $idp ) ) {
         return [
             200,
             [
@@ -3517,25 +3532,24 @@ sub metadata {
 sub getSignatureMethod {
     my ( $self, $signature_method ) = @_;
 
-    my $signature_method_rsa_sha1 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1';
-    my $signature_method_rsa_sha256 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256';
-    my $signature_method_rsa_sha384 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA384';
-    my $signature_method_rsa_sha512 =
-      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA512';
-    my $signature_method_none = eval 'Lasso::Constants::SIGNATURE_METHOD_NONE';
+    $signature_method ||= $self->getDefaultSignatureMethod();
 
-    return $signature_method_rsa_sha1
-      if ( $signature_method =~ /^RSA_SHA1$/i );
-    return $signature_method_rsa_sha256
-      if ( $signature_method =~ /^RSA_SHA256$/i );
-    return $signature_method_rsa_sha384
-      if ( $signature_method =~ /^RSA_SHA384$/i );
-    return $signature_method_rsa_sha512
-      if ( $signature_method =~ /^RSA_SHA512$/i );
-    return $signature_method_none;
+    if ( my $const =
+        Lasso::Constants->can( "SIGNATURE_METHOD_" . uc($signature_method) ) )
+    {
+        return $const->();
+    }
+    else {
+        return 0;
+    }
+}
+
+sub getDefaultSignatureMethod {
+    my ($self) = @_;
+
+    my $signature_method =
+      $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
+    return $signature_method;
 }
 
 ## @method boolean setProviderSignatureMethod(Lasso::Provider provider, int signature_method)
@@ -3546,13 +3560,19 @@ sub getSignatureMethod {
 sub setProviderSignatureMethod {
     my ( $self, $provider, $signature_method ) = @_;
 
-    my $default_key = $self->get_private_key("default-saml-sig");
+    my $key = $self->get_private_key( $self->_get_default_signing_key_name );
+    return $self->setProviderSignatureOptions( $provider, $signature_method,
+        $key );
+}
+
+sub setProviderSignatureOptions {
+    my ( $self, $provider, $signature_method, $key ) = @_;
 
     # We have to use an intermediate variable to avoid interferences between
     # Lasso binding and tied hashes (#3105)
-    my $priv = $default_key->{private};
-    my $pass = $default_key->{password};
-    my $cert = $default_key->{public};
+    my $priv = $key->{private};
+    my $pass = $key->{password};
+    my $cert = $key->{public};
 
     eval {
         my $key = Lasso::Key::new_for_signature_from_file( $priv, $pass,
@@ -3561,6 +3581,65 @@ sub setProviderSignatureMethod {
     };
 
     return $self->checkLassoError($@);
+}
+
+sub _override_signature_or_key {
+    my ( $self, $entityID, $log_description, $signature_method,
+        $signature_key_list )
+      = @_;
+    if ( $signature_method or $signature_key_list ) {
+        $signature_key_list //= "";
+        my $signature_key = ( split( /\s*,\s*/, $signature_key_list ) )[0];
+
+        $signature_method ||= $self->getDefaultSignatureMethod;
+        my $lasso_signature_method =
+          $self->getSignatureMethod($signature_method);
+
+        $signature_key ||= $self->_get_default_signing_key_name;
+        my $key = $self->get_private_key($signature_key);
+
+        # Fallback to default key if custom key was not found
+        if ( !$key ) {
+            $signature_key = $self->_get_default_signing_key_name;
+            $key           = $self->get_private_key($signature_key);
+        }
+
+        $self->logger->debug( "Setting signature key $signature_key"
+              . " and signature method $signature_method"
+              . " on $log_description" );
+
+        unless (
+            $self->setProviderSignatureOptions(
+                $self->lassoServer->get_provider($entityID),
+                $lasso_signature_method, $key
+            )
+          )
+        {
+            $self->logger->error(
+                "Unable to set signature options on $log_description");
+            return;
+        }
+    }
+}
+
+# The default signing key is the first key listed in samlServiceSignatureKey, with
+# fallback to default-saml-sig
+sub _get_default_signing_key_name {
+    my ($self) = @_;
+    my @key_list =
+      split( /\s*,\s*/, ( $self->conf->{samlServiceSignatureKey} || "" ) );
+
+    return ( $key_list[0] || "default-saml-sig" );
+}
+
+# The default encryption key is the first key listed in samlServiceEncryptionKey, with
+# fallback to default-saml-enc
+sub _get_default_encryption_key_name {
+    my ($self) = @_;
+    my @key_list =
+      split( /\s*,\s*/, ( $self->conf->{samlServiceEncryptionKey} || "" ) );
+
+    return ( $key_list[0] || "default-saml-enc" );
 }
 
 1;

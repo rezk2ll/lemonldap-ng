@@ -1608,6 +1608,12 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureKey",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureKey",
+            "title" : "samlIDPMetaDataOptionsSignatureKey"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignSSOMessage",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignSSOMessage",
@@ -2048,6 +2054,12 @@ function templates(tpl,key) {
                   ],
                   "title" : "samlSPMetaDataOptionsSignatureMethod",
                   "type" : "select"
+               },
+               {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureKey",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureKey",
+                  "title" : "samlSPMetaDataOptionsSignatureKey"
                },
                {
                   "default" : -1,

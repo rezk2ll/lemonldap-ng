@@ -3339,6 +3339,16 @@ sub attributes {
             ],
             default => 'RSA_SHA256',
         },
+        samlServiceSignatureKey => {
+            type   => 'text',
+            default => 'default-saml-sig',
+            documentation => 'Key to use for SAML signature',
+        },
+        samlServiceEncryptionKey => {
+            type   => 'text',
+            default => 'default-saml-enc',
+            documentation => 'Key to use for SAML encryption',
+        },
         samlServiceUseCertificateInResponse => {
             type          => 'bool',
             default       => 0,
@@ -3607,6 +3617,10 @@ sub attributes {
             ],
             default => '',
         },
+        samlIDPMetaDataOptionsSignatureKey => {
+            type   => 'text',
+            default => '',
+        },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
             default => 1,
@@ -3794,6 +3808,10 @@ sub attributes {
                 { k => 'RSA_SHA384', v => 'RSA SHA384' },
                 { k => 'RSA_SHA512', v => 'RSA SHA512' },
             ],
+            default => '',
+        },
+        samlSPMetaDataOptionsSignatureKey => {
+            type   => 'text',
             default => '',
         },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {
