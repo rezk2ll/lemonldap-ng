@@ -1286,15 +1286,18 @@ sub makeJWT {
         }
     }
 
+    my $extra_headers = { typ => "at+JWT" };
+
     # Call hook to let the user modify payload
     my $h = $self->p->processHook( $req, 'oidcGenerateAccessToken',
-        $access_token_payload, $rp );
+        $access_token_payload, $rp, $extra_headers );
     return undef if ( $h != PE_OK );
 
     # Get signature algorithm
     my $alg = $self->getSignAlg($rp);
 
-    my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
+    my $jwt =
+      $self->createJWT( $access_token_payload, $alg, $rp, $extra_headers );
 
     my $attr_str = (
         %extra_attr
@@ -2372,20 +2375,36 @@ sub _forceType {
 # @return String jwt JWT
 
 sub createJWT {
-    my ( $self, $payload, $alg, $rp, $type ) = @_;
-    return $self->_createJWT( $payload, $alg, $rp, $type );
+    my ( $self, $payload, $alg, $rp, $extra_headers_or_type ) = @_;
+
+    my $extra_headers = $extra_headers_or_type;
+
+    # Compatibility with old signature
+    if ( !ref($extra_headers_or_type) and $extra_headers_or_type ) {
+        $extra_headers = { typ => $extra_headers_or_type };
+    }
+
+    return $self->_createJWT( $payload, $alg, $rp, $extra_headers );
 }
 
 sub createJWTForOP {
-    my ( $self, $payload, $alg, $rp, $type ) = @_;
-    return $self->_createJWT( $payload, $alg, $rp, $type, 1 );
+    my ( $self, $payload, $alg, $op, $extra_headers_or_type ) = @_;
+
+    my $extra_headers = $extra_headers_or_type;
+
+    # Compatibility with old signature
+    if ( !ref($extra_headers_or_type) and $extra_headers_or_type ) {
+        $extra_headers = { typ => $extra_headers_or_type };
+    }
+
+    return $self->_createJWT( $payload, $alg, $op, $extra_headers, 1 );
 }
 
 sub _createJWT {
-    my ( $self, $payload, $alg, $partner, $type, $isRp ) = @_;
+    my ( $self, $payload, $alg, $partner, $extra_headers, $isRp ) = @_;
 
     my @keyArg;
-    my %extra_headers;
+    $extra_headers //= {};
 
     # Set Cript::JWT arguments depending on "alg"
     #  a) "none"
@@ -2420,29 +2439,32 @@ sub _createJWT {
         @keyArg = ( key => \$priv_key, );
 
         if ( $self->conf->{oidcServiceKeyIdSig} ) {
-            $extra_headers{kid} = $self->conf->{oidcServiceKeyIdSig};
+            $extra_headers->{kid} = $self->conf->{oidcServiceKeyIdSig};
         }
         my $key_info =
           $self->getCertInfo( $self->conf->{oidcServicePublicKeySig} );
         if ( $key_info->{x5t} ) {
-            $extra_headers{x5t} = $key_info->{x5t};
+            $extra_headers->{x5t} = $key_info->{x5t};
         }
-
     }
+
     my $noTyp =
         $isRp
       ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsNoJwtHeader}
       : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsNoJwtHeader};
-    unless ($noTyp) {
-        $extra_headers{typ} = $type || 'JWT';
+    if ($noTyp) {
+        delete $extra_headers->{typ};
     }
-    push @keyArg, extra_headers => \%extra_headers if %extra_headers;
+    else {
+        $extra_headers->{typ} ||= 'JWT';
+    }
 
     # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
-            payload => to_json($payload),
-            alg     => $alg,
+            payload       => to_json($payload),
+            alg           => $alg,
+            extra_headers => $extra_headers,
             @keyArg,
         );
     };
@@ -2464,11 +2486,12 @@ sub createIDToken {
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
+    my $extra_headers = { typ => "JWT" };
     my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp,
-        $sessionData );
+        $sessionData, $extra_headers );
     return undef if ( $h != PE_OK );
 
-    my $id_token = $self->createJWT( $payload, $alg, $rp );
+    my $id_token = $self->createJWT( $payload, $alg, $rp, $extra_headers );
     return $self->encryptToken(
         $rp,
         $id_token,

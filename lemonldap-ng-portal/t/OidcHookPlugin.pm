@@ -48,10 +48,13 @@ use constant hook => {
 };
 
 sub addClaimToIDToken {
-    my ( $self, $req, $payload, $rp, $sessionInfo ) = @_;
+    my ( $self, $req, $payload, $rp, $sessionInfo, $extra_headers ) = @_;
     $payload->{"id_token_hook"}     = 1;
     $payload->{"id_token_hook_rp"}  = $rp;
     $payload->{"id_token_hook_uid"} = $sessionInfo->{uid};
+
+    $extra_headers->{"id_token_hook_header"} = 1;
+
     return PE_OK;
 }
 
@@ -85,8 +88,12 @@ sub modifyRedirectUri {
 }
 
 sub addClaimToAccessToken {
-    my ( $self, $req, $payload, $rp ) = @_;
+    my ( $self, $req, $payload, $rp, $extra_headers ) = @_;
+
     $payload->{"access_token_hook"} = 1;
+
+    $extra_headers->{typ} = "at+JWT+hook";
+
     return PE_OK;
 }
 
