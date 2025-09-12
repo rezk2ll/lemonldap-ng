@@ -88,6 +88,38 @@ sub tests {
             );
         },
 
+        # Check if automatically displayed menu applications have VH configuration
+        menuAutoDisplayedVhostsHaveConf => sub {
+            my @pb;
+            my %entries = map {
+                my $cat = $_;
+                map {
+                    my $u = URI->new(
+                        $conf->{applicationList}->{$cat}->{$_}->{options}->{uri}
+                    );
+                    $conf->{applicationList}->{$cat}->{$_}->{options}->{display}
+                      eq "auto" && $u->can("host") ? ( $u->host => 1 ) : ();
+                } grep { not /^(?:catname|type|options|order)$/ }
+                  keys %{ $conf->{applicationList}->{$cat} };
+            } grep { not /^(?:catname|type|options|order)$/ }
+              keys %{ $conf->{applicationList} };
+
+            foreach ( keys %entries ) {
+                push @pb, $_ unless $conf->{locationRules}->{$_};
+            }
+
+            return (
+                1,
+                (
+                    @pb
+                    ? 'Menu applications '
+                      . join( ', ', @pb )
+                      . ' are automatically displayed but have no configuration'
+                    : undef
+                )
+            );
+        },
+
         # Check if virtual host do not contain a port
         vhostWithPort => sub {
             my @pb;
