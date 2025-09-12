@@ -135,6 +135,39 @@ sub _get_key_config {
         }
     }
 
+    if ( $key_id eq "old-oidc-sig" ) {
+        if ( $self->conf->{oidcServiceOldPrivateKeySig} ) {
+            return {
+                keyPrivate    => $self->conf->{oidcServiceOldPrivateKeySig},
+                keyPrivatePwd => '',
+                keyPublic     => $self->conf->{oidcServiceOldPublicKeySig},
+                keyId         => $self->conf->{oidcServiceOldKeyIdSig},
+            };
+        }
+    }
+
+    if ( $key_id eq "new-oidc-sig" ) {
+        if ( $self->conf->{oidcServiceNewPrivateKeySig} ) {
+            return {
+                keyPrivate    => $self->conf->{oidcServiceNewPrivateKeySig},
+                keyPrivatePwd => '',
+                keyPublic     => $self->conf->{oidcServiceNewPublicKeySig},
+                keyId         => $self->conf->{oidcServiceNewKeyIdSig},
+            };
+        }
+    }
+
+    if ( $key_id eq "default-oidc-enc" ) {
+        if ( $self->conf->{oidcServicePrivateKeyEnc} ) {
+            return {
+                keyPrivate    => $self->conf->{oidcServicePrivateKeyEnc},
+                keyPrivatePwd => '',
+                keyPublic     => $self->conf->{oidcServicePublicKeyEnc},
+                keyId         => $self->conf->{oidcServiceKeyIdEnc},
+            };
+        }
+    }
+
     return;
 }
 
