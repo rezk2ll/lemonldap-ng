@@ -2552,14 +2552,10 @@ sub key2jwks {
         return $eck->export_key_jwk( 'public', 1 );
     }
     else {
-        my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
-        my @params  = $rsa_pub->get_key_parameters();
-
-        return {
-            n   => encode_base64url( $params[0]->to_bin(), "" ),
-            e   => encode_base64url( $params[1]->to_bin(), "" ),
-            kty => 'RSA',
-        };
+        require Crypt::PK::RSA;
+        my $pk = Crypt::PK::RSA->new();
+        $pk->import_key( \$key );
+        return $pk->export_key_jwk( 'public', 1 );
     }
 }
 
@@ -2596,20 +2592,14 @@ sub getCertInfo {
 #   - only the current key. Old encryption key is kept to permit to
 #     Auth::OPenIDCOnnect to decrypt all JWE emitted by Issuer but no
 #     need to display any other key
-use constant KEYS_TO_DISPLAY => (
-    [ ''    => 'Sig' ],
-    [ 'Old' => 'Sig' ],
-    [ 'New' => 'Sig' ],
-    [ ''    => 'Enc' ],
-);
-
 sub _buildJwk {
-    my ( $self, $prefix, $type ) = @_;
-    my $publicKeyOrCert = $self->conf->{"oidcService${prefix}PublicKey$type"};
-    my $privateKey      = $self->conf->{"oidcService${prefix}PrivateKey$type"};
-    my $keyId           = $self->conf->{"oidcService${prefix}KeyId$type"};
-    my $keytype         = $self->conf->{"oidcService${prefix}KeyType$type"};
-    return $privateKey
+    my ( $self, $type, $key ) = @_;
+    return unless $key;
+
+    my $publicKeyOrCert = $key->{public};
+    my $keyId           = $key->{external_id};
+    my $keytype         = $self->_getKeyType($key);
+    return $publicKeyOrCert
       ? {
         kty => $keytype,
         use => lc($type),
@@ -2619,7 +2609,7 @@ sub _buildJwk {
             : ()
         ),
         ( $keyId ? ( kid => $keyId ) : () ),
-        %{ $self->key2jwks( $privateKey, $keytype ) },
+        %{ $self->key2jwks( $publicKeyOrCert, $keytype ) },
         %{ $self->getCertInfo($publicKeyOrCert) },
       }
       : ();
@@ -2633,8 +2623,19 @@ sub jwks {
 
     my $jwks = { keys => [] };
 
-    push @{ $jwks->{keys} }, $self->_buildJwk( $_->[0], $_->[1] )
-      foreach (KEYS_TO_DISPLAY);
+    for my $sig_key (
+        split( /\s*,\s*/, ( $self->conf->{oidcServiceSignatureKey} || "" ) ) )
+    {
+        push @{ $jwks->{keys} },
+          $self->_buildJwk( "Sig", $self->get_public_key($sig_key) );
+    }
+
+    for my $enc_key (
+        split( /\s*,\s*/, ( $self->conf->{oidcServiceEncryptionKey} || "" ) ) )
+    {
+        push @{ $jwks->{keys} },
+          $self->_buildJwk( "Enc", $self->get_public_key($enc_key) );
+    }
 
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
