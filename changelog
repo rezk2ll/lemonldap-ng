@@ -1,3 +1,12 @@
+lemonldap-ng (2.21.3) noble; urgency=medium
+
+  * Bugs:
+    * #3445: Google OIDC authentication module fails with "No response type provided"
+    * #3446: [security:medium] session id exposed in portal AJAX responses
+    * #3462: [security:low] Shell injection in Safe Jail
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 05 Sep 2025 17:58:17 +0200
+
 lemonldap-ng (2.21.2) noble; urgency=medium
 
   * Bugs:
