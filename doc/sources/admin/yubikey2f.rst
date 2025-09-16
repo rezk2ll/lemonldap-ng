@@ -51,12 +51,14 @@ In the manager (second factors), you just have to enable it:
 
 
 .. attention::
+    If you want to use a custom rule for "activation" and want to keep self-registration,
+    you must add the following condition to the custom activation rule::
 
-    If you want to use a custom rule for "activation" and
-    want to keep self-registration, you must include this in your rule:
-    ``has2f('UBK')``, else Yubico OTP will be required even if users are not
-    registered. This is automatically done when "activation" is simply set to
-    "on".
+        and has2f('UBK')
+
+    Without this condition, Yubico OTP will be asked even for users who didn't register one.
+    This is automatically done when "activation" is simply set to "on".
+
 
 Provisioning
 ------------

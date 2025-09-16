@@ -7,7 +7,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
@@ -57,6 +57,9 @@ use constant supportedActions => {
 sub verify {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
 
     # Check Password
     my $password       = $req->param('password');

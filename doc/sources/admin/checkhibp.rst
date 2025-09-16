@@ -23,7 +23,7 @@ Then enable the checkHIBP plugin in ``General Parameters > Advanced parameters >
 
 -  **Activation**: Enable / Disable this plugin
 -  **Have I Been Pwned URL**: URL of I have been pwned API (default to ``https://api.pwnedpasswords.com/range/``)
--  **Require HIBP check to pass**: Is the HIBP check required to pass? (default to ``Off``)
+-  **Require HIBP check to pass**: Is the HIBP check required to pass? (default to ``On``)
 
 Usage
 -----

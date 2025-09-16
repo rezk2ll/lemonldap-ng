@@ -375,9 +375,9 @@ Usage examples:
 
 ::
 
-   ipInSubnet($ENV{REMOTE_ADDR}, '127.0.0.0/8')
+   ipInSubnet($env->{REMOTE_ADDR}, '127.0.0.0/8')
 
-   ipInSubnet($ENV{REMOTE_ADDR}, '10.0.0.0/8', '192.168.0.0/16')
+   ipInSubnet($env->{REMOTE_ADDR}, '10.0.0.0/8', '192.168.0.0/16')
 
 The function returns 1 if provided IP is in one of the subnets, and 0 if
 it is not.

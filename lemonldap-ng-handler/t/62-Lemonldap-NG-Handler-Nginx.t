@@ -13,23 +13,56 @@ init('Lemonldap::NG::Handler::Server::Nginx');
 
 my $res;
 
-# Unauthentified query
-ok( $res = $client->_get('/'), 'Unauthentified query' );
-ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
-ok( $res->[0] == 401,     'Code is 401' )          or explain( $res->[0], 401 );
-my %h = @{ $res->[1] };
-ok(
-    $h{Location} eq 'http://auth.example.com/?url='
-      . uri_escape( encode_base64( 'http://test1.example.com/', '' ) ),
-    'Redirection points to portal'
-  )
-  or explain(
-    \%h,
-    'Location => http://auth.example.com/?url='
-      . uri_escape( encode_base64( 'http://test1.example.com/', '' ) )
-  );
 
-count(4);
+subtest "Unauthenticated queries without special AJAX handling" => sub {
+
+    # Unauthentified query, not AJAX
+    ok( $res = $client->_get('/'), 'Unauthentified query' );
+    ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
+    ok( $res->[0] == 401,     'Code is 401' )          or explain( $res->[0], 401 );
+    my %h = @{ $res->[1] };
+    is(
+        $h{Location}, 'http://auth.example.com/?url='
+        . uri_escape( encode_base64( 'http://test1.example.com/', '' ) ),
+        'Redirection points to portal'
+    );
+
+    # Unauthentified query, AJAX
+    ok( $res = $client->_get('/',undef,undef,undef, HTTP_ACCEPT=> "application/json"), 'Unauthentified query' );
+    ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
+    ok( $res->[0] == 401,     'Code is 401' )          or explain( $res->[0], 401 );
+    my %h = @{ $res->[1] };
+    is(
+        $h{Location}, 'http://auth.example.com/?url='
+        . uri_escape( encode_base64( 'http://test1.example.com/', '' ) ),
+        'Redirection points to portal'
+    );
+};
+count(1);
+
+subtest "Unauthenticated queries with special AJAX handling" => sub {
+    Lemonldap::NG::Handler::Main->tsv->{useRedirectAjaxOnUnauthorized} = 0;
+
+    # Unauthentified query, not AJAX
+    ok( $res = $client->_get('/'), 'Unauthentified query' );
+    ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
+    ok( $res->[0] == 401,     'Code is 401' )          or explain( $res->[0], 401 );
+    my %h = @{ $res->[1] };
+    is(
+        $h{Location}, 'http://auth.example.com/?url='
+        . uri_escape( encode_base64( 'http://test1.example.com/', '' ) ),
+        'Redirection points to portal'
+    );
+
+    # Unauthentified query, AJAX
+    ok( $res = $client->_get('/',undef,undef,undef, HTTP_ACCEPT=> "application/json"), 'Unauthentified query' );
+    ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
+    ok( $res->[0] == 401,     'Code is 401' )          or explain( $res->[0], 401 );
+    my %h = @{ $res->[1] };
+    ok(!  $h{Location}, "No Location header is specified" );
+    Lemonldap::NG::Handler::Main->tsv->{useRedirectAjaxOnUnauthorized} = 1;
+};
+count(1);
 
 # Authentified queries
 # --------------------
@@ -55,6 +88,42 @@ ok(
 'Lm-Remote-Custom => "dwho@badwolf.org alias Doctor_Who:users; timelords by using Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1"'
   );
 count(1);
+
+# Check that cookie is removed
+{
+    my $previous, $success;
+    my $cookie_count = 0;
+    for ( @{ $res->[1] } ) {
+        if ( $_ eq "Cookie" ) {
+            $success = $previous =~ /^Deleteheader/;
+            $cookie_count++;
+        }
+        $previous = $_;
+    }
+    is( $cookie_count, 1, "One occurence of Cookie in response headers" );
+    ok( $success, "Cookie occurence appears after a Deleteheader instruction" );
+    count(2);
+}
+
+# Authorized query with cookie
+ok(
+    $res = $client->_get(
+        '/', undef, 'test4.example.com', "a=b; lemonldap=$sessionId; x=y"
+    ),
+    'Authentified query'
+);
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+count(2);
+
+# Check that cookie is modified
+{
+    %h = @{ $res->[1] };
+    my @cookie_occurences = grep { $_ eq "Cookie" } @{ $res->[1] };
+    is( scalar(@cookie_occurences),
+        1, "One occurence of Cookie in response headers" );
+    is( $h{Cookie}, "a=b; x=y", "Correct cookie value" );
+    count(2);
+}
 
 # Authorized query
 ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),

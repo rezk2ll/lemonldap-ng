@@ -85,10 +85,11 @@ In the manager (advanced parameters), you just have to enable it:
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
 
+
 .. attention::
 
-    If you want to use a custom rule for "activation" and
-    want to keep self-registration, you must add the following condition to the custom activation rule::
+    If you want to use a custom rule for "activation" and want to keep self-registration,
+    you must add the following condition to the custom activation rule::
 
         and has2f('TOTP')
 

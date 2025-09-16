@@ -17,7 +17,7 @@ use Lemonldap::NG::Common::EmailTransport;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 our $transport;
 
@@ -59,11 +59,6 @@ sub loadMailTemplate {
     $prm{cache}                   = 0 unless defined $prm{cache};
     $prm{params}->{STATIC_PREFIX} = $self->p->staticPrefix;
     $prm{params}->{MAIN_LOGO}     = $self->conf->{portalMainLogo};
-    my %extra =
-        $self->p->can('tplParams')
-      ? $self->p->tplParams($req)
-      : ();
-    $prm{params}->{$_} = $extra{$_} for keys %extra;
 
     return $self->loadTemplate( $req, $name, %prm );
 }
@@ -104,7 +99,10 @@ sub translate {
 # @param regexp regular expression
 sub gen_password {
     my ( $self, $regexp ) = @_;
-    return $self->random->randregex($regexp);
+    my $password = join '',
+      sort { int( rand(3) ) - 1 } split //,
+      $self->random->randregex($regexp);
+    return $password;
 }
 
 # Send mail (legacy API, using sendEmail is recommended instead)

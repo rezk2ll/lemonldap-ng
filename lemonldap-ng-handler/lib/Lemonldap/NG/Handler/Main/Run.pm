@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -29,56 +29,7 @@ sub logout {
     return $class->unlog(@_);
 }
 
-sub status {
-    my $class;
-    $class = $#_ ? shift : __PACKAGE__;
-    return $class->getStatus(@_);
-}
-
 # Public methods
-
-# Return Handler::Lib::Status output
-sub getStatus {
-    my ( $class, $req ) = @_;
-    $class->logger->debug("Request for status");
-    my $statusPipe = $class->tsv->{statusPipe};
-    my $statusOut  = $class->tsv->{statusOut};
-    my $args       = '';
-    if ( $ENV{LLNGSTATUSHOST} ) {
-        require IO::Socket::INET;
-        foreach ( 64322 .. 64331 ) {
-            if ( $statusOut =
-                IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
-            {
-                $args =
-                  ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
-                last;
-            }
-        }
-        return $class->abort( $req,
-            "$class: status page can not be displayed, unable to open socket" )
-          unless ($statusOut);
-    }
-    return $class->abort( $req, "$class: status page can not be displayed" )
-      unless ( $statusPipe and $statusOut );
-    my $q = $req->{env}->{QUERY_STRING} || '';
-    if ( $q =~ /\s/ ) {
-        $class->logger->error("Bad characters in query");
-        return $class->FORBIDDEN;
-    }
-    $statusPipe->print(
-        "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "$args\n" );
-    my $buf;
-
-    while ( $_ = $statusOut->getline ) {
-        last if (/^END$/);
-        $buf .= $_;
-    }
-    $class->set_header_out( $req,
-        "Content-Type" => "text/html; charset=UTF-8" );
-    $class->print( $req, $buf );
-    return $class->OK;
-}
 
 # Method that must be called by base packages (Handler::ApacheMP2,...) to get
 # type of handler to call (Main, AuthBasic,...)
@@ -120,7 +71,7 @@ sub checkEvent {
                 $ret = $msg->{action};
             }
             else {
-                $class->logger->error("Unkown action $msg->{action}");
+                $class->logger->debug("Unknown action $msg->{action}");
             }
         }
         else {
@@ -153,6 +104,13 @@ sub publishEvent {
         usleep 100000;
         $class->checkEvent( $req, 0.1 );
     }
+}
+
+sub publishStatus {
+    my ( $class, %msg ) = @_;
+    return unless $class->tsv->{eventStatus};
+    $class->tsv->{msgBrokerWriter}
+      ->publish( $class->tsv->{statusQueueName}, \%msg );
 }
 
 ## @rmethod int run
@@ -330,13 +288,13 @@ sub unlog {
 # @param optional url string URL to log, if undefined defaults to request URI
 sub updateStatus {
     my ( $class, $req, $action, $user, $url ) = @_;
-    my $statusPipe = $class->tsv->{statusPipe} or return;
     $user ||= $req->address;
     $url  ||= $req->{env}->{REQUEST_URI};
-    eval {
-        $statusPipe->print(
-            "$user => " . $req->{env}->{HTTP_HOST} . "$url $action\n" );
-    };
+    $class->publishStatus(
+        user          => $user,
+        url           => $req->{env}->{HTTP_HOST} . $url,
+        handlerAction => $action
+    );
 }
 
 ## @rmethod void lmLog(string msg, string level)
@@ -477,6 +435,7 @@ sub forbidden {
     }
 
     if ( $session->{_upgrade} ) {
+        $class->localUnlog($req);
         return $class->goToPortal( $req, $uri, undef, '/upgradesession' );
     }
 
@@ -494,6 +453,7 @@ sub forbidden {
     );
     $class->updateStatus( $req, 'REJECT',
         $session->{ $class->tsv->{whatToTrace} } );
+    $class->localUnlog($req);
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} && $vhost ne $portal ) {
@@ -543,13 +503,19 @@ sub encodeUrl {
 # @return Constant $class->REDIRECT
 sub goToPortal {
     my ( $class, $req, $url, $arg, $path ) = @_;
+
+    my $portal = $class->tsv->{portal}->($req);
+    if ( !$class->tsv->{useRedirectAjaxOnUnauthorized} and $req->wantJSON ) {
+        $class->set_header_out( $req, 'WWW-Authenticate' => "SSO $portal" );
+        return $class->AUTH_REQUIRED;
+    }
     $path ||= '';
     my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl( $req, $url );
     $class->logger->debug(
         'Redirect ' . $req->address . " to portal (url was $url)" );
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->($req)
+            'Location' => $portal
           . "$path?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
@@ -912,6 +878,14 @@ sub localUnlog {
             my $cache = $module->new($options);
             if ( $cache->get($id) ) {
                 $cache->remove($id);
+            }
+
+            # Modules like Apache::Session::REST stores hashed id in cache
+            if ( $class->tsv->{hashedSessionStore} ) {
+                $id = id2storage($id);
+                if ( $cache->get($id) ) {
+                    $cache->remove($id);
+                }
             }
         }
     }

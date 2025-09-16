@@ -4,12 +4,16 @@
 
   <TMPL_INCLUDE NAME="customLoginHeader.tpl">
 
+  <TMPL_IF env_DISPLAY_PUBLIC_NOTIFICATIONS>
+    <div id="carousel" class="carousel"></div>
+  </TMPL_IF>
+
   <div id="errormsg">
     <TMPL_IF NAME="AUTH_ERROR">
       <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
         <TMPL_IF LOCKTIME>
           <TMPL_VAR NAME="LOCKTIME"> <span trspan="seconds">seconds</span>.
-        </TMPL_IF>
+                </TMPL_IF>
       </div>
     </TMPL_IF>
   </div>
@@ -21,16 +25,15 @@
     <!-- Authentication loop -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <a class="navbar-brand" href="/"><i class="fa fa-user-circle"></i></a>
+    <a class="navbar-brand" href="<TMPL_VAR NAME="PORTAL_BASE">"><i class="fa fa-user-circle"></i></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Choice tabs -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <TMPL_LOOP NAME="AUTH_LOOP">
-          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#id_<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
         </TMPL_LOOP>
       </ul>
     </div>
@@ -41,7 +44,7 @@
       <!-- Forms -->
       <TMPL_LOOP NAME="AUTH_LOOP">
 
-        <div id="<TMPL_VAR NAME="key">">
+        <div id="id_<TMPL_VAR NAME="key">">
 
           <form id="lform<TMPL_VAR NAME="module">" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 

@@ -1,13 +1,13 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
 use strict;
 use MIME::Base64;
-use POSIX qw(strftime);
-use Lemonldap::NG::Common::Util qw(isHiddenAttr);
+use POSIX                                  qw(strftime);
+use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(portalConsts);
 use URI;
 
@@ -24,9 +24,22 @@ sub process {
     $req->env->{ipAddr} = $req->address;
     my $err    = PE_OK;
     my $nofail = delete $args{nofail};
+    if ( grep { ref $_ eq "CODE" } @{ $req->steps } ) {
+        $self->logger->debug(
+            "Warning: process pipeline contains non-serializable step");
+    }
     while ( my $sub = shift @{ $req->steps } ) {
         $nofail = 1 if $req->data->{nofail};
-        if ( ref $sub ) {
+        my @args_array;
+
+        # This lets you transmit arguments by storing
+        # [ "method_name", @args_array ] in steps
+        if ( ref($sub) eq "ARRAY" ) {
+            my $sub_name = shift @$sub;
+            @args_array = @$sub;
+            $sub        = $sub_name;
+        }
+        if ( ref $sub eq "CODE" ) {
             $self->logger->debug("Processing code ref");
             my $tmp = $sub->( $req, %args );
             if ($tmp) {
@@ -34,17 +47,31 @@ sub process {
                 last        unless $nofail and $err != PE_SENDRESPONSE;
             }
         }
-        else {
-            $self->logger->debug("Processing $sub");
-            if ( my $as = $self->aroundSub->{$sub} ) {
-                my $tmp = $as->( $req, %args );
+        elsif ( my ( $plugin, $callback ) = $sub =~ /(.*)::(.*)/ ) {
+            $self->logger->debug("Processing ${plugin}::${callback}");
+            my $plugin = $self->loadedModules->{$plugin};
+            if ( ref($plugin) ) {
+                my $tmp = $plugin->$callback( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
                 }
             }
             else {
-                my $tmp = $self->$sub( $req, %args );
+                $self->logger->error("Plugin $plugin is not loaded");
+            }
+        }
+        else {
+            $self->logger->debug("Processing $sub");
+            if ( my $as = $self->aroundSub->{$sub} ) {
+                my $tmp = $as->( $req, @args_array, %args );
+                if ($tmp) {
+                    $err = $tmp unless $err > 0;
+                    last        unless $nofail and $err != PE_SENDRESPONSE;
+                }
+            }
+            else {
+                my $tmp = $self->$sub( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
@@ -161,21 +188,10 @@ sub controlUrl {
         }
         $req->{urldc} = URI->new( $req->{urldc} )->as_string;
 
-        # For logout request, test if Referer comes from an authorized site
-        my $tmp = (
-              $req->param('logout')
-            ? $req->referer
-            : $req->{urldc}
-        );
+        my $tmp = $req->urldc;
 
         # XSS attack
-        if (
-            $self->checkXSSAttack(
-                $req->param('logout') ? 'HTTP Referer' : 'urldc',
-                $req->{urldc}
-            )
-          )
-        {
+        if ( $self->checkXSSAttack( 'urldc', $req->{urldc} ) ) {
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -204,8 +220,7 @@ sub controlUrl {
         # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);
         $vhost = "$proto://$originalVhost";
-        $self->logger->debug( 'Required URL (param: '
-              . ( $req->param('logout') ? 'HTTP Referer'   : 'urldc' )
+        $self->logger->debug( 'Required URL (param: urldc'
               . ( $tmp ? " | value: $tmp | alias: $vhost)" : ')' ) );
 
         # If the target URL has an authLevel set in config, remember it.
@@ -224,8 +239,7 @@ sub controlUrl {
             $self->auditLog(
                 $req,
                 message => (
-                        "URL contains an unprotected host (param: "
-                      . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
+                        "URL contains an unprotected host (param: urldc"
                       . " | value: $tmp | alias: $vhost)"
                 ),
                 code => "UNAUTHORIZED_REDIRECT",
@@ -239,6 +253,36 @@ sub controlUrl {
         $req->env->{_url}  = $req->{_url};
         $req->data->{_url} = $req->pdata->{_url} =
           encode_base64( $req->{urldc}, '' );    # Avoid \n or \r
+    }
+    return PE_OK;
+}
+
+sub cleanPdata {
+    my ( $self, $req ) = @_;
+    my $tmp = $req->pdata->{keepPdata} //= [];
+    foreach my $k ( keys %{ $req->pdata } ) {
+        unless ( grep { $_ eq $k } @$tmp ) {
+            $self->logger->debug("Removing $k from pdata");
+            delete $req->pdata->{$k};
+        }
+    }
+    my $user_log    = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $auth_module = $req->{sessionInfo}->{_auth};
+    my $ipAddr      = $req->{sessionInfo}->{ipAddr};
+
+    if ($user_log) {
+        $self->auditLog(
+            $req,
+            message => (
+                "User " . $user_log . " connected from $auth_module ($ipAddr)"
+            ),
+            code => "LOGIN",
+            user => $user_log,
+        );
+    }
+    if (@$tmp) {
+        $self->logger->debug( 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
+        $req->pdata->{keepPdata} = $tmp;
     }
     return PE_OK;
 }
@@ -257,9 +301,41 @@ sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
         $self->_unauthLogout($req);
-        $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
+        $req->steps( [ 'controlUrl', [ returnPE => PE_LOGOUT_OK ] ] );
     }
     return PE_OK;
+}
+
+sub returnPE {
+    my ( $self, $req, $code ) = @_;
+
+    return $code;
+}
+
+sub eventLogout {
+    my ( $self, $req, $msg ) = @_;
+    bless $req, 'Lemonldap::NG::Portal::Main::Request';
+    $self->logger->debug("Receive a logout event");
+    $self->processHook( $req, 'eventLogout', $msg );
+    if ( $msg->{id} ) {
+        $self->logger->debug(" -> logout asked for $msg->{id}");
+        if ( my $session = HANDLER->retrieveSession( $req, $msg->{id} ) ) {
+            $req->sessionInfo( $req->userData($session) );
+            $req->id( $session->{_session_id} );
+            $req->pdata( {} );
+            $self->do( $req,
+                [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ],
+                1 );
+        }
+        else {
+            $self->logger->debug('Session not found');
+            $self->_unauthLogout($req);
+        }
+    }
+    else {
+        $self->logger->debug('Logout event without id');
+        $self->_unauthLogout($req);
+    }
 }
 
 sub checkCancel {
@@ -267,7 +343,7 @@ sub checkCancel {
     if ( $req->param('cancel') ) {
         $self->logger->debug('Cancel called, run authCancel calls');
         $req->mustRedirect(1);
-        $req->steps( [ @{ $self->authCancel }, sub { PE_OK } ] );
+        $req->steps( [ @{ $self->authCancel }, [ returnPE => PE_OK ] ] );
         return PE_OK;
     }
     return PE_OK;
@@ -318,7 +394,9 @@ sub deleteSession {
     }
 
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
+    if ( $req->data->{logoutServices}
+        and %{ $req->data->{logoutServices} } )
+    {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
@@ -368,6 +446,10 @@ sub deleteSession {
         $req->steps( [] );
         return PE_OK;
     }
+
+    # You can use the _continueLogout variable to continue the current flow
+    # after deleteSession
+    return PE_OK if $req->data->{_continueLogout};
 
     # Else display "error"
     return PE_LOGOUT_OK;
@@ -457,16 +539,13 @@ sub authenticate {
     my ( $self, $req ) = @_;
     my $ret = $req->authResult( $self->_authentication->authenticate($req) );
     $self->logger->debug( " -> authResult = " . $req->authResult );
-    if ( $ret == PE_OK ) {
-        $req->{sessionInfo}->{_lastAuthnUTime} = time();
-        return $ret;
-    }
+    return $ret if $ret == PE_OK;
 
     # Store failed login into history
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      [ returnPE => PE_BADCREDENTIALS ],
         ]
     );
 
@@ -481,6 +560,7 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{_lastAuthnUTime} = time();
     my $ret = $self->_authentication->setAuthSessionInfo($req);
     if ( $ret == PE_OK
         and not( defined $req->sessionInfo->{authenticationLevel} ) )
@@ -670,6 +750,7 @@ sub buildCookie {
         ? $req->{sessionInfo}
         : $req->{userData}
     );
+    $req->data->{newAuth} = 1;
     $self->auditLog(
         $req,
         message => (

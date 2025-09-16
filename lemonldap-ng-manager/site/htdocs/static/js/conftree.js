@@ -49,6 +49,13 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAllowProxy",
+            "title" : "casAppMetaDataOptionsAllowProxy",
+            "type" : "bool"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
@@ -58,8 +65,7 @@ function templates(tpl,key) {
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
-            "title" : "casAppMetaDataOptionsAuthnLevel",
-            "type" : "intOrNull"
+            "title" : "casAppMetaDataOptionsAuthnLevel"
          },
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
@@ -155,6 +161,12 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSamlValidate",
+            "title" : "casSrvMetaDataOptionsSamlValidate",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "title" : "casSrvMetaDataOptionsComment",
@@ -193,11 +205,45 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "title" : "casSrvMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "id" : "casSrvMetaDataOptionsDisplay",
       "title" : "casSrvMetaDataOptionsDisplay",
+      "type" : "simpleInputContainer"
+   }
+]
+;
+  case 'keyNode':
+    return [
+   {
+      "get" : [
+         tpl+"s/"+key+"/"+"keyPrivate",
+         tpl+"s/"+key+"/"+"keyPrivatePwd",
+         tpl+"s/"+key+"/"+"keyPublic"
+      ],
+      "id" : tpl+"s/"+key+"/"+"KeyMaterial",
+      "title" : "KeyMaterial",
+      "type" : "KeyMaterial"
+   },
+   {
+      "_nodes" : [
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyId",
+            "id" : tpl+"s/"+key+"/"+"keyId",
+            "title" : "keyId"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"keyComment",
+            "id" : tpl+"s/"+key+"/"+"keyComment",
+            "title" : "keyComment"
+         }
+      ],
+      "help" : "keys.html#options",
+      "id" : "keyOptions",
+      "title" : "keyOptions",
       "type" : "simpleInputContainer"
    }
 ]
@@ -480,6 +526,34 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUseNonce",
                   "title" : "oidcOPMetaDataOptionsUseNonce",
                   "type" : "bool"
+               },
+               {
+                  "default" : "userinfo",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserinfoSource",
+                  "select" : [
+                     {
+                        "k" : "userinfo",
+                        "v" : "Userinfo endpoint"
+                     },
+                     {
+                        "k" : "id_token",
+                        "v" : "ID Token"
+                     },
+                     {
+                        "k" : "access_token",
+                        "v" : "Access Token"
+                     }
+                  ],
+                  "title" : "oidcOPMetaDataOptionsUserinfoSource",
+                  "type" : "select"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcOPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsProtocol",
@@ -525,7 +599,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "title" : "oidcOPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authopenidconnect.html#display",
@@ -647,6 +721,13 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsNoJwtHeader",
+                  "title" : "oidcRPMetaDataOptionsNoJwtHeader",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
                   "title" : "oidcRPMetaDataOptionsUserIDAttr"
@@ -713,6 +794,13 @@ function templates(tpl,key) {
                },
                {
                   "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "title" : "oidcRPMetaDataOptionsAllowNativeSso",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
                   "title" : "oidcRPMetaDataOptionsAllowPasswordGrant",
@@ -733,8 +821,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
-                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "oidcRPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
@@ -1311,8 +1398,8 @@ function templates(tpl,key) {
                   "type" : "file"
                }
             ],
-            "id" : "keys",
-            "title" : "keys"
+            "id" : "oidcRpKeys",
+            "title" : "oidcRpKeys"
          },
          {
             "_nodes" : [
@@ -1339,6 +1426,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "type" : "intOrNull"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRtActivity",
+                  "title" : "oidcRPMetaDataOptionsRtActivity",
+                  "type" : "int"
                }
             ],
             "id" : "oidcRPMetaDataOptionsTimeouts",
@@ -1512,6 +1606,12 @@ function templates(tpl,key) {
             ],
             "title" : "samlIDPMetaDataOptionsSignatureMethod",
             "type" : "select"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureKey",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureKey",
+            "title" : "samlIDPMetaDataOptionsSignatureKey"
          },
          {
             "default" : -1,
@@ -1807,7 +1907,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "title" : "samlIDPMetaDataOptionsSortNumber",
-            "type" : "intOrNull"
+            "type" : "int"
          }
       ],
       "help" : "authsaml.html#display",
@@ -1956,6 +2056,12 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureKey",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureKey",
+                  "title" : "samlSPMetaDataOptionsSignatureKey"
+               },
+               {
                   "default" : -1,
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignSSOMessage",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignSSOMessage",
@@ -2021,8 +2127,7 @@ function templates(tpl,key) {
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
-                  "title" : "samlSPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
+                  "title" : "samlSPMetaDataOptionsAuthnLevel"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",

@@ -24,6 +24,7 @@ values unless you have a specific need to change them.
 -  **JWKS**
 -  **Registration**
 -  **Introspection**
+-  **Token revocation**
 -  **End of session**
 -  **Check Session**
 -  **Front-Channel URI**
@@ -33,15 +34,41 @@ values unless you have a specific need to change them.
 
     These endpoints are published in JSON metadata.
 
+
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can associate here an authentication context to an authentication level.
 
+.. _amrrules:
+
+Authentication Method Reference rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When issuing an ID Token, Lemonldap will fill the ``amr`` field according to
+the rules specified in this section. A minimal set of rules is provided. If
+you need particular ``amr`` values to be sent to your applications depending on
+authentication conditions, you can add your own custom rules here.
+
+The key of each entry is the ``amr`` value to be added to the ID token. The
+value is a rule that decides whether or not that value is set.
+
+Any session variable or environment variable can be used, but the most
+relevant variables to use here are probably:
+
+* ``$_auth``: name of the authentication module
+* ``$_choice``: name of the authentication choice, if used
+* ``$_2f``: name of the 2FA type used
+* ``$authenticationLevel``: current authentication level
+* ``$_clientId``: client ID of the target service, in case a service requires special processing
+* ``$_clientConfKey``: configuration key of the target service, in case a service requires special processing
+
+For more information on standard AMR values, refer to :rfc:`8176`
+
 Dynamic registration
 ~~~~~~~~~~~~~~~~~~~~
 
-If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options 
+If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options
 to define attributes and extra claims released when a new relying party is registered through ``/oauth2/register`` endpoint.
 
 -  **Activation**: Set to 1 to allow clients to register themselves
@@ -122,6 +149,9 @@ Timeouts
    Default value is one hour.
 -  **Offline sessions**: This option sets lifetime of Refresh Tokens
    retrieved with ``offline_access`` scope. Default value is one month.
+-  **OIDC Metadata TTL**: When a non 0 value is set here, the OIDC metadata
+   are generated with a ``Cache-Control: public`` header and the corresponding
+   "time-to-live" value.
 
 
 Sessions
@@ -161,5 +191,5 @@ will be returned.
 
 .. tip::
 
-    This feature requires that the LL::NG cookie is exposed to 
+    This feature requires that the LL::NG cookie is exposed to
     javascript (``httpOnly`` option must be set to ``0``).

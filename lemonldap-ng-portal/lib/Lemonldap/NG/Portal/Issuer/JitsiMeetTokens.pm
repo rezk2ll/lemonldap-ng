@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
@@ -276,7 +276,7 @@ sub jitsi {
     };
     if ($@) {
         $self->logger->error("Could not encode JWT: $@");
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        return $self->p->doPE($req, PE_ERROR);
     }
 
     $u->query_form( jwt => $jwt );

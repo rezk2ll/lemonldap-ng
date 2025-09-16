@@ -2,11 +2,12 @@ package Lemonldap::NG::Common::PSGI;
 
 use strict;
 use Mouse;
+use HTTP::Status;
 use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 our $_json = JSON->new->allow_nonref;
 
@@ -235,7 +236,7 @@ sub sendJSONresponse {
 
 sub sendError {
     my ( $self, $req, $err, $code ) = @_;
-    $err  ||= $req->error;
+    $err  ||= $req->error || '';
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
 
@@ -269,13 +270,8 @@ sub sendError {
 
     # Default response: HTML
     else {
-        my $title = (
-              $code >= 500 ? 'Server error'
-            : $code == 403 ? 'Forbidden'
-            : $code == 401 ? 'Authentication required'
-            : $code == 400 ? 'Bad request'
-            :                'Error'
-        );
+        my $title = eval { HTTP::Status::status_message($code) } || 'Error';
+        print STDERR $@ if $@;
 
         # TODO: this should probably use a template instead
         my $s = "<html><head><title>$title</title>
@@ -417,7 +413,7 @@ sub run {
     $args //= {};
     unless ( ref $self ) {
         $self = $self->new($args);
-        return $self->abort( $self->error ) unless ( $self->init($args) );
+        $self->init($args) or $self->logger->error('Initialization failed');
     }
     return $self->_run;
 }
@@ -431,8 +427,8 @@ sub _run {
     );
 }
 
-# This method turns a sub that takes a Lemonldap::NG::Common::PSGI::Request
-# obect and returns a PSGI response into a proper PSGI method.
+# This method returns a sub that takes a Lemonldap::NG::Common::PSGI::Request
+# object and returns a PSGI response into a proper PSGI method.
 sub psgiAdapter {
     my ( $self, $sub ) = @_;
     return sub {
@@ -455,11 +451,12 @@ sub logAndRun {
         $self->userLogger->setRequestObj($req);
     }
 
-    $self->logger->info( "New request "
-          . ref($self) . " "
-          . $req->method . " "
-          . $req->request_uri );
-
+    if ( ref $self->logger ) {
+        $self->logger->info( "New request "
+              . ref($self) . " "
+              . $req->method . " "
+              . $req->request_uri );
+    }
     my $res = $sub->($req);
 
     # Clear the logging system before the next request
@@ -499,7 +496,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
     $self->logLevel('info');
     # It is possible to use syslog for user actions
     $self->syslog('daemon');
-  
+
     # Return a boolean. If false, then error message has to be stored in
     # $self->error
     return 1;
@@ -509,7 +506,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
     my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
-    
+  
     return [ 200, [ 'Content-Type' => 'text/plain' ], [ 'Body lines' ] ];
   }
 
@@ -519,7 +516,7 @@ This package could then be called as a CGI, using FastCGI,...
   
   use My::PSGI;
   use Plack::Handler::FCGI; # or Plack::Handler::CGI
-
+  
   Plack::Handler::FCGI->new->run( My::PSGI->run() );
 
 =head1 DESCRIPTION

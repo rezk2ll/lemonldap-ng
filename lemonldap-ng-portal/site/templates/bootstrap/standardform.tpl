@@ -1,5 +1,5 @@
 <TMPL_IF NAME="TOKEN">
-<input id="token" type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+<input type="hidden" id="token<TMPL_VAR NAME="key">" name="token" value="<TMPL_VAR NAME="TOKEN">" />
 </TMPL_IF>
 
 <TMPL_IF NAME="WAITING_MESSAGE">
@@ -8,24 +8,25 @@
 <div class="form">
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+      <span class="input-group-text"><label for="userfield" class="mb-0"><span trspan="login" hidden></span><i class="fa fa-user"></i></label></span>
     </div>
-    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">"
-      trplaceholder="login" required aria-required="true" autocomplete="webauthn"/>
+    <input id="userfield" name="user" type="text" class="form-control"
+      value="<TMPL_IF NAME="ACTIVE_FORM"><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></TMPL_IF>"
+      trplaceholder="login" required aria-required="true" autocomplete="webauthn" <TMPL_UNLESS NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_UNLESS> />
   </div>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text"><label for="passwordfield" class="mb-0"><i class="fa fa-lock"></i></label></span>
+      <span class="input-group-text"><label for="passwordfield" class="mb-0"><span trspan="pwd" hidden></span><i class="fa fa-lock"></i></label></span>
     </div>
     <TMPL_IF NAME="DONT_STORE_PASSWORD">
-      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true"/>
+      <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true" <TMPL_IF NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_IF> />
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
         <div class="input-group-append">
           <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
         </div>
       </TMPL_IF>
     <TMPL_ELSE>
-      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
+      <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true" <TMPL_IF NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_IF> />
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
         <div class="input-group-append">
           <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
@@ -41,7 +42,7 @@
   <TMPL_INCLUDE NAME="impersonation.tpl">
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
-  <button type="submit" class="btn btn-success" >
+  <button type="submit" class="btn btn-success">
     <span class="fa fa-sign-in"></span>
     <span trspan="connect">Connect</span>
   </button>

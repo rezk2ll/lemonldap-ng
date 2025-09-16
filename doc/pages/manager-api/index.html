@@ -763,8 +763,11 @@
   "required" : [ "service" ],
   "type" : "object",
   "properties" : {
+    "allowProxy" : {
+      "type" : "boolean"
+    },
     "authnLevel" : {
-      "type" : "integer"
+      "type" : "string"
     },
     "comment" : {
       "type" : "string"
@@ -990,6 +993,9 @@
     "allowClientCredentialsGrant" : {
       "type" : "boolean"
     },
+    "allowNativeSso" : {
+      "type" : "boolean"
+    },
     "allowOffline" : {
       "type" : "boolean"
     },
@@ -1004,7 +1010,7 @@
       "type" : "boolean"
     },
     "authnLevel" : {
-      "type" : "integer"
+      "type" : "string"
     },
     "authnRequireNonce" : {
       "type" : "boolean"
@@ -1073,6 +1079,9 @@
     "logoutUrl" : {
       "type" : "string"
     },
+    "noJwtHeader" : {
+      "type" : "boolean"
+    },
     "offlineSessionExpiration" : {
       "type" : "integer"
     },
@@ -1105,6 +1114,9 @@
     },
     "requirePKCE" : {
       "type" : "boolean"
+    },
+    "rtActivity" : {
+      "type" : "integer"
     },
     "rule" : {
       "type" : "string"
@@ -1278,7 +1290,7 @@
   "type" : "object",
   "properties" : {
     "authnLevel" : {
-      "type" : "integer"
+      "type" : "string"
     },
     "checkSLOMessageSignature" : {
       "type" : "boolean"
@@ -1676,7 +1688,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 2.19.0</div>
+              <div class="app-desc">Version: 2.21.3</div>
             <hr>
             <div>The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml</div>
           </div>

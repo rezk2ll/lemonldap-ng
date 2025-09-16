@@ -569,6 +569,9 @@
                "allowClientCredentialsGrant" : {
                   "type" : "boolean"
                },
+               "allowNativeSso" : {
+                  "type" : "boolean"
+               },
                "allowOffline" : {
                   "type" : "boolean"
                },
@@ -589,7 +592,7 @@
                   "type" : "boolean"
                },
                "authnLevel" : {
-                  "type" : "integer"
+                  "type" : "string"
                },
                "authnRequireNonce" : {
                   "type" : "boolean"
@@ -693,6 +696,9 @@
                "logoutUrl" : {
                   "type" : "string"
                },
+               "noJwtHeader" : {
+                  "type" : "boolean"
+               },
                "offlineSessionExpiration" : {
                   "type" : "integer"
                },
@@ -725,6 +731,9 @@
                },
                "requirePKCE" : {
                   "type" : "boolean"
+               },
+               "rtActivity" : {
+                  "type" : "integer"
                },
                "rule" : {
                   "type" : "string"
@@ -1096,8 +1105,12 @@
          },
          "casOptions" : {
             "properties" : {
+               "allowProxy" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
                "authnLevel" : {
-                  "type" : "integer"
+                  "type" : "string"
                },
                "comment" : {
                   "type" : "string"
@@ -1158,7 +1171,7 @@
          "samlOptions" : {
             "properties" : {
                "authnLevel" : {
-                  "type" : "integer"
+                  "type" : "string"
                },
                "checkSLOMessageSignature" : {
                   "default" : 1,
@@ -1267,7 +1280,7 @@
    "info" : {
       "description" : "The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml",
       "title" : "LemonLDAP::NG Manager API",
-      "version" : "2.19.0"
+      "version" : "2.21.3"
    },
    "openapi" : "3.0.1",
    "paths" : {

@@ -25,18 +25,21 @@ SMTPPort                                                Fix SMTP port           
 SMTPServer                                              SMTP Server                                                                          ✔
 SMTPTLS                                                 TLS protocol to use with SMTP                                                        ✔
 SMTPTLSOpts                                             TLS/SSL options for SMTP                                                             ✔
-SSLAuthnLevel                                           SSL authentication level                                                             ✔
+SSLAuthnLevel                                           Mutual TLS authentication level                                                      ✔
 SSLIssuerVar                                                                                                                                 ✔
 SSLVar                                                                                                                                       ✔
 SSLVarIf                                                                                                                                     ✔
 activeTimer                                             Enable timers on portal pages                                                        ✔
 adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
+adminLogoutServerSecret                                 REST OIDC token revocation secret                                                    ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
+appAccessHistoryEnabled                                 Shall OIDC/SAML/CAS protected apps access be recorded to session?                    ✔
 applicationList                                         Applications list                                                                    ✔
 authChoiceAuthBasic                                     Auth module used by AuthBasic handler                                                ✔
 authChoiceFindUser                                      Auth module used by FindUser plugin                                                  ✔
 authChoiceModules                                       Hash list of Choice strings                                                          ✔
 authChoiceParam                                         Applications list                                                                    ✔
+authChoiceSelectOnly                                    Automatically select only available choice                                           ✔
 authentication                                          Authentication module                                                                ✔
 autoSigninRules                                         List of auto signin rules                                                            ✔
 available2F                                             Available second factor modules                                                      ✔                      ✔
@@ -50,6 +53,7 @@ bruteForceProtectionMaxAge                              Max age between current 
 bruteForceProtectionMaxFailed                           Max allowed failed login                                                             ✔
 bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔
 bruteForceProtectionTempo                               Lock time                                                                            ✔
+cacheTagSalt                                            Salt value for cache busting tag                                                     ✔
 captcha                                                 Captcha backend module                                                               ✔      ✔
 captchaOptions                                          Captcha module options                                                               ✔      ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
@@ -130,10 +134,18 @@ corsAllow_Origin                                        Allowed origine for Cros
 corsEnabled                                             Enable Cross-Origin Resource Sharing                                                 ✔
 corsExpose_Headers                                      Exposed headers for Cross-Origin Resource Sharing                                    ✔
 corsMax_Age                                             Max-age for Cross-Origin Resource Sharing                                            ✔
-crowdsec                                                CrowdSec plugin activation                                                           ✔
+crowdSecAgentResponseCode                               Crowdsec ban response code                                                           ✔
+crowdSecAgentResponseValue                              Crowdsec ban response text                                                           ✔
+crowdsec                                                CrowdSec bouncer activation                                                          ✔
 crowdsecAction                                          CrowdSec action                                                                      ✔
+crowdsecAgent                                           Enable plugin to report auth failures to Crowdsec (simple alert)                     ✔
+crowdsecBlockDelay                                      Crowdsec-Agent check delay                                                           ✔
+crowdsecFilters                                         Crowdsec filters directory                                                           ✔
 crowdsecIgnoreFailures                                  Ignore Crowdsec errors                                                               ✔
 crowdsecKey                                             CrowdSec API key                                                                     ✔
+crowdsecMachineId                                       Crowdsec machine ID to send alerts                                                   ✔
+crowdsecMaxFailures                                     Crowdesc-Agent maximum failures allowed during delay                                 ✔
+crowdsecPassword                                        Crowdsec password to send alerts                                                     ✔
 crowdsecUrl                                             Base URL of CrowdSec local API                                                       ✔
 cspConnect                                              Authorized Ajax destination for Content-Security-Policy                              ✔
 cspDefault                                              Default value for Content-Security-Policy                                            ✔
@@ -167,18 +179,17 @@ dbiDynamicHashValidSaltedSchemes                                                
 dbiDynamicHashValidSchemes                                                                                                                   ✔
 dbiExportedVars                                         DBI exported variables                                                               ✔
 dbiPasswordMailCol                                                                                                                           ✔
-dbiUserChain                                                                                                                                 ✔
-dbiUserPassword                                                                                                                              ✔
 dbiUserTable                                                                                                                                 ✔
-dbiUserUser                                                                                                                                  ✔
 decryptValueFunctions                                   Custom function used for decrypting values                                           ✔
 decryptValueRule                                        Decrypt value activation rule                                                        ✔
 defaultNewKeySize                                       Default size for new RSA key helper                                                                 ✔       ✔
 demoExportedVars                                        Demo exported variables                                                              ✔
 disablePersistentStorage                                Enabled persistent storage                                                           ✔
+disabledPlugins                                         Disabled plugins                                                                     ✔
 displaySessionId                                        Display _session_id with sessions explorer                                           ✔
 domain                                                  DNS domain                                                                           ✔      ✔
 eventQueueName                                          Event channel name                                                                   ✔
+eventStatus                                             Push status into message broker                                                             ✔               ✔
 exportedAttr                                            List of attributes to export by SOAP or REST servers                                 ✔
 exportedVars                                            Main exported variables                                                              ✔
 ext2FSendCommand                                        Send command of External second factor                                               ✔
@@ -200,6 +211,7 @@ findUserControl                                         Regular expression to va
 findUserExcludingAttributes                             Attributes used for excluding accounts                                               ✔
 findUserSearchingAttributes                             Attributes used for searching accounts                                               ✔
 findUserWildcard                                        Character used as wildcard                                                           ✔
+floatingCategoryName                                    Name of the category displayed as floating menu                                      ✔
 forceGlobalStorageIssuerOTT                             Force Issuer tokens to be stored into Global Storage                                 ✔                      ✔
 forceGlobalStorageUpgradeOTT                            Force Upgrade tokens be stored into Global Storage                                   ✔                      ✔
 formTimeout                                             Token timeout for forms                                                              ✔
@@ -266,6 +278,12 @@ jitsiNameAttribute                                      Jitsi attribute for name
 jitsiSigningAlg                                         Jitsi JWT signature method                                                           ✔
 jsRedirect                                              Use javascript for redirections                                                      ✔
 key                                                     Secret key                                                                           ✔
+keyComment                                                                                                                                   ✔                      ✔
+keyId                                                                                                                                        ✔                      ✔
+keyPrivate                                                                                                                                   ✔                      ✔
+keyPrivatePwd                                                                                                                                ✔                      ✔
+keyPublic                                                                                                                                    ✔                      ✔
+keys                                                    Root of keys                                                                         ✔                      ✔
 krbAllowedDomains                                       Allowed domains                                                                      ✔
 krbAuthnLevel                                           Null authentication level                                                            ✔
 krbByJs                                                 Launch Kerberos authentication by Ajax                                               ✔
@@ -278,6 +296,7 @@ ldapCAFile                                              Location of the certific
 ldapCAPath                                              Location of the CA directory for LDAP connections                                    ✔
 ldapChangePasswordAsUser                                                                                                                     ✔
 ldapExportedVars                                        LDAP exported variables                                                              ✔
+ldapForcePasswordChangeExpirationWarning                Delay to force password change if password is about to expire                        ✔
 ldapGetUserBeforePasswordChange                                                                                                              ✔
 ldapGroupAttributeName                                  LDAP attribute name for member in groups                                             ✔
 ldapGroupAttributeNameGroup                             LDAP attribute name in group entry referenced as member in groups                    ✔
@@ -322,8 +341,17 @@ logLevel                                                Log level, must be set i
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
 loginHistoryEnabled                                     Enable login history                                                                 ✔
 logoutServices                                          Send logout trough GET request to these services                                     ✔
+lokiAuthorization                                       Loki Authorization header value                                                      ✔      ✔       ✔       ✔
+lokiEnv                                                 Loki env, default "prod"                                                             ✔      ✔       ✔       ✔
+lokiInstance                                            Loki instance, default `hostname` output                                             ✔      ✔       ✔       ✔
+lokiLabel                                               Loki label, default llng                                                             ✔      ✔       ✔       ✔
+lokiService                                             Loki Service (technical context)                                                     ✔      ✔       ✔       ✔
+lokiTenant                                              Loki Tenant                                                                          ✔      ✔       ✔       ✔
+lokiTenantHeader                                        Loki Tenant Header name                                                              ✔      ✔       ✔       ✔
+lokiUrl                                                 Loki API                                                                             ✔      ✔       ✔       ✔
+lokiUserService                                         Loki (userLogger context)                                                            ✔      ✔       ✔       ✔
 lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
-lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
+lwpSslOpts                                              TLS/SSL options passed to LWP::UserAgent                                             ✔
 macros                                                  Macros                                                                               ✔
 mail2fActivation                                        Mail second factor activation                                                        ✔
 mail2fAuthnLevel                                        Authentication level for users authenticated by Mail second factor                   ✔
@@ -384,6 +412,7 @@ nullAuthnLevel                                          Null authentication leve
 oidcAuthnLevel                                          OpenID Connect authentication level                                                  ✔
 oidcDropCspHeaders                                      Drop CORS headers from OIDC issuer responses                                         ✔
 oidcOPMetaDataOptions                                                                                                                        ✔                      [1]
+oidcOfflineTokens                                       OIDC personnal offline token removal                                                 ✔
 oidcRPCallbackGetParam                                  OpenID Connect Callback GET URLparameter                                             ✔
 oidcRPMetaDataOptions                                                                                                                        ✔                      [1]
 oidcRPStateTimeout                                      OpenID Connect Timeout of state sessions                                             ✔
@@ -405,18 +434,23 @@ oidcServiceKeyIdEnc                                     OpenID Connect Encryptio
 oidcServiceKeyIdSig                                     OpenID Connect Signature Key ID                                                      ✔
 oidcServiceKeyTypeEnc                                                                                                                        ✔
 oidcServiceKeyTypeSig                                                                                                                        ✔
+oidcServiceMetaDataAmrRules                             OpenID Connect AMR rules                                                             ✔
 oidcServiceMetaDataAuthnContext                         OpenID Connect Authentication Context Class Ref                                      ✔
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
 oidcServiceMetaDataBackChannelURI                       OpenID Connect Back-Channel logout endpoint                                          ✔
 oidcServiceMetaDataCheckSessionURI                      OpenID Connect check session iframe                                                  ✔
+oidcServiceMetaDataDisallowNoneAlg                                                                                                           ✔
 oidcServiceMetaDataEndSessionURI                        OpenID Connect end session endpoint                                                  ✔
 oidcServiceMetaDataFrontChannelURI                      OpenID Connect Front-Channel logout endpoint                                         ✔
 oidcServiceMetaDataIntrospectionURI                     OpenID Connect introspection endpoint                                                ✔
 oidcServiceMetaDataIssuer                               OpenID Connect issuer                                                                ✔
 oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endpoint                                                         ✔
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
+oidcServiceMetaDataRevokeURI                            OpenID Connect token revocation endpoint                                             ✔
+oidcServiceMetaDataRpLogoutReturnURI                    OpenID Connect RP-Initiated logout return endpoint                                   ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
+oidcServiceMetadataTtl                                  OIDC Metadata TTL                                                                    ✔
 oidcServiceNewKeyIdSig                                  Future OpenID Connect Signature Key ID                                               ✔
 oidcServiceNewKeyTypeSig                                                                                                                     ✔
 oidcServiceNewPrivateKeySig                                                                                                                  ✔
@@ -495,6 +529,7 @@ portalDisplayChangePassword                             Display password tab in 
 portalDisplayGeneratePassword                           Display password generate box in reset password form                                 ✔
 portalDisplayLoginHistory                               Display login history tab in portal                                                  ✔
 portalDisplayLogout                                     Display logout tab in portal                                                         ✔
+portalDisplayOfflineTokens                                                                                                                   ✔
 portalDisplayOidcConsents                               Display OIDC consents tab in portal                                                  ✔
 portalDisplayOrder                                      List for ordering tabs in portal                                                     ✔
 portalDisplayPasswordPolicy                             Display policy in password form                                                      ✔
@@ -525,11 +560,13 @@ proxyAuthnLevel                                         Proxy authentication lev
 proxyCookieName                                         Name of the internal portal cookie                                                   ✔
 proxySessionService                                                                                                                          ✔
 proxyUseSoap                                            Use SOAP instead of REST                                                             ✔
+publicNotifications                                     Enable PublicNotification plugin                                                     ✔
 radius2fActivation                                      Radius second factor activation                                                      ✔
 radius2fAuthnLevel                                      Authentication level for users authenticated by Radius second factor                 ✔
 radius2fDictionaryFile                                                                                                                       ✔
 radius2fLabel                                           Portal label for Radius 2F                                                           ✔
 radius2fLogo                                            Custom logo for Radius 2F                                                            ✔
+radius2fMsgAuth                                         Use Message-Authentication for Radius requests                                       ✔
 radius2fRequestAttributes                               RADIUS second factor authentication attributes                                       ✔
 radius2fSecret                                                                                                                               ✔
 radius2fSendInitialRequest                              Dial in to radius server before displaying form                                      ✔
@@ -539,6 +576,7 @@ radius2fUsernameSessionKey                              Session key used as Radi
 radiusAuthnLevel                                        Radius authentication level                                                          ✔
 radiusDictionaryFile                                                                                                                         ✔
 radiusExportedVars                                      RADIUS exported variables                                                            ✔
+radiusMsgAuth                                           Use Message-Authentication for Radius requests                                       ✔
 radiusRequestAttributes                                 RADIUS authentication attributes                                                     ✔
 radiusSecret                                                                                                                                 ✔
 radiusServer                                                                                                                                 ✔
@@ -555,6 +593,7 @@ registerTimeout                                         Register session timeout
 registerUrl                                             URL of register page                                                                 ✔
 reloadTimeout                                           Configuration reload timeout                                                                        ✔
 reloadUrls                                              URL to call on reload                                                                ✔
+rememberAuthChoiceForgetAtLogout                        Forget Auth Choice at logout                                                         ✔
 rememberAuthChoiceRule                                  remember auth choice activation rule                                                 ✔
 rememberCookieName                                      Name of the remember auth choice cookie                                              ✔
 rememberCookieTimeout                                   lifetime of the remember auth choice cookie                                                         ✔
@@ -589,6 +628,7 @@ restSessionServer                                       Enable REST session serv
 restUserDBUrl                                                                                                                                ✔
 sameSite                                                Cookie SameSite value                                                                ✔      ✔
 samlAttributeAuthorityDescriptorAttributeServiceSOAP    SAML Attribute Authority SOAP                                                        ✔
+samlAuthnContextMapExtra                                SAML extra authn contexts                                                            ✔
 samlAuthnContextMapKerberos                             SAML authn context kerberos level                                                    ✔
 samlAuthnContextMapPassword                             SAML authn context password level                                                    ✔
 samlAuthnContextMapPasswordProtectedTransport           SAML authn context password protected transport level                                ✔
@@ -681,10 +721,10 @@ slaveUserHeader                                                                 
 soapConfigServer                                        Enable SOAP config server                                                            ✔
 soapProxyUrn                                            SOAP URN for Proxy                                                                   ✔                      ✔
 soapSessionServer                                       Enable SOAP session server                                                           ✔
-sslByAjax                                               Use Ajax request for SSL                                                             ✔
-sslHost                                                 URL for SSL Ajax request                                                             ✔
+sslByAjax                                               Use Ajax request for Mutual TLS Authentication                                       ✔
+sslHost                                                 URL for Mutual TLS Authentication Ajax request                                       ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
-status                                                  Status daemon activation                                                                    ✔               ✔
+statusQueueName                                         Status channel name                                                                         ✔               ✔
 stayConnected                                           Stay connected activation rule                                                       ✔
 stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
@@ -695,6 +735,7 @@ storePasswordEncrypted                                  Crypt the password in se
 strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
+syslogSockOptions                                       Option to send to setlogsock()                                                       ✔      ✔       ✔       ✔
 timeout                                                 Session timeout on server side                                                       ✔
 timeoutActivity                                         Session activity timeout on server side                                              ✔
 timeoutActivityInterval                                 Update session timeout interval on server side                                       ✔
@@ -712,6 +753,7 @@ totp2fSelfRegistration                                  TOTP self registration a
 totp2fTTL                                               TOTP device time to live                                                             ✔
 totp2fUserCanRemoveKey                                  Authorize users to remove existing TOTP secret                                       ✔
 trustedBrowserRule                                      Trusted browser registration rule                                                    ✔
+trustedBrowserUseTotp                                   Use TOTP for trusted browser registration                                            ✔
 trustedDomains                                          Trusted domains                                                                      ✔
 twitterAppName                                                                                                                               ✔
 twitterAuthnLevel                                       Twitter authentication level                                                         ✔
@@ -719,6 +761,7 @@ twitterKey                                                                      
 twitterSecret                                                                                                                                ✔
 twitterUserField                                                                                                                             ✔
 upgradeSession                                          Upgrade session activation                                                           ✔
+useRedirectAjaxOnUnauthorized                           Redirect Ajax requests to portal for unauthorized (401)                                     ✔
 useRedirectOnError                                      Use 302 redirect code for error (500)                                                       ✔
 useRedirectOnForbidden                                  Use 302 redirect code for forbidden (403)                                            ✔
 useSafeJail                                             Activate Safe jail                                                                   ✔      ✔
@@ -731,6 +774,7 @@ vhostOptions                                                                    
 viewerAllowBrowser                                      Allow configuration browser                                                          ✔                      ✔
 viewerAllowDiff                                         Allow configuration diff                                                             ✔                      ✔
 viewerHiddenKeys                                        Hidden Conf keys                                                                                    ✔       ✔
+webCronSecret                                           Secret token for webcron plugin                                                      ✔
 webIDAuthnLevel                                         WebID authentication level                                                           ✔
 webIDExportedVars                                       WebID exported variables                                                             ✔
 webIDWhitelist                                                                                                                               ✔
@@ -745,6 +789,8 @@ webauthn2fSelfRegistration                              WebAuthn self registrati
 webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
 webauthn2fUserVerification                              Verify user during registration and login                                            ✔
 webauthnAppId                                           Send AppID extension                                                                 ✔
+webauthnAuthnLevel                                      WebAuthn authentication level                                                        ✔
+webauthnDefaultTransports                               WebAuthn default transports                                                          ✔
 webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
 webauthnRpId                                            WebAuthn Relying Party ID                                                            ✔
 webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔

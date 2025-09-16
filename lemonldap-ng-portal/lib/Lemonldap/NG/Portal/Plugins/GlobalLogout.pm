@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -96,6 +96,8 @@ sub run {
         $req,
         'globallogout',
         params => {
+            FORM_ACTION =>
+              $self->p->relativeUrl( $req, 'globallogout', { all => 1 } ),
             SESSIONS  => $sessions,
             TOKEN     => $token,
             LOGIN     => $user,
@@ -180,7 +182,7 @@ sub globalLogout {
         }
     }
 
-    return $self->p->do( $req, [ sub { $res } ] ) if $res;
+    return $self->p->doPE( $req, $res ) if $res;
     $self->userLogger->info("$count remaining session(s) removed");
     return $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
 }

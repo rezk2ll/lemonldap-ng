@@ -4,7 +4,7 @@
       "Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clement@oodo.net>, Christophe Maudoux <chrmdx@gmail.com>, Maxime Besson <maxime.besson@worteks.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.62, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "ExtUtils::MakeMaker version 7.70, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "open_source"
    ],
@@ -22,10 +22,12 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Cache::Memcached" : "0",
             "Cwd" : "0",
-            "Digest::HMAC_SHA1" : "0",
             "Env" : "0",
+            "HTTP::Message" : "0",
             "IO::Pipe" : "0",
+            "SOAP::Lite" : "0",
             "Test::Pod" : "1",
             "Time::Fake" : "0"
          }
@@ -38,13 +40,12 @@
       "runtime" : {
          "recommends" : {
             "Cache::Memcached" : "0",
-            "Digest::HMAC_SHA1" : "0",
             "HTTP::Message" : "0",
             "SOAP::Lite" : "0"
          },
          "requires" : {
             "LWP::UserAgent" : "0",
-            "Lemonldap::NG::Common" : "v2.19.0",
+            "Lemonldap::NG::Common" : "v2.21.3",
             "Mouse" : "0",
             "URI" : "0"
          }
@@ -62,6 +63,6 @@
       ],
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
-   "version" : "v2.19.2",
-   "x_serialization_backend" : "JSON::PP version 4.07"
+   "version" : "v2.21.3",
+   "x_serialization_backend" : "JSON::PP version 4.16"
 }

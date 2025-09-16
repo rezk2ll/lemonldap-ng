@@ -58,6 +58,7 @@ override_dh_auto_install:
 	for i in handler portal manager api test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done
+	pod2man lemonldap-ng-common/eg/llng-pubsub-server >llng-pubsub-server.1p
 
 override_dh_compress:
 	dh_compress -X favicon.ico -X .woff2 -X .ttf

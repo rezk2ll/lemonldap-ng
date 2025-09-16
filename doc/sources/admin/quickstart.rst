@@ -21,9 +21,9 @@ Debian / Ubuntu
 
 ::
 
-   apt install apt-transport-https
-   wget -O - https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 | apt-key add -
-   echo "deb https://lemonldap-ng.org/deb stable main" > /etc/apt/sources.list.d/lemonldap-ng.list
+   apt install apt-transport-https curl
+   curl https://lemonldap-ng.org/lemonldap-debian-packages-pub.gpg | gpg --dearmor > /usr/share/keyrings/lemonldap-debian-packages-pub.gpg
+   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/lemonldap-debian-packages-pub.gpg] https://lemonldap-ng.org/deb stable main" > /etc/apt/sources.list.d/lemonldap-ng.list
    apt update
    apt install lemonldap-ng
 

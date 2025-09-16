@@ -48,13 +48,9 @@ Enable installed components:
   ln -s ../sites-available/manager-nginx.conf
 
   # Handler
-  # Warning: if no site is protected (see example files for this), the
-  # $lmremote_user variable will not be set. So you can't load this file since
-  # it includes /etc/lemonldap/nginx-lmlog.conf that requires at least one
-  # protected virtual host.
   ln -s ../sites-available/handler-nginx.conf
 
-  # Test site
+  # Test site (optional)
   ln -s ../site-available/test-nginx.conf
 
 Customize them, then reload nginx

@@ -25,12 +25,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
   Lemonldap::NG::Portal::Lib::SAML
 );
+
+with 'Lemonldap::NG::Portal::Lib::Key';
 
 # INTERFACE
 
@@ -102,7 +104,7 @@ sub extractFormInfo {
     my $content_type   = $req->content_type;
 
     # 1.1 SSO assertion consumer
-    if ( $url =~ $self->ssoAssConsumerRe ) {
+    if ( $self->isCallback($req) ) {
         $self->logger->debug(
             "URL $url detected as an SSO assertion consumer URL");
 
@@ -807,14 +809,11 @@ sub extractFormInfo {
                         [$slo_body]
                     ]
                 );
+                $req->data->{_continueLogout} = 1;
                 $req->steps( [
                         @{ $self->p->beforeLogout },
-                        sub {
-                            my ($req) = @_;
-                            my $res = $self->p->deleteSession($req);
-                            return (
-                                $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                        'deleteSession',
+                        [ returnPE => PE_SENDRESPONSE ]
                     ]
                 );
 
@@ -960,14 +959,14 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
-        my @list       = ();
+        my @list = ();
 
         foreach ( keys %{ $self->idpList } ) {
             my $idpName = $self->{idpList}->{$_}->{name};
             $idpName = $self->{idpList}->{$_}->{displayName}
               if $self->{idpList}->{$_}->{displayName};
             my $icon    = $self->{idpList}->{$_}->{icon};
-            my $order   = $self->{idpList}->{$_}->{order} // 0;
+            my $order   = $self->{idpList}->{$_}->{order} // 999999;
             my $tooltip = $self->{idpList}->{$_}->{tooltip} || $idpName;
             my $img_src = '';
 
@@ -1465,6 +1464,11 @@ sub authLogout {
         $self->userLogger->error("Lasso method $method not implemented here");
         return PE_SLO_ERROR;
     }
+}
+
+sub isCallback {
+    my ( $self, $req ) = @_;
+    return $req->uri =~ $self->ssoAssConsumerRe;
 }
 
 sub handleAuthRequests {

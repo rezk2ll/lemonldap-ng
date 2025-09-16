@@ -24,63 +24,7 @@ Make sure you are using at least version 1.2.9 of ``Apache::Session::Browseable`
 Create database schema
 ----------------------
 
-Create the following tables. You may skip the session types you are not going to use, but you need at least ``sessions`` and ``psessions``
-
-::
-
-   CREATE UNLOGGED TABLE sessions (
-       id varchar(64) not null primary key,
-       a_session jsonb
-   );
-
-   CREATE INDEX i_s__whatToTrace     ON sessions ((a_session ->> '_whatToTrace'));
-   CREATE INDEX i_s__session_kind    ON sessions ((a_session ->> '_session_kind'));
-   CREATE INDEX i_s__utime           ON sessions ((cast (a_session ->> '_utime' as bigint)));
-   CREATE INDEX i_s_ipAddr           ON sessions ((a_session ->> 'ipAddr'));
-   CREATE INDEX i_s__httpSessionType ON sessions ((a_session ->> '_httpSessionType'));
-   CREATE INDEX i_s_user             ON sessions ((a_session ->> 'user'));
-   CREATE INDEX i_s_mail             ON sessions ((a_session ->> 'mail'));
-   CREATE INDEX i_s__session_uid     ON sessions ((a_session ->> '_session_uid'));
-
-
-   CREATE TABLE psessions (
-       id varchar(64) not null primary key,
-       a_session jsonb
-   );
-   CREATE INDEX i_p__session_kind    ON psessions ((a_session ->> '_session_kind'));
-   CREATE INDEX i_p__httpSessionType ON psessions ((a_session ->> '_httpSessionType'));
-   CREATE INDEX i_p__session_uid     ON psessions ((a_session ->> '_session_uid'));
-   CREATE INDEX i_p_ipAddr           ON psessions ((a_session ->> 'ipAddr'));
-   CREATE INDEX i_p__whatToTrace     ON psessions ((a_session ->> '_whatToTrace'));
-
-
-   CREATE UNLOGGED TABLE samlsessions (
-       id varchar(64) not null primary key,
-       a_session jsonb
-   );
-   CREATE INDEX i_a__session_kind ON samlsessions ((a_session ->> '_session_kind'));
-   CREATE INDEX i_a__utime        ON samlsessions ((cast(a_session ->> '_utime' as bigint)));
-   CREATE INDEX i_a_ProxyID       ON samlsessions ((a_session ->> 'ProxyID'));
-   CREATE INDEX i_a__nameID       ON samlsessions ((a_session ->> '_nameID'));
-   CREATE INDEX i_a__assert_id    ON samlsessions ((a_session ->> '_assert_id'));
-   CREATE INDEX i_a__art_id       ON samlsessions ((a_session ->> '_art_id'));
-   CREATE INDEX i_a__saml_id      ON samlsessions ((a_session ->> '_saml_id'));
-
-   CREATE UNLOGGED TABLE oidcsessions (
-       id varchar(64) not null primary key,
-       a_session jsonb
-   );
-   CREATE INDEX i_o__session_kind ON oidcsessions ((a_session ->> '_session_kind'));
-   CREATE INDEX i_o__utime        ON oidcsessions ((cast(a_session ->> '_utime' as bigint )));
-
-   CREATE UNLOGGED TABLE cassessions (
-       id varchar(64) not null primary key,
-       a_session jsonb
-   );
-   CREATE INDEX i_c__session_kind ON cassessions ((a_session ->> '_session_kind'));
-   CREATE INDEX i_c__utime        ON cassessions ((cast(a_session ->> '_utime' as bigint)));
-   CREATE INDEX i_c__cas_id       ON cassessions ((a_session ->> '_cas_id'));
-   CREATE INDEX i_c_pgtIou        ON cassessions ((a_session ->> 'pgtIou'));
+You can find the database schema in ``/usr/share/lemonldap-ng/ressources/sessions.pg.sql``.
 
 LemonLDAP::NG configuration
 ---------------------------
@@ -95,18 +39,46 @@ Go in the Manager and set the session module to ``Apache::Session::Browseable::P
 
 Then, set the following module options:
 
-=================== ================================================= =============================================================
-Required parameters
-=================== ================================================= =============================================================
-Name                Comment                                           Example
-**DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:Pg:database=lemonldap-ng
-**UserName**        The database username                             lemonldapng
-**Password**        The database password                             mysuperpassword
-**TableName**       Table name (optional)                             sessions
-**Commit**          1                                                 This setting is mandatory for PostgreSQL to work
-=================== ================================================= =============================================================
+=================== ================================================= =================================
+Parameter name      Comment                                           Example
+=================== ================================================= =================================
+**DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string ``dbi:Pg:database=lemonldap-ng``
+**UserName**        The database username                             ``lemonldapng``
+**Password**        The database password                             ``mysuperpassword``
+**TableName**       Table name (optional)                             ``sessions``
+**Commit**          This setting is mandatory for PostgreSQL to work  ``1``
+=================== ================================================= =================================
 
 
 .. tip::
 
     Unlike other browseable modules, Pg::JSON does not require an ``Index`` parameter
+
+
+.. tip::
+
+   We recommend adding the `tcp_user_timeout` and `keepalives_idle` options to the DBI string
+   Refer to `the full list of PostgreSQL connection options <https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS>`_
+
+Patroni support
+~~~~~~~~~~~~~~~
+
+Starting from version 1.3.17, `Apache::Session::Browseable <https://metacpan.org/pod/Apache::Session::Browseable>`_
+provides a direct `Patroni PostgreSQL cluster <https://patroni.readthedocs.io/en/latest/>`_
+
+This works like PgJSON but can take an additional parameter ``PatroniUrl``
+which lists the Patroni servers available, then if there is a failure, the
+driver will check for Patroni API to find the PostgreSQL leader and change
+its ``DataSource`` to use it. To use it, set ``Apache::Session::Browseable::Patroni``
+as **Sessions module** and set corresponding options. Example:
+
+=================== ================================================================= =============================================================
+Parameters          Example                                                           Comment
+=================== ================================================================= =============================================================
+**DataSource**      ``dbi:Pg:database=lemonldap-ng``                                  Unless an error occurs, the driver will use this data source
+**UserName**        ``lemonldapng``
+**Password**        ``mysuperpassword``
+**TableName**       ``sessions``
+**Commit**          ``1``                                                             This setting is mandatory for PostgreSQL to work
+**PatroniUrl**      ``http://172.16.1.2:8008/cluster http://172.16.1.3:8008/cluster`` List here all ``*/cluster`` APIs
+=================== ================================================================= =============================================================

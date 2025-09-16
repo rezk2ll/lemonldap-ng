@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORDFORMEMPTY
 );
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.21.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -51,7 +51,9 @@ sub init {
     );
 
     return 0 unless $self->captcha;
-    unless ( $self->{conf}->{captcha_login_enabled} ) {
+    unless ($self->{conf}->{captcha_login_enabled}
+        and $self->{conf}->{captcha_login_enabled} eq '0' )
+    {
         $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
         $self->ott->timeout( $self->conf->{formTimeout} );
     }

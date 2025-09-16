@@ -2,7 +2,7 @@
 
 <div id="errorcontent" class="container">
   <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="MSG">"></span></div></div>
-  <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
+  <form id="checkuser" action="<TMPL_VAR NAME="FORM_ACTION">" method="post" class="password" role="form">
     <div class="buttons">
       <TMPL_IF NAME="TOKEN">
       <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
@@ -11,7 +11,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
         </div>
-        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="user" aria-required="true"/>
+        <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="user" aria-required="true"/>
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">

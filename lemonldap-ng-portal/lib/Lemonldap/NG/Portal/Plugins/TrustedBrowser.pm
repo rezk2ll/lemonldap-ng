@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -147,7 +147,7 @@ sub newDevice {
             $req->response(
                 $self->p->sendHtml(
                     $req,
-                    '../common/registerBrowser',
+                    'registerBrowser',
                     params => {
                         TOTPSEC => $totpSecret,
                         USETOTP => $self->use_totp,
@@ -238,13 +238,13 @@ sub storeBrowser {
     else {
         $self->userLogger->error(
             "Cannot restore trusted browser registration state");
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        return $self->p->doPE( $req, PE_ERROR );
     }
 
     # Resume normal login flow
     $req->mustRedirect(1);
     return $self->p->do( $req,
-        [ 'buildCookie', @{ $self->p->endAuth }, sub { PE_OK } ] );
+        [ 'buildCookie', @{ $self->p->endAuth }, [ returnPE => PE_OK ] ] );
 }
 
 sub _restoreRegisterState {
@@ -396,7 +396,7 @@ sub challenge {
     $req->response(
         $self->p->sendHtml(
             $req,
-            '../common/registerBrowser',
+            'registerBrowser',
             params => {
                 TOKEN   => $token,
                 USETOTP => $self->use_totp,
@@ -523,7 +523,7 @@ sub checkBrowserReturn {
         # Restore state
         my $sessionInfo = $state->{data}->{_challenge_session_info};
         my $urldc       = $state->{data}->{_challenge_urldc};
-        return $self->p->do( $req, [ sub { PE_ERROR } ] )
+        return $self->p->doPE( $req, PE_ERROR )
           unless $sessionInfo;
         $req->urldc($urldc) if $urldc;
         $req->sessionInfo($sessionInfo);
@@ -550,7 +550,7 @@ sub checkBrowserReturn {
             [
                 'store',                  'secondFactor',
                 @{ $self->p->afterData }, $self->p->validSession,
-                @{ $self->p->endAuth },   sub { PE_OK }
+                @{ $self->p->endAuth },   [ returnPE => PE_OK ],
             ]
         );
 
@@ -559,7 +559,7 @@ sub checkBrowserReturn {
         $self->logger->error("Trusted browser failed fingerprint challenge");
     }
     $req->noLoginDisplay(1);
-    return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    return $self->p->doPE( $req, PE_ERROR );
 }
 
 1;

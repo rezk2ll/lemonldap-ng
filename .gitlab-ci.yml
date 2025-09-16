@@ -11,12 +11,12 @@
 
 .debian_build_job:
   extends: .build_job
+  image: debian:${CODENAME}
+  variables:
+    DISTRO: debian
   script:
-    - apt-get update --allow-releaseinfo-change && apt-get -y dist-upgrade
-    - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-    - DEBIAN_FRONTEND=noninteractive apt install -y libgeoip2-perl || true
-    - DEBIAN_FRONTEND=noninteractive apt install -y libhttp-browserdetect-perl || true
-    - ci-build-pkg
+    - scripts/ci-build-deb
+    - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/${DISTRO}/${CODENAME}/*_all.deb
   before_script:
     - env | grep ^CI_
     # Converting to native package...
@@ -24,115 +24,76 @@
     - sed -i "1{s/-2) /$suffix) /}" debian/changelog
     - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
 
+.ubuntu_build_job:
+  extends: .debian_build_job
+  variables:
+    DISTRO: ubuntu
+  image: ubuntu:${CODENAME}
+
+.rocky_build_job:
+  extends: .build_job
+  image: quay.io/rockylinux/rockylinux:${MAJOR}
+  script:
+    - scripts/ci-build-rpm
+    - dnf -y install ${CI_PROJECT_DIR}/result/rocky/${MAJOR}/*.noarch.rpm
+
 stages:
   - build
-  - sign
   - deploy
 
 before_script:
   - env | grep ^CI_
 
-build_buster:
-  extends: .debian_build_job
-  image: buildpkg/debian:buster
-
+# EOLTS: 2026-08-31
 build_bullseye:
   extends: .debian_build_job
-  image: buildpkg/debian:bullseye
+  variables:
+    CODENAME: bullseye
 
+# EOLTS: 2028-06-30
 build_bookworm:
   extends: .debian_build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
-
-build_focal:
-  extends: .debian_build_job
-  image: buildpkg/ubuntu:focal
-
-build_jammy:
-  extends: .debian_build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
-
-build_centos_7:
-  extends: .build_job
-  image: buildpkg/centos:7
-  script:
-    - yum-config-manager --disable base,updates,extras
-    - yum-config-manager --add-repo=rpm/el7-vault.repo
-    - yum clean all
-    - yum makecache
-    - yum -y update
-    - yum -y install epel-release
-    - make dist
-    - yum -y install openssl openssl-libs
-    - ci-build-pkg
-
-build_rocky_8:
-  extends: .build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
-  script:
-    - dnf -y update
-    - dnf config-manager --enable powertools
-    - dnf -y install epel-release
-    - make dist
-    - ci-build-pkg
-
-build_rocky_9:
-  extends: .build_job
-  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:9
-  script:
-    - dnf -y update
-    - dnf config-manager --enable crb
-    - dnf -y install epel-release
-    - make dist
-    - ci-build-pkg
-
-sign:
-  image: buildpkg/debian:bullseye
-  stage: sign
-  # variables:
-  # SIGN_USER: firstname.lastname@orange.com
-  # GPG_PRIVATE_KEY:
-  script:
-    - cd $CI_PROJECT_DIR
-    - ci-sign-pkg
-  dependencies:
-    - build_buster
-    - build_bullseye
-    - build_centos_7
-    - build_rocky_8
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - result/*
-  only:
-    - master
-
-pages:
-  image: buildpkg/debian:bullseye
-  stage: deploy
   variables:
-    # Default page dir
-    # PAGES_DIR: public
-    PAGES_HOST: ow2.io
-  environment:
-    name: PPA
-    url: http://${CI_PROJECT_NAMESPACE}.${PAGES_HOST}/${CI_PROJECT_NAME}
-  script:
-    - cd $CI_PROJECT_DIR
-    - ci-pages-ppa
-    - ci-pages-home
-    - ci-pages-tree
-  dependencies:
-    - sign
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - public
-  only:
-    - master
+    CODENAME: bookworm
+
+# EOLTS: 2030-06-30
+build_trixie:
+  extends: .debian_build_job
+  variables:
+    CODENAME: trixie
+
+# EOL: May 2025
+build_focal:
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: focal
+
+# EOL: Apr 2027
+build_jammy:
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: jammy
+
+# EOL: Apr 2029
+build_noble:
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: noble
+
+# EOL: 31 May 2029
+build_rocky_8:
+  extends: .rocky_build_job
+  variables:
+    MAJOR: 8
+
+# EOL: 31 May 2032
+build_rocky_9:
+  extends: .rocky_build_job
+  variables:
+    MAJOR: 9
 
 sonar-inspect:
-  image: buildpkg/debian:buster
+  image: debian:bookworm
   stage: build
   script:
     - scripts/sonar

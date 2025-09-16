@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -47,15 +47,15 @@ sub display {
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
         $self->userLogger->warn('decryptValue service NOT authorized');
-        return $self->p->do( $req,
-            [ sub { PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED } ] );
+        return $self->p->doPE( $req, PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED );
     }
 
     # Display form
     my $params = {
-        MSG    => 'decryptCipheredValue',
-        ALERTE => 'alert-warning',
-        TOKEN  => (
+        FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+        MSG         => 'decryptCipheredValue',
+        ALERTE      => 'alert-warning',
+        TOKEN       => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''
@@ -74,8 +74,7 @@ sub run {
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
         $self->userLogger->warn('decryptValue service NOT authorized');
-        return $self->p->do( $req,
-            [ sub { PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED } ] );
+        return $self->p->doPE( $req, PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED );
     }
 
     # Check token
@@ -96,9 +95,10 @@ sub run {
         }
 
         my $params = {
-            MSG    => "PE$msg",
-            ALERTE => 'alert-warning',
-            TOKEN  => $token,
+            FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+            MSG         => "PE$msg",
+            ALERTE      => 'alert-warning',
+            TOKEN       => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON;
@@ -149,8 +149,9 @@ sub run {
 
     # Display form
     my $params = {
-        MSG       => 'decryptCipheredValue',
-        DECRYPTED => (
+        FORM_ACTION => $self->p->relativeUrl( $req, 'decryptvalue' ),
+        MSG         => 'decryptCipheredValue',
+        DECRYPTED   => (
             $decryptedValue ? $decryptedValue
             : 'notAnEncryptedValue'
         ),

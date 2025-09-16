@@ -17,6 +17,17 @@ The server response contains the answer to this challenge.
 Then, if everything is successful, the communication continues on top of TCP. The client and server can send requests from both side.
 
 
+Webserver configuration
+-----------------------
+
+Nginx does not require any specific configuration to handle WebSocket connections.
+
+If you use Apache, you need a recent version (2.4.47), and you need to add ``upgrade=websocket`` to the ``ProxyPass`` directive ::
+
+    ProxyPass / http://private-name/ upgrade=websocket
+
+Refer to :ref:`vhostapachereverse` for more details
+
 Protection by LemonLDAP::NG
 ---------------------------
 
@@ -27,10 +38,6 @@ The handler is set up as an HTTP/TCP reverse-proxy in front of the websocket app
 |image1|
 
 You can configure the :doc:`access rules and headers<writingrulesand_headers>` as usual.
-
-.. note::
-
-    This scenario has been tested with Nginx.
 
 - Only the initial HTTP handshake (request and response) is protected by LemonLDAP::NG. Later TCP traffic pass directly through Nginx reverse-proxy
 - LemonLDAP::NG access rules are evaluated during the initial HTTP handshake (request and response) that upgrades the communication to websocket
@@ -44,7 +51,7 @@ Be careful of the following scenario :
 
 The unprotected page must manage the 302 return code sent by the SSO portal
 
- 
+
 Load-testing
 ------------
 

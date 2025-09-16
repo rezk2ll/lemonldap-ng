@@ -10,10 +10,110 @@ Known issues
 
 .. Adjust for every new version that has known, unreleased bugs
 
+* `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
+
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-No known issues.
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+If you use both CAS applications and CAS servers on your LemonLDAP::NG install,
+we recommend waiting for 2.21.1 to be released.
+
+2.22.0
+------
+
+lemonldap-ng-cli
+~~~~~~~~~~~~~~~~
+
+Starting from this version, the ``lemonldap-ng-cli`` refuses to store
+invalid configurations. If you use it with intermediate steps that are
+invalid before next changes, use the new **--unsafe** option.
+
+Stricter check on OIDC post-logout redirect URIs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In logout scenarios involving disconnecting from a remote IDP, you may start to
+encouter error messages that warn about unauthorized URIs.
+
+This happens because the `post_logout_redirect_uri` is now more strictly
+enforced in those scenarios.  Make sure you have allowed the value of that
+parameter in *OpenID Connect Relying Parties* > XXX > *Options* > *Logout* >
+*Allowed redirection addresses for logout*
+
+Change in post-logout redirect URI when LLNG is an OIDC client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use :doc:`authopenidconnect`, to delegate authentication to an external
+OpenID Connect provider, you have to update your provider's configuration in
+order to allow a new *post-logout* redirect URIs::
+
+    https://<portal>/oauth2/rlogoutreturn
+
+Change in timeout behavior for 2FA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Contrary to previous versions, resending a 2FA code no longer extends the 2FA timeout anymore.
+
+If your users start having issues with timeouts after upgrading, make sure you have set
+
+*General parameters* » *Second factors* » *Global options* » *Login timeout* to a high enough value
+
+In the particular case of email-based code delivery, you can override this parameter with
+
+*General parameters* » *Second factors* » *Mail second factor* » *Code timeout*
+
+
+
+2.21.1
+------
+
+Make sure no bogus CAS servers have been created
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
+been erroneously created under the "CAS Servers" section as well.
+
+Remove all unwanted **CAS Servers** entries from the manager after upgrading to
+version 2.21.1 (or above) if this is the case.
+
+2.21.0
+------
+
+Log4Perl log level
+~~~~~~~~~~~~~~~~~~
+
+Starting from this version, the global ``logLevel`` parameter is applied
+for all loggers. Thus if you managed your log level inside the log4perl
+configuration file, you may loose unimportant logs if your ``logLevel`` is
+higher.
+
+"typ" header in JWT
+~~~~~~~~~~~~~~~~~~~
+
+Version earlier than 2.17.0 had a "typ" header in all JWT following OIDC
+specification. In version 2.17.0, this header was wrongly removed when
+JWT library changed. This header has been restored starting from version
+2.21.0. However some application may fail with it, so a
+``Don't insert typ header`` option has been aded into RP/OP options to be
+able to restore 2.17.0 behavior.
+
+
+2.20.2
+------
+
+Post-logout redirection
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from this version, passing a ``url=`` parameter to the LemonLDAP logout
+URL (``https://auth.example.com/logout`` or
+``https://auth.example.com/?logout=1``) will only redirect the user to this URL
+if the URL's domain is a known VHost, or a trusted domain.
+
+To add a new domain to the trusted domain list, use the ``trustedDomains``
+variable or the *General parameters* > *Advanced parameters* > *Security* >
+*Trusted domains*. Wildcards can be used to allow all subdomains.
 
 2.20.0
 ------
@@ -27,22 +127,61 @@ automatically refreshed. However, to improve user experience, you may want to
 increase the *General Parameters* » *Second factors* » *Global options* »
 *Login timeout* setting to increase the timeout.
 
+Client secrets as GET parameters are no longer allowed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When calling the OIDC ``/oauth2/token`` endpoint, we no longer allow the
+``client_secret`` parameter to be sent as an URL parameter. It has to be sent
+either in the body (*client_secret_post*), or as part of and ``Authentication``
+HTTP header (*client_secret_basic*).
+
 
 U2F is no more supported
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Current browser no more support U2F specification which has been replaced by
-**Webauthn**. Starting from version 2.20.0, LLNG no more support U2G also.
+Current browsers no more support U2F specification which has been replaced by
+**Webauthn**. Starting from version 2.20.0, LemonLDAP::NG no more supports U2F also.
 
-You can easily replace **U2F** by **Webauthn**. LNG provide also migration
-tools:
+You can easily replace **U2F** by **Webauthn**. LemonLDAP::NG provides also migration tools:
 
 ::
 
    lemonldap-ng-sessions secondfactors migrateu2f --all
    lemonldap-ng-sessions secondfactors delType --all U2F
 
-See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
+See :ref:`lemonldap-ng-sessions doc <cli-sessions>`
+
+window.datas.login is no longer defined in JS code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `window.datas.login` global JS variable used to contain the user's login.
+It caused a security issue and was removed in this version. This only affects
+users who wrote custom JS code for the portal and who explicitely used this
+variable.
+
+Status changed
+^^^^^^^^^^^^^^
+
+The obsolete "portal status" and "status" features were removed from 2.20.0.
+An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
+
+SAML federations
+^^^^^^^^^^^^^^^^
+
+The recommended way of configuring SAML federations is now to keep bundled metadata in a separate file.
+
+Switching to this method should improve performance.
+
+Check :doc:`SAML federation documentation <samlfederation>` to know how use this new method.
+
+Auth::DBI no longer uses stored procedures to generate UNIX-style hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this version, we no longer require stored procedures to generate
+``unixcrypt1``, ``unixcrypt5`` and ``unixcrypt6`` hashes. The computation is
+performed by LemonLDAP::NG itself.
+This does not require any action by the admin or users. Let us know if you
+encounter regressions.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -229,7 +368,7 @@ In previous versions of LemonLDAP::NG, a 2FA protected account didn't need to us
 
 If you are *absolutely sure* that you want 2FA protected accounts to access AuthBasic handlers, which are password only, you can add the following test in your 2FA activation rules ::
 
-    and not $ENV{AuthBasic}
+    and not $env->{AuthBasic}
 
 
 2.0.16
@@ -249,16 +388,16 @@ The error messages for the following situations have been changed:
 
 .. csv-table::
    :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
-   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
-   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
-   An unauthorized logout URL was specified during logout from a CAS application;error_108;PE108;Unauthorized URL
-   An unauthorized Redirect URI was used during an OIDC login;error_108;PE108;Unauthorized URL
-   The provided url= parameter does not correspond to a protected URL;error_109;PE109;Not a protected or trusted URL
+   An authentication request has been made to an unknown CAS application,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown SAML service provider,error_107,PE107,This application is not known
+   An authentication request has been made to an unknown OIDC relying party,error_107,PE107,This application is not known
+   User was not allowed to access a CAS application,error_84,PE84,You're not authorized to access to this host
+   An unauthorized logout URL was specified during logout from a CAS application,error_108,PE108,Unauthorized URL
+   An unauthorized Redirect URI was used during an OIDC login,error_108,PE108,Unauthorized URL
+   The provided url= parameter does not correspond to a protected URL,error_109,PE109,Not a protected or trusted URL
 
 Users who wish to adjust error messages in these situations should update their translation files
 

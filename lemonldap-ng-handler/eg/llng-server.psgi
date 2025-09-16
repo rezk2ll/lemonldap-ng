@@ -27,10 +27,6 @@ my %builder = (
         eval "require $class";
         return $class->reload();
     },
-    status => sub {
-        eval "require $class";
-        return $class->status();
-    },
     manager => sub {
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );
@@ -53,10 +49,13 @@ my %builder = (
     psgi => sub {
         return sub {
 
-            # Fix PATH_INFO when using Nginx with default uwsgi_params
-            # See #2031
-            ( $_[0]->{PATH_INFO} ) =
-              $_[0]->{REQUEST_URI} =~ /^(?:\Q$_[0]->{SCRIPT_NAME}\E)?([^?]*)/;
+            # Reimplement split_pathinfo
+            if ( $_[0]->{SCRIPT_NAME}
+                and rindex( $_[0]->{PATH_INFO}, $_[0]->{SCRIPT_NAME}, 0 ) == 0 )
+            {
+                $_[0]->{PATH_INFO} =
+                  substr( $_[0]->{PATH_INFO}, length( $_[0]->{SCRIPT_NAME} ) );
+            }
 
             my $script = $_[0]->{SCRIPT_FILENAME};
             return $_apps{$script}->(@_) if ( $_apps{$script} );

@@ -1,3 +1,213 @@
+lemonldap-ng (2.21.3) noble; urgency=medium
+
+  * Bugs:
+    * #3445: Google OIDC authentication module fails with "No response type provided"
+    * #3446: [security:medium] session id exposed in portal AJAX responses
+    * #3462: [security:low] Shell injection in Safe Jail
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 05 Sep 2025 17:58:17 +0200
+
+lemonldap-ng (2.21.2) noble; urgency=medium
+
+  * Bugs:
+    * #3338: Can't edit wildcard vhosts using % after creation
+    * #3405: Issue with viewing psessions in Manager when using Oracle backend (hard-coded tablename)
+    * #3406: Choice Kerberos + LDAP causes a page reload loop
+    * #3427: When Auth::OpenIDConnect returns an error, the user cannot try again
+    * #3429: max_age=0 sent in Auth::OpenIDConnect authorization request since 2.21.1
+    * #3430: [Security:low] bad CORS check allows Origins that are a prefix of the Portal URL
+    * #3433: Dynamic RPs (via hook) can't be used with JWT-based auth
+
+  * Improvements:
+    * #3416: [OIDC]: renew of offline session allowed even if offline right was dropped to this app
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 11 Jul 2025 10:52:21 +0200
+
+lemonldap-ng (2.21.1) noble; urgency=medium
+
+  * Bugs:
+    * #3205: lemonldap scripts fail with permission error when run as root with pg tls backend
+    * #3361: Empty display parameter sent in OIDC authorization request
+    * #3367: OIDC doesn't manage "prompt=none" for unauthenticated users
+    * #3397: Adding a new CAS application in Manager also add a CAS server with the same name
+    * #3399: Internal server error when resending 2FA code if token has expired
+    * #3401: _lastAuthnUTime missing when using "Switch context another user"
+
+  * Improvements:
+    * #3363: Add Slovak translation into portal
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 11 Jun 2025 10:56:27 +0200
+
+lemonldap-ng (2.21.0) noble; urgency=medium
+
+  * Bugs:
+    * #2044: Session upgrade with Auth::SAML / Auth::OpenIDConnect
+    * #3169: nginx handler breaks with OpenResty 1.25.3.1
+    * #3259: Errors  in old browsers due to new coffeescript version
+    * #3265: VHost alias is not removed from cache when reloading conf
+    * #3266: Aliases override VHosts
+    * #3272: Notifications condition is not always displayed
+    * #3279: Using private_key_jwt authentication with Azure fails with invalid_client
+    * #3291: Password expiration warning is not shown after 2FA
+    * #3297: Manually uploaded RP JWKS document is not JSON decoded before processing
+    * #3304: JWT "typ" header no more exist
+    * #3308: Secondary sessions are not updated during session upgrade/renew
+    * #3309: LocationDetect tries to lookup city even when country database is used
+    * #3312: Redis as MessageBroker breaks when loosing connection and auth is required
+    * #3314: Configuration diff viewer incorrectly reports modifications on menu entries with the same name
+    * #3318: "Something went wrong in combination" on all requests after a while
+    * #3324: refresh_token should be validated against DB, not cache
+    * #3330: OIDC: Incorrect implementation of client_secret_basic
+    * #3337: Wrong "match an alias" error when saving conf
+    * #3340: lemonldap-ng-cli does not work if enabledModules has been changed in lemonldap-ng.ini
+    * #3341: [Security:Medium][CVE-2025-31510] XSS/HTML Injection through tab parameter when using "Choice" authentication module
+    * #3347: User stuck on /notifback after accepting a notification when an accepted global notification already exists
+    * #3352: unlog events are not working with Lemonldap::NG::Common::Apache::Session::REST
+    * #3355: Unlog events are not working Lemonldap::NG::Common::Apache::Session::REST and hashedSessionStore
+    * #3356: CAS incompatible with hashed storage
+    * #3358: HashedStorage doesn't use good id when calling update
+
+  * New features:
+    * #1772: Append a new plugin to display a custom message on portal
+    * #2902: Implement "OpenID Connect Native SSO for Mobile Apps 1.0"
+    * #2925: Support samlValidate in CAS 3.0 protocol
+    * #3262: Google ReCaptcha v3
+    * #3336: Loki logger
+
+  * Improvements:
+    * #1921: javascript versionning
+    * #3176: Forward OIDC login_hint
+    * #3186: Manage amr claim (Authentication Method Reference) in OpenID Connect
+    * #3239: Append plugin or option to enable a floating menu in Portal to display most used applications
+    * #3244: Add option to drop "none" from OIDC alg list (metadata)
+    * #3268: OpenIDConnect metadata can not be cached
+    * #3278: Allow session variables to be used in notifications
+    * #3280: Render checkState plugin more generic
+    * #3284: ADFS doc is outdated
+    * #3287: Sessions are not sorted in the Second Factors Tab
+    * #3288: SAML identity providers are not displayed correctly in order
+    * #3289: There is no default value for the Use 2FA for session upgrade option.
+    * #3294: Allow required authentication level to be a rule
+    * #3299: Permits to Auth::OpenIDConnect to use claims from id_token and/or access_token
+    * #3302: Prefill user login input with OIDC login_hint parameter
+    * #3305: Allow admins to disable CAS proxy features per-application
+    * #3311: Logger Log4Perl don't follow logLevel
+    * #3313: Allow maintainance mode for portal
+    * #3316: Add an option to disable built-in plugins
+    * #3321: Add functionnality (plugin, extended function,...) to dump %ENV or $env
+    * #3323: purgeCentralCache script fails with empty xxxxStorage keys
+    * #3328: Add short timeout on messageBroker check
+    * #3333: Option to store logs in JSON format
+    * #3339: user field isn't set on auditLog logout events
+    * #3342: Improve random password generation with a shuffle
+
+  * WebServer Confs:
+    * #3306: Simplify Nginx initial configuration
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 07 Apr 2025 15:58:42 +0200
+
+lemonldap-ng (2.20.2) noble; urgency=medium
+
+  * Bugs:
+    * #3258: [Security][CVE-2024-52948] CSRF on 2FA registration
+    * #3281: Test user abarnes mentionned in 2FA logs
+    * #3293: [Session explorer] offline sessions count is wrong
+    * #3301: [Security] Open redirect vulnerability in logout
+    * #3307: Manager test on aliases is not correct
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 21 Jan 2025 16:37:44 +0100
+
+lemonldap-ng (2.20.1) noble; urgency=medium
+
+  * Bugs:
+    * #3255: [Security] Adaptative Authentication Rules triggered by "Refresh my rights"
+    * #3257: [Security] XSS in upgradeSession / forceUpgrade pages
+    * #3260: downloadSamlMetadata missing from packages in 2.20.0
+    * #3261: CDA request for id  is not valid
+    * #3263: "This application is not known" when trying to access a federation application with empty  RelayState
+    * #3264: SAML regression in 2.20.0
+    * #3274: Internal error when captcha rule isn't validated
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 08 Nov 2024 15:31:50 +0100
+
+lemonldap-ng (2.20.0) noble; urgency=medium
+
+  * Bugs:
+    * #1886: mysql and MariaDB DBI UserBackend UTF8 encoding
+    * #2461: Session cache not invalidated when upgrading session with 2FA
+    * #2718: "Connected as" menu is broken on narrow screens
+    * #2978: Using the (unimplemented) claims= parameter in an OIDC authorize request triggers XSS detection with authentication=Choice
+    * #3122: Random DB errors when using llng-fastcgi-server in foreground mode
+    * #3154: log4perl %S{} broken with Apache2 Handler
+    * #3178: oidcOPMetaDataOptionsAuthnEndpointAuthMethod: Invalid value 'get' for this select
+    * #3182: Logging out from CAS/OIDC without redirection does not display the logged out message
+    * #3183: Random unit tests failure on CentOS
+    * #3185: Hidden numbers in captcha
+    * #3198: manager api does not allow federated SAML sps
+    * #3204: Email language does not correspond to portal language when default language is used
+    * #3206: Oldpassword is sent to client when password reset form is displayed by LDAP password policy
+    * #3210: Using a USB Fido2 device to authenticate requires a manual step
+    * #3216: Jitsi JWT issuer ASAP server fails when oidcServicePublicKeySig is a PUBLIC KEY
+    * #3220: Captcha and TrustedBrowser plugins are always loaded
+    * #3229: Client secret sent as GET is treated as 'client_secret_post'
+    * #3232: [security] XSS/HTML Injection login page when user contains special characters
+    * #3233: AuthenticationLevel not set by Radius authentication module
+    * #3237: Failed logout of oidc clients in multi-node environment
+    * #3242: Manage HEAD requests
+    * #3248: log warnings when requiring multiple custom functions files
+    * #3250: when failing to authenticate with Auth::Choice, login is pre-filled in all choices
+
+  * New features:
+    * #3035: FIDO2 / WebAuthn Passwordless
+    * #3051: Add message broker support to instantly share events like logout or configuration update (Redis, PostgreSQL and MQTT)
+    * #3148: Implement OIDC token exchange
+    * #3174: Allow hooks to modify the authentication level depending on which 2FA device was used
+    * #3203: Allow plugins to easily add new portal tabs
+    * #3214: Both systemd and sysvinit tooling are always installed
+    * #3215: rotateOidcKey has no option to create X.509 certificates
+    * #3219: ReCaptcha plugin
+    * #3221: API requests reaching the handler should return 401 instead of 302
+    * #3231: Improve password hashing in Auth::DBI
+    * #3243: Allow message authentication in Auth::Radius and 2F::Radius
+
+  * Improvements:
+    * #1848: select authentication scheme according to authentication level
+    * #2396: Refresh token rotation
+    * #2788: Make custom skins testable
+    * #3056: Remove XML::Simple (again)
+    * #3126: Allow multiple TOTP devices to be registered
+    * #3135: Default value for portalForceAuthnInterval might be too low when using 2FA and prompt parameter in OIDC flow
+    * #3145: Append an option to define password max length
+    * #3149: Make WebAuthn appid optional
+    * #3152: inGroup extended function does not work with a list of group
+    * #3153: Drop dependency to Crypt::U2F::Server
+    * #3155: Deprecate/remove the Status server
+    * #3156: OIDC introspection endpoint shouldn't refuse authenticated connexions even when client is public
+    * #3160: Use netblocks to define accredited IP to connect with AuthSlave
+    * #3164: Manager "raw" upload should check configuration
+    * #3166: Improve output of lemonldap-ng-cli restore
+    * #3175: If only one Choice available, submit it by default
+    * #3177: Nginx error_page configuration is missing
+    * #3187: Clicking twice on 2FA code submit button raises an error
+    * #3193: Change cursor into pointer when hover renew captcha link
+    * #3196: Append password policy option to check dynamically if newpassword & confirmpassword are the same
+    * #3197: Add SAML authentication level "urn:federation:authentication:windows" for ADFS compatibility
+    * #3199: Add "count" command to lemonldap-ng-sessions
+    * #3202: Add "backup/restore" command to lemonldap-ng-sessions cli
+    * #3212: llng-fastcgi-server manpage is not installed
+    * #3222: Change captcha_* parameters into `boolOrExpr` to permit to change rules depending on network
+    * #3226: Bad manager translations
+    * #3245: Plugin RememberAuthChoice: option to remove cookie at logout
+    * #3246: Plugin RememberAuthChoice: hide screen if timer is configured to 0
+
+  * Templates:
+    * #3187: Clicking twice on 2FA code submit button raises an error
+
+  * WebServer Confs:
+    * #3177: Nginx error_page configuration is missing
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 08 Oct 2024 11:06:47 +0200
+
 lemonldap-ng (2.19.2) jammy; urgency=medium
 
   * Bugs:

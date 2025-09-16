@@ -54,6 +54,7 @@ Then, go in ``Choice Parameters``:
    :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
 -  **FindUser plugin parameter**: authentication module called by
    Find user plugin (:doc:`Find user plugin<finduser>`)
+-  **Auto-select only method**: if only one authentication method is available, automatically select it
 
 |image0|
 

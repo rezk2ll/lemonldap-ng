@@ -8,6 +8,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::IPv6;
 
 extends qw(
@@ -16,7 +17,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.22.0';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -28,6 +29,8 @@ use constant icon         => 'duplicate';
 sub init {
     my ( $self, $conf ) = @_;
 
+    $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
+
     # HTML template
     $self->addRoute( 'sessions.html', undef, ['GET'] )
 
@@ -38,6 +41,13 @@ sub init {
       ->addRoute(
         sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
         ['DELETE']
+      )
+
+      # DELETE ALL SESSIONS FOR A USER
+      ->addRoute(
+        sessions =>
+          { glogout => { ':sessionType' => { ':sessionId' => 'userLogout' } } },
+        ['POST']
       )
 
       # DELETE OIDC CONSENT
@@ -52,12 +62,110 @@ sub init {
     $self->setTypes($conf);
 
     $self->{ipField}              ||= 'ipAddr';
+    $self->{portal}               ||= $conf->{portal};
+    $self->{cookieName}           ||= $conf->{cookieName};
     $self->{multiValuesSeparator} ||= '; ';
     $self->{impersonationPrefix} = $conf->{impersonationPrefix} || 'real_';
     $self->{hiddenAttributes} //= '_password';
     $self->{hiddenAttributes} .= ' _session_id'
       unless $conf->{displaySessionId};
+    $self->{tokenRevokeSecret} = $conf->{adminLogoutServerSecret};
     return 1;
+}
+
+#
+# User logout
+#
+
+sub userLogout {
+    my ( $self, $req ) = @_;
+
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+    my $id = $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->sendError( $req, "session $id not found" );
+
+    my $uidKey = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
+    my $uid    = $session->data->{$uidKey} || $session->data->{_session_uid};
+
+    my $count = 0;
+    foreach my $storage (qw(oidcStorage sessionStorage)) {
+        my $storageModule =
+          Lemonldap::NG::Handler::Main->tsv->{"${storage}Module"};
+        if ( defined $storageModule ) {
+            next if ( $storageModule eq "Apache::Session::Memcached" );
+            my $opts = Lemonldap::NG::Handler::Main->tsv->{"${storage}Options"};
+            $opts->{backend} = $storageModule;
+            my $sessions =
+              Lemonldap::NG::Common::Apache::Session->searchOn( $opts, $uidKey,
+                $uid );
+            my @keys;
+            if ( $sessions and %$sessions ) {
+                @keys = keys %$sessions;
+                foreach my $sid (@keys) {
+                    my $kind = $sessions->{$sid}->{_session_kind};
+                    if (
+                        $self->{tokenRevokeSecret}
+                        and (
+                            $kind eq 'SSO'
+                            or (    $kind eq 'OIDCI'
+                                and $sessions->{$sid}->{_type} eq
+                                'refresh_token' )
+                        )
+                      )
+                    {
+                        my $type =
+                          $kind eq 'SSO' ? 'SSO' : $sessions->{$sid}->{_type};
+                        my $s = build_urlencoded(
+                            token_hint => $type,
+                            token      => $sid,
+                            raw        => 1,
+                        );
+                        my $lreq = HTTP::Request->new(
+                            POST => "$self->{portal}/admintokenrevoke",
+                            [
+                                Authorization =>
+                                  "Bearer $self->{tokenRevokeSecret}",
+                                'Content-Length' => length($s),
+                                'Content-Type'   =>
+                                  'application/x-www-form-urlencoded',
+                                Accept => 'application/json',
+                            ],
+                            $s
+                        );
+                        my $resp = $self->ua->request($lreq);
+                        if ( $resp->is_success ) {
+                            $self->logger->info(
+                                "Session $type/$sid deleted by portal");
+                        }
+                        else {
+                            $self->logger->error(
+                                "Error when calling portal to logout: "
+                                  . $resp->status_line );
+                        }
+                    }
+
+                    my $session = Lemonldap::NG::Common::Session->new(
+                        storageModule        => $storageModule,
+                        storageModuleOptions => $opts,
+                        cacheModule => Lemonldap::NG::Handler::Main->tsv
+                          ->{sessionCacheModule},
+                        cacheModuleOptions => Lemonldap::NG::Handler::Main->tsv
+                          ->{sessionCacheOptions},
+                        id => $sid,
+                    );
+                    if ( $session->data ) {
+                        $session->remove;
+                        $count++;
+                    }
+                }
+            }
+        }
+    }
+    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    return $self->sendJSONresponse( $req, { result => 1, count => $count } );
 }
 
 #######################
@@ -270,13 +378,43 @@ sub sessions {
         # Substrings
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
             my ( $field, $length, $start ) = ( $1, $2, $3 );
+
+            # "next" is a try with $length+1, if only one account, $length++
+            # This permits UI to jump directly to the uid
+            # -d (300)
+            #    -> dwho (300)
+            #       ... sessions
+            #
             $start ||= 0;
             $length = 1 if ( $length < 1 );
-            foreach my $k ( keys %$res ) {
-                $r->{ substr $res->{$k}->{$field}, $start, $length }++
-                  if ( $res->{$k}->{$field} );
+            while (1) {
+                my $next = {};
+                my $stop;
+                foreach my $k ( keys %$res ) {
+                    my $subk = substr $res->{$k}->{$field}, $start, $length + 1;
+                    $next->{$subk}++
+                      if ( $res->{$k}->{$field} );
+
+                    # End of the loop if we reached the length of uid
+                    $stop++
+                      if $start + $length >= length( $res->{$k}->{$field} );
+                }
+
+                # Loop if only one result
+                my @k = keys %$next;
+                if ( @k == 1 and !$stop ) {
+                    $length++;
+                    next;
+                }
+
+                # Result calculation
+                foreach my $k ( keys %$res ) {
+                    $r->{ substr $res->{$k}->{$field}, $start, $length }++
+                      if ( $res->{$k}->{$field} );
+                }
+                $group = $field;
+                last;
             }
-            $group = $field;
         }
 
         # Subnets IPv4
@@ -337,7 +475,8 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
         }
 
         # Build result
-        $res = [
+        $total = 0;
+        $res   = [
             sort {
                 my @a = ( $a->{value} =~ /^(\d+)(?:\.(\d+))*$/ );
                 my @b = ( $b->{value} =~ /^(\d+)(?:\.(\d+))*$/ );
@@ -347,8 +486,9 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
                       or $a[2] <=> $b[2]
                       or $a[3] <=> $b[3] )
                   : $a->{value} cmp $b->{value}
-              }
-              map { { value => $_, count => $r->{$_} } } keys %$r
+            }
+            map { $total += $r->{$_}; { value => $_, count => $r->{$_} } }
+              keys %$r
         ];
     }
 
@@ -398,7 +538,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     else {
         $res = [
             sort { $a->{date} <=> $b->{date} }
-              map {
+            map {
                 {
                     session => $self->_maybeEncryptSessionId($_),
                     date    => $res->{$_}->{_utime}

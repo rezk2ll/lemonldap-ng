@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my ( $res, $host, $url, $query );
-my $maintests = 17;
+my $maintests = 16;
 my $mailSend  = 0;
 my $mail2     = 0;
 
@@ -22,8 +22,7 @@ SKIP: {
         skip 'Missing dependencies', $maintests;
     }
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
@@ -76,11 +75,6 @@ m%<a class="btn btn-secondary" href="http://auth.example.com/resetpwd\?skin=boot
         $res->[2]->[0] =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok(
-        $res->[2]->[0] =~
-m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png"#,
-        ' Renew Captcha button found'
-    ) or explain( $res->[2]->[0], 'Renew captcha button not found' );
     ok( $res->[2]->[0] =~ /captcha\.(?:min\.)?js/, 'Get captcha javascript' );
 
     $query .= "&captcha=$captcha";
@@ -123,12 +117,15 @@ m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png"#,
     );
     ok( mail() =~ /<span>Your new password is<\/span>/, 'New password sent' );
     ok( mail() =~ /<b>(.+?)<\/b>/s, 'New generated password found' );
+    my $password = $1;
     ok(
-        $1 =~ /[A-Z]{1}[a-z]{1}\d{2}[*#@]{1}/,
-        'New generated password matches'
+        length $password == 5
+          && $password =~ /[*#@]/
+          && $password =~ /[A-Z]/
+          && $password =~ /[a-z]/
+          && $password =~ /\d/,
+        'New generated password matches policy'
     );
-
-    #print STDERR Dumper($query);
 }
 count($maintests);
 

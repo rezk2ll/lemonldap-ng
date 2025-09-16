@@ -8,6 +8,10 @@ To use Nginx, you must install LemonLDAP::NG FastCGI server or use
 ``llngapp.psgi`` *(provided in examples)* with a PSGI server. See
 :doc:`Advanced PSGI usage<psgi>`.
 
+.. note::
+
+    If installation has been done with packages, this should be already done.
+
 Debian/Ubuntu
 ~~~~~~~~~~~~~
 
@@ -19,8 +23,8 @@ Enable and start the service :
 
 ::
 
-   systemctl enable llng-fastcgi-server
-   systemctl start llng-fastcgi-server
+   systemctl enable lemonldap-ng-fastcgi-server
+   systemctl start lemonldap-ng-fastcgi-server
 
 Red Hat/CentOS
 ~~~~~~~~~~~~~~
@@ -48,23 +52,23 @@ configuration.
 Debian/Ubuntu
 ~~~~~~~~~~~~~
 
--  Install log format *(automatically loaded when linked in this place)*
-
-::
-
-   ln -s /etc/lemonldap-ng/nginx-lmlog.conf /etc/nginx/conf.d/llng-lmlog.conf
-
 -  Install snippet for vhost configuration files:
 
 ::
 
    ln -s /etc/lemonldap-ng/nginx-lua-headers.conf /etc/nginx/snippets/llng-lua-headers.conf
 
--  Enable sites:
+-  Enable portal, manager and handler/reload sites:
 
 ::
 
-   ln -s /etc/nginx/sites-available/handler-nginx.conf /etc/nginx/sites-enabled/
-   ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
    ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
+   ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
+   ln -s /etc/nginx/sites-available/handler-nginx.conf /etc/nginx/sites-enabled/
+
+
+-  Enable test sites (optional):
+
+::
+
    ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/

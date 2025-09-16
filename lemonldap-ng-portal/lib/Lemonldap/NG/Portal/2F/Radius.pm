@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_RADIUSCONNECTFAILED
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
@@ -47,6 +47,7 @@ sub init {
             radius_secret  => $self->conf->{radius2fSecret},
             radius_server  => $self->conf->{radius2fServer},
             radius_timeout => $self->conf->{radius2fTimeout},
+            radius_msgauth => $self->conf->{radius2fMsgAuth},
             modulename     => ( $self->prefix . "2f" ),
             logger         => $self->logger,
             p              => $self->p,
@@ -77,10 +78,11 @@ sub run {
         params => {
             TOKEN  => $token,
             PREFIX => $self->prefix,
-            TARGET => '/'
-              . $self->prefix
-              . '2fcheck?skin='
-              . $self->p->getSkin($req),
+            TARGET => $self->p->relativeUrl(
+                $req,
+                $self->prefix . '2fcheck',
+                { skin => $self->p->getSkin($req) }
+            ),
             LEGEND => 'enterRadius2fCode',
             $self->get2fTplParams($req),
         }

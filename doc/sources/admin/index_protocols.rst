@@ -6,4 +6,3 @@ Standard SSO protocols
 
    samlservice
    openidconnectservice
-   

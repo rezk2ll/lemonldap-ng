@@ -16,6 +16,7 @@ LemonLDAP::NG portal menu proposes 5 modules:
 -  **Login history**: display user's last logins and failed logins
 -  **Password change**: form to change password
 -  **OIDC consents**: display user's OpenId Connect consents
+-  **OIDC offline tokens**: display user's OpenId Connect sessions with offline tokens (needs offline session tab plugin to be enabled) 
 -  **Logout**: logout button
 -  **Display order**: list used for sorting modules (default: Appslist ChangePassword LoginHistory OidcConsents Logout)
 
@@ -70,6 +71,10 @@ Application parameters:
 .. tip::
 
     Categories and applications are displayed in alphabetical order.
+    Applications are displayed based on access rule only to propose the reauthentication mechanism.
+    It means that authentication level is not taken into account.
+    To hide applications depending on authentication level, you have to append an authentication level condition
+    like this: `$uid eq 'dwho' && $authenticationLevel == 5`
 
 |image1|
 

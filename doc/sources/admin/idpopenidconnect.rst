@@ -21,6 +21,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
 -  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
+-  Authentication Method References (AMR) (Since ``2.21.0``)
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
@@ -234,6 +235,7 @@ Options
    -  **Other RP allowed to exchange access_token** (since version ``2.20.0``):
       You can specify a space-separated list of Relying-Party allowed to ask
       for a token exchange. See :doc:`OpenID-Connect Token Exchange<oidctokenexchange>`
+   -  **Don't insert typ header**: don't add the type header in JWT
 
 -  **Scope**
 
@@ -254,6 +256,9 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+   -  **Allow Native SSO for Mobile Apps** (since version ``2.21.0``): Allow
+      relying party to request a **device_secret**. See
+      https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
    -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
       the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
       This feature only works if you have configured a form-based authentication module.
@@ -264,7 +269,8 @@ Options
       `request_uri
       <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
-   -  **Authentication level**: Required authentication level to access this application
+   -  **Required authentication level**: Required authentication level to
+      access this application. Since ``2.21.0`` this can be a Perl expression.
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
    -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
    -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
@@ -296,6 +302,10 @@ Options
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
 
+.. important::
+
+    JWKS URI MUST be reachable by Portal to fetch JWKS document
+
 -  **Timeouts**
 
    -  **Authorization Codes** *(default: one minute)*: Expiration time of
@@ -306,6 +316,16 @@ Options
    -  **Offline sessions** *(default: one month)*: Lifetime of the
       refresh token obtained with the **offline_access** scope.
       This parameter only applies if offline sessions are enabled.
+   -  **refresh_token activity timeout** *(default: none)*: Expiration time
+      of inactives refresh tokens. if no value is set, activity isn't tracked.
+
+.. important::
+
+    When enabling **refresh_token activity timeout**, a refresh_token created
+    with a version of LLNG previous to 2.22.0 and never used after update
+    is considered as active *(because it has no activity field)*.
+    Such totally inactive refresh_token will be purged normally at their
+    normal end-of-life. Any use of a refresh_token updates the activity field.
 
 -  **Logout**
 
@@ -357,13 +377,13 @@ By default, the following scope-to-attributes are already mapped by LL::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
-   :delim: ;
+   :delim: ,
    :widths: auto
 
-   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
-   email; email email_verified
-   address; street_address locality region postal_code country
-   phone; phone_number phone_number_verified
+   profile, name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+   email, email email_verified
+   address, street_address locality region postal_code country
+   phone, phone_number phone_number_verified
 
 If you want to expose custom attributes to OpenID Connect clients,
 you have to declare them in a new scope in this section.
@@ -384,8 +404,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 .. important::
 
     Your custom attributes will only be visible if the application requests the
-    corresponding scope value, or if you use a Scope Rule to always enable that
-    scope.
+    corresponding scope value, or if you use a Scope Rule to always enable that scope.
 
 
 .. _oidcscoperules:

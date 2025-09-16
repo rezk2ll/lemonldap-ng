@@ -32,7 +32,7 @@ PERLTIDY_VERSION=20220217
 # External commands
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
-export PERL5LIB=$(shell echo `pwd`/${SRCCOMMONDIR}/blib/lib:`pwd`/${SRCHANDLERDIR}/blib/lib:`pwd`/${SRCMANAGERDIR}/blib/lib/:`pwd`/${SRCPORTALDIR}/blib/lib/)
+export PERL5LIB=$(CURDIR)/${SRCCOMMONDIR}/blib/lib:$(CURDIR)/${SRCHANDLERDIR}/blib/lib:$(CURDIR)/${SRCMANAGERDIR}/blib/lib/:$(CURDIR)/${SRCPORTALDIR}/blib/lib/
 SU=su -c
 COMPRESS=tar czf
 UNCOMPRESS=tar xzf
@@ -243,26 +243,26 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		$(SRCPORTALDIR)/lib/Lemonldap/NG/Portal/Main/Constants.pm \
 		$(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
-		_example/conf/lmConf-1.json
+		_example/conf/lmConf-1.json \
+		doc/sources/admin/error_codes.rst
 
 
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
-# Coffee files
-MANAGERCOFFEESRCFILES:=$(shell find lemonldap-ng-manager/site/coffee -type f -name '*.coffee')
-PORTALCOFFEESRCFILES:=$(shell find lemonldap-ng-portal/site/coffee -type f -name '*.coffee')
-COFFEESRCFILES=$(MANAGERCOFFEESRCFILES) $(PORTALCOFFEESRCFILES)
-MANAGERCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/js/,$(MANAGERCOFFEESRCFILES:.coffee=.js))
-PORTALCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/common/js/,$(PORTALCOFFEESRCFILES:.coffee=.js))
-COFFEEDSTFILES:=$(MANAGERCOFFEEDSTFILES) $(PORTALCOFFEEDSTFILES)
+# JS source files
+MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
+PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.js')
+MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
+PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
+JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
 
 # Minified files
-JSDSTFILES=$(JSSRCFILES:.js=.min.js)
-CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
+JSMINFILES=$(JSSRCFILES:.js=.min.js)
+CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 
 # -------
 # TARGETS
@@ -321,22 +321,32 @@ all:	configure common handler manager portal documentation
 
 configure:	common_conf handler_conf portal_conf manager_conf
 
-js: $(COFFEEDSTFILES)
+js: $(JSDSTFILES)
 
-minify: js $(JSDSTFILES) $(CSSDSTFILES)
+minify: $(JSDSTFILES) $(JSMINFILES) $(CSSMINFILES)
 
-$(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%.coffee
-	@if which coffee >/dev/null; then \
-		echo "Compiling $(SRCPORTALDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
+_rollup_portal:
+	@if which rollup >/dev/null; then \
+		cd $(SRCPORTALDIR)/site/js-src && \
+		rollup -c; \
 	else \
-		echo "Can't find coffee"; \
+		echo "Can't find rollup"; \
 	fi
 
-$(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
-	@if which coffee >/dev/null; then \
-		echo "Compiling $(SRCMANAGERDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCMANAGERDIR)/site/htdocs/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
+$(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/js-src/%.js
+	$(MAKE) _rollup_portal
+
+_rollup_manager:
+	@if which rollup >/dev/null; then \
+		cd $(SRCMANAGERDIR)/site/js-src && \
+		rollup -c; \
+	else \
+		echo "Can't find rollup"; \
+	fi
+
+$(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
+	@if test "$*" != "conftree"; then \
+		$(MAKE) _rollup_manager; \
 	fi
 
 %.min.css: %.css
@@ -345,7 +355,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 
 %.min.js: %.js
 	@echo "Compressing $*.js"
-	if test "$(UGLIFYJSVERSION)" = 2; then \
+	@if test "$(UGLIFYJSVERSION)" = 2; then \
 		cd `dirname $*`; \
 		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
 	else \
@@ -426,7 +436,7 @@ portal_test:	portal
 	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCPORTALDIR} test
 
 manager_test:	manager
-	@$(MAKE) -C ${SRCMANAGERDIR} test
+	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCMANAGERDIR} test
 
 autopkgtest: all autopkg_common autopkg_handler autopkg_portal autopkg_manager autopkg_runner
 
@@ -449,23 +459,24 @@ prepare_test_server:
 	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
 		DNSDOMAIN=$(DNSDOMAIN) \
-		CONFDIR=`pwd`/e2e-tests/conf \
+		CONFDIR=$(CURDIR)/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
-		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
-		PORTALSITEDIR=`pwd`/e2e-tests/conf/portal \
-		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
-		MANAGERSITEDIR=`pwd`/e2e-tests/conf/manager \
-		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
-		RUNITDIR=`pwd`/e2e-tests/conf/run \
-		RTMPFILESDIR=`pwd`/e2e-tests/conf/tmp \
-		TESTDIR=`pwd`/e2e-tests/conf/site \
-		DEFDOCDIR=`pwd`/doc \
-		SBINDIR=`pwd`/e2e-tests/conf/sbin \
-		INITDIR=`pwd`/e2e-tests/conf/init \
-		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
+		FASTCGISOCKDIR=$(CURDIR)/e2e-tests/conf \
+		PORTALSITEDIR=$(CURDIR)/e2e-tests/conf/portal \
+		PORTALSTATICDIR=$(CURDIR)/$(SRCPORTALDIR)/site/htdocs/static \
+		MANAGERSITEDIR=$(CURDIR)/e2e-tests/conf/manager \
+		MANAGERSTATICDIR=$(CURDIR)/$(SRCMANAGERDIR)/site/htdocs/static \
+		RUNITDIR=$(CURDIR)/e2e-tests/conf/run \
+		RTMPFILESDIR=$(CURDIR)/e2e-tests/conf/tmp \
+		TESTDIR=$(CURDIR)/e2e-tests/conf/site \
+		DEFDOCDIR=$(CURDIR)/doc \
+		SBINDIR=$(CURDIR)/e2e-tests/conf/sbin \
+		MANDIR=$(CURDIR)/e2e-tests/conf/man \
+		INITDIR=$(CURDIR)/e2e-tests/conf/init \
+		ETCDEFAULTDIR=$(CURDIR)/e2e-tests/conf/def
 	#@cp -f e2e-tests/index.* e2e-tests/conf/
 	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
 	@cp -f $(SRCMANAGERDIR)/site/api/api* e2e-tests/conf/api
@@ -474,11 +485,11 @@ prepare_test_server:
 	@cp e2e-tests/saml-sp.xml e2e-tests/conf/site/saml-sp.xml
 	@cp e2e-tests/rules.json e2e-tests/conf/site/test.json
 	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \
-		perl -i -pe 'if($$.==2){print "BEGIN{\n"; print qq(use lib q('`pwd`'/lemonldap-ng-$$_/blib/lib);\n) foreach qw(common handler portal manager); print "}\n"; }' $$f; \
+		perl -i -pe 'if($$.==2){print "BEGIN{\n"; print qq(use lib q('$(CURDIR)'/lemonldap-ng-$$_/blib/lib);\n) foreach qw(common handler portal manager); print "}\n"; }' $$f; \
 	done
 	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng*.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
-	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;s#__domain__#$(DNSDOMAIN)#g;' \
+	@perl -i -mCwd -pe 'BEGIN{$$p=Cwd::getcwd()}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;s#__domain__#$(DNSDOMAIN)#g;' \
 		e2e-tests/conf/lemonldap-ng*.ini \
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
@@ -506,7 +517,7 @@ start_web_server:	all prepare_test_server
 				set globalStorage Apache::Session::SQLite3; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
 			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
-				addKey globalStorageOptions DataSource 'dbi:SQLite:dbname='`pwd`'/e2e-tests/conf/sessions.db'; \
+				addKey globalStorageOptions DataSource 'dbi:SQLite:dbname='$(CURDIR)'/e2e-tests/conf/sessions.db'; \
 	fi
 	@# Debian: make start_web_server TESTBACKEND=LDAP LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
 	@if test "$(TESTBACKEND)" = "LDAP"; then \
@@ -550,17 +561,17 @@ start_web_server:	all prepare_test_server
 		else \
 			APACHEARGS=; \
 		fi; \
-		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf $$APACHEARGS -k start; \
+		LLNG_DEFAULTCONFFILE=$(CURDIR)/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d $(CURDIR)/e2e-tests -f apache2.conf $$APACHEARGS -k start; \
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
 		echo "Testing nginx conf"; \
-		$(NGINX) -t -p `pwd`/e2e-tests \
-			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
-			-c `pwd`/e2e-tests/nginx.conf \
+		$(NGINX) -t -p $(CURDIR)/e2e-tests \
+			-g 'error_log '$(CURDIR)'/e2e-tests/conf/nginx.log;' \
+			-c $(CURDIR)/e2e-tests/nginx.conf \
 			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching nginx"; \
-		$(NGINX) -p `pwd`/e2e-tests \
-			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
-			-c `pwd`/e2e-tests/nginx.conf \
+		$(NGINX) -p $(CURDIR)/e2e-tests \
+			-g 'error_log '$(CURDIR)'/e2e-tests/conf/nginx.log;' \
+			-c $(CURDIR)/e2e-tests/nginx.conf \
 			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching plackup"; \
 		$(MAKE) plackup; \
@@ -571,8 +582,7 @@ start_web_server:	all prepare_test_server
 			ARGS=; \
 		fi; \
 		echo "ARGS=$$ARGS"; \
-		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-		PERL5LIB=`pwd`/lemonldap-ng-common/blib/lib/:`pwd`/lemonldap-ng-handler/blib/lib/:`pwd`/lemonldap-ng-portal/blib/lib/:`pwd`/lemonldap-ng-manager/blib/lib/ \
+		LLNG_DEFAULTCONFFILE=$(CURDIR)/e2e-tests/conf/lemonldap-ng.ini \
 		/usr/bin/start_server \
 			--log-file=e2e-tests/conf/starman.log \
 			--pid-file=e2e-tests/conf/server.pid \
@@ -590,12 +600,12 @@ start_web_server:	all prepare_test_server
 
 reload_web_server:
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
-		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-		/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
+		LLNG_DEFAULTCONFFILE=$(CURDIR)/e2e-tests/conf/lemonldap-ng.ini \
+		/usr/sbin/apache2 -d $(CURDIR)/e2e-tests -f apache2.conf -k graceful; \
 	elif [ -e e2e-tests/conf/nginx.pid ]; then \
-		$(NGINX) -p `pwd`/e2e-tests \
-			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
-			-c `pwd`/e2e-tests/nginx.conf \
+		$(NGINX) -p $(CURDIR)/e2e-tests \
+			-g 'error_log '$(CURDIR)'/e2e-tests/conf/nginx.log;' \
+			-c $(CURDIR)/e2e-tests/nginx.conf \
 			-s reload \
 			2>&1 | grep -v 'Permission denied' || true; \
 		kill `cat e2e-tests/conf/llng-fastcgi.pid` || true; \
@@ -630,7 +640,7 @@ stop_web_server:
 restart_web_server: start_web_server
 
 plackup:
-	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
+	@LLNG_DEFAULTCONFFILE=$(CURDIR)/e2e-tests/conf/lemonldap-ng.ini \
 	perl -I . e2e-tests/conf/sbin/llng-fastcgi-server \
 		-F >e2e-tests/conf/fastcgi.log 2>&1 &
 
@@ -663,8 +673,11 @@ install_bin:	install_conf_dir
 	@cp -f\
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
+		${SRCPORTALDIR}/scripts/purgePersistentSessions \
+		${SRCPORTALDIR}/scripts/crowdsecBan \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
+		${SRCPORTALDIR}/scripts/downloadSamlMetadata \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
 		${SRCCOMMONDIR}/scripts/convertToHashSessionStorage \
@@ -680,22 +693,26 @@ install_bin:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
 		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
 		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' \
 			$(RBINDIR)/lmConfigEditor \
 			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/rotateOidcKeys \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*
@@ -787,7 +804,7 @@ install_uwsgi_server:
 
 # Site install
 
-install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
+install_site:	install_bin install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
 	# Site install
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
@@ -1013,7 +1030,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	else \
 		$(CHMOD) 777 $(RFILECONFIGDIR); \
 	fi
-	@cp $(SRCCOMMONDIR)/tools/lmConfig.* $(SRCCOMMONDIR)/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@cp $(SRCCOMMONDIR)/tools/*.sql $(RTOOLSDIR)
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
 	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; s#__CACHEDIR__#$(CACHEDIR)#g;' \
 		$(RCONFDIR)/$(CONFFILENAME)
@@ -1120,7 +1137,7 @@ clean:
 	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
-	@rm -rf doc/pages/documentation/current/*
+	@if [ ! "$(SKIP_DOCUMENTATION)" ]; then rm -rf doc/pages/documentation/current/*; fi
 	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
@@ -1172,6 +1189,9 @@ dist:	clean
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "lemonldap-ng-$(VERSION)") lemonldap-ng-$(VERSION)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/docker
+	@rm -rf lemonldap-ng-$(VERSION)/Dockerfile
+	@rm -rf lemonldap-ng-$(VERSION)/dev
 	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
@@ -1186,6 +1206,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/dev
 	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
@@ -1278,15 +1299,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	@find e2e-tests/ \
-		  -type f \
-		  -name '*.js' \
-		! -name 'jq*' \
-		! -name 'bootstrap*' \
-		! -name '*.min.js' \
-		! -name conftree.js \
-		  -print \
-		  -exec js_beautify -o -s=2 {} \;
+	@for i in lemonldap-ng-*/site/js-src/*.js; do js-beautify -s 2 -r -f $$i; done
 
 html_spelling:
 	@for i in $$(find doc/ -type f -name '*.html'); do \

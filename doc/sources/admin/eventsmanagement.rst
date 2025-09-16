@@ -198,3 +198,16 @@ If ``ssl`` is set then these environment variables can be used also:
 .. _`DBD::Pg`: https://metacpan.org/pod/DBD::Pg
 .. _`IO::Socket::SSL`: https://metacpan.org/pod/IO::Socket::SSL
 .. _`libio-socket-ssl-perl`: https://packages.debian.org/stable/libio-socket-ssl-perl
+
+Web
+~~~
+
+LLNG provide a light pub/sub server, named **llng-pubsub-server**, designed to be
+used to manage LLNG events.
+
+To use it, configure the message broker:
+
+* ``server`` *(default: ``localhost:8080``)*. To enable SSL, use ``https://server:port``
+* ``token``: optional token to be set if the server requires a token
+
+You can find **llng-pubsub-server** documentation into its manpage.

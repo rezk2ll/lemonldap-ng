@@ -57,6 +57,8 @@ Mail second factor".
    the OTP code as password. By default, the attribute designated as
    ``whatToTrace`` is used.
 -  **Authentication timeout** (Optional): Allowed time to perform authentication
+-  **Authenticate Radius requests**: Use the Message-Authenticator attribute to
+   protect requests.
 -  **Dictionary**: radius dictionary file ex: /usr/share/freeradius/dictionary
    This is mandatory if you want to send extra request attributes.
 -  **Request attributes**: a list of additional Radius attributes to send with

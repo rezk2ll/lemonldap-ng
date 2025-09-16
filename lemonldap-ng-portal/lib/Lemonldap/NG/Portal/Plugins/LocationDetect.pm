@@ -2,11 +2,14 @@ package Lemonldap::NG::Portal::Plugins::LocationDetect;
 
 use Mouse;
 use List::MoreUtils qw/uniq/;
+use Scalar::Util qw/blessed/;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
   Lemonldap::NG::Portal::Lib::SMTP
 );
+
+our $VERSION = '2.21.0';
 
 has reader   => ( is => 'rw' );
 has ipDetail => ( is => 'rw' );
@@ -107,20 +110,26 @@ sub getIpInfo {
         $type = "country";
     }
 
-    my $city_display;
-    my $city_code;
-    my $city =
-      eval { $self->reader->$type( ip => $req->address )->city() };
-    if ($@) {
-        $self->logger->warn( "[LocationDetect] Could not resolve city for IP "
-              . $req->address . ": "
-              . $@ );
-        $city_code    = "unknown";
-        $city_display = "Unknown";
-    }
-    else {
-        $city_code    = $city->geoname_id                    || "unknown";
-        $city_display = $self->_get_localized( $req, $city ) || "Unknown";
+    my $city_display = "Unknown";
+    my $city_code    = "unknown";
+    if ( $type eq "city" ) {
+        my $city =
+          eval { $self->reader->$type( ip => $req->address )->city() };
+        if ($@) {
+            my $msg = $@;
+            if ( blessed($@) && $@->isa('Throwable::Error') ) {
+                $msg = $@->message;
+            }
+
+            $self->logger->warn(
+                    "[LocationDetect] Could not resolve city for IP "
+                  . $req->address . ": "
+                  . $msg );
+        }
+        else {
+            $city_code    = $city->geoname_id                    || "unknown";
+            $city_display = $self->_get_localized( $req, $city ) || "Unknown";
+        }
     }
 
     my $country_display;
@@ -128,10 +137,14 @@ sub getIpInfo {
     my $country =
       eval { $self->reader->$type( ip => $req->address )->country() };
     if ($@) {
+        my $msg = $@;
+        if ( blessed($@) && $@->isa('Throwable::Error') ) {
+            $msg = $@->message;
+        }
         $self->logger->warn(
                 "[LocationDetect] Could not resolve country for IP "
               . $req->address . ": "
-              . $@ );
+              . $msg );
         $country_code    = "unknown";
         $country_display = "Unknown";
     }

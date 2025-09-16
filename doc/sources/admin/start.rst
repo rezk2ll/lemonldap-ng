@@ -7,7 +7,7 @@ Documentation for LemonLDAP::NG 2.0
    :target: https://www.lemonldap-ng.org
 
 .. toctree::
-   
+
    Documentation index<documentation>
 
 .. toctree::
@@ -124,36 +124,36 @@ Official Backends                                                    Authenticat
 ==================================================================== =============================================== ======== ========
 :doc:`Active Directory<authad>`                                      ✔                                               ✔        ✔
 :doc:`Apache (Basic, NTLM, OTP, ...)<authapache>`                    ✔
-:doc:`CAS<authcas>`                                                  ✔                                               |new|
+:doc:`CAS<authcas>`                                                  ✔                                               ✔
 :doc:`SQL Databases<authdbi>`                                        ✔                                               ✔        ✔
 :doc:`Demonstration<authdemo>`                                       ✔                                               ✔        ✔
 :doc:`Facebook<authfacebook>`                                        ✔                                               ✔
-:doc:`GitHub<authgithub>` |new|  [1]_                                ✔
-:doc:`GPG<authgpg>` |new|  [2]_                                      ✔
-:doc:`Kerberos<authkerberos>` |new|                                  ✔
+:doc:`GitHub<authgithub>` [1]_                                       ✔
+:doc:`GPG<authgpg>` [2]_                                             ✔
+:doc:`Kerberos<authkerberos>`                                        ✔
 :doc:`LDAP<authldap>`                                                ✔                                               ✔        ✔
 :doc:`LinkedIn<authlinkedin>`                                        ✔
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
 :doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔
-:doc:`PAM<authpam>` |new|                                            ✔
+:doc:`PAM<authpam>`                                                  ✔
 :doc:`Proxy LL::NG<authproxy>`                                       ✔                                               ✔
 :doc:`Radius<authradius>`                                            ✔
-:doc:`REST<authrest>` |new|                                          ✔                                               ✔        ✔
+:doc:`REST<authrest>`                                                ✔                                               ✔        ✔
 :doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
-:doc:`Passkeys<authwebauthn>` |beta|                                 ✔                                                         
+:doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
-:doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
+:doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
 
 ==================================================================== ================================================= ======== =========================
 Combo Backends                                                       Authentication                                    Users    Password
 ==================================================================== ================================================= ======== =========================
 :doc:`Choice by users<authchoice>`                                   ✔                                                 ✔        ✔
-:doc:`Combination of auth schemes<authcombination>` |new|            ✔                                                 ✔        ✔ (since *2.0.10*)
+:doc:`Combination of auth schemes<authcombination>`                  ✔                                                 ✔        ✔
 :doc:`Multiple backends stack<authmulti>` |deprecated|               *Replaced by* :doc:`Combination<authcombination>`
 ==================================================================== ================================================= ======== =========================
 
@@ -167,14 +167,14 @@ Obsolete Backends                                                    Authenticat
 ==================================================================== ============== =================
 Second factor (:doc:`documentation<secondfactor>`)                   Authentication Self-registration
 ==================================================================== ============== =================
-:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
-:doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
-:doc:`E-mail Second Factor<mail2f>` |new|                            ✔              [18]_
-:doc:`Yubico OTP<yubikey2f>` |new|                                   ✔              ✔
-:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔              [18]_
-:doc:`REST Second Factor<rest2f>` |new|                              ✔              [18]_
-:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
-:doc:`Password as second factor<password2f>` |new| [4]_              ✔              ✔
+:doc:`TOTP<totp2f>` *(Google Authenticator,...)*                     ✔              ✔
+:doc:`WebAuthn<webauthn2f>`                                          ✔              ✔
+:doc:`E-mail Second Factor<mail2f>`                                  ✔              [18]_
+:doc:`Yubico OTP<yubikey2f>`                                         ✔              ✔
+:doc:`External Second Factor<external2f>` *(OTP, SMS,...)*           ✔              [18]_
+:doc:`REST Second Factor<rest2f>`                                    ✔              [18]_
+:doc:`Radius Second Factor<radius2f>`        [3]_                    ✔
+:doc:`Password as second factor<password2f>` [4]_                    ✔              ✔
 ==================================================================== ============== =================
 
 .. versionadded:: 2.0.6
@@ -185,7 +185,7 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 ==================================================================== ==============
 Auth addons                                                          Authentication
 ==================================================================== ==============
-:doc:`Auto Signin<autosignin>` |new|                                 ✔
+:doc:`Auto Signin<autosignin>`                                       ✔
 ==================================================================== ==============
 
 
@@ -274,34 +274,35 @@ Name                                                                 Description
 :doc:`Auto Signin<autosignin>`                                       Sign-in automatically
 :doc:`Brute Force protection<bruteforceprotection>`                  User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
-:doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file
-:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned
-:doc:`Check entropy<checkentropy>` [21]_ |new|                       Check entropy of password
-:doc:`InitializePasswordReset<initializePasswordReset>` [22]_ |new|  Initialize Password Reset by mail
-:doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
+:doc:`Check DevOps<checkdevops>` [5]_                                Check DevOps handler file
+:doc:`Check HIBP<checkhibp>` [19]_                                   Check Have I Been Pwned
+:doc:`Check entropy<checkentropy>` [21]_                             Check entropy of password
+:doc:`InitializePasswordReset<initializePasswordReset>` [22]_        Initialize Password Reset by mail
+:doc:`Check state<checkstate>`                                       Check state plugin (test page)
 :doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
 :doc:`Context switching<contextswitching>`  [7]_\                    Switch context other users
-:doc:`CrowdSec<crowdsec>`  [8]_\ |new|                               CrowdSec bouncer
+:doc:`CrowdSec<crowdsec>`  [8]_\                                     CrowdSec agent and bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
 :doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
-:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
+:doc:`Find user<finduser>`  [12]_\                                   Search for user account
 :doc:`Force authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
-:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
-:doc:`Notifications system<notifications>`                           Display a message during log in process 
-:doc:`Portal status<status>`                                         Experimental portal status page
+:doc:`NewLocationWarning<newlocationwarning>`  [13]_\                Send an email when user sign in from a new location
+:doc:`Notifications system<notifications>`                           Display a message during log in process
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
-:doc:`Reset certificate by mail<resetcertificate>`  [15]_\ |new|     Allow users to reset their certificate
+:doc:`Reset certificate by mail<resetcertificate>`  [15]_\           Allow users to reset their certificate
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Remember auth choice<rememberauthchoice>` [20]_\ |new|         Remember user last authentication choice
+:doc:`Remember auth choice<rememberauthchoice>` [20]_\               Remember user last authentication choice
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
+:doc:`Web Cron<webcron>` |new|                                       Add API to trigger scheduled tasks
+:doc:`Admin logout server<adminlogout>` |new|                        Add API to permit Session-Explorer to call portal when using "Global logout" *(to call back-channel-logout)*
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
@@ -319,12 +320,12 @@ Handler type                                                         Apache     
 Main *(default handler)*                                             ✔          ✔                                                                     ✔                                           :doc:`Partial<nodehandler>` ** [16]_ **                                            ✔
 :doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                                     ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
 :doc:`CDA<cda>`                                                      ✔          ✔                                                                     ✔                                                                                                                              ✔                                               For Cross Domain Authentication
-:doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|         ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
-:doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|     ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
-:doc:`DevOpsCDA<devopscdahandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|   ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`CDA<cda>`
-:doc:`OAuth2<oauth2handler>`  [17]_\ |new|                           ✔          ✔                                                                     ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
+:doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)                ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
+:doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)            ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
+:doc:`DevOpsCDA<devopscdahandler>`  (:doc:`SSOaaS<ssoaas>`)          ✔          ✔                                                                     ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`CDA<cda>`
+:doc:`OAuth2<oauth2handler>`  [17]_\                                 ✔          ✔                                                                     ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
 :doc:`Secure Token<securetoken>`                                     ✔          ✔                                                                     ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
-:doc:`Service Token<servertoserver>` |new| *(Server-to-Server)*      ✔          ✔                                                                     ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
+:doc:`Service Token<servertoserver>` *(Server-to-Server)*            ✔          ✔                                                                     ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
 :doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                                     ✔
 ==================================================================== ========== ===================================================================== =========================================== ================================================================================== =============================================== ======================================================================================================================
 
@@ -348,7 +349,7 @@ Backend                                               Shareable Comment
                                                                 if used in conjunction with :doc:`REST<restconfbackend>`
                                                                 or with a shared file system (NFS,...).
                                                                 Selected by default during installation.
-:doc:`YAML<yamlconfbackend>` |new|                              Same as :doc:`File<fileconfbackend>` but in YAML format
+:doc:`YAML<yamlconfbackend>`                                    Same as :doc:`File<fileconfbackend>` but in YAML format
                                                                 instead of JSON
 :doc:`SQL (CDBI/RDBI)<sqlconfbackend>`                ✔         **Recommended for large-scale systems**. Prefer CDBI.
 :doc:`Cassandra<cassandraconfbackend>`                ✔         Via SQL pseudo-driver
@@ -357,11 +358,11 @@ Backend                                               Shareable Comment
 :doc:`SOAP<soapconfbackend>` |deprecated|             ✔         Proxy backend to be used in conjunction with another
                                                                 configuration backend. \ **Can be used to secure another backend**
                                                                 for remote servers.
-:doc:`REST<restconfbackend>` |new|                    ✔         Proxy backend to be used in conjunction with another configuration
+:doc:`REST<restconfbackend>`                          ✔         Proxy backend to be used in conjunction with another configuration
                                                                 backend. \ **Can be used to secure another backend** for
                                                                 remote servers.
-:doc:`Local<localconfbackend>` |new|                            Use only lemonldap-ng.ini parameters.
-:doc:`Overlay<overlayconfbackend>` |new|              ✔         Pseudo configuration backend that permits one to store part of the
+:doc:`Local<localconfbackend>`                                  Use only lemonldap-ng.ini parameters.
+:doc:`Overlay<overlayconfbackend>`                    ✔         Pseudo configuration backend that permits one to store part of the
                                                                 configuration into local files. \ *(for example to not store secrets
                                                                 into central configuration)*
 ===================================================== ========= ====================================================================
@@ -406,15 +407,14 @@ Backend                                                          Shareable Sessi
 :doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`Cassandra<cassandrasessionbackend>`                        ✔         ✔                                                ✔                                                    ✔                  Another supported NoSQL DB
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for session explorer and single session features.
-:doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
+:doc:`REST<restsessionbackend>`                                  ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 
 .. tip::
 
     You can migrate from one session backend to another using the
-    :doc:`session conversion script<changesessionbackend>`. (|new|
-    *since 2.0.7*)
+    :doc:`session conversion script<changesessionbackend>`.
 
 Applications protection
 -----------------------
@@ -474,8 +474,8 @@ Advanced features
 -  :doc:`Forward logout to applications<logoutforward>`
 -  :doc:`Secure Token Handler<securetoken>`
 -  :doc:`AuthBasic Handler<authbasichandler>`
--  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)* |new|
--  :doc:`Handling server webservice calls<servertoserver>` |new|
+-  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)*
+-  :doc:`Handling server webservice calls<servertoserver>`
 -  `LemonLDAP::NG kubernetes
    controller <https://github.com/lemonldap-ng-controller/lemonldap-ng-controller>`__
 -  :doc:`Safe jail<safejail>`
@@ -488,9 +488,9 @@ Advanced features
 -  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
 -  :doc:`Deploy Traefik configuration<configtraefik>`
 -  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
-   *(Twiggy, Starman, Corona,...)* |new|
--  :doc:`Node.js handler<nodehandler>` |new|
--  :doc:`Event management<eventsmanagement>` |new|
+   *(Twiggy, Starman, Corona,...)*
+-  :doc:`Node.js handler<nodehandler>`
+-  :doc:`Event management<eventsmanagement>`
 
 Mini howtos
 -----------
@@ -506,7 +506,7 @@ Mini howtos
 -  :doc:`Create a protocol proxy<federationproxy>` *(SAML to OpenID, CAS
    to SAML ,...)*
 -  :doc:`Convert HTTP header into environment variable<header_remote_user_conversion>`
--  :doc:`Connect to Renater Federation<renater>` |new|
+-  :doc:`Connect to Renater Federation<renater>`
 -  :doc:`Run LemonLDAP::NG components behind a reverse proxy<behindproxyminihowto>`
 -  :doc:`Configure LL::NG to use an outgoing proxy<useoutgoingproxy>`
 
@@ -518,10 +518,7 @@ Exploitation
 -  :doc:`Performances<performances>`
 -  :doc:`Security<security>`
 -  :doc:`SELinux<selinux>`
--  :doc:`Handler status page<status>`
 -  :doc:`Portal state check<checkstate>` *(health check for fail-over)*
-   |new|
--  :doc:`Monitoring<monitoring>`
 -  :doc:`Logs settings<logs>`
 -  :doc:`Error messages<error>`
 -  :doc:`High Availability<highavailability>`

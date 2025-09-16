@@ -5,6 +5,7 @@ Plugins
    :maxdepth: 1
 
    adaptativeauthenticationlevel
+   adminlogout
    autosignin
    bruteforceprotection
    cda
@@ -36,3 +37,4 @@ Plugins
    status
    trustedbrowser
    viewer
+   webcron

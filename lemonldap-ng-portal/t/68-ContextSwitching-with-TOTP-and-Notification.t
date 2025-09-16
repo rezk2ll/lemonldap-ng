@@ -16,14 +16,13 @@ print F '[
   "reference": "testref",
   "title": "Test title",
   "subtitle": "Test subtitle",
-  "text": "This is a test text",
+  "text": "This is a test text for $uid",
   "check": ["Accept test","Accept test2"]
 }
 ]';
 close F;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                        => 'error',
             authentication                  => 'Demo',
@@ -63,9 +62,13 @@ expectRedirection( $res, 'http://auth.example.com/' );
 # JS query
 ok(
     $res = $client->_post(
-        '/2fregisters/totp/getkey', IO::String->new(''),
+        '/2fregisters/totp/getkey',
+        IO::String->new(''),
         cookie => "lemonldap=$id",
         length => 0,
+        custom => {
+            HTTP_X_CSRF_CHECK => 1,
+        },
     ),
     'Get new key'
 );
@@ -90,6 +93,9 @@ ok(
         IO::String->new($s),
         length => length($s),
         cookie => "lemonldap=$id",
+        custom => {
+            HTTP_X_CSRF_CHECK => 1,
+        },
     ),
     'Post code'
 );
@@ -144,9 +150,13 @@ count(3);
 # JS query
 ok(
     $res = $client->_post(
-        '/2fregisters/totp/getkey', IO::String->new(''),
+        '/2fregisters/totp/getkey',
+        IO::String->new(''),
         cookie => "lemonldap=$id",
         length => 0,
+        custom => {
+            HTTP_X_CSRF_CHECK => 1,
+        },
     ),
     'Get new key'
 );
@@ -170,6 +180,9 @@ ok(
         IO::String->new($s),
         length => length($s),
         cookie => "lemonldap=$id",
+        custom => {
+            HTTP_X_CSRF_CHECK => 1,
+        },
     ),
     'Post code'
 );
@@ -345,7 +358,13 @@ ok(
 ok( $res->[2]->[0] =~ m%trspan="gotNewMessages">%,
     'You have some new messages' )
   or explain( $res->[2]->[0], 'trspan="gotNewMessages"' );
-count(2);
+is(
+    getHtmlElement( $res, '//p[@class="notifText"]/text()' )->pop()->data,
+    "This is a test text for msmith",
+    "Found notification text"
+);
+count(3);
+
 
 ## Try to authenticate => TOTP prompted
 ok(

@@ -8,7 +8,7 @@ use JSON qw(from_json to_json);
 use MIME::Base64 qw(encode_base64url decode_base64url);
 use Crypt::URandom;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';
@@ -64,9 +64,10 @@ use constant supportedActions => {
 sub initDisplay {
     my ( $self, $req ) = @_;
 
+    my $cacheTag = $self->p->cacheTag;
     $req->data->{customScript} .= <<"EOF";
-<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js"></script>
-<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js?v=$cacheTag"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js?v=$cacheTag"></script>
 EOF
 
 }
@@ -112,6 +113,10 @@ sub _generate_user_handle {
 
 sub _registrationchallenge {
     my ( $self, $req ) = @_;
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     my $user             = $req->userData->{ $self->conf->{whatToTrace} };
     my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
@@ -159,6 +164,9 @@ sub _registrationchallenge {
 sub _registration {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
 
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
@@ -265,6 +273,9 @@ sub _verificationchallenge {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     $self->logger->debug( $self->prefix . '2f: verification challenge req' );
 
     my $request = $self->generateChallenge( $req, $req->userData );
@@ -289,6 +300,9 @@ sub _verificationchallenge {
 sub _verification {
     my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
 
     my $credential_json = $req->param('credential');
 

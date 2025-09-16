@@ -5,7 +5,7 @@ use strict;
 use Lemonldap::NG::Portal::Main::Constants qw/PE_OK PE_ERROR/;
 use Mouse;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -128,8 +128,8 @@ sub delete {
     return $self->p->sendError( $req, 'notAuthorized', 400 )
       unless $self->userCanRemove;
 
-    $self->checkCsrfToken($req)
-      or return $self->p->sendError( $req, 'csrfToken', 400 );
+    $self->checkCsrf($req)
+      or return $self->p->sendError( $req, 'csrfError', 400 );
 
     my $epoch = $req->param('epoch')
       or return $self->p->sendError( $req,
@@ -207,10 +207,9 @@ sub registerDevice {
     }
 }
 
-sub checkCsrfToken {
+sub checkCsrf {
     my ( $self, $req ) = @_;
-
-    return $self->ott->getToken( $req->param('csrf_token') );
+    return $req->headers->header('X-CSRF-Check');
 }
 
 1;

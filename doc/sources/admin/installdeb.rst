@@ -26,7 +26,11 @@ Get the packages
 LL::NG repository
 ~~~~~~~~~~~~~~~~~
 
+
 You can add this repository to have recent packages.
+
+.. Important::
+    The GPG key for debian has been updated on September 2025. Take care to use the new one by following the instructions below.
 
 First, make sure your system can install packages from HTTPS
 repositories:
@@ -35,11 +39,11 @@ repositories:
 
    apt install apt-transport-https curl gnupg
 
-You will need to trust the `DEB signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ :
+You will need to trust the `DEB signing key <https://lemonldap-ng.org/lemonldap-debian-packages-pub.gpg>`__ :
 
 ::
 
-   curl https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 | gpg --dearmor > /usr/share/keyrings/lemonldap-ng-archive-keyring.gpg
+   curl https://lemonldap-ng.org/lemonldap-debian-packages-pub.gpg | gpg --dearmor > /usr/share/keyrings/lemonldap-debian-packages-pub.gpg
 
 Then, add the official LL::NG repository
 
@@ -50,7 +54,7 @@ Then, add the official LL::NG repository
 ::
 
    # LemonLDAP::NG repository
-   deb [arch=amd64 signed-by=/usr/share/keyrings/lemonldap-ng-archive-keyring.gpg] https://lemonldap-ng.org/deb 2.0 main
+   deb [arch=amd64 signed-by=/usr/share/keyrings/lemonldap-debian-packages-pub.gpg] https://lemonldap-ng.org/deb 2.0 main
 
 
 .. tip::

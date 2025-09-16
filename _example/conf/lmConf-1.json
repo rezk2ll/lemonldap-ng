@@ -170,6 +170,6 @@
    "sessionDataToRemember" : {},
    "timeout" : 72000,
    "userDB" : "Same",
-   "webauthnDefaultTransports": "usb, nfc, ble, internal",
+   "webauthnDefaultTransports" : "usb, nfc, ble, internal",
    "whatToTrace" : "_whatToTrace"
 }

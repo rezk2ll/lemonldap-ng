@@ -8,7 +8,7 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.21.0';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
@@ -56,6 +56,9 @@ sub sendcode {
         return $self->failResponse( $req, 'PE79', 200 );
     }
 
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     # Validate format
     unless ( $self->validateFormat($generic) ) {
         my $error_label = $self->conf->{generic2fFormatErrorLabel}
@@ -84,6 +87,10 @@ sub sendcode {
 sub verify {
 
     my ( $self, $req ) = @_;
+
+    return $self->failResponse( $req, 'csrfError', 400 )
+      unless $self->checkCsrf($req);
+
     my $user        = $req->userData->{ $self->conf->{whatToTrace} };
     my $generic     = $req->param('generic');
     my $tokenid     = $req->param("token");
@@ -117,7 +124,7 @@ sub verify {
     }
 
     # Add a new one
-    my $res = $self->registerDevice(
+    $res = $self->registerDevice(
         $req,
         $req->userData,
         {

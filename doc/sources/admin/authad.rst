@@ -20,7 +20,10 @@ The Active Directory module is based on
 Configuration
 -------------
 
-The configuration is the same as the :doc:`LDAP module<authldap>`.
+The configuration is the same as the :doc:`LDAP module<authldap>`,
+except that the common ``uid`` attribute is replaced by ``sAMAccountName``.
+The ``userPrincipalName`` is also a unique attribute. Generaly
+``<sAMAccountName>@<ad-domain>``.
 
 AD password policy
 ------------------
@@ -29,18 +32,18 @@ AD password policy does not follow the LDAP RFC, but Microsoft has
 implemented its own policy. LemonLDAP::NG implements partially the
 policy:
 
--  when pwdLastSet = 0 in the user entry, it means that password has
+-  when ``pwdLastSet = 0`` in the user entry, it means that password has
    been reset, and a form is displayed to the user to change his
    password.
--  when computed virtual attribute 'msDS-User-Account-Control-Computed'
-   as 6th flag set to 8, the password is considered expired (support
-   from Windows Server 2003). It is too late for the user to do
+-  when computed virtual attribute ``msDS-User-Account-Control-Computed``
+   as 6th flag set to 8, the password is considered expired *(support
+   from Windows Server 2003)*. It is too late for the user to do
    anything. He must contact his administrator.
 -  a warning before password expiration is possible in AD, but only in
-   GPO (Computer Configuration\Windows Settings\Local Policies\Security
-   Options under Interactive Logon: Prompt user to change password
-   before expiration). However it as no reality in LDAP referential. A
-   "password warning time before password expiration" variable can be
+   GPO (*Computer Configuration* » *Windows Settings* » *Local Policies* » *Security Options*
+   under *"Interactive Logon: Prompt user to change password before expiration"*).
+   However it has no reality in LDAP referential. A
+   *"password warning time before password expiration"* variable can be
    specified in LemonLDAP::NG to do so.
 
 

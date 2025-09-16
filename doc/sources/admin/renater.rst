@@ -12,10 +12,10 @@ higher education in France.
 It is based on SAMLv2 but add some specific items like a WAYF service
 and a metadata bundle to list all SP and IDP from the federation.
 
-Since LL::NG 2.0, you can register into Renater federation.
-
 Register as Service Provider
 ----------------------------
+
+If you want to give access to applications protected with LL::NG to users of the federation then you will act as a Service Provider.
 
 LL::NG configuration
 ~~~~~~~~~~~~~~~~~~~~
@@ -28,193 +28,73 @@ Configure :ref:`SAML Discovery Protocol<samlservice-discovery-protocol>`
 to redirect users on WAYF Service. The endpoint URL is
 https://discovery.renater.fr/renater/WAYF.
 
-Metadata import
+With configuration CLI:
+
+.. code-block:: shell
+
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli set \
+        samlDiscoveryProtocolActivation 1 \
+        samlDiscoveryProtocolURL https://discovery.renater.fr/renater/WAYF.
+
+SAML Federation
 ~~~~~~~~~~~~~~~
 
-You now need to import IDP metadata in LL::NG configuration. Use the
-``importMetadata`` script that should be installed in
-/usr/share/lemonldap-ng/bin. You need to select the correct metadata
-bundle proposed by Renater:
-https://services.renater.fr/federation/documentation/generale/metadata/versions-metadata.
+Follow :doc:`SAML Federation documentation<samlfederation>` to enable `IDP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`__ download as a cronjob. For example, in ``/etc/cron.d/metadata-download`` file:
 
-For Renater, you need to customize some settings of the script, copy it
-and edit configuration:
+.. code-block:: shell
 
-::
+   30 3 * * * root /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-idps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
 
-   cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataRenater
-   vi /usr/share/lemonldap-ng/bin/importMetadataRenater
+Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
 
-.. versionchanged:: 2.0.15
+With configuration CLI:
 
-   Since version 2.0.15 it is no longer necessary to copy the script, you can
-   use the ``--configfile`` option to handle most customization use cases. See
-   :ref:`importmetadataconfig` below for details.
+.. code-block:: shell
 
-Set attributes (use the SAML Name, not FriendlyName) that are provided
-by IDPs, for example:
-
-.. code-block:: perl
-
-   my $exportedAttributes = {
-       'cn'                          => '0;urn:oid:2.5.4.3',
-       'eduPersonPrincipalName'      => '1;urn:oid:1.3.6.1.4.1.5923.1.1.1.6',
-       'givenName'                   => '0;urn:oid:2.5.4.42',
-       'sn'                          => '0;urn:oid:2.5.4.4',
-       'eduPersonAffiliation'        => '0;urn:oid:1.3.6.1.4.1.5923.1.1.1.1',
-       'eduPersonPrimaryAffiliation' => '0;urn:oid:1.3.6.1.4.1.5923.1.1.1.5',
-       'mail'                        => '0;urn:oid:0.9.2342.19200300.100.1.3',
-       'supannListeRouge'            => '0;urn:oid:1.3.6.1.4.1.7135.1.2.1.1',
-       'supannEtuCursusAnnee'        => '0;rn:oid:1.3.6.1.4.1.5923.1.1.1.10',
-   };
-
-Adapt IDP options, for example:
-
-.. code-block:: perl
-
-   my $idpOptions = {
-       'samlIDPMetaDataOptionsAdaptSessionUtime'        => 0,
-       'samlIDPMetaDataOptionsAllowLoginFromIDP'        => 0,
-       'samlIDPMetaDataOptionsCheckAudience'            => 1,
-       'samlIDPMetaDataOptionsCheckSLOMessageSignature' => 1,
-       'samlIDPMetaDataOptionsCheckSSOMessageSignature' => 1,
-       'samlIDPMetaDataOptionsCheckTime'                => 1,
-       'samlIDPMetaDataOptionsEncryptionMode'           => 'none',
-       'samlIDPMetaDataOptionsForceAuthn'               => 0,
-       'samlIDPMetaDataOptionsForceUTF8'                => 1,
-       'samlIDPMetaDataOptionsIsPassive'                => 0,
-       'samlIDPMetaDataOptionsNameIDFormat'             => 'transient',
-       'samlIDPMetaDataOptionsRelayStateURL'            => 0,
-       'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
-       'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
-       'samlIDPMetaDataOptionsStoreSAMLToken'           => 0,
-       'samlIDPMetaDataOptionsUserAttribute' => 'urn:oid:1.3.6.1.4.1.5923.1.1.1.6',
-   };
-
-Then run the script:
-
-::
-
-   /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i "idp-renater-" -s "sp-renater-"
-
-The script provide the following options
-
-* -i (--idpconfprefix): Prefix used to set IDP configuration key
-* -h (--help): print this message
-* -m (--metadata): URL of metadata document
-* -s (--spconfprefix): Prefix used to set SP configuration key
-* --ignore-sp: ignore SP matching this entityID (can be specified multiple times)
-* --ignore-idp: ignore IdP matching this entityID (can be specified multiple times)
-* -a (--nagios): output statistics in Nagios format
-* -n (--dry-run): print statistics but do not apply changes
-* -c (--configfile): use a configuration file
-* -v (--verbose): increase verbosity of output
-* -r (--remove): remove provider from LemonLDAP::NG if it does not appear in metadata
-
-
-Example :
-::
-
-    /usr/libexec/lemonldap-ng/bin/importMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -v -d
-
-This command will
-  * fetch all SPs metadata from renater
-  * set a prefix to entity stored inside LemonLdap::NG
-  * disable local modification of SP https://test-sp.federation.renater.fr
-  * remove local SPs wich didn't exist anymore in Federation metadata
-  * show only all modifications to apply
-
-The output is the following :
-::
-
-  ...
-  Update SP https://www-iuem.univ-brest.fr/sp in configuration
-  Attribute mail (urn:oid:0.9.2342.19200300.100.1.3) requested by SP https://gesper.ad.bnu.fr/shibboleth
-  Attribute eduPersonPrimaryAffiliation (urn:oid:1.3.6.1.4.1.5923.1.1.1.5) requested by SP https://gesper.ad.bnu.fr/shibboleth
-  Attribute eduPersonPrincipalName (urn:oid:1.3.6.1.4.1.5923.1.1.1.6) requested by SP https://gesper.ad.bnu.fr/shibboleth
-  Attribute displayName (urn:oid:2.16.840.1.113730.3.1.241) requested by SP https://gesper.ad.bnu.fr/shibboleth
-  Update SP https://gesper.ad.bnu.fr/shibboleth in configuration
-  [INFO] Dry-run mod no EntityID inserted
-  [IDP]	Found: 0	Updated: 0	Created: 0	Removed: 0	Rejected: 0	Ignored: 0
-  [SP]	Found: 1248	Updated: 1240	Created: 0	Removed: 0	Rejected: 7	Ignored: 1
-
-
-With "-n" options you could get a "nagios like" output with metrics :
-::
-
-  /usr/libexec/lemonldap-ng/bin/importMetadataFedRenater -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -d -n
-  Metadata loaded inside Conf: [DRY-RUN]|idp_found=0, idp_updated=0, idp_created=0, idp_removed=0, idp_rejected=0, idp_ignored=0, sp_found=1248, sp_updated=1240, sp_created=0, sp_removed=0, sp_rejected=7, sp_ignored=1
-
-
-.. attention::
-
-    You need to add this in cron to refresh metadata into
-    LL::NG configuration.
-
-
-.. _importmetadataconfig:
-
-Metadata import configuration file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-You can now use a configuration file for the script in order to handle most custom cases.
-
-Here is an example of a INI-formatted configuration file::
-
-    # main script options, these will be overriden by the CLI options
-    [main]
-    dry-run=1
-    verbose=1
-    metadata=http://url/to/metadata.xml
-    ; Multi-value options
-    ignore-idp=entity-id-to-ignore-1
-    ignore-idp=entity-id-to-ignore-2
-
-    # Default exported attributes for IDPs
-    [exportedAttributes]
-    cn=0;cn
-    eduPersonPrincipalName=0;eduPersonPrincipalName
-    ...
-
-    # options that apply to all providers
-    [ALL]
-    ; Disable signature requirement on requests
-    samlSPMetaDataOptionsCheckSSOMessageSignature=0
-    samlSPMetaDataOptionsCheckSLOMessageSignature=0
-    ; Store SAML assertions in session
-    samlIDPMetaDataOptionsStoreSAMLToken=1
-    ; Mark ePPN as always required
-    attribute_required_eduPersonPrincipalName=1
-    ...
-
-    # Specific provider configurations
-    [https://test-sp.federation.renater.fr]
-    ; All attributes are optional for this provider
-    attribute_required=0
-    ; Override some options
-    samlSPMetaDataOptionsNameIDFormat=persistent
-
-    [https://idp.renater.fr/idp/shibboleth]
-    ; declare an extra attribute from this provider
-    exported_attribute_eduPersonAffiliation=1;uid
-
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli set \
+     samlFederationFiles /etc/lemonldap-ng/metadata/main-idps-renater-metadata.xml
 
 
 Add your SP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to https://federation.renater.fr/registry and register your SP.
-
+Go to `Renater registration portal <https://federation.renater.fr/registry>`__ and register your SP on the Renater federation.
 
 .. attention::
 
     Be sure to check all attributes as mandatory to be able
-    to get them in SAML assertions.
+    to get them in SAML assertions. Remember OID and name
+    ti configure them in LL::NG.
+
+
+Create the IDP template
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Declare a template Identity Provider in LL::NG configuration that will hold the default settings for all IDP of the Renater Federation :
+
+* Keep metadata empty
+* Associate it by setting Options > Federation > Entity identifier to https://federation.renater.fr/
+* Declare the attributes in Exported Attributes and put ``urn:oid:OID`` in Attribute name and name in Friendly name.
+* Set NameID format to ``Unspecified`` in Options > NameID format
+
+With configuration CLI:
+
+.. code-block:: shell
+
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli addKey \
+     samlIDPMetaDataExportedAttributes/idp-renater mail '0;urn:oid:0.9.2342.19200300.100.1.3;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;mail' \
+     samlIDPMetaDataExportedAttributes/idp-renater uid '0;urn:oid:1.3.6.1.4.1.5923.1.1.1.6;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;eduPersonPrincipalName' \
+     samlIDPMetaDataOptions/idp-renater samlIDPMetaDataOptionsFederationEntityID 'https://federation.renater.fr/' \
+     samlIDPMetaDataOptions/idp-renater samlIDPMetaDataOptionsNameIDFormat 'unspecified'
+
+.. tip::
+
+   You can override these settings for a specific IDP by creating a new IDP in configuration and configuring the Federation EntityID with the value of the IDP EntityID.
 
 Register as Identity Provider
 -----------------------------
+
+If you want to give access to Renater applications (SP) to users authenticated with your LL::NG server, then you will act as an Identity Provider.
 
 .. _llng-configuration-renater-1:
 
@@ -235,57 +115,50 @@ moment.
 
 .. _metadata-import-1:
 
-Metadata import
+SAML Federation
 ~~~~~~~~~~~~~~~
 
-You now need to import SP metadata in LL::NG configuration. Use the
-``importMetadata`` script that should be installed in
-/usr/share/lemonldap-ng/bin. You need to select the correct metadata
-bundle proposed by Renater:
-https://services.renater.fr/federation/documentation/generale/metadata/versions-metadata.
+Follow :doc:`SAML Federation documentation<samlfederation>` to enable `SP metadata file bundle <https://services.renater.fr/federation/en/documentation/generale/metadata/fichiers>`_ download as a cronjob. For example, in ``/etc/cron.d/metadata-download`` file:
 
-For Renater, you may need to customize some settings of the script, copy
-it and edit configuration:
+.. code-block:: shell
 
-::
+   30 2 * * * root /usr/share/lemonldap-ng/bin/downloadSamlMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -o /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
 
-   cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataRenater
-   vi /usr/share/lemonldap-ng/bin/importMetadataRenater
+Then declare this file in SAML2 Service > Advanced > Federation > SAML Federation Metadata files.
 
-Adapt IDP options, for example:
+With configuration CLI:
 
-.. code-block:: perl
+.. code-block:: shell
 
-   my $spOptions = {
-       'samlSPMetaDataOptionsCheckSLOMessageSignature'   => 1,
-       'samlSPMetaDataOptionsCheckSSOMessageSignature'   => 1,
-       'samlSPMetaDataOptionsEnableIDPInitiatedURL'      => 0,
-       'samlSPMetaDataOptionsEncryptionMode'             => 'none',
-       'samlSPMetaDataOptionsForceUTF8'                  => 1,
-       'samlSPMetaDataOptionsNameIDFormat'               => '',
-       'samlSPMetaDataOptionsNotOnOrAfterTimeout'        => 72000,
-       'samlSPMetaDataOptionsOneTimeUse'                 => 0,
-       'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => 72000,
-       'samlSPMetaDataOptionsSignSLOMessage'             => 1,
-       'samlSPMetaDataOptionsSignSSOMessage'             => 1
-   };
-
-Then run the script:
-
-::
-
-   /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-sps-renater-metadata.xml -r -i "idp-renater" -s "sp-renater"
-
-
-.. attention::
-
-    You need to add this in cron to refresh metadata into
-    LL::NG configuration.
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli set \
+     samlFederationFiles /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
 
 Add your IDP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to https://federation.renater.fr/registry and register your IDP.
+Go to `Renater registration portal <https://federation.renater.fr/registry>`__ and register your IDP on the Renater federation.
+
+Create the SP template
+~~~~~~~~~~~~~~~~~~~~~~
+
+Declare a template Service Provider in LL::NG configuration that will hold the default settings for all SP of the Renater Federation:
+
+* Keep metadata empty
+* Associate it by setting Options > Federation > Entity identifier to https://federation.renater.fr/
+* Make required attributes optional in Options > Federation > Required attributes
+
+With configuration CLI:
+
+.. code-block:: shell
+
+   /usr/*/lemonldap-ng/bin/lemonldap-ng-cli addKey \
+     samlSPMetaDataOptions/sp-renater samlSPMetaDataOptionsFederationEntityID 'https://federation.renater.fr/' \
+     samlSPMetaDataOptions/sp-renater samlSPMetaDataOptionsFederationRequiredAttributes'optional'
+
+.. tip::
+
+   You can override these settings for a specific SP by creating a new SP in configuration and configuring the Federation EntityID with the value of the SP EntityID.
+
 
 .. |image0| image:: /logos/1renater.png
    :class: align-center

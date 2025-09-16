@@ -92,8 +92,8 @@ Go in Manager and click on ``SAML 2 Service`` node.
     You can use #PORTAL# in values to replace the portal
     URL.
 
-Entry Identifier
-~~~~~~~~~~~~~~~~
+Entity Identifier
+~~~~~~~~~~~~~~~~~
 
 Your EntityID, often use as metadata URL, by default
 #PORTAL#/saml/metadata.
@@ -145,9 +145,19 @@ To define keys, you can:
 
 
 
+-  **Signature method**: set the signature algorithm
 -  **Use certificate in response**: Certificate will be sent inside SAML
    responses.
--  **Signature method**: set the signature algorithm
+-  **Signing key name**: By default, the key specified in *Security Parameters*
+   will be used for signature. You can use :doc:`anonther key <keys>` instead in
+   order to better manage key rotation. If you declare a comma-separated list,
+   only the first declared key will be used for signature, but all listed keys
+   will be published in SAML metadata.
+-  **Encryption key name**: By default, the key specified in *Security Parameters*
+   will be used for encryption. You can use :doc:`anonther key <keys>` instead in
+   order to better manage key rotation. If you declare a comma-separated list,
+   only the first declared key will be used for encryption, but all listed keys
+   will be published in SAML metadata.
 
 .. versionchanged:: 2.0.10
 
@@ -421,14 +431,22 @@ binding.
 Response Location should be empty, as SOAP responses are directly
 returned (synchronous binding).
 
+
+.. _samlservice-saml-sessions-module-name-and-options:
+
+Sessions
+~~~~~~~~
+
+By default, the main session module is used to store SAML temporary data
+(like relay-states), but if you need high performance on session access, you
+should use a dedicated session storage.
+
 Advanced
 ~~~~~~~~
 
 These parameters are not mandatory to run SAML service, but can help to
 customize it:
 
--  **IDP resolution cookie name**: by default, it's the LL::NG cookie
-   name suffixed by ``idp``, for example: ``lemonldapidp``.
 -  **UTF8 metadata conversion**: set to On to force partner's metadata
    conversion.
 -  **RelayState session timeout**: timeout for RelayState sessions. By
@@ -445,16 +463,6 @@ customize it:
    this case, you can fill here the IDP entityID, for example:
    ``https://auth.example.com/saml/metadata/idp``.
 
--  **Federation**: see :doc:`samlfederation`
-
-.. _samlservice-saml-sessions-module-name-and-options:
-
-SAML sessions module name and options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-By default, the main session module is used to store SAML temporary data
-(like relay-states), but if you need high performance on session access, you
-should use a decidated session storage.
 
 Common Domain Cookie
 ^^^^^^^^^^^^^^^^^^^^
@@ -511,3 +519,9 @@ Configuration parameters are:
 .. |image1| image:: /documentation/manager-saml-signature.png
    :class: align-center
 
+
+Federation
+^^^^^^^^^^
+
+
+Import SAML metadata federation files. See :doc:`samlfederation`

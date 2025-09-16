@@ -58,13 +58,22 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
     A blank or null value disable this feature.
 
+Floating category name
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can display an applications category as a floating menu by specifying its category ``name``.
+Example: ``Sample applications``.
+
+.. tip::
+
+    A blank or an inexisting value disable this feature.
+
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
 You can define a custom CSS file, for example ``custom.css``, which will
-be loaded after default CSS files. This file must be created in the
-static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
+be loaded after default CSS files. This file must be created in the static repository
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
 Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
@@ -82,15 +91,23 @@ Custom JS file
 ~~~~~~~~~~~~~~
 
 Similarly, you can define a custom JS file, for example ``custom.js``, which will
-be loaded after default JS files. This file must be created in the
-static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+be loaded after default JS files. This file must be created in the static repository
+(By default: ``/usr/share/lemonldap-ng/portal/htdocs/static/``).
 
-Then set this value in Custom CSS parameter:
+Then set this value in Custom JS parameter:
 ``bootstrap/js/custom.js``.
 
 Check out the :doc:`jqueryevents` page for available integrations
 
+Some javascript functions are exported by LemonLDAP:
+
+* ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
+
+.. versionadded:: 2.21.0
+
+    * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
+    * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
+    * ``ssl_start``: start SSL authentication. This only works the login page
 
 .. _portalcustom-skin-customization:
 
@@ -235,7 +252,7 @@ To change CSS, two options:
 
 ::
 
-   <link href="<TMPL_VAR NAME="STATIC_PREFIX">myskin/css/myskin.css" rel="stylesheet" type="text/css" />
+   <link href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/myskin.css" rel="stylesheet" type="text/css" />
 
 To add custom JS, create a new file in myskin/js/custom.js and load it in customhead.tpl ::
 
@@ -256,6 +273,13 @@ lemonldap-ng-cli:
 You can find additional documentation on the syntax of template files in the
 `official documentation of the HTML::Template module
 <https://metacpan.org/pod/HTML::Template>`__
+
+.. note::
+
+    If you modify the static files of your theme often, you should use the
+    *Cache-busting salt* configuration parameters to force web browsers to
+    reload your static resources by changing the special ``?v=`` parameter in static resource URLs.
+    Be sure that you include ``?v=<TMPL_VAR CACHE_TAG>`` in the URL of your static resources
 
 .. _intlmessages:
 
@@ -314,6 +338,17 @@ all languages.
 
 .. versionchanged:: 2.0.15
    Translations in lemonldap-ng.ini now take priority over translations from skin files
+
+Additional error details
+------------------------
+
+When a particular error happens, it can be useful to display some detailed
+instructions to the user, you can do this using the ``TMPL_ERROR_NNN`` variable::
+
+    <!-- Account has been locked: PE21 -->
+    <TMPL_IF NAME="AUTH_ERROR_21">
+    <div trspan="custom_error_message_for_locked_account"></div>
+    </TMPL_IF>
 
 Adding messages in your templates
 ---------------------------------
@@ -430,7 +465,7 @@ Password Policy
 -  **Minimal special characters**: leave 0 to bypass the check
 -  **Allowed special characters**: list of allowed special characters. Set the ``__ALL__`` value to allow ALL special characters.
    A blank value forbids ALL special characters. The ``space`` character can not be
-   specified at the begin or at the end of the list to prevent trimming.  
+   specified at the begin or at the end of the list to prevent trimming.
 
 .. _portalcustom-other-parameters:
 
@@ -453,6 +488,8 @@ Other
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
 -  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
+-  **Cache-busting salt**: change this value any time you update a static file
+   on the server to force your users to reload their browser cache
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center

@@ -2,7 +2,7 @@
 # into "plugins" list in lemonldap-ng.ini, section "portal"
 package Lemonldap::NG::Portal::Main::Plugins;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -13,12 +13,13 @@ use Mouse;
 #
 # Developers: 2FA must be loaded before Notifications
 # Developers: GlobalLogout must be the last loaded plugin
+# Developers: Notifications must be loaded before PublicNotifications
 our @pList = (
     portalDisplayResetPassword          => '::Plugins::MailPasswordReset',
     portalDisplayCertificateResetByMail => '::Plugins::CertificateResetByMail',
-    portalStatus                        => '::Plugins::Status',
     cda                                 => '::Plugins::CDA',
     notification                        => '::Plugins::Notifications',
+    publicNotifications                 => '::Plugins::PublicNotifications',
     rememberAuthChoiceRule              => '::Plugins::RememberAuthChoice',
     stayConnected                       => '::Plugins::StayConnected',
     portalCheckLogins                   => '::Plugins::History',
@@ -27,6 +28,7 @@ our @pList = (
     upgradeSession                      => '::Plugins::Upgrade',
     autoSigninRules                     => '::Plugins::AutoSignin',
     checkState                          => '::Plugins::CheckState',
+    webCronSecret                       => '::Plugins::WebCron',
     portalForceAuthn                    => '::Plugins::ForceAuthn',
     checkUser                           => '::Plugins::CheckUser',
     checkDevOps                         => '::Plugins::CheckDevOps',
@@ -38,13 +40,18 @@ our @pList = (
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
+    oidcOfflineTokens                   => '::Plugins::OidcOfflineTokens',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
-    refreshSessions     => '::Plugins::Refresh',
-    crowdsec            => '::Plugins::CrowdSec',
-    locationDetect      => '::Plugins::LocationDetect',
-    globalLogoutRule    => '::Plugins::GlobalLogout',
-    samlFederationFiles => '::Plugins::SamlFederation',
+    refreshSessions         => '::Plugins::Refresh',
+    crowdsec                => '::Plugins::CrowdSec',
+    crowdsecAgent           => '::Plugins::CrowdSecAgent',
+    locationDetect          => '::Plugins::LocationDetect',
+    globalLogoutRule        => '::Plugins::GlobalLogout',
+    samlFederationFiles     => '::Plugins::SamlFederation',
+    adminLogoutServerSecret => '::Plugins::AdminLogout',
+    'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
+      '::Plugins::OIDCNativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>
       '::Plugins::AuthOidcPkce',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsTokenXAuthorizedRP' =>
@@ -73,7 +80,7 @@ sub enabledServices {
     push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
 
     # Portal menu
-    push @res, [ menu         => "::Main::Menu" ];
+    push @res, [ menu => "::Main::Menu" ];
 
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {

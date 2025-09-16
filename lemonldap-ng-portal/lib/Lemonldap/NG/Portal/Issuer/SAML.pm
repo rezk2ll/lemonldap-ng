@@ -23,10 +23,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
+
+with 'Lemonldap::NG::Portal::Lib::Key';
 
 has rule           => ( is => 'rw' );
 has ssoUrlRe       => ( is => 'rw' );
@@ -41,6 +43,7 @@ use constant liDump      => '_lassoIdentityDumpI';
 
 # Simply store SP in $req->env
 use constant beforeAuth => 'storeEnv';
+use constant hook => { updateSessionId => 'updateSAMLSecondarySessions', };
 
 # INITIALIZATION
 
@@ -197,7 +200,8 @@ sub storeEnv {
 
             # Store target authentication level in pdata
             my $targetAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel};
+              $self->spLevelRules->{$spConfKey}->( $req, {} );
+
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
         }
@@ -562,7 +566,8 @@ sub run {
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
                 $self->logger->debug(
-                    "Get NameID format $nameIDFormat from request");
+                    "Get NameID format $nameIDFormat from request")
+                  if defined($nameIDFormat);
             }
 
             # Get default NameID Format from configuration
@@ -619,7 +624,7 @@ sub run {
             $self->logger->debug("SSO: authentication request is valid");
 
             my $spAuthnLevel =
-              $self->spOptions->{$sp}->{samlSPMetaDataOptionsAuthnLevel} || 0;
+              $self->spLevelRules->{$spConfKey}->( $req, $req->sessionInfo );
 
             # Get ForceAuthn flag
             my $force_authn;
@@ -638,7 +643,7 @@ sub run {
             if (
                 $force_authn
                 and (
-                    time - $req->sessionInfo->{_utime} >
+                    time - $req->sessionInfo->{_lastAuthnUTime} >
                     $self->conf->{portalForceAuthnInterval} )
               )
             {
@@ -1150,6 +1155,10 @@ sub run {
             $self->logger->debug(
                 "Link session $session_id to SAML session $saml_session_id");
 
+            $self->p->registerProtectedAppAccess( $req,
+                $req->{sessionInfo}->{ $self->conf->{whatToTrace} },
+                "saml:$spConfKey" );
+
             # Send SSO Response
 
             # Register IDP in Common Domain Cookie if needed
@@ -1229,9 +1238,9 @@ sub run {
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
-                    user            => $user,
-                    saml_name_id    => $name_id_content,
-                    attributes => \%log_attributes,
+                    user         => $user,
+                    saml_name_id => $name_id_content,
+                    attributes   => \%log_attributes,
                 );
 
                 # Use autosubmit form
@@ -1278,9 +1287,9 @@ sub run {
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
-                    user            => $user,
-                    saml_name_id    => $name_id_content,
-                    attributes => \%log_attributes,
+                    user         => $user,
+                    saml_name_id => $name_id_content,
+                    attributes   => \%log_attributes,
                 );
 
                 # Redirect user to response URL
@@ -1646,7 +1655,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $req->urldc( $self->p->buildUrl($req->portal, { logout => 1 } ) );
+        $req->urldc( $self->p->buildUrl( $req->portal, { logout => 1 } ) );
         return PE_OK;
     }
 
@@ -1668,7 +1677,7 @@ sub sloRelaySoap {
     # Retrieve the corresponding data from samlStorage
     my $relayInfos = $self->getSamlSession($relayID);
     unless ($relayInfos) {
-        $self->logger->error("Could not get relay session $relayID");
+        $self->logger->warn("Could not get relay session $relayID");
         return $self->imgnok($req);
     }
 
@@ -1899,7 +1908,7 @@ sub sloResume {
     my $logoutContextSession = $self->getSamlSession($ResumeParams);
 
     unless ($logoutContextSession) {
-        $self->logger->error("Could not find logout context session");
+        $self->logger->warn("Could not find logout context session");
         return PE_SLO_ERROR;
     }
 
@@ -1946,7 +1955,8 @@ sub _finishSlo {
     # Else build SLO status relay URL and display info
     else {
         $req->{urldc} =
-          $self->p->buildUrl( $req->portal, 'saml', 'relaySingleLogoutTermination' );
+          $self->p->buildUrl( $req->portal, 'saml',
+            'relaySingleLogoutTermination' );
         $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
         return $self->p->do( $req, [] );
     }
@@ -2020,7 +2030,7 @@ sub sloServer {
 
         if ($session_index) {
             my $sessionIndexSession = $self->getSamlSession($session_index);
-            return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] )
+            return $self->p->doPE( $req, PE_SESSIONEXPIRED )
               unless $sessionIndexSession;
 
             $local_session_id = $sessionIndexSession->data->{_saml_id};
@@ -2045,7 +2055,7 @@ sub sloServer {
             my $local_session = $self->p->getApacheSession($local_session_id);
 
             unless ($local_session) {
-                $self->logger->error("No local session found");
+                $self->logger->warn("No local session found");
                 return $self->sendSLOErrorResponse( $req, $logout, $method );
             }
 
@@ -2143,17 +2153,17 @@ sub sloServer {
         my $doAuthLogout = 0;
         my $logoutContextSession;
 
-        # TODO: for now, we only try authLogout to disconnect an
-        # external IDP if the current session has been opened on a
-        # SAML IDP. We only propagate logout to the IDP our SP is SAML
-        # AND our IDP is SAML too
-        if ( $req->sessionInfo->{_lassoSessionDump} ) {
+        # TODO: only propagation to SAML or OIDC issuers is supported
+        # at the moment
+        if (   $req->sessionInfo->{_lassoSessionDump}
+            or $req->sessionInfo->{_oidc_OP} )
+        {
 
             $doAuthLogout = 1;
 
             # In case we have to redirect to the IDP, save current state
             # to allow resumption. This needs to be done here because
-            # issuerUrldc will be put in the IdP logout's RelayState
+            # issuerNextUrl will be put in the IdP logout's RelayState
             my $logoutInfos = {
                 logout      => $logout->dump,
                 spConfKey   => $spConfKey,
@@ -2164,11 +2174,13 @@ sub sloServer {
             };
             $logoutContextSession =
               $self->getSamlSession( undef, $logoutInfos );
-            my $uri =
-              URI->new(
-                $self->p->buildUrl( $req->portal, 'saml', 'singleLogoutResume' ) );
+            my $uri = URI->new(
+                $self->p->buildUrl(
+                    $req->portal, 'saml', 'singleLogoutResume'
+                )
+            );
             $uri->query_param( ResumeParams => $logoutContextSession->id );
-            $req->{issuerUrldc} = $uri->as_string;
+            $req->{issuerNextUrl} = $uri->as_string;
         }
 
         # We don't want info to interfere with the auth logout process
@@ -2193,7 +2205,7 @@ sub sloServer {
             if ($savedInfo) {
                 $logoutContextSession->update( { info => $savedInfo } );
             }
-            return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+            return $self->p->doPE( $req, PE_REDIRECT );
         }
 
         $req->info($savedInfo);

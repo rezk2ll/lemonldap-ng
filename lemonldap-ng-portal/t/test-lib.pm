@@ -14,11 +14,11 @@ test-lib.pm - Test framework for LLNG portal
   use Test::More;
   use strict;
   use IO::String;
-  
+
   require 't/test-lib.pm';
-  
+
   my $res;
-  
+
   my $client = LLNG::Manager::Test->new( {
       ini => {
           logLevel => 'error',
@@ -26,7 +26,7 @@ test-lib.pm - Test framework for LLNG portal
       }
     }
   );
-  
+
   ok(
       $res = $client->_post(
           '/',
@@ -38,7 +38,7 @@ test-lib.pm - Test framework for LLNG portal
   count(1);
   expectOK($res);
   my $id = expectCookie($res);
-  
+
   clean_sessions();
   done_testing( count() );
 
@@ -65,7 +65,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
-use Carp                        qw/shortmess/;
+use Carp qw/shortmess/;
 
 #use 5.10.0;
 
@@ -85,10 +85,7 @@ use File::Temp 'tempfile', 'tempdir';
 use File::Copy 'copy';
 our $tmpDir = $LLNG::TMPDIR
   || tempdir( 'tmpSessionXXXXX', DIR => 't/sessions', CLEANUP => 1 );
-mkdir "$tmpDir/lock";
-mkdir "$tmpDir/saml";
-mkdir "$tmpDir/saml/lock";
-copy( "t/lmConf-1.json", "$tmpDir/lmConf-1.json" );
+reset_tmpdir();
 
 =head4 count($inc)
 
@@ -129,6 +126,20 @@ sub main::explain {
     my ( $get, $ref ) = @_;
     $get = Dumper($get) if ( ref $get );
     diag("Expect $ref, get $get\n");
+}
+
+=head4 reset_tmpdir()
+
+Reinitialize temp directory, useful for cleaning state when multiple subtests may interfere with each other
+
+=cut
+
+sub reset_tmpdir {
+    find( sub { unlink if -f }, $tmpDir );
+    mkdir "$tmpDir/lock";
+    mkdir "$tmpDir/saml";
+    mkdir "$tmpDir/saml/lock";
+    copy( "t/lmConf-1.json", "$tmpDir/lmConf-1.json" );
 }
 
 =head4 clean_sessions()
@@ -263,8 +274,7 @@ sub expectRedirection {
         return @match;
     }
     else {
-        ok( getRedirection($res) eq $location, " Location is $location" )
-          or explain( $res->[1], "Location => $location" );
+        is( getRedirection($res), $location, " Location is $location" );
         count(1);
     }
 }
@@ -394,7 +404,7 @@ m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
     }
 }
 
-=head4 expectAuthenticatedAs($user)
+=head4 expectAuthenticatedAs($res, $user)
 
 Verify that result has a C<Lm-Remote-User> header and value is $user
 
@@ -537,7 +547,7 @@ sub expectReject {
     ok( not($@), ' Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
     if ( defined $code ) {
-        is( $res->{error}, $code, " Error code is $code" );
+        is( $res->{error}, $code, " Error code is $code" ) or explain( $res->[0], $code );
     }
     else {
         pass("Error code is $res->{error}");
@@ -742,17 +752,17 @@ sub register {
     # Clear previous global handler data
     @Lemonldap::NG::Handler::Main::_onReload = ();
     $Lemonldap::NG::Handler::Main::_tshv     = {
-        tsv             => {},
-        cfgNum          => 0,
-        cfgDate         => 0,
-        lastCheck       => 0,
-        checkTime       => 600,
-        confAcc         => {},
-        logger          => {},
-        userLogger      => {},
-        lmConf          => {},
-        localConfig     => {},
-        _auditLogger    => {},
+        tsv          => {},
+        cfgNum       => 0,
+        cfgDate      => 0,
+        lastCheck    => 0,
+        checkTime    => 600,
+        confAcc      => {},
+        logger       => {},
+        userLogger   => {},
+        lmConf       => {},
+        localConfig  => {},
+        _auditLogger => {},
     };
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 
@@ -890,6 +900,7 @@ our $defaultIni = {
         namespace   => 'lemonldap-ng-session',
         cache_root  => $tmpDir,
         cache_depth => 0,
+        allow_cache_for_root => 1,
     },
     logLevel              => 'error',
     cookieName            => 'lemonldap',
@@ -1204,6 +1215,11 @@ sub _post {
     # If $body is a HASHREF, serialize as string
     if ( ref($body) eq "HASH" ) {
         $body = main::buildForm($body);
+    }
+
+    # Automatically serialize query if given as HASHREF
+    if ( ref( $args{query} ) eq "HASH" ) {
+        $args{query} = main::buildForm( $args{query} );
     }
 
     # If $body is a string, wrap in IO::Handle

@@ -12,7 +12,7 @@
 use LWP::UserAgent;
 use JSON;
 
-my $milestone = '2.19.2';
+my $milestone = '2.21.3';
 my @cat = ( 'Bug', 'New feature', 'Improvement', 'Template', 'WebServer Conf' );
 
 open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
@@ -31,6 +31,11 @@ for (@cat) {
     my $tmp .= "  * ${_}s:\n";
     $res = JSON::from_json( $res->content );
     my $add = 0;
+    unless ( ref($res) eq 'ARRAY' ) {
+        require Data::Dumper;
+        print STDERR Data::Dumper::Dumper($res);
+        exit 1;
+    }
     while ( my $i = pop @$res ) {
         $tmp .= "    * #$i->{iid}: $i->{title}\n";
         $add++;

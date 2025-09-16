@@ -91,7 +91,7 @@ subtest "Request RP1, wait for timeout, request RP2" => sub {
 
     ok(
         $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
         'Found EXTCODE input'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
@@ -174,7 +174,7 @@ subtest "Request RP1, wait for timeout, complete login" => sub {
 
     ok(
         $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
         'Found EXTCODE input'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
@@ -259,7 +259,7 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp.com/?logout=1",
+                          "http://auth.rp.com/oauth2/rlogoutreturn",
                         oidcRPMetaDataOptionsRedirectUris =>
                           'http://rp.example.com/',
                     },
@@ -274,7 +274,7 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp2.com/?logout=1",
+                          "http://auth.rp2.com/oauth2/rlogoutreturn",
                         oidcRPMetaDataOptionsRedirectUris =>
                           'http://rp2.example.com/',
                     }

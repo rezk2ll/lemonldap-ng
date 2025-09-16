@@ -132,6 +132,12 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: Signature method for requests sent to this provider
+-  **Signing key name**: Since ``2.22.0``. If you want to use a specific
+   signing key only for requests sent to this IDP, indicate the name of a key
+   from the :doc:`key management section <keys>`. If you specify multiple
+   values separated by a comma, the first key will be used for signing
+   requests, and the others will be published in metadata if you use the
+   ``/saml/metadata/sp?idp=<entityid>`` endpoint.
 -  **Sign SSO message**: Sign SSO message
 -  **Check SSO message signature**: Check SSO message signature
 -  **Sign SLO message**: Sign SLO message
@@ -210,12 +216,14 @@ Used only if at least 2 SAML Identity Providers are declared
    for a user. You have access to all environment variable *(like user
    IP address)* and all session keys.
 
-For example, to preselect this IDP for users coming from 129.168.0.0/16
-network
-
-::
+For example, to preselect this IDP for users coming from 192.168.0.0/16
+network ::
 
    $ENV{REMOTE_ADDR} =~ /^192\.168/
+
+   $env->{REMOTE_ADDR} =~ /^192\.168/
+   
+   inSubnet('192.168.0.0/16')
 
 To preselect this IDP when the ``MY_IDP`` :doc:`choice <authchoice>` is selected ::
 
@@ -233,8 +241,8 @@ In addition to the *resolution rule* described above, you can also use the
 ``idp`` or ``idpName`` URL parameters to automatically select an IDP for the
 user.
 
-Use the ``idp`` parameter to specify the SAML Entity ID of the provider. Do not
-forget to url-encode the value:
+Use the ``idp`` parameter to specify the SAML Entity ID of the provider.
+Do not forget to url-encode the value:
 ``https://auth.example.com/?idp=https%3A%2F%2Fidp.example.com%2Fsaml``.
 
 Alternatively, use the ``idpName`` parameter to specify the name of the

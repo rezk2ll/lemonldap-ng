@@ -6,7 +6,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib';
 
@@ -163,7 +163,8 @@ sub virtualHosts {
     }
 
     # Send setDefault for new vhosts
-    return $self->sendError( $req, 'setDefault', 200 ) if ( $vh =~ /^new__/ );
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
+      if ( $vh =~ /^new__/ );
 
     # Reject unknown vhosts
     return $self->sendError( $req, "Unknown virtualhost ($vh)", 400 )
@@ -255,7 +256,7 @@ sub _samlMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -382,7 +383,7 @@ sub _oidcMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -506,7 +507,7 @@ sub _casMetaDataNodes {
     }
 
     # setDefault response for new partners
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
@@ -767,6 +768,39 @@ sub sfExtra {
     return $self->sendJSONresponse( $req, $res );
 }
 
+## Keys
+sub keyNodes {
+    my ( $self, $req, @path ) = @_;
+    {
+        local $" = ",";
+        $self->logger->debug("Keynode @path");
+    }
+
+    return $self->complexNodesRoot( $req, "keys", "keyNode" ) unless (@path);
+
+    my $keyId = shift @path;
+    my $query = shift @path;
+
+    unless ($query) {
+        return $self->sendError( $req,
+            "Bad request: keyNodes query must ask for a key", 400 );
+    }
+
+    # setDefault response for new keyIds
+    return $self->sendError( $req, 'setDefault', 200 )
+      if ( $keyId =~ /^new__/ );
+
+    # Reject unknown keyIds
+    return $self->sendError( $req, "Unknown key ID ($keyId)", 400 )
+      unless ( defined eval { $self->getConfKey( $req, 'keys' )->{$keyId}; } );
+
+    my ( $id, $resp ) = ( 1, [] );
+
+    my $value =
+      eval { $self->getConfKey( $req, "keys" )->{$keyId}->{$query}; } // undef;
+    return $self->sendJSONresponse( $req, { value => $value } );
+}
+
 # 33 - Root queries
 #      -----------
 
@@ -949,7 +983,7 @@ sub getKey {
 
     # When "hash"
     if ( $key =~ qr/^$simpleHashKeys$/o ) {
-        return $self->sendError( $req, 'setDefault', 200 )
+        return $self->sendJSONresponse( $req, { error => 'setDefault' } )
           unless defined($value);
 
         # If a hash key is asked return its value
@@ -987,7 +1021,7 @@ sub getKey {
     # When scalar
     return $self->sendError( $req, "Key $key is not a hash", 400 )
       if ($subkey);
-    return $self->sendError( $req, 'setDefault', 200 )
+    return $self->sendJSONresponse( $req, { error => 'setDefault' } )
       unless defined($value);
     return $self->sendJSONresponse( $req, { value => $value } );
 

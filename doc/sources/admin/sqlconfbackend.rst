@@ -4,7 +4,7 @@ SQL configuration backends
 There is 2 types of SQL configuration backends for LemonLDAP::NG:
 
 -  **CDBI**: very simple storage (recommended)
--  **RDBI**: triple store storage (not recommended)
+-  **RDBI**: triple store storage (deprecated)
 
 
 .. tip::
@@ -38,39 +38,13 @@ You need DBD::MySQL Perl module:
 Database and table creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Create database:
 
 .. code-block:: sql
 
    CREATE DATABASE lemonldap-ng CHARACTER SET utf8;
 
-Use database to create table:
 
-.. code-block:: sql
-
-   use lemonldap-ng
-
-CDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmConfig (
-       cfgNum int not null primary key,
-       data longtext
-   );
-
-RDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmConfig (
-       cfgNum int(11) NOT NULL,
-       field varchar(255) NOT NULL DEFAULT '',
-       value longtext,
-       PRIMARY KEY (cfgNum,field)
-       );
+Then execute ``/usr/share/lemonldap-ng/ressources/config.my.sql`` to create the table.
 
 Grant access
 ~~~~~~~~~~~~
@@ -114,6 +88,10 @@ file (section configuration):
    ; optional
    dbiTable    = mytablename
 
+.. tip::
+
+   We recommend adding the `mysql_connect_timeout`, `mysql_write_timeout`, and `mysql_read_timeout` options to the DBI string
+
 PostGreSQL
 ----------
 
@@ -147,39 +125,7 @@ Create database:
 
    CREATE DATABASE lemonldap-ng;
 
-Use database to create table:
-
-.. code-block:: sql
-
-   use lemonldap-ng
-
-.. _rdbi-1:
-
-CDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmConfig (
-       cfgnum integer not null primary key,
-       data text
-   );
-
-.. _connection-settings-1:
-
-RDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmconfig (
-       cfgnum integer NOT NULL,
-       field text NOT NULL,
-       value text,
-       PRIMARY KEY (cfgNum,field)
-       );
-
-.. _cdbi-1:
+Then execute ``/usr/share/lemonldap-ng/ressources/config.pg.sql`` to create the table.
 
 Connection settings
 -------------------
@@ -197,3 +143,55 @@ file (section configuration):
    ; optional
    dbiTable    = mytablename
 
+.. tip::
+
+   We recommend adding the `tcp_user_timeout` and `keepalives_idle` options to the DBI string
+
+Patroni support
+~~~~~~~~~~~~~~~
+
+If you use a PostgreSQL cluster based on Patroni, you can add the list of
+Patroni API urls to get a native high-availability without needing any
+load-balancer. In case of error, LLNG will try to get the Patroni leader
+and update its "dbiChain":
+
+.. code-block:: ini
+
+   [configuration]
+   type = Patroni
+   dbiChain    = DBI:Pg:database=lemonldap-ng;host=1.2.3.4
+   patroniUrl  = http://1.2.3.2:8008/cluster, http://1.2.3.3:8008/cluster, http://1.2.3.4:8008/cluster
+   dbiUser     = lemonldaprw
+   dbiPassword = mypassword
+   ; optional
+   dbiTable    = mytablename
+
+RDBI (deprecated)
+------------------
+
+In order to use the deprecated RDBI storage, use the following table schemas:
+
+
+MySQL
+~~~~~
+
+.. code-block:: sql
+
+   CREATE TABLE lmConfig (
+       cfgNum int(11) NOT NULL,
+       field varchar(255) NOT NULL DEFAULT '',
+       value longtext,
+       PRIMARY KEY (cfgNum,field)
+       );
+
+PostgreSQL
+~~~~~~~~~~
+
+.. code-block:: sql
+
+   CREATE TABLE lmconfig (
+       cfgnum integer NOT NULL,
+       field text NOT NULL,
+       value text,
+       PRIMARY KEY (cfgNum,field)
+       );

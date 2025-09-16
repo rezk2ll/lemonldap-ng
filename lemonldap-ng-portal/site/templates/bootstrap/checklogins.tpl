@@ -3,11 +3,11 @@
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <div class="input-group-text">
-          <input type="checkbox" id="checkLogins" name="checkLogins" aria-describedby="checkLoginsLabel" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF> />
+          <input type="checkbox" id="checkLogins<TMPL_VAR NAME="key">" name="checkLogins" aria-describedby="checkLoginsLabel" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF> />
         </div>
       </div>
       <p class="form-control">
-        <label id="checkLoginsLabel" for="checkLogins" trspan="checkLastLogins">Check my last logins</label>
+        <label id="checkLoginsLabel" for="checkLogins<TMPL_VAR NAME="key">" trspan="checkLastLogins">Check my last logins</label>
       </p>
     </div>
     </TMPL_IF>

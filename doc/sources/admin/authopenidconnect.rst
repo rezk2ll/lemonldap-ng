@@ -47,11 +47,11 @@ documentation:
    authopenidconnect_prosanteconnect
 
 
-=============== ================== ==================
-Google          France Connect     Pro Santé Connect
-=============== ================== ==================
-|google|        |franceconnect|    |prosanteconnect|
-=============== ================== ==================
+=============== ================== ================== ==================
+Google          France Connect     Pro Santé Connect  ProConnect
+=============== ================== ================== ==================
+|google|        |franceconnect|    |prosanteconnect|  |proconnect|
+=============== ================== ================== ==================
 
 .. |google| image:: applications/google_logo.png
    :target: authopenidconnect_google.html
@@ -61,6 +61,9 @@ Google          France Connect     Pro Santé Connect
 
 .. |prosanteconnect| image:: applications/prosanteconnect_logo.png
    :target: authopenidconnect_prosanteconnect.html
+
+.. |proconnect| image:: applications/proconnect.svg
+   :target: oidc-proconnect.html#ll-ng-as-relying-party
 
 .. attention::
 
@@ -122,7 +125,7 @@ Register LL::NG to an OpenID Connect Provider
 To register LL::NG, you will need to give some information like
 application name or logo.
 
-You will be prompted to provide a *Redirect URI* for LL::NG, which is built 
+You will be prompted to provide a *Redirect URI* for LL::NG, which is built
 by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:
@@ -146,6 +149,8 @@ You may also be prompted for lougout type. LL::NG supports both *back* and
 
     Front Channel use requires "iss" and "sid" parameters in requests (See
     `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
+
+- https://<portal>/oauth2/rlogoutreturn should be allowed as a *post-logout* redirect URI
 
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.
@@ -245,7 +250,10 @@ Protocol
    ``openid`` scope is mandatory.
 -  **Display**: Value of display parameter (example: page)
 -  **Prompt**: Value of prompt parameter (example: consent)
--  **Max age**: Value of max_age parameter (example: 3600)
+-  **Max age**: Value of ``max_age`` parameter (example: 3600). A value of
+   ``0`` disables the ``max_age`` parameter. If you want to force
+   reauthentication, you can set **Prompt** to ``login`` or use a very short,
+   non-null value.
 -  **Locales UI**: Value of ui_locales parameter (example: en-GB en fr-FR fr)
 -  **ACR values**: Space-separated list of acceptable ACR values (example:
    'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
@@ -260,6 +268,8 @@ Protocol
    date and reject it if too old
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
+-  **User Info source**: source of user data. Default to query userInfo endpoint
+-  **Don't insert typ header**: don't add the type header in JWT
 
 Comment: Set a comment
 """""""""""""""""""""""
@@ -273,19 +283,26 @@ Used only if at least 2 OIDC Providers are declared
 -  **Logo**: Logo of the OP
 -  **Tooltip**: Information displayed on mouse over the button
 -  **Resolution rule**: Rule that will be applied to preselect an OP
-   for a user. You have access to all environment variable *(like user
-   IP address)* and all session keys.
+   for a user. You have access to all environment variables *(like user
+   IP address)* and all session keys. You have also access to OIDC parameters
+   constituting the QueryString. Those variables are prefixed by ``llng_oidc_``.
 
-For example, to preselect this OP for users coming from 129.168.0.0/16
-network
-
-::
+For example, to preselect this OP for users coming from 192.168.0.0/16 network ::
 
    $ENV{REMOTE_ADDR} =~ /^192\.168/
+
+   $env->{REMOTE_ADDR} =~ /^192\.168/
+
+   inSubnet('192.168.0.0/16')
 
 To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected ::
 
     $_choice eq "MY_OP"
+
+To preselect this OP for users with a particular ``login_hint`` ::
+
+   $env->{llng_oidc_login_hint} =~ /@example\.com$/
+
 
 -  **Order**: Used for sorting OP
 

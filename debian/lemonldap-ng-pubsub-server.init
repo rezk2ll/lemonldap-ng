@@ -1,0 +1,132 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:	     lemonldap-ng-pubsub-server
+# Required-Start:    $local_fs $remote_fs $network $named
+# Required-Stop:     $local_fs $remote_fs $network $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the Lemonldap::NG PubSub server
+# Description:       starts Lemonldap::NG PubSub server using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/llng-pubsub-server
+NAME=llng-pubsub-server
+DESC=llng-pubsub-server
+
+# Include llng-pubsub-server defaults if available
+if [ -r /etc/default/lemonldap-ng-pubsub-server ]; then
+	. /etc/default/lemonldap-ng-pubsub-server
+fi
+
+STOP_SCHEDULE="${STOP_SCHEDULE:-TERM/5/KILL/5}"
+
+test -x $DAEMON || exit 0
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+# Try to extract llng-pubsub-server pidfile
+if [ -z "$PID" ]; then
+	PID=/run/llng-pubsub-server/llng-pubsub-server.pid
+fi
+
+for f in "$PID"; do
+	DIR=`dirname "$f"`
+	if [ ! -d "$DIR" ]; then
+		mkdir -p "$DIR"
+		if [ -n "$USER" ]; then
+			chown "$USER" "$DIR"
+		fi
+		if [ -n "$GROUP" ]; then
+			chgrp "$GROUP" "$DIR"
+		fi
+	fi
+done
+
+DAEMON_OPTS="--pid-file ${PID} --user ${USER} --group ${GROUP}"
+
+start_server() {
+	# Start the daemon/service
+	#
+	# Returns:
+	#   0 if daemon has been started
+	#   1 if daemon was already running
+	#   2 if daemon could not be started
+	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --test > /dev/null \
+		|| return 1
+	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON -- \
+		$DAEMON_OPTS 2>/dev/null \
+		|| return 2
+}
+
+stop_server() {
+	# Stops the daemon/service
+	#
+	# Return
+	#   0 if daemon has been stopped
+	#   1 if daemon was already stopped
+	#   2 if daemon could not be stopped
+	#   other if a failure occurred
+	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --user=$USER --group=$GROUP
+	RETVAL="$?"
+	sleep 1
+	return "$RETVAL"
+}
+
+reload_server() {
+	# Function that sends a SIGHUP to the daemon/service
+	start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --exec $DAEMON
+	return 0
+}
+
+case "$1" in
+	start)
+		log_daemon_msg "Starting $DESC" "$NAME"
+		start_server
+		case "$?" in
+			0|1) log_end_msg 0 ;;
+			2)   log_end_msg 1 ;;
+		esac
+		;;
+	stop)
+		log_daemon_msg "Stopping $DESC" "$NAME"
+		stop_server
+		case "$?" in
+			0|1) log_end_msg 0 ;;
+			2)   log_end_msg 1 ;;
+		esac
+		;;
+	restart)
+		log_daemon_msg "Restarting $DESC" "$NAME"
+
+		stop_server
+		case "$?" in
+			0|1)
+				start_server
+				case "$?" in
+					0) log_end_msg 0 ;;
+					1) log_end_msg 1 ;; # Old process is still running
+					*) log_end_msg 1 ;; # Failed to start
+				esac
+				;;
+			*)
+				# Failed to stop
+				log_end_msg 1
+				;;
+		esac
+		;;
+	reload|force-reload)
+		log_daemon_msg "Reloading $DESC configuration" "$NAME"
+		reload_server
+		log_end_msg $?
+		;;
+	status)
+		status_of_proc -p $PID "$DAEMON" "$NAME" && exit 0 || exit $?
+		;;
+	*)
+		echo "Usage: $NAME {start|stop|restart|reload|force-reload|status}" >&2
+		exit 3
+		;;
+esac

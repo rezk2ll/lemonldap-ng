@@ -8,9 +8,6 @@ use IO::String;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::TOTP;
 
-eval { mkdir 't/sessions' };
-`rm -rf t/sessions/*`;
-
 require 't/test-lib.pm';
 
 our $_json = JSON->new->allow_nonref;
@@ -22,8 +19,8 @@ sub newSession {
         $tmp = Lemonldap::NG::Common::Session->new( {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
-                    Directory      => 't/sessions',
-                    LockDirectory  => 't/sessions',
+                    Directory      => "$main::tmpdir/sessions",
+                    LockDirectory  => "$main::tmpdir/sessions",
                     backend        => 'Apache::Session::File',
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
@@ -61,8 +58,8 @@ sub get2fDevices {
         $tmp = Lemonldap::NG::Common::Session->new( {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
-                    Directory      => 't/sessions',
-                    LockDirectory  => 't/sessions',
+                    Directory      => "$main::tmpdir/sessions",
+                    LockDirectory  => "$main::tmpdir/sessions",
                     backend        => 'Apache::Session::File',
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
@@ -571,13 +568,42 @@ checkAddWithBadAttributes(
     { name => "test", type => "test", epoch => 1 },
     qr/Invalid input: epoch is forbidden/
 );
+
+# Make epoch predictable
+no warnings 'redefine';
+*Lemonldap::NG::Manager::Api::_get_epoch = sub {
+    return 123;
+};
+
 checkAdd( "Add second factor",
     "donna", undef, { type => "test", name => "test", mydisplay => 1 } );
 $ret = checkGetList( 1, 'donna', 'test' );
 checkDisplay( 'donna', $ret->[0]->{id} );
-checkAdd( "Add second factor",
+
+checkAddFailsIfExists( "Add second factor with same ID as previous",
     "donna", undef, { type => "test", name => "test" } );
+
+checkAdd( "Add second factor with different ID",
+    "donna", undef, { type => "test", name => "test2" } );
 $ret = checkGetList( 2, 'donna', 'test' );
+is_deeply(
+    $ret,
+    [ {
+            'epoch'     => '123',
+            'id'        => 'MTIzOjp0ZXN0Ojp0ZXN0',
+            'mydisplay' => 1,
+            'name'      => 'test',
+            'type'      => 'test'
+        },
+        {
+            'epoch' => '123',
+            'id'    => 'MTIzOjp0ZXN0Ojp0ZXN0Mg==',
+            'name'  => 'test2',
+            'type'  => 'test'
+        }
+    ],
+    "Expected second factors data"
+);
 
 # 2FA add (invalid type)
 checkAddWithUnknownType( "Add/noattr ", "amy", "xxx", {} );
@@ -646,7 +672,7 @@ checkGetList( 1, 'unknownt', 'TOTP' );
 
 # 2FA search
 
-`rm -rf t/sessions/*`;
+unlink glob $main::tmpdir . '/sessions/*';
 
 checkSearchNotFound;
 

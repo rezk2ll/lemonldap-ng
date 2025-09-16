@@ -16,6 +16,7 @@ usr/share/man/man1/encryptTotpSecrets.1p
 usr/share/man/man1/importMetadata.1p
 usr/share/man/man1/lemonldap-ng-cli.1p
 usr/share/man/man1/lemonldap-ng-sessions.1p
+usr/share/man/man1/rotateOidcKeys.1p
 usr/share/man/man3/Lemonldap::NG::Common*
 usr/share/perl5/Lemonldap/NG/Common*
 usr/share/perl5/auto/Lemonldap/NG/Common

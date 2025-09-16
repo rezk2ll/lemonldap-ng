@@ -15,6 +15,22 @@ Common use cases for plugins are:
 Creating a plugin can be as simple as writing a short Perl module file and
 declaring it in your configuration. See below for an example.
 
+
+.. _plugin-options:
+
+Enabling custom plugins
+-----------------------
+
+LemonLDAP::NG comes with many plugins already, but you might want to write your owns and load them as well
+
+In *General parameters* » *Plugins* » *Custom plugins*
+
+- **Modules list**: The list of custom modules to load. Modules will be loaded after the built-in ones
+- **Additional parameters**: Configuration for your custom plugins
+- **Disabled plugins**: (*since 2.21.0*): List of built-in modules you do not
+  want LemonLDAP::NG to load. This is useful if you want to overload a built-in
+  module with one of your own.
+
 Plugin API
 ----------
 
@@ -94,7 +110,38 @@ The current LemonLDAP::NG configuration can be accessed in the ``$self->conf`` h
 You can set your own parameters in ``General Parameters`` » ``Plugins`` » ``Custom plugins`` » ``Additional parameters``
 and reach them through ``customPluginsParams``
 
+.. tip::
+
+    If you have got several plugins with several parameters, parameters can be passed by using JSON notation ``myPluginParams = {"title":"myTitle", "msg":"myMsg"}`` and converted into a PERL object with ``from_json`` function.
+
+
 .. code-block:: perl
+
+    use Mouse;
+    use JSON 'from_json';
+
+    has myPluginParams => (
+        is => 'ro',
+        builder => sub {
+            my $self = $_[0];
+            my $defaultParams = {
+                title => 'title',
+                msg   => 'msg',
+                path  => 'path',
+            };
+            my $params = eval {
+                from_json( $self->conf->{customPluginsParams}->{myPluginParams} );
+            };
+            if ($@) {
+                my $package = __PACKAGE__;
+                $self->userLogger->warn(
+            "Bad JSON file: $package plugin will use default parameters ($@)"
+                );
+                return $defaultParams;
+            }
+            return { %$defaultParams, %$params };
+        }
+    );
 
     sub my_function {
         my ($self, $req) = @_;
@@ -104,7 +151,10 @@ and reach them through ``customPluginsParams``
 
         # Get your custom LLNG option
         my $myvar = $self->conf->{customPluginsParams}->{myvar};
-        }
+
+        # Get your custom LLNG option from your parameters hash
+        my $title = $self->myPluginParams->{title};
+    }
 
 Logs
 ~~~~
@@ -192,6 +242,18 @@ If you want to display user feedback, you need to do two additional things
 
 * Implement a JS check and trigger it on the :ref:`checkpassword event <checkpassword>`
 
+Creating a custom CAPTCHA
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See the ``Lemonldap::NG::Portal::Captcha`` manual page for details on how to
+implement a Captcha module.
+
+Creating a custom menu tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See the ``Lemonldap::NG::Portal::MenuTab`` manual page for details on how to
+implement a new tab for the application menu
+
 Creating a second factor module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -223,6 +285,60 @@ This module must inherit from ``Lemonldap::NG::Portal::2F::Register::Base``.
 
     extends 'Lemonldap::NG::Portal::2F::Register::Base';
 
+Custom entry points
+~~~~~~~~~~~~~~~~~~~
+
+Entrypoints allow plugins to register custom actions when they are loaded.
+LemonLDAP::NG comes with many pre-defined entrypoints already. But you may want
+to add your own, especially if you are creating a plugin that can itself have
+plugins.
+
+You can call the ``addEntryPoint`` method in your plugin's ``init`` to
+create your custom entrypoints.
+
+.. note::
+
+   Only plugins loaded *after* registering the entry point will trigger it. Be
+   careful with the ordering of your ``customPlugins`` variable.
+
+Here are a few examples:
+
+.. code:: perl
+
+    sub init {
+        my ($self) = @_;
+
+        # ...
+
+        # From now on, when loading a new plugin that inherits from
+        # My::Base::Class, run the provided code reference, with an
+        # instance of the plugin being loaded as first argument
+        $self->addEntryPoint(
+            isa      => "My::Base::Class",
+            callback => sub {
+                my ($plugin) = @_;
+                $self->do_domething_with($plugin);
+            }
+        );
+
+        # From now on, when loading a new plugin that uses My::Role
+        # Call a particular method of a particular service, passing the new
+        # plugins instance and optional extra arguments.
+        # This will effectively run:
+        #  $portal->getService('myservice')
+        #         ->mymethod($plugin, "role_entry_point")
+        $self->addEntryPoint(
+            does    => "My::Role",
+            service => "myservice",
+            method  => "mymethod",
+            args    => ["role_entry_point"],
+        );
+
+        # ...
+        return 1;
+    }
+
+See also ``Lemonldap::NG::Portal::Main::Plugin`` man page for full details.
 
 Example
 -------

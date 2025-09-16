@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -376,10 +376,16 @@ sub attributes {
             type          => 'text',
             documentation => 'Version of LLNG which build configuration',
         },
-        status => {
+        eventStatus => {
             type          => 'bool',
-            documentation => 'Status daemon activation',
+            documentation => 'Push status into message broker',
             flags         => 'h',
+        },
+        statusQueueName => {
+            type          => 'text',
+            default       => 'llng_status',
+            flags         => 'h',
+            documentation => 'Status channel name',
         },
         confirmFormMethod => {
             type   => "select",
@@ -518,6 +524,10 @@ sub attributes {
             default       => 400,
             documentation => 'Display back to top button',
         },
+        floatingCategoryName => {
+            type          => 'text',
+            documentation => 'Name of the category displayed as floating menu',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',
@@ -532,6 +542,11 @@ sub attributes {
             default       => '; ',
             documentation => 'Separator for multiple values',
             flags         => 'hmp',
+        },
+        rememberAuthChoiceForgetAtLogout => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Forget Auth Choice at logout',
         },
         rememberAuthChoiceRule => {
             type          => 'boolOrExpr',
@@ -603,6 +618,10 @@ sub attributes {
         checkStateSecret => {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
+        },
+        webCronSecret => {
+            type          => 'text',
+            documentation => 'Secret token for webcron plugin',
         },
         checkDevOps => {
             default       => 0,
@@ -982,6 +1001,51 @@ sub attributes {
             documentation => 'Log4Perl logger configuration file',
             flags         => 'hmp',
         },
+        lokiUrl => {
+            type          => 'text',
+            documentation => 'Loki API',
+            flags         => 'hmp',
+        },
+        lokiLabel => {
+            type          => 'text',
+            documentation => 'Loki label, default llng',
+            flags         => 'hmp',
+        },
+        lokiInstance => {
+            type          => 'text',
+            documentation => 'Loki instance, default `hostname` output',
+            flags         => 'hmp',
+        },
+        lokiEnv => {
+            type          => 'text',
+            documentation => 'Loki env, default "prod"',
+            flags         => 'hmp',
+        },
+        lokiTenant => {
+            type          => 'text',
+            documentation => 'Loki Tenant',
+            flags         => 'hmp',
+        },
+        lokiTenantHeader => {
+            type          => 'text',
+            documentation => 'Loki Tenant Header name',
+            flags         => 'hmp',
+        },
+        lokiAuthorization => {
+            type          => 'text',
+            documentation => 'Loki Authorization header value',
+            flags         => 'hmp',
+        },
+        lokiService => {
+            type          => 'text',
+            documentation => 'Loki Service (technical context)',
+            flags         => 'hmp',
+        },
+        lokiUserService => {
+            type          => 'text',
+            documentation => 'Loki (userLogger context)',
+            flags         => 'hmp',
+        },
         sentryDsn => {
             type          => 'text',
             documentation => 'Sentry logger DSN',
@@ -996,6 +1060,12 @@ sub attributes {
             type          => 'text',
             documentation => 'Syslog logger user-actions facility',
             flags         => 'hmp',
+        },
+        syslogSockOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Option to send to setlogsock()',
+            flags         => 'hmp',
+            keyTest       => qr/^(?:type|path|timeout|host|port)$/,
         },
 
         # Manager or PSGI protected apps
@@ -1087,6 +1157,10 @@ sub attributes {
             msgFail       => '__badValue__',
             documentation => 'Rules to choose portal skin',
         },
+        cacheTagSalt => {
+            type          => 'text',
+            documentation => 'Salt value for cache busting tag',
+        },
 
         # Security
         formTimeout => {
@@ -1128,7 +1202,7 @@ sub attributes {
               'Enable force to authenticate when displaying portal',
         },
         portalForceAuthnInterval => {
-            default       => 5,
+            default       => 30,
             type          => 'int',
             documentation =>
 'Maximum interval in seconds since last authentication to force reauthentication',
@@ -1349,6 +1423,13 @@ sub attributes {
             type          => 'bool',
             documentation => 'Avoid browsers to store users password',
         },
+        useRedirectAjaxOnUnauthorized => {
+            type          => 'bool',
+            default       => 1,
+            documentation =>
+              'Redirect Ajax requests to portal for unauthorized (401)',
+            flags => 'h',
+        },
         useRedirectOnError => {
             type          => 'bool',
             default       => 1,
@@ -1392,13 +1473,14 @@ sub attributes {
         },
         lwpSslOpts => {
             type          => 'keyTextContainer',
-            documentation => 'SSL options passed to LWP::UserAgent',
+            documentation => 'TLS/SSL options passed to LWP::UserAgent',
         },
 
-        # CrowdSec plugin
+        # CrowdSec plugins
         crowdsec => {
-            type          => 'bool',
-            documentation => 'CrowdSec plugin activation',
+            default       => 0,
+            type          => 'boolOrExpr',
+            documentation => 'CrowdSec bouncer activation',
         },
         crowdsecAction => {
             type   => 'select',
@@ -1418,8 +1500,51 @@ sub attributes {
             documentation => 'CrowdSec API key',
         },
         crowdsecIgnoreFailures => {
+            default       => 0,
             type          => 'bool',
             documentation => 'Ignore Crowdsec errors',
+        },
+        crowdsecAgent => {
+            default       => 0,
+            type          => 'boolOrExpr',
+            documentation =>
+'Enable plugin to report auth failures to Crowdsec (simple alert)',
+        },
+        crowdsecMachineId => {
+            type          => 'text',
+            documentation => 'Crowdsec machine ID to send alerts',
+        },
+        crowdsecPassword => {
+            type          => 'text',
+            documentation => 'Crowdsec password to send alerts',
+        },
+        crowdsecMaxFailures => {
+            type          => 'int',
+            documentation =>
+              'Crowdesc-Agent maximum failures allowed during delay',
+        },
+        crowdsecBlockDelay => {
+            type          => 'int',
+            documentation => 'Crowdsec-Agent check delay',
+        },
+        crowdsecFilters => {
+            type          => 'text',
+            documentation => 'Crowdsec filters directory',
+        },
+        crowdSecAgentResponseCode => {
+            type          => 'int',
+            default       => 404,
+            documentation => 'Crowdsec ban response code',
+        },
+        crowdSecAgentResponseValue => {
+            type          => 'text',
+            documentation => 'Crowdsec ban response text',
+        },
+
+        # OIDC personnal offline token removal
+        oidcOfflineTokens => {
+            type          => 'bool',
+            documentation => 'OIDC personnal offline token removal',
         },
 
         # History
@@ -1476,6 +1601,10 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Display reset password button in portal',
+        },
+        portalDisplayOfflineTokens => {
+            'default' => '$_auth eq \'OIDC\'',
+            'type'    => 'boolOrExpr'
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
@@ -1605,6 +1734,11 @@ sub attributes {
             type          => 'text',
             default       => 'allusers',
             documentation => 'Notification string to match all users',
+        },
+        publicNotifications => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable PublicNotification plugin',
         },
         notificationXSLTfile => {
             type          => 'text',
@@ -1869,6 +2003,7 @@ sub attributes {
                 { k => '::Redis', v => 'Redis' },
                 { k => '::Pg',    v => 'PostgreSQL' },
                 { k => '::MQTT',  v => 'MQTT' },
+                { k => '::Web',   v => 'Web' },
             ],
             flags => 'hp',
         },
@@ -2403,6 +2538,10 @@ sub attributes {
             default       => 20,
             documentation => 'Radius 2f verification timeout',
         },
+        radius2fMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radius2fSendInitialRequest => {
             type          => 'bool',
             default       => 0,
@@ -2700,6 +2839,12 @@ sub attributes {
             type          => 'int',
             default       => 2,
             documentation => 'REST authentication level',
+        },
+
+        # OIDC revoke token Plugin
+        adminLogoutServerSecret => {
+            type          => 'text',
+            documentation => 'REST OIDC token revocation secret',
         },
 
         # SOAP server
@@ -3004,7 +3149,8 @@ sub attributes {
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this CAS application',
         },
@@ -3028,9 +3174,18 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS application service',
         },
+        casSrvMetaDataOptionsSamlValidate => {
+            type          => 'bool',
+            documentation => 'use SAML validateion',
+        },
         casAppMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation => 'CAS User attribute',
+        },
+        casAppMetaDataOptionsAllowProxy => {
+            type          => 'bool',
+            documentation => 'Allow CAS proxy',
+            default       => 1,
         },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
@@ -3184,6 +3339,16 @@ sub attributes {
             ],
             default => 'RSA_SHA256',
         },
+        samlServiceSignatureKey => {
+            type   => 'text',
+            default => 'default-saml-sig',
+            documentation => 'Key to use for SAML signature',
+        },
+        samlServiceEncryptionKey => {
+            type   => 'text',
+            default => 'default-saml-enc',
+            documentation => 'Key to use for SAML encryption',
+        },
         samlServiceUseCertificateInResponse => {
             type          => 'bool',
             default       => 0,
@@ -3205,6 +3370,7 @@ sub attributes {
         },
         samlAuthnContextMapExtra => {
             type          => 'keyTextContainer',
+            keyTest       => qr/\w/,
             documentation => 'SAML extra authn contexts',
         },
         samlAuthnContextMapPassword => {
@@ -3451,6 +3617,10 @@ sub attributes {
             ],
             default => '',
         },
+        samlIDPMetaDataOptionsSignatureKey => {
+            type   => 'text',
+            default => '',
+        },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
             default => 1,
@@ -3508,7 +3678,7 @@ sub attributes {
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
         samlIDPMetaDataOptionsTooltip       => { type => 'text', },
-        samlIDPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
+        samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -3640,6 +3810,10 @@ sub attributes {
             ],
             default => '',
         },
+        samlSPMetaDataOptionsSignatureKey => {
+            type   => 'text',
+            default => '',
+        },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {
             type    => 'bool',
             default => 1,
@@ -3670,7 +3844,8 @@ sub attributes {
             default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this SP',
         },
@@ -3708,7 +3883,7 @@ sub attributes {
                 { k => 'PAM',         v => 'PAM' },
                 { k => 'Radius',      v => 'Radius' },
                 { k => 'REST',        v => 'REST' },
-                { k => 'SSL',         v => 'SSL' },
+                { k => 'SSL',         v => 'mTLS' },
                 { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebID',       v => 'WebID (deprecated)' },
                 { k => 'WebAuthn',    v => 'WebAuthn' },
@@ -3777,6 +3952,7 @@ sub attributes {
         },
         sfOnlyUpgrade => {
             type          => 'bool',
+            default       => 0,
             help          => 'secondfactor.html',
             documentation => 'Only trigger second factor on session upgrade',
         },
@@ -3924,6 +4100,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'utf-8',
             documentation => 'LDAP password encoding',
         },
+        ldapForcePasswordChangeExpirationWarning => {
+            type          => 'intOrNull',
+            documentation =>
+              'Delay to force password change if password is about to expire',
+        },
         ldapUsePasswordResetAttribute => {
             type          => 'bool',
             default       => 1,
@@ -4070,7 +4251,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         SSLAuthnLevel => {
             type          => 'int',
             default       => 5,
-            documentation => 'SSL authentication level',
+            documentation => 'Mutual TLS authentication level',
         },
         SSLVar => {
             type    => 'text',
@@ -4088,11 +4269,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         sslByAjax => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Use Ajax request for SSL',
+            documentation => 'Use Ajax request for Mutual TLS Authentication',
         },
         sslHost => {
             type          => 'url',
-            documentation => 'URL for SSL Ajax request',
+            documentation => 'URL for Mutual TLS Authentication Ajax request',
         },
 
         # CAS
@@ -4135,7 +4316,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Path of CAS server icon',
         },
         casSrvMetaDataOptionsSortNumber => {
-            type          => 'intOrNull',
+            type          => 'int',
             documentation => 'Number to sort buttons',
         },
         casSrvMetaDataOptionsResolutionRule => {
@@ -4190,7 +4371,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusTimeout => {
             type => 'intOrNull',
         },
-
+        radiusMsgAuth => {
+            type          => 'bool',
+            documentation => 'Use Message-Authentication for Radius requests',
+        },
         radiusExportedVars => {
             type => 'keyTextContainer',
 
@@ -4489,6 +4673,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Auth module used by FindUser plugin',
         },
+        authChoiceSelectOnly => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Automatically select only available choice',
+        },
         authChoiceModules => {
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
@@ -4519,7 +4708,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Remote',        v => 'Remote' },
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
-                    { k => 'SSL',           v => 'SSL' },
+                    { k => 'SSL',           v => 'mTLS' },
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
@@ -4582,7 +4771,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'PAM',      v => 'PAM' },
                 { k => 'Radius',   v => 'Radius' },
                 { k => 'REST',     v => 'REST' },
-                { k => 'SSL',      v => 'SSL' },
+                { k => 'SSL',      v => 'mTLS' },
                 { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebID',    v => 'WebID (deprecated)' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
@@ -4647,6 +4836,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'keyTextContainer',
             documentation => 'Custom plugins parameters',
         },
+        disabledPlugins => {
+            type          => 'text',
+            documentation => 'Disabled plugins',
+        },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {
@@ -4695,11 +4888,20 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'register',
             documentation => 'OpenID Connect registration endpoint',
         },
+
+        # Oauth2 endpoints
         oidcServiceMetaDataIntrospectionURI => {
             type          => 'text',
             default       => 'introspect',
             documentation => 'OpenID Connect introspection endpoint',
         },
+        oidcServiceMetaDataRevokeURI => {
+            type          => 'text',
+            default       => 'revoke',
+            documentation => 'OpenID Connect token revocation endpoint',
+        },
+
+        # Logout endpoints
         oidcServiceMetaDataEndSessionURI => {
             type          => 'text',
             default       => 'logout',
@@ -4720,6 +4922,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'flogout',
             documentation => 'OpenID Connect Front-Channel logout endpoint',
         },
+        oidcServiceMetaDataRpLogoutReturnURI => {
+            type          => 'text',
+            default       => 'rlogoutreturn',
+            documentation =>
+              'OpenID Connect RP-Initiated logout return endpoint',
+        },
         oidcServiceMetaDataAuthnContext => {
             type    => 'keyTextContainer',
             keyTest => qr/\w/,
@@ -4731,6 +4939,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'loa-5' => 5,
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
+        },
+        oidcServiceMetaDataAmrRules => {
+            type    => 'keyTextContainer',
+            keyTest => qr/\w/,
+            test    => sub { return perlExpr(@_) },
+            default => {
+                'pwd' => '$authenticationLevel == 2',
+                'mfa' => '$_2f',
+                'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
+                'otp' => '$_2f eq "TOTP"',
+            },
+            documentation => 'OpenID Connect AMR rules',
+            help          => 'openidconnectservice.html#amrrules',
         },
         oidcServiceHideMetadata => {
             type          => 'bool',
@@ -4913,6 +5134,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation => 'Drop CORS headers from OIDC issuer responses',
         },
+        oidcServiceMetadataTtl => {
+            type          => 'int',
+            documentation => 'OIDC Metadata TTL',
+        },
+        oidcServiceMetaDataDisallowNoneAlg => {
+            type        => 'bool',
+            description => 'Disallow "none" algorithm for signature',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
@@ -4995,7 +5224,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName   => { type => 'text', },
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
-        oidcOPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
+        oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
         oidcOPMetaDataOptionsTooltip       => { type => 'text', },
         oidcOPMetaDataOptionsComment       => { type => 'longtext', },
         oidcOPMetaDataOptionsResolutionRule => {
@@ -5006,6 +5235,21 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Use PKCE with this OP',
+        },
+        oidcOPMetaDataOptionsUserinfoSource => {
+            type    => 'select',
+            default => 'userinfo',
+            select  => [
+                { k => 'userinfo',     v => 'Userinfo endpoint' },
+                { k => 'id_token',     v => 'ID Token' },
+                { k => 'access_token', v => 'Access Token' },
+            ],
+            documentation => "Source of userinfo",
+        },
+        oidcOPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            default       => 0,
+            documentation => "Don't insert typ header",
         },
 
         # OpenID Connect relying parties
@@ -5155,8 +5399,15 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Invalidate refresh token after use',
         },
+        oidcRPMetaDataOptionsRtActivity => {
+            type          => 'int',
+            test          => sub { $_[0] >= 0 },
+            default       => 0,
+            documentation => 'refresh_token activity timeout',
+        },
         oidcRPMetaDataOptionsAuthnLevel => {
-            type          => 'intOrNull',
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             documentation =>
               'Authentication level requires to access to this RP',
         },
@@ -5164,6 +5415,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
+        },
+        oidcRPMetaDataOptionsAllowNativeSso => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allow Native SSO for Mobile Apps',
         },
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',
@@ -5264,6 +5520,34 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               'List of RP authorized to query for an access_token of this RP',
         },
+        oidcRPMetaDataOptionsNoJwtHeader => {
+            type          => 'bool',
+            default       => 0,
+            documentation => "Don't insert typ header",
+        },
+        appAccessHistoryEnabled => {
+            type          => 'bool',
+            default       => 0,
+            documentation =>
+'Shall OIDC/SAML/CAS protected apps access be recorded to session?'
+        },
+
+        # Fake attribute: used by manager REST API to agglomerate all other
+        # nodes
+        keyNodes => {
+            type     => 'keyNodeContainer',
+            help     => 'keys.html',
+            template => 'keyNode',
+        },
+        keys => {
+            type          => 'subContainer',
+            documentation => 'Root of keys',
+        },
+        keyPrivate    => { type => 'EcOrRSAPrivateKey', default => "" },
+        keyPrivatePwd => { type => 'password',          default => "" },
+        keyPublic => { type => 'EcOrRSAPublicKeyOrCertificate', default => "" },
+        'keyId'   => { type => "text",                          default => "" },
+        'keyComment' => { type => 'text', default => "" },
     };
 }
 

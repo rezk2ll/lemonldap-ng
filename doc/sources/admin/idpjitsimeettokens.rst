@@ -51,6 +51,7 @@ Options
 - **Application ID**: The application identifier
 - **Shared secret**: The application shared secret, only needed if you use ``HS*`` signature algorithms
 - **Signature algorithm**: The signature algorithm to use. By default ``HS256`` is used, which requires a shared secret.
+- **Jitsi JWT expiration**: How long, in seconds, will the generated JWT be valid (``exp`` field)
 
 Signature algorithms
 ~~~~~~~~~~~~~~~~~~~~

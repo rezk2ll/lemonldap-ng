@@ -89,7 +89,7 @@ sub expectSentCode {
 
     ok(
         $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
         'Found EXTCODE input'
     ) or print STDERR Dumper( $res->[2]->[0] );
     count(1);
@@ -174,6 +174,15 @@ subtest 'Login after several resend' => sub {
     $res = validateCode( $res, $client, $code );
     my $id = expectCookie($res);
     $client->logout($id);
+};
+
+subtest 'Try to resend with an expired token' => sub {
+    my $res  = init_login($client);
+    my $code = expectSentCode($res);
+
+    Time::Fake->offset("+10m");
+    $res = resendCode( $res, $client );
+    expectPortalError( $res, 82 );
 };
 
 # If the session info check was not run during the test, then something

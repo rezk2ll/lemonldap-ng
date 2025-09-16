@@ -9,7 +9,10 @@
 #   * POST /sessions/<type>?all=1                : get all sessions (needs a token)
 #   * POST /sessions/<type>?all=1&search=uid,dwho: search all sessions where uid=dwho (needs a token)
 #   * PUT /sessions/<type>/<session-id>          : update some keys
+#   * PUT /sessions/<type>/<session-id>/key1     : update key1
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
+#
+# Add a "hash=1" parameter in your query if store is hashed and session-id is the user value
 #
 # When the storage is hashed, and if those APIs are called with real IDs, not
 # the storage IDs, it is required to add a "hash=1" parameter in the URL.
@@ -73,7 +76,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -361,7 +364,7 @@ sub newAuthSession {
 }
 
 sub updateSession {
-    my ( $self, $req, $id ) = @_;
+    my ( $self, $req, $id, $attr ) = @_;
     $self->logger->debug("REST request to update session $id");
     my $mod = $self->getMod($req)
       or return $self->p->sendError( $req, undef, 400 );
@@ -370,6 +373,8 @@ sub updateSession {
     # Get new info
     my $infos = $req->jsonBodyToObj
       or return $self->p->sendError( $req, undef, 400 );
+
+    $infos = { $attr => $infos } if $attr;
 
     # Get secret if given
     my $secret = delete $infos->{__secret};

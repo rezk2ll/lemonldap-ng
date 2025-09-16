@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -195,7 +195,6 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    $req->data->{alreadyAuthenticated} = 1;
     return $self->do(
         $req,
         [
@@ -261,20 +260,29 @@ sub processRefreshSession {
     # Avoid interferences when refresh is run on multiple sessions
     # in the same request
     $req->sessionInfo( {} );
+
+    # Transmit refreshed session data to setRefreshedSessionData
+    $req->data->{refreshedSessionData} = \%data;
     $req->steps( [
-            'getUser',
-            @{ $self->betweenAuthAndData },
-            'setSessionInfo',
-            sub {
-                $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
-                $_[0]->refresh(1);
-                return PE_OK;
-            },
-            $self->groupsAndMacros,
-            'setLocalGroups',
+            'getUser',              @{ $self->betweenAuthAndData },
+            'setSessionInfo',       'setRefreshedSessionData',
+            $self->groupsAndMacros, 'setLocalGroups',
         ]
     );
-    return $self->process($req);
+    my $res = $self->process($req);
+    delete $req->data->{refreshedSessionData};
+
+    return $res;
+}
+
+sub setRefreshedSessionData {
+    my ( $self, $req ) = @_;
+    my %data = %{ $req->data->{refreshedSessionData} };
+
+    $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
+    $req->refresh(1);
+
+    return PE_OK;
 }
 
 sub refresh {
@@ -302,9 +310,9 @@ sub refresh {
             )
         );
         $req->urldc( $req->portal );
-        return $self->do( $req, [ sub { PE_INFO } ] );
+        return $self->doPE( $req, PE_INFO );
     }
-    return $self->do( $req, [ sub { PE_OK } ] );
+    return $self->doPE( $req, PE_OK );
 }
 
 sub logout {
@@ -322,12 +330,14 @@ sub logout {
 
 sub unauthLogout {
     my ( $self, $req ) = @_;
-    $self->_unauthLogout($req);
-    return $self->do( $req, [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
+    my $err = $self->_unauthLogout($req);
+    return $self->do( $req,
+        [ 'controlUrl', [ returnPE => ( $err > 0 ? $err : PE_LOGOUT_OK ) ] ] );
 }
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
+    my $err = $self->processHook( $req, 'unauthLogout' );
     $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
@@ -341,6 +351,7 @@ sub _unauthLogout {
             value   => 0
         )
     );
+    return $err;
 }
 
 # RUNNING METHODS
@@ -353,11 +364,11 @@ sub do {
     my $err = $req->error( $self->process( $req, nofail => $nofail ) );
 
     # Update status
-    if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->{env}->{REQUEST_URI}
-              . " $err\n" );
-    }
+    $self->HANDLER->publishStatus(
+        user       => ( $req->user ? $req->user : $req->address ),
+        url        => $req->{env}->{HTTP_HOST} . $req->{env}->{REQUEST_URI},
+        portalCode => $err,
+    );
 
     # Update history
     return $req->response if $err == PE_SENDRESPONSE;
@@ -367,7 +378,10 @@ sub do {
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
-        if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
+        if (   ( $err > 0 and !$req->id and !( $err == PE_LOGOUT_OK ) )
+            or $err eq PE_SESSIONNOTGRANTED
+            or $err eq PE_SESSIONEXPIRED )
+        {
             my $json = { result => 0, error => $err };
             if ( $req->wantErrorRender ) {
                 $json->{html} = $self->loadTemplate( $req, 'errormsg',
@@ -399,7 +413,7 @@ sub do {
         }
         else {
             my $res = { result => 1, error => $err };
-            unless ( $req->data->{alreadyAuthenticated} ) {
+            if ( $req->data->{newAuth} ) {
                 $res->{id}      = $req->id;
                 $res->{id_http} = $req->sessionInfo->{_httpSession}
                   if $req->sessionInfo->{_httpSession};
@@ -435,6 +449,11 @@ sub do {
 
 # Utilities
 # ---------
+
+sub doPE {
+    my ( $self, $req, $res ) = @_;
+    return $self->do( $req, [ [ returnPE => $res ] ] );
+}
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
@@ -493,6 +512,8 @@ sub autoRedirect {
                 message => "Redirection to $req->{urldc} blocked",
                 code    => "UNAUTHORIZED_REDIRECT",
                 url     => $req->{urldc},
+                user    => $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  || $req->user,
             );
             delete $req->{urldc};
         }
@@ -559,7 +580,8 @@ sub getApacheSession {
         $self->lmLog(
             $err,
             (
-                $err =~ /(?:Object does not exist|Invalid session ID)/
+                $err =~
+/(?:Object does not exist|Invalid session ID|Session kind mismatch)/
                 ? 'notice'
                 : 'error'
             )
@@ -723,6 +745,9 @@ sub updateSession {
                 $self->logger->error( $apacheSession->error );
             }
         }
+
+        # remove the corresponding session from handler cache
+        HANDLER->publishEvent( $req, { action => 'unlog', id => $id } );
     }
 }
 
@@ -789,6 +814,7 @@ sub _deleteSession {
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
             ),
             code => "LOGOUT",
+            user => $user,
             auth => $mod,
         );
     }
@@ -826,6 +852,8 @@ sub autoPost {
             message => "Redirection to $req->{urldc} blocked",
             code    => "UNAUTHORIZED_REDIRECT",
             url     => $req->{urldc},
+            user    => $req->sessionInfo->{ $self->conf->{whatToTrace} }
+              || $req->user,
         );
         return PE_BADURL;
     }
@@ -1059,6 +1087,10 @@ sub getTrOver {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    if ( $self->conf->{logParams} ) {
+        $self->_dump($req);
+        $self->_dump( \%args );
+    }
 
     my $skin_template_dir = $self->getSkinTplDir( $self->getSkin($req) );
 
@@ -1072,7 +1104,6 @@ sub sendHtml {
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
-      'X-XSS-Protection'       => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
       'Cache-Control' => 'no-cache, no-store, must-revalidate',    # HTTP 1.1
       'Pragma'        => 'no-cache',                               # HTTP 1.0
@@ -1274,10 +1305,13 @@ sub tplParams {
     }
 
     return (
+        CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,
+        PORTAL_BASE  => $portalPath,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
+        FLOATING_CAT => $self->conf->{floatingCategoryName},
         SKIN         => $self->getSkin($req),
         SKIN_PATH    => $portalPath . "skins",
         SAMESITE     => getSameSite( $self->conf ),
@@ -1372,6 +1406,34 @@ sub registerLogin {
     PE_OK;
 }
 
+# Register access to protected app
+# @param Lemonldap::NG::Portal::Main::Request $req The request
+# @param string $uid The connected user ident
+# @param string $app The application client/RP namespaced with protocol
+sub registerProtectedAppAccess {
+    my ( $self, $req, $uid, $app ) = @_;
+
+    return unless $self->conf->{appAccessHistoryEnabled};
+
+    $self->logger->debug("Registering $app access for user $uid");
+
+    my $persistentSession = $self->getPersistentSession($uid);
+    my $entry = $persistentSession->data->{_appHistory}->{$app} || {};
+
+    $entry->{access_time} = time();
+    $entry->{access_count}++;
+
+    $self->updatePersistentSession(
+        $req,
+        {
+            _appHistory => {
+                %{ $persistentSession->data->{_appHistory} }, $app => $entry
+            }
+        },
+        $uid
+    );
+}
+
 # put main session data into a hash ref
 # @param hashref $session The session to sum up
 # @return hashref
@@ -1423,9 +1485,7 @@ sub sendJSONresponse {
     # If this is a cross-domain request from the portal itself
     # (Ajax SSL to a different VHost)
     # we allow CORS
-    if ( $req->origin
-        and index( $req->portal, $req->origin ) == 0 )
-    {
+    if ( $self->_checkSelfCors($req) ) {
         $self->logger->debug('AJAX request from portal, allowing CORS');
         push @{ $res->[1] },
           "Access-Control-Allow-Origin"      => $req->origin,
@@ -1437,6 +1497,21 @@ sub sendJSONresponse {
         $self->setCorsHeaderFromConfig($res);
     }
     return $res;
+}
+
+sub _checkSelfCors {
+    my ( $self, $req ) = @_;
+
+    if ( $req->origin ) {
+        my $origin = URI->new( $req->origin );
+        my $portal = URI->new( $req->portal );
+
+        return (  $origin->scheme
+              and $portal->scheme eq $origin->scheme
+              and $origin->host_port
+              and $origin->host_port eq $portal->host_port );
+    }
+    return;
 }
 
 sub sendRawHtml {
@@ -1479,6 +1554,9 @@ sub loadTemplate {
         global_vars            => 0,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
+    if ( $self->can('tplParams') ) {
+        $tpl->param( $self->tplParams($req) );
+    }
     if ( $prm{params} ) {
         $tpl->param( %{ $prm{params} } );
     }
@@ -1511,9 +1589,24 @@ sub cspGetHost {
     return;
 }
 
+sub relativeUrl {
+    my $self = shift;
+    my $req  = shift;
+
+    my $uri = $self->_buildUrlObj( $req->portal, @_ );
+    return $uri->path_query;
+}
+
 sub buildUrl {
     my $self = shift;
     return $self->portal unless @_;
+
+    return $self->_buildUrlObj(@_)->as_string;
+}
+
+sub _buildUrlObj {
+    my $self = shift;
+    return URI->new( $self->portal ) unless @_;
 
     # URL base is $self->portal unless first arg is an URL
     my $uri =
@@ -1533,7 +1626,7 @@ sub buildUrl {
         }
     }
     $uri->path_segments(@pathSg);
-    return $uri->as_string;
+    return $uri;
 }
 
 sub rememberBrowser {

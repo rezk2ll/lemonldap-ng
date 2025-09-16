@@ -37,6 +37,8 @@ Example of a protected virtual host for a local application:
 
    </VirtualHost>
 
+.. _vhostapachereverse:
+
 Reverse-Proxy
 ~~~~~~~~~~~~~
 
@@ -220,7 +222,7 @@ Example of a protected virtual host for a local application:
      location = /lmauth {
        internal;
        include /etc/nginx/fastcgi_params;
-       fastcgi_pass /path/to/llng-fastcgi-server.sock;
+       fastcgi_pass unix:/path/to/llng-fastcgi-server.sock;
        # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
@@ -240,7 +242,7 @@ Example of a protected virtual host for a local application:
        try_files $uri $uri/ =404;
        include fastcgi_params;
        try_files $fastcgi_script_name =404;
-       fastcgi_pass /path/to/php-fpm/socket;
+       fastcgi_pass unix:/path/to/php-fpm/socket;
        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
        fastcgi_intercept_errors on;
        fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -281,7 +283,7 @@ Reverse-Proxy
      location = /lmauth {
        internal;
        include /etc/nginx/fastcgi_params;
-       fastcgi_pass /path/to/llng-fastcgi-server.sock;
+       fastcgi_pass unix:/path/to/llng-fastcgi-server.sock;
        # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";

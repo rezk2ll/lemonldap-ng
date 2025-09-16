@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.22.0';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -94,13 +94,14 @@ sub tests {
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
                 push @pb, $vh if ( $vh =~ /:/ );
             }
-            if (@pb) {
-                return ( 0,
-                        'Virtual hosts '
-                      . join( ', ', @pb )
-                      . " contain a port, this is not allowed" );
-            }
-            else { return 1; }
+            return @pb
+              ? (
+                0,
+                'Virtual hosts '
+                  . join( ', ', @pb )
+                  . ' contain a port, this is not allowed'
+              )
+              : 1;
         },
 
         # Force vhost to be lowercase
@@ -109,13 +110,31 @@ sub tests {
             foreach my $vh ( keys %{ $conf->{locationRules} } ) {
                 push @pb, $vh if ( $vh ne lc $vh );
             }
-            if (@pb) {
-                return ( 0,
-                        'Virtual hosts '
-                      . join( ', ', @pb )
-                      . " must be in lower case" );
+            return @pb
+              ? (
+                0,
+                'Virtual hosts ' . join( ', ', @pb ) . ' must be in lower case'
+              )
+              : 1;
+        },
+
+        vhostNotAnAlias => sub {
+            my ( @pb, @aliases, @all_aliases );
+
+            @aliases =
+              map { $conf->{vhostOptions}->{$_}->{vhostAliases} }
+              keys %{ $conf->{vhostOptions} };
+
+            foreach my $alias (@aliases) {
+                push @all_aliases, split( /\s+/, $alias );
             }
-            else { return 1; }
+
+            foreach my $vh ( keys %{ $conf->{locationRules} } ) {
+                push @pb, $vh if ( grep { lc($_) eq lc($vh) } @all_aliases );
+            }
+            return @pb
+              ? ( 0, 'Virtual hosts ' . join( ', ', @pb ) . ' match an alias' )
+              : 1;
         },
 
         # Check if "userDB" and "authentication" are consistent
@@ -411,11 +430,19 @@ sub tests {
         # Test if SAML private and public keys signature keys are set
         samlSecretKeys => sub {
             return 1 unless ( $conf->{issuerDBSAMLActivation} );
+
+            if (   $conf->{samlServicePrivateKeySig}
+                && $conf->{samlServicePublicKeySig} )
+            {
+                return 1;
+            }
+            elsif ( $conf->{keys}->{"default-saml-sig"} ) {
+                return 1;
+            }
+
             return ( 0,
-                'SAML service private and public keys signature must be set' )
-              unless ( $conf->{samlServicePrivateKeySig}
-                && $conf->{samlServicePublicKeySig} );
-            return 1;
+                'SAML service private and public keys signature must be set' );
+
         },
 
         samlSignatureOverrideNeedsCertificate => sub {
@@ -816,12 +843,32 @@ sub tests {
                     ->{oidcRPMetaDataOptionsRedirectUris} )
                 {
                     push @msg,
-                      "$oidcRpId OpenID Connect RP has no redirect URI defined";
+"$oidcRpId: OIDC Relying Party has no redirect URI defined";
                     $res = 0;
                     next;
                 }
             }
             return ( $res, join( ', ', @msg ) );
+        },
+
+        # OIDC public RP should implement PKCE
+        oidcRPpublicClientWithPKCE => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @msg;
+            foreach my $oidcRpId ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                if ( $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
+                    ->{oidcRPMetaDataOptionsPublic} )
+                {
+                    push @msg,
+"$oidcRpId: requiring PKCE is recommended for public OIDC Relying Parties"
+                      unless $conf->{oidcRPMetaDataOptions}->{$oidcRpId}
+                      ->{oidcRPMetaDataOptionsRequirePKCE};
+                    next;
+                }
+            }
+            return ( 1, join( ', ', @msg ) );
         },
 
         # Test if SAML private and public keys signature keys are set
@@ -906,7 +953,7 @@ sub tests {
                   ->{oidcRPMetaDataOptionsClientID};
                 unless ($clientId) {
                     push @msg,
-                      "$clientConfKey OIDC Relying Party has no Client ID";
+                      "$clientConfKey: OIDC Relying Party has no Client ID";
                     $res = 0;
                     next;
                 }
@@ -958,7 +1005,7 @@ sub tests {
                     my ($appHost) = $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
                     unless ($appHost) {
                         push @msg,
-                          "$casConfKey CAS Application has no Service URL";
+                          "$casConfKey: CAS Application has no Service URL";
                         $res = 0;
                         next;
                     }
@@ -1270,6 +1317,75 @@ sub tests {
                 and $conf->{passwordPolicyMinSize}
                 and $conf->{passwordPolicyActivation} );
             return 1;
+        },
+        accessTokenConsistency => sub {
+            return 1
+              unless $conf->{issuerDBOpenIDConnectActivation};
+            my @pb;
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsAccessTokenClaims}
+                  and not $opts->{oidcRPMetaDataOptionsAccessTokenJWT};
+            }
+            return 1 unless @pb;
+            return ( 0,
+                'access_token cannot be opaque with claims in access_token ('
+                  . join( ', ', @pb )
+                  . ')' );
+        },
+        oidcNoneConsistency => sub {
+            my @pb;
+            return 1 unless $conf->{oidcServiceMetaDataDisallowNoneAlg};
+            foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                my $opts = $conf->{oidcRPMetaDataOptions}->{$rp};
+                push @pb, $rp
+                  if $opts->{oidcRPMetaDataOptionsIDTokenSignAlg} eq 'none'
+                  or $opts->{oidcRPMetaDataOptionsUserInfoSignAlg} eq 'none';
+            }
+            return 1 unless @pb;
+            return ( 1,
+                'Signature algorithm is not allowed but set for: '
+                  . join( ', ', @pb ) );
+        },
+        oidcNativeSso => sub {
+            return ( 0, 'Native SSO without OIDC identity service' )
+              if $conf->{oidcServiceAllowNativeSso}
+              and not $conf->{issuerDBOpenIDConnectActivation};
+            return 1
+              unless $conf->{oidcRPMetaDataOptions}
+              and ref $conf->{oidcRPMetaDataOptions};
+            my @needNativeSso;
+            if ( $conf->{oidcRPMetaDataOptions}
+                and ref $conf->{oidcRPMetaDataOptions} )
+            {
+                for my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                    push @needNativeSso, $rp
+                      if $conf->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsAllowNativeSso};
+                }
+            }
+            if ( @needNativeSso and not $conf->{oidcServiceAllowNativeSso} ) {
+                return ( 1,
+                    "Native SSO isn't enabled but needed by: "
+                      . join( ', ', @needNativeSso ) );
+            }
+            if ( !@needNativeSso and $conf->{oidcServiceAllowNativeSso} ) {
+                return ( 1, 'Native SSO service enabled but useless' );
+            }
+            return 1;
+        },
+        crowdSecBouncer => sub {
+            return 1 unless $conf->{crowdsec};
+            return 1 if $conf->{crowdsecKey};
+            return ( 0, 'Crowdsec Bouncer enabled without API key' );
+        },
+        crowdSecAgent => sub {
+            return 1 unless $conf->{crowdsecAgent};
+            return 1
+              if $conf->{crowdsecMachineId} and $conf->{crowdsecPassword};
+            return ( 0,
+                'Crowdsec Agent enabled without machine_id and password' );
         },
     };
 }

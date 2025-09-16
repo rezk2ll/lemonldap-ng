@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
@@ -50,7 +50,7 @@ sub init {
     $self->keytab("FILE:$file");
     $self->AjaxInitScript( '<script type="text/javascript" src="'
           . $self->p->staticPrefix
-          . '/common/js/kerberosChoice.js"></script>' )
+          . '/common/js/kerberosChoice.min.js"></script>' )
       if $self->conf->{krbByJs};
     return 1;
 }
@@ -217,7 +217,7 @@ sub _handle_ajax_response {
     }
     else {
         $req->wantErrorRender(1);
-        return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
+        return $self->p->doPE($req, PE_BADCREDENTIALS);
     }
 }
 

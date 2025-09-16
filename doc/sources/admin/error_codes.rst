@@ -9,117 +9,118 @@ Error codes list
     This page references all Portal error codes.
 
 .. csv-table::
-   :header: "Error label", "Error number"
-   :delim: ;
+   :header: "Error label", "Error number", "Detail"
+   :delim: ,
    :widths: auto
 
 
-    ``PE_2FWAIT``;-6
-    ``PE_IDPCHOICE``;-5
-    ``PE_SENDRESPONSE``;-4
-    ``PE_INFO``;-3
-    ``PE_REDIRECT``;-2
-    ``PE_DONE``;-1
-    ``PE_OK``;0
-    ``PE_SESSIONEXPIRED``;1
-    ``PE_FORMEMPTY``;2
-    ``PE_WRONGMANAGERACCOUNT``;3
-    ``PE_USERNOTFOUND``;4
-    ``PE_BADCREDENTIALS``;5
-    ``PE_LDAPCONNECTFAILED``;6
-    ``PE_LDAPERROR``;7
-    ``PE_APACHESESSIONERROR``;8
-    ``PE_FIRSTACCESS``;9
-    ``PE_BADCERTIFICATE``;10
-    ``PE_NO_PASSWORD_BE``;20
-    ``PE_PP_ACCOUNT_LOCKED``;21
-    ``PE_PP_PASSWORD_EXPIRED``;22
-    ``PE_CERTIFICATEREQUIRED``;23
-    ``PE_ERROR``;24
-    ``PE_PP_CHANGE_AFTER_RESET``;25
-    ``PE_PP_PASSWORD_MOD_NOT_ALLOWED``;26
-    ``PE_PP_MUST_SUPPLY_OLD_PASSWORD``;27
-    ``PE_PP_INSUFFICIENT_PASSWORD_QUALITY``;28
-    ``PE_PP_PASSWORD_TOO_SHORT``;29
-    ``PE_PP_PASSWORD_TOO_YOUNG``;30
-    ``PE_PP_PASSWORD_IN_HISTORY``;31
-    ``PE_PP_GRACE``;32
-    ``PE_PP_EXP_WARNING``;33
-    ``PE_PASSWORD_MISMATCH``;34
-    ``PE_PASSWORD_OK``;35
-    ``PE_NOTIFICATION``;36
-    ``PE_BADURL``;37
-    ``PE_NOSCHEME``;38
-    ``PE_BADOLDPASSWORD``;39
-    ``PE_MALFORMEDUSER``;40
-    ``PE_SESSIONNOTGRANTED``;41
-    ``PE_CONFIRM``;42
-    ``PE_MAILFORMEMPTY``;43
-    ``PE_BADMAILTOKEN``;44
-    ``PE_MAILERROR``;45
-    ``PE_MAILOK``;46
-    ``PE_LOGOUT_OK``;47
-    ``PE_SAML_ERROR``;48
-    ``PE_SAML_LOAD_SERVICE_ERROR``;49
-    ``PE_SAML_LOAD_IDP_ERROR``;50
-    ``PE_SAML_SSO_ERROR``;51
-    ``PE_SAML_UNKNOWN_ENTITY``;52
-    ``PE_SAML_DESTINATION_ERROR``;53
-    ``PE_SAML_CONDITIONS_ERROR``;54
-    ``PE_SAML_IDPSSOINITIATED_NOTALLOWED``;55
-    ``PE_SLO_ERROR``;56
-    ``PE_SAML_SIGNATURE_ERROR``;57
-    ``PE_SAML_ART_ERROR``;58
-    ``PE_SAML_SESSION_ERROR``;59
-    ``PE_SAML_LOAD_SP_ERROR``;60
-    ``PE_SAML_ATTR_ERROR``;61
-    ``PE_OPENID_EMPTY``;62
-    ``PE_OPENID_BADID``;63
-    ``PE_MISSINGREQATTR``;64
-    ``PE_BADPARTNER``;65
-    ``PE_MAILCONFIRMATION_ALREADY_SENT``;66
-    ``PE_PASSWORDFORMEMPTY``;67
-    ``PE_CAS_SERVICE_NOT_ALLOWED``;68
-    ``PE_MAILFIRSTACCESS``;69
-    ``PE_MAILNOTFOUND``;70
-    ``PE_PASSWORDFIRSTACCESS``;71
-    ``PE_MAILCONFIRMOK``;72
-    ``PE_RADIUSCONNECTFAILED``;73
-    ``PE_MUST_SUPPLY_OLD_PASSWORD``;74
-    ``PE_FORBIDDENIP``;75
-    ``PE_CAPTCHAERROR``;76
-    ``PE_CAPTCHAEMPTY``;77
-    ``PE_REGISTERFIRSTACCESS``;78
-    ``PE_REGISTERFORMEMPTY``;79
-    ``PE_REGISTERALREADYEXISTS``;80
-    ``PE_NOTOKEN``;81
-    ``PE_TOKENEXPIRED``;82
-    ``PE_WEBAUTHNFAILED``;83
-    ``PE_UNAUTHORIZEDPARTNER``;84
-    ``PE_RENEWSESSION``;85
-    ``PE_WAIT``;86
-    ``PE_MUSTAUTHN``;87
-    ``PE_MUSTHAVEMAIL``;88
-    ``PE_SAML_SERVICE_NOT_ALLOWED``;89
-    ``PE_OIDC_SERVICE_NOT_ALLOWED``;90
-    ``PE_OID_SERVICE_NOT_ALLOWED``;91
-    ``PE_GET_SERVICE_NOT_ALLOWED``;92
-    ``PE_IMPERSONATION_SERVICE_NOT_ALLOWED``;93
-    ``PE_ISSUERMISSINGREQATTR``;94
-    ``PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED``;95
-    ``PE_BADOTP``;96
-    ``PE_RESETCERTIFICATE_INVALID``;97
-    ``PE_RESETCERTIFICATE_FORMEMPTY``;98
-    ``PE_RESETCERTIFICATE_FIRSTACCESS``;99
-    ``PE_PP_NOT_ALLOWED_CHARACTER``;100
-    ``PE_PP_NOT_ALLOWED_CHARACTERS``;101
-    ``PE_UPGRADESESSION``;102
-    ``PE_NO_SECOND_FACTORS``;103
-    ``PE_BAD_DEVOPS_FILE``;104
-    ``PE_FILENOTFOUND``;105
-    ``PE_OIDC_AUTH_ERROR``;106
-    ``PE_UNKNOWNPARTNER``;107
-    ``PE_UNAUTHORIZEDURL``;108
-    ``PE_UNPROTECTEDURL``;109
-    ``PE_RETRY_2FA``;110
-    ``PE_PP_PASSWORD_TOO_LONG``;111
+    ``PE_2FWAIT``,-6,"Wait for second factor"
+    ``PE_IDPCHOICE``,-5,"Prompt to choose identity provider"
+    ``PE_SENDRESPONSE``,-4,"Send response given in $req->response"
+    ``PE_INFO``,-3,"Prompt to display $req->info"
+    ``PE_REDIRECT``,-2,"Redirect user to $req->urldc"
+    ``PE_DONE``,-1,"Don't launch next steps"
+    ``PE_OK``,0,"User authenticated"
+    ``PE_SESSIONEXPIRED``,1,"Your connection has expired, you must authenticate once again"
+    ``PE_FORMEMPTY``,2,"User and password fields must be filled"
+    ``PE_WRONGMANAGERACCOUNT``,3,"Wrong directory manager account or password"
+    ``PE_USERNOTFOUND``,4,"User not found in directory"
+    ``PE_BADCREDENTIALS``,5,"Wrong credentials"
+    ``PE_LDAPCONNECTFAILED``,6,"Unable to connect to LDAP server"
+    ``PE_LDAPERROR``,7,"Abnormal error from LDAP server"
+    ``PE_APACHESESSIONERROR``,8,"Session storage module failed"
+    ``PE_FIRSTACCESS``,9,"Authentication required"
+    ``PE_BADCERTIFICATE``,10,"Invalid certificate"
+    ``PE_NO_PASSWORD_BE``,20,"No password backend defined"
+    ``PE_PP_ACCOUNT_LOCKED``,21,"Your account is locked"
+    ``PE_PP_PASSWORD_EXPIRED``,22,"Your password has expired"
+    ``PE_CERTIFICATEREQUIRED``,23,"Certificate required"
+    ``PE_ERROR``,24,"Error"
+    ``PE_PP_CHANGE_AFTER_RESET``,25,"Password has been reset and now must be changed"
+    ``PE_PP_PASSWORD_MOD_NOT_ALLOWED``,26,"Password may not be modified"
+    ``PE_PP_MUST_SUPPLY_OLD_PASSWORD``,27,"Old password must also be supplied when setting a new password"
+    ``PE_PP_INSUFFICIENT_PASSWORD_QUALITY``,28,"Insufficient password quality"
+    ``PE_PP_PASSWORD_TOO_SHORT``,29,"Password too short"
+    ``PE_PP_PASSWORD_TOO_YOUNG``,30,"Password too young"
+    ``PE_PP_PASSWORD_IN_HISTORY``,31,"Password used too recently"
+    ``PE_PP_GRACE``,32,"authentications remaining, change your password!"
+    ``PE_PP_EXP_WARNING``,33,"%d days, %d hours, %d minutes and %d seconds before password expiration, change it!"
+    ``PE_PASSWORD_MISMATCH``,34,"Passwords mismatch"
+    ``PE_PASSWORD_OK``,35,"Password successfully changed"
+    ``PE_NOTIFICATION``,36,"You have a new message"
+    ``PE_BADURL``,37,"Bad URL"
+    ``PE_NOSCHEME``,38,"No scheme available"
+    ``PE_BADOLDPASSWORD``,39,"Bad old password"
+    ``PE_MALFORMEDUSER``,40,"Bad username"
+    ``PE_SESSIONNOTGRANTED``,41,"Session opening not allowed"
+    ``PE_CONFIRM``,42,"Confirmation required"
+    ``PE_MAILFORMEMPTY``,43,"Your mail address is mandatory"
+    ``PE_BADMAILTOKEN``,44,"Confirmation key is invalid or too old"
+    ``PE_MAILERROR``,45,"An error occurred when sending mail"
+    ``PE_MAILOK``,46,"A mail has been sent"
+    ``PE_LOGOUT_OK``,47,"You have been disconnected"
+    ``PE_SAML_ERROR``,48,"Undefined SAML error"
+    ``PE_SAML_LOAD_SERVICE_ERROR``,49,"Unable to load SAML service"
+    ``PE_SAML_LOAD_IDP_ERROR``,50,"Problem when loading an identity provider"
+    ``PE_SAML_SSO_ERROR``,51,"An error occured during SAML single sign on"
+    ``PE_SAML_UNKNOWN_ENTITY``,52,"SAML entity is not known"
+    ``PE_SAML_DESTINATION_ERROR``,53,"SAML message destination is not correct"
+    ``PE_SAML_CONDITIONS_ERROR``,54,"SAML message conditions are not respected"
+    ``PE_SAML_IDPSSOINITIATED_NOTALLOWED``,55,"Identity provider initiated single sign on is not authorized"
+    ``PE_SLO_ERROR``,56,"You've been disconnected but an error occured in another application, you should close your browser"
+    ``PE_SAML_SIGNATURE_ERROR``,57,"Error in SAML message signature management"
+    ``PE_SAML_ART_ERROR``,58,"An error occurred during SAML artifact use"
+    ``PE_SAML_SESSION_ERROR``,59,"Communication error with SAML sessions"
+    ``PE_SAML_LOAD_SP_ERROR``,60,"Problem when loading a service provider"
+    ``PE_SAML_ATTR_ERROR``,61,"An error occurred during SAML attributes exchange"
+    ``PE_OPENID_EMPTY``,62,"This is an OpenID endpoint page"
+    ``PE_OPENID_BADID``,63,"You try to use an OpenID identity which is not yours"
+    ``PE_MISSINGREQATTR``,64,"A required attribute is not available"
+    ``PE_BADPARTNER``,65,"Federation forbidden by security policy"
+    ``PE_MAILCONFIRMATION_ALREADY_SENT``,66,"The confirmation mail was already sent"
+    ``PE_PASSWORDFORMEMPTY``,67,"Password field must be filled"
+    ``PE_CAS_SERVICE_NOT_ALLOWED``,68,"Access not granted on CAS service"
+    ``PE_MAILFIRSTACCESS``,69,"Please provide your mail address"
+    ``PE_MAILNOTFOUND``,70,"No matching user"
+    ``PE_PASSWORDFIRSTACCESS``,71,"Please provide your new password"
+    ``PE_MAILCONFIRMOK``,72,"A confirmation mail has been sent"
+    ``PE_RADIUSCONNECTFAILED``,73,"Radius connection has failed"
+    ``PE_MUST_SUPPLY_OLD_PASSWORD``,74,"Old password is required"
+    ``PE_FORBIDDENIP``,75,"You came from an unaccredited IP address"
+    ``PE_CAPTCHAERROR``,76,"You failed at typing the captcha"
+    ``PE_CAPTCHAEMPTY``,77,"You have to type the captcha"
+    ``PE_REGISTERFIRSTACCESS``,78,"Please enter your information"
+    ``PE_REGISTERFORMEMPTY``,79,"An information is missing"
+    ``PE_REGISTERALREADYEXISTS``,80,"This address is already used"
+    ``PE_NOTOKEN``,81,"Invalid authentication attempt"
+    ``PE_TOKENEXPIRED``,82,"Exceeded authentication timeout"
+    ``PE_WEBAUTHNFAILED``,83,"WebAuthn authentication failed"
+    ``PE_UNAUTHORIZEDPARTNER``,84,"You're not authorized to access to this host"
+    ``PE_RENEWSESSION``,85,"The remote site ask for a newer session (and UpgradeSession plugin isn't loaded). Logout and retry"
+    ``PE_WAIT``,86,"Your account is locked. You have to wait"
+    ``PE_MUSTAUTHN``,87,"You must authenticate again to access to Portal"
+    ``PE_MUSTHAVEMAIL``,88,"Your account must have an e-mail address in order to use double factor authentication"
+    ``PE_SAML_SERVICE_NOT_ALLOWED``,89,"Access not granted on SAML service"
+    ``PE_OIDC_SERVICE_NOT_ALLOWED``,90,"Access not granted on OIDC service"
+    ``PE_OID_SERVICE_NOT_ALLOWED``,91,"Access not granted on OID service"
+    ``PE_GET_SERVICE_NOT_ALLOWED``,92,"Access not granted on GET service"
+    ``PE_IMPERSONATION_SERVICE_NOT_ALLOWED``,93,"Access not granted on IMPERSONATION service"
+    ``PE_ISSUERMISSINGREQATTR``,94,"A required attribute is not available"
+    ``PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED``,95,"Access not granted on DECRYPT service"
+    ``PE_BADOTP``,96,"Invalid verification code"
+    ``PE_RESETCERTIFICATE_INVALID``,97,"Your certificate is invalid or expires soon"
+    ``PE_RESETCERTIFICATE_FORMEMPTY``,98,"Please select your new certificate"
+    ``PE_RESETCERTIFICATE_FIRSTACCESS``,99,"Please select your new certificate"
+    ``PE_PP_NOT_ALLOWED_CHARACTER``,100,"Password contains not allowed character"
+    ``PE_PP_NOT_ALLOWED_CHARACTERS``,101,"Password contains not allowed characters"
+    ``PE_UPGRADESESSION``,102,"Session must be upgraded"
+    ``PE_NO_SECOND_FACTORS``,103,"No second factors available for your account"
+    ``PE_BAD_DEVOPS_FILE``,104,"Bad DevOps handler file"
+    ``PE_FILENOTFOUND``,105,"File not found"
+    ``PE_OIDC_AUTH_ERROR``,106,"Error during authentication with OpenID Provider"
+    ``PE_UNKNOWNPARTNER``,107,"This application is not known"
+    ``PE_UNAUTHORIZEDURL``,108,"Unauthorized URL"
+    ``PE_UNPROTECTEDURL``,109,"Not a protected or trusted URL"
+    ``PE_RETRY_2FA``,110,"Second factor validation failed, please retry"
+    ``PE_PP_PASSWORD_TOO_LONG``,111,"Password too long"
+    ``PE_PP_PASSWORD_EXPIRES_SOON``,112,"Password is about to expire, please change it now"
