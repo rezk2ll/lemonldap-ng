@@ -64,8 +64,8 @@ sub get_private_key {
         return {
             private     => $key_config->{keyPrivate},
             public      => $key_config->{keyPublic},
-            external_id => ( $key_config->{keyId} || $key_id ),
-            password    => ( $key_config->{keyPrivatePwd} // '' ),
+            external_id => $key_config->{keyId},
+            password    => $key_config->{keyPrivatePwd},
         };
     }
 
@@ -84,7 +84,7 @@ sub get_public_key {
         $self->logger->debug("Found public key $key_id_log");
         return {
             public      => $key_config->{keyPublic},
-            external_id => ( $key_config->{keyId} || $key_id ),
+            external_id => $key_config->{keyId},
         };
     }
 
@@ -96,8 +96,13 @@ sub _get_key_config {
     my ( $self, $key_id ) = @_;
 
     return unless $key_id;
-    if ( $self->conf->{'keys'}->{$key_id} ) {
-        return $self->conf->{'keys'}->{$key_id};
+    if ( my $key = $self->conf->{'keys'}->{$key_id} ) {
+        return {
+            keyPrivate    => $key->{keyPrivate},
+            keyPrivatePwd => ( $key->{keyPrivatePwd} // "" ),
+            keyPublic     => $key->{keyPublic},
+            keyId         => ( $key->{keyId} || $key_id ),
+        };
     }
 
     if ( $key_id eq "default-saml-sig" ) {
