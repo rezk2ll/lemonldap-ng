@@ -2443,19 +2443,26 @@ sub _createJWT {
 
     #  c) asymetric algorithms
     else {
-        my $priv_key = $self->conf->{oidcServicePrivateKeySig};
+        my $key_list =
+            $isRp
+          ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsSigningKey}
+          : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsSigningKey};
+        $key_list ||= $self->conf->{oidcServiceSignatureKey};
+        my $key_id   = ( split( /\s*,\s*/, $key_list ) )[0];
+        my $priv_key = $self->get_private_key($key_id);
+
         unless ($priv_key) {
             $self->logger->error(
                 "Algorithm $alg needs a Private Key to sign JWT");
             return;
         }
-        @keyArg = ( key => \$priv_key, );
 
-        if ( $self->conf->{oidcServiceKeyIdSig} ) {
-            $extra_headers->{kid} = $self->conf->{oidcServiceKeyIdSig};
+        @keyArg = ( key => \$priv_key->{private}, );
+
+        if ( $priv_key->{external_id} ) {
+            $extra_headers->{kid} = $priv_key->{external_id};
         }
-        my $key_info =
-          $self->getCertInfo( $self->conf->{oidcServicePublicKeySig} );
+        my $key_info = $self->getCertInfo( $priv_key->{public} );
         if ( $key_info->{x5t} ) {
             $extra_headers->{x5t} = $key_info->{x5t};
         }
