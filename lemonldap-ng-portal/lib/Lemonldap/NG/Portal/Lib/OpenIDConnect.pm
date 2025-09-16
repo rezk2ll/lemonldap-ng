@@ -491,7 +491,7 @@ sub buildAuthorizationCodeAuthnRequest {
                 iat => time,
                 %$authorize_request_params,
             },
-            $self->opOptions->{op}
+            $self->opOptions->{$op}
               ->{oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg} || 'RS256',
             $op
         );
