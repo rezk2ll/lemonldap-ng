@@ -2741,6 +2741,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'openid profile',
             'type'    => 'text'
         },
+        'oidcOPMetaDataOptionsSigningKey' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'oidcOPMetaDataOptionsSortNumber' => {
             'type' => 'int'
         },
@@ -3383,6 +3387,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 return perlExpr(@_);
             },
             'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsSigningKey' => {
+            'default' => '',
+            'type'    => 'text'
         },
         'oidcRPMetaDataOptionsTokenXAuthorizedRP' => {
             'type' => 'text'

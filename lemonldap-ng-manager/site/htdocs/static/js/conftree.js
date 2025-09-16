@@ -568,6 +568,13 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSigningKey",
+                  "help" : "Signature key used with this OP",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSigningKey",
+                  "title" : "oidcOPMetaDataOptionsSigningKey"
+               },
+               {
                   "default" : 1,
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsCheckJWTSignature",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsCheckJWTSignature",
@@ -1457,6 +1464,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwks",
                   "title" : "oidcRPMetaDataOptionsJwks",
                   "type" : "file"
+               },
+               {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsSigningKey",
+                  "help" : "Signature key used with this OP",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsSigningKey",
+                  "title" : "oidcRPMetaDataOptionsSigningKey"
                }
             ],
             "id" : "oidcRpKeys",
