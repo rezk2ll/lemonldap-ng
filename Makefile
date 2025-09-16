@@ -1137,7 +1137,7 @@ clean:
 	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
-	@rm -rf doc/pages/documentation/current/*
+	@if [ ! "$(SKIP_DOCUMENTATION)" ]; then rm -rf doc/pages/documentation/current/*; fi
 	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
