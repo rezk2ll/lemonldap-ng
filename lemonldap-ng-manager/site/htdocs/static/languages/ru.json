@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Порядок",
 "oidcOPMetaDataOptionsStoreIDToken":"ID-токен магазина",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Метод аутентификации конечной точки токена",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Подсказка",
 "oidcOPMetaDataOptionsUiLocales":"UI локалей",
 "oidcOPMetaDataOptionsUseNonce":"Использовать одноразовый номер",

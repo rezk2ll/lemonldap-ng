@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Order",
 "oidcOPMetaDataOptionsStoreIDToken":"Mã thông báo Cửa hàng",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Phương pháp xác thực thiết bị đầu cuối Token",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Chú giải ",
 "oidcOPMetaDataOptionsUiLocales":"Giao diện Người dùng",
 "oidcOPMetaDataOptionsUseNonce":"Sử dụng nonce",

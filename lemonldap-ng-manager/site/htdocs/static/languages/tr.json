@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Sıra",
 "oidcOPMetaDataOptionsStoreIDToken":"ID Jetonu Sakla",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Jeton uç noktası doğrulama metodu",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Araç ipucu",
 "oidcOPMetaDataOptionsUiLocales":"Yerel UI",
 "oidcOPMetaDataOptionsUseNonce":"Tek seferlik anahtarı kullan",

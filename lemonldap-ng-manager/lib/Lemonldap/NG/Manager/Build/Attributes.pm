@@ -5207,6 +5207,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'client_secret_post',
         },
+        oidcOPMetaDataOptionsTokenEndpointAuthSigAlg => {
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
+            default => 'RS256',
+        },
         oidcOPMetaDataOptionsAuthnEndpointAuthMethod => {
             type   => 'select',
             select =>
