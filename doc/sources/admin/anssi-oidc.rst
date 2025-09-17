@@ -149,7 +149,7 @@ This is the default configuration, check it in ``Options`` > ``Protocol`` > ``Us
 
 * **R23** Utiliser une authentification du client OIDC adaptée
 
-Set authentication on token endpoint in ``Options`` > ``Protocol`` > ``Token endpoint authentication method``, prefer JWS authentication method.
+Set authentication on token endpoint in ``Options`` > ``Protocol`` > ``Token endpoint authentication method``, prefer ``private_key_jwt`` aand select an appropriate algorithm (``RS256`` or ``ES256``) as the ``Signature algorithm for token endpoint authentication``.
 
 * **R32** Ne pas écrire dans les journaux les access token
 
