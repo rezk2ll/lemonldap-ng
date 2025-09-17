@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"סדר",
 "oidcOPMetaDataOptionsStoreIDToken":"Store ID Token",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Token endpoint authentication method",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"חלונית עצה",
 "oidcOPMetaDataOptionsUiLocales":"Locales UI",
 "oidcOPMetaDataOptionsUseNonce":"Use nonce",

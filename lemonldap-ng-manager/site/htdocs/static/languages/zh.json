@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"順序",
 "oidcOPMetaDataOptionsStoreIDToken":"儲存 ID 權杖",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"權杖端點驗證方法",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"工具提示",
 "oidcOPMetaDataOptionsUiLocales":"在地化使用者介面",
 "oidcOPMetaDataOptionsUseNonce":"使用隨機數",

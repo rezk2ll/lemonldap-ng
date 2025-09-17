@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT qw(encode_jwt decode_jwt);
+use Crypt::JWT  qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -456,9 +456,10 @@ sub buildAuthorizationCodeAuthnRequest {
         %$authorize_request_oauth2_params,
         ( $display ? ( display => $display ) : () ),
         ( $prompt  ? ( prompt  => $prompt )  : () ),
+
         # MaxAge is defined as an int type in LLNG config,
         # so 0 means undefined
-        ( $max_age    ? ( max_age    => $max_age )    : () ),
+        ( $max_age ? ( max_age => $max_age ) : () ),
         (
             defined($ui_locales)
               && length($ui_locales) ? ( ui_locales => $ui_locales ) : ()
@@ -777,11 +778,14 @@ sub getAccessTokenFromTokenEndpoint {
         }
         elsif ( $auth_method =~ /^(?:client_secret|private_key)_jwt$/ ) {
 
-            # TODO: add parameter to choose alg
-            my $alg =
-                $auth_method eq 'client_secret_jwt'          ? 'HS256'
-              : $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256'
-              :                                                'RS256';
+            my $alg = $self->opOptions->{$op}
+              ->{oidcOPMetaDataOptionsTokenEndpointAuthSigAlg};
+            if ( !$alg ) {
+                $alg =
+                    $auth_method eq 'client_secret_jwt'          ? 'HS256'
+                  : $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256'
+                  :                                                'RS256';
+            }
             my $time = time;
             my $jws  = $self->createJWTForOP( {
                     iss => $client_id,

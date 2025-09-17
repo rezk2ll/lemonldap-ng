@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Order",
 "oidcOPMetaDataOptionsStoreIDToken":"مخزن تعريف التوكن",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"توكن نقطة النهاية لطريقة إثبات الهوية",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Tooltip",
 "oidcOPMetaDataOptionsUiLocales":"واجهة المستخدم المحلية",
 "oidcOPMetaDataOptionsUseNonce":"استخدام نونس",

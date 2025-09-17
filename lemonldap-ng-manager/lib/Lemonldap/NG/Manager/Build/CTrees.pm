@@ -200,6 +200,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsAuthnEndpointAuthMethod',
                             'oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg',
                             'oidcOPMetaDataOptionsTokenEndpointAuthMethod',
+                            'oidcOPMetaDataOptionsTokenEndpointAuthSigAlg',
                             'oidcOPMetaDataOptionsCheckJWTSignature',
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
                             'oidcOPMetaDataOptionsUseNonce',

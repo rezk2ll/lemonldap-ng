@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Kolejność",
 "oidcOPMetaDataOptionsStoreIDToken":"Przechowuj token identyfikacyjny",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Metoda uwierzytelniania tokena punktu końcowego",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Etykietka",
 "oidcOPMetaDataOptionsUiLocales":"Interfejs użytkownika Locales",
 "oidcOPMetaDataOptionsUseNonce":"Użyj nonce",

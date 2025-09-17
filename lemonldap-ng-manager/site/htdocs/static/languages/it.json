@@ -751,6 +751,7 @@
 "oidcOPMetaDataOptionsSortNumber":"Ordine",
 "oidcOPMetaDataOptionsStoreIDToken":"Immagazzina ID Token",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Metodo di autenticazione degli endpoint di token",
+"oidcOPMetaDataOptionsTokenEndpointAuthSigAlg":"Signature algorithm for token endpoint authentication",
 "oidcOPMetaDataOptionsTooltip":"Tooltip",
 "oidcOPMetaDataOptionsUiLocales":"Locales UI",
 "oidcOPMetaDataOptionsUseNonce":"Usare nonce",
