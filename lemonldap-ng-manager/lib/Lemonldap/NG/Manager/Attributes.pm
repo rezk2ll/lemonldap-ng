@@ -2741,6 +2741,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'openid profile',
             'type'    => 'text'
         },
+        'oidcOPMetaDataOptionsSigningKey' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'oidcOPMetaDataOptionsSortNumber' => {
             'type' => 'int'
         },
@@ -3384,6 +3388,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsSigningKey' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'oidcRPMetaDataOptionsTokenXAuthorizedRP' => {
             'type' => 'text'
         },
@@ -3636,6 +3644,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcServiceEncryptionKey' => {
+            'default' => 'default-oidc-enc',
+            'type'    => 'text'
+        },
         'oidcServiceHideMetadata' => {
             'type' => 'bool'
         },
@@ -3841,6 +3853,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcServicePublicKeySig' => {
             'type' => 'EcOrRSAPublicKeyOrCertificate'
+        },
+        'oidcServiceSignatureKey' => {
+            'default' => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            'type'    => 'text'
         },
         'oidcStorage' => {
             'type' => 'PerlModule'

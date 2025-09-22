@@ -301,6 +301,11 @@ Options
 
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
+   -  **Signing key name**: Since ``2.22.0``, lets you use a
+      :doc:`different key <keys>` for signing tokens. If you specify multiple
+      values separated by a comma, the first key will be used for signing, and the
+      others will be published in metadata if you use the
+      ``/oauth2/jwks?client_id=<clientid>`` endpoint
 
 .. important::
 

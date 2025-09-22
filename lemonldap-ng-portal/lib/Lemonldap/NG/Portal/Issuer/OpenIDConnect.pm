@@ -34,7 +34,8 @@ extends qw(
 );
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
-  'Lemonldap::NG::Common::OpenIDConnect::Metadata';
+  'Lemonldap::NG::Common::OpenIDConnect::Metadata',
+  'Lemonldap::NG::Portal::Lib::Key';
 
 # INTERFACE
 
@@ -2668,13 +2669,16 @@ sub registration {
     my $client_id     = random_string(RS_MSK);
     my $client_secret = random_string(RS_MSK);
 
+    my $default_signing_key_type =
+      $self->_getKeyType( $self->get_public_key("default-oidc-sig") );
+
     # Register known parameters
     my $client_name =
       $client_metadata->{client_name} || "Self registered client";
     my $logo_uri = $client_metadata->{logo_uri};
     my $id_token_signed_response_alg =
       $client_metadata->{id_token_signed_response_alg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+      || ( $default_signing_key_type eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $request_uris           = $client_metadata->{request_uris};

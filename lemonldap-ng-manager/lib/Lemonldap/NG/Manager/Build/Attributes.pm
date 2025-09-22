@@ -5060,6 +5060,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 'RSA',
         },
 
+        oidcServiceSignatureKey => {
+            type   => 'text',
+            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            documentation => 'Key to use for OIDC signature',
+        },
+        oidcServiceEncryptionKey => {
+            type   => 'text',
+            default => 'default-oidc-enc',
+            documentation => 'Key to use for OIDC encryption',
+        },
+
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,
@@ -5222,6 +5233,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select  => oidcSigAlgorithmAlg,
             default => 'RS256',
         },
+        oidcOPMetaDataOptionsSigningKey => {
+            type    => 'text',
+            help    => 'Signature key used with this OP',
+            default => '',
+        },
         oidcOPMetaDataOptionsCheckJWTSignature =>
           { type => 'bool', default => 1 },
         oidcOPMetaDataOptionsIDTokenMaxAge => { type => 'int',  default => 30 },
@@ -5288,6 +5304,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
+        oidcRPMetaDataOptionsSigningKey => {
+            type    => 'text',
+            help    => 'Signature key used with this OP',
+            default => '',
+        },
         oidcRPMetaDataOptionsIDTokenSignAlg => {
             type   => 'select',
             select => [ { k => 'none', v => 'None' }, @{&oidcSigAlgorithmAlg} ],
