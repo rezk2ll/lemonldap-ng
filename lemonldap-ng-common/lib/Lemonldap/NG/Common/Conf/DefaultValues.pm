@@ -147,12 +147,13 @@ sub defaultValues {
         'issuersTimeout'                => 120,
         'jitsiExpiration'               => '300',
         'jitsiSigningAlg'               => 'RS256',
-        'jsRedirect'                    => 0,
-        'krbAuthnLevel'                 => 3,
-        'krbRemoveDomain'               => 1,
-        'ldapAuthnLevel'                => 2,
-        'ldapBase'                      => 'dc=example,dc=com',
-        'ldapExportedVars'              => {
+        'jitsiSigningKey'  => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+        'jsRedirect'       => 0,
+        'krbAuthnLevel'    => 3,
+        'krbRemoveDomain'  => 1,
+        'ldapAuthnLevel'   => 2,
+        'ldapBase'         => 'dc=example,dc=com',
+        'ldapExportedVars' => {
             'cn'   => 'cn',
             'mail' => 'mail',
             'uid'  => 'uid'

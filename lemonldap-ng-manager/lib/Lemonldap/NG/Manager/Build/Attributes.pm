@@ -2054,6 +2054,11 @@ sub attributes {
             default       => 'RS256',
             documentation => 'Jitsi JWT signature method',
         },
+        jitsiSigningKey => {
+            type          => 'text',
+            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            documentation => 'Jitsi JWT signature key',
+        },
         jitsiExpiration => {
             type          => 'int',
             default       => '300',

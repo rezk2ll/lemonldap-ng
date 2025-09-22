@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"אפשרויות",
 "jitsiSigningAlg":"Signature algorithm",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"jQuery button selector (optional)",
 "jqueryFormSelector":"jQuery form selector (optional)",
 "jqueryUrl":"כתובת jQuery (רשות)",

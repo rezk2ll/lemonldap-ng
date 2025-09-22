@@ -1938,6 +1938,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             ],
             'type' => 'select'
         },
+        'jitsiSigningKey' => {
+            'default' => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            'type'    => 'text'
+        },
         'jsRedirect' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"الخيارات",
 "jitsiSigningAlg":"Signature algorithm",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"زر التحديد ل جي كويري  (اختياري)",
 "jqueryFormSelector":"تحديد الاستمارة ل جي كويري (اختياري)",
 "jqueryUrl":"جي كويري يو آر إل (اختياري)",

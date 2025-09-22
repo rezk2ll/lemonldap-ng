@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"選項",
 "jitsiSigningAlg":"Signature algorithm",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"jQuery 按鈕選取器（選擇性）",
 "jqueryFormSelector":"jQuery 表單選取器（選擇性）",
 "jqueryUrl":"jQuery URL（選擇性）",

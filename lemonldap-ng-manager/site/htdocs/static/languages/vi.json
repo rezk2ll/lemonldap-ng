@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"Tùy chọn",
 "jitsiSigningAlg":"Signature algorithm",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"nút chọn jQuery (tùy chọn)",
 "jqueryFormSelector":"trình đơn chọn jQuery (tùy chọn)",
 "jqueryUrl":"jQuery URL (tùy chọn)",
