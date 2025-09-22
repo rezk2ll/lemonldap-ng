@@ -1225,6 +1225,7 @@ sub newAccessToken {
             my $at_jwt =
               $self->makeJWT( $req, $session->id, $sessionInfo, $at_info,
                 $ttl );
+            return undef unless $at_jwt;
             $at_jwt = $self->encryptToken(
                 $rp,
                 $at_jwt,
@@ -1306,6 +1307,7 @@ sub makeJWT {
 
     my $jwt =
       $self->createJWT( $access_token_payload, $alg, $rp, $extra_headers );
+    return undef unless $jwt;
 
     my $attr_str = (
         %extra_attr
@@ -2457,6 +2459,15 @@ sub _createJWT {
             return;
         }
 
+        my $key_type          = $self->_getKeyType($priv_key);
+        my $required_key_type = $self->_getRequiredKeyTypeForAlg($alg);
+        if ( $required_key_type and $key_type ne $required_key_type ) {
+            $self->logger->error(
+                    "Algorithm $alg needs a $required_key_type key to sign JWT,"
+                  . " but key $key_id is $key_type" );
+            return;
+        }
+
         @keyArg = ( key => \$priv_key->{private}, );
 
         if ( $priv_key->{external_id} ) {
@@ -2512,6 +2523,8 @@ sub createIDToken {
     return undef if ( $h != PE_OK );
 
     my $id_token = $self->createJWT( $payload, $alg, $rp, $extra_headers );
+    return undef unless $id_token;
+
     return $self->encryptToken(
         $rp,
         $id_token,
@@ -2926,6 +2939,17 @@ sub _getKeyType {
         return "EC";
     }
 
+    return;
+}
+
+sub _getRequiredKeyTypeForAlg {
+    my ( $self, $alg ) = @_;
+    if ( $alg =~ m/^(?:R|P)S/ ) {
+        return "RSA";
+    }
+    elsif ( $alg =~ /^ES/ ) {
+        return "EC";
+    }
     return;
 }
 
