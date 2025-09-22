@@ -6,7 +6,7 @@ Keys |beta|
 .. versionadded:: 2.22.0
 
 This section allows you to define cryptographic key pairs (*public* and *private* keys) that can be used by LemonLDAP::NG features such as
-:doc:`idpsaml` or :doc:`idpopenidconnect`.
+:doc:`idpsaml`, :doc:`idpopenidconnect` and :doc:`idpjitsimeettokens`.
 
 Key material
 ------------
