@@ -2628,11 +2628,20 @@ sub jwks {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
 
-    my $jwks = { keys => [] };
+    my $jwks      = { keys => [] };
+    my $client_id = $req->param('client_id');
 
-    for my $sig_key (
-        split( /\s*,\s*/, ( $self->conf->{oidcServiceSignatureKey} || "" ) ) )
-    {
+    my $list_sig_keys;
+    if ($client_id) {
+        my $rp = $self->getRP($client_id);
+        if ($rp) {
+            $list_sig_keys =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsSigningKey};
+        }
+    }
+    $list_sig_keys ||= $self->conf->{oidcServiceSignatureKey} || "";
+
+    for my $sig_key ( split( /\s*,\s*/, $list_sig_keys ) ) {
         push @{ $jwks->{keys} },
           $self->_buildJwk( "Sig", $self->get_public_key($sig_key) );
     }

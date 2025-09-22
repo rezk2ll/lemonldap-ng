@@ -203,11 +203,7 @@ ok( $res = $op->_get( '/oauth2/jwks', ), "Get default JWKS" );
 
 my $keys = from_json( $res->[2]->[0] );
 my @ids  = map { $_->{kid} } @{ $keys->{keys} };
-is_deeply(
-    \@ids,
-    [ 'default-oidc-sig', 'eckey' ],
-    "Expected keys are returned"
-);
+is_deeply( \@ids, [ 'defaultkey', 'eckey' ], "Expected keys are returned" );
 count(2);
 
 # Per-client JWKS
@@ -281,6 +277,7 @@ sub op {
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
                 oidcServicePublicKeySig  => oidc_cert_op_public_sig,
+                oidcServiceKeyIdSig      => 'defaultkey',
                 oidcServiceSignatureKey  => 'default-oidc-sig, eckey',
                 keys                     => {
                     "eckey" => {
