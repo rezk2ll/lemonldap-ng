@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"Seçenekler",
 "jitsiSigningAlg":"İmza algoritması",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"jQuery buton seçici (isteğe bağlı)",
 "jqueryFormSelector":"jQuery form seçici (isteğe bağlı)",
 "jqueryUrl":"jQuery URL (isteğe bağlı)",

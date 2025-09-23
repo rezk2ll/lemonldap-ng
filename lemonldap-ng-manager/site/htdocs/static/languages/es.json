@@ -507,6 +507,7 @@
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"Opciones",
 "jitsiSigningAlg":"Signature algorithm",
+"jitsiSigningKey":"Signing key name",
 "jqueryButtonSelector":"Botón selector jQuery (opcional)",
 "jqueryFormSelector":"Formulario selector jQuery (opcional)",
 "jqueryUrl":"URL JQuery (opcional)",

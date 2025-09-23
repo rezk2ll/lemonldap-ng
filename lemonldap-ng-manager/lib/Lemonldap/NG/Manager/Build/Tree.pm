@@ -574,6 +574,7 @@ sub tree {
                                         'jitsiAppId',
                                         'jitsiAppSecret',
                                         'jitsiSigningAlg',
+                                        'jitsiSigningKey',
                                         'jitsiExpiration',
                                         {
                                             title => 'jitsiAttributes',
