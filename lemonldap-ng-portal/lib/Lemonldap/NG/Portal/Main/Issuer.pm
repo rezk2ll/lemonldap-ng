@@ -227,7 +227,6 @@ sub cleanPdata {
 
 sub storeRequest {
     my ( $self, $req ) = @_;
-    $self->logger->debug('Store issuer request');
     my $info = {};
     $info->{content} = $req->content;
     foreach ( keys %{ $req->env } ) {
@@ -235,11 +234,14 @@ sub storeRequest {
         next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
-    return $self->_ott->createToken($info);
+    my $token = $self->_ott->createToken($info);
+    $self->logger->debug("Store issuer request as $token");
+    return $token;
 }
 
 sub restoreRequest {
     my ( $self, $req, $token ) = @_;
+    $self->logger->debug("Restore issuer request from $token");
 
     my $result = 0;
     my $env    = $self->_ott->getToken($token);
