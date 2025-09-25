@@ -139,6 +139,8 @@ sub _redirect {
 
 sub resumeProcess {
     my ( $self, $req, $ir, @path ) = @_;
+
+    $self->p->clearHiddenFormValue($req, [ 'inProgress' ]);
     $self->restoreRequest( $req, $ir );
     $self->cleanPdata($req);
     return $self->run( $req, @path );
