@@ -96,7 +96,11 @@ sub _redirect {
         $self->logger->debug("Unauth request to $self->{path} issuer");
         $restore = 1;
         $self->logger->debug('Processing _redirect');
-        $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
+        if ( !$req->param("inProgress") ) {
+            $req->pdata->{ $self->ipath } = $self->storeRequest($req);
+        }
+        $self->p->setHiddenFormValue( $req, "inProgress", 1, '', 0 );
+        $ir = $req->pdata->{ $self->ipath };
         $req->pdata->{ $self->ipath . 'Path' } = \@path;
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
