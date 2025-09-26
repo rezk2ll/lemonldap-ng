@@ -131,6 +131,7 @@
 "backToTop":"Başa dön",
 "badCode":"Hatalı kod",
 "badName":"Hatalı isim",
+"browserAlreadyTrusted":"You are using a trusted browser",
 "cancel":"İptal Et",
 "captcha":"Captcha",
 "certificateReset":"Sertifikamı sıfırla",
