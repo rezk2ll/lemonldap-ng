@@ -20,6 +20,10 @@ extends qw(
   Lemonldap::NG::Portal::Lib::OpenIDConnect
 );
 
+with qw(
+  Lemonldap::NG::Portal::Lib::Key
+);
+
 # INTERFACE
 
 has opList      => ( is => 'rw', isa     => 'ArrayRef', default => sub { [] } );

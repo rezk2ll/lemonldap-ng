@@ -574,6 +574,7 @@ sub tree {
                                         'jitsiAppId',
                                         'jitsiAppSecret',
                                         'jitsiSigningAlg',
+                                        'jitsiSigningKey',
                                         'jitsiExpiration',
                                         {
                                             title => 'jitsiAttributes',
@@ -1531,7 +1532,7 @@ sub tree {
                         {
                             title => 'samlFederation',
                             form  => 'simpleInputContainer',
-                            help => 'samlfederation.html',
+                            help  => 'samlfederation.html',
                             nodes => [ 'samlFederationFiles', ]
                         },
                     ]
@@ -1618,6 +1619,13 @@ sub tree {
                                         'oidcServiceOldKeyTypeEnc',
                                     ],
                                 },
+                            ],
+                        },
+                        {
+                            title => 'oidcServiceMetaDataAdvancedKeys',
+                            nodes => [
+                                'oidcServiceSignatureKey',
+                                'oidcServiceEncryptionKey',
                             ],
                         },
                         'oidcServiceAllowAuthorizationCodeFlow',

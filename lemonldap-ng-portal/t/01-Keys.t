@@ -18,6 +18,15 @@ subtest "No keys defined, fallback to old config vars" => sub {
                 oidcServicePrivateKeySig    => oidc_key_op_private_sig(),
                 oidcServicePublicKeySig     => oidc_cert_op_public_sig(),
                 oidcServiceKeyIdSig         => "currentkey",
+                oidcServiceOldPrivateKeySig => alt_oidc_key_op_private_sig(),
+                oidcServiceOldPublicKeySig  => alt_oidc_cert_op_public_sig(),
+                oidcServiceOldKeyIdSig      => "oldkey",
+                oidcServiceNewPrivateKeySig => saml_key_proxy_private_sig(),
+                oidcServiceNewPublicKeySig  => saml_key_proxy_public_sig(),
+                oidcServiceNewKeyIdSig      => "newkey",
+                oidcServicePrivateKeyEnc    => saml_key_idp_private_enc(),
+                oidcServicePublicKeyEnc     => saml_key_idp_public_enc(),
+                oidcServiceKeyIdEnc         => 'currentenc',
                 samlServicePrivateKeySig    => saml_key_idp_private_sig(),
                 samlServicePublicKeySig     => saml_key_idp_public_sig(),
                 samlServicePrivateKeySigPwd => "mypass",
@@ -98,6 +107,63 @@ subtest "No keys defined, fallback to old config vars" => sub {
             'public'      => oidc_cert_op_public_sig(),
         },
         "Default OIDC private key is as expected"
+    );
+
+    is_deeply(
+        $instance->get_public_key("old-oidc-sig"),
+        {
+            'external_id' => 'oldkey',
+            'public'      => alt_oidc_cert_op_public_sig(),
+        },
+        "Previous OIDC public key is as expected"
+    );
+    is_deeply(
+        $instance->get_private_key("old-oidc-sig"),
+        {
+            'external_id' => 'oldkey',
+            'password'    => '',
+            'private'     => alt_oidc_key_op_private_sig(),
+            'public'      => alt_oidc_cert_op_public_sig(),
+        },
+        "Previous OIDC private key is as expected"
+    );
+
+    is_deeply(
+        $instance->get_public_key("new-oidc-sig"),
+        {
+            'external_id' => 'newkey',
+            'public'      => saml_key_proxy_public_sig(),
+        },
+        "Future OIDC public key is as expected"
+    );
+    is_deeply(
+        $instance->get_private_key("new-oidc-sig"),
+        {
+            'external_id' => 'newkey',
+            'password'    => '',
+            'private'     => saml_key_proxy_private_sig(),
+            'public'      => saml_key_proxy_public_sig(),
+        },
+        "Future OIDC private key is as expected"
+    );
+
+    is_deeply(
+        $instance->get_public_key("default-oidc-enc"),
+        {
+            'external_id' => 'currentenc',
+            'public'      => saml_key_idp_public_enc(),
+        },
+        "Default OIDC public encryption key is as expected"
+    );
+    is_deeply(
+        $instance->get_private_key("default-oidc-enc"),
+        {
+            'external_id' => 'currentenc',
+            'password'    => '',
+            'private'     => saml_key_idp_private_enc(),
+            'public'      => saml_key_idp_public_enc(),
+        },
+        "Default OIDC private encryption key is as expected"
     );
 };
 

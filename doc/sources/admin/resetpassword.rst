@@ -62,8 +62,8 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Password management``:
 
     By default, mail content are empty in order to use HTML templates:
 
-    -  portal/skins/common/mail_confirm.tpl
-    -  portal/skins/common/mail_password.tpl
+    -  portal/templates/common/mail_confirm.tpl
+    -  portal/templates/common/mail_password.tpl
 
     If you define mail contents in Manager, HTML templates will not be used.
 

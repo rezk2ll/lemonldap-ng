@@ -442,7 +442,6 @@ sub tests {
 
             return ( 0,
                 'SAML service private and public keys signature must be set' );
-
         },
 
         samlSignatureOverrideNeedsCertificate => sub {
@@ -871,14 +870,22 @@ sub tests {
             return ( 1, join( ', ', @msg ) );
         },
 
-        # Test if SAML private and public keys signature keys are set
+        # Test if OIDC private and public keys signature keys are set
         oidcSecretKeys => sub {
             return 1 unless ( $conf->{issuerDBOpenIDConnectActivation} );
+
+            if (   $conf->{oidcServicePrivateKeySig}
+                && $conf->{oidcServicePublicKeySig} )
+            {
+                return 1;
+            }
+            elsif ( $conf->{keys}->{"default-oidc-sig"} ) {
+                return 1;
+            }
+
             return ( 1,
-                'OIDC service private and public keys signature should be set' )
-              unless ( $conf->{oidcServicePrivateKeySig}
-                && $conf->{oidcServicePublicKeySig} );
-            return 1;
+                'OIDC service private and public keys signature should be set'
+            );
         },
 
         # RS* OIDC algs require a signing key
@@ -901,7 +908,12 @@ sub tests {
                   ->{oidcRPMetaDataOptionsAccessTokenJWT}
               } keys %{ $conf->{oidcRPMetaDataOptions} };
 
-            if ( @usingRSA and not $conf->{oidcServicePrivateKeySig} ) {
+            if (
+                @usingRSA
+                and not( $conf->{oidcServicePrivateKeySig}
+                    or $conf->{keys}->{"default-oidc-sig"} )
+              )
+            {
                 my $msg =
                   join( ", ", @usingRSA )
                   . ": using RS-type encryption, but no RSA key is defined in global OIDC configuration";
@@ -1217,30 +1229,6 @@ sub tests {
                                   . ' Reload the manager and try again' );
                         }
                     }
-                }
-            }
-            return 1;
-        },
-
-        # OIDC Signature and Encryption tests
-        oidcSigAlgShouldMatchKeyType => sub {
-            for my $key (
-                qw(oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsAccessTokenSignAlg oidcRPMetaDataOptionsUserInfoSignAlg)
-              )
-            {
-                foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
-                    return ( 0,
-"Signature algorithm shouldn't be ES* if key type is RSA ($rp/$key)"
-                      )
-                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
-                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} =~ /^E/
-                      and $conf->{oidcServiceKeyTypeSig} ne 'EC';
-                    return ( 0,
-"Signature algorithm shouldn't be RS* or PS* if key type is EC ($rp/$key)"
-                      )
-                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
-                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} !~ /^E/
-                      and $conf->{oidcServiceKeyTypeSig} eq 'EC';
                 }
             }
             return 1;

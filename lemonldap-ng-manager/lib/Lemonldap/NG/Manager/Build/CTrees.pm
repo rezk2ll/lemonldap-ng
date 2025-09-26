@@ -200,6 +200,8 @@ sub cTrees {
                             'oidcOPMetaDataOptionsAuthnEndpointAuthMethod',
                             'oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg',
                             'oidcOPMetaDataOptionsTokenEndpointAuthMethod',
+                            'oidcOPMetaDataOptionsTokenEndpointAuthSigAlg',
+                            'oidcOPMetaDataOptionsSigningKey',
                             'oidcOPMetaDataOptionsCheckJWTSignature',
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
                             'oidcOPMetaDataOptionsUseNonce',
@@ -302,6 +304,7 @@ sub cTrees {
                         nodes => [
                             'oidcRPMetaDataOptionsJwksUri',
                             'oidcRPMetaDataOptionsJwks',
+                            'oidcRPMetaDataOptionsSigningKey',
                         ],
                     },
                     {

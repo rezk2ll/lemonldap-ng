@@ -90,3 +90,6 @@ You can use the ``lemonldap-ng-sessions`` tool to search, update or delete sessi
    # Delete all sessions:
    $ llngDeleteSession *
 
+.. tip::
+
+    For sessions purge see :doc:`timers <timers>`

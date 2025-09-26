@@ -262,6 +262,12 @@ Protocol
 -  **Signature algorithm for authorization code authentication**: Fix signature algorithm to be used for JWS authentication for code requests
 -  **Token endpoint authentication method**: choice between
    ``client_secret_post``, ``client_secret_basic``, ``client_secret_jwt`` and ``private_key_jwt``
+-  **Signature algorithm for token endpoint authentication**: select an
+   algorithm compatible with the authentication method: ``client_secret_jwt``
+   requires a ``HS*`` algorithm, ``private_key_jwt`` requires either ``RS*`` or
+   ``ES*`` depending on the type of your private key.
+-  **Signing key name**: Since ``2.22.0``, lets you use a
+   :doc:`different key <keys>` for signing requests.
 -  **Check JWT signature**: Set to 0 to disable JWT signature
    checking
 -  **ID Token max age**: If defined, LL::NG will check the ID Token

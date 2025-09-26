@@ -2054,6 +2054,11 @@ sub attributes {
             default       => 'RS256',
             documentation => 'Jitsi JWT signature method',
         },
+        jitsiSigningKey => {
+            type          => 'text',
+            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            documentation => 'Jitsi JWT signature key',
+        },
         jitsiExpiration => {
             type          => 'int',
             default       => '300',
@@ -5060,6 +5065,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 'RSA',
         },
 
+        oidcServiceSignatureKey => {
+            type   => 'text',
+            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            documentation => 'Key to use for OIDC signature',
+        },
+        oidcServiceEncryptionKey => {
+            type   => 'text',
+            default => 'default-oidc-enc',
+            documentation => 'Key to use for OIDC encryption',
+        },
+
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,
@@ -5207,6 +5223,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'client_secret_post',
         },
+        oidcOPMetaDataOptionsTokenEndpointAuthSigAlg => {
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
+            default => 'RS256',
+        },
         oidcOPMetaDataOptionsAuthnEndpointAuthMethod => {
             type   => 'select',
             select =>
@@ -5216,6 +5237,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'select',
             select  => oidcSigAlgorithmAlg,
             default => 'RS256',
+        },
+        oidcOPMetaDataOptionsSigningKey => {
+            type    => 'text',
+            help    => 'Signature key used with this OP',
+            default => '',
         },
         oidcOPMetaDataOptionsCheckJWTSignature =>
           { type => 'bool', default => 1 },
@@ -5283,6 +5309,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
+        oidcRPMetaDataOptionsSigningKey => {
+            type    => 'text',
+            help    => 'Signature key used with this OP',
+            default => '',
+        },
         oidcRPMetaDataOptionsIDTokenSignAlg => {
             type   => 'select',
             select => [ { k => 'none', v => 'None' }, @{&oidcSigAlgorithmAlg} ],
