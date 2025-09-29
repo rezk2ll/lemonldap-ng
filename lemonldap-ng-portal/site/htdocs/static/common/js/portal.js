@@ -448,7 +448,7 @@
     }
     // If there are no auto-focused fields, focus on first visible input
     if ($("input[autofocus]").length === 0) {
-      $("input[type!=hidden]:first").focus();
+      $("input[type=text], input[type=password]").first().focus();
     }
     // Open links in new windows if required
     if (datas['newwindow']) {
