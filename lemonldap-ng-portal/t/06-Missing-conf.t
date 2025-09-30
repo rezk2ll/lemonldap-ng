@@ -15,7 +15,8 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            configStorage => { type => 'File', dirName => $confDir }
+            configStorage =>
+              { type => 'File', dirName => $confDir, confFile => '/dev/null' }
         },
         confFailure => 1,
     }

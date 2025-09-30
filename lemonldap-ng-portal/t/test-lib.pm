@@ -892,14 +892,15 @@ unless ( -d $templateDir ) {
 
 our $defaultIni = {
     configStorage => {
-        type    => 'File',
-        dirName => "$tmpDir",
+        confFile => "/dev/null",
+        type     => 'File',
+        dirName  => "$tmpDir",
     },
     localSessionStorage        => 'Cache::FileCache',
     localSessionStorageOptions => {
-        namespace   => 'lemonldap-ng-session',
-        cache_root  => $tmpDir,
-        cache_depth => 0,
+        namespace            => 'lemonldap-ng-session',
+        cache_root           => $tmpDir,
+        cache_depth          => 0,
         allow_cache_for_root => 1,
     },
     logLevel              => 'error',
