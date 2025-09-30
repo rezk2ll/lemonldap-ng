@@ -4934,6 +4934,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlIDPMetaDataOptionsUserAttribute' => {
             'type' => 'text'
         },
+        'samlIDPMetaDataURL' => {
+            'type' => 'text'
+        },
         'samlIDPMetaDataXML' => {
             'type' => 'file'
         },
@@ -5276,6 +5279,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlSPMetaDataOptionsSignSSOMessage' => {
             'default' => -1,
             'type'    => 'trool'
+        },
+        'samlSPMetaDataURL' => {
+            'type' => 'text'
         },
         'samlSPMetaDataXML' => {
             'type' => 'file'

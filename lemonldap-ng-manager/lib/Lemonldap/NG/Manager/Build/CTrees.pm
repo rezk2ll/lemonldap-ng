@@ -37,6 +37,7 @@ sub cTrees {
         ],
         samlIDPMetaDataNode => [
             'samlIDPMetaDataXML',
+            'samlIDPMetaDataURL',
             'samlIDPMetaDataExportedAttributes',
 
             {
@@ -115,6 +116,7 @@ sub cTrees {
         ],
         samlSPMetaDataNode => [
             'samlSPMetaDataXML',
+            'samlSPMetaDataURL',
             'samlSPMetaDataExportedAttributes',
             {
                 title => 'samlSPMetaDataOptions',

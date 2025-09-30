@@ -643,6 +643,7 @@ samlDiscoveryProtocolPolicy                             SAML Discovery Protocol 
 samlDiscoveryProtocolURL                                SAML Discovery Protocol EndPoint URL                                                 ✔
 samlEntityID                                            SAML service entityID                                                                ✔
 samlFederationFiles                                     Path to SAML Federation Metadata                                                     ✔
+samlIDPMetaDataURL                                      SAML IDP MetaData URL
 samlIDPMetaDataOptions                                                                                                                       ✔                      [1]
 samlIDPSSODescriptorArtifactResolutionServiceArtifact   SAML IDP artifact resolution service                                                 ✔
 samlIDPSSODescriptorSingleLogoutServiceHTTPPost         SAML IDP SLO HTTP POST                                                               ✔
@@ -662,6 +663,7 @@ samlOrganizationName                                    SAML service organizatio
 samlOrganizationURL                                     SAML service organization URL                                                        ✔
 samlOverrideIDPEntityID                                 Override SAML EntityID when acting as an IDP                                         ✔
 samlRelayStateTimeout                                   SAML timeout of relay state                                                          ✔
+samlSPMetaDataURL                                       SAML SP MetaData URL
 samlSPMetaDataOptions                                                                                                                        ✔                      [1]
 samlSPSSODescriptorArtifactResolutionServiceArtifact    SAML SP artifact resolution service                                                  ✔
 samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact SAML SP ACS HTTP artifact                                                            ✔

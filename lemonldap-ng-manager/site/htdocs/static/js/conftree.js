@@ -1610,6 +1610,11 @@ function templates(tpl,key) {
       "type" : "file"
    },
    {
+      "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
+      "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
+      "title" : "samlIDPMetaDataURL"
+   },
+   {
       "cnodes" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "default" : [],
       "help" : "authsaml.html#exported-attributes",
@@ -1999,6 +2004,11 @@ function templates(tpl,key) {
       "id" : tpl+"s/"+key+"/"+"samlSPMetaDataXML",
       "title" : "samlSPMetaDataXML",
       "type" : "file"
+   },
+   {
+      "get" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
+      "id" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
+      "title" : "samlSPMetaDataURL"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
