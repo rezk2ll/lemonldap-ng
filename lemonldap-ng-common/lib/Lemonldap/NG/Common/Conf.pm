@@ -31,7 +31,7 @@ our $VERSION = '2.22.0';
 our $msg     = '';
 our $iniObj;
 
-our $PlaceHolderRe = '%SERVERENV:(.*?)%';
+our $EnvPlaceHolderRe = '%SERVERENV:(.*?)%';
 
 BEGIN {
     eval {
@@ -74,9 +74,13 @@ sub new {
             # Use local conf to get configStorage and localStorage
             my $localConfAccessPrms =
               $self->getLocalConf( CONFSECTION, $self->{confFile}, 0 );
-            $self->replacePlaceholders($localConfAccessPrms)
-              if $localConfAccessPrms->{useServerEnv};
+
             if ( defined $localConfAccessPrms ) {
+                %$self = ( %$self, %$localConfAccessPrms );
+                $self->replacePlaceholders($localConfAccessPrms);
+
+                # localConfAccessPrms might have changed so we need to
+                # update $self
                 %$self = ( %$self, %$localConfAccessPrms );
             }
         }
@@ -277,7 +281,7 @@ sub getConf {
     # Create cipher object and replace variable placeholder
     unless ($raw) {
 
-        $self->replacePlaceholders($res) if $self->{useServerEnv};
+        $self->replacePlaceholders($res);
         eval {
             $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} );
         };
@@ -430,7 +434,7 @@ sub getLocalConf {
         }
     }
 
-    $self->replacePlaceholders($r) if $self->{useServerEnv};
+    $self->replacePlaceholders($r);
     return $r;
 }
 
@@ -565,9 +569,12 @@ sub logError {
 }
 
 sub _substPlaceHolders {
-    return $_[0] unless $_[0];
-    $_[0] =~ s/$PlaceHolderRe/$ENV{$1}/ge;
-    return $_[0];
+    my ( $self, $string ) = @_;
+    return $string unless $string;
+    if ( $self->{useServerEnv} ) {
+        $string =~ s/$EnvPlaceHolderRe/$ENV{$1}/g;
+    }
+    return $string;
 }
 
 ## @method void replacePlaceholders(res: LLNG_Conf)
@@ -576,19 +583,17 @@ sub _substPlaceHolders {
 sub replacePlaceholders {
     my ( $self, $conf ) = @_;
     if ( ref $conf eq 'HASH' ) {
-        foreach my $key ( keys %$conf ) {
-            if ( $key =~ /$PlaceHolderRe/ ) {
-                my $val = $conf->{$key};
-                delete $conf->{$key};
-                my $nk = _substPlaceHolders($key);
-                $conf->{$nk} = $val;
+        foreach my $oldkey ( keys %$conf ) {
+            my $key = $self->_substPlaceHolders($oldkey);
+            if ( $key ne $oldkey ) {
+                $conf->{$key} = delete $conf->{$oldkey};
             }
             next unless ( $conf->{$key} );
             if ( ref $conf->{$key} ) {
                 $self->replacePlaceholders( $conf->{$key} );
             }
-            elsif ( $conf->{$key} =~ /$PlaceHolderRe/ ) {
-                $conf->{$key} = _substPlaceHolders( $conf->{$key} );
+            else {
+                $conf->{$key} = $self->_substPlaceHolders( $conf->{$key} );
             }
         }
     }
@@ -597,8 +602,8 @@ sub replacePlaceholders {
             if ( ref $conf->[$i] ) {
                 $self->replacePlaceholders( $conf->[$i] );
             }
-            elsif ( $conf->[$i] =~ /$PlaceHolderRe/ ) {
-                $conf->[$i] = _substPlaceHolders( $conf->[$i] );
+            else {
+                $conf->[$i] = $self->_substPlaceHolders( $conf->[$i] );
             }
         }
     }
