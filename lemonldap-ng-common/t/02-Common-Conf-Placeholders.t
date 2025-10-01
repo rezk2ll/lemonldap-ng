@@ -85,9 +85,12 @@ useSafeJail = 1
 logLevel     = notice
 checkTime = 1
 myA = %SERVERENV:A%
+myS = %SECRET:myS%
 
 [configuration]
 useServerEnv=1
+configPlaceHolderModules=SECRET=t::Secrets
+secretPlaceholderConfig=1
 type=t::TestConfBackend
 accessoption=%SERVERENV:MYKEY%
 
@@ -103,6 +106,8 @@ EOF
     my $localConf = $h->getLocalConf();
     {
         is( $localConf->{myA}, "Aa", 'configuration variable replaced' );
+        is( $localConf->{myS}, "secret-myS",
+            'configuration variable replaced' );
     }
 };
 
@@ -116,6 +121,7 @@ useSafeJail = 1
 logLevel     = notice
 checkTime = 1
 myA = %SERVERENV:A%
+myS = %SECRET:myS%
 
 [configuration]
 type=t::TestConfBackend
@@ -147,6 +153,7 @@ useSafeJail = 1
 logLevel     = notice
 checkTime = 1
 myA = %SERVERENV:A%
+myS = %SECRET:myS%
 
 [configuration]
 type=t::TestConfBackend
@@ -164,6 +171,8 @@ EOF
     my $localConf = $h->getLocalConf();
     {
         is( $localConf->{myA}, "%SERVERENV:A%",
+            'configuration variable not replaced' );
+        is( $localConf->{myS}, "%SECRET:myS%",
             'configuration variable not replaced' );
     }
 };
