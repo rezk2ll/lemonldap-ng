@@ -31,8 +31,6 @@ our $VERSION = '2.22.0';
 our $msg     = '';
 our $iniObj;
 
-our $EnvPlaceHolderRe = '%SERVERENV:(.*?)%';
-
 BEGIN {
     eval {
         require threads::shared;
@@ -569,10 +567,11 @@ sub logError {
 }
 
 sub _substPlaceHolders {
-    my ( $self, $string ) = @_;
+    my ( $self, $string, $placeholder_config ) = @_;
     return $string unless $string;
-    if ( $self->{useServerEnv} ) {
-        $string =~ s/$EnvPlaceHolderRe/$ENV{$1}/g;
+
+    while ( my ( $key, $value ) = each %$placeholder_config ) {
+        $string =~ s/%\Q$key\E:(.*?)%/$value->($1)/ge;
     }
     return $string;
 }
@@ -582,28 +581,54 @@ sub _substPlaceHolders {
 # Recursively replace %SERVERENV:VariableName% by $ENV{VariableName} value
 sub replacePlaceholders {
     my ( $self, $conf ) = @_;
+
+    my $placeholder_config = {};
+    if ( $self->{useServerEnv} ) {
+        $placeholder_config->{SERVERENV} = sub { %ENV{ $_[0] } };
+    }
+    if ( my $moduleList = $self->{configPlaceHolderModules} ) {
+        for my $moduledef ( split( /[,\s]+/, $moduleList ) ) {
+            if ( my ( $prefix, $module ) =
+                $moduledef =~ /(\w+)\s*=\s*([\w:]+)/ )
+            {
+                eval "require $module";
+                $placeholder_config->{$prefix} =
+                  sub { $module->replace( $self, $_[0] ) };
+            }
+        }
+    }
+
+    return $self->_replacePlaceholder_recurse( $conf, $placeholder_config );
+}
+
+sub _replacePlaceholder_recurse {
+    my ( $self, $conf, $placeholder_config ) = @_;
     if ( ref $conf eq 'HASH' ) {
         foreach my $oldkey ( keys %$conf ) {
-            my $key = $self->_substPlaceHolders($oldkey);
+            my $key = $self->_substPlaceHolders( $oldkey, $placeholder_config );
             if ( $key ne $oldkey ) {
                 $conf->{$key} = delete $conf->{$oldkey};
             }
             next unless ( $conf->{$key} );
             if ( ref $conf->{$key} ) {
-                $self->replacePlaceholders( $conf->{$key} );
+                $self->_replacePlaceholder_recurse( $conf->{$key},
+                    $placeholder_config );
             }
             else {
-                $conf->{$key} = $self->_substPlaceHolders( $conf->{$key} );
+                $conf->{$key} = $self->_substPlaceHolders( $conf->{$key},
+                    $placeholder_config );
             }
         }
     }
     elsif ( ref $conf eq 'ARRAY' ) {
         for ( my $i = 0 ; $i < @$conf ; $i++ ) {
             if ( ref $conf->[$i] ) {
-                $self->replacePlaceholders( $conf->[$i] );
+                $self->_replacePlaceholder_recurse( $conf->[$i],
+                    $placeholder_config );
             }
             else {
-                $conf->[$i] = $self->_substPlaceHolders( $conf->[$i] );
+                $conf->[$i] =
+                  $self->_substPlaceHolders( $conf->[$i], $placeholder_config );
             }
         }
     }
