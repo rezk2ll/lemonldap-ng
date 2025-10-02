@@ -265,21 +265,23 @@ __DATA__
       index="<TMPL_VAR NAME="samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex">"
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorArtifactResolutionServiceArtifactBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation">" />
+    <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceSOAPLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceSOAPLocation">" />
+    </TMPL_IF>
+    <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectLocation">"
-      <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">"
-      </TMPL_IF>/>
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">" />
+    </TMPL_IF>
+    <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostLocation">"
-      <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">"
-      </TMPL_IF>/>
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">" />
+    </TMPL_IF>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
@@ -327,21 +329,23 @@ __DATA__
       index="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactIndex">"
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactLocation">" />
+    <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceSOAPLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPLocation">" />
+    </TMPL_IF>
+    <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectLocation">"
-      <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">"
-      </TMPL_IF>/>
+      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">" />
+    </TMPL_IF>
+    <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostLocation">"
-      <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">"
-      </TMPL_IF>/>
+      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">" />
+    </TMPL_IF>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
