@@ -263,7 +263,8 @@ sub processRefreshSession {
 
     # Transmit refreshed session data to setRefreshedSessionData
     $req->data->{refreshedSessionData} = \%data;
-    $req->steps( [
+    $req->steps(
+        [
             'getUser',              @{ $self->betweenAuthAndData },
             'setSessionInfo',       'setRefreshedSessionData',
             $self->groupsAndMacros, 'setLocalGroups',
@@ -559,7 +560,8 @@ sub getApacheSession {
         $self->logger->debug("Try to get a new $args{kind} session");
     }
 
-    my $as = Lemonldap::NG::Common::Session->new( {
+    my $as = Lemonldap::NG::Common::Session->new(
+        {
 
             # The $args{hashStore} permits one to override the
             # hashedSessionStore parameter. It is used when sessions are given
@@ -635,7 +637,8 @@ sub getPersistentSession {
 
     $info->{_session_uid} = $uid;
 
-    my $ps = Lemonldap::NG::Common::Session->new( {
+    my $ps = Lemonldap::NG::Common::Session->new(
+        {
             storageModule        => $self->conf->{persistentStorage},
             storageModuleOptions => $self->conf->{persistentStorageOptions},
             id                   => $pid,
@@ -1302,6 +1305,11 @@ sub tplParams {
 
     for my $env_key ( keys %{ $req->env } ) {
         $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
+    for my $custom_key ( keys %{ $self->conf->{customTplParams} } ) {
+        $templateParams{$custom_key} =
+          $self->conf->{customTplParams}->{$custom_key};
     }
 
     return (
