@@ -114,7 +114,7 @@ sub extractFormInfo {
         }
 
         # Exit
-        $req->response( [ 200, [ 'Content-Length' => 0 ], [] ] );
+        $req->response( $self->p->sendBinaryResponse( $req, "" ) );
         return PE_SENDRESPONSE;
     }
 

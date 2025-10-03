@@ -66,15 +66,12 @@ sub register {
             }
         );
         if ( $res == PE_OK ) {
-            return [
-                302,
-                [
-                    Location => $self->p->buildUrl(
-                        $req->portal, "2fregisters", { continue => 1 }
-                    )
-                ],
-                []
-            ];
+            return $self->p->sendRedirection(
+                $req,
+                $self->p->buildUrl(
+                    $req->portal, "2fregisters", { continue => 1 }
+                )
+            );
         }
         else {
             $self->logger->debug( $self->prefix . "2f: unable to add device" );

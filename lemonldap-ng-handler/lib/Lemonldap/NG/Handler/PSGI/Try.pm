@@ -65,7 +65,7 @@ sub addAuthRouteWithRedirect {
 sub _auth_and_redirect {
     my ( $self, $req ) = @_;
     $self->api->goToPortal( $req, $req->{env}->{REQUEST_URI} );
-    return [ 302, [ $req->spliceHdrs ], [] ];
+    return $self->sendRedirection($req);
 }
 
 sub defaultAuthRoute {

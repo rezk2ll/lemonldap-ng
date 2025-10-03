@@ -2697,7 +2697,7 @@ sub sendLogoutResponseToServiceProvider {
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
-        return [ 302, [ Location => URI->new($slo_url)->as_string ], [] ];
+        return $self->p->sendRedirection( $req, URI->new($slo_url)->as_string );
     }
 
     # HTTP-POST
@@ -3399,14 +3399,7 @@ sub sendSLOSoapErrorResponse {
     }
     my $slo_body = $logout->msg_body;
     $self->logger->debug("SOAP response $slo_body");
-    return [
-        200,
-        [
-            'Content-Type'   => 'text/xml',
-            'Content-Length' => length($slo_body)
-        ],
-        [$slo_body]
-    ];
+    return $self->p->sendBinaryResponse( $req, $slo_body, type => 'text/xml' );
 }
 
 ## @method string getQueryString()
@@ -3513,14 +3506,8 @@ sub metadata {
     my $idp  = $req->param('idp');
     my $sp   = $req->param('sp');
     if ( my $metadata = $self->_get_metadata_xml( $req, $type, $sp, $idp ) ) {
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/xml',
-                'Content-Length' => length($metadata),
-            ],
-            [$metadata]
-        ];
+        return $self->p->sendTextResponse( $req, $metadata,
+            type => 'application/xml' );
     }
     return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
 }

@@ -108,7 +108,10 @@ sub storeEnvAndCheckGateway {
             $self->logger->debug(
                 "Gateway mode requested, redirect without authentication");
             $req->response(
-                [ 302, [ Location => URI->new($service)->as_string ], [] ] );
+                $self->p->sendRedirection(
+                    $req, URI->new($service)->as_string
+                )
+            );
             for my $s ( $self->ipath, $self->ipath . 'Path' ) {
                 $self->logger->debug("Removing $s from pdata")
                   if delete $req->pdata->{$s};
@@ -1129,7 +1132,7 @@ sub _failValidate1 {
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
     );
 
-    return $self->returnCasValidateError();
+    return $self->returnCasValidateError($req);
 }
 
 sub _failValidate2 {

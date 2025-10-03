@@ -1857,16 +1857,16 @@ sub sendOIDCError {
 # @param error_message Error message
 # @return GI response
 sub returnBearerError {
-    my ( $self, $error_code, $error_message ) = @_;
+    my ( $self, $req, $error_code, $error_message ) = @_;
 
-    my $res = [
-        401,
-        [
+    my $res = $self->p->sendBinaryResponse(
+        $req, '',
+        code    => 401,
+        headers => [
             'WWW-Authenticate' =>
               "error=$error_code,error_description=$error_message"
-        ],
-        []
-    ];
+        ]
+    );
 
     $self->p->setCorsHeaderFromConfig($res);
 

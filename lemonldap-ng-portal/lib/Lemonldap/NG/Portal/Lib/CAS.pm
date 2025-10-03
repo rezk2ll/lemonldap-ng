@@ -142,14 +142,8 @@ sub loadApp {
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
     $self->logger->debug("Send response: $s");
-    return [
-        200,
-        [
-            'Content-Length' => length($s),
-            'Content-Type'   => 'application/soap+xml',
-        ],
-        [$s]
-    ];
+    return $self->p->sendTextResponse( $req, $s,
+        type => 'application/soap+xml' );
 }
 
 # Try to recover the CAS session corresponding to id and return session data
@@ -197,7 +191,7 @@ sub getCasSession {
 sub returnCasValidateError {
     my ( $self, $req ) = @_;
 
-    return [ 200, [ 'Content-Length' => 4 ], ["no\n\n"] ];
+    return $self->p->sendBinaryResponse( $req, "no\n\n" );
 }
 
 # Return success for CAS VALIDATE request

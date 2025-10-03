@@ -531,14 +531,9 @@ sub autoRedirect {
                 $req->data->{redirectFormMethod} = "get";
             }
             else {
-                return [
-                    302,
-                    [
-                        Location => URI->new( $req->{urldc} )->as_string,
-                        $req->spliceHdrs
-                    ],
-                    []
-                ];
+                return $self->sendRedirection( $req,
+                    URI->new( $req->{urldc} )->as_string,
+                );
             }
         }
     }
@@ -1215,13 +1210,7 @@ sub sendImage {
     my $u = URI->new_abs( $self->staticPrefix . "/common/$img", $req->portal )
       ->as_string;
 
-    return [
-        302,
-        [
-            'Location' => $u,
-        ],
-        [],
-    ];
+    return $self->sendRedirection( $req, $u );
 }
 
 sub sendCss {
@@ -1236,15 +1225,11 @@ sub sendCss {
           . '") no-repeat center fixed;'
           . 'background-size:cover;}';
     }
-    return [
-        200,
-        [
-            'Content-Type'   => 'text/css',
-            'Content-Length' => length($s),
-            'Cache-Control'  => 'public,max-age=3600',
-        ],
-        [$s]
-    ];
+    return $self->p->sendTextResponse(
+        $req, $s,
+        type    => 'text/css',
+        headers => [ 'Cache-Control' => 'public,max-age=3600' ]
+    );
 }
 
 sub lmError {
@@ -1459,7 +1444,7 @@ sub _sumUpSession {
 sub corsPreflight {
     my ( $self, $req ) = @_;
     my @headers;
-    my $res = [ 204, \@headers, [] ];
+    my $res = $self->sendBinaryResponse( $req, '', code => 204 );
 
     $self->setCorsHeaderFromConfig($res);
 

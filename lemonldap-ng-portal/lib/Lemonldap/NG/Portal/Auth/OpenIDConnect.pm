@@ -522,16 +522,10 @@ sub frontLogout {
     my $badRequest = 0;
     my $logName    = 'OIDC FC Logout';
 
-    my $img      = $self->conf->{staticPrefix} . '/common/icons/ok.png';
-    my $frame    = qq'<html><body><img src="$img"></body></html>';
-    my $response = [
-        200,
-        [
-            'Content-Type'   => 'text/html',
-            'Content-Length' => length($frame)
-        ],
-        [$frame]
-    ];
+    my $img   = $self->conf->{staticPrefix} . '/common/icons/ok.png';
+    my $frame = qq'<html><body><img src="$img"></body></html>';
+    my $response =
+      $self->p->sendTextResponse( $req, $frame, type => 'text/html' );
 
     # LLNG requires sid and iss
     unless ( $iss and $sid ) {
@@ -721,7 +715,7 @@ sub backLogout {
         $self->logger->warn("$logName: no session found for $uid");
     }
 
-    return [ 200, [], [] ];
+    return $self->p->sendBinaryResponse( $req, '' );
 }
 
 1;
