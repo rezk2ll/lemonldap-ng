@@ -359,6 +359,35 @@ sub sendJs {
     ];
 }
 
+sub sendTextResponse {
+    my ( $self, $req, $text, %args ) = @_;
+
+    my $data = $text;
+
+    #my $data = Encode::encode( "UTF-8", $text );
+
+    $args{type} ||= "text/plain; charset=utf-8";
+
+    return $self->sendBinaryResponse( $req, $data, %args );
+}
+
+sub sendBinaryResponse {
+    my ( $self, $req, $data, %args ) = @_;
+    $args{code} ||= 200;
+    $args{type} ||= "application/octet-stream";
+    my $headers = $args{headers} || [ $req->spliceHdrs ];
+
+    return [
+        $args{code},
+        [
+            'Content-Type'   => $args{type},
+            'Content-Length' => length($data),
+            @$headers,
+        ],
+        [$data]
+    ];
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
     my $sp = $self->staticPrefix;
@@ -477,6 +506,22 @@ sub logAndRun {
     }
 
     return $res;
+}
+
+sub sendRedirection {
+    my ( $self, $req, $destination, %args ) = @_;
+
+    $args{code}    ||= 302;
+    $args{headers} ||= [ $req->spliceHdrs ];
+
+    return [
+        $args{code},
+        [
+            ( $destination ? ( Location => $destination ) : () ),
+            @{ $args{headers} }
+        ],
+        []
+    ];
 }
 
 1;
