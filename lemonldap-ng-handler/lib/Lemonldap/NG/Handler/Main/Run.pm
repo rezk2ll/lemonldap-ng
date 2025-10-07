@@ -897,6 +897,10 @@ my %alreadyBuilt;
 
 sub buildAndLoadType {
     my ( $class, $package ) = @_;
+    unless ( $package =~ /^[\w:]+$/ ) {
+        $class->logger->error("Bad clas name: $package");
+        return;
+    }
     return if $alreadyBuilt{$package};
     eval "require $package";
     if ($@) {
