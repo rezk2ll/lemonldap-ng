@@ -23,13 +23,9 @@ cp lemonldap-ng-*.tar.gz /root/rpmbuild/SOURCES/
 
 # Install build dependencies
 # On some EL versions, a second run is needed
-if [ "$ver" -lt "8" ] ; then
-    yum-builddep -y rpm/lemonldap-ng.spec
-    yum-builddep -y rpm/lemonldap-ng.spec
-else
-    dnf -y builddep rpm/lemonldap-ng.spec
-    dnf -y builddep rpm/lemonldap-ng.spec
-fi
+dnf -y builddep rpm/lemonldap-ng.spec
+dnf -y builddep rpm/lemonldap-ng.spec
+dnf -y install perl-Authen-WebAuthn
 
 rpmbuild -ba rpm/lemonldap-ng.spec
 

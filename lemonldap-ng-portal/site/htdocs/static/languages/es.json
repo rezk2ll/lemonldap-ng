@@ -131,6 +131,7 @@
 "backToTop":"Back to top",
 "badCode":"Código incorrecto",
 "badName":"Nombre incorrecto",
+"browserAlreadyTrusted":"You are using a trusted browser",
 "cancel":"Cancelar",
 "captcha":"Captcha",
 "certificateReset":"Reiniciar mi certificado",

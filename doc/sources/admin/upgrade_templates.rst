@@ -106,6 +106,32 @@ We also add the `required` property to code input to avoid submitting an empty f
           <span trspan="connect">Connect</span>
         </button>
 
+Display if browser is already trusted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An information message is diplayed instead of the checkbox.
+
+.. code-block:: diff
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/checklogins.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/checklogins.tpl
+   @@ -12,6 +12,9 @@
+        </div>
+        </TMPL_IF>
+        <TMPL_IF NAME="STAYCONNECTED">
+   +      <TMPL_IF NAME="BROWSER_ALREADY_TRUSTED">
+   +      <div class="message message-success alert alert-success"><span trspan="browserAlreadyTrusted">This browser is already trusted</span></div>
+   +      <TMPL_ELSE>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+   @@ -22,4 +25,5 @@
+            <label id="stayConnectedLabel" for="stayconnected" trspan="stayConnected">Stay connected on this device</label>
+          </p>
+        </div>
+   +      </TMPL_IF>
+        </TMPL_IF>
+
 2.21.0
 ------
 

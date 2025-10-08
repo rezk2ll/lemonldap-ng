@@ -131,6 +131,7 @@
 "backToTop":"العودة إلى الأعلى",
 "badCode":"رمز خاطئ",
 "badName":"اسم خاطئ",
+"browserAlreadyTrusted":"You are using a trusted browser",
 "cancel":"إلغاء",
 "captcha":"كلمة التحقق أو الكابتشا ",
 "certificateReset":"إعادة تعيين شهادتي",

@@ -891,6 +891,35 @@ sub localUnlog {
     }
 }
 
+## @rmethod buildAndLoadType(string package)
+# Try to load type or build it
+my %alreadyBuilt;
+
+sub buildAndLoadType {
+    my ( $class, $package ) = @_;
+    unless ( $package =~ /^[\w:]+$/ ) {
+        $class->logger->error("Bad clas name: $package");
+        return;
+    }
+    return if $alreadyBuilt{$package};
+    eval "require $package";
+    if ($@) {
+        my $lastError = $@;
+        my $main      = $package;
+        $main =~ s/::([^:]*)$/::Main/;
+        my $type = $1 or die "Malformed package $package";
+        eval <<EOF;
+package $package;
+use base 'Lemonldap::NG::Handler::Lib::$type',
+  '$main';
+1;
+EOF
+        die "Unable to build wrapper.\n First try: $lastError\n Auto-build: $@"
+          if ($@);
+    }
+    $alreadyBuilt{$package} = 1;
+}
+
 ## @rmethod protected postOutputFilter(string uri)
 # Add a javascript to html page in order to fill html form with fake data
 # @param uri URI to catch

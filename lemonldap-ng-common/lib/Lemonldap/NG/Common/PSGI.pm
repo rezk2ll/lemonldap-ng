@@ -230,8 +230,15 @@ sub sendJSONresponse {
         };
         return $self->sendError( $req, $@ ) if ($@);
     }
-    return [ $args{code}, [ 'Content-Type' => $type, @{ $args{headers} } ],
-        [$j] ];
+    return [
+        $args{code},
+        [
+            'Content-Type'   => $type,
+            'Content-Length' => length($j),
+            @{ $args{headers} }
+        ],
+        [$j]
+    ];
 }
 
 sub sendError {

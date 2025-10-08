@@ -116,7 +116,7 @@ sub _authAndTrace {
     my $tmp = $self->api;
     $tmp =~ s/::\w+$/::/;
     $type = $tmp . $type;
-    eval "require $type";
+    Lemonldap::NG::Handler::Main->buildAndLoadType($type);
     die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
     my $portal = eval { $type->tsv->{portal}->($req) };

@@ -17,6 +17,7 @@ mk-build-deps --install --remove \
 apt install -y tzdata
 apt install -y libgeoip2-perl || true
 apt install -y libhttp-browserdetect-perl || true
+apt install -y libauthen-webauthn-perl || true
 
 make debian-packages
 
