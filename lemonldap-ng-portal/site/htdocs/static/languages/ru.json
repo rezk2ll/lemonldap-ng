@@ -131,6 +131,7 @@
 "backToTop":"Back to top",
 "badCode":"Недействительный код",
 "badName":"Недействительное имя",
+"browserAlreadyTrusted":"You are using a trusted browser",
 "cancel":"Отмена",
 "captcha":"Капча",
 "certificateReset":"Сбросить мой сертификат",
