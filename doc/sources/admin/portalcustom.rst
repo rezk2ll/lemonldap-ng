@@ -7,6 +7,15 @@ Portal customization
     The portal is the visible part of LemonLDAP::NG, all user
     interactions are displayed on it.
 
+A lot of customization can be done through configuration parameters (logo, background, ...), this is the advocated method
+as it requires no effort when upgrading the software.
+
+If you need deeper changes in the user interface, then you should create your own skin. In this case, you need to
+read :doc:`template upgrade notes<upgrade_templates>` at each version update.
+
+Customization parameters
+------------------------
+
 Main Logo
 ~~~~~~~~~
 
@@ -20,6 +29,31 @@ A blank value disables Main logo display.
     - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
     - Logo file path must be like my/path/logo.png
     - Main logo is included in Portal templates AND mail body
+
+Skin background
+~~~~~~~~~~~~~~~
+
+Go in ``General Parameters`` > ``Portal`` > ``Customization`` >
+``Skin background``. You can define a background by selecting one of the
+available image. Select ``None`` to use the default skin background configuration.
+
+|image0|
+
+To set your own background, copy your file in
+``/usr/share/lemonldap-ng/portal/htdocs/static/common/backgrounds/`` and
+register it in ``/etc/lemonldap-ng/lemonldap-ng.ini``:
+
+.. code-block:: ini
+
+   [portal]
+   portalSkinBackground = file.png
+
+You can also use ``lemonldap-ng-cli``:
+
+::
+
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli set portalSkinBackground file.png
+
 
 Favicon
 ~~~~~~~
@@ -111,12 +145,138 @@ Some javascript functions are exported by LemonLDAP:
 
 .. _portalcustom-skin-customization:
 
-Skin
-----
+.. _intlmessages:
 
-LemonLDAP::NG is shipped with a bootstrap skin.
+Messages
+~~~~~~~~
 
-But you can provide your own. See Skin customization below.
+Messages are defined in source code. If they really do not suit you,
+override them! You just need to know the ID of the message (look at
+Portal/Main/Constants.pm).
+
+There are two methods to do this:
+
+-  Use ``lemonldap-ng.ini``:
+
+.. code-block:: ini
+
+   [portal]
+
+   # Custom error messages
+   error_0 = Big brother is watching you, authenticated user
+
+   # Custom standard messages
+   msg_lastLogins = Your last connections
+
+You can also define messages in several languages or disable message
+boxes by using the bareword ``_hide_`` :
+
+.. code-block:: ini
+
+   error_en_0        = Big brother is watching you, authenticated user
+   error_fr_0        = Souriez, vous êtes surveillés !
+   msg_fr_lastLogins = Dernières connexions
+   error_9           = _hide_
+
+-  Create a lang file in skin:
+
+You can create a lang file in
+``templates/bootstrap`` similar to the default lang files provided in
+``htdocs/static/languages/``.
+
+For example ``templates/bootstrap/en.json``:
+
+.. code-block:: javascript
+
+   {
+     "PE9":"Please authenticate!",
+     "lastLogins": "Previous authentications",
+     "myMessage": "My custom message, in english"
+   }
+
+You can also create a file called ``all.json`` to override messages in
+all languages.
+
+.. versionchanged:: 2.0.15
+   Translations in lemonldap-ng.ini now take priority over translations from skin files
+
+Buttons on login page
+~~~~~~~~~~~~~~~~~~~~~
+
+This node allows one to enable/disable buttons on the login page:
+
+-  **Check last logins**: display a checkbox on login form, allowing
+   user to check his login history right after opening session
+-  **Register new account**: display a link to :doc:`register page<register>` (for
+   password based authentication backends)
+-  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
+   password based authentication backends)
+-  **Reset password**: display a link to
+   :doc:`reset your password page<resetpassword>` (for password based
+   authentication backends). Number of allowed retries can be set (3
+   times by default)
+
+Password management
+~~~~~~~~~~~~~~~~~~~
+
+-  **Require old password**: used only in the password changing module
+   of the menu, will check the old password before updating it
+-  **Allow to display password**: if enabled, a small icon in the password
+   field is added and when users click on it, the password value is
+   revealed. Disabled by default.
+-  **Hide old password**: used only if the password need to be reset by
+   the user (LDAP password policy), will hide the old password input
+-  **Send mail on password change**: send a mail if the password is
+   changed from the Menu, or from forced password reset (LDAP password
+   policy)
+
+Password Policy
+~~~~~~~~~~~~~~~
+
+.. tip::
+
+    Available since version 2.0.6
+
+-  **Activation**: enable/disable password policy. You can set a rule
+   to enable policy for specific users only
+-  **Display policy in password form**: enable this option to display an
+   information message about password policy constraints
+-  **Minimal size**: leave 0 to bypass the check
+-  **Maximal size**: leave 0 to bypass the check
+-  **Minimal lower characters**: leave 0 to bypass the check
+-  **Minimal upper characters**: leave 0 to bypass the check
+-  **Minimal digit characters**: leave 0 to bypass the check
+-  **Minimal special characters**: leave 0 to bypass the check
+-  **Allowed special characters**: list of allowed special characters. Set the ``__ALL__`` value to allow ALL special characters.
+   A blank value forbids ALL special characters. The ``space`` character can not be
+   specified at the begin or at the end of the list to prevent trimming.
+
+.. _portalcustom-other-parameters:
+
+Other
+~~~~~
+
+-  **User attribute**: which session attribute will be used to display
+   ``Connected as`` in the menu
+-  **New window**: open menu links in new window
+-  **Anti iframe protection**: Set ``X-Frame-Options`` and CSP
+   ``frame-ancestors`` headers (see `Browser
+   compatibility <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility>`__)
+-  **Ping interval**: number of milliseconds between each ping (Ajax
+   request) on the portal menu. Set to 0 to dismiss checks.
+-  **Show error on expired session**: display the error "Session
+   expired", which stops the authentication process. This is enabled by
+   default but can be disabled to prevent transparent authentication
+   (like SSL or Kerberos) to be stopped.
+-  **Show error on mail not found**: display error if provided mail is
+   not found in password reset by mail process. Disabled by default to
+   prevent mail enumeration from this page.
+-  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
+-  **Cache-busting salt**: change this value any time you update a static file
+   on the server to force your users to reload their browser cache
+
+Create your own skin
+--------------------
 
 Default skin
 ~~~~~~~~~~~~
@@ -126,30 +286,6 @@ You can change the default skin in Manager: ``General Parameters`` >
 
 Select the ``Custom`` skin, then set the name of the skin you want to
 use in the input below.
-
-Skin background
-~~~~~~~~~~~~~~~
-
-Go in ``General Parameters`` > ``Portal`` > ``Customization`` >
-``Skin background``. You can define a background by selecting one of the
-available image. Select ``None`` to use the default skin background configuration.
-
-|image0|
-
-To set your own background, copy your file in
-``/usr/share/lemonldap-ng/portal/htdocs/static/common/backgrounds/`` and
-register it in ``/etc/lemonldap-ng/lemonldap-ng.ini``:
-
-.. code-block:: ini
-
-   [portal]
-   portalSkinBackground = file.png
-
-You can also use ``lemonldap-ng-cli``:
-
-::
-
-   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli set portalSkinBackground file.png
 
 Skin rules
 ~~~~~~~~~~
@@ -187,7 +323,6 @@ skin, but shared skin objects (like scripts, images and CSS).
 
 Skin customization
 ~~~~~~~~~~~~~~~~~~
-
 
 .. attention::
 
@@ -233,10 +368,6 @@ To use override these files, copy them into your skin folder:
 
    cp ../bootstrap/custom* .
 
-Any other template file can also be overriden, be sure you check
-:doc:`upgrade notes <upgrade>` for important updates in your overriden template
-files.
-
 Then you can add your media to ``myskin/images``, you will be able to
 use them in HTML template with this code:
 
@@ -281,66 +412,8 @@ You can find additional documentation on the syntax of template files in the
     reload your static resources by changing the special ``?v=`` parameter in static resource URLs.
     Be sure that you include ``?v=<TMPL_VAR CACHE_TAG>`` in the URL of your static resources
 
-.. _intlmessages:
-
-Messages
-~~~~~~~~
-
-Changing messages
------------------
-
-Messages are defined in source code. If they really do not suit you,
-override them! You just need to know the ID of the message (look at
-Portal/Main/Constants.pm).
-
-There are two methods to do this:
-
--  Use ``lemonldap-ng.ini``:
-
-.. code-block:: ini
-
-   [portal]
-
-   # Custom error messages
-   error_0 = Big brother is watching you, authenticated user
-
-   # Custom standard messages
-   msg_lastLogins = Your last connections
-
-You can also define messages in several languages or disable message
-boxes by using the bareword ``_hide_`` :
-
-.. code-block:: ini
-
-   error_en_0        = Big brother is watching you, authenticated user
-   error_fr_0        = Souriez, vous êtes surveillés !
-   msg_fr_lastLogins = Dernières connexions
-   error_9           = _hide_
-
--  Create a lang file in custom skin:
-
-If you have a custom skin, then you can create a lang file in
-``templates/<your skin>`` similar to the default lang files provided in
-``htdocs/static/languages/``.
-
-For example ``templates/myskin/en.json``:
-
-.. code-block:: javascript
-
-   {
-     "PE9":"Please authenticate!",
-     "lastLogins": "Previous authentications",
-     "myMessage": "My custom message, in english"
-   }
-
-You can also create a file called ``all.json`` to override messages in
-all languages.
-
-.. versionchanged:: 2.0.15
-   Translations in lemonldap-ng.ini now take priority over translations from skin files
-
 Additional error details
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a particular error happens, it can be useful to display some detailed
 instructions to the user, you can do this using the ``TMPL_ERROR_NNN`` variable::
@@ -351,7 +424,7 @@ instructions to the user, you can do this using the ``TMPL_ERROR_NNN`` variable:
     </TMPL_IF>
 
 Adding messages in your templates
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the ``trspan`` HTML attribute to replace the content of a tag by an internationalized string ::
 
@@ -397,6 +470,14 @@ template parameter for your customization, then add to
    # Custom template parameters
    tpl_myparam = world
 
+You can also define them directly in configuration, in ``portalCustomTplParams`` key:
+
+::
+
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
+       addKey \
+           portalCustomTplParams myparam "world"
+   
 Then you will be able to use it in your template like this:
 
 .. code-block:: html
@@ -416,81 +497,5 @@ You can also display environment variables, with the prefix ``env_``:
 
    Your IP is <TMPL_VAR NAME="env_REMOTE_ADDR">
 
-Buttons on login page
----------------------
-
-This node allows one to enable/disable buttons on the login page:
-
--  **Check last logins**: display a checkbox on login form, allowing
-   user to check his login history right after opening session
--  **Register new account**: display a link to :doc:`register page<register>` (for
-   password based authentication backends)
--  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
-   password based authentication backends)
--  **Reset password**: display a link to
-   :doc:`reset your password page<resetpassword>` (for password based
-   authentication backends). Number of allowed retries can be set (3
-   times by default)
-
-Password management
--------------------
-
--  **Require old password**: used only in the password changing module
-   of the menu, will check the old password before updating it
--  **Allow to display password**: if enabled, a small icon in the password
-   field is added and when users click on it, the password value is
-   revealed. Disabled by default.
--  **Hide old password**: used only if the password need to be reset by
-   the user (LDAP password policy), will hide the old password input
--  **Send mail on password change**: send a mail if the password is
-   changed from the Menu, or from forced password reset (LDAP password
-   policy)
-
-Password Policy
----------------
-
-.. tip::
-
-    Available since version 2.0.6
-
--  **Activation**: enable/disable password policy. You can set a rule
-   to enable policy for specific users only
--  **Display policy in password form**: enable this option to display an
-   information message about password policy constraints
--  **Minimal size**: leave 0 to bypass the check
--  **Maximal size**: leave 0 to bypass the check
--  **Minimal lower characters**: leave 0 to bypass the check
--  **Minimal upper characters**: leave 0 to bypass the check
--  **Minimal digit characters**: leave 0 to bypass the check
--  **Minimal special characters**: leave 0 to bypass the check
--  **Allowed special characters**: list of allowed special characters. Set the ``__ALL__`` value to allow ALL special characters.
-   A blank value forbids ALL special characters. The ``space`` character can not be
-   specified at the begin or at the end of the list to prevent trimming.
-
-.. _portalcustom-other-parameters:
-
-Other
------
-
--  **User attribute**: which session attribute will be used to display
-   ``Connected as`` in the menu
--  **New window**: open menu links in new window
--  **Anti iframe protection**: Set ``X-Frame-Options`` and CSP
-   ``frame-ancestors`` headers (see `Browser
-   compatibility <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility>`__)
--  **Ping interval**: number of milliseconds between each ping (Ajax
-   request) on the portal menu. Set to 0 to dismiss checks.
--  **Show error on expired session**: display the error "Session
-   expired", which stops the authentication process. This is enabled by
-   default but can be disabled to prevent transparent authentication
-   (like SSL or Kerberos) to be stopped.
--  **Show error on mail not found**: display error if provided mail is
-   not found in password reset by mail process. Disabled by default to
-   prevent mail enumeration from this page.
--  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
--  **Cache-busting salt**: change this value any time you update a static file
-   on the server to force your users to reload their browser cache
-
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center
-
