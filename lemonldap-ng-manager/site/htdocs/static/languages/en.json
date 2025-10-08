@@ -970,6 +970,7 @@
 "portalCheckLogins":"Check last logins",
 "portalCustomCss":"Custom CSS file",
 "portalCustomJs":"Custom JS file",
+"portalCustomTplParams":"Custom template parameters",
 "portalCustomization":"Customization",
 "portalDisplayAppslist":"Application list",
 "portalDisplayCertificateResetByMail":"Reset certificate",

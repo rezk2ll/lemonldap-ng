@@ -4106,6 +4106,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'portalCustomJs' => {
             'type' => 'text'
         },
+        'portalCustomTplParams' => {
+            'type' => 'keyTextContainer'
+        },
         'portalDisplayAppslist' => {
             'default' => 1,
             'type'    => 'boolOrExpr'

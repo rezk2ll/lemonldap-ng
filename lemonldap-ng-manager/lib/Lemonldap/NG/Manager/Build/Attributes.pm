@@ -472,6 +472,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Path to custom JS file',
         },
+        portalCustomTplParams => {
+            type          => 'keyTextContainer',
+            documentation => 'Custom templates parameters',
+        },
         portalStatus => {
             type          => 'bool',
             default       => 0,
@@ -2056,7 +2060,7 @@ sub attributes {
         },
         jitsiSigningKey => {
             type          => 'text',
-            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            default       => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
             documentation => 'Jitsi JWT signature key',
         },
         jitsiExpiration => {
@@ -3345,13 +3349,13 @@ sub attributes {
             default => 'RSA_SHA256',
         },
         samlServiceSignatureKey => {
-            type   => 'text',
-            default => 'default-saml-sig',
+            type          => 'text',
+            default       => 'default-saml-sig',
             documentation => 'Key to use for SAML signature',
         },
         samlServiceEncryptionKey => {
-            type   => 'text',
-            default => 'default-saml-enc',
+            type          => 'text',
+            default       => 'default-saml-enc',
             documentation => 'Key to use for SAML encryption',
         },
         samlServiceUseCertificateInResponse => {
@@ -3623,7 +3627,7 @@ sub attributes {
             default => '',
         },
         samlIDPMetaDataOptionsSignatureKey => {
-            type   => 'text',
+            type    => 'text',
             default => '',
         },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
@@ -3816,7 +3820,7 @@ sub attributes {
             default => '',
         },
         samlSPMetaDataOptionsSignatureKey => {
-            type   => 'text',
+            type    => 'text',
             default => '',
         },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {
@@ -5066,13 +5070,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         oidcServiceSignatureKey => {
-            type   => 'text',
-            default => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
+            type          => 'text',
+            default       => 'default-oidc-sig, old-oidc-sig, new-oidc-sig',
             documentation => 'Key to use for OIDC signature',
         },
         oidcServiceEncryptionKey => {
-            type   => 'text',
-            default => 'default-oidc-enc',
+            type          => 'text',
+            default       => 'default-oidc-enc',
             documentation => 'Key to use for OIDC encryption',
         },
 
@@ -5306,10 +5310,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'bool',
             default => 0,
         },
-        oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
-        oidcRPMetaDataOptionsIcon           => { type => 'text', },
-        oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
-        oidcRPMetaDataOptionsSigningKey => {
+        oidcRPMetaDataOptionsDisplayName => { type => 'text', },
+        oidcRPMetaDataOptionsIcon        => { type => 'text', },
+        oidcRPMetaDataOptionsUserIDAttr  => { type => 'text', },
+        oidcRPMetaDataOptionsSigningKey  => {
             type    => 'text',
             help    => 'Signature key used with this OP',
             default => '',
