@@ -17,7 +17,7 @@ my $client = LLNG::Manager::Test->new(
             portal          => 'https://auth.example.com/',
             skinTemplateDir => 't/templates',
             tpl_iniParam    => 'Template parameter from lemonldap-ng.ini',
-            customTplParams =>
+            portalCustomTplParams =>
               { confParam => 'Template parameter from configuration' },
         }
     }
