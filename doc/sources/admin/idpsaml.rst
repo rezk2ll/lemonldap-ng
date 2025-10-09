@@ -184,6 +184,11 @@ Federation
 
 See :doc:`samlfederation`
 
+Metadata URL
+''''''''''''
+
+Store the URL that can be used to refresh metadata
+
 Comment: set a comment
 ''''''''''''''''''''''
 
