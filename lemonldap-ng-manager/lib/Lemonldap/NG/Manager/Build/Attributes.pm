@@ -3700,7 +3700,7 @@ sub attributes {
         },
         samlSPMetaDataXML     => { type => 'file', },
         samlSPMetaDataURL     => {
-	    type => 'text',
+	        type => 'text',
         },
         samlSPMetaDataOptions => {
             type       => 'keyTextContainer',

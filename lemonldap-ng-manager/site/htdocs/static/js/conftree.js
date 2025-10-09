@@ -1610,11 +1610,6 @@ function templates(tpl,key) {
       "type" : "file"
    },
    {
-      "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
-      "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
-      "title" : "samlIDPMetaDataURL"
-   },
-   {
       "cnodes" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "default" : [],
       "help" : "authsaml.html#exported-attributes",
@@ -1949,6 +1944,11 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
+            "title" : "samlIDPMetaDataURL"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "title" : "samlIDPMetaDataOptionsComment",
@@ -2004,11 +2004,6 @@ function templates(tpl,key) {
       "id" : tpl+"s/"+key+"/"+"samlSPMetaDataXML",
       "title" : "samlSPMetaDataXML",
       "type" : "file"
-   },
-   {
-      "get" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
-      "id" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
-      "title" : "samlSPMetaDataURL"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
@@ -2273,6 +2268,11 @@ function templates(tpl,key) {
             "id" : "samlSPMetaDataOptionsFederation",
             "title" : "samlSPMetaDataOptionsFederation",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
+            "title" : "samlSPMetaDataURL"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",

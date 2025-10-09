@@ -195,8 +195,8 @@ our \@EXPORT      = ( \@{ \$EXPORT_TAGS{'all'} } );
 
 our \$specialNodeHash = {
     virtualHosts         => [qw(exportedHeaders locationRules post vhostOptions)],
-    samlIDPMetaDataNodes => [qw(samlIDPMetaDataXML samlIDPMetaDataURL samlIDPMetaDataExportedAttributes samlIDPMetaDataOptions)],
-    samlSPMetaDataNodes  => [qw(samlSPMetaDataXML samlSPMetaDataURL samlSPMetaDataExportedAttributes samlSPMetaDataOptions samlSPMetaDataMacros)],
+    samlIDPMetaDataNodes => [qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes samlIDPMetaDataOptions)],
+    samlSPMetaDataNodes  => [qw(samlSPMetaDataXML samlSPMetaDataExportedAttributes samlSPMetaDataOptions samlSPMetaDataMacros)],
     oidcOPMetaDataNodes  => [qw(oidcOPMetaDataJSON oidcOPMetaDataJWKS oidcOPMetaDataOptions oidcOPMetaDataExportedVars)],
     oidcRPMetaDataNodes  => [qw(oidcRPMetaDataOptions oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims oidcRPMetaDataMacros oidcRPMetaDataScopeRules)],
     casSrvMetaDataNodes  => [qw(casSrvMetaDataOptions casSrvMetaDataExportedVars)],

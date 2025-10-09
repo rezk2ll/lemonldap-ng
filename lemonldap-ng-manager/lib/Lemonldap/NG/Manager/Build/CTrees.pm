@@ -37,7 +37,6 @@ sub cTrees {
         ],
         samlIDPMetaDataNode => [
             'samlIDPMetaDataXML',
-            'samlIDPMetaDataURL',
             'samlIDPMetaDataExportedAttributes',
 
             {
@@ -98,6 +97,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => ['samlIDPMetaDataOptionsFederationEntityID']
                     },
+                    'samlIDPMetaDataURL',
                     'samlIDPMetaDataOptionsComment'
                 ],
             },
@@ -116,7 +116,6 @@ sub cTrees {
         ],
         samlSPMetaDataNode => [
             'samlSPMetaDataXML',
-            'samlSPMetaDataURL',
             'samlSPMetaDataExportedAttributes',
             {
                 title => 'samlSPMetaDataOptions',
@@ -164,6 +163,7 @@ sub cTrees {
                             'samlSPMetaDataOptionsFederationRequiredAttributes',
                         ]
                     },
+                     'samlSPMetaDataURL',
                     'samlSPMetaDataOptionsComment'
                 ]
             },
