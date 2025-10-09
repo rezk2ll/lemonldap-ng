@@ -163,7 +163,7 @@ sub cTrees {
                             'samlSPMetaDataOptionsFederationRequiredAttributes',
                         ]
                     },
-                     'samlSPMetaDataURL',
+                    'samlSPMetaDataURL',
                     'samlSPMetaDataOptionsComment'
                 ]
             },
