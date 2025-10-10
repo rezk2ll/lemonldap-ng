@@ -749,6 +749,16 @@ crowdsecMaxFailures
     :Description: Crowdesc-Agent maximum failures allowed during delay
     :Used by portal: yes
 
+crowdsecMetricsEnabled
+    :Location: General Parameters » Advanced parameters » Security » Crowdsec » Bouncer » Enable CrowdSec usage-metrics
+    :Description: Enable CrowdSec usage-metrics push
+    :Used by portal: yes
+
+crowdsecMetricsInterval
+    :Location: General Parameters » Advanced parameters » Security » Crowdsec » Bouncer » Usage-metrics flush interval (s)
+    :Description: CrowdSec usage-metrics flush interval (seconds)
+    :Used by portal: yes
+
 crowdsecPassword
     :Location: General Parameters » Advanced parameters » Security » Crowdsec » Agent » Password
     :Description: Crowdsec password to send alerts
@@ -1172,11 +1182,6 @@ groupLDAPFilter
 groups
     :Location: Variables » Groups
     :Description: Groups
-    :Used by portal: yes
-
-groupsBeforeMacros
-    :Location: General Parameters » Advanced parameters » Compute groups before macros
-    :Description: Compute groups before macros
     :Used by portal: yes
 
 handlerInternalCache

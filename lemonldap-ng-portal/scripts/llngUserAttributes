@@ -33,7 +33,7 @@ sub userSearch {
     $req->user($uid);
     $req->steps( [
             'getUser',        @{ $p->betweenAuthAndData },
-            'setSessionInfo', $p->groupsAndMacros,
+            'setSessionInfo','setGroups', 'setMacros',
             'setLocalGroups',
         ]
     );

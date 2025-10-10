@@ -440,7 +440,6 @@
 "grantSessionRules":"Điều kiện mở",
 "groupLDAPFilter":"Group Filter",
 "groups":"Nhóm",
-"groupsBeforeMacros":"Tính toán các nhóm trước macros",
 "hGroups":"Nhóm (HashRef)",
 "hashedSessionStore":"Hashed session storage",
 "hashkey":"Khóa",

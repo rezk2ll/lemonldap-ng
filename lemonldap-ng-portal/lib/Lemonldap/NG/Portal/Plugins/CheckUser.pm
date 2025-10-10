@@ -296,7 +296,7 @@ sub check {
                     $req->sessionInfo($attrs);
                     delete $req->sessionInfo->{groups};
                     $req->steps(
-                        [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+                        [ 'setGroups', 'setMacros', 'setLocalGroups' ] );
                     if ( my $error = $self->p->process($req) ) {
                         $self->logger->debug("Process returned error: $error");
                         return $req->error($error);
@@ -414,9 +414,10 @@ sub _userData {
       defined $realAuthLevel
       ? [
         'getUser',        'setAuthSessionInfo',
-        'setSessionInfo', $self->p->groupsAndMacros
+        'setSessionInfo', 'setGroups',
+        'setMacros',
       ]
-      : [ 'getUser', 'setSessionInfo', $self->p->groupsAndMacros ];
+      : [ 'getUser', 'setSessionInfo', 'setGroups', 'setMacros', ];
     $self->conf->{checkUserDisplayPersistentInfo}
       ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
       : push @$steps, 'setLocalGroups';
@@ -441,7 +442,7 @@ sub _userData {
     delete $req->sessionInfo->{groups};
 
     $req->steps(
-        [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        [ 'setSessionInfo', 'setGroups', 'setMacros', 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug("CheckUser: process returned error ($error)");
         return $req->error($error);

@@ -203,9 +203,9 @@ sub _certificateReset {
 
     # Search user in database
     $req->steps( [
-            'getUser',                 'setSessionInfo',
-            $self->p->groupsAndMacros, 'setPersistentSessionInfo',
-            'setLocalGroups'
+            'getUser',                  'setSessionInfo',
+            'setGroups',                'setMacros',
+            'setPersistentSessionInfo', 'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {

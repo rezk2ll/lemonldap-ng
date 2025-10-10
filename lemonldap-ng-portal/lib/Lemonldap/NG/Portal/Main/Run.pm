@@ -21,22 +21,12 @@ use Lemonldap::NG::Common::Util qw(getPSessionID getSameSite);
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
-# The execution order between groups and macros can be
-# modified in config (#1877)
-sub groupsAndMacros {
-    return (
-        $_[0]->conf->{groupsBeforeMacros}
-        ? qw(setGroups setMacros)
-        : qw(setMacros setGroups)
-    );
-}
-
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionData {
-    return qw(setAuthSessionInfo setSessionInfo), $_[0]->groupsAndMacros,
-      qw(setPersistentSessionInfo setLocalGroups rememberBrowserCheck store secondFactor);
+    return
+      qw(setAuthSessionInfo setSessionInfo setGroups setMacros setPersistentSessionInfo setLocalGroups rememberBrowserCheck store secondFactor);
 }
 
 sub validSession {
@@ -264,9 +254,10 @@ sub processRefreshSession {
     # Transmit refreshed session data to setRefreshedSessionData
     $req->data->{refreshedSessionData} = \%data;
     $req->steps( [
-            'getUser',              @{ $self->betweenAuthAndData },
-            'setSessionInfo',       'setRefreshedSessionData',
-            $self->groupsAndMacros, 'setLocalGroups',
+            'getUser',        @{ $self->betweenAuthAndData },
+            'setSessionInfo', 'setRefreshedSessionData',
+            'setGroups',      'setMacros',
+            'setLocalGroups',
         ]
     );
     my $res = $self->process($req);

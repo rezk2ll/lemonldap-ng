@@ -228,8 +228,8 @@ sub _userData {
     $req->sessionInfo($realSession);
     $req->steps( [
             'getUser',        'setAuthSessionInfo',
-            'setSessionInfo', $self->p->groupsAndMacros,
-            'setLocalGroups'
+            'setSessionInfo', 'setGroups',
+            'setMacros',      'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
@@ -263,8 +263,9 @@ sub _userData {
         $req->{sessionInfo} = {%$realSession};
         $req->{user}        = $realId;
         $req->steps( [
-                'getUser',                 'setSessionInfo',
-                $self->p->groupsAndMacros, 'setLocalGroups'
+                'getUser',   'setSessionInfo',
+                'setGroups', 'setMacros',
+                'setLocalGroups'
             ]
         );
         $self->logger->debug('Reset Impersonation process');
@@ -280,7 +281,7 @@ sub _userData {
       $realSession->{real_authenticationLevel};
     delete $req->sessionInfo->{groups};
     $req->steps(
-        [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        [ 'setSessionInfo', 'setGroups', 'setMacros', 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug("Impersonation: Process returned error: $error");
         $req->error($error);
