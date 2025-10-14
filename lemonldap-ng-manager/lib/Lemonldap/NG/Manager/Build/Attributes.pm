@@ -3542,6 +3542,9 @@ sub attributes {
         samlIDPMetaDataXML => {
             type => 'file',
         },
+        samlIDPMetaDataOptionsURL => {
+            type => 'url',
+        },
         samlIDPMetaDataOptions => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
@@ -3699,7 +3702,10 @@ sub attributes {
             msgFail    => '__badValue__',
             default    => {},
         },
-        samlSPMetaDataXML     => { type => 'file', },
+        samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataOptionsURL => {
+            type => 'url',
+        },
         samlSPMetaDataOptions => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,

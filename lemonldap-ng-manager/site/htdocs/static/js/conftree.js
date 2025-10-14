@@ -1944,6 +1944,11 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsURL",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsURL",
+            "title" : "samlIDPMetaDataOptionsURL"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "title" : "samlIDPMetaDataOptionsComment",
@@ -2263,6 +2268,11 @@ function templates(tpl,key) {
             "id" : "samlSPMetaDataOptionsFederation",
             "title" : "samlSPMetaDataOptionsFederation",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsURL",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsURL",
+            "title" : "samlSPMetaDataOptionsURL"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",

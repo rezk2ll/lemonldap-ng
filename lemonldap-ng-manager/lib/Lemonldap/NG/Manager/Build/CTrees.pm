@@ -97,6 +97,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => ['samlIDPMetaDataOptionsFederationEntityID']
                     },
+                    'samlIDPMetaDataOptionsURL',
                     'samlIDPMetaDataOptionsComment'
                 ],
             },
@@ -162,6 +163,7 @@ sub cTrees {
                             'samlSPMetaDataOptionsFederationRequiredAttributes',
                         ]
                     },
+                    'samlSPMetaDataOptionsURL',
                     'samlSPMetaDataOptionsComment'
                 ]
             },

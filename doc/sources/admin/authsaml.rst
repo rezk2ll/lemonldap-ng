@@ -193,6 +193,7 @@ Authentication request
    by IDP is the URL where the user must be redirected after
    authentication
 -  **Federation**: see :doc:`samlfederation`
+-  **Metadata URL**: Store the URL that can be used to refresh metadata
 -  **Comment**: set a comment
 
 

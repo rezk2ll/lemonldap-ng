@@ -373,6 +373,11 @@ sub _scanNodes {
                     $self->set( $target, [ $oldName, $key ],
                         $target, $leaf->{data} );
                 }
+                elsif ( $target =~ /^saml(?:S|ID)PMetaDataURL$/ ) {
+                    hdebug("  $target");
+                    $self->set( $target, [ $oldName, $key ],
+                        $target, $leaf->{data} );
+                }
                 elsif ( $target =~ /^saml(?:ID|S)PMetaDataOptions/ ) {
                     my $optKey = $&;
                     hdebug("  $base sub key: $target");
