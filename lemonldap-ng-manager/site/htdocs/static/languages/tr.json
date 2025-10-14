@@ -970,6 +970,7 @@
 "portalCheckLogins":"Son girişleri kontrol et",
 "portalCustomCss":"Özelleştirilmiş CSS dosyası",
 "portalCustomJs":"Özelleştirilmiş JS dosyası",
+"portalCustomTplParams":"Custom template parameters",
 "portalCustomization":"Özelleştirme",
 "portalDisplayAppslist":"Uygulama listesi",
 "portalDisplayCertificateResetByMail":"Sertifikayı sıfırla",

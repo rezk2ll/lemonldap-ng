@@ -72,6 +72,7 @@ sub tree {
                                         'portalDisplayResetPassword'
                                     ]
                                 },
+                                'portalCustomTplParams',
                                 {
                                     title => 'passwordManagement',
                                     help  =>

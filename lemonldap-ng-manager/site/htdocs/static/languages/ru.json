@@ -970,6 +970,7 @@
 "portalCheckLogins":"Проверить последние входы в систему",
 "portalCustomCss":"Пользовательский файл CSS",
 "portalCustomJs":"Пользовательский файл JS",
+"portalCustomTplParams":"Custom template parameters",
 "portalCustomization":"Кастомизация",
 "portalDisplayAppslist":"Список приложений",
 "portalDisplayCertificateResetByMail":"Сбросить сертификат",

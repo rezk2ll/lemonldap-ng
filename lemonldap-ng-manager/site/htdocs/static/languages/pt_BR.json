@@ -970,6 +970,7 @@
 "portalCheckLogins":"Conferir últimos logins",
 "portalCustomCss":"Arquivo CSS personalizado",
 "portalCustomJs":"Arquivo JS customizado",
+"portalCustomTplParams":"Custom template parameters",
 "portalCustomization":"Customização",
 "portalDisplayAppslist":"Lista de aplicações",
 "portalDisplayCertificateResetByMail":"Redefinir certificado",

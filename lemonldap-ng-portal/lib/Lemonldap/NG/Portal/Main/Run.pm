@@ -1304,6 +1304,11 @@ sub tplParams {
         $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
     }
 
+    for my $custom_key ( keys %{ $self->conf->{portalCustomTplParams} } ) {
+        $templateParams{$custom_key} =
+          $self->conf->{portalCustomTplParams}->{$custom_key};
+    }
+
     return (
         CACHE_TAG    => $self->cacheTag,
         PORTAL_URL   => $req->portal,

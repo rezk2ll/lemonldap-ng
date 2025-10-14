@@ -472,6 +472,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Path to custom JS file',
         },
+        portalCustomTplParams => {
+            type          => 'keyTextContainer',
+            documentation => 'Custom templates parameters',
+        },
         portalStatus => {
             type          => 'bool',
             default       => 0,
