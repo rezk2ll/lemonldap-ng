@@ -289,6 +289,7 @@ $defaultAttr}
     foreach ( qw(
         exportedHeaders locationRules post vhostOptions
         samlIDPMetaDataXML samlIDPMetaDataExportedAttributes
+        samlIDPMetaDataURL samlSPMetaDataURL
         samlIDPMetaDataOptions samlSPMetaDataXML
         samlSPMetaDataExportedAttributes samlSPMetaDataMacros
         samlSPMetaDataOptions oidcOPMetaDataJSON
