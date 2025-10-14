@@ -4931,10 +4931,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlIDPMetaDataOptionsTooltip' => {
             'type' => 'text'
         },
-        'samlIDPMetaDataOptionsUserAttribute' => {
-            'type' => 'text'
+        'samlIDPMetaDataOptionsURL' => {
+            'type' => 'url'
         },
-        'samlIDPMetaDataURL' => {
+        'samlIDPMetaDataOptionsUserAttribute' => {
             'type' => 'text'
         },
         'samlIDPMetaDataXML' => {
@@ -5280,8 +5280,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => -1,
             'type'    => 'trool'
         },
-        'samlSPMetaDataURL' => {
-            'type' => 'text'
+        'samlSPMetaDataOptionsURL' => {
+            'type' => 'url'
         },
         'samlSPMetaDataXML' => {
             'type' => 'file'

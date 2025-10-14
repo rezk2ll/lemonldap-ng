@@ -3538,8 +3538,8 @@ sub attributes {
         samlIDPMetaDataXML => {
             type => 'file',
         },
-        samlIDPMetaDataURL => {
-            type => 'text',
+        samlIDPMetaDataOptionsURL => {
+            type => 'url',
         },
         samlIDPMetaDataOptions => {
             type       => 'keyTextContainer',
@@ -3698,9 +3698,9 @@ sub attributes {
             msgFail    => '__badValue__',
             default    => {},
         },
-        samlSPMetaDataXML => { type => 'file', },
-        samlSPMetaDataURL => {
-            type => 'text',
+        samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataOptionsURL => {
+            type => 'url',
         },
         samlSPMetaDataOptions => {
             type       => 'keyTextContainer',

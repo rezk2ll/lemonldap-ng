@@ -1944,9 +1944,9 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataURL",
-            "title" : "samlIDPMetaDataURL"
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsURL",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsURL",
+            "title" : "samlIDPMetaDataOptionsURL"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
@@ -2270,9 +2270,9 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
-            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataURL",
-            "title" : "samlSPMetaDataURL"
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsURL",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsURL",
+            "title" : "samlSPMetaDataOptionsURL"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",
