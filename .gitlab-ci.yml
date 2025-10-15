@@ -92,6 +92,12 @@ build_rocky_9:
   variables:
     MAJOR: 9
 
+# EOL: 31 May 2035
+build_rocky_10:
+  extends: .rocky_build_job
+  variables:
+    MAJOR: 10
+
 sonar-inspect:
   image: debian:bookworm
   stage: build
