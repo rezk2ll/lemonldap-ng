@@ -327,6 +327,19 @@ sub reloadConf {
     $self->logger->debug(
         "Cookies will use SameSite=" . $self->cookieSameSite );
 
+    # Set asset tag from version and optional salt
+    my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
+    my $key          = $self->conf->{key}          // "";
+    my $digest = substr(
+        MIME::Base64::encode_base64url(
+            Digest::SHA::hmac_sha256(
+                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt, $key
+            )
+        ),
+        0, 8
+    );
+    $self->cacheTag($digest);
+
     # Load menu
     # ---------
     $self->displayInit;
@@ -444,25 +457,13 @@ sub reloadConf {
 
     # Clean $req->pdata after authentication
     push @{ $self->endAuth }, "cleanPdata";
+
     # Failsafe: allow handler access to portal in case it's missing in conf
     my $default_portal_uri  = URI->new( HANDLER->tsv->{portal}->() );
     my $default_portal_host = eval { $default_portal_uri->host };
     if ($default_portal_host) {
         HANDLER->tsv->{defaultCondition}->{$default_portal_host} ||= sub { 1 };
     }
-
-    # Set asset tag from version and optional salt
-    my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
-    my $key          = $self->conf->{key}          // "";
-    my $digest       = substr(
-        MIME::Base64::encode_base64url(
-            Digest::SHA::hmac_sha256(
-                $Lemonldap::NG::Portal::VERSION . $cacheTagSalt, $key
-            )
-        ),
-        0, 8
-    );
-    $self->cacheTag($digest);
 
     1;
 }
