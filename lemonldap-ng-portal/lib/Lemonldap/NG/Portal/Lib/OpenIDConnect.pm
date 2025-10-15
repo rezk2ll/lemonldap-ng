@@ -387,7 +387,8 @@ sub refreshJWKSdataForOp {
         $self->logger->warn(
             "Unable to get JWKS data for $op from $jwksUri: "
               . $response->message );
-        $self->logger->debug( $response->content );
+        $self->logger->debug(
+            "JWKS response received: " . $response->as_string );
         return;
     }
 
@@ -813,11 +814,15 @@ sub getAccessTokenFromTokenEndpoint {
             "Content-Type" => 'application/x-www-form-urlencoded' );
     }
 
+    $self->logger->debug(
+        "Token request sent: " . $response->request()->as_string );
+
     if ( $response->is_error ) {
         $self->logger->error(
             "Bad token response from $op, grant_type: $grant_type, error: "
               . $response->message );
-        $self->logger->debug( $response->content );
+        $self->logger->debug(
+            "Token response received: " . $response->as_string );
         return 0;
     }
     return $response->decoded_content;
@@ -1115,7 +1120,8 @@ sub getUserInfo {
 
     if ( $response->is_error ) {
         $self->logger->error( "Bad userinfo response: " . $response->message );
-        $self->logger->debug( $response->content );
+        $self->logger->debug(
+            "Userinfo response received: " . $response->as_string );
         return 0;
     }
 
@@ -1640,7 +1646,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -2741,7 +2747,8 @@ sub getRequestJWT {
     if ( $response->is_error ) {
         $self->logger->error( "Unable to get request JWT on $request_uri: "
               . $response->message );
-        $self->logger->debug( $response->content );
+        $self->logger->debug(
+            "Request JWT response received: " . $response->as_string );
         return;
     }
 
