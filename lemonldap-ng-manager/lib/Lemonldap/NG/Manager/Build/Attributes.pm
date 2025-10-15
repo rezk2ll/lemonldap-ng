@@ -23,7 +23,7 @@ sub perlExpr {
     );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $cpt->reval($val);
+    $cpt->reval("local *_;$val");
     my $err = join( '',
         grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
           split( /\n/, $@ ) );
