@@ -184,6 +184,12 @@ run for example each week:
 
    5 5 * * 6 www-data /usr/share/lemonldap-ng/bin/rotateOidcKeys
 
+Both a systemd timer and a cronjob are provided in LL::NG tarball and packages.
+
+This is _not_ enabled by default, one needs to enable it:
+
+- For cron, un-comment the line in the `/etc/cron.d/lemonldap-ng-rotateOidcKeys` cronjob.
+- For systemd, run `systemctl enable lemonldap-ng-rotateOidcKeys.timer --now`.
 
 .. tip::
 
