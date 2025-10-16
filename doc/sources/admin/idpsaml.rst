@@ -157,6 +157,12 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: the algorithm used to sign messages sent to this service
+-  **Signing key name**: Since ``2.22.0``. If you want to use a specific
+   signing key only for responses sent to this RP, indicate the name of a key
+   from the :doc:`key management section <keys>`. If you specify multiple
+   values separated by a comma, the first key will be used for signing
+   responses, and the others will be published in metadata if you use the
+   ``/saml/metadata/idp?sp=<entityid>`` endpoint
 -  **Sign SSO message**: Sign SSO message
 -  **Check SSO message signature**: "On" means that LemonLDAP::NG will verify
    signatures if IDP and SP metadata require it. "Off" will disable signature
@@ -177,6 +183,11 @@ Federation
 ''''''''''
 
 See :doc:`samlfederation`
+
+Metadata URL
+''''''''''''
+
+Store the URL that can be used to refresh metadata
 
 Comment: set a comment
 ''''''''''''''''''''''

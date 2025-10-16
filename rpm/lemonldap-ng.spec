@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.21.2
+Version:        2.21.3
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -544,6 +544,7 @@ if [ $1 -gt 1 ] ; then
         chgrp %{lm_apachegroup} %{lm_storagefile} || :
     fi
 fi
+%systemd_post lemonldap-ng-rotateOidcKeys.timer
 
 %preun common
 # Upgrade from previous version
@@ -552,6 +553,10 @@ if [ $1 -eq 1 ] ; then
     find %{apache_confdir} -name 'z-lemonldap-ng*.conf' \
         -type l -delete 2>&1 > /dev/null || :
 fi
+%systemd_preun lemonldap-ng-rotateOidcKeys.timer
+
+%postun common
+%systemd_postun lemonldap-ng-rotateOidcKeys.timer
 
 %post fastcgi-server
 %systemd_post llng-fastcgi-server.service
@@ -610,6 +615,8 @@ fi
 %license COPYING LICENSE
 %dir %{lm_confdir}
 %config(noreplace) %attr(640,root,%{lm_apachegroup}) %{lm_storagefile}
+%{_unitdir}/lemonldap-ng-rotateOidcKeys.service
+%{_unitdir}/lemonldap-ng-rotateOidcKeys.timer
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
@@ -677,6 +684,7 @@ fi
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
+%{lm_bindir}/crowdsecBan
 %{lm_bindir}/lmConfigEditor
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
@@ -738,6 +746,9 @@ fi
 
 
 %changelog
+* Fri Sep 05 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.3-1
+- Update to 2.21.3
+
 * Fri Jul 11 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.2-1
 - Update to 2.21.2
 

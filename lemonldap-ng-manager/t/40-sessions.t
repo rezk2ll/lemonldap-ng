@@ -60,8 +60,8 @@ count(5);
 $res = &client->jsonResponse( '/sessions/global', 'groupBy=substr(uid,1)' );
 ok( $res->{result} == 1, 'Result code = 1' );
 ok( $res->{count} == 1,  'Found 1 entry' );
-ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
-    'Result match "uid=d"' )
+ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'dwho',
+    'Result match "uid=dwho"' )
   or print STDERR Dumper($res);
 ok( $res->{values}->[0]->{count} == 2, 'Found 2 sessions starting with "d"' );
 count(4);

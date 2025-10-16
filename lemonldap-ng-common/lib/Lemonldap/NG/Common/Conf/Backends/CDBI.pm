@@ -5,7 +5,7 @@ use utf8;
 use JSON;
 use Lemonldap::NG::Common::Conf::Backends::_DBI;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.22.0';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Backends::_DBI);
 
 sub store {

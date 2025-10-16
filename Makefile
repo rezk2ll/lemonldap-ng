@@ -674,6 +674,7 @@ install_bin:	install_conf_dir
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/purgePersistentSessions \
+		${SRCPORTALDIR}/scripts/crowdsecBan \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
 		${SRCPORTALDIR}/scripts/downloadSamlMetadata \
@@ -715,6 +716,33 @@ install_bin:	install_conf_dir
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*
+	# Cron files
+	@if [ "x$(WITHRC)" = "xyes" ]; then \
+		install -v -d $(RCRONDIR); \
+		cp -f $(SRCCOMMONDIR)/scripts/rotateOidcKeys.cron.d $(RCRONDIR)/lemonldap-ng-rotateOidcKeys; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-rotateOidcKeys; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-rotateOidcKeys; \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-rotateOidcKeys; \
+	fi
+	# systemd files
+	@if [ "x$(WITHSYSTEMD)" = "xyes" ]; then \
+		install -v -d $(RUNITDIR); \
+		cp -f $(SRCCOMMONDIR)/scripts/lemonldap-ng-rotateOidcKeys.service \
+			$(SRCCOMMONDIR)/scripts/lemonldap-ng-rotateOidcKeys.timer \
+			$(RUNITDIR)/; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' \
+				$(RUNITDIR)/lemonldap-ng-rotateOidcKeys.service; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' \
+				$(RUNITDIR)/lemonldap-ng-rotateOidcKeys.service; \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' \
+			$(RUNITDIR)/lemonldap-ng-rotateOidcKeys.service; \
+	fi
 
 install_fastcgi_server:
 	@install -v -d \
@@ -1136,7 +1164,7 @@ clean:
 	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
-	@rm -rf doc/pages/documentation/current/*
+	@if [ ! "$(SKIP_DOCUMENTATION)" ]; then rm -rf doc/pages/documentation/current/*; fi
 	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)

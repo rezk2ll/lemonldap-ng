@@ -2,7 +2,7 @@
 # into "plugins" list in lemonldap-ng.ini, section "portal"
 package Lemonldap::NG::Portal::Main::Plugins;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -45,6 +45,7 @@ our @pList = (
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions         => '::Plugins::Refresh',
     crowdsec                => '::Plugins::CrowdSec',
+    crowdsecAgent           => '::Plugins::CrowdSecAgent',
     locationDetect          => '::Plugins::LocationDetect',
     globalLogoutRule        => '::Plugins::GlobalLogout',
     samlFederationFiles     => '::Plugins::SamlFederation',

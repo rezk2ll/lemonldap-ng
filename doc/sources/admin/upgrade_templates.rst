@@ -1,7 +1,7 @@
 Template updates
 ================
 
-.. note:: 
+.. note::
 
     The content of this page only applies to you if:
 
@@ -18,6 +18,33 @@ Template updates
 
 2.22.0
 ------
+
+Authentication choice
+^^^^^^^^^^^^^^^^^^^^^
+
+To prevent having a digit as first character of an identifier, the choice id value has been prefixed by ``id_``. This could break the remember auth choice plugin if you have a customized ``login.tpl``
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    @@ -33,7 +33,7 @@
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <ul class="navbar-nav mr-auto">
+             <TMPL_LOOP NAME="AUTH_LOOP">
+    -          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+    +          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#id_<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+             </TMPL_LOOP>
+           </ul>
+         </div>
+    @@ -44,7 +44,7 @@
+           <!-- Forms -->
+           <TMPL_LOOP NAME="AUTH_LOOP">
+
+    -        <div id="<TMPL_VAR NAME="key">">
+    +        <div id="id_<TMPL_VAR NAME="key">">
+
+               <form id="lform<TMPL_VAR NAME="module">" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 
 Prevent 2FA multiple submit
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -79,6 +106,32 @@ We also add the `required` property to code input to avoid submitting an empty f
           <span trspan="connect">Connect</span>
         </button>
 
+Display if browser is already trusted
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An information message is diplayed instead of the checkbox.
+
+.. code-block:: diff
+
+   --- a/lemonldap-ng-portal/site/templates/bootstrap/checklogins.tpl
+   +++ b/lemonldap-ng-portal/site/templates/bootstrap/checklogins.tpl
+   @@ -12,6 +12,9 @@
+        </div>
+        </TMPL_IF>
+        <TMPL_IF NAME="STAYCONNECTED">
+   +      <TMPL_IF NAME="BROWSER_ALREADY_TRUSTED">
+   +      <div class="message message-success alert alert-success"><span trspan="browserAlreadyTrusted">This browser is already trusted</span></div>
+   +      <TMPL_ELSE>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+   @@ -22,4 +25,5 @@
+            <label id="stayConnectedLabel" for="stayconnected" trspan="stayConnected">Stay connected on this device</label>
+          </p>
+        </div>
+   +      </TMPL_IF>
+        </TMPL_IF>
+
 2.21.0
 ------
 
@@ -96,10 +149,10 @@ Apply the following patches to ``menu.tpl``, ``footer.tpl`` and ``script.tpl`` t
     @@ -129,7 +129,7 @@
                  <TMPL_IF NAME="category">
                  <!-- Category -->
-     
+
     -              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" id="sort_<TMPL_VAR NAME="__counter__">">
     +              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
-     
+
                      <div class="card-header text-white bg-secondary">
                      <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
 
@@ -107,7 +160,7 @@ Apply the following patches to ``menu.tpl``, ``footer.tpl`` and ``script.tpl`` t
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/footer.tpl
     @@ -1,10 +1,12 @@
        </div>
-     
+
     -<TMPL_IF NAME="SCROLL_TOP">
     -  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
     -    <i class="fa fa-arrow-circle-up"></i>
@@ -120,7 +173,7 @@ Apply the following patches to ``menu.tpl``, ``footer.tpl`` and ``script.tpl`` t
     +  </TMPL_IF>
     +
     +  <div class="col-6" id="floating-menu"></div>
-     
+
        <div id="footer">
          <div class="row">
 

@@ -140,8 +140,11 @@ sub test {
     expectOK($res);
     my $opPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
+    ( $host, undef, $query ) = expectForm( $res, '#', undef );
+
     # Try to authenticate to OP
-    $query = "user=french&password=french&$query";
+    $query =~ s/user=/user=french/;
+    $query =~ s/password=/password=french/;
     ok(
         $res = $op->_post(
             $url,

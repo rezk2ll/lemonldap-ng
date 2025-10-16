@@ -70,8 +70,10 @@ lib/Lemonldap/NG/Portal/Lib/Captcha.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/Code2F.pm
+lib/Lemonldap/NG/Portal/Lib/CrowdSecFilter.pm
 lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
+lib/Lemonldap/NG/Portal/Lib/Key.pm
 lib/Lemonldap/NG/Portal/Lib/LazyLoadedConfiguration.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
@@ -137,6 +139,7 @@ lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
 lib/Lemonldap/NG/Portal/Plugins/CrowdSec.pm
+lib/Lemonldap/NG/Portal/Plugins/CrowdSecAgent.pm
 lib/Lemonldap/NG/Portal/Plugins/DecryptValue.pm
 lib/Lemonldap/NG/Portal/Plugins/FindUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
@@ -195,6 +198,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/crowdsecBan
 scripts/downloadSamlMetadata
 scripts/lemonldap-ng-portal.preset
 scripts/lemonldap-ng-portal.service
@@ -469,6 +473,7 @@ site/js-src/oidcOfflineTokens.js
 site/js-src/password2fregistration.js
 site/js-src/portal.js
 site/js-src/ppolicy.js
+site/js-src/recaptchav3.js
 site/js-src/redirect.js
 site/js-src/registerbrowser.js
 site/js-src/rollup.config.cjs
@@ -530,6 +535,7 @@ site/templates/bootstrap/public/test.tpl
 site/templates/bootstrap/pwdWillExpire.tpl
 site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
+site/templates/bootstrap/registerBrowser.tpl
 site/templates/bootstrap/removeOther.tpl
 site/templates/bootstrap/samlRedirectToIdp.tpl
 site/templates/bootstrap/samlSpLogout.tpl
@@ -582,7 +588,6 @@ site/templates/common/mail_register_done.tpl
 site/templates/common/notification.xsl
 site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
-site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/00-Switch.t
 t/01-AuthDemo.t
@@ -598,6 +603,7 @@ t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
+t/01-Keys.t
 t/01-Mail-Tpl.t
 t/01-OneTimeToken.t
 t/01-pdata.t
@@ -684,6 +690,7 @@ t/30-Auth-ResolutionRule.t
 t/30-Auth-Saml-Reauth.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
+t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-Macros.t
@@ -765,6 +772,7 @@ t/32-OIDC-JWT-type-header.t
 t/32-OIDC-login_hint.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
+t/32-OIDC-Logout-unauth.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
 t/32-OIDC-Native-SSO.t
@@ -890,6 +898,7 @@ t/61-BruteForceProtection-with-Incremental-lockTimes.t
 t/61-BruteForceProtection.t
 t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
+t/61-CrowdSecAgent.t
 t/61-ForceAuthn.t
 t/61-GrantSession.t
 t/61-LocationDetect.t
@@ -1002,6 +1011,7 @@ t/81-MostViewedApplications.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t
+t/91-no-console.log.t
 t/92-Required-Auth-Methods.t
 t/92-Required-Issuer-Methods.t
 t/92-Required-UserDB-Methods.t
@@ -1014,6 +1024,9 @@ t/CaptchaOldApi.pm
 t/cas-lib.pm
 t/CasHookPlugin.pm
 t/ChoiceHookPlugin.pm
+t/crowdsec-filters/bad.url.re
+t/crowdsec-filters/bad.url.txt
+t/crowdsec-filters/url1/bad.txt
 t/Custom.pm
 t/CustomMenu.pm
 t/DbiCustomHash.pm
@@ -1075,7 +1088,6 @@ t/test-yubikey.pm
 t/Test2FA.pm
 t/Test2FRegister.pm
 t/TestMail.pm
-t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
 t/TestStdLogger.pm

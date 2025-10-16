@@ -51,6 +51,11 @@ Options
 - **Application ID**: The application identifier
 - **Shared secret**: The application shared secret, only needed if you use ``HS*`` signature algorithms
 - **Signature algorithm**: The signature algorithm to use. By default ``HS256`` is used, which requires a shared secret.
+- **Signing key name**: By default, the key specified above will be used for
+  signature. You can use :doc:`anonther key <keys>` instead in order to better
+  manage key rotation. If you declare a comma-separated list, only the first
+  declared key will be used for signature, but all listed keys will be
+  published to Jitsi using the ASAP protocol
 - **Jitsi JWT expiration**: How long, in seconds, will the generated JWT be valid (``exp`` field)
 
 Signature algorithms
@@ -65,8 +70,9 @@ There are two ways for the Jitsi Meet server to validate the token authenticity:
 .. important::
 
     LemonLDAP::NG will attempt to use the *OpenID Connect* private key to emit
-    JWTs, which means you need to create a key in *OpenID Connect Service* >
-    *Security* > *Keys* if you intend to use public-key signature.
+    JWTs, by default. If you don't use OpenID Connect. You should create a new
+    key in *General Parameters* > *Keys*, and indicate the name you gave to it
+    in *Signing key name*
 
 
 Attribute mapping

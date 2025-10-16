@@ -109,6 +109,9 @@ overScheme = {
     // "v.length > over" avoids a loop if one user opened more than "max"
     // sessions
     console.debug('overScheme => level', level, 'over', over);
+
+    // no overScheme when over reached the length of previous result
+    if (v.length >= (level+over)) return null;
     if (level === 1 && v.length > over) {
       return `${t}=${v}*&groupBy=substr(${t},${level + over + 1})`;
     } else {
@@ -650,9 +653,8 @@ llapp.controller('SessionsExplorerCtrl', [
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
-            ref = data.values;
-            for (i = 0, len = ref.length; i < len; i++) {
-              n = ref[i];
+            for (i = 0; i < data.values.length; i++) {
+              n = data.values[i];
               autoId++;
               n.id = `node${autoId}`;
               if (level < scheme.length - 1) {

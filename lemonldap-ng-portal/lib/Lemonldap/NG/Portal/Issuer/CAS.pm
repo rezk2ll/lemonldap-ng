@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use URI;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -235,7 +235,7 @@ sub run {
         # Renew
         if (    $renew
             and $renew eq 'true'
-            and time - $req->sessionInfo->{_utime} >
+            and time - $req->sessionInfo->{_lastAuthnUTime} >
             $self->conf->{portalForceAuthnInterval} )
         {
 

@@ -28,7 +28,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -914,6 +914,7 @@ sub _continueLogin {
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
                 _2f                 => $prefix,
+                _lastAuthnUTime     => time,
                 %macros
             }
         );
@@ -923,7 +924,8 @@ sub _continueLogin {
         $self->p->updateSession(
             $req,
             {
-                _2f => $prefix,
+                _lastAuthnUTime => time,
+                _2f             => $prefix,
             }
         );
     }

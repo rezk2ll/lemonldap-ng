@@ -178,7 +178,7 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Parry_Pe
 Copyright: EpicV27
 License: CC-BY-SA-4.0 or CC-BY-3.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_*
 Copyright: Jo Simon
 License: CC-BY-SA-4.0
 
@@ -225,7 +225,7 @@ License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/fingerprintjs2/*
 Copyright: 2015, Valentin Vasilyev <valentin.vasilyev@outlook.com>
-License: Expat or Apache-2.0
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/font-awesome/css/*
 Copyright: Font Awesome Team <hello@fontawesome.com>
@@ -241,7 +241,7 @@ License: CC-BY-3.0
 
 Files: lemonldap-ng-*/site/htdocs/static/bwr/jquery/*
 Copyright: 2010, The jQuery project and the jQuery UI team
-License: GPL-2 or Expat
+License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery.cookie/*
 Copyright: 2010, Klaus Hartl (stilbuero.de)
@@ -263,6 +263,8 @@ Files: lemonldap-ng-portal/site/htdocs/static/bwr/qrious/*
 Copyright: 2017, Alasdair Mercer
  2010, Tom Zerucha
 License: GPL-3+
+Comment:
+ Contains code covered by MIT license, same author
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
  doc/sources/admin/icons/*
@@ -272,6 +274,14 @@ License: LGPL-3
 Files: lemonldap-ng-portal/t/geoip/*
 Copyright: 2013 - 2024 by MaxMind, Inc.
 License: Expat or Apache-2.0
+
+Files: lemonldap-ng-common/t/saml-schemas/saml-*
+Copyright: OASIS Open 2005
+License: OASIS
+
+Files: lemonldap-ng-common/t/saml-schemas/x*
+Copyright: W3C
+License: W3C
 
 Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
@@ -2362,3 +2372,20 @@ License: unDraw
  assets in packs or otherwise. This extends to automated and non-automated
  ways to link, embed, scrape, search or download the assets included on the
  website without our consent.
+
+License: OASIS
+ Copyright © OASIS Open 2005. All Rights Reserved.
+ This document and translations of it may be copied and furnished to others, and derivative works that
+ comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and
+ distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and
+ this paragraph are included on all such copies and derivative works. However, this document itself may
+ not be modified in any way, such as by removing the copyright notice or references to OASIS, except as
+ needed for the purpose of developing OASIS specifications, in which case the procedures for copyrights
+ defined in the OASIS Intellectual Property Rights document must be followed, or as required to translate it
+ into languages other than English.
+ The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors
+ or assigns.
+ This document and the information contained herein is provided on an “AS IS” basis and OASIS
+ DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+ WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR
+ ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.

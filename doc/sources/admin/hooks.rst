@@ -123,6 +123,7 @@ The hook's parameters are:
 .. versionadded:: 2.22.0
 
 * A hash of session information
+* A hash of additional JWT headers
 
 Sample code::
 
@@ -131,7 +132,7 @@ Sample code::
    };
 
    sub addClaimToIDToken {
-       my ( $self, $req, $payload, $rp, $sessionInfo ) = @_;
+       my ( $self, $req, $payload, $rp, $sessionInfo, $extra_headers ) = @_;
        $payload->{"id_token_hook"} = 1;
        return PE_OK;
    }
@@ -148,6 +149,10 @@ The hook's parameters are:
 * A hash of the claims to be contained in the Access Token
 * the configuration key of the relying party which will receive the token
 
+.. versionadded:: 2.22.0
+
+* A hash of additional JWT headers
+
 Sample code::
 
    use constant hook => {
@@ -155,7 +160,7 @@ Sample code::
    };
 
    sub addClaimToAccessToken {
-       my ( $self, $req, $payload, $rp ) = @_;
+       my ( $self, $req, $payload, $rp, $extra_headers ) = @_;
        $payload->{"access_token_hook"} = 1;
        return PE_OK;
    }
@@ -209,6 +214,59 @@ Sample code::
        push @{$scopeList}, "myscope";
        return PE_OK;
    }
+
+oidcValidateRedirectUri
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.22.0
+
+This hook lets you override the built-in URI validation logic
+
+The hook's parameters are:
+
+* The configuration key of the requested RP
+* The redirect URI to validate
+* The name of the endpoint that received the URI, such as
+
+  * ``authorization``
+  * ``end_session``
+
+* A state object used to return the result of validation. Its subkeys are
+
+  * ``result``: boolean result of the URI validation
+
+.. warning::
+
+    This hook must return ``PE_DONE`` in order to indicate that it performed
+    URI validation. The result of validation must be set in ``$state->{result}``.
+
+Sample code ::
+
+    use URI;
+    use constant hook => { oidcValidateRedirectUri => 'allowLocalhost' };
+
+    sub allowLocalhost {
+        my ( $self, $req, $rp, $uri, $endpoint, $state ) = @_;
+
+        # If this RP is used by devs, allow all localhost urls
+        if ( $rp =~ /^dev-/ ) {
+
+            my $parsed_uri = URI->new($uri);
+            if ( $parsed_uri->host eq "localhost" ) {
+
+                # Force validation to succeed even if the URI
+                # is not declared in LemonLDAP::NG config
+                $state->{result} = 1;
+                return PE_DONE;
+            }
+        }
+
+        # Returning PE_OK means that we defer the decision to
+        # LemonLDAP::NG's built-in logic, which is to only allow
+        # explicitely declared URIs
+
+        return PE_OK;
+    }
 
 
 oidcGotOnlineRefresh
@@ -333,10 +391,12 @@ the RP configuration ::
            extraClaims => # hashref of additional scopes to consider
        );
 
-       # Set the TTL even if nothing was found in DB to prevent LLNG from
-       # calling the hook too often
+       # If you don't set a TTL, the returned configuration is considered
+       # permanently valid. Even if nothing was returned.
        $config->{ttl} = 3600;
 
+       # If you return a non-OK status, the hook will be called again
+       # on the next attempt to resolve the same entityID
        return PE_OK;
    }
 
@@ -377,12 +437,15 @@ the IDP or SP information::
            idp_options => #hashref of options
        );
 
-       # Set the TTL even if nothing was found in DB to prevent LLNG from
-       # calling the hook too often
+       # If you don't set a TTL, the returned configuration is considered
+       # permanently valid. Even if nothing was returned.
        $config->{ttl} = 3600;
 
+       # If you return a non-OK status, the hook will be called again
+       # on the next attempt to resolve the same entityID
        return PE_OK;
    }
+
 
 SAML Issuer hooks
 -----------------
@@ -855,7 +918,7 @@ the user.
 
 The hook's only parameter is a context hash which you can modify. Its subkeys are
 
-  * ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
+* ``choice``: set this key to the desired choice, or leave it empty to show the standard choice forms
 
 Sample code::
 
@@ -890,24 +953,28 @@ You can use this hook to implement :ref:`custom password policies <pluginppolicy
 
 The hook's parameters are:
 
-* The main user identifier
+* The main user identifier (warning: can be an email during the password reset flow)
 * The new password
 * The old password, if relevant
 
 Sample code::
 
-   use constant hook => {
-       passwordBeforeChange => 'blacklistPassword',
-   };
+    use constant hook => { passwordBeforeChange => 'blacklistPassword', };
 
-   sub blacklistPassword {
-       my ( $self, $req, $user, $password, $old ) = @_;
-       if ( $password eq "12345" ) {
-           $self->logger->error("I've got the same combination on my luggage");
-           return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
-       }
-       return PE_OK;
-   }
+    sub blacklistPassword {
+        my ( $self, $req, $_user, $password, $old ) = @_;
+
+        # Note: because $_user can be either a username or an email,
+        # using an explicit attribute from sessionInfo is more reliable
+        my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+        if ( $password eq "12345" ) {
+            $self->logger->error( "Password change refused for $user : "
+                  . "I've got the same combination on my luggage" );
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+        return PE_OK;
+    }
 
 
 passwordAfterChange
@@ -919,22 +986,27 @@ This hook is triggered after LemonLDAP::NG has changed the user's password succe
 
 The hook's parameters are:
 
-* The main user identifier
+* The main user identifier (warning: can be an email during the password reset flow)
 * The new password
 * The old password, if relevant
 
 Sample code::
 
-   use constant hook => {
-       passwordAfterChange  => 'logPasswordChange',
-   };
+    use constant hook => { passwordAfterChange => 'logPasswordChange', };
 
-   sub logPasswordChange {
-       my ( $self, $req, $user, $password, $old ) = @_;
-       $old ||= "";
-       $self->userLogger->info("Password changed for $user: $old -> $password");
-       return PE_OK;
-   }
+    sub logPasswordChange {
+        my ( $self, $req, $_user, $password, $old ) = @_;
+        $old ||= "";
+
+        # Note: because $_user can be either a username or an email,
+        # using an explicit attribute from sessionInfo is more reliable
+        my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+        # This is just an example, don't actually log a password!
+        $self->userLogger->info(
+            "Password changed for $user: $old -> $password");
+        return PE_OK;
+    }
 
 
 Second factor hooks
@@ -1120,3 +1192,11 @@ Sample code::
         }
         return PE_OK;
     }
+
+unauthLogout
+~~~~~~~~~~~~
+
+.. versionadded:: 2.22.0
+
+This hook is called just before any logout. It receive only one parameter, the
+`̀`$req`` object.

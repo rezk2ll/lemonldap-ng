@@ -195,7 +195,6 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    $req->data->{alreadyAuthenticated} = 1;
     return $self->do(
         $req,
         [
@@ -338,7 +337,7 @@ sub unauthLogout {
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
-    my $err = $self->processHook( $req, 'unAuthLogout' );
+    my $err = $self->processHook( $req, 'unauthLogout' );
     $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
@@ -414,7 +413,7 @@ sub do {
         }
         else {
             my $res = { result => 1, error => $err };
-            unless ( $req->data->{alreadyAuthenticated} ) {
+            if ( $req->data->{newAuth} ) {
                 $res->{id}      = $req->id;
                 $res->{id_http} = $req->sessionInfo->{_httpSession}
                   if $req->sessionInfo->{_httpSession};
@@ -1303,6 +1302,11 @@ sub tplParams {
 
     for my $env_key ( keys %{ $req->env } ) {
         $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
+    for my $custom_key ( keys %{ $self->conf->{portalCustomTplParams} } ) {
+        $templateParams{$custom_key} =
+          $self->conf->{portalCustomTplParams}->{$custom_key};
     }
 
     return (

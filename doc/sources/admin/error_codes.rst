@@ -14,12 +14,12 @@ Error codes list
    :widths: auto
 
 
-    ``PE_2FWAIT``,-6,""
-    ``PE_IDPCHOICE``,-5,""
-    ``PE_SENDRESPONSE``,-4,""
-    ``PE_INFO``,-3,""
-    ``PE_REDIRECT``,-2,""
-    ``PE_DONE``,-1,""
+    ``PE_2FWAIT``,-6,"Wait for second factor"
+    ``PE_IDPCHOICE``,-5,"Prompt to choose identity provider"
+    ``PE_SENDRESPONSE``,-4,"Send response given in $req->response"
+    ``PE_INFO``,-3,"Prompt to display $req->info"
+    ``PE_REDIRECT``,-2,"Redirect user to $req->urldc"
+    ``PE_DONE``,-1,"Don't launch next steps"
     ``PE_OK``,0,"User authenticated"
     ``PE_SESSIONEXPIRED``,1,"Your connection has expired, you must authenticate once again"
     ``PE_FORMEMPTY``,2,"User and password fields must be filled"

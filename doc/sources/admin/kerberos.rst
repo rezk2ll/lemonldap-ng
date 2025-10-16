@@ -105,63 +105,11 @@ Add ``https://auth.example.com`` as trusted site.
 
 Check into security parameters that Kerberos authentication is allowed.
 
-Single AD domain
-----------------
-
-Client Kerberos configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-On LL::NG server, edit ``/etc/krb5.conf``:
-
-.. code-block:: ini
-
-   [libdefaults]
-    default_realm = EXAMPLE.COM
-    dns_lookup_kdc = false
-    dns_lookup_realm = no
-    ticket_lifetime = 24h
-    forwardable = yes
-    renewable = true
-
-   [realms]
-    EXAMPLE.COM = {
-     kdc = ad.example.com
-     admin_server = ad.example.com
-    }
-
-   [domain_realm]
-    .example.com = EXAMPLE.COM
-    example.com = EXAMPLE.COM
-
-You can check that Kerberos is working by trying to get a ticket for a
-user of the domain (for example coudot):
-
-::
-
-   kinit coudot@EXAMPLE.COM
-
-You should be prompted to enter password. Then list the tickets:
-
-::
-
-   klist -e
-
-You should see a krbtgt ticket:
-
-::
-
-   Valid starting     Expires            Service principal
-   06/04/15 15:43:24  06/05/15 01:43:29  krbtgt/EXAMPLE.COM@EXAMPLE.COM
-           renew until 06/05/15 15:43:24, Etype (skey, tkt): aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
-
-You can then close the Kerberos session:
-
-::
-
-   kdestroy
-
 Obtain keytab file
-~~~~~~~~~~~~~~~~~~
+------------------
+
+Standard case
+~~~~~~~~~~~~~
 
 You have to run this command on Active Directory:
 
@@ -194,10 +142,74 @@ Change rights on keytab file:
    # If you use SELinux
    restorecon /etc/lemonldap-ng/auth.keytab
 
+Special case: multiple AD domains
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You need to obtain a keytab for each node on each domain. This means the
+ktpass commands should be run on both AD.
+
+Then you will have 2 keytab files for each node, for example:
+
+-  node1-example.keytab
+-  node1-acme.keytab
+
+You need to concatenate the keytab files, thanks to ``ktutil`` command:
+
+::
+
+   ktutil
+   ktutil: read_kt node1-example.keytab
+   ktutil: read_kt node1-acme.keytab
+   ktutil: write_kt /etc/lemonldap-ng/auth.keytab
+   ktutil: quit
+
+You can then remove the original keytab files and protect the final
+keytab file:
+
+::
+
+   chown apache /etc/lemonldap-ng/auth.keytab
+   chmod 600 /etc/lemonldap-ng/auth.keytab
+
+Testing your setup
+------------------
+
+This is only needed if your Kerberos configuration is not working and you don't understand why. It explains how request a Kerbeors ticket from a GNU/Linux station (which could be the LL::NG server if you don't have other one).
+
+Of course it requires a valid user account on AD to be able to otbain the Kerberos ticket.
+
+Client Kerberos configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Edit ``/etc/krb5.conf``:
+
+.. code-block:: ini
+
+   [libdefaults]
+    default_realm = EXAMPLE.COM
+    dns_lookup_kdc = false
+    dns_lookup_realm = no
+    ticket_lifetime = 24h
+    forwardable = yes
+    renewable = true
+
+   [realms]
+    EXAMPLE.COM = {
+     kdc = ad.example.com
+     admin_server = ad.example.com
+    }
+
+   [domain_realm]
+    .example.com = EXAMPLE.COM
+    example.com = EXAMPLE.COM
+
+Getting a Kerberos ticket
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 You can check the validity of the keytab file by trying to request a
 service ticket, and compare the result with the keytab content.
 
-Open a Kerberos session (like done in the previous step):
+Open a Kerberos session:
 
 ::
 
@@ -234,8 +246,11 @@ You can close the Kerberos session:
 
    kdestroy
 
+Checking the keytab
+~~~~~~~~~~~~~~~~~~~
+
 Now you can compare the above result with the same request done through
-the keytab file:
+the keytab file on LL::NG server:
 
 ::
 
@@ -256,13 +271,9 @@ The important things to check are:
 -  Principal names must be the same
 -  Encryption types must be the same
 
+
 Multiple AD domains
--------------------
-
-.. _client-kerberos-configuration-1:
-
-Client Kerberos configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 The two domains must be defined in ``/etc/krb5.conf``:
 
@@ -307,33 +318,4 @@ You should then be able to open a Kerberos session on each domain:
    klist -e
    kdestroy
 
-.. _obtain-keytab-file-1:
-
-Obtain keytab file
-~~~~~~~~~~~~~~~~~~
-
-You need to obtain a keytab for each node on each domain. This means the
-ktpass commands should be run on both AD.
-
-Then you will have 2 keytab files for each node, for example:
-
--  node1-example.keytab
--  node1-acme.keytab
-
-You need to concatenate the keytab files, thanks to ``ktutil`` command:
-
-::
-
-   ktutil
-   ktutil: read_kt node1-example.keytab
-   ktutil: read_kt node1-acme.keytab
-   ktutil: write_kt /etc/lemonldap-ng/auth.keytab
-   ktutil: quit
-
-You can then remove the original keytab files and protect the final
-keytab file:
-
-::
-
-   chown apache /etc/lemonldap-ng/auth.keytab
-   chmod 600 /etc/lemonldap-ng/auth.keytab
+You can then check the tickets and the keytab.

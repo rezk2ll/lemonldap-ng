@@ -17,7 +17,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -88,7 +88,7 @@ sub userLogout {
       or return $self->sendError( $req, "session $id not found" );
 
     my $uidKey = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
-    my $uid    = $session->data->{$uidKey};
+    my $uid    = $session->data->{$uidKey} || $session->data->{_session_uid};
 
     my $count = 0;
     foreach my $storage (qw(oidcStorage sessionStorage)) {
@@ -378,13 +378,43 @@ sub sessions {
         # Substrings
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
             my ( $field, $length, $start ) = ( $1, $2, $3 );
+
+            # "next" is a try with $length+1, if only one account, $length++
+            # This permits UI to jump directly to the uid
+            # -d (300)
+            #    -> dwho (300)
+            #       ... sessions
+            #
             $start ||= 0;
             $length = 1 if ( $length < 1 );
-            foreach my $k ( keys %$res ) {
-                $r->{ substr $res->{$k}->{$field}, $start, $length }++
-                  if ( $res->{$k}->{$field} );
+            while (1) {
+                my $next = {};
+                my $stop;
+                foreach my $k ( keys %$res ) {
+                    my $subk = substr $res->{$k}->{$field}, $start, $length + 1;
+                    $next->{$subk}++
+                      if ( $res->{$k}->{$field} );
+
+                    # End of the loop if we reached the length of uid
+                    $stop++
+                      if $start + $length >= length( $res->{$k}->{$field} );
+                }
+
+                # Loop if only one result
+                my @k = keys %$next;
+                if ( @k == 1 and !$stop ) {
+                    $length++;
+                    next;
+                }
+
+                # Result calculation
+                foreach my $k ( keys %$res ) {
+                    $r->{ substr $res->{$k}->{$field}, $start, $length }++
+                      if ( $res->{$k}->{$field} );
+                }
+                $group = $field;
+                last;
             }
-            $group = $field;
         }
 
         # Subnets IPv4

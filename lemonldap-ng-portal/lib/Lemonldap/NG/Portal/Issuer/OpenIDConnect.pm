@@ -8,6 +8,7 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
   PE_OK
+  PE_DONE
   PE_ERROR
   PE_CONFIRM
   PE_REDIRECT
@@ -24,7 +25,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -33,7 +34,8 @@ extends qw(
 );
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
-  'Lemonldap::NG::Common::OpenIDConnect::Metadata';
+  'Lemonldap::NG::Common::OpenIDConnect::Metadata',
+  'Lemonldap::NG::Portal::Lib::Key';
 
 # INTERFACE
 
@@ -214,7 +216,11 @@ sub load_config {
 
     # Not found in config, try to load from hook
     my $config = {};
-    $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
+    my $res =
+      $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
+    if ( $res != PE_OK ) {
+        return;
+    }
 
     my $info;
     if ( $config->{confKey} ) {
@@ -491,8 +497,8 @@ sub _checkErrorsInAuthorizeEndpoint {
     # Check redirect_uri
     my $redirect_uri = $oidc_request->{'redirect_uri'};
     if (
-        !$self->isUriAllowedForRP(
-            $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
+        !$self->_validateRedirectUri(
+            $req, $rp, $redirect_uri, "authorization"
         )
       )
     {
@@ -637,7 +643,7 @@ sub _authorizeEndpoint {
             $prompt
         and $prompt =~ /\blogin\b/
         and (
-            time - $req->sessionInfo->{_utime} >
+            time - $req->sessionInfo->{_lastAuthnUTime} >
             $self->conf->{portalForceAuthnInterval} )
       )
     {
@@ -1249,7 +1255,9 @@ sub _rpInitiatedLogout {
 
     # Set hidden fields
     my $oidc_request = {};
-    foreach my $param (qw/id_token_hint post_logout_redirect_uri state/) {
+    foreach
+      my $param (qw/id_token_hint post_logout_redirect_uri state client_id/)
+    {
         if ( $oidc_request->{$param} = $req->param($param) ) {
             $self->logger->debug(
                 "OIDC request parameter $param: " . $oidc_request->{$param} );
@@ -1258,16 +1266,48 @@ sub _rpInitiatedLogout {
 
     my $post_logout_redirect_uri = $oidc_request->{'post_logout_redirect_uri'};
     my $id_token_hint            = $oidc_request->{'id_token_hint'};
+    my $client_id                = $oidc_request->{'client_id'};
     my $state                    = $oidc_request->{'state'};
     my $bypassConfirm            = 0;
 
     my $post_logout_redirect_uri_with_state;
+    my $rp;
+
+    # Check if we can bypass confirm using token_hint
+    if ($id_token_hint) {
+
+        # TODO: we should check JWT signature here to avoid DoS by
+        # logging the user out, however, as long as there is no logout
+        # confirmation when accessing ?logout=1, such a protection is
+        # trivial to bypass
+        my $payload = getJWTPayload($id_token_hint);
+
+        if ( my $azp = $payload->{azp} ) {
+            if ( !$client_id or $client_id eq $azp ) {
+                $rp = $self->getRP( $payload->{azp} );
+            }
+            else {
+                $self->logger->error(
+                        "Provided client ID $client_id does not match"
+                      . " id_token_hint azp $azp" );
+                return PE_ERROR;
+            }
+        }
+
+        $bypassConfirm = $self->_check_bypass_confirm( $req, $rp, $payload );
+
+    }
+
+    if ( not $rp and $client_id ) {
+        $rp = $self->getRP($client_id);
+    }
+
+    # Validate post_logout_redirect_uri
     if ($post_logout_redirect_uri) {
 
         unless (
-            $self->findRPFromUri(
-                $post_logout_redirect_uri,
-                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            $self->_validatePostLogoutRedirectUri(
+                $req, $rp, $post_logout_redirect_uri, "end_session"
             )
           )
         {
@@ -1278,20 +1318,6 @@ sub _rpInitiatedLogout {
         # Build Response
         $post_logout_redirect_uri_with_state =
           $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
-    }
-
-    # Check if we can bypass confirm using token_hint
-    if ($id_token_hint) {
-
-        # TODO: we should check JWT signature here to avoid DoS by
-        # logging the user out, however, as long as there is no logout
-        # confirmation when accessing ?logout=1, such a protection is
-        # trivial to bypass
-        my $payload = getJWTPayload($id_token_hint);
-        my $rp;
-        $rp = $self->getRP( $payload->{azp} ) if $payload->{azp};
-
-        $bypassConfirm = $self->_check_bypass_confirm( $req, $rp, $payload );
     }
 
     # Ask consent for logout
@@ -1377,6 +1403,41 @@ sub _check_bypass_confirm {
     }
     return 0;
 
+}
+
+sub _validateRedirectUri {
+    my ( $self, $req, $rp, $uri, $current_endpoint ) = @_;
+
+    return unless $rp;
+
+    my $state = {};
+    my $h     = $self->p->processHook( $req, 'oidcValidateRedirectUri',
+        $rp, $uri, $current_endpoint, $state );
+    return $state->{result} if ( $h == PE_DONE );
+
+    return $self->isUriAllowedForRP( $uri, $rp,
+        'oidcRPMetaDataOptionsRedirectUris' );
+}
+
+sub _validatePostLogoutRedirectUri {
+    my ( $self, $req, $rp, $uri, $current_endpoint ) = @_;
+
+    if ($rp) {
+
+        my $state = {};
+        my $h     = $self->p->processHook( $req, 'oidcValidateRedirectUri',
+            $rp, $uri, $current_endpoint, $state );
+        return $state->{result} if ( $h == PE_DONE );
+
+        return $self->isUriAllowedForRP( $uri, $rp,
+            'oidcRPMetaDataOptionsPostLogoutRedirectUris' );
+    }
+    else {
+        return (
+            $self->findRPFromUri( $uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris' ) ? 1 : 0
+        );
+    }
 }
 
 sub findRPFromUri {
@@ -1663,12 +1724,13 @@ sub _handlePasswordGrant {
         }
     }
 
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
     # Resolve scopes
     my $scope = $self->getScope( $req, $rp, $req_scope );
     unless ($scope) {
-        $self->userLogger->warn( 'User '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-              . " was not granted any requested scopes ($req_scope) for $rp" );
+        $self->userLogger->warn( "User $user was not granted"
+              . "  any requested scopes ($req_scope) for $rp" );
         return $self->sendOIDCError( $req, 'invalid_scope', 400 );
     }
 
@@ -1704,10 +1766,11 @@ sub _handlePasswordGrant {
         my $refreshTokenSession = $self->_generateRefreshToken(
             $req, $rp,
             {
-                scope           => $scope,
-                client_id       => $client_id,
-                user_session_id => $req->id,
-                grant_type      => "password",
+                scope                      => $scope,
+                client_id                  => $client_id,
+                user_session_id            => $req->id,
+                grant_type                 => "password",
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -1847,7 +1910,8 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
-    my $sid = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $sid  = $self->getSidFromSession( $rp, $apacheSession->data );
+    my $user = $apacheSession->data->{ $self->conf->{whatToTrace} };
 
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
@@ -1870,11 +1934,10 @@ sub _handleAuthorizationCodeGrant {
                 redirect_uri => $codeSession->data->{redirect_uri},
                 scope        => $scope,
                 client_id    => $client_id,
-                _session_uid =>
-                  $apacheSession->data->{ $self->conf->{whatToTrace} },
-                auth_time  => $apacheSession->data->{_lastAuthnUTime},
-                grant_type => "authorizationcode",
-                _oidc_sid  => $sid,
+                _session_uid => $user,
+                auth_time    => $apacheSession->data->{_lastAuthnUTime},
+                grant_type   => "authorizationcode",
+                _oidc_sid    => $sid,
             },
             1,
         );
@@ -1905,6 +1968,7 @@ sub _handleAuthorizationCodeGrant {
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
+                $self->conf->{whatToTrace} => $user,
             },
             0,
         );
@@ -2514,7 +2578,7 @@ sub _revokeToken {
         if ( my ( $_rp, $_uid ) = $checkRight->( $oidcSession, $rp ) ) {
             my $bck =
               $self->rpOptions->{$_rp}->{oidcRPMetaDataOptionsLogoutType};
-            if ( $tokenHint eq 'refresh_token' and $bck and $bck eq 'back' ) {
+            if ( $bck and $bck eq 'back' ) {
                 $self->_backChannelLogout( $req, $_rp, $oidcSession->data );
             }
             $self->auditLog(
@@ -2605,13 +2669,16 @@ sub registration {
     my $client_id     = random_string(RS_MSK);
     my $client_secret = random_string(RS_MSK);
 
+    my $default_signing_key_type =
+      $self->_getKeyType( $self->get_public_key("default-oidc-sig") );
+
     # Register known parameters
     my $client_name =
       $client_metadata->{client_name} || "Self registered client";
     my $logo_uri = $client_metadata->{logo_uri};
     my $id_token_signed_response_alg =
       $client_metadata->{id_token_signed_response_alg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+      || ( $default_signing_key_type eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $request_uris           = $client_metadata->{request_uris};
@@ -2748,13 +2815,35 @@ sub endSessionDone {
 
     my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
     my $state                    = $req->param('state');
+    my $client_id                = $req->param('client_id');
+    my $id_token_hint            = $req->param('id_token_hint');
+    my $rp;
+
+    if ($id_token_hint) {
+        my $payload = getJWTPayload($id_token_hint);
+
+        if ( my $azp = $payload->{azp} ) {
+            if ( !$client_id or $client_id eq $azp ) {
+                $rp = $self->getRP( $payload->{azp} );
+            }
+            else {
+                $self->logger->error(
+                        "Provided client ID $client_id does not match"
+                      . " id_token_hint azp $azp" );
+                return $self->p->login($req);
+            }
+        }
+    }
+
+    if ( not $rp and $client_id ) {
+        $rp = $self->getRP($client_id);
+    }
 
     if ($post_logout_redirect_uri) {
 
         unless (
-            $self->findRPFromUri(
-                $post_logout_redirect_uri,
-                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            $self->_validatePostLogoutRedirectUri(
+                $req, $rp, $post_logout_redirect_uri, "end_session"
             )
           )
         {
@@ -2926,6 +3015,10 @@ sub metadata {
 # Store request parameters in %ENV
 sub exportRequestParameters {
     my ( $self, $req ) = @_;
+
+    unless ( $self->ssoMatch($req) ) {
+        return PE_OK;
+    }
 
     if ( my $p = $req->param('prompt') ) {
         if ( $p eq 'none' ) {

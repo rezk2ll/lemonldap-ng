@@ -2,8 +2,7 @@
   'use strict';
 
   // TOTP part inspired from https://github.com/bellstrand/totp-generator
-  // Copyright: 2016 Magnus Bellstrand
-  // License: MIT
+  // Copyright: 2016 Magnus Bellstrand, license MIT
   var base32tohex, dec2hex, getToken, go, hex2dec, leftpad, tryFingerprint;
   $(document).ready(function () {
     if (window.requestIdleCallback) {

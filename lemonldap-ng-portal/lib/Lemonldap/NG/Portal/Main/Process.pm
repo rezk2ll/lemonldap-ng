@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -750,6 +750,7 @@ sub buildCookie {
         ? $req->{sessionInfo}
         : $req->{userData}
     );
+    $req->data->{newAuth} = 1;
     $self->auditLog(
         $req,
         message => (

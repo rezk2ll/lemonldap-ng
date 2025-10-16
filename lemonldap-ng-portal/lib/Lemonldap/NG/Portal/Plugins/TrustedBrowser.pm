@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -31,6 +31,7 @@ extends qw(
 
 # INTERFACE
 
+use constant beforeAuth => 'checkAlreadyTrusted';
 use constant beforeLogout => 'logout';
 
 # INITIALIZATION
@@ -112,6 +113,19 @@ sub init {
 
 # RUNNING METHODS
 
+# Check if browser is trusted before auth
+sub checkAlreadyTrusted {
+    my ( $self, $req ) = @_;
+
+    my $session = $self->getTrustedBrowserSessionFromReq($req);
+
+    if ($session) {
+        $req->data->{browserAlreadyTrusted} = 1;
+    }
+
+    return PE_OK;
+}
+
 # This method is called by the portal in standard auth flows
 
 sub newDevice {
@@ -133,7 +147,7 @@ sub newDevice {
             $req->response(
                 $self->p->sendHtml(
                     $req,
-                    '../common/registerBrowser',
+                    'registerBrowser',
                     params => {
                         TOTPSEC => $totpSecret,
                         USETOTP => $self->use_totp,
@@ -382,7 +396,7 @@ sub challenge {
     $req->response(
         $self->p->sendHtml(
             $req,
-            '../common/registerBrowser',
+            'registerBrowser',
             params => {
                 TOKEN   => $token,
                 USETOTP => $self->use_totp,

@@ -101,12 +101,16 @@ Run tests:
 
 	podman run -it -v ./:/app llng-local-dev make test
 
-**Note :** this will not be efficient if you want to run tests multiple times (eg while developing) as the patch and build steps will be run each
-time. You can speed-up this by starting the dev. server container, then running your tests inside the running container with the following
-command:
+.. note::
+
+   this will not be efficient if you want to run tests multiple times (eg while developing) as the patch and build steps will be run each
+   time. You can speed-up this by starting the dev. server container, then running your tests inside the running container with the following
+   command.
 
 ::
+
 	podman exec -it <container-id> make test
+
 
 Manual setup
 ^^^^^^^^^^^^

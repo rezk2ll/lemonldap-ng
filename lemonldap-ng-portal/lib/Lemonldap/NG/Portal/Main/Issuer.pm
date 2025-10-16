@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 # PROPERTIES
 
@@ -96,7 +96,11 @@ sub _redirect {
         $self->logger->debug("Unauth request to $self->{path} issuer");
         $restore = 1;
         $self->logger->debug('Processing _redirect');
-        $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
+        if ( !$req->param("inProgress") ) {
+            $req->pdata->{ $self->ipath } = $self->storeRequest($req);
+        }
+        $self->p->setHiddenFormValue( $req, "inProgress", 1, '', 0 );
+        $ir = $req->pdata->{ $self->ipath };
         $req->pdata->{ $self->ipath . 'Path' } = \@path;
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
@@ -135,6 +139,8 @@ sub _redirect {
 
 sub resumeProcess {
     my ( $self, $req, $ir, @path ) = @_;
+
+    $self->p->clearHiddenFormValue($req, [ 'inProgress' ]);
     $self->restoreRequest( $req, $ir );
     $self->cleanPdata($req);
     return $self->run( $req, @path );
@@ -223,7 +229,6 @@ sub cleanPdata {
 
 sub storeRequest {
     my ( $self, $req ) = @_;
-    $self->logger->debug('Store issuer request');
     my $info = {};
     $info->{content} = $req->content;
     foreach ( keys %{ $req->env } ) {
@@ -231,11 +236,14 @@ sub storeRequest {
         next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
-    return $self->_ott->createToken($info);
+    my $token = $self->_ott->createToken($info);
+    $self->logger->debug("Store issuer request as $token");
+    return $token;
 }
 
 sub restoreRequest {
     my ( $self, $req, $token ) = @_;
+    $self->logger->debug("Restore issuer request from $token");
 
     my $result = 0;
     my $env    = $self->_ott->getToken($token);

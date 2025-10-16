@@ -3,7 +3,7 @@ package t::OidcHookPlugin;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_SENDRESPONSE);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_SENDRESPONSE PE_DONE);
 use Data::Dumper;
 use Test::More;
 
@@ -44,13 +44,17 @@ use constant hook => {
     oidcGotOfflineRefresh             => 'refreshHook',
     oidcGotTokenExchange              => 'tokenExchange',
     getOidcRpConfig                   => 'getRp',
+    oidcValidateRedirectUri           => 'allowOnlyLocalhost',
 };
 
 sub addClaimToIDToken {
-    my ( $self, $req, $payload, $rp, $sessionInfo ) = @_;
+    my ( $self, $req, $payload, $rp, $sessionInfo, $extra_headers ) = @_;
     $payload->{"id_token_hook"}     = 1;
     $payload->{"id_token_hook_rp"}  = $rp;
     $payload->{"id_token_hook_uid"} = $sessionInfo->{uid};
+
+    $extra_headers->{"id_token_hook_header"} = 1;
+
     return PE_OK;
 }
 
@@ -84,8 +88,12 @@ sub modifyRedirectUri {
 }
 
 sub addClaimToAccessToken {
-    my ( $self, $req, $payload, $rp ) = @_;
+    my ( $self, $req, $payload, $rp, $extra_headers ) = @_;
+
     $payload->{"access_token_hook"} = 1;
+
+    $extra_headers->{typ} = "at+JWT+hook";
+
     return PE_OK;
 }
 
@@ -187,6 +195,31 @@ sub getRp {
         },
         ttl => 600,
     );
+
+    return PE_OK;
+}
+
+sub allowOnlyLocalhost {
+    my ( $self, $req, $rp, $uri, $endpoint, $state ) = @_;
+
+    like(
+        $endpoint,
+        qr/^(?:end_session|authorization)/,
+        "Allowed value in endpoint"
+    );
+    main::count(1);
+
+    # If this RP is used by devs, allow all localhost urls
+    if ( $rp =~ /^dev-/ ) {
+
+        my $parsed_uri = URI->new($uri);
+        $state->{result} = ( $parsed_uri->host eq "localhost" );
+        return PE_DONE;
+    }
+
+    # Returning PE_OK means that we defer the decision to
+    # LemonLDAP::NG's built-in logic, which is to only allow
+    # explicitely declared URIs
 
     return PE_OK;
 }

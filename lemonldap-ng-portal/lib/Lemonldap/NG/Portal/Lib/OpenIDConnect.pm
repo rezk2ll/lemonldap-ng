@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT qw(encode_jwt decode_jwt);
+use Crypt::JWT  qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -28,7 +28,7 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.21.1';
+our $VERSION = '2.22.0';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -456,9 +456,10 @@ sub buildAuthorizationCodeAuthnRequest {
         %$authorize_request_oauth2_params,
         ( $display ? ( display => $display ) : () ),
         ( $prompt  ? ( prompt  => $prompt )  : () ),
+
         # MaxAge is defined as an int type in LLNG config,
         # so 0 means undefined
-        ( $max_age    ? ( max_age    => $max_age )    : () ),
+        ( $max_age ? ( max_age => $max_age ) : () ),
         (
             defined($ui_locales)
               && length($ui_locales) ? ( ui_locales => $ui_locales ) : ()
@@ -491,7 +492,7 @@ sub buildAuthorizationCodeAuthnRequest {
                 iat => time,
                 %$authorize_request_params,
             },
-            $self->opOptions->{op}
+            $self->opOptions->{$op}
               ->{oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg} || 'RS256',
             $op
         );
@@ -777,11 +778,18 @@ sub getAccessTokenFromTokenEndpoint {
         }
         elsif ( $auth_method =~ /^(?:client_secret|private_key)_jwt$/ ) {
 
-            # TODO: add parameter to choose alg
-            my $alg =
-                $auth_method eq 'client_secret_jwt'          ? 'HS256'
-              : $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256'
-              :                                                'RS256';
+            my $alg = $self->opOptions->{$op}
+              ->{oidcOPMetaDataOptionsTokenEndpointAuthSigAlg};
+            if ( !$alg ) {
+                my $default_signing_key_type =
+                  $self->_getKeyType(
+                    $self->get_public_key("default-oidc-sig") );
+
+                $alg =
+                    $auth_method eq 'client_secret_jwt' ? 'HS256'
+                  : $default_signing_key_type eq 'EC'   ? 'ES256'
+                  :                                       'RS256';
+            }
             my $time = time;
             my $jws  = $self->createJWTForOP( {
                     iss => $client_id,
@@ -1213,22 +1221,11 @@ sub newAccessToken {
     );
 
     if ($session) {
-
-        my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
-        $self->auditLog(
-            $req,
-            code    => "ISSUER_OIDC_ACCESS_TOKEN",
-            rp      => $rp,
-            message =>
-              ("Access Token for $user generated for $rp with TTL $ttl"),
-            user => $user,
-            ttl  => $ttl,
-        );
-
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
               $self->makeJWT( $req, $session->id, $sessionInfo, $at_info,
                 $ttl );
+            return undef unless $at_jwt;
             $at_jwt = $self->encryptToken(
                 $rp,
                 $at_jwt,
@@ -1242,6 +1239,16 @@ sub newAccessToken {
             return $at_jwt;
         }
         else {
+            my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+            $self->auditLog(
+                $req,
+                code    => "ISSUER_OIDC_ACCESS_TOKEN",
+                rp      => $rp,
+                message =>
+                  ("Access Token for $user generated for $rp with TTL $ttl"),
+                user => $user,
+                ttl  => $ttl,
+            );
             return $session->id;
         }
     }
@@ -1276,27 +1283,51 @@ sub makeJWT {
       $self->buildUserInfoResponseFromData( $req, $at_info->{scope}, $rp,
         $sessionInfo );
 
+    my $sub = $access_token_payload->{sub} = delete $claims->{sub};
+    my %extra_attr;
+
     # Release claims, or only sub
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenClaims} ) {
         foreach ( keys %$claims ) {
-            $access_token_payload->{$_} = $claims->{$_}
-              unless $access_token_payload->{$_};
+            unless ( $access_token_payload->{$_} ) {
+                $extra_attr{$_} = $access_token_payload->{$_} = $claims->{$_};
+            }
         }
     }
-    else {
-        $access_token_payload->{sub} = $claims->{sub};
-    }
+
+    my $extra_headers = { typ => "at+JWT" };
 
     # Call hook to let the user modify payload
     my $h = $self->p->processHook( $req, 'oidcGenerateAccessToken',
-        $access_token_payload, $rp );
+        $access_token_payload, $rp, $extra_headers );
     return undef if ( $h != PE_OK );
 
     # Get signature algorithm
     my $alg = $self->getSignAlg($rp);
 
-    my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
+    my $jwt =
+      $self->createJWT( $access_token_payload, $alg, $rp, $extra_headers );
+    return undef unless $jwt;
 
+    my $attr_str = (
+        %extra_attr
+        ? ( " with attributes " . join( ',', sort( keys %extra_attr ) ) )
+        : ''
+    );
+
+    my $user = $sessionInfo->{ $self->conf->{whatToTrace} };
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_ACCESS_TOKEN",
+        rp      => $rp,
+        message => (
+"Access Token for $user generated for $rp as $sub with TTL $ttl$attr_str"
+        ),
+        user       => $user,
+        ttl        => $ttl,
+        oidc_sub   => $sub,
+        attributes => \%extra_attr,
+    );
     return $jwt;
 }
 
@@ -1483,8 +1514,13 @@ sub getOpenIDConnectSession {
 
 sub getSignAlg {
     my ( $self, $rp ) = @_;
-    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
+    my $alg =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg};
+    if ( !$alg ) {
+        my $default_signing_key_type =
+          $self->_getKeyType( $self->get_public_key("default-oidc-sig") );
+        $alg = ( $default_signing_key_type eq 'EC' ? 'ES256' : 'RS256' );
+    }
     $self->logger->debug("Access Token signature algorithm: $alg");
     return $alg;
 }
@@ -1911,7 +1947,7 @@ sub checkEndPointAuthenticationCredentials {
             unless ( $method eq
                 $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} )
             {
-                $self->logger->error("Wrong authetication method for $rp");
+                $self->logger->error("Wrong authentication method for $rp");
                 return undef;
             }
         }
@@ -2354,20 +2390,36 @@ sub _forceType {
 # @return String jwt JWT
 
 sub createJWT {
-    my ( $self, $payload, $alg, $rp, $type ) = @_;
-    return $self->_createJWT( $payload, $alg, $rp, $type );
+    my ( $self, $payload, $alg, $rp, $extra_headers_or_type ) = @_;
+
+    my $extra_headers = $extra_headers_or_type;
+
+    # Compatibility with old signature
+    if ( !ref($extra_headers_or_type) and $extra_headers_or_type ) {
+        $extra_headers = { typ => $extra_headers_or_type };
+    }
+
+    return $self->_createJWT( $payload, $alg, $rp, $extra_headers );
 }
 
 sub createJWTForOP {
-    my ( $self, $payload, $alg, $rp, $type ) = @_;
-    return $self->_createJWT( $payload, $alg, $rp, $type, 1 );
+    my ( $self, $payload, $alg, $op, $extra_headers_or_type ) = @_;
+
+    my $extra_headers = $extra_headers_or_type;
+
+    # Compatibility with old signature
+    if ( !ref($extra_headers_or_type) and $extra_headers_or_type ) {
+        $extra_headers = { typ => $extra_headers_or_type };
+    }
+
+    return $self->_createJWT( $payload, $alg, $op, $extra_headers, 1 );
 }
 
 sub _createJWT {
-    my ( $self, $payload, $alg, $partner, $type, $isRp ) = @_;
+    my ( $self, $payload, $alg, $partner, $extra_headers, $isRp ) = @_;
 
     my @keyArg;
-    my %extra_headers;
+    $extra_headers //= {};
 
     # Set Cript::JWT arguments depending on "alg"
     #  a) "none"
@@ -2393,38 +2445,57 @@ sub _createJWT {
 
     #  c) asymetric algorithms
     else {
-        my $priv_key = $self->conf->{oidcServicePrivateKeySig};
+        my $key_list =
+            $isRp
+          ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsSigningKey}
+          : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsSigningKey};
+        $key_list ||= $self->conf->{oidcServiceSignatureKey};
+        my $key_id   = ( split( /\s*,\s*/, $key_list ) )[0];
+        my $priv_key = $self->get_private_key($key_id);
+
         unless ($priv_key) {
             $self->logger->error(
                 "Algorithm $alg needs a Private Key to sign JWT");
             return;
         }
-        @keyArg = ( key => \$priv_key, );
 
-        if ( $self->conf->{oidcServiceKeyIdSig} ) {
-            $extra_headers{kid} = $self->conf->{oidcServiceKeyIdSig};
+        my $key_type          = $self->_getKeyType($priv_key);
+        my $required_key_type = $self->_getRequiredKeyTypeForAlg($alg);
+        if ( $required_key_type and $key_type ne $required_key_type ) {
+            $self->logger->error(
+                    "Algorithm $alg needs a $required_key_type key to sign JWT,"
+                  . " but key $key_id is $key_type" );
+            return;
         }
-        my $key_info =
-          $self->getCertInfo( $self->conf->{oidcServicePublicKeySig} );
+
+        @keyArg = ( key => \$priv_key->{private}, );
+
+        if ( $priv_key->{external_id} ) {
+            $extra_headers->{kid} = $priv_key->{external_id};
+        }
+        my $key_info = $self->getCertInfo( $priv_key->{public} );
         if ( $key_info->{x5t} ) {
-            $extra_headers{x5t} = $key_info->{x5t};
+            $extra_headers->{x5t} = $key_info->{x5t};
         }
-
     }
+
     my $noTyp =
         $isRp
       ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsNoJwtHeader}
       : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsNoJwtHeader};
-    unless ($noTyp) {
-        $extra_headers{typ} = $type || 'JWT';
+    if ($noTyp) {
+        delete $extra_headers->{typ};
     }
-    push @keyArg, extra_headers => \%extra_headers if %extra_headers;
+    else {
+        $extra_headers->{typ} ||= 'JWT';
+    }
 
     # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
-            payload => to_json($payload),
-            alg     => $alg,
+            payload       => to_json($payload),
+            alg           => $alg,
+            extra_headers => $extra_headers,
             @keyArg,
         );
     };
@@ -2446,11 +2517,14 @@ sub createIDToken {
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
+    my $extra_headers = { typ => "JWT" };
     my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp,
-        $sessionData );
+        $sessionData, $extra_headers );
     return undef if ( $h != PE_OK );
 
-    my $id_token = $self->createJWT( $payload, $alg, $rp );
+    my $id_token = $self->createJWT( $payload, $alg, $rp, $extra_headers );
+    return undef unless $id_token;
+
     return $self->encryptToken(
         $rp,
         $id_token,
@@ -2498,14 +2572,10 @@ sub key2jwks {
         return $eck->export_key_jwk( 'public', 1 );
     }
     else {
-        my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
-        my @params  = $rsa_pub->get_key_parameters();
-
-        return {
-            n   => encode_base64url( $params[0]->to_bin(), "" ),
-            e   => encode_base64url( $params[1]->to_bin(), "" ),
-            kty => 'RSA',
-        };
+        require Crypt::PK::RSA;
+        my $pk = Crypt::PK::RSA->new();
+        $pk->import_key( \$key );
+        return $pk->export_key_jwk( 'public', 1 );
     }
 }
 
@@ -2542,20 +2612,14 @@ sub getCertInfo {
 #   - only the current key. Old encryption key is kept to permit to
 #     Auth::OPenIDCOnnect to decrypt all JWE emitted by Issuer but no
 #     need to display any other key
-use constant KEYS_TO_DISPLAY => (
-    [ ''    => 'Sig' ],
-    [ 'Old' => 'Sig' ],
-    [ 'New' => 'Sig' ],
-    [ ''    => 'Enc' ],
-);
-
 sub _buildJwk {
-    my ( $self, $prefix, $type ) = @_;
-    my $publicKeyOrCert = $self->conf->{"oidcService${prefix}PublicKey$type"};
-    my $privateKey      = $self->conf->{"oidcService${prefix}PrivateKey$type"};
-    my $keyId           = $self->conf->{"oidcService${prefix}KeyId$type"};
-    my $keytype         = $self->conf->{"oidcService${prefix}KeyType$type"};
-    return $privateKey
+    my ( $self, $type, $key ) = @_;
+    return unless $key;
+
+    my $publicKeyOrCert = $key->{public};
+    my $keyId           = $key->{external_id};
+    my $keytype         = $self->_getKeyType($key);
+    return $publicKeyOrCert
       ? {
         kty => $keytype,
         use => lc($type),
@@ -2565,7 +2629,7 @@ sub _buildJwk {
             : ()
         ),
         ( $keyId ? ( kid => $keyId ) : () ),
-        %{ $self->key2jwks( $privateKey, $keytype ) },
+        %{ $self->key2jwks( $publicKeyOrCert, $keytype ) },
         %{ $self->getCertInfo($publicKeyOrCert) },
       }
       : ();
@@ -2577,10 +2641,30 @@ sub jwks {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
 
-    my $jwks = { keys => [] };
+    my $jwks      = { keys => [] };
+    my $client_id = $req->param('client_id');
 
-    push @{ $jwks->{keys} }, $self->_buildJwk( $_->[0], $_->[1] )
-      foreach (KEYS_TO_DISPLAY);
+    my $list_sig_keys;
+    if ($client_id) {
+        my $rp = $self->getRP($client_id);
+        if ($rp) {
+            $list_sig_keys =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsSigningKey};
+        }
+    }
+    $list_sig_keys ||= $self->conf->{oidcServiceSignatureKey} || "";
+
+    for my $sig_key ( split( /\s*,\s*/, $list_sig_keys ) ) {
+        push @{ $jwks->{keys} },
+          $self->_buildJwk( "Sig", $self->get_public_key($sig_key) );
+    }
+
+    for my $enc_key (
+        split( /\s*,\s*/, ( $self->conf->{oidcServiceEncryptionKey} || "" ) ) )
+    {
+        push @{ $jwks->{keys} },
+          $self->_buildJwk( "Enc", $self->get_public_key($enc_key) );
+    }
 
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
@@ -2836,6 +2920,37 @@ sub decryptJwt {
         $self->logger->debug("Decrypted JWT: $jwt");
     }
     return $jwt;
+}
+
+sub _getKeyType {
+    my ( $self, $key ) = @_;
+
+    require Crypt::PK::RSA;
+
+    my $rsa_pub = eval { Crypt::PK::RSA->new( \( $key->{public} ) ) };
+    if ($rsa_pub) {
+        return "RSA";
+    }
+
+    require Crypt::PK::ECC;
+
+    my $ecc_pub = eval { Crypt::PK::ECC->new( \( $key->{public} ) ) };
+    if ($ecc_pub) {
+        return "EC";
+    }
+
+    return;
+}
+
+sub _getRequiredKeyTypeForAlg {
+    my ( $self, $alg ) = @_;
+    if ( $alg =~ m/^(?:R|P)S/ ) {
+        return "RSA";
+    }
+    elsif ( $alg =~ /^ES/ ) {
+        return "EC";
+    }
+    return;
 }
 
 1;

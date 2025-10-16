@@ -193,9 +193,16 @@ sub name {
     unless ($req) {
         return 'Choice';
     }
-    my $n = ref( $req->data->{ "enabledMods" . $self->type }->[0] );
-    $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
-    return $n;
+
+    my $module = $req->data->{ "enabledMods" . $self->type }->[0];
+    if ( my $sub = eval { $module->can('name') } ) {
+        return $sub->($module, $req, $type );
+    }
+    else {
+        my $n = ref($module);
+        $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
+        return $n;
+    }
 }
 
 package Lemonldap::NG::Portal::Main;

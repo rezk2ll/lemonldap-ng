@@ -1,0 +1,33 @@
+#!/bin/sh
+set -xe
+
+. /etc/os-release
+dist=${ID:unknown}
+ver=$(rpm --eval '%{rhel}')
+
+# Replace deprecated mirrors
+if [ $dist = "centos" ] ; then
+    sed -i 's/mirror\.centos\.org/vault.centos.org/g' /etc/yum.repos.d/CentOS-*.repo
+    sed -i 's/^#.*baseurl=http/baseurl=http/g' /etc/yum.repos.d/CentOS-*.repo
+    sed -i 's/^mirrorlist=http/#mirrorlist=http/g' /etc/yum.repos.d/CentOS-*.repo
+    alias dnf=yum
+fi
+
+dnf -y install epel-release make rpm-build
+[ -x /usr/bin/crb ] && crb enable
+
+make dist
+
+mkdir -p /root/rpmbuild/SOURCES
+cp lemonldap-ng-*.tar.gz /root/rpmbuild/SOURCES/
+
+# Install build dependencies
+# On some EL versions, a second run is needed
+dnf -y builddep rpm/lemonldap-ng.spec
+dnf -y builddep rpm/lemonldap-ng.spec
+dnf -y install perl-Authen-WebAuthn
+
+rpmbuild -ba rpm/lemonldap-ng.spec
+
+mkdir -p "result/$dist/$ver/"
+cp /root/rpmbuild/RPMS/noarch/*rpm  "result/$dist/$ver/"

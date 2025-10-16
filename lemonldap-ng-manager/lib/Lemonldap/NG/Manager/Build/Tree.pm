@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 sub tree {
     return [ {
@@ -72,6 +72,7 @@ sub tree {
                                         'portalDisplayResetPassword'
                                     ]
                                 },
+                                'portalCustomTplParams',
                                 {
                                     title => 'passwordManagement',
                                     help  =>
@@ -574,6 +575,7 @@ sub tree {
                                         'jitsiAppId',
                                         'jitsiAppSecret',
                                         'jitsiSigningAlg',
+                                        'jitsiSigningKey',
                                         'jitsiExpiration',
                                         {
                                             title => 'jitsiAttributes',
@@ -1202,15 +1204,33 @@ sub tree {
                                 'strictTransportSecurityMax_Age',
                                 'hashedSessionStore',
                                 {
-                                    title => 'CrowdSecPlugin',
+                                    title => 'Crowdsec',
                                     help  => 'crowdsec.html',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'crowdsec',
-                                        'crowdsecIgnoreFailures',
-                                        'crowdsecAction',
-                                        'crowdsecUrl',
-                                        'crowdsecKey',
+                                    nodes => [ {
+                                            title => 'CrowdSecBouncer',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'crowdsec',
+                                                'crowdsecIgnoreFailures',
+                                                'crowdsecAction',
+                                                'crowdsecUrl',
+                                                'crowdsecKey',
+                                            ],
+                                        },
+                                        {
+                                            title => 'CrowdSecAgent',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'crowdsecAgent',
+                                                'crowdsecMachineId',
+                                                'crowdsecPassword',
+                                                'crowdsecMaxFailures',
+                                                'crowdsecBlockDelay',
+                                                'crowdsecFilters',
+                                                'crowdSecAgentResponseCode',
+                                                'crowdSecAgentResponseValue',
+                                            ],
+                                        },
                                     ],
                                 },
                                 {
@@ -1333,7 +1353,8 @@ sub tree {
                             ]
                         },
                     ]
-                }
+                },
+                'keyNodes',
             ]
         },
         {
@@ -1369,8 +1390,10 @@ sub tree {
                                 'samlServicePublicKeyEnc'
                             ]
                         },
+                        'samlServiceSignatureMethod',
                         'samlServiceUseCertificateInResponse',
-                        'samlServiceSignatureMethod'
+                        'samlServiceSignatureKey',
+                        'samlServiceEncryptionKey',
                     ]
                 },
                 {
@@ -1510,6 +1533,7 @@ sub tree {
                         {
                             title => 'samlFederation',
                             form  => 'simpleInputContainer',
+                            help  => 'samlfederation.html',
                             nodes => [ 'samlFederationFiles', ]
                         },
                     ]
@@ -1596,6 +1620,13 @@ sub tree {
                                         'oidcServiceOldKeyTypeEnc',
                                     ],
                                 },
+                            ],
+                        },
+                        {
+                            title => 'oidcServiceMetaDataAdvancedKeys',
+                            nodes => [
+                                'oidcServiceSignatureKey',
+                                'oidcServiceEncryptionKey',
                             ],
                         },
                         'oidcServiceAllowAuthorizationCodeFlow',

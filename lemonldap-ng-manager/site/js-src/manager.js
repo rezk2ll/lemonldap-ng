@@ -24,6 +24,7 @@ llapp.controller('TreeCtrl', [
   '$translator',
   '$cookies',
   '$htmlParams',
+  '$timeout',
   function($scope,
     $http,
     $location,
@@ -31,7 +32,8 @@ llapp.controller('TreeCtrl', [
     $uibModal,
     $translator,
     $cookies,
-    $htmlParams) {
+    $htmlParams,
+    $timeout) {
     var _checkSaveResponse,
       _download,
       _getAll,
@@ -53,6 +55,7 @@ llapp.controller('TreeCtrl', [
     $scope.showT = false;
     $scope.form = 'home';
     $scope.currentCfg = {};
+    $scope.clipboardAvailable = Boolean(navigator.clipboard);
     $scope.confPrefix = window.confPrefix;
     $scope.message = {};
     $scope.result = '';
@@ -614,6 +617,11 @@ llapp.controller('TreeCtrl', [
         'casPartnerName',
         'app-example');
     };
+    $scope.addKey = function() {
+      return $scope.newTemplateNode('keyNode',
+  'keyName',
+  'key-example');
+    };
     $scope.newTemplateNode = function(type,
       title,
       init) {
@@ -954,6 +962,17 @@ llapp.controller('TreeCtrl', [
         return scope.toggle();
       });
     };
+    $scope.copyPath = function() {
+      var text = $scope.breadCrumb.join(" » ");
+      navigator.clipboard.writeText(text).then(function () {
+        $scope.$apply(function () {
+        $scope.copySuccess = true;
+        $timeout(function() {
+          $scope.copySuccess = false;
+        }, 400);
+        });
+      });
+    };
     setHelp = function(scope) {
       while (!scope.$modelValue.help && scope.$parentNodeScope) {
         scope = scope.$parentNodeScope;
@@ -970,6 +989,22 @@ llapp.controller('TreeCtrl', [
     //	- launch getKeys to set `node.data`
     //	- hide tree when in XS size
 
+    $scope.getTrPath = function(scope) {
+      var path = [];
+      var trpath = [];
+      var current = scope;
+      var safetycount = 0;
+      while (current && current.$modelValue && safetycount < 100) {
+        safetycount = safetycount + 1;
+        if (current.$modelValue.title && current.$modelValue.title != path[0]) {
+          trpath.unshift(scope.translate(current.$modelValue.title));
+          path.unshift(current.$modelValue.title);
+        }
+        current = current.$parent;
+      }
+      return trpath;
+    };
+
     $scope.displayForm = function(scope) {
       var f,
         len,
@@ -977,6 +1012,7 @@ llapp.controller('TreeCtrl', [
         node,
         o,
         ref;
+
       node = scope.$modelValue;
       if (node.cnodes) {
         $scope.download(scope);
@@ -1002,6 +1038,7 @@ llapp.controller('TreeCtrl', [
         }
       }
       $scope.showT = false;
+      $scope.breadCrumb = $scope.getTrPath(scope);
       return setHelp(scope);
     };
     $scope.keyWritable = function(scope) {
@@ -1075,6 +1112,27 @@ llapp.controller('TreeCtrl', [
           currentNode = $scope.currentNode;
           password = $scope.result;
           return $http.post(`${window.confPrefix}/newCertificate`, {
+            "password": password
+          }).then(function(response) {
+              currentNode.data[0].data = response.data.private;
+              currentNode.data[1].data = password;
+              currentNode.data[2].data = response.data.public;
+              return $scope.waiting = false;
+            },
+            readError);
+        },
+        function() {
+          console.debug('New key cancelled');
+        });
+    };
+    $scope.newEcCertificate = function() {
+      return $scope.showModal('password.html').then(function() {
+          var currentNode,
+            password;
+          $scope.waiting = true;
+          currentNode = $scope.currentNode;
+          password = $scope.result;
+          return $http.post(`${window.confPrefix}/newEcCertificate`, {
             "password": password
           }).then(function(response) {
               currentNode.data[0].data = response.data.private;
@@ -1172,7 +1230,8 @@ llapp.controller('TreeCtrl', [
           for (i = o = 0, len = ref.length; o < len; i = ++o) {
             n = ref[i];
             node.data[i] = {
-              title: n,
+              title: n.split("/").pop(),
+              get: n,
               id: n
             };
             tmp.push($scope.getKey(node.data[i]));
@@ -1289,6 +1348,7 @@ llapp.controller('TreeCtrl', [
       var tmp;
       tmp = null;
       $scope.waiting = true;
+      $scope.breadCrumb = null;
       $scope.data = [];
       $scope.confirmNeeded = false;
       $scope.forceSave = false;

@@ -94,7 +94,18 @@ Security
    - Set signing key if LLNG is an OpenID-Connect server
    - Set Encryption key if LLNG is an OpenID-Connect Relying-Party and if you
      want that the OpenID-Connect server encrypt the JWT tokens
+-  **Advanced key configuration**
 
+   -  **Signing key name**: By default, the key specified above will be used
+      for signature. You can use :doc:`anonther key <keys>` instead in order to
+      better manage key rotation. If you declare a comma-separated list, only
+      the first declared key will be used for signature, but all listed keys
+      will be published in the JWKS document
+   -  **Encryption key name**: By default, the key specified above will be
+      used for encryption. You can use :doc:`anonther key <keys>` instead in
+      order to better manage key rotation. If you declare a comma-separated
+      list, only the first declared key will be used for encryption, but all
+      listed keys will be published in the JWKS document
 -  **Authorization Code Flow**: Set to 'On' to allow Authorization Code flow
 -  **Implicit Flow**: Set to 'On' to allow Implicit flow
 -  **Hybrid Flow**: Set to 'On' to allow Hybrid flow
@@ -173,6 +184,12 @@ run for example each week:
 
    5 5 * * 6 www-data /usr/share/lemonldap-ng/bin/rotateOidcKeys
 
+Both a systemd timer and a cronjob are provided in LL::NG tarball and packages.
+
+This is _not_ enabled by default, one needs to enable it:
+
+- For cron, un-comment the line in the `/etc/cron.d/lemonldap-ng-rotateOidcKeys` cronjob.
+- For systemd, run `systemctl enable lemonldap-ng-rotateOidcKeys.timer --now`.
 
 .. tip::
 

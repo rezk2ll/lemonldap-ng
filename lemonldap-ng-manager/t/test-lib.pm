@@ -3,6 +3,7 @@
 use strict;
 use Data::Dumper;
 use File::Copy;
+use JSON;
 use File::Temp qw/ tempdir /;
 use IO::String;
 
@@ -19,10 +20,24 @@ copy_subst_file( "t/lemonldap-ng-DBI-conf.ini", "lemonldap-ng-DBI-conf.ini" );
 
 sub substitute_io_handle {
     my ($filename) = @_;
+    return get_conf_body_from_fixture($filename);
+}
+
+# Reads a configuration fixture file, replace TMPDIR by the current tmpdir, and
+# apply optional transformation to the decoded JSON data structure
+sub get_conf_body_from_fixture {
+    my ( $filename, $transformation ) = @_;
+
     open( my $fh, "<", $filename );
     my $file_content = do { local $/; <$fh> };
     close($fh);
     $file_content =~ s/TMPDIR/$main::tmpdir/g;
+
+    if ($transformation) {
+        my $conf_data = decode_json($file_content);
+        $transformation->($conf_data);
+        $file_content = encode_json($conf_data);
+    }
 
     return ( length($file_content), IO::String->new($file_content) );
 }

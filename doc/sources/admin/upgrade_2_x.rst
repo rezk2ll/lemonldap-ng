@@ -65,6 +65,17 @@ In the particular case of email-based code delivery, you can override this param
 *General parameters* » *Second factors* » *Mail second factor* » *Code timeout*
 
 
+Configuration update needed for OpenID Connect Providers that use signed requests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you configured the following option:
+
+OpenID Connect Providers » op-example » Options » Protocol » Token endpoint authentication method = client_secret_jwt or private_key_jwt
+
+Then, starting with this version, you need to explicitely configure the desired algorithm in *Signature algorithm for token endpoint authentication*:
+
+* For ``client_secret_jwt``, specify ``HS256`` or greater.
+* For ``private_key_jwt``, specify ``RS256`` or greater if you are using a RSA key, or ``ES256`` or greater if you are using an EC key.
 
 2.21.1
 ------

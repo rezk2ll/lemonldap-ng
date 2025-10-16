@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -448,6 +448,7 @@ sub display {
                 ) ? ( STAYCONNECTED => 1 )
                 : ()
             ),
+            BROWSER_ALREADY_TRUSTED => $req->{data}->{browserAlreadyTrusted},
             (
                 $self->rememberAuthChoice->( $req, $req->sessionInfo )
                 ? ( REMEMBERAUTHCHOICE => 1 )
