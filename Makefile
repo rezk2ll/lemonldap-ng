@@ -249,9 +249,9 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 
 
 # Javascript and CSS to minify
-JSSRCFILES=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css')
 
 # JS source files
 MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
