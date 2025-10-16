@@ -547,7 +547,8 @@ sub expectReject {
     ok( not($@), ' Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
     if ( defined $code ) {
-        is( $res->{error}, $code, " Error code is $code" ) or explain( $res->[0], $code );
+        is( $res->{error}, $code, " Error code is $code" )
+          or explain( $res->[0], $code );
     }
     else {
         pass("Error code is $res->{error}");
