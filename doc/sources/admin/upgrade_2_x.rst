@@ -15,11 +15,7 @@ Known issues
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because of an issue in LemonLDAP::NG 2.21.0, your CAS applications might have
-been erroneously created under the "CAS Servers" section as well.
-
-If you use both CAS applications and CAS servers on your LemonLDAP::NG install,
-we recommend waiting for 2.21.1 to be released.
+None.
 
 2.22.0
 ------
