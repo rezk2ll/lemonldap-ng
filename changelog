@@ -1,3 +1,78 @@
+lemonldap-ng (2.22.0) noble; urgency=medium
+
+  * Bugs:
+    * #2186: abandonned authentication attempt interferes leads to mix-up of issuer contexts
+    * #3189: Handler never retries to fetch its configuration
+    * #3364: Public notifications no more shown when authentication leads to an error
+    * #3371: [Choice] Do not use Choice key as id value in HTML code
+    * #3377: When OIDC RP config is incorrect, RP is still partially considered as loaded
+    * #3388: Portal  never retries to fetch its configuration
+    * #3389: User gets stuck on the grant sessions info page
+    * #3415: RP-initiated logout does not complete when Auth::SAML or Auth::OIDC is used
+    * #3421: CAS protocol has no unauth logout
+    * #3425: OneTimeToken updates inconsistently raise their timeout
+    * #3447: Remove SingleLogoutService from metadata if location is empty
+    * #3449: Log4Perl extra information (from $req) is not available in userLogger when Log4Perl is not the main logger
+    * #3451: Renew session loop with OIDC prompt=login and 2FA ext method
+    * #3459: rememberAuthChoice doesn't work on custom login themes
+    * #3460: rememberAuthChoice doesnt work with Auth::SSL (sslByAjax=1)
+    * #3485: [security:low] incomplete fix for CVE-2025-59518
+
+  * New features:
+    * #3168: Add an option for machine-parseable (JSON) output to CLI commands
+    * #3303: Add a way to purge persistent sessions
+    * #3366: Portal should track inactive offline sessions
+    * #3374: Manage multiple SAML keys and associate them to SP
+    * #3378: [Oauth2] implement revoke endpoint (RFC7009)
+    * #3380: Create an easier way to purge old configurations
+    * #3391: Native PostgreSQL/Patroni support
+    * #3456: Crowdsec agent to propagate auth failures and bad URLs to Crowdsec server
+    * #3461: New manager section for public/private keys
+
+  * Improvements:
+    * #2890: Allow syslog to send logs to a remote host
+    * #3241: In Trusted Browser plugin, display if browser is already trusted
+    * #3247: Portal tab to manage offline sessions
+    * #3273: Plugin to propagate delSession events from Session-Explorer to portal
+    * #3282: Add hook around JWT generation
+    * #3334: Activating SAML or OpenID Connect using cli without configuring keys breaks portal
+    * #3343: Missing cron/unitfile for rotateOidcKeys
+    * #3344: Web based message broker
+    * #3351: Allow updating a single session attr in the REST API server
+    * #3359: Option to force password reset when password is about to expire
+    * #3365: Add webcron plugin
+    * #3369: [OIDC] missing optional fields in introspection endpoint responses and missing "sid" into user_info
+    * #3373: navbar toggler icon not visible with minified version of bootstrap.css
+    * #3375: Provide hook on OIDC redirect_uri validation
+    * #3381: Using an Ajax request with AuthSSL to submit form should remove "Connect" button
+    * #3383: AuthGPG module not well displayed if initialization process fails
+    * #3385: Add options to modify mTLS, Slave and WebAuthn logos
+    * #3392: Add configuration parameter for template custom variables
+    * #3393: Uncorrelate "Check my last logins" checkboxes when Choice authentication is used
+    * #3394: Deduplicate token id in forms with choice authentication
+    * #3395: add purgeCentralCache option to get detailed stats
+    * #3414: X-XSS-Protection header is deprecated
+    * #3423: Prevent multiple form submit
+    * #3431: Portal autofocus feature is annoying for notifications
+    * #3432: Loki logger should provide an async system to bufferize messages
+    * #3452: SessionExplorer split tree requests when more than 30 responses even if there is only one account
+    * #3466: Cannot customize registerBrowser.tpl
+    * #3475: SAML Metadata URL in configuration for SP and IDP
+    * #3476: Manage multiple OIDC keys
+    * #3479: Allow using a dedicated key in Jisti Meet issuer
+    * #3483: Enable CheckHIBP plugin throw an antiCache error
+
+  * Templates:
+    * #3241: In Trusted Browser plugin, display if browser is already trusted
+    * #3371: [Choice] Do not use Choice key as id value in HTML code
+    * #3381: Using an Ajax request with AuthSSL to submit form should remove "Connect" button
+    * #3385: Add options to modify mTLS, Slave and WebAuthn logos
+    * #3393: Uncorrelate "Check my last logins" checkboxes when Choice authentication is used
+    * #3394: Deduplicate token id in forms with choice authentication
+    * #3423: Prevent multiple form submit
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 17 Oct 2025 11:59:42 +0200
+
 lemonldap-ng (2.21.3) noble; urgency=medium
 
   * Bugs:
