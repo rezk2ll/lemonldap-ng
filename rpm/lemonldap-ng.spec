@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.21.3
+Version:        2.22.0
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -746,6 +746,9 @@ fi
 
 
 %changelog
+* Fri Oct 17 2025 Clement Oudot <clement.oudot@worteks.com> - 2.22.0-1
+- Update to 2.22.0
+
 * Fri Sep 05 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.3-1
 - Update to 2.21.3
 
