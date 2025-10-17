@@ -1121,6 +1121,9 @@
     "rule" : {
       "type" : "string"
     },
+    "signingKey" : {
+      "type" : "string"
+    },
     "tokenXAuthorizedRP" : {
       "type" : "string"
     },
@@ -1356,9 +1359,16 @@
       "type" : "integer",
       "default" : -1
     },
+    "signatureKey" : {
+      "type" : "string"
+    },
     "signatureMethod" : {
       "type" : "string",
       "enum" : [ "", "RSA_SHA1", "RSA_SHA256", "RSA_SHA384", "RSA_SHA512" ]
+    },
+    "uRL" : {
+      "type" : "string",
+      "format" : "url"
     }
   }
 };
@@ -1688,7 +1698,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 2.21.3</div>
+              <div class="app-desc">Version: 2.22.0</div>
             <hr>
             <div>The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml</div>
           </div>
