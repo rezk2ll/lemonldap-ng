@@ -276,6 +276,7 @@ jitsiIdAttribute                                        Jitsi attribute for ID  
 jitsiMailAttribute                                      Jitsi attribute for email                                                            ✔
 jitsiNameAttribute                                      Jitsi attribute for name                                                             ✔
 jitsiSigningAlg                                         Jitsi JWT signature method                                                           ✔
+jitsiSigningKey                                         Jitsi JWT signature key                                                              ✔
 jsRedirect                                              Use javascript for redirections                                                      ✔
 key                                                     Secret key                                                                           ✔
 keyComment                                                                                                                                   ✔                      ✔
@@ -427,6 +428,7 @@ oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported 
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
 oidcServiceEncAlgorithmAlg                              JWT encryption algorithme                                                            ✔
 oidcServiceEncAlgorithmEnc                              JWT encryption algorithme                                                            ✔
+oidcServiceEncryptionKey                                Key to use for OIDC encryption                                                       ✔
 oidcServiceHideMetadata                                                                                                                      ✔
 oidcServiceIDTokenExpiration                            OpenID Connect global ID token TTL                                                   ✔
 oidcServiceIgnoreScopeForClaims                         OpenID Connect release all attributes even when not allowed by scope                 ✔
@@ -468,6 +470,7 @@ oidcServicePrivateKeyEnc                                                        
 oidcServicePrivateKeySig                                                                                                                     ✔
 oidcServicePublicKeyEnc                                                                                                                      ✔
 oidcServicePublicKeySig                                                                                                                      ✔
+oidcServiceSignatureKey                                 Key to use for OIDC signature                                                        ✔
 oidcStorage                                             Apache::Session module to store OIDC user data                                       ✔
 oidcStorageOptions                                      Apache::Session module parameters                                                    ✔
 okta2fActivation                                        Okta2F activation                                                                    ✔
@@ -523,6 +526,7 @@ portalAntiFrame                                         Avoid portal to be displ
 portalCheckLogins                                       Display login history checkbox in portal                                             ✔
 portalCustomCss                                         Path to custom CSS file                                                              ✔
 portalCustomJs                                          Path to custom JS file                                                               ✔
+portalCustomTplParams                                   Custom templates parameters                                                          ✔
 portalDisplayAppslist                                   Display applications tab in portal                                                   ✔
 portalDisplayCertificateResetByMail                     Display certificate reset by mail button in portal                                   ✔
 portalDisplayChangePassword                             Display password tab in portal                                                       ✔
@@ -671,12 +675,14 @@ samlSPSSODescriptorSingleLogoutServiceHTTPPost          SAML SP SLO HTTP POST   
 samlSPSSODescriptorSingleLogoutServiceHTTPRedirect      SAML SP SLO HTTP Redirect                                                            ✔
 samlSPSSODescriptorSingleLogoutServiceSOAP              SAML SP SLO SOAP                                                                     ✔
 samlSPSSODescriptorWantAssertionsSigned                 SAML SP WantAssertionsSigned                                                         ✔
+samlServiceEncryptionKey                                Key to use for SAML encryption                                                       ✔
 samlServicePrivateKeyEnc                                SAML encryption private key                                                          ✔
 samlServicePrivateKeyEncPwd                                                                                                                  ✔
 samlServicePrivateKeySig                                SAML signature private key                                                           ✔
 samlServicePrivateKeySigPwd                             SAML signature private key password                                                  ✔
 samlServicePublicKeyEnc                                 SAML encryption public key                                                           ✔
 samlServicePublicKeySig                                 SAML signature public key                                                            ✔
+samlServiceSignatureKey                                 Key to use for SAML signature                                                        ✔
 samlServiceSignatureMethod                                                                                                                   ✔
 samlServiceUseCertificateInResponse                     Use certificate instead of public key in SAML responses                              ✔
 samlStorage                                             Apache::Session module to store SAML user data                                       ✔
