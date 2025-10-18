@@ -5,10 +5,12 @@ Lemonldap/NG/Handler/Lib/SecureToken.pm
 Lemonldap/NG/Handler/Server/SecureToken.pm
 Lemonldap/NG/Handler.pm
 Lemonldap/NG/Portal/Lib/Captcha.pm
+Lemonldap/NG/Portal/Lib/Choice.pm
 Lemonldap/NG/Portal/Main/Run
 Lemonldap/NG/Portal/Main/Init
 Lemonldap/NG/Portal/Main/Display
 Lemonldap/NG/Portal/Main/Process
+Lemonldap/NG/Common/MessageBroker/Web.pm
 Lemonldap/NG/Portal/Plugins/CertificateResetByMail
 SSOaaS/Apache/Client
 ZimbraPreAuth.pm

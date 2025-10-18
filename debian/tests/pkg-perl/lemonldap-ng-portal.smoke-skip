@@ -1,6 +1,8 @@
 t/02-Password-Demo-checkHIBP.t
 t/29-AuthGPG.t
+t/41-Captcha-with-LDAP.t
 t/90-Translations.t
+t/91-no-console.log.t
 t/92-Required-Auth-Methods.t
 t/92-Required-Issuer-Methods.t
 t/92-Required-UserDB-Methods.t

@@ -1,9 +1,9 @@
 .prove
 .proverc
 t
+scripts
 site/templates
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/logos/logo_llng_old.png
 site/htdocs/static/common/logos/logo_llng_400px.png
 site/htdocs/static/common/modules/Apache.png
-inc
