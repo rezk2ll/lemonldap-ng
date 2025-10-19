@@ -164,7 +164,16 @@ and update its "dbiChain":
    dbiUser     = lemonldaprw
    dbiPassword = mypassword
    ; optional
-   dbiTable    = mytablename
+   dbiTable                  = mytablename
+   patroniTimeout            = 3
+   patroniCacheTTL           = 60
+   patroniCircuitBreakerDelay = 30
+
+Optional Patroni parameters:
+
+- **patroniTimeout**: Timeout in seconds for Patroni API requests (default: 3)
+- **patroniCacheTTL**: Time-to-live in seconds for the cached leader information. If all Patroni APIs are temporarily unavailable, LLNG will use the last known leader if the cache is still valid (default: 60)
+- **patroniCircuitBreakerDelay**: Circuit breaker delay in seconds. When Patroni API requests fail, LLNG will wait this amount of time before retrying, using the cached leader in the meantime (default: 30)
 
 RDBI (deprecated)
 ------------------
