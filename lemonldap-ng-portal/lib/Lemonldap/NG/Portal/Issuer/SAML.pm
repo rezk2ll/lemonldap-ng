@@ -1379,14 +1379,8 @@ sub artifactServer {
 
     # Return SOAP message
     $self->logger->debug("Send SOAP Message: $art_response");
-    return [
-        200,
-        [
-            'Content-Type'   => 'text/xml',
-            'Content-Length' => length($art_response)
-        ],
-        [$art_response]
-    ];
+    return $self->p->sendBinaryResponse( $req, $art_response,
+        type => 'text/xml' );
 }
 
 sub soapSloServer {
@@ -1595,14 +1589,8 @@ sub soapSloServer {
                 400 );
         }
         my $slo_body = $logout->msg_body;
-        return [
-            200,
-            [
-                'Content-Type'   => 'text/xml',
-                'Content-Length' => length($slo_body)
-            ],
-            [$slo_body]
-        ];
+        return $self->p->sendBinaryResponse( $req, $slo_body,
+            type => 'text/xml' );
     }
 
 }
@@ -2555,14 +2543,8 @@ sub attributeServer {
         $self->p->sendError( $req, "Unable to build attribute response", 500 );
     }
 
-    return [
-        200,
-        [
-            'Content-Type'   => 'text/xml',
-            'Content-Length' => length($att_response)
-        ],
-        [$att_response]
-    ];
+    return $self->p->sendBinaryResponse( $req, $att_response,
+        type => 'text/xml' );
 }
 
 # LEGACY METHODS

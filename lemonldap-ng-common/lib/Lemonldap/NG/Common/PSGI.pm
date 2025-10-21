@@ -230,7 +230,7 @@ sub sendJSONresponse {
         };
         return $self->sendError( $req, $@ ) if ($@);
     }
-    return [
+    return $self->_buildPsgiResponse(
         $args{code},
         [
             'Content-Type'   => $type,
@@ -238,7 +238,7 @@ sub sendJSONresponse {
             @{ $args{headers} }
         ],
         [$j]
-    ];
+    );
 }
 
 sub sendError {
@@ -258,7 +258,7 @@ sub sendError {
   </Detail>
  </soapenv:Fault>
 </soapenv:Body>';
-        return [
+        return $self->_buildPsgiResponse(
             $code,
             [
                 'Content-Type'   => 'application/xml; charset=utf-8',
@@ -266,7 +266,7 @@ sub sendError {
                 $req->spliceHdrs,
             ],
             [$s]
-        ];
+        );
     }
 
     # Handle Ajax responses
@@ -300,7 +300,7 @@ sub sendRawHtml {
     my ( $self, $req, $s, %args ) = @_;
     my $code    = $args{code}    || 200;
     my $headers = $args{headers} || [ $req->spliceHdrs ];
-    return [
+    return $self->_buildPsgiResponse(
         $code,
         [
             'Content-Type'   => 'text/html; charset=utf-8',
@@ -308,7 +308,7 @@ sub sendRawHtml {
             @{$headers},
         ],
         [$s]
-    ];
+    );
 }
 
 sub abort {
@@ -348,7 +348,7 @@ sub sendJs {
       . 'var portal="%s";', $sp, $sc, $self->languages,
       $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
-    return [
+    return $self->_buildPsgiResponse(
         200,
         [
             'Content-Type'   => 'application/javascript',
@@ -356,7 +356,36 @@ sub sendJs {
             'Cache-Control'  => 'public,max-age=2592000',
         ],
         [$s]
-    ];
+    );
+}
+
+sub sendTextResponse {
+    my ( $self, $req, $text, %args ) = @_;
+
+    my $data = $text;
+
+    #my $data = Encode::encode( "UTF-8", $text );
+
+    $args{type} ||= "text/plain; charset=utf-8";
+
+    return $self->sendBinaryResponse( $req, $data, %args );
+}
+
+sub sendBinaryResponse {
+    my ( $self, $req, $data, %args ) = @_;
+    $args{code} ||= 200;
+    $args{type} ||= "application/octet-stream";
+    my $headers = $args{headers} || [ $req->spliceHdrs ];
+
+    return $self->_buildPsgiResponse(
+        $args{code},
+        [
+            'Content-Type'   => $args{type},
+            'Content-Length' => length($data),
+            @$headers,
+        ],
+        [$data]
+    );
 }
 
 sub sendHtml {
@@ -408,7 +437,7 @@ sub sendHtml {
     # Set headers
     my $hdrs = [ 'Content-Type' => 'text/html', @{ $args{headers} } ];
     $self->logger->debug("Sending $template");
-    return [ $args{code}, $hdrs, [ $htpl->output() ] ];
+    return $self->_buildPsgiResponse( $args{code}, $hdrs, [ $htpl->output() ] );
 }
 
 ###############
@@ -477,6 +506,27 @@ sub logAndRun {
     }
 
     return $res;
+}
+
+sub sendRedirection {
+    my ( $self, $req, $destination, %args ) = @_;
+
+    $args{code}    ||= 302;
+    $args{headers} ||= [ $req->spliceHdrs ];
+
+    return $self->_buildPsgiResponse(
+        $args{code},
+        [
+            ( $destination ? ( Location => $destination ) : () ),
+            @{ $args{headers} }
+        ],
+        []
+    );
+}
+
+sub _buildPsgiResponse {
+    my ( $self, $code, $header, $data ) = @_;
+    return [ $code, $header, $data ];
 }
 
 1;

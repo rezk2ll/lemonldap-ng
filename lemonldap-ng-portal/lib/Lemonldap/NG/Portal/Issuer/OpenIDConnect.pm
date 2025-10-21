@@ -2305,7 +2305,7 @@ sub userInfo {
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Missing access_token',
         );
-        return $self->returnBearerError( 'invalid_request',
+        return $self->returnBearerError( $req, 'invalid_request',
             "Access token not found in request", 401 );
     }
 
@@ -2319,7 +2319,7 @@ sub userInfo {
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Invalid or expired access_token',
         );
-        return $self->returnBearerError( 'invalid_request',
+        return $self->returnBearerError( $req, 'invalid_request',
             'Invalid request', 401 );
     }
 
@@ -2341,7 +2341,7 @@ sub userInfo {
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Missing required authentication header',
         );
-        return $self->returnBearerError( 'invalid_request',
+        return $self->returnBearerError( $req, 'invalid_request',
             'Invalid request', 400 );
     }
 
@@ -2358,13 +2358,14 @@ sub userInfo {
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Unable to get session corresponding to access-token',
         );
-        return $self->returnBearerError( 'invalid_request',
+        return $self->returnBearerError( $req, 'invalid_request',
             'Invalid request', 401 );
     }
 
     my $userinfo_response =
       $self->buildUserInfoResponse( $req, $scope, $rp, $session );
-    return $self->returnBearerError( 'invalid_request', 'Invalid request', 401 )
+    return $self->returnBearerError( $req, 'invalid_request',
+        'Invalid request', 401 )
       unless ($userinfo_response);
 
     my $attr_str = join( ',', sort( keys(%$userinfo_response) ) );
@@ -2402,14 +2403,8 @@ sub userInfo {
               ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg},
         );
         $self->logger->debug("Return UserInfo as JWT: $userinfo_jwt");
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/jwt',
-                'Content-Length' => length($userinfo_jwt)
-            ],
-            [$userinfo_jwt]
-        ];
+        return $self->p->sendBinaryResponse( $req, $userinfo_jwt,
+            type => 'application/jwt' );
     }
 }
 
@@ -2594,7 +2589,7 @@ sub _revokeToken {
                 "$tokenHint dropped was " . $oidcSession->id );
             $oidcSession->remove;
         }
-        return [ 200, [], [] ];
+        return $self->p->sendBinaryResponse( $req, '' );
     }
     else {
         $self->auditLog(
@@ -2607,7 +2602,7 @@ sub _revokeToken {
             $tokenHint => $token
         );
     }
-    return [ 200, [], [] ];
+    return $self->p->sendBinaryResponse( $req, '' );
 }
 
 # Endpoint JWKS is implemented in Lib/OpenIDConnect
@@ -2856,7 +2851,7 @@ sub endSessionDone {
           $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
 
         $self->logger->debug("Redirect user to $response_url");
-        return [ 302, [ Location => $response_url ], [] ];
+        return $self->p->sendRedirection( $req, $response_url, code => 302 );
     }
 
     # Else, normal login process

@@ -898,14 +898,7 @@ sub metadata {
                   $metadata->serviceToXML(
                     { %{ $self->currentConf }, portal => $self->p->portal },
                     'all' );
-                return [
-                    200,
-                    [
-                        'Content-Type'   => 'application/xml',
-                        'Content-Length' => length($s),
-                    ],
-                    [$s]
-                ];
+                return $self->p->sendTextResponse($req, $s, type => "application/xml; charset=utf-8");
             }
             return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
         }

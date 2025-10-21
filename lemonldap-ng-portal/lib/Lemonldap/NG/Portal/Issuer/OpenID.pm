@@ -271,7 +271,8 @@ sub _openIDResponse {
     }
     elsif ($type) {
         $self->logger->debug("OpenID generated page ($type)");
-        $req->response( [ 200, [ 'Content-Type' => $type ], [$data] ] );
+        $req->response(
+            $self->p->sendBinaryResponse( $req, $data, type => $type ) );
     }
     else {
         $req->response(

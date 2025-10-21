@@ -156,15 +156,8 @@ sub _sendAsap {
     my $parse_cert_error = $@;
 
     if ($res) {
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/x-pem-file',
-                'Content-Length' => length($res),
-                $req->spliceHdrs,
-            ],
-            [$res]
-        ];
+        return $self->p->sendBinaryResponse( $req, $res,
+            type => 'application/x-pem-file' );
     }
     else {
         $self->logger->error(

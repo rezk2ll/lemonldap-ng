@@ -415,14 +415,10 @@ sub run {
               $self->regOtt->createToken( $self->save2faSessionInfo($req) );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
-            $req->response( [
-                    302,
-                    [
-                        Location =>
-                          $self->p->buildUrl( $req->portal, '2fregisters' )
-                    ],
-                    []
-                ]
+            $req->response(
+                $self->p->sendRedirection(
+                    $req, $self->p->buildUrl( $req->portal, '2fregisters' )
+                )
             );
             return PE_SENDRESPONSE;
         }
@@ -613,7 +609,8 @@ sub _redirect {
     my $arg = $req->env->{QUERY_STRING};
 
     $self->logger->debug('Call sfEngine _redirect method');
-    return [ 302, [ Location => $req->portal . ( $arg ? "?$arg" : '' ) ], [] ];
+    return $self->p->sendRedirection( $req,
+        $req->portal . ( $arg ? "?$arg" : '' ) );
 }
 
 sub _displayRegister {
@@ -684,14 +681,8 @@ sub _displayRegister {
     }
 
     # If only one 2F is available, redirect to it
-    return [
-        302,
-        [
-            Location =>
-              $self->p->buildUrl( $req->portal, '2fregisters', $am[0]->{CODE} )
-        ],
-        []
-      ]
+    return $self->p->sendRedirection( $req,
+        $self->p->buildUrl( $req->portal, '2fregisters', $am[0]->{CODE} ) )
       if (
         @am == 1
         and not( @$_2fDevices
@@ -822,7 +813,7 @@ sub restoreSession {
 
             unless ( $sessionData->{_2fRealSession} ) {
                 $self->logger->error("Invalid 2FA registration token");
-                return [ 302, [ Location => $req->portal ], [] ];
+                return $self->p->sendRedirection( $req, $req->portal );
             }
             $self->restore2faSessionInfo( $req, $sessionData );
 
@@ -854,7 +845,7 @@ sub restoreSession {
     }
     $self->logger->warn(
         "Cannot restore session state during mandatory 2FA registration");
-    return [ 302, [ Location => $req->portal ], [] ];
+    return $self->p->sendRedirection( $req, $req->portal );
 }
 
 sub continueLoginAfterRegistration {
