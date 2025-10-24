@@ -63,7 +63,8 @@ EOF
         );
         chomp $str;
         my $json;
-        ok( $json = eval { JSON::from_json("[$str]")->[0] }, 'Valid JSON response' )
+        ok( $json = eval { JSON::from_json("[$str]")->[0] },
+            'Valid JSON response' )
           or diag($@);
         $test->($json);
         ok( $test->($json), "$name result matches" ) or diag "$str";
@@ -72,14 +73,14 @@ EOF
     subtest 'Conf: simple string', sub {
         runTest( 'manager', 'portal',
             sub { $_[0] eq 'http://auth.example.com/' },
-            'get', 'portal', '-json', );
+            '-json', 'get', 'portal');
     };
     subtest 'Conf: hash ref', sub {
         runTest(
             'manager',
             'globalStorageOptions',
             sub { $_[0]->{Directory} eq '/var/lib/lemonldap-ng/sessions' },
-            '--json',
+            '-json',
             'get',
             'globalStorageOptions'
         );
@@ -90,8 +91,7 @@ EOF
             sub {
                 $_[0]->{author} eq 'The LemonLDAP::NG team';
             },    #qr#"author"\s*:\s*"The LemonLDAP::NG team"#,
-            'info',
-            '-json'
+            '-json', 'info',
         );
     };
 }
