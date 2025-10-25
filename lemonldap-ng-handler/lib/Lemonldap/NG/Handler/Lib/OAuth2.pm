@@ -102,7 +102,7 @@ sub fetchId {
     }
 
     # Check audiences if defined - Must be a JWT
-    my @aud = split /[,\s]/, getAccessTokenAudiences($access_token);
+    my @aud = split /\s+/, getAccessTokenAudiences($access_token);
     if ( $aud[0] ) {
         my $vhost = $class->resolveAlias($req);
         if ( grep { $_ eq $vhost} @aud ) {

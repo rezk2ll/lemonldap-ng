@@ -230,7 +230,7 @@ Options
       identifier (``sub``). Default value is ``whatToTrace``.
    -  **Additional audiences** (since version ``2.0.8``): You can
       specify a space-separated list of audiences that will be added to the
-      ID Token audiences, and possibly the access token audiences if the
+      ID token audiences, and possibly the access token audiences if the
       access token format is JWT
    -  **Other RP allowed to exchange access_token** (since version ``2.20.0``):
       You can specify a space-separated list of Relying-Party allowed to ask
