@@ -1,9 +1,10 @@
 package Lemonldap::NG::Handler::Lib::OAuth2;
-use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
+use Lemonldap::NG::Common::JWT
+  qw(getAccessTokenSessionId getAccessTokenAudiences);
 
 use strict;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.1';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
@@ -98,6 +99,26 @@ sub fetchId {
     unless ($infos) {
         $req->data->{oauth2_error} = 'invalid_token';
         return;
+    }
+
+    # Check audiences if defined - Must be a JWT
+    my @aud = split /[,\s]/, getAccessTokenAudiences($access_token);
+    if ( $aud[0] ) {
+        my $vhost = $class->resolveAlias($req);
+        if ( grep { $_ eq $vhost} @aud ) {
+            $class->logger->debug(
+                "$vhost found in audiences list: " . join ', ', @aud );
+        }
+        else {
+            $class->auditLog(
+                $req,
+                message => 'VHost not found in audiences',
+                code    => "INVALID_ACCESS_TOKEN",
+            );
+            $class->logger->debug(
+                "$vhost not found in audiences list: " . join ', ', @aud );
+            return 0;
+        }
     }
 
     # Store scope and rpid for future session attributes
