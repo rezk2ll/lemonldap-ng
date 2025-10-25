@@ -117,7 +117,7 @@ sub fetchId {
             );
             $class->logger->debug(
                 "$vhost not found in audiences list: " . join ', ', @aud );
-            return 0;
+            return;
         }
     }
 
