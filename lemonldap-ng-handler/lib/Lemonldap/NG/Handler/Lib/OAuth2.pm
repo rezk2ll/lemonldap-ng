@@ -195,6 +195,13 @@ sub getOIDCInfos {
     return $infos;
 }
 
+# Hide AccesToken to the protected application
+sub hideCookie {
+    my ( $class, $req ) = @_;
+    $class->logger->debug("Removing Authorization header");
+    $class->unset_header_in( $req, 'Authorization' );
+}
+
 ## The OAuth2 handler does not redirect, we simply return a 401 with relevant
 # information as described in https://tools.ietf.org/html/rfc6750#section-3
 sub goToPortal {
