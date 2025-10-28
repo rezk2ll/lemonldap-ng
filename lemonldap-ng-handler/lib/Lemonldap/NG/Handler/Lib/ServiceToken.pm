@@ -105,4 +105,11 @@ sub fetchId {
     return $_session_id;
 }
 
+# Hide ServiceToken to the protected application
+sub hideCookie {
+    my ( $class, $req ) = @_;
+    $class->logger->debug('Removing X_LLNG_TOKEN header');
+    $class->unset_header_in( $req, 'X_LLNG_TOKEN' );
+}
+
 1;
