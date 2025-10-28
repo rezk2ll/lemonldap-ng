@@ -540,7 +540,12 @@ To develop an handler, see:
 -  :doc:`Handler architecture<handlerarch>`
 -  :doc:`Custom handlers<customhandlers>`
 
-To develop a portal plugin, see manpages:
+To develop a plugin, see
+
+- :doc:`plugincustom`
+- :doc:`customconfigplaceholder`
+
+As well as the following manpages:
 
 -  Lemonldap::NG::Portal
 -  Lemonldap::NG::Portal::Auth
