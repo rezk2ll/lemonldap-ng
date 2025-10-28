@@ -2,13 +2,13 @@ package Lemonldap::NG::Common::JWT;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK =
-  qw(getAccessTokenSessionId getAccessTokenAudiences getJWTHeader getJWTPayload getJWTSignature getJWTSignedData)
+  qw(getAccessTokenSessionId getJWTHeader getJWTPayload getJWTSignature getJWTSignedData)
   ;    # symbols to export on request
 
 use JSON;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 
-our $VERSION = '2.22.1';
+our $VERSION = '2.22';
 
 # Gets the Access Token session ID embedded in a LLNG-emitted JWT
 sub getAccessTokenSessionId {
@@ -25,19 +25,6 @@ sub getAccessTokenSessionId {
     else {
         return $access_token;
     }
-}
-
-# Gets the audiences list embedded in a LLNG-emitted JWT
-sub getAccessTokenAudiences {
-    my ($access_token) = @_;
-
-    # Access Token is a JWT, extract Audience list
-    # and return it
-    if ( index( $access_token, '.' ) > 0 ) {
-        my $data = getJWTPayload($access_token);
-        return ( $data and $data->{aud} ) ? $data->{aud} : undef;
-    }
-    return;
 }
 
 # Isolate and decode parts of a JWT
