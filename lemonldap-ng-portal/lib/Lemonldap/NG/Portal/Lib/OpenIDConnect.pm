@@ -1208,6 +1208,7 @@ sub newAccessToken {
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $at_info = {
+
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
@@ -1693,7 +1694,7 @@ sub decodeJWT {
                 decode_jwt( token => $jwt, @$keyArg, decode_payload => 0 ) );
         };
         if ($@) {
-            $error = [ "Unable to verify JWT: $@", "JWT was: $jwt" ];
+            $error = [ "Unable to verify JWT: $@", "Jwt was: $jwt" ];
         }
         else {
             $error = [];
@@ -2426,7 +2427,7 @@ sub _createJWT {
     my @keyArg;
     $extra_headers //= {};
 
-    # Set Crypt::JWT arguments depending on "alg"
+    # Set Cript::JWT arguments depending on "alg"
     #  a) "none"
     if ( $alg eq 'none' ) {
         @keyArg = ( allow_none => 1 );
