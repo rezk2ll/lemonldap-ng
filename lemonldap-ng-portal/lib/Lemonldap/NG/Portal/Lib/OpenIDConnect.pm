@@ -5,7 +5,9 @@
 # Common OpenID Connect functions
 package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 
+use Mouse;
 use strict;
+use Crypt::URandom;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
 use Crypt::JWT  qw(encode_jwt decode_jwt);
@@ -21,14 +23,11 @@ use MIME::Base64
 use Scalar::Util qw/looks_like_number/;
 use URI;
 use URI::QueryParam;
-use Mouse;
-use Crypt::URandom;
-use URI;
 
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.22.1';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -230,7 +229,7 @@ sub load_rp {
             or $config{options}->{oidcRPMetaDataOptionsJwks} )
       )
     {
-        $self->logger->debug("Processing JWKS options for RP $rp...");
+        $self->logger->debug("Processing JWKS options for RP $rp");
         my $jwks = $config{options}->{oidcRPMetaDataOptionsJwks};
         $jwks = $self->decodeJSON($jwks) if $jwks and not ref $jwks;
 
@@ -406,7 +405,6 @@ sub getCallbackUri {
     my ( $self, $req ) = @_;
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
-
     my $callback_uri =
       $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
@@ -1038,9 +1036,8 @@ sub refreshAccessToken {
     my ( $self, $req, $op, $session ) = @_;
 
     # Handle unauthenticated OIDC calls
-    my $data       = $session ? $session->data : $req->userData;
-    my $session_id = $session ? $session->id   : $req->id;
-
+    my $data          = $session ? $session->data : $req->userData;
+    my $session_id    = $session ? $session->id   : $req->id;
     my $refresh_token = $data->{_oidc_refresh_token};
 
     if ($refresh_token) {
@@ -1113,15 +1110,15 @@ sub getUserInfo {
     }
 
     $self->logger->debug(
-        "Request User Info on $userinfo_uri with access token $access_token");
+        "Request UserInfo on $userinfo_uri with access token $access_token");
 
     my $response = $self->ua->get( $userinfo_uri,
         "Authorization" => "Bearer $access_token" );
 
     if ( $response->is_error ) {
-        $self->logger->error( "Bad userinfo response: " . $response->message );
+        $self->logger->error( "Bad UserInfo response: " . $response->message );
         $self->logger->debug(
-            "Userinfo response received: " . $response->as_string );
+            "UserInfo response received: " . $response->as_string );
         return 0;
     }
 
@@ -1136,6 +1133,13 @@ sub getUserInfo {
     elsif ( $content_type =~ /jwt/ ) {
         my $jwt = $self->decryptJwt($userinfo_content);
         return $self->decodeJWT( $jwt, $op );
+    }
+    else {
+        $self->logger->error('Bad UserInfo Content-Type');
+        $self->logger->debug(
+"UserInfo response received with invalid Content-Type ($content_type)"
+        );
+        return 0;
     }
 }
 
@@ -1204,11 +1208,10 @@ sub getAuthorizationCode {
 
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
-
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-
-    my $at_info = {
-
+    my $at_info   = {
+        aud =>
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAdditionalAudiences},
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
@@ -1216,7 +1219,6 @@ sub newAccessToken {
         nbf       => time,
         %{$info},
     };
-
     my $ttl =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
@@ -1277,7 +1279,7 @@ sub makeJWT {
 
     my $access_token_payload = {
         iss => $self->get_issuer($req),     # Issuer Identifier
-        exp => $exp,                        # expiration
+        exp => $exp,                        # Expiration
         aud => $self->getAudiences($rp),    # Audience
         jti => $id,                         # Access Token session ID
         sid => $self->getSidFromSession( $rp, $sessionInfo ),    # Session id
