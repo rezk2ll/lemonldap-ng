@@ -8,7 +8,7 @@ our @EXPORT_OK =
 use JSON;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.22';
 
 # Gets the Access Token session ID embedded in a LLNG-emitted JWT
 sub getAccessTokenSessionId {
@@ -18,12 +18,7 @@ sub getAccessTokenSessionId {
     # and use it as session ID
     if ( index( $access_token, '.' ) > 0 ) {
         my $data = getJWTPayload($access_token);
-        if ( $data and $data->{jti} ) {
-            return $data->{jti};
-        }
-        else {
-            return;
-        }
+        return ( $data and $data->{jti} ) ? $data->{jti} : undef;
     }
 
     # Access Token is the session ID directly

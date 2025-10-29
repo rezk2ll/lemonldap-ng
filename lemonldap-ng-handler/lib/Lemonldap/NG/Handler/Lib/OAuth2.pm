@@ -1,9 +1,9 @@
 package Lemonldap::NG::Handler::Lib::OAuth2;
-use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 
+use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 use strict;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.1';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
@@ -40,20 +40,17 @@ sub retrieveSession {
     );
 
     unless ( $session->error ) {
-
         my $data = { %{ $session->data }, $class->_getTokenAttributes($req) };
-
         $class->data($data);
-
         $class->logger->debug("Get session $offlineId from Handler::Main::Run");
 
         # Verify that session is valid
         $class->logger->error(
-"_utime is not defined. This should not happen. Check if it is well transmitted to handler"
+'_utime is not defined. This should not happen. Check if it is well transmitted to handler.'
         ) unless $session->data->{_utime};
 
         my $ttl = $class->tsv->{timeout} - time + $session->data->{_utime};
-        $class->logger->debug( "Session TTL = " . $ttl );
+        $class->logger->debug("Session TTL =  $ttl");
 
         if ( time - $session->data->{_utime} > $class->tsv->{timeout} ) {
             $class->logger->info("Session $id expired");
@@ -75,7 +72,6 @@ sub retrieveSession {
 
 sub fetchId {
     my ( $class, $req ) = @_;
-
     my $access_token;
     my $authorization = $req->{env}->{HTTP_AUTHORIZATION};
 
@@ -98,6 +94,26 @@ sub fetchId {
     unless ($infos) {
         $req->data->{oauth2_error} = 'invalid_token';
         return;
+    }
+
+    # Check audiences if defined
+    my @aud = split /[,\s]+/, $infos->{aud};
+    if ( $aud[0] ) {
+        my $vhost = $class->resolveAlias($req);
+        if ( grep { $_ eq $vhost } @aud ) {
+            $class->logger->debug(
+                "$vhost found in audiences list: " . join ', ', @aud );
+        }
+        else {
+            $class->auditLog(
+                $req,
+                message => 'VHost not found in audiences',
+                code    => "INVALID_ACCESS_TOKEN",
+            );
+            $class->logger->debug(
+                "$vhost not found in audiences list: " . join ', ', @aud );
+            return;
+        }
     }
 
     # Store scope and rpid for future session attributes
@@ -177,6 +193,13 @@ sub getOIDCInfos {
     }
 
     return $infos;
+}
+
+# Hide AccesToken to the protected application
+sub hideCookie {
+    my ( $class, $req ) = @_;
+    $class->logger->debug("Removing Authorization header");
+    $class->unset_header_in( $req, 'Authorization' );
 }
 
 ## The OAuth2 handler does not redirect, we simply return a 401 with relevant

@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 29;
 
 init(
     'Lemonldap::NG::Handler::Server',
@@ -60,7 +60,27 @@ Lemonldap::NG::Common::Session->new( {
             "_type"           => "access_token",
             "_utime"          => ( time - 72000 + 300 ),
             "rp"              => "rp-example2",
-            "scope"           => "openid email read"
+            "scope"           => "openid email read",
+            "aud"             => "test1.example.com other.example.com"
+        }
+    }
+);
+
+# Inject an on-line access token session
+Lemonldap::NG::Common::Session->new( {
+        hashStore            => $ENV{LLNG_HASHED_SESSION_STORE},
+        storageModule        => 'Apache::Session::File',
+        storageModuleOptions => { Directory => 't/sessions' },
+        id                   =>
+          'f1fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+        force => 1,
+        kind  => 'OIDCI',
+        info  => {
+            "user_session_id" => $sessionId,
+            "_type"           => "access_token",
+            "_utime"          => ( time - 72000 + 300 ),
+            "rp"              => "rp-example2",
+            "scope"           => "openid email read",
         }
     }
 );
@@ -78,7 +98,8 @@ Lemonldap::NG::Common::Session->new( {
             "_type"              => "refresh_token",
             "_utime"             => ( time - 72000 + 300 ),
             "rp"                 => "rp-example",
-            "scope"              => "openid email read"
+            "scope"              => "openid email read",
+            "aud"                => "test1.example.com"
         }
     }
 );
@@ -149,6 +170,20 @@ ok(
         'test1.example.com', '',
         VHOSTTYPE          => 'OAuth2',
         HTTP_AUTHORIZATION =>
+'Bearer f1fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    ),
+    'Valid access token without audience'
+);
+%h = @{ $res->[1] };
+is( $res->[0],           200,        "Request accepted" );
+
+# Request with valid Access Token
+ok(
+    $res = $client->_get(
+        '/read',             undef,
+        'test1.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION =>
 'Bearer f0fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
     ),
     'Valid access token'
@@ -193,6 +228,19 @@ ok(
 is( $res->[0], 200, "Request accepted" );
 ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
   or explain( \%h, 'Auth-User => "dwho"' );
+
+# Request with Access token from offline session
+ok(
+    $res = $client->_get(
+        '/read',             undef,
+        'other.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION => 'Bearer 999888777',
+    ),
+    'Invalid access token (audience)'
+);
+%h = @{ $res->[1] };
+is( $res->[0], 401, "Access was rejected" );
 
 # Request with Access token from offline session
 ok(

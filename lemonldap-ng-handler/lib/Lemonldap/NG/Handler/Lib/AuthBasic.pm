@@ -142,7 +142,7 @@ sub createSession {
 # Hide user credentials to the protected application
 sub hideCookie {
     my ( $class, $req ) = @_;
-    $class->logger->debug("removing Authorization header");
+    $class->logger->debug('Removing Authorization header');
     $class->unset_header_in( $req, 'Authorization' );
 }
 
