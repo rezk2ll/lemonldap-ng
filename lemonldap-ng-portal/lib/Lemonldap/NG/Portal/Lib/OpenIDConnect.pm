@@ -28,7 +28,7 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.22.1';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -1204,10 +1204,9 @@ sub getAuthorizationCode {
 
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
-
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-
     my $at_info = {
+        aud       => $self->getAudiences($rp),
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
@@ -1215,7 +1214,6 @@ sub newAccessToken {
         nbf       => time,
         %{$info},
     };
-
     my $ttl =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
@@ -1276,7 +1274,7 @@ sub makeJWT {
 
     my $access_token_payload = {
         iss => $self->get_issuer($req),     # Issuer Identifier
-        exp => $exp,                        # expiration
+        exp => $exp,                        # Expiration
         aud => $self->getAudiences($rp),    # Audience
         jti => $id,                         # Access Token session ID
         sid => $self->getSidFromSession( $rp, $sessionInfo ),    # Session id
