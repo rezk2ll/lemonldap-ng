@@ -1036,9 +1036,8 @@ sub refreshAccessToken {
     my ( $self, $req, $op, $session ) = @_;
 
     # Handle unauthenticated OIDC calls
-    my $data       = $session ? $session->data : $req->userData;
-    my $session_id = $session ? $session->id   : $req->id;
-
+    my $data          = $session ? $session->data : $req->userData;
+    my $session_id    = $session ? $session->id   : $req->id;
     my $refresh_token = $data->{_oidc_refresh_token};
 
     if ($refresh_token) {
@@ -1211,7 +1210,8 @@ sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my $at_info   = {
-        aud       => $self->getAudiences($rp),
+        aud =>
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAdditionalAudiences},
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
