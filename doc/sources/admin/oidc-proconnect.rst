@@ -88,8 +88,8 @@ If you want to configure it through CLI, you can adapt the following commands.
             oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsClientSecret client-secret-for-proconnect \
             oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsIDTokenExpiration 3600 \
             oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsIDTokenSignAlg RS256 \
-            oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsPostLogoutRedirectUris https://auth.agentconnect.gouv.fr/api/v2/oidc-callback \
-            oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsRedirectUris https://auth.agentconnect.gouv.fr/api/v2/client/logout-callback \
+            oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsPostLogoutRedirectUris https://auth.agentconnect.gouv.fr/api/v2/client/logout-callback \
+            oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsRedirectUris https://auth.agentconnect.gouv.fr/api/v2/oidc-callback \
             oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsUserIDAttr uid \
             oidcRPMetaDataOptions/rp-proconnect oidcRPMetaDataOptionsUserInfoSignAlg RS256
 
