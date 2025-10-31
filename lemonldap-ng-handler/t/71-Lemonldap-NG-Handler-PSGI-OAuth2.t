@@ -4,12 +4,11 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 28;
+my $maintests = 34;
 
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        logLevel              => 'error',
         oidcRPMetaDataOptions => {
             "rp-example" => {
                 oidcRPMetaDataOptionsClientID => "example",
@@ -25,10 +24,22 @@ init(
                 vhostMaintenance     => 0,
                 vhostServiceTokenTTL => -1,
             },
+            'test2.example.com' => {
+                vhostHttps           => 0,
+                vhostPort            => 80,
+                vhostMaintenance     => 0,
+                vhostServiceTokenTTL => -1,
+            },
         },
         exportedHeaders => {
             'test1.example.com' => {
                 'Auth-Token'         => '$_accessToken',
+                'Auth-User'          => '$uid',
+                'Auth-ClientID'      => '$_clientId',
+                'Auth-ClientConfKey' => '$_clientConfKey',
+                'Auth-Scope'         => '$_scope',
+            },
+            'test2.example.com' => {
                 'Auth-User'          => '$uid',
                 'Auth-ClientID'      => '$_clientId',
                 'Auth-ClientConfKey' => '$_clientConfKey',
@@ -42,6 +53,10 @@ init(
                 'default' => 'accept',
                 '^/write' => '$_scope =~ /(?<!\S)write(?!\S)/',
                 '^/read'  => '$_scope =~ /(?<!\S)read(?!\S)/',
+            },
+            'test2.example.com' => {
+                # Restrict audience
+                'default' => 'listMatch($_audiences, "test2.example.com")',
             },
         },
     }
@@ -61,7 +76,66 @@ Lemonldap::NG::Common::Session->new( {
             "_type"           => "access_token",
             "_utime"          => ( time - 72000 + 300 ),
             "rp"              => "rp-example2",
-            "scope"           => "openid email read"
+            "scope"           => "openid email read",
+        }
+    }
+);
+
+# Inject an on-line access token session
+Lemonldap::NG::Common::Session->new( {
+        hashStore            => $ENV{LLNG_HASHED_SESSION_STORE},
+        storageModule        => 'Apache::Session::File',
+        storageModuleOptions => { Directory => 't/sessions' },
+        id                   =>
+          'f1fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+        force => 1,
+        kind  => 'OIDCI',
+        info  => {
+            "user_session_id" => $sessionId,
+            "_type"           => "access_token",
+            "_utime"          => ( time - 72000 + 300 ),
+            "rp"              => "rp-example2",
+            "scope"           => "openid email read",
+        }
+    }
+);
+
+# Inject an on-line access token session
+Lemonldap::NG::Common::Session->new( {
+        hashStore            => $ENV{LLNG_HASHED_SESSION_STORE},
+        storageModule        => 'Apache::Session::File',
+        storageModuleOptions => { Directory => 't/sessions' },
+        id                   =>
+          'f2fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+        force => 1,
+        kind  => 'OIDCI',
+        info  => {
+            "user_session_id" => $sessionId,
+            "_type"           => "access_token",
+            "_utime"          => ( time - 72000 + 300 ),
+            "rp"              => "rp-example2",
+            "scope"           => "openid email read",
+            "aud"             => ["other.example.com"]
+        }
+    }
+);
+
+# Inject an on-line access token session
+Lemonldap::NG::Common::Session->new( {
+        hashStore            => $ENV{LLNG_HASHED_SESSION_STORE},
+        storageModule        => 'Apache::Session::File',
+        storageModuleOptions => { Directory => 't/sessions' },
+        id                   =>
+          'f3fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+        force => 1,
+        kind  => 'OIDCI',
+        info  => {
+            "user_session_id" => $sessionId,
+            "_type"           => "access_token",
+            "_utime"          => ( time - 72000 + 300 ),
+            "rp"              => "rp-example2",
+            "scope"           => "openid email read",
+            "aud"             => ["test2.example.com"]
         }
     }
 );
@@ -225,6 +299,48 @@ is( $h{'Auth-ClientID'}, 'example',   'Client ID correctly transmitted' );
 is( $h{'Auth-ClientConfKey'},
     'rp-example', 'Client confkey correctly transmitted' );
 like( $h{'Auth-Scope'}, qr/\bemail\b/, 'Scope correctly transmitted' );
+
+# Audience-protected, token without audience
+ok(
+    $res = $client->_get(
+        '/',             undef,
+        'test2.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION =>
+'Bearer f1fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    ),
+    'Valid access token without audience'
+);
+%h = @{ $res->[1] };
+is( $res->[0],           403,        "Request accepted" );
+
+# Audience-protected, token with wrong audience
+ok(
+    $res = $client->_get(
+        '/',             undef,
+        'test2.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION =>
+'Bearer f2fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    ),
+    'Valid access token without audience'
+);
+%h = @{ $res->[1] };
+is( $res->[0],           403,        "Request accepted" );
+
+# Audience-protected, token with correct audience
+ok(
+    $res = $client->_get(
+        '/',             undef,
+        'test2.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION =>
+'Bearer f3fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    ),
+    'Valid access token without audience'
+);
+%h = @{ $res->[1] };
+is( $res->[0],           200,        "Request accepted" );
 
 Time::Fake->offset("+600s");
 ok(

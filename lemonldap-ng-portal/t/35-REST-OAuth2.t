@@ -12,9 +12,9 @@ BEGIN {
     require 't/oidc-lib.pm';
 }
 
-my $debug = 'error';
-my ( $op, $rp, $res );
+my $debug = 'debug';
 
+my ( $op, $rp, $test, $res );
 my $access_token;
 
 LWP::Protocol::PSGI->register(
@@ -173,6 +173,18 @@ ok(
 count(1);
 expectOK($res);
 
+ok( $test = register( 'test', sub { test() } ), 'Test portal' );
+ok(
+    $res = $test->_get(
+        '/mysession',
+        query  => 'whoami=1',
+        accept => 'application/json',
+    ),
+    'Check session'
+);
+count(2);
+expectReject($res);
+
 clean_sessions();
 done_testing( count() );
 
@@ -210,14 +222,85 @@ sub op {
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
                     rp => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP",
-                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsClientID          => "rpid",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent     => 0,
-                        oidcRPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcRPMetaDataOptionsRefreshToken      => 1,
-                        oidcRPMetaDataOptionsUserIDAttr        => "",
+                        oidcRPMetaDataOptionsDisplayName         => "RP",
+                        oidcRPMetaDataOptionsIDTokenExpiration   => 3600,
+                        oidcRPMetaDataOptionsClientID            => "rpid",
+                        oidcRPMetaDataOptionsIDTokenSignAlg      => "HS512",
+                        oidcRPMetaDataOptionsBypassConsent       => 0,
+                        oidcRPMetaDataOptionsClientSecret        => "rpsecret",
+                        oidcRPMetaDataOptionsRefreshToken        => 1,
+                        oidcRPMetaDataOptionsUserIDAttr          => "",
+                        oidcRPMetaDataOptionsAdditionalAudiences =>
+                          "test.op.com",
+                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
+                        oidcRPMetaDataOptionsPostLogoutRedirectUris =>
+                          "http://auth.rp.com/oauth2/rlogoutreturn",
+                        oidcRPMetaDataOptionsRule         => '$uid eq "french"',
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://auth.rp.com/?openidconnectcallback=1',
+                    }
+                },
+                oidcOPMetaDataOptions           => {},
+                oidcOPMetaDataJSON              => {},
+                oidcOPMetaDataJWKS              => {},
+                oidcServiceMetaDataAuthnContext => {
+                    'loa-4'       => 4,
+                    'customacr-1' => 1,
+                    'loa-5'       => 5,
+                    'loa-2'       => 2,
+                    'loa-3'       => 3
+                },
+                oidcServicePrivateKeySig => oidc_key_op_private_sig,
+                oidcServicePublicKeySig  => oidc_cert_op_public_sig,
+            }
+        }
+    );
+}
+
+sub test {
+    return LLNG::Manager::Test->new( {
+            ini => {
+                logLevel      => $debug,
+                locationRules => {
+                    'auth.op.com' => {
+                        '^/mysession' => '$_scope =~ /(?<!\S)llngapi(?!\S)/',
+                        default       => 'accept',
+                    },
+
+                    # Fix this when the test lib correctly transmits HTTP_HOST
+                    "auth.example.com" => {
+                        "default" => "accept"
+                    },
+                },
+                domain                          => 'idp.com',
+                portal                          => 'http://auth.op.com/',
+                authentication                  => 'Demo',
+                userDB                          => 'Same',
+                issuerDBOpenIDConnectActivation => "1",
+                restSessionServer               => 1,
+                restExportSecretKeys            => 1,
+                oidcRPMetaDataExportedVars      => {
+                    rp => {
+                        email       => "mail",
+                        family_name => "cn",
+                        name        => "cn"
+                    }
+                },
+                oidcServiceAllowHybridFlow            => 1,
+                oidcServiceAllowImplicitFlow          => 1,
+                oidcServiceAllowAuthorizationCodeFlow => 1,
+                oidcRPMetaDataOptions                 => {
+                    rp => {
+                        oidcRPMetaDataOptionsDisplayName         => "RP",
+                        oidcRPMetaDataOptionsIDTokenExpiration   => 3600,
+                        oidcRPMetaDataOptionsClientID            => "rpid",
+                        oidcRPMetaDataOptionsIDTokenSignAlg      => "HS512",
+                        oidcRPMetaDataOptionsBypassConsent       => 0,
+                        oidcRPMetaDataOptionsClientSecret        => "rpsecret",
+                        oidcRPMetaDataOptionsRefreshToken        => 1,
+                        oidcRPMetaDataOptionsUserIDAttr          => "",
+                        oidcRPMetaDataOptionsAdditionalAudiences =>
+                          "test.op.com",
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp.com/oauth2/rlogoutreturn",
