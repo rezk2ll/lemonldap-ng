@@ -18,7 +18,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADURL
   PE_CAS_SERVICE_NOT_ALLOWED
 );
-use URI;
 
 our $VERSION = '2.22.0';
 
@@ -29,7 +28,6 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 use constant beforeAuth  => 'storeEnvAndCheckGateway';
 use constant sessionKind => 'ICAS';
-
 use constant hook => { updateSessionId => 'updateCasSecondarySessions', };
 
 has rule => ( is => 'rw' );
