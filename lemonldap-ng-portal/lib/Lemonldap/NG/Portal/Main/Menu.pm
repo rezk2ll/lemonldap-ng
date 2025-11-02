@@ -379,6 +379,7 @@ sub _filterHash {
             }
 
             # Check rights
+            $self->logger->debug('Build menu applications list...');
             my $appdisplay = $apphash->{$key}->{options}->{display}
               || "auto";
             $apphash->{$key}->{options}->{uri} =~ URIRE;
