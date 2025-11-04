@@ -1134,6 +1134,12 @@ sub getUserInfo {
         my $jwt = $self->decryptJwt($userinfo_content);
         return $self->decodeJWT( $jwt, $op );
     }
+    else {
+        $self->logger->error('Bad UserInfo Content-Type');
+        $self->logger->debug( "UserInfo response received with"
+              . " invalid Content-Type ($content_type)" );
+        return 0;
+    }
 }
 
 # Convert JSON to HashRef
