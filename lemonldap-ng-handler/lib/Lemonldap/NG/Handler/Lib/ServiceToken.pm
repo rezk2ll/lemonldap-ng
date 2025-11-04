@@ -110,6 +110,7 @@ sub hideCookie {
     my ( $class, $req ) = @_;
     $class->logger->debug('Removing X_LLNG_TOKEN header');
     $class->unset_header_in( $req, 'X_LLNG_TOKEN' );
+    $class->Lemonldap::NG::Handler::Main::hideCookie($req);
 }
 
 1;
