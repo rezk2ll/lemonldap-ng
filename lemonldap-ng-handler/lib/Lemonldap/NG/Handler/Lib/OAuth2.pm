@@ -3,7 +3,7 @@ use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 
 use strict;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.22.1';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
@@ -40,20 +40,18 @@ sub retrieveSession {
     );
 
     unless ( $session->error ) {
-
         my $data = { %{ $session->data }, $class->_getTokenAttributes($req) };
 
         $class->data($data);
-
         $class->logger->debug("Get session $offlineId from Handler::Main::Run");
 
         # Verify that session is valid
         $class->logger->error(
-"_utime is not defined. This should not happen. Check if it is well transmitted to handler"
+'_utime is not defined. This should not happen. Check if it is well transmitted to handler'
         ) unless $session->data->{_utime};
 
         my $ttl = $class->tsv->{timeout} - time + $session->data->{_utime};
-        $class->logger->debug( "Session TTL = " . $ttl );
+        $class->logger->debug( "Session TTL = $ttl" );
 
         if ( time - $session->data->{_utime} > $class->tsv->{timeout} ) {
             $class->logger->info("Session $id expired");
@@ -75,7 +73,6 @@ sub retrieveSession {
 
 sub fetchId {
     my ( $class, $req ) = @_;
-
     my $access_token;
     my $authorization = $req->{env}->{HTTP_AUTHORIZATION};
 
