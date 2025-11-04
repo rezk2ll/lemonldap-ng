@@ -1211,19 +1211,16 @@ sub getAuthorizationCode {
 
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
-
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-
-    my $at_info = {
-
+    my $at_info   = {
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
         iat       => time,
         nbf       => time,
+        aud       => $self->getAudiences($rp),
         %{$info},
     };
-
     my $ttl =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
