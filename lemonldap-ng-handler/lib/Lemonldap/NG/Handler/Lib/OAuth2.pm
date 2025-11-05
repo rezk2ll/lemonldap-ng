@@ -100,6 +100,7 @@ sub fetchId {
     # Store scope and rpid for future session attributes
     if ( $infos->{rp} ) {
         my $rp = $infos->{rp};
+        $req->data->{_accessToken}     = $access_token;
         $req->data->{_scope}           = $infos->{scope};
         $req->data->{_oidc_grant_type} = $infos->{grant_type};
         $req->data->{_clientConfKey}   = $rp;
@@ -201,7 +202,9 @@ sub goToPortal {
 sub _getTokenAttributes {
     my ( $class, $req ) = @_;
     my %res;
-    for my $attr (qw/_scope _clientConfKey _clientId _oidc_grant_type/) {
+    for my $attr (
+        qw/_scope _clientConfKey _clientId _oidc_grant_type _accessToken/)
+    {
         if ( $req->data->{$attr} ) {
             $res{$attr} = $req->data->{$attr};
         }
