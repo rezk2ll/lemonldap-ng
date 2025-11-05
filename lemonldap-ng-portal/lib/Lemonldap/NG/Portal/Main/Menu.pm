@@ -149,11 +149,11 @@ sub displayModules {
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
                   $self->p->mkSessionArray( $req,
-                    $req->{userData}->{_loginHistory}->{successLogin},
+                    $req->userData->{_loginHistory}->{successLogin},
                     "", 0, 0 );
                 $moduleHash->{'FAILED_LOGIN'} =
                   $self->p->mkSessionArray( $req,
-                    $req->{userData}->{_loginHistory}->{failedLogin},
+                    $req->userData->{_loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
             elsif ( $module->[0] eq 'OidcConsents' ) {

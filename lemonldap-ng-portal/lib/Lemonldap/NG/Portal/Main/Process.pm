@@ -748,7 +748,7 @@ sub buildCookie {
     my $ref = (
         %{ $req->{sessionInfo} }
         ? $req->{sessionInfo}
-        : $req->{userData}
+        : $req->userData
     );
     $req->data->{newAuth} = 1;
     $self->auditLog(

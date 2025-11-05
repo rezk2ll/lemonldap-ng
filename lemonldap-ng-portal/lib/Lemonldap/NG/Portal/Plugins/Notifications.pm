@@ -213,10 +213,10 @@ sub retrieveNotifs {
     } (
         map {
             /^notification_(.+)$/
-              ? { reference => $1, epoch => $req->{userData}->{$_} }
+              ? { reference => $1, epoch => $req->userData->{$_} }
               : ()
           }
-          keys %{ $req->{userData} }
+          keys %{ $req->userData }
     );
     splice @_notifications, $self->conf->{notificationsMaxRetrieve};
 
