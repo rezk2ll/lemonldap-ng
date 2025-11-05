@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 28;
 
 init(
     'Lemonldap::NG::Handler::Server',
@@ -28,6 +28,7 @@ init(
         },
         exportedHeaders => {
             'test1.example.com' => {
+                'Auth-Token'         => '$_accessToken',
                 'Auth-User'          => '$uid',
                 'Auth-ClientID'      => '$_clientId',
                 'Auth-ClientConfKey' => '$_clientConfKey',
@@ -156,8 +157,13 @@ ok(
 
 # Check headers
 %h = @{ $res->[1] };
-is( $res->[0],           200,        "Request accepted" );
-is( $h{'Auth-User'},     'dwho',     'Header Auth-User is set to "dwho"' );
+is( $res->[0],       200,    "Request accepted" );
+is( $h{'Auth-User'}, 'dwho', 'Header Auth-User is set to "dwho"' );
+is(
+    $h{'Auth-Token'},
+    'f0fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    'Access Token correctly transmitted'
+);
 is( $h{'Auth-ClientID'}, 'example2', 'Client ID correctly transmitted' );
 is( $h{'Auth-ClientConfKey'},
     'rp-example2', 'Client confkey correctly transmitted' );
@@ -193,6 +199,11 @@ ok(
 is( $res->[0], 200, "Request accepted" );
 ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
   or explain( \%h, 'Auth-User => "dwho"' );
+is(
+    $h{'Auth-Token'},
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwianRpIjoiZjBmZDRlODUwMDBjZTM1ZDA2MmY5N2Y1YjQ2NmZjMDBhYmMyZmFkMDQwNmUwM2UwODY2MDVmOTI5ZWM0YTI0OSJ9.h0RDBLo5Vy8lqbltEP2L496KOzJLhLCIRZZmEqcPuN8',
+    'Access Token correctly transmitted'
+);
 
 # Request with Access token from offline session
 ok(
@@ -207,9 +218,10 @@ ok(
 
 # Check headers
 %h = @{ $res->[1] };
-is( $res->[0],           200,       "Request accepted" );
-is( $h{'Auth-User'},     'dwho',    'Header Auth-User is set to "dwho"' );
-is( $h{'Auth-ClientID'}, 'example', 'Client ID correctly transmitted' );
+is( $res->[0],           200,         "Request accepted" );
+is( $h{'Auth-User'},     'dwho',      'Header Auth-User is set to "dwho"' );
+is( $h{'Auth-Token'},    '999888777', 'Access Token correctly transmitted' );
+is( $h{'Auth-ClientID'}, 'example',   'Client ID correctly transmitted' );
 is( $h{'Auth-ClientConfKey'},
     'rp-example', 'Client confkey correctly transmitted' );
 like( $h{'Auth-Scope'}, qr/\bemail\b/, 'Scope correctly transmitted' );
