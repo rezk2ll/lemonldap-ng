@@ -1225,7 +1225,7 @@ sub sendCss {
           . '") no-repeat center fixed;'
           . 'background-size:cover;}';
     }
-    return $self->p->sendTextResponse(
+    return $self->sendTextResponse(
         $req, $s,
         type    => 'text/css',
         headers => [ 'Cache-Control' => 'public,max-age=3600' ]
