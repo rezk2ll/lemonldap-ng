@@ -286,15 +286,15 @@ of ``cron.d`` scripts.
 
 If you need to modify the frequency of execution of your maintenance tasks, you should use a systemd override:
 
-```
-systemd edit liblemonldap-ng-portal-perl.timer
-systemd edit liblemonldap-ng-handler-perl.timer
-```
+::
 
-```
-[Timer]
-OnCalendar=*-*-* *:07:07
-```
+    systemctl edit liblemonldap-ng-portal-perl.timer
+    systemctl edit liblemonldap-ng-handler-perl.timer
+
+::
+    [Timer]
+    OnCalendar=*-*-* *:07:07
+
 
 Encryption of password in session
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
