@@ -22,6 +22,19 @@ Impacted users can `apply a hotfix for this regression
 <https://gitlab.ow2.org/-/project/181/uploads/836c98294bfe901285074d6b1b6f8ee1/3502.diff>`__
 until 2.22.1 is released
 
+2.23.0
+------
+
+OAuth2 Handler now hides Access Tokens
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :doc:`oauth2handler` no longer transmits the Access Token to the backend application after verifying it.
+
+You you rely on this behavior, you can add a custom exported header such as
+
+* Key: ``Auth-Token``
+* Value: ``$_accessToken``
+
 2.22.0
 ------
 

@@ -53,6 +53,7 @@ The OAuth2 handler defines a few extra variables that you can use in
   Token. Possible values: ``authorizationcode``, ``implicit``, ``hybrid``,
   ``clientcredentials``, ``password``
 * ``$_scope``: list of space-separated scopes granted by the Access Token
+* ``$_accessToken``: value of the access token, in case your application needs it as well
 
 For example, to grant access to access tokens containing the ``write`` scope,
 use ::

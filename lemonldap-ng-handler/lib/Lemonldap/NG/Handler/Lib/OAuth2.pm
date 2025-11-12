@@ -100,6 +100,7 @@ sub fetchId {
     # Store scope and rpid for future session attributes
     if ( $infos->{rp} ) {
         my $rp = $infos->{rp};
+        $req->data->{_accessToken}     = $access_token;
         $req->data->{_scope}           = $infos->{scope};
         $req->data->{_oidc_grant_type} = $infos->{grant_type};
         $req->data->{_clientConfKey}   = $rp;
@@ -176,6 +177,14 @@ sub getOIDCInfos {
     return $infos;
 }
 
+# Hide AccesToken to the protected application
+sub hideCookie {
+    my ( $class, $req ) = @_;
+    $class->logger->debug('Removing Authorization header');
+    $class->unset_header_in( $req, 'Authorization' );
+    $class->Lemonldap::NG::Handler::Main::hideCookie($req);
+}
+
 ## The OAuth2 handler does not redirect, we simply return a 401 with relevant
 # information as described in https://tools.ietf.org/html/rfc6750#section-3
 sub goToPortal {
@@ -193,7 +202,9 @@ sub goToPortal {
 sub _getTokenAttributes {
     my ( $class, $req ) = @_;
     my %res;
-    for my $attr (qw/_scope _clientConfKey _clientId _oidc_grant_type/) {
+    for my $attr (
+        qw/_scope _clientConfKey _clientId _oidc_grant_type _accessToken/)
+    {
         if ( $req->data->{$attr} ) {
             $res{$attr} = $req->data->{$attr};
         }
