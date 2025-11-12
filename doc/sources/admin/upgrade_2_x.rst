@@ -15,7 +15,12 @@ Known issues
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-None.
+In LemonLDAP::NG 2.22.0, there is a regression impacting users of the LDAP,
+RDBI and MongoDB configuration backends that can lead to an HTTP 500 error.
+
+Impacted users can `apply a hotfix for this regression
+<https://gitlab.ow2.org/-/project/181/uploads/836c98294bfe901285074d6b1b6f8ee1/3502.diff>`__
+until 2.22.1 is released
 
 2.22.0
 ------
