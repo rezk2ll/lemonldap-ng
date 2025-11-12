@@ -152,6 +152,7 @@ sub run {
         $class->logger->debug("Access control skipped");
         $class->updateStatus( $req, 'SKIP' );
         $class->hideCookie($req);
+        $class->data( {} );
         $class->cleanHeaders($req);
         return $class->OK;
     }

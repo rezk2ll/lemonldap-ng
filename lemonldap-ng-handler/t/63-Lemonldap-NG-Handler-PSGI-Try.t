@@ -34,7 +34,19 @@ ok( $app->addAuthRoute( test => sub { [ 200, [], ['Auth'] ] }, ['GET'] ),
 ok( $app->addUnauthRoute( test => sub { [ 200, [], ['Unauth'] ] }, ['GET'] ),
     'Set auth route' );
 
-count(4);
+ok(
+    $app->addAuthRoute(
+        alwaysskip => sub {
+            ok( !$_[1]->userData->{uid}, "Cache was cleared" );
+            count(1);
+            [ 200, [], ['Auth'] ];
+        },
+        ['GET']
+    ),
+    'Set auth route'
+);
+
+count(5);
 
 my $res;
 
@@ -56,6 +68,15 @@ ok(
     ),
     'Get response'
 );
+ok( $res->[0] == 200, 'Response code is 200' )
+  or print "Expect 200, got $res->[0]\n";
+ok( $res->[2]->[0] eq 'Auth', 'Get auth result' )
+  or print "Expect Auth, got $res->[2]->[0]\n";
+count(3);
+
+# Skip bug
+ok( $res = $client->_get( '/alwaysskip', undef, undef, undef ),
+    'Get response' );
 ok( $res->[0] == 200, 'Response code is 200' )
   or print "Expect 200, got $res->[0]\n";
 ok( $res->[2]->[0] eq 'Auth', 'Get auth result' )
