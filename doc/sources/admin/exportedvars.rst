@@ -139,6 +139,19 @@ Using groups in a rule
     macro2 may involve value of macro1. As same for groups: a group rule may
     involve another, previously computed group.
 
+In macros and access rules, you can deal with any session attribute stored in the user session.
+Sometimes, those attributes are arrays, and you want to grab a value inside.
+You can use them, but pay attention to treat variables in a non-ambiguous way.
+For arrays, this means for example writing ``@{$variable}`` and not ``@$variable``.
+
+As a more complete example, you can build a macro checking a specific LDAP objectClass in the ``$objectClass`` array reference:
+
+.. code-block:: perl
+
+    # string macro checking a value in an array attribute
+    employeeCategory -> grep( /^customer$/, @{$objectClass} ) ? "customer" : "other"
+
+
 .. |Exported variables in the Manager| image:: /documentation/manager-exported-variables.png
    :class: align-center
 
