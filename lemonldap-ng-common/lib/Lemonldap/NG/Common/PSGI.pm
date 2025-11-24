@@ -230,6 +230,7 @@ sub sendJSONresponse {
         };
         return $self->sendError( $req, $@ ) if ($@);
     }
+    utf8::downgrade($j);
     return $self->_buildPsgiResponse(
         $args{code},
         [
