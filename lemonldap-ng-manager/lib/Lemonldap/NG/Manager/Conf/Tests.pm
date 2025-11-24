@@ -879,7 +879,7 @@ sub tests {
             {
                 return 1;
             }
-            elsif ( $conf->{keys}->{"default-oidc-sig"} ) {
+            elsif ( %{ $conf->{keys} || {} } ) {
                 return 1;
             }
 
@@ -911,7 +911,7 @@ sub tests {
             if (
                 @usingRSA
                 and not( $conf->{oidcServicePrivateKeySig}
-                    or $conf->{keys}->{"default-oidc-sig"} )
+                    or %{ $conf->{keys} || {} } )
               )
             {
                 my $msg =
