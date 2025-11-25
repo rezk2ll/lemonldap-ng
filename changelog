@@ -1,3 +1,16 @@
+lemonldap-ng (2.22.1) noble; urgency=medium
+
+  * Bugs:
+    * #3495: lemonldap-ng-cli breaks when using negative values
+    * #3502: New keys entry (2.22) bug when empty
+    * #3503: Local session purge always returns an error
+    * #3510: oidc_util_decode_json_object - userinfo JSON cannot be parsed
+
+  * Improvements:
+    * #3509: LemonLDAP::NG::Common now depends on LemonLDAP::NG::Portal
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 25 Nov 2025 14:21:32 +0100
+
 lemonldap-ng (2.22.0) noble; urgency=medium
 
   * Bugs:

@@ -12,7 +12,7 @@
 use LWP::UserAgent;
 use JSON;
 
-my $milestone = '2.22.0';
+my $milestone = '2.22.1';
 my @cat = ( 'Bug', 'New feature', 'Improvement', 'Template', 'WebServer Conf' );
 
 open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
@@ -21,10 +21,12 @@ close F;
 $token =~ s/\s//sg or die "No token";
 
 my $ua = LWP::UserAgent->new();
+$ua->default_header('Accept' => '*/*');
 
 my $result = '';
 
 for (@cat) {
+
     my $res = $ua->get(
 "https://gitlab.ow2.org/api/v4/projects/181/issues?labels=$_&milestone=$milestone&state=all&scope=all&per_page=100&private_token=$token"
     );
