@@ -752,6 +752,9 @@ fi
 * Fri Sep 05 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.3-1
 - Update to 2.21.3
 
+* Thu Jul 24 2025 Fedora Release Engineering <releng@fedoraproject.org> - 2.21.2-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
+
 * Fri Jul 11 2025 Clement Oudot <clem.oudot@gmail.com> - 2.21.2-1
 - Update to 2.21.2
 
@@ -763,6 +766,9 @@ fi
 
 * Tue Jan 21 2025 Clement Oudot <clem.oudot@gmail.com> - 2.20.2-1
 - Update to 2.20.2
+
+* Fri Jan 17 2025 Fedora Release Engineering <releng@fedoraproject.org> - 2.20.1-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
 
 * Fri Nov 08 2024 Clement Oudot <clem.oudot@gmail.com> - 2.20.1-1
 - Update to 2.20.1
@@ -1079,7 +1085,7 @@ fi
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
 
-* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com>
+* Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com> 
 - New spec file
 
 * Sun Mar 02 2008 Dag Wieers <dag@wieers.com> - 0.85-1
