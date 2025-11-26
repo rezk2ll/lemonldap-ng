@@ -216,7 +216,12 @@ is_deeply(
     },
     "Correct hGroups"
 );
-count(6);
+is_deeply(
+    $res->{complex},
+    { a => [ 1, 2 ] },
+    "Complex JSON variable was imported as-is"
+);
+count(7);
 
 is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
 is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
@@ -582,6 +587,7 @@ sub op {
                         family_name => "cn",
                         name        => "cn",
                         groups      => "groups",
+                        complex     => "complex",
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
@@ -626,12 +632,15 @@ sub rp {
     my ( $jwks, $metadata ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => $debug,
+                logLevel => $debug,
 
                 # needed to to test #3445
                 issuerDBOpenIDConnectActivation => "1",
 
-                domain                     => 'rp.com',
+                domain => 'rp.com',
+                macros => {
+                    complex => ' { a => [ 1, 2 ] }'
+                },
                 portal                     => 'http://auth.rp.com/',
                 authentication             => 'OpenIDConnect',
                 userDB                     => 'Same',
@@ -639,11 +648,12 @@ sub rp {
                 restExportSecretKeys       => 1,
                 oidcOPMetaDataExportedVars => {
                     op => {
-                        cn     => "name",
-                        uid    => "sub",
-                        sn     => "family_name",
-                        mail   => "email",
-                        groups => "groups",
+                        cn      => "name",
+                        uid     => "sub",
+                        sn      => "family_name",
+                        mail    => "email",
+                        groups  => "groups",
+                        complex => "complex",
                     }
                 },
                 oidcOPMetaDataOptions => {
