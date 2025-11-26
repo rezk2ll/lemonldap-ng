@@ -327,7 +327,8 @@ sub warn {
 
 sub AUTOLOAD {
     no strict;
-    return $_[0]->{logger}->$AUTOLOAD( $_[1] )
+    $AUTOLOAD =~ s/.*:://;
+    return $_[0]->{logger}->$AUTOLOAD($_[1])
       if ( $AUTOLOAD =~ /^(?:notice|debug|error|info)$/ );
 }
 
