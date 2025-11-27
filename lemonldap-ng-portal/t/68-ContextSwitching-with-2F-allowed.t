@@ -207,7 +207,7 @@ SKIP: {
     ok(
         $devices =
           $res->[2]->[0] =~
-          s%<span\s*device=\'(?:TOTP)\'\s*epoch=\'\d{10}\'%%mg,
+          s%<td\s*class="data-epoch">\d{10}<\/td>%%mg,
         '2F device found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $devices == 1, '2F devices found' )
@@ -334,7 +334,7 @@ SKIP: {
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $devices =
-          $res->[2]->[0] =~ s%<span\s*device=\'TOTP\'\s*epoch=\'\d{10}\'%%mg,
+          $res->[2]->[0] =~ s%<td\s*class="data-epoch">\d{10}<\/td>%%mg,
         '2F device found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $devices == 1, '2F device found' )
@@ -490,7 +490,7 @@ SKIP: {
     ok(
         $devices =
           $res->[2]->[0] =~
-          s%<span\s*device=\'(?:TOTP)\'\s*epoch=\'(?:\d{10})\'%%mg,
+          s%<td\s*class="data-epoch">\d{10}<\/td>%%mg,
         '2F devices found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $devices == 1, '2F devices registered' )

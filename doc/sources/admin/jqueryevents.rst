@@ -64,6 +64,22 @@ Sample code:
                 // Your code here
     });
 
+mfaUpdated
+~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This event is triggered when a TOTP or WebAuthn device name is updated
+
+Sample code:
+
+.. code:: javascript
+
+    $(document).on( "mfaUpdated", { }, function( event, info ) {
+                console.log( "Updated MFA of type" + info.type + " with a new label " + info.label);
+                // Your code here
+    });
+
 UI
 --
 

@@ -58,6 +58,7 @@ use constant supportedActions => {
     registration          => "_registration",
     verificationchallenge => "_verificationchallenge",
     verification          => "_verification",
+    modify                => "modify",
     delete                => "delete",
 };
 

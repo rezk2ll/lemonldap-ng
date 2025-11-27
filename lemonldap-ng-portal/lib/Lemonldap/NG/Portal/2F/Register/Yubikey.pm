@@ -29,6 +29,7 @@ has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
 
 use constant supportedActions => {
     register => "register",
+    modify   => "modify",
     delete   => "delete",
 };
 
