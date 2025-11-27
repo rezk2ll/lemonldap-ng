@@ -23,17 +23,17 @@ $(window).on("load", function() {
 
   // Transmit attributes to remove2f modal
   $('#remove2fModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var device = button.attr('device') // Extract device/epoch from button
-  var epoch = button.attr('epoch')
-  var prefix = button.attr('prefix')
-  var modal = $(this)
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var device = button.attr('device') // Extract device/epoch from button
+    var epoch = button.attr('epoch')
+    var prefix = button.attr('prefix')
+    var modal = $(this)
 
-  // Set device/epoch on modal remove2f button so that the portal JS code can find it
-  modal.find('.remove2f').attr('device', device)
-  modal.find('.remove2f').attr('epoch', epoch)
-  modal.find('.remove2f').attr('prefix', prefix)
-})
+    // Set device/epoch on modal remove2f button so that the portal JS code can find it
+    modal.find('.remove2f').attr('device', device)
+    modal.find('.remove2f').attr('epoch', epoch)
+    modal.find('.remove2f').attr('prefix', prefix)
+  })
 
   // Set tab items (my applications, password, history, logout) tabbable
   // (ie accessible via tab key)

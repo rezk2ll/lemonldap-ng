@@ -141,6 +141,27 @@ sub delete {
     return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
 }
 
+sub modify {
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    $self->checkCsrf($req)
+      or return $self->p->sendError( $req, 'csrfError', 400 );
+
+    my $epoch = $req->param('epoch')
+      or return $self->p->sendError( $req,
+        $self->prefix . '2f: "epoch" parameter is missing', 400 );
+    my $label = $req->param('label')
+      or return $self->p->sendError( $req,
+        $self->prefix . '2f: "label" parameter is missing', 400 );
+    $self->logger->debug("Modifying 2FA device with the label " . $label);
+    if ( $self->update2fDevice($req, $req->userData, $self->type, "epoch", $epoch, "name", $label ) ) {
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
+    }
+    $self->logger->error( $self->prefix . "2f: device not found" );
+    return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
+}
+
 sub failHtmlResponse {
     my ( $self, $req, $error ) = @_;
     my $uid = $req->userData->{ $self->conf->{whatToTrace} };

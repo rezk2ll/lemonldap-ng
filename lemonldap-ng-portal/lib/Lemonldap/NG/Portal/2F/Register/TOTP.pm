@@ -35,6 +35,7 @@ has ott => (
 
 use constant supportedActions => {
     delete => "delete",
+    modify => "modify",
     verify => "verify",
     getkey => "getkey",
 };

@@ -50,6 +50,7 @@ has crypto => (
 
 use constant supportedActions => {
     verify => "verify",
+    modify => "modify",
     delete => "delete",
 };
 
