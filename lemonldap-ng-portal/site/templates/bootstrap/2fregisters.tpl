@@ -50,7 +50,7 @@
                     device='<TMPL_VAR NAME="type">'
                     epoch='<TMPL_VAR NAME="epoch">'
                     prefix='<TMPL_VAR NAME="prefix">'
-                    oldLabel='<TMPL_VAR NAME="name">'
+                    oldlabel='<TMPL_VAR NAME="name">'
                     class="btn btn-success update2f"
                     type="button">
                   <span class="fa fa-pencil"></span>
