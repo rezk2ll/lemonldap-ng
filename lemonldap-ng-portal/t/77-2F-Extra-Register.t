@@ -511,6 +511,7 @@ subtest "Register and use rest based custom SF as dwho" => sub {
     $query = buildForm( {
             generic     => 'dwho-destination',
             genericcode => $code,
+            genericname => 'my-contact',
             token       => $token
         }
     );
@@ -593,14 +594,30 @@ subtest "Register and use rest based custom SF as dwho" => sub {
         cookie => "lemonldap=$id",
         accept => 'text/html',
     );
+
+    # Try to modify name
+    my $rename  = getHtmlElement( $res,
+            '//span[@prefix="work" and @device="work"]'
+          . '/span[@trspan="rename"]/..' )->get_node(1);
+
+    ok( $rename, "Found rename button" );
+
+    my $epoch  = $rename->getAttribute("epoch");
+    my $prefix = $rename->getAttribute("prefix");
+    my $oldlabel = $rename->getAttribute("oldlabel");
+    ok( $epoch,  "Found epoch on rename button" );
+    ok( $prefix, "Found prefix on rename button" );
+    ok( $oldlabel, "Found oldlabel on rename button" );
+
+    # Delete
     my $unregister = getHtmlElement( $res,
             '//span[@prefix="work" and @device="work"]'
           . '/span[@trspan="unregister"]/..' )->get_node(1);
 
     ok( $unregister, "Found unregister button" );
 
-    my $epoch  = $unregister->getAttribute("epoch");
-    my $prefix = $unregister->getAttribute("prefix");
+    $epoch  = $unregister->getAttribute("epoch");
+    $prefix = $unregister->getAttribute("prefix");
     ok( $epoch,  "Found epoch on delete button" );
     ok( $prefix, "Found prefix on delete button" );
 
