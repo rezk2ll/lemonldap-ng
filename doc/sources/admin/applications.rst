@@ -59,6 +59,7 @@ Applications
    applications/symfony
    applications/sympa
    applications/tomcat
+   applications/wazuh
    applications/wekan
    applications/wikijs
    applications/wordpress
@@ -154,6 +155,7 @@ Application                                                       Configuration 
 .. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔
 .. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔                             ✔
 .. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔
+.. image:: applications/wazuh-logo.png                            :doc:`Wazuh<applications/wazuh>`                                                         ✔
 .. image:: applications/wekan-logo.png                            :doc:`Wekan<applications/wekan>`                                           ✔
 .. image:: applications/wiki.js.svg                               :doc:`Wiki.js<applications/wikijs>`                                           ✔
 .. image:: applications/wordpress_logo.png                        :doc:`Wordpress<applications/wordpress>`                                           ✔
