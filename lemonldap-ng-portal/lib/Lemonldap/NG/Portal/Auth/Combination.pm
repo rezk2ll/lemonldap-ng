@@ -128,6 +128,7 @@ sub getDisplayType {
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
 
+    eval { $self->getStack( $req, 'getDisplayType' ); };
     my ( $nb, $stack ) = (
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}
