@@ -113,6 +113,7 @@ t/02-Common-Conf-ServerEnv.t
 t/03-Common-Conf-CDBI.t
 t/03-Common-Conf-Patroni.t
 t/03-Common-Conf-RDBI.t
+t/04-Common-DBI-Reconnect.t
 t/05-Common-Conf-LDAP.t
 t/10-PSGI-Request.t
 t/10-PSGI.t
