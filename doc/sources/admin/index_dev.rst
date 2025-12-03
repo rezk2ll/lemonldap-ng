@@ -10,4 +10,5 @@ Development
    plugincustom
    hooks
    customhandlers
+   customconfigplaceholder
    oidctokenexchange

@@ -28,6 +28,13 @@ Options
 - **Comment**: set a comment to describe this key to your future self or fellow admins
 
 
+Using placeholders
+------------------
+
+You can use :ref:`configuration placeholders <configuration-placeholders>` as
+the value of any field in this section, which is a convenient way to store
+private keys externally.
+
 
 .. |beta| image:: /documentation/beta.png
    :width: 35px

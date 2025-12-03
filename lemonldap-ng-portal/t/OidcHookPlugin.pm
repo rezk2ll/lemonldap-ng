@@ -163,7 +163,7 @@ sub getRp {
 
     $config->{ttl} = 600;
 
-    return unless $client_id eq "hookclient" and $self->confEnabled;
+    return PE_OK unless $client_id eq "hookclient" and $self->confEnabled;
 
     %$config = (
         confKey    => "hook.hookclient",
