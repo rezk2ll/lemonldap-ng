@@ -144,7 +144,7 @@
               return setMsg(data.error, 'danger');
             }
           } else {
-            $("[class=update2f][device=".concat(device, "][epoch=").concat(epoch, "]")).attr('oldlabel', label);
+            $("span.update2f[device=".concat(device, "][epoch=").concat(epoch, "]")).attr('oldlabel', label);
             e = jQuery.Event("mfaUpdated");
             $(document).trigger(e, [{
               "type": "2fregisters"

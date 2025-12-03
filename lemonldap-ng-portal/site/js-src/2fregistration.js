@@ -96,7 +96,7 @@ update2F = function update2F(device, epoch, prefix, label, oldlabel) {
   } else {
     return $.ajax({
       type: "POST",
-      url: "".concat(scriptname, "2fregisters/").concat(prefix, "/modify"),
+      url: `${scriptname}2fregisters/${prefix}/modify`,
       data: {
         epoch: epoch,
         label: label
@@ -115,7 +115,7 @@ update2F = function update2F(device, epoch, prefix, label, oldlabel) {
             return setMsg(data.error, 'danger');
           }
         } else {
-          $(`[class=update2f][device=${device}][epoch=${epoch}]`).attr('oldlabel',label);
+          $(`span.update2f[device=${device}][epoch=${epoch}]`).attr('oldlabel',label);
           e = jQuery.Event("mfaUpdated");
           $(document).trigger(e, [{
             "type": "2fregisters"
