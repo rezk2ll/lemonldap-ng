@@ -144,6 +144,8 @@ configuration.
        instanceName = LLNG_Demo
 
 
+.. _configuration-placeholders:
+
 Configuration placeholders
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
