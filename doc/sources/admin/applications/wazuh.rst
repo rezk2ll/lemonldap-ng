@@ -23,33 +23,11 @@ LemonLDAP::NG, if not please follow :
 LL::NG SAML Key & Certificate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll need a private key and the corresponding certificate to setup
-SAML in Wazuh, you can do it with your pki or with openssl on your machine
-:
-
-::
-
-   openssl req -x509 -newkey rsa:4096 -keyout saml-awx.key -out saml-awx.crt -days 3650 -nodes
-
-
-Generate Certificate from Key
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-You can find your private key in : SAML2 Service -> Security Parameters
--> Signature -> Private Key
-
-Copy it somewhere secure as lemonldap.key, and then generate the
-certificate with this command :
-
-::
-
-   openssl req -new -x509 -days 3650 -key lemonldap.key > lemonldap.crt
-
-After that, if you want, you can replace your SAML public key with this
-certificate in LL::NG configuration.
-
-Make sure you have generated a set of private key and public certificate in
+Wazuh requires a certificate in the published Identity Provider metadata (i.e. not a public key). Make sure you have generated a set of private key and public certificate in
 ``SAML`` » ``Security`` » ``Keys``.
+
+LL::NG SAML Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use RSA-SHA256 for the IDP signature method.
 
