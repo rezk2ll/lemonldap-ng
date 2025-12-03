@@ -596,18 +596,63 @@ subtest "Register and use rest based custom SF as dwho" => sub {
     );
 
     # Try to modify name
-    my $rename  = getHtmlElement( $res,
+    my $rename = getHtmlElement( $res,
             '//span[@prefix="work" and @device="work"]'
           . '/span[@trspan="rename"]/..' )->get_node(1);
 
     ok( $rename, "Found rename button" );
 
-    my $epoch  = $rename->getAttribute("epoch");
-    my $prefix = $rename->getAttribute("prefix");
+    my $epoch    = $rename->getAttribute("epoch");
+    my $prefix   = $rename->getAttribute("prefix");
     my $oldlabel = $rename->getAttribute("oldlabel");
-    ok( $epoch,  "Found epoch on rename button" );
-    ok( $prefix, "Found prefix on rename button" );
-    ok( $oldlabel, "Found oldlabel on rename button" );
+    ok( $epoch,                    "Found epoch on rename button" );
+    ok( $prefix,                   "Found prefix on rename button" );
+    ok( $oldlabel,                 "Found oldlabel on rename button" );
+    ok( $oldlabel eq "my-contact", "old label is equal to current label" );
+
+    {
+        my $rename_query =
+          buildForm( { epoch => $epoch, label => "new-contact" } );
+        $res = $client->_post(
+            "/2fregisters/$prefix/modify",
+            $rename_query,
+            length => length($rename_query),
+            cookie => "lemonldap=$id",
+        );
+        my $json = expectBadRequest($res);
+        ok( $res->[2]->[0] =~ 'csrfError', "Rename expects valid CSRF token" );
+    }
+
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => "test/html",
+    );
+
+    $query = buildForm( { epoch => $epoch, label => "new-contact" } );
+    ok(
+        $res = $client->_post(
+            "/2fregisters/$prefix/modify",
+            IO::String->new($query),
+            cookie => "lemonldap=$id",
+            length => length($query),
+            custom => {
+                HTTP_X_CSRF_CHECK => 1,
+            },
+        ),
+        'Post rename'
+    );
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+
+    my $_2fDevices = from_json( getPSession('dwho')->data->{'_2fDevices'} );
+    ok( $_2fDevices->[0]->{name} eq "new-contact", "Device was renamed" );
+
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => "test/html",
+    );
 
     # Delete
     my $unregister = getHtmlElement( $res,
@@ -656,7 +701,7 @@ subtest "Register and use rest based custom SF as dwho" => sub {
     $res = expectJSON($res);
     is( $res->{result}, 1 );
 
-    my $_2fDevices = from_json( getPSession('dwho')->data->{'_2fDevices'} );
+    $_2fDevices = from_json( getPSession('dwho')->data->{'_2fDevices'} );
     ok( !@$_2fDevices, "Device was unregistered" );
 };
 
