@@ -34,7 +34,7 @@ Use RSA-SHA256 for the IDP signature method.
 Now go in "Exported attributes" and add the 'groups' variables and put the name 'Roles' for the attribute name. The attribute name must match the
 'roles_key' configuration of the Wazuh indexer.
 
-You can generate the Service Provider xml using `SAMLTool <https://www.samltool.com/sp_metadata.php>`__. Indicate "https://<WAZUH_DHASBOARD_DOMAIN>/_opendistro/_security/saml/acs" as the Attribute Consume Service Endpoint and "https://<WAZUH_DHASBOARD_DOMAIN>/" as the Logout Service Endpoint.
+You can generate the Service Provider xml using `SAMLTool <https://www.samltool.com/sp_metadata.php>`__. Indicate ``https://<WAZUH_DHASBOARD_DOMAIN>/_opendistro/_security/saml/acs`` as the Attribute Consume Service Endpoint and ``https://<WAZUH_DHASBOARD_DOMAIN>/`` as the Logout Service Endpoint.
 
 Wazuh
 ~~~~~
