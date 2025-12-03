@@ -437,6 +437,10 @@ sub attributes {
                         'v' => 'WebAuthn'
                     },
                     {
+                        'k' => 'Combination',
+                        'v' => 'combineMods'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -500,6 +504,10 @@ sub attributes {
                     {
                         'k' => 'WebID',
                         'v' => 'WebID (deprecated)'
+                    },
+                    {
+                        'k' => 'Combination',
+                        'v' => 'combineMods'
                     },
                     {
                         'k' => 'Custom',

@@ -4727,6 +4727,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
+                    { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [
@@ -4748,6 +4749,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
                     { k => 'WebID',         v => 'WebID (deprecated)' },
+                    { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [

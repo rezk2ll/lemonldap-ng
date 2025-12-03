@@ -285,8 +285,7 @@ sub _buildAuthLoop {
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType = eval {
-                    $self->_authentication->modules->{$_}
-                      ->can('getDisplayType')->( $self, $req );
+                    $self->_authentication->modules->{$_}->getDisplayType( $req )
                 } || 'logo';
 
                 $self->logger->debug(
