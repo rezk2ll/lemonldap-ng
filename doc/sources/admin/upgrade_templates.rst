@@ -16,6 +16,45 @@ Template updates
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
 
 
+2.23.0
+------
+
+Rename 2FA
+^^^^^^^^^^
+
+A new update button is added in 2FA manager to let users rename their 2FA.
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    index dc3801b9d..fd5c84385 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    @@ -39,9 +39,21 @@
+                     </TMPL_IF>
+                 </TMPL_IF>
+                 </td>
+    -            <td class="align-middle"><TMPL_VAR NAME="name"></td>
+    +            <td class="align-middle">
+    +              <input id='input-<TMPL_VAR NAME="epoch">' type="text" class="form-control" value="<TMPL_VAR NAME="name">" />
+    +            </td>
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+                 <td>
+    +               <span
+    +                    device='<TMPL_VAR NAME="type">'
+    +                    epoch='<TMPL_VAR NAME="epoch">'
+    +                    prefix='<TMPL_VAR NAME="prefix">'
+    +                    oldlabel='<TMPL_VAR NAME="name">'
+    +                    class="btn btn-success update2f"
+    +                    type="button">
+    +                  <span class="fa fa-pencil"></span>
+    +                  <span trspan="rename">Rename</span>
+    +                </span>
+                   <TMPL_IF NAME="delAllowed">
+                     <span
+                         device='<TMPL_VAR NAME="type">'
+    
+
 2.22.0
 ------
 
