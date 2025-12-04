@@ -39,23 +39,21 @@
                 </TMPL_IF>
             </TMPL_IF>
             </td>
-            <td>
-            <div class="input-group">
+            <td class="align-middle">
               <input id='input-<TMPL_VAR NAME="epoch">' type="text" class="form-control" value="<TMPL_VAR NAME="name">" />
-            </div>
             </td>
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td>
-                <span
+               <span
                     device='<TMPL_VAR NAME="type">'
                     epoch='<TMPL_VAR NAME="epoch">'
                     prefix='<TMPL_VAR NAME="prefix">'
-                    oldLabel='<TMPL_VAR NAME="name">'
+                    oldlabel='<TMPL_VAR NAME="name">'
                     class="btn btn-success update2f"
                     type="button">
                   <span class="fa fa-pencil"></span>
                   <span trspan="rename">Rename</span>
-               </span>
+                </span>
               <TMPL_IF NAME="delAllowed">
                 <span
                     device='<TMPL_VAR NAME="type">'

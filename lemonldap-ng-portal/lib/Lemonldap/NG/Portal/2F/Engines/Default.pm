@@ -626,13 +626,6 @@ sub _displayRegister {
             ALERT => "positive",
         );
     }
-    if ( $req->params("update") ) {
-        %tplParams = (
-            %tplParams,
-            MSG   => 'yourKeyIsUpdated',
-            ALERT => "positive",
-        );
-    }
 
     $self->p->importHandlerData($req);
 

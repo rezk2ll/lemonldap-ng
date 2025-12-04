@@ -90,13 +90,13 @@ delete2F = function(device, epoch, prefix) {
 };
 
 // Update function (launched by "save" button)
-update2F = function update2F(device, epoch, prefix, label, oldLabel) {
-  if (label == oldLabel) {
+update2F = function update2F(device, epoch, prefix, label, oldlabel) {
+  if (label == oldlabel) {
     setMsg('yourKeyIsUnchanged', 'warning');
   } else {
     return $.ajax({
       type: "POST",
-      url: "".concat(scriptname, "2fregisters/").concat(prefix, "/modify"),
+      url: `${scriptname}2fregisters/${prefix}/modify`,
       data: {
         epoch: epoch,
         label: label
@@ -115,7 +115,7 @@ update2F = function update2F(device, epoch, prefix, label, oldLabel) {
             return setMsg(data.error, 'danger');
           }
         } else {
-          $(`[class=update2f][device=${device}][epoch=${epoch}]`).attr('oldLabel',label);
+          $(`span.update2f[device=${device}][epoch=${epoch}]`).attr('oldlabel',label);
           e = jQuery.Event("mfaUpdated");
           $(document).trigger(e, [{
             "type": "2fregisters"
@@ -135,7 +135,7 @@ $(document).ready(function() {
     return delete2F($(this).attr('device'), $(this).attr('epoch'), $(this).attr('prefix'));
   });
   $('body').on('click', '.update2f', function() {
-    return update2F($(this).attr('device'), $(this).attr('epoch'), $(this).attr('prefix'), $(`#input-${$(this).attr('epoch')}`).val(), $(this).attr('oldLabel'));
+    return update2F($(this).attr('device'), $(this).attr('epoch'), $(this).attr('prefix'), $(`#input-${$(this).attr('epoch')}`).val(), $(this).attr('oldlabel'));
   });
   $('#goback').attr('href', portal);
   return $(".data-epoch").each(function() {

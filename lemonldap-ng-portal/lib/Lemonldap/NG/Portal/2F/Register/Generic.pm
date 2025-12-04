@@ -45,6 +45,7 @@ use constant supportedActions => {
     sendcode => "sendcode",
     verify   => "verify",
     delete   => "delete",
+    modify   => "modify",
 };
 
 sub sendcode {
