@@ -1192,6 +1192,7 @@ sub tree {
                                 'userControl',
                                 'browsersDontStorePassword',
                                 'portalForceAuthn',
+                                'defaultAuthnLevel',
                                 'portalForceAuthnInterval',
                                 'key',
                                 'trustedDomains',
@@ -1316,7 +1317,6 @@ sub tree {
                             nodes => [
                                 'https',
                                 'port',
-                                'defaultAuthnLevel',
                                 'useRedirectAjaxOnUnauthorized',
                                 'useRedirectOnForbidden',
                                 'useRedirectOnError',
