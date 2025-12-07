@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -261,7 +261,8 @@ sub defaultValuesInit {
             $class->tsv->{type}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostType};
             $class->tsv->{authnLevel}->{$vhost} =
-              $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel};
+                 $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel}
+              || $conf->{defaultAuthnLevel};
             $class->tsv->{serviceTokenTTL}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
             $class->tsv->{accessToTrace}->{$vhost} =
@@ -673,7 +674,8 @@ sub substitute {
 sub buildSub {
     my ( $class, $val ) = @_;
     my $res =
-      $class->tsv->{jail}->jail_reval("sub{my (\$r,\$s)=\@_; local *_;return($val)}");
+      $class->tsv->{jail}
+      ->jail_reval("sub{my (\$r,\$s)=\@_; local *_;return($val)}");
     unless ($res) {
         $class->logger->error( $class->tsv->{jail}->error );
     }

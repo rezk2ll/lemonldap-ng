@@ -27,13 +27,13 @@ use URI::QueryParam;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.22.1';
-
 use constant oidcErrorLevel => {
     server_error     => 'error',
     invalid_request  => 'warn',
     consent_required => 'notice',
 };
+
+our $VERSION = '2.23.0';
 
 # PROPERTIES
 
@@ -177,9 +177,12 @@ sub load_rp {
     }
 
     # Required authentication level rule
-    my $levelrule = $config{options}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $levelrule =
+         $config{options}->{oidcRPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
     $levelrule = $self->p->buildRule( $levelrule,
-        "required authentication level rule for RP $rp" );
+        "Required authentication level rule for RP $rp" );
     unless ($levelrule) {
         $valid = 0;
     }
@@ -1649,7 +1652,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {

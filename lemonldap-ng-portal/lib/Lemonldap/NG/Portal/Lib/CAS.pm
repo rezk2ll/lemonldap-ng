@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::UserAgent;
 use URI;
 use Crypt::URandom;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 # PROPERTIES
 
@@ -96,10 +96,13 @@ sub loadApp {
         }
 
         # Required authentication level rule
-        my $levelrule = $self->conf->{casAppMetaDataOptions}->{$_}
-          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        my $levelrule =
+          $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsAuthnLevel}
+          || $self->conf->{defaultAuthnLevel}
+          || 0;
         $levelrule = $self->p->buildRule( $levelrule,
-            "required authentication level" . " rule for App $_" );
+            "Required authentication level rule for App $_" );
         unless ($levelrule) {
             $valid = 0;
         }
@@ -321,7 +324,7 @@ sub updateCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session, undef, 0);
+            my $casSession = $self->getCasSession( $cas_session, undef, 0 );
 
             # Delete session
             if ($casSession) {
@@ -365,7 +368,7 @@ sub deleteCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session, undef, 0);
+            my $casSession = $self->getCasSession( $cas_session, undef, 0 );
 
             # Delete session
             $result = $self->deleteCasSession($casSession);
@@ -785,7 +788,7 @@ sub getAttributesFromServiceValidateResponse {
         {
 
             # There should be only on session
-            my $pgtIdSession = $self->getCasSession($id, undef, 0) or next;
+            my $pgtIdSession = $self->getCasSession( $id, undef, 0 ) or next;
             $pgtId = $pgtIdSession->data->{pgtId};
             $pgtIdSession->remove;
         }

@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -322,6 +322,7 @@ sub attributes {
             default       => 5,
             flags         => 'hp',
         },
+        defaultAuthnLevel => { type => 'intOrNull' },
         defaultNewKeySize => {
             type          => 'int',
             documentation => 'Default size for new RSA key helper',

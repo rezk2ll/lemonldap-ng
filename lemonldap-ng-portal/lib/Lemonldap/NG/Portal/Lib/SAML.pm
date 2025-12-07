@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 # PROPERTIES
 
@@ -451,9 +451,12 @@ sub load_sp_metadata {
     }
 
     # Required authentication level rule
-    my $levelrule = $options->{samlSPMetaDataOptionsAuthnLevel} || 0;
+    my $levelrule =
+         $options->{samlSPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
     $levelrule = $self->p->buildRule( $levelrule,
-        "required authentication level rule for SP $spConfKey" );
+        "Required authentication level rule for SP $spConfKey" );
     unless ($levelrule) {
         $valid = 0;
     }
