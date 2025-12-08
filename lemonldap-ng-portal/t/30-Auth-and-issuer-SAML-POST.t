@@ -422,6 +422,48 @@ SKIP: {
                 'Post SAML request to IdP'
             );
             expectXpath( $res, '//span[@trspan="askToUpgrade"]' );
+            is( expectPdata($res)->{targetAuthnLevel}, 9,
+                "Correct authnLevel" );
+        };
+
+        subtest "Check default authentication level" => sub {
+
+            $issuer->ini( {
+                    %{ $issuer->ini },
+                    defaultAuthnLevel     => 3,
+                    samlSPMetaDataOptions => {
+                        'sp.com' => {
+                            samlSPMetaDataOptionsAuthnLevel => 0,
+                        }
+                    }
+                }
+            );
+
+            $idpId = $issuer->login("rtyler");
+            ok(
+                $res = $sp->_get(
+                    '/', accept => 'text/html',
+                ),
+                'Unauth SP request'
+            );
+            expectOK($res);
+            ( $host, $url, $s ) =
+              expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
+                'SAMLRequest' );
+
+            ok(
+                $res = $issuer->_post(
+                    $url,
+                    IO::String->new($s),
+                    accept => 'text/html',
+                    length => length($s),
+                    cookie => "lemonldap=$idpId",
+                ),
+                'Post SAML request to IdP'
+            );
+            expectXpath( $res, '//span[@trspan="askToUpgrade"]' );
+            is( expectPdata($res)->{targetAuthnLevel}, 3,
+                "Correct authnLevel" );
         };
     };
 }

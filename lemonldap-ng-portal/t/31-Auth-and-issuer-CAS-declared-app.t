@@ -239,6 +239,38 @@ ok(
 );
 count(1);
 expectXpath( $res, '//span[@trspan="askToUpgrade"]' );
+is( expectPdata($res)->{targetAuthnLevel}, 5,
+    "Target Authnlevel set in pdata" );
+count(1);
+
+# Test defaultAuthnLevel
+$issuer->ini( {
+        %{ $issuer->ini },
+        defaultAuthnLevel     => 3,
+        casAppMetaDataOptions => {
+            sp => {
+                casAppMetaDataOptionsService    => 'http://auth.sp.com',
+                casAppMetaDataOptionsAuthnLevel => 0,
+            }
+        }
+    }
+);
+
+$idpId = $issuer->login("rtyler");
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.sp.com/',
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId",
+    ),
+    'Query CAS server'
+);
+count(1);
+expectXpath( $res, '//span[@trspan="askToUpgrade"]' );
+is( expectPdata($res)->{targetAuthnLevel}, 3,
+    "Target Authnlevel set in pdata" );
+count(1);
 
 clean_sessions();
 done_testing( count() );
