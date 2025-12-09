@@ -12,8 +12,6 @@ BEGIN {
     require 't/oidc-lib.pm';
 }
 
-my $debug = 'debug';
-
 my ( $op, $rp, $test, $res );
 my $access_token;
 
@@ -191,7 +189,6 @@ done_testing( count() );
 sub op {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel      => $debug,
                 locationRules => {
                     'auth.op.com' => {
                         '^/mysession' => '$_scope =~ /(?<!\S)llngapi(?!\S)/',
@@ -260,7 +257,6 @@ sub op {
 sub test {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel      => $debug,
                 locationRules => {
                     'auth.op.com' => {
                         '^/mysession' => '$_scope =~ /(?<!\S)llngapi(?!\S)/',
@@ -330,7 +326,6 @@ sub rp {
     my ( $jwks, $metadata ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => $debug,
                 domain                     => 'rp.com',
                 portal                     => 'http://auth.rp.com/',
                 authentication             => 'OpenIDConnect',

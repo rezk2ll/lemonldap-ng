@@ -55,6 +55,7 @@ init(
                 '^/read'  => '$_scope =~ /(?<!\S)read(?!\S)/',
             },
             'test2.example.com' => {
+
                 # Restrict audience
                 'default' => 'listMatch($_audiences, "test2.example.com")',
             },
@@ -303,7 +304,7 @@ like( $h{'Auth-Scope'}, qr/\bemail\b/, 'Scope correctly transmitted' );
 # Audience-protected, token without audience
 ok(
     $res = $client->_get(
-        '/',             undef,
+        '/',                 undef,
         'test2.example.com', '',
         VHOSTTYPE          => 'OAuth2',
         HTTP_AUTHORIZATION =>
@@ -312,35 +313,35 @@ ok(
     'Valid access token without audience'
 );
 %h = @{ $res->[1] };
-is( $res->[0],           403,        "Request accepted" );
+is( $res->[0], 403, "Unauthorized because audience is missing" );
 
 # Audience-protected, token with wrong audience
 ok(
     $res = $client->_get(
-        '/',             undef,
+        '/',                 undef,
         'test2.example.com', '',
         VHOSTTYPE          => 'OAuth2',
         HTTP_AUTHORIZATION =>
 'Bearer f2fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
     ),
-    'Valid access token without audience'
+    'Valid access token with wrong audience'
 );
 %h = @{ $res->[1] };
-is( $res->[0],           403,        "Request accepted" );
+is( $res->[0], 403, "Unauthorized because audience does not match" );
 
 # Audience-protected, token with correct audience
 ok(
     $res = $client->_get(
-        '/',             undef,
+        '/',                 undef,
         'test2.example.com', '',
         VHOSTTYPE          => 'OAuth2',
         HTTP_AUTHORIZATION =>
 'Bearer f3fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
     ),
-    'Valid access token without audience'
+    'Valid access token with correct audience'
 );
 %h = @{ $res->[1] };
-is( $res->[0],           200,        "Request accepted" );
+is( $res->[0], 200, "Request accepted" );
 
 Time::Fake->offset("+600s");
 ok(
