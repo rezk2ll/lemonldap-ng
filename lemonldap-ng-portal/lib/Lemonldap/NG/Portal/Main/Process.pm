@@ -751,15 +751,24 @@ sub buildCookie {
         : $req->{userData}
     );
     $req->data->{newAuth} = 1;
+
+    my $whatToTrace = $ref->{ $self->conf->{whatToTrace} };
+    if ( !$whatToTrace ) {
+        $self->logger->error( "Could not obtain main identifier ("
+              . $self->conf->{whatToTrace}
+              . ") of user. Aborting authentication" );
+        return PE_ERROR;
+
+    }
+
     $self->auditLog(
         $req,
         message => (
-                'User '
-              . $ref->{ $self->conf->{whatToTrace} }
+                "User $whatToTrace "
               . " successfully authenticated at level $ref->{authenticationLevel}"
         ),
         code  => "AUTHENTICATED",
-        user  => $ref->{ $self->conf->{whatToTrace} },
+        user  => $whatToTrace,
         level => $ref->{authenticationLevel},
     );
     return PE_OK;
