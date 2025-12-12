@@ -7,7 +7,7 @@ use strict;
 use Mouse;
 use Convert::Base32 qw(decode_base32 encode_base32);
 use Crypt::URandom;
-use Digest::HMAC_SHA1 'hmac_sha1_hex';
+use Digest::SHA 'hmac_sha1_hex';
 use Lemonldap::NG::Common::Crypto;
 
 our $VERSION = '2.19.0';
@@ -89,7 +89,7 @@ sub verifyCode {
     }
     for ( -$range .. $range ) {
         if ( $code eq $self->_code( $s, $_, $interval, $digits ) ) {
-            return (wantarray() ? (1, $_) : 1 );
+            return ( wantarray() ? ( 1, $_ ) : 1 );
         }
     }
     return 0;

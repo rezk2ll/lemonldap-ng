@@ -27,7 +27,6 @@ you must install libconvert-base32-perl by :
 
    apt update
    apt install libconvert-base32-perl
-   apt install libdigest-hmac-perl
 
 Or from CPAN repository :
 
