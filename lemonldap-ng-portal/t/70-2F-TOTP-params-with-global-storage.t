@@ -4,20 +4,20 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 26;
+my $maintests = 28;
 
 SKIP: {
     eval { require Convert::Base32 };
     if ($@) {
         skip 'Convert::Base32 is missing', $maintests;
     }
-    require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
+                totp2fInterval         => 10,
                 totp2fDigits           => 8,
                 totp2fTTL              => -1,
                 formTimeout            => 120,
@@ -89,9 +89,12 @@ SKIP: {
     ok( $token = $res->{token},  'Found token' );
     $key = Convert::Base32::decode_base32($key);
 
+    is( $res->{'digits'},    8,        "Expected digits" );
+    is( $res->{'interval'},  10,       "Expected interval" );
+
     # Post code
     my $code;
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
+    ok( $code = getTotp( $key, digits => 8, interval => 10 ),
         'Code' );
     ok( $code =~ /^\d{8}$/, 'Code contains 8 digits' );
     my $s = "code=$code&token=$token";
@@ -134,8 +137,10 @@ SKIP: {
       expectForm( $res, undef, '/totp2fcheck', 'token' );
 
     # Generate TOTP with LLNG
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
-        'LLNG Code' );
+    ok(
+        $code = getTotp( $key, digits => 8, interval => 10 ),
+        'LLNG Code'
+    );
 
     $query =~ s/code=/code=$code/;
     ok(
@@ -168,8 +173,10 @@ SKIP: {
       expectForm( $res, undef, '/totp2fcheck', 'token' );
 
     # Generate TOTP with LLNG
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
-        'LLNG Code' );
+    ok(
+        $code = getTotp( $key, digits => 8, interval => 10 ),
+        'LLNG Code'
+    );
     $query =~ s/code=/code=$code/;
 
     # Skipping time until form token expiration
