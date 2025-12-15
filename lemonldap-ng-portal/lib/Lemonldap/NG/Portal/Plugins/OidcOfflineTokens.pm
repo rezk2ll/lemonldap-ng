@@ -55,7 +55,7 @@ sub display {
     my $regex          = qr/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
 
     $self->logger->debug("Reading OidcOfflineTokens");
-    my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     if ($user) {
         $self->logger->debug('Try to retrieve sessions from DB');
