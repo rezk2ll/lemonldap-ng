@@ -4,7 +4,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 28;
+my $maintests = 29;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -19,6 +19,7 @@ SKIP: {
                 totp2fActivation       => 1,
                 totp2fInterval         => 10,
                 totp2fDigits           => 8,
+                totp2fAlgorithm        => "sha256",
                 totp2fTTL              => -1,
                 formTimeout            => 120,
                 requireToken           => 1,
@@ -89,12 +90,13 @@ SKIP: {
     ok( $token = $res->{token},  'Found token' );
     $key = Convert::Base32::decode_base32($key);
 
+    is( $res->{'algorithm'}, 'sha256', "Expected algorithm" );
     is( $res->{'digits'},    8,        "Expected digits" );
     is( $res->{'interval'},  10,       "Expected interval" );
 
     # Post code
     my $code;
-    ok( $code = getTotp( $key, digits => 8, interval => 10 ),
+    ok( $code = getTotp( $key, digits => 8, interval => 10, hash => "sha256" ),
         'Code' );
     ok( $code =~ /^\d{8}$/, 'Code contains 8 digits' );
     my $s = "code=$code&token=$token";
@@ -138,7 +140,7 @@ SKIP: {
 
     # Generate TOTP with LLNG
     ok(
-        $code = getTotp( $key, digits => 8, interval => 10 ),
+        $code = getTotp( $key, digits => 8, interval => 10, hash => "sha256" ),
         'LLNG Code'
     );
 
@@ -174,7 +176,7 @@ SKIP: {
 
     # Generate TOTP with LLNG
     ok(
-        $code = getTotp( $key, digits => 8, interval => 10 ),
+        $code = getTotp( $key, digits => 8, interval => 10, hash => "sha256" ),
         'LLNG Code'
     );
     $query =~ s/code=/code=$code/;
