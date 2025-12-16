@@ -83,6 +83,15 @@ sub enabledServices {
     my $conf = $self->conf;
     my @res;
 
+    # Authentication
+    push @res,
+      [
+        authentication => (
+            $self->conf->{'authEngine'}
+              // 'Lemonldap::NG::Portal::Main::Authentication'
+        )
+      ];
+
     # Second factor
     push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
 
@@ -149,11 +158,6 @@ sub enabledPlugins {
 
     # Add REST (check is done by plugin itself)
     push @res, '::Plugins::RESTServer';
-
-    # Check if password is enabled
-    if ( my $p = $conf->{passwordDB} ) {
-        push @res, "::Password::$p";
-    }
 
     # Check if register is enabled
     push @res, '::Plugins::Register'

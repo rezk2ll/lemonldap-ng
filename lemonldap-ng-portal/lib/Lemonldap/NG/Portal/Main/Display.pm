@@ -556,9 +556,7 @@ sub display {
             }
 
             # Authentication loop
-            if ( $self->conf->{authentication} eq 'Choice'
-                and my $authLoop = $self->_buildAuthLoop($req) )
-            {
+            if ( my $authLoop = $self->_authentication->_buildAuthLoop($req) ) {
                 %templateParams = (
                     %templateParams,
                     AUTH_LOOP            => $authLoop,
@@ -579,39 +577,6 @@ sub display {
                         ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                         : ()
                     ),
-                );
-            }
-
-            # Choose which form to display if not in a loop
-            else {
-                my $displayType =
-                  eval { $self->_authentication->getDisplayType($req) }
-                  || 'logo';
-
-                $self->logger->debug("Display type $displayType");
-
-                %templateParams = (
-                    %templateParams,
-                    DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1
-                    : 0,
-                    DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
-                    ? 1
-                    : 0,
-                    DISPLAY_SSL_FORM      => $displayType =~ /sslform/ ? 1 : 0,
-                    DISPLAY_WEBAUTHN_FORM => $displayType =~ /webauthnform/ ? 1
-                    : 0,
-                    DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
-                    DISPLAY_FINDUSER  => scalar @$fields,
-                    module            => $displayType eq "logo"
-                    ? $self->getModule( $req, 'auth' )
-                    : "",
-                    AUTH_LOOP  => [],
-                    PORTAL_URL => ( $displayType eq "logo" ? $req->portal : 0 ),
-                    MSG        => $req->info(),
-                    MANDATORY  => $mandatory,
-                    FIELDS     => $fields,
-                    SPOOFID    => $slogin
                 );
             }
         }

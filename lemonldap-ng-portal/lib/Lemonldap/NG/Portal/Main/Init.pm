@@ -28,15 +28,13 @@ has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
 has trOver      => ( is => 'rw', default => sub { { all => {} } } );
 
-# Sub modules
-has _authentication => ( is => 'rw' );
-has _userDB         => ( is => 'rw' );
-has _passwordDB     => ( is => 'rw' );
-
 has _loadedServices => ( is => 'rw', default => sub { {} } );
 has _loadedPlugins  => ( is => 'rw', default => sub { {} } );
 
 # Legacy
+sub _authentication { $_[0]->getService('authentication') }
+sub _userDB         { $_[0]->getService('authentication') }
+sub _passwordDB     { $_[0]->getService('authentication') }
 sub _captcha        { $_[0]->getService('captcha') }
 sub _trustedBrowser { $_[0]->getService('trustedBrowser') }
 sub _sfEngine       { $_[0]->getService('secondFactor') }
@@ -352,24 +350,6 @@ sub reloadConf {
     # Load menu
     # ---------
     $self->displayInit;
-
-    # Load authentication/userDB
-    # --------------------------
-    my $mod;
-    for my $type (qw(authentication userDB)) {
-        unless ( $self->conf->{$type} ) {
-            $self->error("$type is not set");
-            return $self->fail;
-        }
-        $mod = $self->conf->{$type}
-          unless ( $self->conf->{$type} eq 'Same' );
-        my $module = '::' . ucfirst($type) . '::' . $mod;
-        $module =~ s/Authentication/Auth/;
-
-        # Launch and initialize module
-        return $self->fail
-          unless ( $self->{"_$type"} = $self->loadPlugin($module) );
-    }
 
     # Compile macros in _macros, groups in _groups
     foreach my $type (qw(macros groups)) {
