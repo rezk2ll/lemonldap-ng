@@ -147,7 +147,9 @@
             $("span.update2f[device=".concat(device, "][epoch=").concat(epoch, "]")).attr('oldlabel', label);
             e = jQuery.Event("mfaUpdated");
             $(document).trigger(e, [{
-              "type": "2fregisters"
+              "type": device,
+              "epoch": epoch,
+              "label": label
             }]);
             if (!e.isDefaultPrevented()) {
               setMsg('yourKeyIsUpdated', 'positive');
