@@ -11,28 +11,19 @@ require 't/test-lib.pm';
 my $res;
 
 sub testUserTokenSSLAuth {
-    my %params = @_;
-    my $choice = $params{'choice'};
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel    => 'error',
                 useSafeJail => 1,
                 (
-                    $choice
-                    ? (
-                        authentication    => 'Choice',
-                        userDB            => 'Same',
-                        authChoiceParam   => 'test',
-                        authChoiceModules => {
-                            '1_demo' => 'Demo;Demo;Null',
-                            '2_ssl'  => 'SSL;Demo;Null',
-                        },
-                      )
-                    : (
-                        authentication => 'SSL',
-                        userDB         => 'Demo',
-                    )
+                    authentication    => 'Choice',
+                    userDB            => 'Same',
+                    authChoiceParam   => 'test',
+                    authChoiceModules => {
+                        '1_demo' => 'Demo;Demo;Null',
+                        '2_ssl'  => 'SSL;Demo;Null',
+                    },
                 ),
 
                 SSLVar            => 'SSL_CLIENT_S_DN_Custom',
@@ -62,7 +53,7 @@ sub testUserTokenSSLAuth {
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
         'Found 5_ssl Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
-    my $scriptname = "ssl" . ( $choice ? "Choice" : "" ) . "(?:min)?\.js";
+    my $scriptname = "sslChoice(?:min)?\.js";
     ok( $res->[2]->[0] =~ /$scriptname/, 'Get ssl javascript' )
       or print STDERR Dumper( $res->[2]->[0] );
 
@@ -109,30 +100,19 @@ sub testUserTokenSSLAuth {
 }
 
 sub testLegacyAjaxSSL {
-    my %params = @_;
-    my $choice = $params{'choice'};
     my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel    => 'error',
                 useSafeJail => 1,
                 (
-                    $choice
-                    ? (
-                        authentication    => 'Choice',
-                        userDB            => 'Same',
-                        authChoiceParam   => 'test',
-                        authChoiceModules => {
-                            '1_demo' => 'Demo;Demo;Null',
-                            '2_ssl'  => 'SSL;Demo;Null',
-                        },
-                        sslHost =>
-                          'https://authssl.example.com:19876/?test=2_ssl'
-                      )
-                    : (
-                        authentication => 'SSL',
-                        userDB         => 'Demo',
-                        sslHost        => 'https://authssl.example.com:19876/'
-                    )
+                    authentication    => 'Choice',
+                    userDB            => 'Same',
+                    authChoiceParam   => 'test',
+                    authChoiceModules => {
+                        '1_demo' => 'Demo;Demo;Null',
+                        '2_ssl'  => 'SSL;Demo;Null',
+                    },
+                    sslHost => 'https://authssl.example.com:19876/?test=2_ssl'
                 ),
                 SSLVar    => 'SSL_CLIENT_S_DN_Custom',
                 sslByAjax => 1,
@@ -158,12 +138,12 @@ m%<script type="application/init">\s*\{"sslHost":"([^"]*)"\}\s*</script>%s,
     my $sslHost = URI->new($1);
     is( $sslHost->authority, "authssl.example.com:19876", "Correct hostname" );
     is( $sslHost->path,      "/",                         "Correct path" );
-    is( $sslHost->query, ( $choice ? "test=2_ssl" : undef ), "Correct query" );
+    is( $sslHost->query,     ("test=2_ssl"),              "Correct query" );
 
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
         'Found 5_ssl Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
-    my $scriptname = "ssl" . ( $choice ? "Choice" : "" ) . "(?:min)?\.js";
+    my $scriptname = "sslChoice(?:min)?\.js";
     ok( $res->[2]->[0] =~ /$scriptname/, 'Get ssl javascript' )
       or print STDERR Dumper( $res->[2]->[0] );
 
@@ -197,17 +177,13 @@ m%<script type="application/init">\s*\{"sslHost":"([^"]*)"\}\s*</script>%s,
     expectRedirection( $res, 'http://test1.example.com/' );
 }
 
-subtest 'Usertoken SSL Auth' => \&testUserTokenSSLAuth, choice => 0;
 subtest
-  'Usertoken SSL Auth (with choice)' => \&testUserTokenSSLAuth,
-  choice                             => 1;
+  'Usertoken SSL Auth' => \&testUserTokenSSLAuth,
 
-subtest 'Legacy AJAX SSL Auth' => \&testLegacyAjaxSSL, choice => 0;
-subtest
-  'Legacy AJAX SSL Auth (with Choice)' => \&testLegacyAjaxSSL,
-  choice                               => 1;
+  subtest
+  'Legacy AJAX SSL Auth' => \&testLegacyAjaxSSL,
 
-subtest 'Regular SSL Auth' => sub {
+  subtest 'Regular SSL Auth' => sub {
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     my $client = LLNG::Manager::Test->new( {
             ini => {
@@ -228,7 +204,7 @@ subtest 'Regular SSL Auth' => sub {
 
     expectOK($res);
     expectCookie($res);
-};
+  };
 
 sub testSSLVarIf {
     my ( $client, $headers, $expected ) = @_;
