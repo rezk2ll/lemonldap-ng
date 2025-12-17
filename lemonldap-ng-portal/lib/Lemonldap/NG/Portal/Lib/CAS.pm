@@ -597,7 +597,7 @@ sub getCasApp {
     my $longestCandidate = "";
     my $hostnameConfKey;
 
-    for my $app ( keys %{ $self->casAppList } ) {
+    for my $app ( sort keys %{ $self->casAppList } ) {
 
         for my $appservice (
             split(
