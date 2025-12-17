@@ -288,9 +288,9 @@ sub getUser {
 
 sub findUser {
     my ( $self, $req, %args ) = @_;
-    $self->checkChoice($req) or return PE_FIRSTACCESS;
-    my $res = $self->userdb_modules->{ $req->data->{_authChoice} }
-      ->findUser( $req, %args );
+    my $choice = $self->checkChoice($req) or return PE_FIRSTACCESS;
+
+    my $res = $self->userdb_modules->{$choice}->findUser( $req, %args );
     delete $req->pdata->{_choice} if ( $res > 0 );
     return $res;
 }
