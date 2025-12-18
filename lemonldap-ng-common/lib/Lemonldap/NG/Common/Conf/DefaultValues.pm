@@ -427,6 +427,7 @@ sub defaultValues {
         'timeoutActivity'         => 0,
         'timeoutActivityInterval' => 60,
         'totp2fActivation'        => 0,
+        'totp2fAlgorithm'         => 'sha1',
         'totp2fDigits'            => 6,
         'totp2fInterval'          => 30,
         'totp2fRange'             => 1,

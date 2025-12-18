@@ -22,7 +22,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libdatetime-format-rfc3339-perl <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
                      libdbi-perl <!nocheck>,
-                     libdigest-hmac-perl <!nocheck>,
                      libemail-address-xs-perl | libemail-address-perl <!nocheck>,
                      libemail-sender-perl <!nocheck>,
                      libgd-securityimage-perl <!nocheck>,
@@ -202,7 +201,7 @@ Package: lemonldap-ng-handler
 Architecture: all
 Depends: liblemonldap-ng-handler-perl (= ${binary:Version}), ${misc:Depends}
 Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | libapache2-mod-perl2
-Suggests: libcache-memcached-perl, libdigest-hmac-perl, libsoap-lite-perl
+Suggests: libcache-memcached-perl, libsoap-lite-perl
 Breaks: lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Replaces: lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Description: Lemonldap::NG handler part
@@ -319,7 +318,6 @@ Architecture: all
 Depends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi,
          libclone-perl,
          libconvert-base32-perl,
-         libdigest-hmac-perl,
          libemail-date-format-perl,
          libhtml-formattext-withlinks-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),

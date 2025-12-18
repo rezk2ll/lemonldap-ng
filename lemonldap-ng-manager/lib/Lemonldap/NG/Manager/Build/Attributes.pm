@@ -2423,15 +2423,25 @@ sub attributes {
             default       => 30,
             documentation => 'TOTP interval',
         },
-        totp2fRange => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'TOTP range (number of interval to test)',
-        },
         totp2fDigits => {
             type          => 'int',
             default       => 6,
             documentation => 'Number of digits for TOTP code',
+        },
+        totp2fAlgorithm => {
+            type   => 'select',
+            select => [
+                { k => 'sha1',   v => 'SHA-1' },
+                { k => 'sha256', v => 'SHA-256' },
+                { k => 'sha512', v => 'SHA-512' },
+            ],
+            default       => 'sha1',
+            documentation => 'Hashing algorithm to use for HMAC',
+        },
+        totp2fRange => {
+            type          => 'int',
+            default       => 1,
+            documentation => 'TOTP range (number of interval to test)',
         },
         totp2fUserCanRemoveKey => {
             type          => 'bool',
@@ -2719,9 +2729,9 @@ sub attributes {
         webauthn2fUserVerification => {
             type   => 'select',
             select => [
-                { k => 'discouraged', v => 'Discouraged' },
-                { k => 'preferred',   v => 'Preferred' },
-                { k => 'required',    v => 'Required' },
+                { k => 'discouraged', v => 'discouraged' },
+                { k => 'preferred',   v => 'preferred' },
+                { k => 'required',    v => 'required' },
             ],
             default       => 'preferred',
             documentation => 'Verify user during registration and login',

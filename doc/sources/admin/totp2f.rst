@@ -27,7 +27,6 @@ you must install libconvert-base32-perl by :
 
    apt update
    apt install libconvert-base32-perl
-   apt install libdigest-hmac-perl
 
 Or from CPAN repository :
 
@@ -46,7 +45,19 @@ In the manager (advanced parameters), you just have to enable it:
 -  **Allow users to remove TOTP**: If enabled, users can unregister
    TOTP
 -  **Issuer name** (Optional): default to portal hostname
--  **Interval**: interval for TOTP algorithm (default: 30)
+-  **Time step**: size of the time-step window for TOTP algorithm (default: 30)
+
+.. warning::
+
+    Many mobile applications only support the default value
+
+-  **Number of digits**: number of digits in codes (default: 6)
+
+.. warning::
+
+    Many mobile applications only support the default value
+
+-  **Algorithm**: hash function to use for TOTP algorithm (default: SHA-1)
 
 .. warning::
 
@@ -60,12 +71,6 @@ In the manager (advanced parameters), you just have to enable it:
 
     Range is tested backward and forward to prevent
     positive or negative clock drift.
-
--  **Number of digits**: number of digit by codes (default: 6)
-
-.. warning::
-
-    Many mobile applications only support the default value
 
 -  **Authentication level**: you can overwrite here auth level for TOTP
    registered users. Leave it blank keeps auth level provided by first

@@ -70,9 +70,8 @@ SKIP: {
 
     # Post code
     my $code;
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
-        'Code' );
-    ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
+    ok( $code = getTotp($key), 'Code' );
+    ok( $code =~ /^\d{6}$/,    'Code contains 6 digits' );
     my $s = "code=$code&token=$token";
     ok(
         $res = $client->_post(
@@ -186,8 +185,7 @@ SKIP: {
 
     my ( $host, $url, $query ) =
       expectForm( $res, undef, '/totp2fcheck', 'token' );
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
-        'Code' );
+    ok( $code = getTotp($key), 'Code' );
     $query =~ s/code=/code=$code/;
     ok(
         $res = $client->_post(
