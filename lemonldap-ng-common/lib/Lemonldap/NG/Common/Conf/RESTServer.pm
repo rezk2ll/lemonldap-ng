@@ -70,7 +70,7 @@ sub getConfKey {
 
 sub getConfByNum {
     my ( $self, $cfgNum, @args ) = @_;
-    unless ($self->currentConf
+    unless ( $self->currentConf
         and %{ $self->currentConf }
         and $cfgNum == $self->currentConf->{cfgNum} )
     {
@@ -398,8 +398,8 @@ sub _oidcMetaDataNodes {
     # Reject unknown partners
     return $self->sendError( $req,
         "Unknown OpenID-Connect partner ($partner)", 400 )
-      unless ( defined eval { $self->getConfKey( $req, $refKey )->{$partner}; }
-      );
+      unless (
+        defined eval { $self->getConfKey( $req, $refKey )->{$partner}; } );
 
     my ( $id, $resp ) = ( 1, [] );
 
@@ -521,8 +521,8 @@ sub _casMetaDataNodes {
 
     # Reject unknown partners
     return $self->sendError( $req, "Unknown CAS partner ($partner)", 400 )
-      unless ( defined eval { $self->getConfKey( $req, $refKey )->{$partner}; }
-      );
+      unless (
+        defined eval { $self->getConfKey( $req, $refKey )->{$partner}; } );
 
     my ( $id, $resp ) = ( 1, [] );
 
@@ -898,7 +898,8 @@ sub metadata {
                   $metadata->serviceToXML(
                     { %{ $self->currentConf }, portal => $self->p->portal },
                     'all' );
-                return $self->p->sendTextResponse($req, $s, type => "application/xml; charset=utf-8");
+                return $self->p->sendTextResponse( $req, $s,
+                    type => "application/xml; charset=utf-8" );
             }
             return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
         }
@@ -920,7 +921,8 @@ sub metadata {
         if ($ind) {
             my $prevNum = $a[ $ind - 1 ];
             my $prevConf =
-              $self->confAcc->getConf( { cfgNum => $prevNum, raw => 1, noCache => 1 } );
+              $self->confAcc->getConf(
+                { cfgNum => $prevNum, raw => 1, noCache => 1 } );
             $res->{prev} = {
                 cfgNum => $prevNum,
                 cfgLog => $prevConf->{cfgLog}
@@ -929,7 +931,8 @@ sub metadata {
         if ( defined $ind and $ind < $#a ) {
             my $nextNum = $a[ $ind + 1 ];
             my $nextConf =
-              $self->confAcc->getConf( { cfgNum => $nextNum, raw => 1, noCache => 1 } );
+              $self->confAcc->getConf(
+                { cfgNum => $nextNum, raw => 1, noCache => 1 } );
             $res->{next} = {
                 cfgNum => $nextNum,
                 cfgLog => $nextConf->{cfgLog}
