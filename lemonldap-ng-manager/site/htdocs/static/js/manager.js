@@ -303,7 +303,7 @@
       return node.nodes.push({
         id: `${node.id}/n${idinc++}`,
         title: 'New rule',
-        re: 'Message',
+        re: '"Message"',
         comment: 'New rule',
         data: '1',
         type: "grant"
