@@ -193,7 +193,7 @@ sub removeOther {
                     next;
                 }
                 my $user = $token->{user};
-                if ( $req->{userData}->{ $self->{conf}->{whatToTrace} } eq
+                if ( $req->userData->{ $self->{conf}->{whatToTrace} } eq
                     $user )
                 {
                     $self->userLogger->info("Remove \"$user\" session: $_");

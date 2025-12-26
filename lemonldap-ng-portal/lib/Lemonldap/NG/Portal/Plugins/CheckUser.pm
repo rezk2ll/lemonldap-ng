@@ -168,7 +168,7 @@ sub display {
         FORM_ACTION => $self->p->relativeUrl( $req, 'checkuser' ),
         MSG         => 'checkUser' . $self->merged,
         ALERTE      => ( $self->merged ? 'alert-warning' : 'alert-info' ),
-        LOGIN       => $req->{userData}->{ $self->conf->{whatToTrace} },
+        LOGIN       => $req->userData->{ $self->conf->{whatToTrace} },
         HISTORY     => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
         SUCCESS     => $history->[0],
         FAILED      => $history->[1],

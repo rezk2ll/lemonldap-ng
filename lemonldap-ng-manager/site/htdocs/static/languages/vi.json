@@ -1362,6 +1362,7 @@
 "tooltip":"Chú giải ",
 "totp2f":"TOTP",
 "totp2fActivation":"Kích hoạt",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"Mức xác thực",
 "totp2fDigits":"Số chữ số",
 "totp2fEncryptSecret":"Mã hóa bí mật TOTP",

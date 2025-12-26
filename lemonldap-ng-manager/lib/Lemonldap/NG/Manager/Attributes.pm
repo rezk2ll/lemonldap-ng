@@ -5676,6 +5676,23 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'totp2fAlgorithm' => {
+            'default' => 'sha1',
+            'select'  => [ {
+                    'k' => 'sha1',
+                    'v' => 'SHA-1'
+                },
+                {
+                    'k' => 'sha256',
+                    'v' => 'SHA-256'
+                },
+                {
+                    'k' => 'sha512',
+                    'v' => 'SHA-512'
+                }
+            ],
+            'type' => 'select'
+        },
         'totp2fAuthnLevel' => {
             'type' => 'intOrNull'
         },
@@ -5975,15 +5992,15 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 'preferred',
             'select'  => [ {
                     'k' => 'discouraged',
-                    'v' => 'Discouraged'
+                    'v' => 'discouraged'
                 },
                 {
                     'k' => 'preferred',
-                    'v' => 'Preferred'
+                    'v' => 'preferred'
                 },
                 {
                     'k' => 'required',
-                    'v' => 'Required'
+                    'v' => 'required'
                 }
             ],
             'type' => 'select'

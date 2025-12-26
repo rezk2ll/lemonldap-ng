@@ -1362,6 +1362,7 @@
 "tooltip":"工具提示",
 "totp2f":"TOTP",
 "totp2fActivation":"激活",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"驗證等級",
 "totp2fDigits":"位數",
 "totp2fEncryptSecret":"Encrypt TOTP secrets",

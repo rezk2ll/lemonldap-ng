@@ -1362,6 +1362,7 @@
 "tooltip":"Dica da ferramenta",
 "totp2f":"TOTP",
 "totp2fActivation":"Ativação",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"Nível de autenticação",
 "totp2fDigits":"Número de dígitos",
 "totp2fEncryptSecret":"Encriptar segredos TOTP",

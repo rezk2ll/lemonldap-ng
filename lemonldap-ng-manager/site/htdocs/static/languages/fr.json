@@ -1362,6 +1362,7 @@
 "tooltip":"Info-bulle",
 "totp2f":"TOTP",
 "totp2fActivation":"Activation",
+"totp2fAlgorithm":"Algorithme",
 "totp2fAuthnLevel":"Niveau d'authentification",
 "totp2fDigits":"Nombre de chiffres",
 "totp2fEncryptSecret":"Chiffrer le secret TOTP",

@@ -1362,6 +1362,7 @@
 "tooltip":"Etykietka",
 "totp2f":"TOTP",
 "totp2fActivation":"Aktywacja",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"Poziom uwierzytelnienia",
 "totp2fDigits":"Ilość cyfr",
 "totp2fEncryptSecret":"Szyfruj sekrety TOTP",

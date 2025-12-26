@@ -1362,6 +1362,7 @@
 "tooltip":"Araç ipucu",
 "totp2f":"TOTP",
 "totp2fActivation":"Aktivasyon",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"Doğrulama seviyesi",
 "totp2fDigits":"Rakam sayısı",
 "totp2fEncryptSecret":"TOTP sırlarını şifreleyin",

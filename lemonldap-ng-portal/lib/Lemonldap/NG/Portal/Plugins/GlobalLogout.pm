@@ -53,7 +53,7 @@ sub init {
 # Look for user active SSO sessions and suggest to close them
 sub run {
     my ( $self, $req ) = @_;
-    my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->userData ) ) {
@@ -125,8 +125,8 @@ sub globalLogout {
             if ( $token = $self->ott->getToken($token) ) {
                 my $storeId =
                   $self->conf->{hashedSessionStore}
-                  ? id2storage( $req->{userData}->{_session_id} )
-                  : $req->{userData}->{_session_id};
+                  ? id2storage( $req->userData->{_session_id} )
+                  : $req->userData->{_session_id};
 
                 # Read active sessions from token
                 my $sessions = eval { from_json( $token->{sessions} ) };
@@ -138,7 +138,7 @@ sub globalLogout {
                 my $as;
                 my $user = $token->{user};
                 my $req_user =
-                  $req->{userData}->{ $self->{conf}->{whatToTrace} };
+                  $req->userData->{ $self->{conf}->{whatToTrace} };
                 if ( $req_user eq $user ) {
                     foreach (@$sessions) {
                         unless (
@@ -191,7 +191,7 @@ sub activeSessions {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
-    my $user           = $req->{userData}->{ $self->conf->{whatToTrace} };
+    my $user           = $req->userData->{ $self->conf->{whatToTrace} };
     my $customParam    = $self->conf->{globalLogoutCustomParam} || '';
 
     # Try to retrieve sessions from sessions DB
@@ -261,8 +261,8 @@ sub removeOtherActiveSessions {
 
     my $storeId =
       $self->conf->{hashedSessionStore}
-      ? id2storage( $req->{userData}->{_session_id} )
-      : $req->{userData}->{_session_id};
+      ? id2storage( $req->userData->{_session_id} )
+      : $req->userData->{_session_id};
     foreach (@$sessions) {
 
         # searchOn() returns sessions indexed by their storage ID, then
@@ -274,7 +274,7 @@ sub removeOtherActiveSessions {
         }
         unless ( $storeId eq $_->{id} ) {
             $self->userLogger->info(
-"Remove \"$req->{userData}->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
+"Remove \"$req->userData->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
             );
             $as->remove;
             $count++;

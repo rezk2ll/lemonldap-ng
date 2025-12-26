@@ -1362,6 +1362,7 @@
 "tooltip":"חלונית עצה",
 "totp2f":"TOTP",
 "totp2fActivation":"הפעלה",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"דרגת אימות",
 "totp2fDigits":"מספר ספרות",
 "totp2fEncryptSecret":"Encrypt TOTP secrets",

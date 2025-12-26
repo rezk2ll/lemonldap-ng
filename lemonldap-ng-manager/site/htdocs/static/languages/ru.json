@@ -1362,6 +1362,7 @@
 "tooltip":"Подсказка",
 "totp2f":"TOTP",
 "totp2fActivation":"Активация",
+"totp2fAlgorithm":"Algorithm",
 "totp2fAuthnLevel":"Уровень аутентификации",
 "totp2fDigits":"Количество цифр",
 "totp2fEncryptSecret":"Шифровать секреты TOTP",
