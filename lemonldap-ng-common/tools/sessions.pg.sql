@@ -37,7 +37,7 @@ CREATE INDEX i_a__assert_id    ON samlsessions ((a_session ->> '_assert_id'));
 CREATE INDEX i_a__art_id       ON samlsessions ((a_session ->> '_art_id'));
 CREATE INDEX i_a__saml_id      ON samlsessions ((a_session ->> '_saml_id'));
 
-CREATE UNLOGGED TABLE oidcsessions (
+CREATE TABLE oidcsessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
