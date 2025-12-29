@@ -6,17 +6,21 @@ use JSON;
 require './lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Build/Attributes.pm';
 require './lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/ReConstants.pm';
 
-my $rmg =
-"^(?:(?:$Lemonldap::NG::Common::Conf::ReConstants::virtualHostKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::casAppMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::casSrvMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::oidcOPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::oidcRPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::samlIDPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::samlSPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::specialNodeKeys))\$";
-$rmg = qr/$rmg/;
+my $complexNodes =
+  qr/^(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|vhost)Options$/;
 
-my $complexNodes = qr/^(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|vhost)Options$/;
+my $ignore = qr/^cfg[A-Z]/;
 
-my $ignore = qr/^(?:virtualHosts)$/;
+open my $rt, 'lemonldap-ng-manager/site/htdocs/static/reverseTree.json';
+my $managed = JSON::from_json( join '', <$rt> );
+close $rt;
 
-open F, 'lemonldap-ng-manager/site/htdocs/static/reverseTree.json';
+open my $translation_file,
+  'lemonldap-ng-manager/site/htdocs/static/languages/en.json';
+my $trKeys = JSON::decode_json( join '', <$translation_file> );
+close $translation_file;
 
-my $managed = JSON::from_json( join '', <F> );
+$trKeys->{__confKey__} = "*configuration key*";
 
 my $prm = Lemonldap::NG::Manager::Build::Attributes::attributes();
 
@@ -26,47 +30,34 @@ print <<EOF;
 Parameter list
 ==============
 
-
-.. tip::
-
-    Click on a column header to sort table. The attribute key
-    name can be used directly in ``lemonldap-ng.ini`` or in Perl scripts to
-    override configuration parameters (see
-    :doc:`configuration location<configlocation>`).
-
 Main parameters
 ---------------
 
-======================================================= ==================================================================================== ====== ======= ======= =============
-Key name                                                Documentation                                                                        Portal Handler Manager ini file only
-======================================================= ==================================================================================== ====== ======= ======= =============
 EOF
-
-#| Activate auto accept timer | activeTimer |  ✔  | | |
 
 foreach my $k ( sort keys %$prm ) {
     next if $k =~ $ignore;
-    next if $k =~ $rmg;
     my $p = $prm->{$k};
     $p->{flags} ||= 'p';
-    my $line = "$k". " "x(56-length($k)) 
-    . "$p->{documentation}"." "x(85-length($p->{documentation}))
-      # Portal flag
-      . ( $p->{flags} =~ /p/ ? "$ok      " : '       ')
-      # Handler flag
-      .( $p->{flags} =~ /h/ ? "$ok       " : '        ')
-      # Manager flag
-      .( $p->{flags} =~ /m/ ? "$ok       " : '        ')
-      # Ini-only flag
-      .( ( $managed->{$k} or $k =~ $rmg ) ? '' : ( $k =~ $complexNodes ? '[1]' : $ok ) );
-      $line =~ s/\s*$//;
-      print "$line\n";
+    my $is_portal     = $p->{flags} =~ /p/;
+    my $is_handler    = $p->{flags} =~ /h/;
+    my $is_manager    = $p->{flags} =~ /m/;
+    my $documentation = $p->{documentation};
+    my $path          = join( " » ",
+        map { $trKeys->{$_} || $_ } split( "/", $managed->{$k} ), $k );
+    my $ini_only = not( $managed->{$k} or $k =~ $complexNodes );
+
+    print "$k\n";
+    print "    :Location: $path\n" if !$ini_only;
+    print "    :Description: $documentation\n" if $documentation;
+    print "    :Used by portal: yes\n"  if $is_portal;
+    print "    :Used by manager: yes\n" if $is_manager;
+    print "    :Used by handler: yes\n" if $is_handler;
+    print "    :Ini only: yes\n"        if $ini_only;
+    print "\n";
 }
 
 print <<EOF;
-======================================================= ==================================================================================== ====== ======= ======= =============
-
-*[1]: complex nodes*
 
 Configuration backend parameters
 --------------------------------
