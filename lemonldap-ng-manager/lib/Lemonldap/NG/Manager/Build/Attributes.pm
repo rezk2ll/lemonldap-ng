@@ -1115,7 +1115,7 @@ sub attributes {
         portalPingInterval => {
             type          => 'int',
             default       => 60000,
-            documentation => 'Interval in ms between portal Ajax pings ',
+            documentation => 'Interval in ms between portal Ajax pings',
         },
         portalSkin => {
             type          => 'portalskin',
@@ -2387,7 +2387,7 @@ sub attributes {
         },
         password2fTTL => {
             type          => 'intOrNull',
-            documentation => 'Password2F device time to live ',
+            documentation => 'Password2F device time to live',
         },
 
         # TOTP second factor
@@ -2450,7 +2450,7 @@ sub attributes {
         },
         totp2fTTL => {
             type          => 'intOrNull',
-            documentation => 'TOTP device time to live ',
+            documentation => 'TOTP device time to live',
         },
         totp2fEncryptSecret => {
             type          => 'bool',
@@ -3786,7 +3786,7 @@ sub attributes {
             type    => 'samlAssertion',
             default => '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
               . '#PORTAL#/saml/artifact',
-            documentation => 'SAML SP artifact resolution service ',
+            documentation => 'SAML SP artifact resolution service',
         },
         samlSPMetaDataOptionsComment => {
             type => 'longtext'
