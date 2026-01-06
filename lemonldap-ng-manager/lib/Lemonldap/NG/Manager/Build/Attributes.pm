@@ -3214,6 +3214,11 @@ sub attributes {
             documentation => 'Allow CAS proxy',
             default       => 1,
         },
+        casAppMetaDataOptionsActivation => {
+            type          => 'bool',
+            documentation => 'Activate CAS application',
+            default       => 1,
+        },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
             help =>
@@ -3721,6 +3726,10 @@ sub attributes {
             default    => {},
         },
         samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataOptionsActivation => {
+            type    => 'bool',
+            default => 1,
+        },
         samlSPMetaDataOptionsURL => {
             type => 'url',
         },
@@ -5336,6 +5345,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'preferred_username' => 'uid',
                 'email'              => 'mail',
             }
+        },
+        oidcRPMetaDataOptionsActivation     => {
+            type    => 'bool',
+            default => 1,
         },
         oidcRPMetaDataOptionsClientID     => { type => 'text', },
         oidcRPMetaDataOptionsClientSecret => { type => 'password', },

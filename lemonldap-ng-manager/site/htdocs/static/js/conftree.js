@@ -39,6 +39,13 @@ function templates(tpl,key) {
    {
       "_nodes" : [
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsActivation",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsActivation",
+            "title" : "casAppMetaDataOptionsActivation",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
             "title" : "casAppMetaDataOptionsService"
@@ -1708,6 +1715,13 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsActivation",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsActivation",
+            "title" : "oidcRPMetaDataOptionsActivation",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
             "title" : "oidcRPMetaDataOptionsComment",
@@ -2419,6 +2433,13 @@ function templates(tpl,key) {
             "id" : "samlSPMetaDataOptionsFederation",
             "title" : "samlSPMetaDataOptionsFederation",
             "type" : "simpleInputContainer"
+         },
+         {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsActivation",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsActivation",
+            "title" : "samlSPMetaDataOptionsActivation",
+            "type" : "bool"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsURL",

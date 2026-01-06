@@ -441,6 +441,12 @@ sub load_sp_metadata {
 
     my $valid = 1;
 
+    # Check if SP is activated
+    unless ( $options->{samlSPMetaDataOptionsActivation} // 1 ) {
+        $self->logger->debug("SP $spConfKey deactivated");
+        return 0;
+    }
+
     # Access Rule
     my $rule = $options->{samlSPMetaDataOptionsRule};
     if ( length $rule ) {

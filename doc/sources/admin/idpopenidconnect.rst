@@ -366,6 +366,8 @@ Options
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
 
+-  **Activation** The user can activate and deactivate a RP. By default, RPs are
+   active upon creation.
 -  **Comment**: set a comment
 
 Macros

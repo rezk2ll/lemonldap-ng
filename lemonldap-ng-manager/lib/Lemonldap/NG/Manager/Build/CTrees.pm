@@ -164,6 +164,7 @@ sub cTrees {
                             'samlSPMetaDataOptionsFederationRequiredAttributes',
                         ]
                     },
+                    'samlSPMetaDataOptionsActivation',
                     'samlSPMetaDataOptionsURL',
                     'samlSPMetaDataOptionsComment'
                 ]
@@ -336,6 +337,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
+                    'oidcRPMetaDataOptionsActivation',
                     'oidcRPMetaDataOptionsComment',
                 ]
             },
@@ -382,6 +384,7 @@ sub cTrees {
                 title => 'casAppMetaDataOptions',
                 form  => 'simpleInputContainer',
                 nodes => [
+                    'casAppMetaDataOptionsActivation',
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
                     'casAppMetaDataOptionsAllowProxy',

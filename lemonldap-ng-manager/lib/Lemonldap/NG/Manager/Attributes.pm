@@ -802,6 +802,10 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'casAppMetaDataOptionsAllowProxy' => {
             'default' => 1,
             'type'    => 'bool'
@@ -3052,6 +3056,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsAdditionalAudiences' => {
             'type' => 'text'
         },
@@ -5289,6 +5297,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyMsgFail' => '__badMetadataName__',
             'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'type'       => 'keyTextContainer'
+        },
+        'samlSPMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'samlSPMetaDataOptionsAuthnLevel' => {
             'test' => sub {

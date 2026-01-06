@@ -150,6 +150,12 @@ sub load_rp {
     my ( $self, %config ) = @_;
     my $rp = $config{confKey};
 
+    # Check if RP is activated
+    unless ( $config{options}->{oidcRPMetaDataOptionsActivation} // 1 ) {
+        $self->logger->debug("Processing $rp: RP Deactivated");
+        return 0;
+    }
+
     my $valid = 1;
 
     # Handle scopes
