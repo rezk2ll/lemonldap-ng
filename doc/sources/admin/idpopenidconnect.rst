@@ -172,6 +172,8 @@ You can then set this RP configuration.
 Basic options
 ^^^^^^^^^^^^^
 
+-  **Activation** The user can activate and deactivate a RP. By default, RPs are
+   active upon creation.
 -  **Public client** (since version ``2.0.4``): Set this RP as public
    client, so authentication is not needed on tokens endpoint. Set this for
    mobile apps or native Javascript apps.
