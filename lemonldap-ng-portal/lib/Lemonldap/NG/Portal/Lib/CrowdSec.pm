@@ -201,12 +201,14 @@ sub _banPayload {
     $data->{source}   ||= { scope => 'ip', value => $ip };
     my $reason = delete( $data->{reason} ) || 'Banned by LLNG';
     my $login  = delete( $data->{login} );
+    my $uri    = delete( $data->{uri} );
     $data->{scenario_hash} = sha256_hex( $data->{scenario} );
     my @meta = (
         { key => 'log_type', value => 'llng-auth' },
         { key => 'reason',   value => $reason }
     );
     push @meta, { key => 'login', value => $login } if $login;
+    push @meta, { key => 'uri',   value => $uri }   if $uri;
     return to_json( [ {
                 %$data,
                 message => $msg,

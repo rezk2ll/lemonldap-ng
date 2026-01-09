@@ -115,9 +115,10 @@ sub controlUrl {
     if (    $self->filters->{url}
         and $req->env->{REQUEST_URI} =~ $self->filters->{url} )
     {
-        my $msg = 'Bad URI detected: ' . $req->env->{REQUEST_URI};
+        my $uri = $req->env->{REQUEST_URI};
+        my $msg = "Bad URI detected: $uri";
         $self->alert( $req->address, $msg,
-            { scenario => 'llng/urlscan', reason => $msg, } )
+            { scenario => 'llng/urlscan', reason => $msg, uri => $uri } )
           ? $self->auditLog(
             $req,
             code         => 200,

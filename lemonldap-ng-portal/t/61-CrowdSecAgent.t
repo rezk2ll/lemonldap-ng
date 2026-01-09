@@ -15,6 +15,7 @@ my $ban = 0;
 my $res;
 my $lastAlertTypeIsBan;
 my $lastAlertLogin;
+my $lastAlertUri;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -55,8 +56,9 @@ LWP::Protocol::PSGI->register(
                         );
                         $lastAlertTypeIsBan = $obj->[0]->{remediation};
 
-                        # Extract login from meta if present
+                        # Extract login and uri from meta if present
                         $lastAlertLogin = undef;
+                        $lastAlertUri   = undef;
                         if (    $obj->[0]->{events}
                             and $obj->[0]->{events}->[0]
                             and $obj->[0]->{events}->[0]->{meta} )
@@ -64,10 +66,10 @@ LWP::Protocol::PSGI->register(
                             foreach
                               my $m ( @{ $obj->[0]->{events}->[0]->{meta} } )
                             {
-                                if ( $m->{key} eq 'login' ) {
-                                    $lastAlertLogin = $m->{value};
-                                    last;
-                                }
+                                $lastAlertLogin = $m->{value}
+                                  if $m->{key} eq 'login';
+                                $lastAlertUri = $m->{value}
+                                  if $m->{key} eq 'uri';
                             }
                         }
                     }
@@ -158,6 +160,7 @@ subtest 'Report bad urls to Crowdsec', sub {
             ok( $res->[2]->[0] =~ /Not found/i )
               or explain( $res->[2], 'Not found' );
             ok( $ban == ++$prevBan, "Bad url detected" );
+            ok( $lastAlertUri eq $url, "URI '$url' is in alert metadata" );
         };
     }
 };
