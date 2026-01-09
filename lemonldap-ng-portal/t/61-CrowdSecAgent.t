@@ -14,6 +14,7 @@ my $ban = 0;
 
 my $res;
 my $lastAlertTypeIsBan;
+my $lastAlertLogin;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -53,6 +54,22 @@ LWP::Protocol::PSGI->register(
                               . ( $obj->[0]->{remediation} ? 'ban' : 'alert' )
                         );
                         $lastAlertTypeIsBan = $obj->[0]->{remediation};
+
+                        # Extract login from meta if present
+                        $lastAlertLogin = undef;
+                        if (    $obj->[0]->{events}
+                            and $obj->[0]->{events}->[0]
+                            and $obj->[0]->{events}->[0]->{meta} )
+                        {
+                            foreach
+                              my $m ( @{ $obj->[0]->{events}->[0]->{meta} } )
+                            {
+                                if ( $m->{key} eq 'login' ) {
+                                    $lastAlertLogin = $m->{value};
+                                    last;
+                                }
+                            }
+                        }
                     }
                     $ban++;
                 };
@@ -107,6 +124,7 @@ subtest 'Report auth failures to Crowdsec', sub {
     expectReject($res);
     ok( $ban == 2,            'Alert received' );
     ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+    ok( $lastAlertLogin eq 'dwho', 'Login "dwho" is in alert metadata' );
 };
 
 subtest 'Report unknown user to Crowdsec', sub {
@@ -121,6 +139,7 @@ subtest 'Report unknown user to Crowdsec', sub {
     expectReject($res);
     ok( $ban == 3,            'Alert received' );
     ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+    ok( $lastAlertLogin eq 'jdoe', 'Login "jdoe" is in alert metadata' );
 };
 
 our %badUrls = (

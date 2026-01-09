@@ -200,17 +200,20 @@ sub _banPayload {
     $data->{stop_at}  ||= $timestamp;
     $data->{source}   ||= { scope => 'ip', value => $ip };
     my $reason = delete( $data->{reason} ) || 'Banned by LLNG';
+    my $login  = delete( $data->{login} );
     $data->{scenario_hash} = sha256_hex( $data->{scenario} );
+    my @meta = (
+        { key => 'log_type', value => 'llng-auth' },
+        { key => 'reason',   value => $reason }
+    );
+    push @meta, { key => 'login', value => $login } if $login;
     return to_json( [ {
                 %$data,
                 message => $msg,
                 events  => [ {
                         timestamp => $data->{start_at},
-                        meta      => [
-                            { key => 'log_type', value => 'llng-auth' },
-                            { key => 'reason',   value => $reason }
-                        ],
-                        source => $data->{source},
+                        meta      => \@meta,
+                        source    => $data->{source},
                     }
                 ],
             }

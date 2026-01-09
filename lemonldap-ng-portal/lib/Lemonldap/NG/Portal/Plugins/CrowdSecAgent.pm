@@ -87,8 +87,9 @@ sub sendIpAlerts {
     }
     my $msg = 'Authentication failed: '
       . &Lemonldap::NG::Portal::Main::Constants::portalConsts->{$ret};
+    my $login = $req->user // '';
     $self->alert( $req->address, $msg,
-        { scenario => 'llng/badcredentials', reason => $msg, } )
+        { scenario => 'llng/badcredentials', reason => $msg, login => $login } )
       ? $self->auditLog(
         $req,
         code    => 200,
