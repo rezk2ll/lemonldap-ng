@@ -138,7 +138,7 @@ sub alert {
 
     $data ||= {};
     my $max   = $self->conf->{crowdsecMaxFailures};
-    my $count = $self->getAlertsByIp($ip) || 0;
+    my $count = $self->getAlertsByIp( $ip, $data->{scenario} ) || 0;
     $data->{remediation} =
       ( $max and $count >= ( $max - 1 ) and $notBanned )
       ? JSON::true
@@ -222,7 +222,7 @@ sub getToken {
     my ($self) = @_;
 
     # Use token if available
-    return $self->token if $self->token and $self->tokenExp < time - 10;
+    return $self->token if $self->token and $self->tokenExp > time + 10;
 
     # Get new token
     my ( $user, $pwd ) =
