@@ -286,6 +286,7 @@
 "crowdsec":"Activación",
 "crowdsecAction":"Acción",
 "crowdsecAgent":"Activación",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Check delay",
 "crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",

@@ -16,6 +16,7 @@ my $res;
 my $lastAlertTypeIsBan;
 my $lastAlertLogin;
 my $lastAlertUri;
+my $lastAlertHasDecisions;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -55,6 +56,11 @@ LWP::Protocol::PSGI->register(
                               . ( $obj->[0]->{remediation} ? 'ban' : 'alert' )
                         );
                         $lastAlertTypeIsBan = $obj->[0]->{remediation};
+
+                        # Check if decisions are present
+                        $lastAlertHasDecisions =
+                          ( $obj->[0]->{decisions}
+                              and @{ $obj->[0]->{decisions} } ) ? 1 : 0;
 
                         # Extract login and uri from meta if present
                         $lastAlertLogin = undef;
@@ -110,8 +116,9 @@ subtest 'Crowdsec ban function', sub {
         'Lemonldap::NG::Portal::Plugins::CrowdSecAgent'};
 
     ok( $crowdsec->ban( '1.2.3.4', 'Test ban' ), 'Call to ban()' );
-    ok( $ban == 1,                               'Ban received' );
-    ok( $lastAlertTypeIsBan,                     'Alert type is "ban"' );
+    ok( $ban == 1,                   'Ban received' );
+    ok( $lastAlertTypeIsBan,         'Alert type is "ban"' );
+    ok( $lastAlertHasDecisions,      'Alert contains decisions array' );
 };
 
 subtest 'Report auth failures to Crowdsec', sub {
@@ -124,8 +131,9 @@ subtest 'Report auth failures to Crowdsec', sub {
         'Bad auth query'
     );
     expectReject($res);
-    ok( $ban == 2,            'Alert received' );
-    ok( !$lastAlertTypeIsBan, 'Alert type is "alert"' );
+    ok( $ban == 2,               'Alert received' );
+    ok( !$lastAlertTypeIsBan,    'Alert type is "alert"' );
+    ok( !$lastAlertHasDecisions, 'Alert has no decisions (simple alert)' );
     ok( $lastAlertLogin eq 'dwho', 'Login "dwho" is in alert metadata' );
 };
 

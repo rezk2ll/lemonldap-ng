@@ -1537,6 +1537,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Crowdsec-Agent check delay',
         },
+        crowdsecBanDuration => {
+            type          => 'text',
+            default       => '4h',
+            documentation => 'Crowdsec-Agent ban duration (e.g. 4h, 1d)',
+        },
         crowdsecFilters => {
             type          => 'text',
             documentation => 'Crowdsec filters directory',

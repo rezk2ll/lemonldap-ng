@@ -286,6 +286,7 @@
 "crowdsec":"Aktywacja",
 "crowdsecAction":"Akcja",
 "crowdsecAgent":"Aktywacja",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Sprawdź opóźnienie",
 "crowdsecFilters":"Katalog filtrów",
 "crowdsecIgnoreFailures":"Zignoruj ​​awarie Crowdsec",

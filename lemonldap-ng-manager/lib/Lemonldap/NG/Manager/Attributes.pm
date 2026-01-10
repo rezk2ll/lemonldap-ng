@@ -1318,6 +1318,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'crowdSecAgentResponseValue' => {
             'type' => 'text'
         },
+        'crowdsecBanDuration' => {
+            'default' => '4h',
+            'type'    => 'text'
+        },
         'crowdsecBlockDelay' => {
             'type' => 'int'
         },

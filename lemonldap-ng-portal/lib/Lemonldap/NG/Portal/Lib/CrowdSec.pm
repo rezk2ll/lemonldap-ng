@@ -191,7 +191,8 @@ sub getAlertsByIp {
 
 sub _banPayload {
     my ( $self, $ip, $msg, $data ) = @_;
-    $msg ||= 'Banned by LLNG Crowdsec plugin';
+    $msg  ||= 'Banned by LLNG Crowdsec plugin';
+    $data ||= {};
     foreach my $k ( keys %$defaultBanValues ) {
         $data->{$k} //= $defaultBanValues->{$k};
     }
@@ -209,18 +210,34 @@ sub _banPayload {
     );
     push @meta, { key => 'login', value => $login } if $login;
     push @meta, { key => 'uri',   value => $uri }   if $uri;
-    return to_json( [ {
-                %$data,
-                message => $msg,
-                events  => [ {
-                        timestamp => $data->{start_at},
-                        meta      => \@meta,
-                        source    => $data->{source},
-                    }
-                ],
+
+    my $alert = {
+        %$data,
+        message => $msg,
+        events  => [ {
+                timestamp => $data->{start_at},
+                meta      => \@meta,
+                source    => $data->{source},
             }
-        ]
-    );
+        ],
+    };
+
+    # Add decisions array when remediation is requested
+    # This ensures the IP is immediately banned by CrowdSec
+    if ( $data->{remediation} ) {
+        my $duration = $self->conf->{crowdsecBanDuration} || '4h';
+        $alert->{decisions} = [ {
+                duration => $duration,
+                type     => 'ban',
+                scope    => 'ip',
+                value    => $ip,
+                origin   => 'llng',
+                scenario => $data->{scenario},
+            }
+        ];
+    }
+
+    return to_json( [$alert] );
 }
 
 sub getToken {

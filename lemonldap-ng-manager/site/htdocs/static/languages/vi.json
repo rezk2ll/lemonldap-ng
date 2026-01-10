@@ -286,6 +286,7 @@
 "crowdsec":"Kích hoạt",
 "crowdsecAction":"Hành động",
 "crowdsecAgent":"Kích hoạt",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Check delay",
 "crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
