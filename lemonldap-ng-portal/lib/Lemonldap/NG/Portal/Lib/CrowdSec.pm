@@ -281,6 +281,11 @@ sub _banPayload {
     my $reason = delete( $data->{reason} ) || 'Banned by LLNG';
     my $login  = delete( $data->{login} );
     my $uri    = delete( $data->{uri} );
+
+    # Include login in message for CAPI transmission
+    # (events[].meta is NOT forwarded by LAPI to CAPI)
+    $msg .= " (login: $login)" if $login;
+
     $data->{scenario_hash} = sha256_hex( $data->{scenario} );
     my @meta = (
         { key => 'log_type', value => 'llng-auth' },
