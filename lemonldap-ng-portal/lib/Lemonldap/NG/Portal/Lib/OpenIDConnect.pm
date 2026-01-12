@@ -1905,10 +1905,6 @@ sub checkEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret, $method ) =
       $self->getEndPointAuthenticationCredentials($req);
 
-    # Unescape client secret to be compliant with RFC 6749
-    # https://datatracker.ietf.org/doc/html/rfc6749
-    $client_secret = uri_unescape($client_secret);  
-
     $self->logger->debug(
         'Authentication method: ' . ( $method || 'undefined' ) );
 
@@ -1987,6 +1983,10 @@ sub getEndPointAuthenticationCredentials {
               split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
+
+        # Unescape client secret to be compliant with RFC 6749
+        # https://datatracker.ietf.org/doc/html/rfc6749
+        $client_secret = uri_unescape($client_secret);  
 
         # Using multiple methods is an error
         if (
