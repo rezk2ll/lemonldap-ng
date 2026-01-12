@@ -39,7 +39,6 @@ lib/Lemonldap/NG/Common/Conf/RESTServer.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
 lib/Lemonldap/NG/Common/Conf/Wrapper.pm
-lib/Lemonldap/NG/Common/CrowdSec.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/EmailAddress.pm
 lib/Lemonldap/NG/Common/EmailTransport.pm
@@ -100,9 +99,12 @@ scripts/convertToHashSessionStorage
 scripts/encryptTotpSecrets
 scripts/importMetadata
 scripts/lemonldap-ng-cli
+scripts/lemonldap-ng-rotateOidcKeys.service
+scripts/lemonldap-ng-rotateOidcKeys.timer
 scripts/lemonldap-ng-sessions
 scripts/lmMigrateConfFiles2ini
 scripts/rotateOidcKeys
+scripts/rotateOidcKeys.cron.d
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t
 t/02-Common-Conf-Overlay.t
@@ -127,7 +129,6 @@ t/41-Common-EmailAddress.t
 t/45-importMetadata-config.t
 t/45-importMetadata.t
 t/50-Combination-Parser.t
-t/60-Cli-JSON.t
 t/60-Hashed-Session.t
 t/60-Purge-Persistent.t
 t/60-Purge.t
