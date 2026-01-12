@@ -153,10 +153,22 @@ sub alert {
     $msg ||= 'Reported by LLNG';
 
     # Pass previous alerts for enrichment when ban decision is made
-    $data->{_prevAlerts} = $prevAlerts
-      if $data->{remediation}
-      and $prevAlerts
-      and @$prevAlerts;
+    # Only include alerts that contributed to the decision (max - 1), capped at 30
+    if ( $data->{remediation} and $prevAlerts and @$prevAlerts ) {
+        my $limit = ( $max && $max > 1 ) ? $max - 1 : 30;
+        $limit = 30 if $limit > 30;
+        if ( @$prevAlerts > $limit ) {
+
+            # Take most recent alerts (sorted by start_at desc)
+            my @sorted =
+              sort { ( $b->{start_at} || '' ) cmp( $a->{start_at} || '' ) }
+              @$prevAlerts;
+            $data->{_prevAlerts} = [ @sorted[ 0 .. $limit - 1 ] ];
+        }
+        else {
+            $data->{_prevAlerts} = $prevAlerts;
+        }
+    }
 
     return $self->ban( $ip, $msg, $data );
 }
@@ -310,7 +322,7 @@ sub _banPayload {
 
             if ( $context->{count} ) {
                 push @meta,
-                  { key => 'previous_alert_count', value => $context->{count} };
+                  { key => 'previous_alert_count', value => "" . $context->{count} };
             }
 
             if ( $context->{first_alert} ) {
