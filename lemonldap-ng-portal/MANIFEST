@@ -819,6 +819,7 @@ t/35-REST-sessions-with-REST-server-and-MessageBroker-Redis.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
+t/36-Choice-with-Combination.t
 t/36-Combination-Custom.t
 t/36-Combination-Kerberos-multiple-domains.t
 t/36-Combination-Password.t
@@ -976,11 +977,11 @@ t/68-Impersonation.t
 t/68-InitializePasswordReset.t
 t/70-2F-Password.t
 t/70-2F-targetAuthnLevel.t
-t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-encryption.t
 t/70-2F-TOTP-Hook.t
 t/70-2F-TOTP-multiple-register.t
 t/70-2F-TOTP-multiple.t
+t/70-2F-TOTP-params-with-global-storage.t
 t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-LDAP.t
 t/70-2F-TOTP-with-Range.t
@@ -1070,6 +1071,7 @@ t/redis/redis.conf
 t/redis/redis.pm
 t/saml-lib.pm
 t/SamlHookPlugin.pm
+t/Secrets.pm
 t/sendCode.pl
 t/SendHtmlPlugin.pm
 t/sendOTP.pl
