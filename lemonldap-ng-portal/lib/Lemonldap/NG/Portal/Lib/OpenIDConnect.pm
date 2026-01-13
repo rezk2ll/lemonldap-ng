@@ -22,14 +22,13 @@ use MIME::Base64
   qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
 use Scalar::Util qw/looks_like_number/;
 use URI;
+use URI::Escape qw(uri_unescape);
 use URI::QueryParam;
 
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-use URI::Escape qw(uri_unescape);
-
-our $VERSION = '2.22.1';
+our $VERSION = '2.22.2';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -1986,8 +1985,13 @@ sub getEndPointAuthenticationCredentials {
 
         # Unescape clientId and clientSecret to be compliant with RFC 6749
         # https://datatracker.ietf.org/doc/html/rfc6749
+<<<<<<< HEAD
         $client_id = uri_unescape($client_id);  
         $client_secret = uri_unescape($client_secret);  
+=======
+        $client_id = uri_unescape($client_id);
+        $client_secret = uri_unescape($client_secret);
+>>>>>>> v2.22
 
         # Using multiple methods is an error
         if (
