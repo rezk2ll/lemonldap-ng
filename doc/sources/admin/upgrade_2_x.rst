@@ -17,6 +17,16 @@ Known regressions in the latest released version
 
 None.
 
+2.22.1
+------
+
+OpenID-Connect secrets
+~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from this version, LLNG follows strictly RFC 6749, so client\_id
+and client\_secret are "URI-decoded" before comparison. In some rare case
+this could generate a regression, then avoid using `%` character.
+
 2.22.0
 ------
 
