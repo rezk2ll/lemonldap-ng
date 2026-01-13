@@ -1985,13 +1985,8 @@ sub getEndPointAuthenticationCredentials {
 
         # Unescape clientId and clientSecret to be compliant with RFC 6749
         # https://datatracker.ietf.org/doc/html/rfc6749
-<<<<<<< HEAD
-        $client_id = uri_unescape($client_id);  
-        $client_secret = uri_unescape($client_secret);  
-=======
-        $client_id = uri_unescape($client_id);
+        $client_id     = uri_unescape($client_id);
         $client_secret = uri_unescape($client_secret);
->>>>>>> v2.22
 
         # Using multiple methods is an error
         if (
