@@ -27,6 +27,8 @@ use URI::QueryParam;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
+use URI::Escape qw(uri_unescape);
+
 our $VERSION = '2.22.1';
 
 use constant oidcErrorLevel => {
@@ -1981,6 +1983,11 @@ sub getEndPointAuthenticationCredentials {
               split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
+
+        # Unescape clientId and clientSecret to be compliant with RFC 6749
+        # https://datatracker.ietf.org/doc/html/rfc6749
+        $client_id = uri_unescape($client_id);  
+        $client_secret = uri_unescape($client_secret);  
 
         # Using multiple methods is an error
         if (
