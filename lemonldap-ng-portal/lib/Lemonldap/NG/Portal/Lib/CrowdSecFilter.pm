@@ -4,7 +4,7 @@ use strict;
 use Mouse::Role;
 use Regexp::Assemble;
 
-use constant knownCat      => (qw(url));
+use constant knownCat      => (qw(url urlskip));
 use constant knownSuffixes => (qw(re txt));
 
 # Initialization functions for CrowdsecFilter feature

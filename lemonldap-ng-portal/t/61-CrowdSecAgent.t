@@ -206,6 +206,17 @@ subtest 'Report bad urls to Crowdsec', sub {
     }
 };
 
+subtest 'Whitelisted URL should not be blocked', sub {
+    my $prevBan = $ban;
+
+    # /allowed-phpmyadmin matches the phpmyadmin regex but is whitelisted
+    ok( $res = $client->_get( '/allowed-phpmyadmin', accept => 'text/html' ),
+        "Test whitelisted url /allowed-phpmyadmin" );
+    ok( $res->[0] == 200, 'Got 200 OK (not blocked)' )
+      or explain( $res, 'Expected 200' );
+    ok( $ban == $prevBan, 'No alert sent for whitelisted URL' );
+};
+
 # Test ban trigger with crowdsecMaxFailures
 # crowdsecMaxFailures=5, so we need 4 previous alerts to trigger ban on 5th
 subtest 'Ban triggered after max failures', sub {
