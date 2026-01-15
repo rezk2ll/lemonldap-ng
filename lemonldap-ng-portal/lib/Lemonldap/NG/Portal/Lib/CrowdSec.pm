@@ -225,7 +225,14 @@ sub getAlertsByIp {
     my ( $self, $ip, $scenario ) = @_;
     $scenario ||= $defaultBanValues->{scenario};
     if ( my $token = $self->getToken ) {
-        my $url     = $self->crowdsecUrl . '/v1/alerts';
+
+        # Use API filters to avoid default 50 alerts limit
+        my $url =
+            $self->crowdsecUrl
+          . '/v1/alerts?scope=ip&value='
+          . $ip
+          . '&scenario='
+          . $scenario;
         my $request = HTTP::Request->new(
             GET => $url,
             [
@@ -247,12 +254,10 @@ sub getAlertsByIp {
             return;
         }
         my $timeLimit = time - ( $self->conf->{crowdsecBlockDelay} || 180 );
+
+        # API already filters by IP and scenario, just filter by time
         my @ipAlerts =
-          grep {
-                  $_->{source}->{value} eq $ip
-              and $_->{scenario} eq $scenario
-              and str2time( $_->{start_at} ) > $timeLimit
-          } @$alerts;
+          grep { str2time( $_->{start_at} ) > $timeLimit } @$alerts;
 
         # In list context, return both count and alerts for enrichment
         return wantarray ? ( scalar @ipAlerts, \@ipAlerts ) : scalar @ipAlerts;
