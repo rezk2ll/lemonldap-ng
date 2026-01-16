@@ -112,10 +112,12 @@ sub controlUrl {
     }
 
     return $ret unless $self->filters;
-    if (    $self->filters->{url}
+    if (
+            $self->filters->{url}
         and $req->env->{REQUEST_URI} =~ $self->filters->{url}
-        and not(    $self->filters->{urlskip}
-                and $req->env->{REQUEST_URI} =~ $self->filters->{urlskip} ) )
+        and not($self->filters->{urlskip}
+            and $req->env->{REQUEST_URI} =~ $self->filters->{urlskip} )
+      )
     {
         my $uri = $req->env->{REQUEST_URI};
         my $msg = "Bad URI detected: $uri";

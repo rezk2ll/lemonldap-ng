@@ -152,8 +152,8 @@ sub alert {
     $data->{reason} ||= 'Reported by LLNG';
     $msg ||= 'Reported by LLNG';
 
-    # Pass previous alerts for enrichment when ban decision is made
-    # Only include alerts that contributed to the decision (max - 1), capped at 30
+  # Pass previous alerts for enrichment when ban decision is made
+  # Only include alerts that contributed to the decision (max - 1), capped at 30
     if ( $data->{remediation} and $prevAlerts and @$prevAlerts ) {
         my $limit = ( $max && $max > 1 ) ? $max - 1 : 30;
         $limit = 30 if $limit > 30;
@@ -332,7 +332,10 @@ sub _banPayload {
 
             if ( $context->{count} ) {
                 push @meta,
-                  { key => 'previous_alert_count', value => "" . $context->{count} };
+                  {
+                    key   => 'previous_alert_count',
+                    value => "" . $context->{count}
+                  };
             }
 
             if ( $context->{first_alert} ) {
