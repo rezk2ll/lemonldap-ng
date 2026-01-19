@@ -42,7 +42,7 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
 
 -  **Javascript protection**: set httpOnly flag, to prevent cookie from
    being leaked by malicious javascript code
--  **Cookie expiration time**: by default, SSO cookie is a session
+-  **SSO cookie expiration time**: by default, SSO cookie is a session
    cookie, which means it will be destroyed when browser is closed. You
    can change this behavior by setting a cookie expiration time. It must
    be an integer. **Cookie Expiration Time** value is a number of

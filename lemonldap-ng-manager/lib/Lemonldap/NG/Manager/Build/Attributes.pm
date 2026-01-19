@@ -1584,7 +1584,7 @@ sub attributes {
         # Cookies
         cookieExpiration => {
             type          => 'intOrNull',
-            documentation => 'Cookie expiration',
+            documentation => 'SSO cookie expiration',
             flags         => 'hp',
         },
         cookieName => {
@@ -1592,7 +1592,7 @@ sub attributes {
             test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             msgFail       => '__badCookieName__',
             default       => 'lemonldap',
-            documentation => 'Name of the main cookie',
+            documentation => 'Name of the SSO cookie',
             flags         => 'hp',
         },
         domain => {
@@ -4839,7 +4839,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataAmrRules => {
             type    => 'keyTextContainer',
             keyTest => qr/\w/,
-            test       => sub { return perlExpr(@_) },
+            test    => sub { return perlExpr(@_) },
             default => {
                 'pwd' => '$authenticationLevel == 2',
                 'mfa' => '$_2f',
@@ -4847,7 +4847,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'otp' => '$_2f eq "TOTP"',
             },
             documentation => 'OpenID Connect AMR rules',
-            help => 'openidconnectservice.html#amrrules',
+            help          => 'openidconnectservice.html#amrrules',
         },
         oidcServiceHideMetadata => {
             type          => 'bool',
