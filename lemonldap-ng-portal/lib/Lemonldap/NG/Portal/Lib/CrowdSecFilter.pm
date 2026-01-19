@@ -51,7 +51,7 @@ sub parseFilters {
             if ($cat) {
                 $self->parseFilters( $path, $res, $cat );
             }
-            elsif ( my ($t) = grep { $file =~ m/^$_/ } knownCat ) {
+            elsif ( my ($t) = grep { $file =~ m/^${_}(?:[_\s-]|$)/ } knownCat ) {
                 $self->parseFilters( $path, $res, $t );
             }
             else {

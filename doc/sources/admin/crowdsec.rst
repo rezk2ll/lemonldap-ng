@@ -93,11 +93,13 @@ The category is the scope of the filter *(example: "url")* and the type is the
 format of the file *(example: "txt")*.
 The type is the suffix of the file, there are two ways to define the category:
 either by setting the category as second suffix in the main directory, either
-by storing the file into a subdirectory with a name starting by the category.
-Examples:
+by storing the file into a subdirectory named with the category followed by a
+separator (``_``, ``-`` or space) and an optional description, or exactly the
+category name. Examples:
 
 - ``bad.url.txt`` is a file formatted as "txt" and owned by category "url"
-- ``url1/bad.re`` is a file formatted as "re" and owned by category "url"
+- ``url_scanner/bad.re`` is a file formatted as "re" and owned by category "url"
+- ``urlskip-icons/icons.re`` is a file formatted as "re" and owned by category "urlskip"
 
 .. _Formats:
 

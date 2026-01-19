@@ -186,9 +186,9 @@ subtest 'Report unknown user to Crowdsec', sub {
 };
 
 our %badUrls = (
-    'Filter in a sub-directory named url1' => '/bb/.htaccess',
-    'Filter type re in main directory'     => '/aa/phpmyadmin',
-    'Filter type txt in main directory'    => '/config.php',
+    'Filter in a sub-directory named url_1' => '/bb/.htaccess',
+    'Filter type re in main directory'      => '/aa/phpmyadmin',
+    'Filter type txt in main directory'     => '/config.php',
 );
 subtest 'Report bad urls to Crowdsec', sub {
     my $prevBan = $ban;
@@ -223,8 +223,7 @@ subtest 'Ban triggered after max failures', sub {
 
     # Setup mock previous alerts for IP 127.0.0.1 (4 alerts to trigger ban)
     my $now = time;
-    @mockPreviousAlerts = (
-        {
+    @mockPreviousAlerts = ( {
             source   => { value => '127.0.0.1' },
             scenario => 'llng/badcredentials',
             start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 90 ) ),
@@ -286,8 +285,7 @@ subtest 'URL scan ban triggered after max failures', sub {
 
     # Setup mock previous alerts for URL scan (4 alerts to trigger ban)
     my $now = time;
-    @mockPreviousAlerts = (
-        {
+    @mockPreviousAlerts = ( {
             source   => { value => '127.0.0.1' },
             scenario => 'llng/urlscan',
             start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 90 ) ),
