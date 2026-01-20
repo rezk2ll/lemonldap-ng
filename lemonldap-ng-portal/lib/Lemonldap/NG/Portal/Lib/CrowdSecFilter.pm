@@ -19,7 +19,7 @@ sub initializeFilters {
                 $re->add( map { qr/(?i)$_/ } @{ $filters->{$cat}->{re} } )
                   if $filters->{$cat}->{re};
                 $re->add( map { qr/(?i)\Q$_\E/ } @{ $filters->{$cat}->{txt} } )
-                  if @{ $filters->{$cat}->{txt} };
+                  if $filters->{$cat}->{txt};
             };
             if ($@) {
                 $self->logger->error("Unable to parst category $cat: $@");
