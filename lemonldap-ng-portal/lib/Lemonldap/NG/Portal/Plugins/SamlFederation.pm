@@ -112,9 +112,8 @@ sub get_sp_config_from_placeholders {
         }
     }
 
-    # handle eduPersonTargetedID
-    if ( $attributes->{eduPersonTargetedID} ) {
-        delete $attributes->{eduPersonTargetedID};
+    # if SP wants a persistent NameID (eduPersonTargetedID)
+    if ( $attributes->{__persistent_name_id} ) {
         $options->{samlSPMetaDataOptionsNameIDFormat} = 'persistent';
     }
 
@@ -261,7 +260,13 @@ sub get_config_info_from_xml_federation {
                         $self->logger->debug( "Attribute $friendlyname ($name)"
                               . " requested by SP $entityID\n" );
 
-                        $requestedAttributes->{$friendlyname} =
+                        # handle eduPersonTargetedID
+                        my $session_attr_name = $friendlyname;
+                        if ( $name eq "urn:oid:1.3.6.1.4.1.5923.1.1.1.10" ) {
+                            $session_attr_name = "__persistent_name_id";
+                        }
+
+                        $requestedAttributes->{$session_attr_name} =
                           "$required;$name;$nameformat;$friendlyname";
                     }
                 }
