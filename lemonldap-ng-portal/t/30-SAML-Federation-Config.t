@@ -92,7 +92,9 @@ SKIP: {
             'eduPersonPrincipalName' =>
 '0;urn:oid:1.3.6.1.4.1.5923.1.1.1.6;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;eduPersonPrincipalName',
             'mail' =>
-'0;urn:oid:0.9.2342.19200300.100.1.3;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;mail'
+'0;urn:oid:0.9.2342.19200300.100.1.3;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;mail',
+            '__persistent_name_id' =>
+'0;urn:oid:1.3.6.1.4.1.5923.1.1.1.10;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;eduPersonTargetedID'
         },
         "SP attributes have been imported as configured by policy",
     );
