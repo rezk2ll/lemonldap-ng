@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"Varlık Tanımlayıcı",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"İsteğe bağlı nitelikler",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Gerekli nitelikler",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"UTF-8'e zorla",
 "samlSPMetaDataOptionsNameIDFormat":"Varsayılan NameID formatı",
 "samlSPMetaDataOptionsNameIDSessionKey":"NameID oturum anahtarını zorla",

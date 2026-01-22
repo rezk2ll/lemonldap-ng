@@ -2067,6 +2067,12 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceNameIDFormat",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceNameIDFormat",
+                  "title" : "samlSPMetaDataOptionsForceNameIDFormat",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsNameIDSessionKey",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsNameIDSessionKey",
                   "title" : "samlSPMetaDataOptionsNameIDSessionKey"

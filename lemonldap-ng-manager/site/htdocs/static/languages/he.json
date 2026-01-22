@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"מזהה יישות",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"Optional attributes",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Required attributes",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"אילוץ UTF-8",
 "samlSPMetaDataOptionsNameIDFormat":"Default NameID format",
 "samlSPMetaDataOptionsNameIDSessionKey":"Force NameID session key",
