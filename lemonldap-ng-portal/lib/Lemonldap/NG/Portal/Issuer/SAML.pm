@@ -578,7 +578,9 @@ sub run {
 
             # NameID unspecified is forced to default NameID format
             if (  !$nameIDFormat
-                or $nameIDFormat eq $self->getNameIDFormat("unspecified") )
+                or $nameIDFormat eq $self->getNameIDFormat("unspecified")
+                or $self->spOptions->{$sp}
+                ->{samlSPMetaDataOptionsForceNameIDFormat} )
             {
                 $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
 
