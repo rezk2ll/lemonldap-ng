@@ -110,6 +110,9 @@ Authentication response
 -  **Default NameID format**: if no NameID format is requested, or the
    NameID format undefined, this NameID format will be used. If no
    value, the default NameID format is Email.
+-  **Force NameID format**: some SPs ask for a particular NameID format in
+   their SAML request. Enable this option to always use the default NameID
+   format even if the SP requests another one.
 -  **Force NameID session key**: if empty, the NameID mapping defined in
    :doc:`SAML service<samlservice>` configuration will be used. You can
    force here another session key that will be used as NameID content.
