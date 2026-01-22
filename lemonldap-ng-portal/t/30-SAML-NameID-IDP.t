@@ -29,11 +29,13 @@ sub runTest {
     my $req_nif        = $args{'requested_format'};
     my $idp_nif        = $args{'idp_conf'};
     my $force_attr     = $args{'idp_attr'};
+    my $force_fmt      = $args{'idp_forcefmt'};
     my $expect_res_nif = $args{'expected_format'};
     my $expect_nameid  = $args{'expected_nameid'};
 
     # Initialization
-    $issuer = register( 'issuer', sub { issuer( $idp_nif, $force_attr ) } );
+    $issuer =
+      register( 'issuer', sub { issuer( $idp_nif, $force_attr, $force_fmt ) } );
     my $id = $issuer->login("french");
 
     my $request = getAuthnRequest($req_nif);
@@ -210,6 +212,37 @@ SKIP: {
     isnt( $transient_id, $persistent_id,
         "Transient ID is different from persistent ID" );
 
+    # Forcing NameID format at the IDP side
+    runTest(
+        requested_format =>
+          "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+        idp_conf        => "unspecified",
+        idp_attr        => "mail",
+        idp_forcefmt    => 1,
+        expected_format =>
+          "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
+        expected_nameid => 'fa@badwolf.org'
+    );
+    runTest(
+        requested_format =>
+          "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+        idp_conf        => "persistent",
+        idp_attr        => undef,
+        idp_forcefmt    => 1,
+        expected_format =>
+          "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
+        expected_nameid => $persistent_id,
+    );
+    runTest(
+        requested_format =>
+          "urn:oasis:names:tc:SAML:2.0:nameid-format:transient",
+        idp_conf        => "persistent",
+        idp_attr        => undef,
+        idp_forcefmt    => 1,
+        expected_format =>
+          "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
+        expected_nameid => $persistent_id,
+    );
 }
 clean_sessions();
 done_testing();
@@ -245,7 +278,7 @@ sub getAuthnRequest {
 }
 
 sub issuer {
-    my ( $res_nif, $force_attr ) = @_;
+    my ( $res_nif, $force_attr, $force_fmt ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel               => $debug,
@@ -271,6 +304,11 @@ sub issuer {
                             $force_attr
                             ? ( samlSPMetaDataOptionsNameIDSessionKey =>
                                   $force_attr, )
+                            : ()
+                        ),
+                        (
+                            $force_fmt
+                            ? ( samlSPMetaDataOptionsForceNameIDFormat => 1 )
                             : ()
                         ),
                     }
