@@ -19,8 +19,15 @@ has externalMenuUrl => ( is => 'rw' );
 sub init {
     my ($self) = @_;
 
-    # Compile URL with variable substitution
     my $url = $self->conf->{externalMenu};
+
+    # Minimum URL format validation
+    if ( $url and $url !~ m#^(?:\w+)://# ) {
+        $self->logger->error('externalMenu must be a valid URL');
+        return 0;
+    }
+
+    # Compile URL with variable substitution
     my $sub =
       $self->p->HANDLER->buildSub( $self->p->HANDLER->substitute("qq{$url}") );
     unless ($sub) {
