@@ -140,33 +140,32 @@ sub alert {
     my $max = $self->conf->{crowdsecMaxFailures};
 
     # Get both count and previous alerts for enrichment
-    my ( $count, $prevAlerts ) =
-      $self->getAlertsByIp( $ip, $data->{scenario} );
-    $count ||= 0;
+    my @prevAlerts = $self->getAlertsByIp( $ip, $data->{scenario} );
 
     $data->{remediation} =
-      ( $max and $count >= ( $max - 1 ) and $notBanned )
+      ( $max and @prevAlerts >= ( $max - 1 ) and $notBanned )
       ? JSON::true
       : JSON::false;
-    $self->logger->debug("Crowdsec alerts count is $count for $ip");
+    $self->logger->debug(
+        "Crowdsec alerts count is " . scalar(@prevAlerts) . " for $ip" );
     $data->{reason} ||= 'Reported by LLNG';
     $msg ||= 'Reported by LLNG';
 
   # Pass previous alerts for enrichment when ban decision is made
   # Only include alerts that contributed to the decision (max - 1), capped at 30
-    if ( $data->{remediation} and $prevAlerts and @$prevAlerts ) {
+    if ( $data->{remediation} and @prevAlerts ) {
         my $limit = ( $max && $max > 1 ) ? $max - 1 : 30;
         $limit = 30 if $limit > 30;
-        if ( @$prevAlerts > $limit ) {
+        if ( @prevAlerts > $limit ) {
 
             # Take most recent alerts (sorted by start_at desc)
             my @sorted =
               sort { ( $b->{start_at} || '' ) cmp( $a->{start_at} || '' ) }
-              @$prevAlerts;
+              @prevAlerts;
             $data->{_prevAlerts} = [ @sorted[ 0 .. $limit - 1 ] ];
         }
         else {
-            $data->{_prevAlerts} = $prevAlerts;
+            $data->{_prevAlerts} = \@prevAlerts;
         }
     }
 
@@ -245,14 +244,23 @@ sub getAlertsByIp {
                 join ' ',           'Unable to get alerts',
                 $resp->status_line, $resp->decoded_content
             );
-            return;
+            return ();
         }
-        my $alerts = eval { from_json( $resp->decoded_content ) };
-        if ( $@ or !$alerts ) {
+        my $content = $resp->decoded_content;
+
+        # CrowdSec returns "null" when there are no alerts
+        if ( !$content or $content eq 'null' ) {
+            $self->logger->debug("No alerts found for $ip");
+            return ();
+        }
+        my $alerts = eval { from_json($content) };
+        if ($@) {
             $self->logger->error( join ' ', 'Unable to read Crowdsec response:',
-                $@, $resp->decoded_content );
-            return;
+                $@, ", $content" );
+            return ();
         }
+
+        # Default: 3 hours
         my $timeLimit = time - ( $self->conf->{crowdsecBlockDelay} || 180 );
 
         # API already filters by IP and scenario, just filter by time
@@ -260,11 +268,11 @@ sub getAlertsByIp {
           grep { str2time( $_->{start_at} ) > $timeLimit } @$alerts;
 
         # In list context, return both count and alerts for enrichment
-        return wantarray ? ( scalar @ipAlerts, \@ipAlerts ) : scalar @ipAlerts;
+        return @ipAlerts;
     }
     else {
-        $self->logger->error('Unable to push Crowdsec decision');
-        return;
+        $self->logger->error('Unable to query Crowdsec');
+        return ();
     }
 }
 
