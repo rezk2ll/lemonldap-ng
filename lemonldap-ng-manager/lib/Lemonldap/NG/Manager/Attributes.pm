@@ -1555,6 +1555,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'ext2FValidateCommand' => {
             'type' => 'text'
         },
+        'externalMenu' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'facebookAppId' => {
             'type' => 'text'
         },

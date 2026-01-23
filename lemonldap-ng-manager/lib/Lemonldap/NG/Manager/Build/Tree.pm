@@ -1329,6 +1329,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'jsRedirect',
+                                'externalMenu',
                                 'noAjaxHook',
                                 'skipRenewConfirmation',
                                 'skipUpgradeConfirmation',

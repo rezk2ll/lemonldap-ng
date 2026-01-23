@@ -393,6 +393,7 @@
 "ext2fLabel":"Метка",
 "ext2fLogo":"Лого",
 "ext2fResendInterval":"Заново отправить интервал",
+"externalMenu":"External menu URL",
 "facebookAppId":"Идентификатор приложения Facebook",
 "facebookAppSecret":"Секрет приложения Facebook",
 "facebookAuthnLevel":"Уровень аутентификации",
