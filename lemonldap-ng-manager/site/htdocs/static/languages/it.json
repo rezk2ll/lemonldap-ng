@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"Identificatore dell'entità",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"Optional attributes",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Required attributes",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"Forza UTF-8",
 "samlSPMetaDataOptionsNameIDFormat":"Formato predefinito NameID",
 "samlSPMetaDataOptionsNameIDSessionKey":"Forza la chiave di sessione NameID",

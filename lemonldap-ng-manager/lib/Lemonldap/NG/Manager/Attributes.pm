@@ -5184,6 +5184,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'samlSPMetaDataOptionsForceNameIDFormat' => {
+            'type' => 'bool'
+        },
         'samlSPMetaDataOptionsForceUTF8' => {
             'default' => 1,
             'type'    => 'bool'

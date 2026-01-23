@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"實體識別符號",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"Optional attributes",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Required attributes",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"強制 UTF-8",
 "samlSPMetaDataOptionsNameIDFormat":"預設 NameID 格式",
 "samlSPMetaDataOptionsNameIDSessionKey":"強制 NameID 工作階段金鑰",

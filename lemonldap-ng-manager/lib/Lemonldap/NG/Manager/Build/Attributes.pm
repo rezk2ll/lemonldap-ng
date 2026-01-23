@@ -3807,6 +3807,7 @@ sub attributes {
             ],
             default => '',
         },
+        samlSPMetaDataOptionsForceNameIDFormat    => { type => 'bool' },
         samlSPMetaDataOptionsNameIDSessionKey    => { type => 'text' },
         samlSPMetaDataOptionsNotOnOrAfterTimeout => {
             type    => 'int',

@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"معرف الكيان",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"Optional attributes",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Required attributes",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"فرضUTF-8  ",
 "samlSPMetaDataOptionsNameIDFormat":"صيغة معرف الاسم الاعْتيادي",
 "samlSPMetaDataOptionsNameIDSessionKey":"فرض اسم المعرف لمفتاح الجلسة",

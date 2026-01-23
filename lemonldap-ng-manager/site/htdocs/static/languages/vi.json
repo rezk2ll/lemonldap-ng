@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"Thực thể trình định danh",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"thuộc tính tùy chọn",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Thuộc tính bắt buộc",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"Bắt buộc UTF-8",
 "samlSPMetaDataOptionsNameIDFormat":"Định dạng NameID mặc định",
 "samlSPMetaDataOptionsNameIDSessionKey":"Bắt buộc khóa phiên NameID",

@@ -1224,6 +1224,7 @@
 "samlSPMetaDataOptionsFederationEntityID":"Идентификатор объекта",
 "samlSPMetaDataOptionsFederationOptionalAttributes":"Опциональные атрибуты",
 "samlSPMetaDataOptionsFederationRequiredAttributes":"Обязательные атрибуты ",
+"samlSPMetaDataOptionsForceNameIDFormat":"Force NameID format",
 "samlSPMetaDataOptionsForceUTF8":"Вызвать UTF-8",
 "samlSPMetaDataOptionsNameIDFormat":"Формат NameID по умолчанию",
 "samlSPMetaDataOptionsNameIDSessionKey":"Принудительный ключ сеанса NameID",

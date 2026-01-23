@@ -125,6 +125,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'samlSPMetaDataOptionsNameIDFormat',
+                            'samlSPMetaDataOptionsForceNameIDFormat',
                             'samlSPMetaDataOptionsNameIDSessionKey',
                             'samlSPMetaDataOptionsOneTimeUse',
                             'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout',
