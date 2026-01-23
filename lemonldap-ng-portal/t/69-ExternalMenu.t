@@ -50,7 +50,7 @@ subtest 'Normal authentication redirects to external menu', sub {
         'Auth query'
     );
     expectRedirection( $res,
-        'https://apps.example.com/home?user=dwho&mail=dwho@badwolf.org' );
+        'https://apps.example.com/home?user=dwho&mail=dwho%40badwolf.org' );
 
     $id = expectCookie($res);
 };
@@ -65,7 +65,7 @@ subtest 'Authenticated users are redirected to external menu', sub {
         'Access portal as authenticated user'
     );
     expectRedirection( $res,
-        'https://apps.example.com/home?user=dwho&mail=dwho@badwolf.org' );
+        'https://apps.example.com/home?user=dwho&mail=dwho%40badwolf.org' );
 };
 
 subtest 'Plugins with API are not affected', sub {

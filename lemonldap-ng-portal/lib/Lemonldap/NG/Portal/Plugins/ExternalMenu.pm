@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Plugins::ExternalMenu;
 
 use strict;
 use Mouse;
+use URI::Escape;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 our $VERSION = '2.22.0';
@@ -11,9 +12,6 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 # INTERFACE
 use constant endAuth     => 'setExternalMenu';
 use constant forAuthUser => 'setExternalMenu';
-
-# Compiled URL sub
-has externalMenuUrl => ( is => 'rw' );
 
 # INITIALIZATION
 sub init {
@@ -26,16 +24,6 @@ sub init {
         $self->logger->error('externalMenu must be a valid URL');
         return 0;
     }
-
-    # Compile URL with variable substitution
-    my $sub =
-      $self->p->HANDLER->buildSub( $self->p->HANDLER->substitute("qq{$url}") );
-    unless ($sub) {
-        $self->logger->error( 'externalMenu URL compilation error: '
-              . $self->p->HANDLER->tsv->{jail}->error );
-        return 0;
-    }
-    $self->externalMenuUrl($sub);
     return 1;
 }
 
@@ -47,10 +35,10 @@ sub setExternalMenu {
     # - Authentication succeeded (PE_OK)
     # - urldc is not already set
     unless ( $req->{urldc} ) {
-        if ( my $url = $self->externalMenuUrl->( $req, $req->sessionInfo ) ) {
-            $self->logger->debug("ExternalMenu: redirecting to $url");
-            $req->{urldc} = $url;
-        }
+        my $url = $self->conf->{externalMenu};
+        $url =~ s/\$(\w+)/uri_escape($req->sessionInfo->{$1})/ge;
+        $url =~ s/\$\{(\w+)\}/uri_escape($req->sessionInfo->{$1})/ge;
+        $req->{urldc} = $url;
     }
     return PE_OK;
 }
