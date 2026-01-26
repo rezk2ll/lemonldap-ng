@@ -13,6 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SIGNATURE_ERROR
   PE_SENDRESPONSE
   PE_USERNOTFOUND
+  PE_WAIT
 );
 
 our $VERSION = '2.22.0';
@@ -22,6 +23,7 @@ our @ALERTS = (
     PE_BADCERTIFICATE,       PE_MALFORMEDUSER,
     PE_SAML_SIGNATURE_ERROR, PE_OPENID_BADID,
     PE_CAPTCHAERROR,         PE_BADOTP,
+    PE_WAIT,
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
