@@ -1375,6 +1375,14 @@ sub tests {
             return ( 0,
                 'Crowdsec Agent enabled without machine_id and password' );
         },
+
+        # External menu URL must be a valid URL
+        externalMenuUrl => sub {
+            return 1 unless $conf->{externalMenu};
+            return ( 0, 'External menu URL looks invalid' )
+              unless $conf->{externalMenu} =~ m#^(\w+)://#;
+            return 1;
+        },
     };
 }
 

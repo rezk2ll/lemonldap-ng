@@ -426,6 +426,12 @@ sub attributes {
             default       => 0,
             documentation => 'Use javascript for redirections',
         },
+        externalMenu => {
+            type          => 'text',
+            default       => '',
+            documentation =>
+'URL to redirect authenticated users to instead of showing menu. Supports session variables like $uid, $mail, etc.',
+        },
         logoutServices => {
             type          => 'keyTextContainer',
             help          => 'logoutforward.html',

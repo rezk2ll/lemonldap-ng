@@ -46,6 +46,7 @@ our @pList = (
     refreshSessions         => '::Plugins::Refresh',
     crowdsec                => '::Plugins::CrowdSec',
     crowdsecAgent           => '::Plugins::CrowdSecAgent',
+    externalMenu            => '::Plugins::ExternalMenu',
     locationDetect          => '::Plugins::LocationDetect',
     globalLogoutRule        => '::Plugins::GlobalLogout',
     samlFederationFiles     => '::Plugins::SamlFederation',

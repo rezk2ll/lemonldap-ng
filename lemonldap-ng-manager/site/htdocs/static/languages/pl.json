@@ -393,6 +393,7 @@
 "ext2fLabel":"Etykieta",
 "ext2fLogo":"Logo",
 "ext2fResendInterval":"Interwał ponownego wysyłania",
+"externalMenu":"External menu URL",
 "facebookAppId":"Identyfikator aplikacji na Facebooku",
 "facebookAppSecret":"Sekret aplikacji na Facebooku",
 "facebookAuthnLevel":"Poziom uwierzytelnienia",

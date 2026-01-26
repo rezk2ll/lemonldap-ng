@@ -393,6 +393,7 @@
 "ext2fLabel":"Nhãn",
 "ext2fLogo":"Logo",
 "ext2fResendInterval":"Gửi lại khoảng thời gian",
+"externalMenu":"External menu URL",
 "facebookAppId":"ID ứng dụng Facebook ",
 "facebookAppSecret":"Ứng dụng Facebook bí mật",
 "facebookAuthnLevel":"Mức xác thực",

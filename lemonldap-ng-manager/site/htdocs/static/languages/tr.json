@@ -393,6 +393,7 @@
 "ext2fLabel":"Etiket",
 "ext2fLogo":"Logo",
 "ext2fResendInterval":"Yeniden gönderme aralığı",
+"externalMenu":"External menu URL",
 "facebookAppId":"Facebook uygulama ID",
 "facebookAppSecret":"Facebook uygulama gizli anahtar",
 "facebookAuthnLevel":"Doğrulama seviyesi",
