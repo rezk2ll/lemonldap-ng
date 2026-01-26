@@ -175,6 +175,51 @@ Optional Patroni parameters:
 - **patroniCacheTTL**: Time-to-live in seconds for the cached leader information. If all Patroni APIs are temporarily unavailable, LLNG will use the last known leader if the cache is still valid (default: 60)
 - **patroniCircuitBreakerDelay**: Circuit breaker delay in seconds. When Patroni API requests fail, LLNG will wait this amount of time before retrying, using the cached leader in the meantime (default: 30)
 
+Alternative: DBD::Patroni
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As an alternative to LLNG's native Patroni support, you can use the
+`DBD::Patroni <https://metacpan.org/dist/DBD-Patroni>`_ Perl driver. This
+driver wraps DBD::Pg and handles Patroni leader discovery transparently at
+the DBI level.
+
+**Additional features compared to native support:**
+
+- Automatic query routing: SELECT queries go to replicas, write queries to the leader
+- Load balancing modes: round_robin, random, or leader_only
+- Works with the standard CDBI backend (no LLNG-specific code needed)
+
+Installation:
+
+::
+
+   cpan DBD::Patroni
+
+Configuration:
+
+.. code-block:: ini
+
+   [configuration]
+   type = CDBI
+   dbiChain    = dbi:Patroni:dbname=lemonldap-ng;patroni_url=http://1.2.3.2:8008/cluster,http://1.2.3.3:8008/cluster,http://1.2.3.4:8008/cluster
+   dbiUser     = lemonldaprw
+   dbiPassword = mypassword
+
+Available DSN options:
+
+- **patroni_url**: Comma-separated Patroni REST API endpoints (required)
+- **patroni_lb**: Load balancing mode - ``round_robin`` (default), ``random``, or ``leader_only``
+- **patroni_timeout**: HTTP timeout for Patroni API calls in seconds (default: 3)
+
+For HTTPS with self-signed certificates, you can disable SSL verification:
+
+.. code-block:: ini
+
+   dbiChain = dbi:Patroni:dbname=lemonldap-ng;patroni_url=https://...;patroni_ssl_verify=0
+
+See `DBD::Patroni documentation <https://metacpan.org/dist/DBD-Patroni>`_ for
+more options including mTLS configuration.
+
 RDBI (deprecated)
 ------------------
 
