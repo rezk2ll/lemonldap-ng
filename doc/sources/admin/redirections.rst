@@ -104,5 +104,7 @@ Portal Redirections
    redirected to 2FA page.
 -  **External menu URL**: If set, authenticated users will be redirected
    to this URL instead of seeing the portal menu. This URL supports
-   session variables interpolation (e.g. ``$uid``, ``$mail``). The
-   standard ``url`` parameter takes priority over this setting.
+   session variables interpolation (e.g. ``$uid``, ``$mail``). Note: if
+   the user was redirected to the portal with a target URL (via the
+   ``url`` query parameter), that target URL takes priority over this
+   setting.
