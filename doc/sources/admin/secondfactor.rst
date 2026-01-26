@@ -54,6 +54,12 @@ If you want to force a 2F registration on first login, you can use the *Force
 You can use a :doc:`rule <writingrulesand_headers>` to enable this behavior only for
 some users.
 
+.. versionadded:: 2.23.0
+
+   Using an expression such as ``$targetAuthnLevel <= 10`` forces a user to
+   register a second factor if the application targetAuthnLevel is equal to the
+   required authentication level.
+
 Session upgrade through 2FA
 ---------------------------
 
@@ -79,13 +85,13 @@ of doing a complete reauthentication.
 Special Rule Activation
 -----------------------
 
-When activating second factor an additional option is available called "Special Rule". This 
-option allows the second factor to be enabled only when the conditions of the expression are met.
+When activating second factor an additional option is available called "Special
+Rule". This option allows the second factor to be enabled only when the
+conditions of the expression are met.
 
-.. tip::
-
-   Using the following expression ``$targetAuthnLevel <= 10`` enables the second factor when 
-   the application targetAuthnLevel is equal to the required authentication level.
+Using an expression such as ``$targetAuthnLevel <= 10`` enables the second
+factor when the application targetAuthnLevel is equal to the required
+authentication level.
 
 Login timeout
 -------------

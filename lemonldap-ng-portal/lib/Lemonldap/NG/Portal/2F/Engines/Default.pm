@@ -407,8 +407,12 @@ sub run {
     # Note that a rule may forbid access after (GrantSession plugin)
     unless (@am) {
 
+        my $modifiedSession = { %{ $req->sessionInfo // {} } };
+        $modifiedSession->{targetAuthnLevel} = $req->{pdata}->{targetAuthnLevel}
+          if $req->{pdata}->{targetAuthnLevel};
+
         # Except if 2FA is required, move to registration
-        if ( $self->sfReq->( $req, $req->sessionInfo ) ) {
+        if ( $self->sfReq->( $req, $modifiedSession ) ) {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
