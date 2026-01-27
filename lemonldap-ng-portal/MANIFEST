@@ -709,6 +709,7 @@ t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth-with-Cmb-Kerberos.t
 t/30-SAML-ReAuth.t
 t/30-SAML-RelayState.t
+t/30-SAML-Response.t
 t/30-SAML-SP-rule.t
 t/31-Auth-and-issuer-CAS-declared-app-multiple-urls.t
 t/31-Auth-and-issuer-CAS-declared-app-userattr.t
