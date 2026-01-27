@@ -1428,7 +1428,7 @@ sub updateToken {
 
     if ( $oidcSession->error ) {
         $self->userLogger->warn(
-            "OpenIDConnect session $id isn't yet available");
+            "OpenIDConnect session $id not found");
         return undef;
     }
 
@@ -1442,6 +1442,8 @@ sub getOpenIDConnectSession {
     my $self = shift;
     my $id   = shift;
     my $type = shift;
+
+    my $type_log = $type || "session";
 
     # Check old method signature ($id, $type, $ttl, $info)
     my %opts =
@@ -1481,10 +1483,10 @@ sub getOpenIDConnectSession {
     if ( $oidcSession->error ) {
         if ($id) {
             $self->userLogger->warn(
-                "OpenIDConnect session $id isn't yet available");
+                "OpenIDConnect $type_log $id not found");
         }
         else {
-            $self->logger->error("Unable to create new OpenIDConnect session");
+            $self->logger->error("Unable to create new OpenIDConnect $type_log");
             $self->logger->error( $oidcSession->error );
         }
         return undef;
@@ -1507,7 +1509,7 @@ sub getOpenIDConnectSession {
         if (
             time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            $self->logger->notice("Session $id has expired");
+            $self->logger->notice("OpenIDConnect $type_log $id has expired");
             return undef;
         }
     }
@@ -1515,7 +1517,7 @@ sub getOpenIDConnectSession {
     # Make sure the token is still valid, we already compensated for
     # different TTLs when storing _utime
     if ( time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) ) {
-        $self->logger->notice("Session $id has expired");
+        $self->logger->notice("OpenIDConnect $type_log $id has expired");
         return undef;
     }
 
