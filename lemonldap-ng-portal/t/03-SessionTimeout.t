@@ -25,7 +25,7 @@ my $client = LLNG::Manager::Test->new(
 
 # Try to authenticate with good password
 # --------------------------------------
-diag 'Waiting';
+note 'Waiting';
 ok(
     $res = $client->_post(
         '/',
