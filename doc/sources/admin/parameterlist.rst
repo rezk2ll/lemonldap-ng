@@ -638,14 +638,14 @@ contextSwitchingUnrestrictedUsersRule
     :Used by portal: yes
 
 cookieExpiration
-    :Location: General Parameters » Cookies » Cookie expiration time
-    :Description: Cookie expiration
+    :Location: General Parameters » Cookies » SSO cookie expiration time
+    :Description: SSO cookie expiration
     :Used by portal: yes
     :Used by handler: yes
 
 cookieName
     :Location: General Parameters » Cookies » Cookie name
-    :Description: Name of the main cookie
+    :Description: Name of the SSO cookie
     :Used by portal: yes
     :Used by handler: yes
 
@@ -1008,6 +1008,11 @@ ext2fLogo
 ext2fResendInterval
     :Location: General Parameters » Second factors » External second factor » Re-send interval
     :Description: Delay before user is allowed to resend code
+    :Used by portal: yes
+
+externalMenu
+    :Location: General Parameters » Advanced parameters » Portal redirections » External menu URL
+    :Description: URL to redirect authenticated users to instead of showing menu. Supports session variables like $uid, $mail, etc.
     :Used by portal: yes
 
 facebookAppId
@@ -3905,6 +3910,10 @@ samlSPMetaDataOptionsFederationRequiredAttributes
     :Location: SAML Service Providers » *configuration key* » Options » Federation » Required attributes
     :Used by portal: yes
 
+samlSPMetaDataOptionsForceNameIDFormat
+    :Location: SAML Service Providers » *configuration key* » Options » Authentication response » Force NameID format
+    :Used by portal: yes
+
 samlSPMetaDataOptionsForceUTF8
     :Location: SAML Service Providers » *configuration key* » Options » Authentication response » Force UTF-8
     :Used by portal: yes
@@ -4358,6 +4367,11 @@ totp2fActivation
     :Description: TOTP activation
     :Used by portal: yes
 
+totp2fAlgorithm
+    :Location: General Parameters » Second factors » TOTP » Algorithm
+    :Description: Hashing algorithm to use for HMAC
+    :Used by portal: yes
+
 totp2fAuthnLevel
     :Location: General Parameters » Second factors » TOTP » Authentication level
     :Description: Authentication level for users authentified by password+TOTP
@@ -4374,7 +4388,7 @@ totp2fEncryptSecret
     :Used by portal: yes
 
 totp2fInterval
-    :Location: General Parameters » Second factors » TOTP » Interval
+    :Location: General Parameters » Second factors » TOTP » Time step
     :Description: TOTP interval
     :Used by portal: yes
 
