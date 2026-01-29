@@ -125,8 +125,8 @@ contextSwitchingPrefix                                  Prefix to store real ses
 contextSwitchingRule                                    Context switching activation rule                                                    ✔
 contextSwitchingStopWithLogout                          Stop context switching by logout                                                     ✔
 contextSwitchingUnrestrictedUsersRule                   Context switching unrestricted users rule                                            ✔
-cookieExpiration                                        Cookie expiration                                                                    ✔      ✔
-cookieName                                              Name of the main cookie                                                              ✔      ✔
+cookieExpiration                                        SSO cookie expiration                                                                ✔      ✔
+cookieName                                              Name of the SSO cookie                                                               ✔      ✔
 corsAllow_Credentials                                   Allow credentials for Cross-Origin Resource Sharing                                  ✔
 corsAllow_Headers                                       Allowed headers for Cross-Origin Resource Sharing                                    ✔
 corsAllow_Methods                                       Allowed methods for Cross-Origin Resource Sharing                                    ✔
