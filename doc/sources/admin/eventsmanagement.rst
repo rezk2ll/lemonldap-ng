@@ -148,7 +148,7 @@ Example:
 
 .. code-block:: perl
 
-   server => "redis.example.com:3456"
+   server => "redis.example.com:6379"
 
 .. _PubSubPg:
 
@@ -156,6 +156,7 @@ PostgreSQL
 ~~~~~~~~~~
 
 The following parameters are needed:
+
 * ``dbiChain``: see `DBD::Pg`_ to know the syntax
 * ``dbiUser``: the username to use to connect
 * ``dbiPassword``: the password to use to connect
@@ -164,7 +165,7 @@ Example:
 
 .. code-block:: perl
 
-   dbiChain    => "dbi:Pg:dbname=llng;host=localhost;port=54432",
+   dbiChain    => "dbi:Pg:dbname=llng;host=localhost;port=5432",
    dbiUser     => "llng",
    dbiPassword => "llng",
 

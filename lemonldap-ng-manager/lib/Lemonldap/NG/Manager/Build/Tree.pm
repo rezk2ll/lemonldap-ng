@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 sub tree {
     return [ {
@@ -964,6 +964,10 @@ sub tree {
                             ],
                         },
                         {
+                            title => 'adminLogoutServer',
+                            nodes => ['adminLogoutServerSecret']
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html#plugin-options',
                             form  => 'simpleInputContainer',
@@ -971,10 +975,6 @@ sub tree {
                                 'customPlugins', 'customPluginsParams',
                                 'disabledPlugins'
                             ]
-                        },
-                        {
-                            title => 'adminLogoutServer',
-                            nodes => ['adminLogoutServerSecret']
                         },
                         'oidcOfflineTokens',
                     ]
@@ -1349,9 +1349,9 @@ sub tree {
                             title => 'eventsManagement',
                             help  => 'eventsmanagement.html',
                             nodes => [
-                                'messageBroker', 'messageBrokerOptions',
-                                'reloadTimeout', 'reloadUrls',
-                                'compactConf',   'eventQueueName',
+                                'reloadUrls',     'reloadTimeout',
+                                'compactConf',    'messageBroker',
+                                'eventQueueName', 'messageBrokerOptions',
                             ]
                         },
                     ]
