@@ -539,6 +539,10 @@ sub attributes {
                         'v' => 'None'
                     },
                     {
+                        'k' => 'Combination',
+                        'v' => 'combineMods'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
