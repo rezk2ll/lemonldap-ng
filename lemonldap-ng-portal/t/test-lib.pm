@@ -65,7 +65,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
-use Carp                        qw/shortmess/;
+use Carp qw/shortmess/;
 
 #use 5.10.0;
 
@@ -743,7 +743,8 @@ Return a temporary file named XXXX.db
 =cut
 
 sub tempdb {
-    return "$tmpDir/userdb.db";
+    my $filename = shift // "userdb.db";
+    return "$tmpDir/$filename";
 }
 
 my %handlerOR;
