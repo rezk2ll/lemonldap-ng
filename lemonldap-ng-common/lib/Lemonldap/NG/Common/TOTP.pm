@@ -16,7 +16,7 @@ my $hash_func = {
     "sha512" => \&Digest::SHA::hmac_sha512_hex,
 };
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.23.0';
 
 has key => (
     is      => 'ro',

@@ -28,7 +28,7 @@ use URI::QueryParam;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.22.2';
+our $VERSION = '2.23.0';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',

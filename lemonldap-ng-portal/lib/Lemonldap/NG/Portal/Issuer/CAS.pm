@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CAS_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';

@@ -12,7 +12,7 @@ use strict;
 use URI::Escape;
 use Digest::SHA qw(hmac_sha1_hex);
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.23.0';
 
 # Overload main run method
 sub run {

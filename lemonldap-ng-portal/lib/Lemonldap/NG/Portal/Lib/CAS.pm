@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::UserAgent;
 use URI;
 use Crypt::URandom;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 # PROPERTIES
 

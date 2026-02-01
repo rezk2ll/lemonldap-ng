@@ -9,7 +9,7 @@ extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
 );
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 has reader   => ( is => 'rw' );
 has locales  => ( is => 'rw' );
