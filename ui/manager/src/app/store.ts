@@ -1,10 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import configReducer from "../features/config/configSlice";
 import { createReduxHistoryContext } from "redux-first-history";
-import { createBrowserHistory } from "history";
+import { createBrowserHistory, createMemoryHistory } from "history";
+
+const isTest = typeof process !== "undefined" && process.env.NODE_ENV === "test";
+const historyInstance = isTest ? createMemoryHistory() : createBrowserHistory();
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
-  createReduxHistoryContext({ history: createBrowserHistory() });
+  createReduxHistoryContext({ history: historyInstance });
 
 const rootReducer = combineReducers({
   config: configReducer,

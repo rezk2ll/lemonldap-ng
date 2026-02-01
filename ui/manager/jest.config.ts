@@ -23,6 +23,7 @@ const config: Config = {
       ],
       testEnvironment: "jsdom",
       testMatch: ["**/*.test.tsx"],
+      setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
       transform: {
         "^.+\\.tsx?$": "ts-jest",
         "^.+\\.(css|scss|sass|less)$": "jest-preview/transforms/css",

@@ -97,13 +97,13 @@ describe("Application Dashboard", () => {
     renderWithProviders(<Configuration location={location} />);
     await screen.findAllByText("14");
 
-    expect(screen.getByText(t("Basic Option"))).toBeInTheDocument();
-    expect(screen.getByText(t("locationRules"))).toBeInTheDocument();
+    expect(screen.getByText("basicOptions")).toBeInTheDocument();
+    expect(screen.getByText("locationRules")).toBeInTheDocument();
     expect(
-      screen.getByText(t("exportedHeaders"), { selector: ".title2" })
+      screen.getByText("exportedHeaders", { selector: ".title2" })
     ).toBeInTheDocument();
-    expect(screen.getByText(t("post"))).toBeInTheDocument();
-    expect(screen.getByText(t("vhostOptions"))).toBeInTheDocument();
+    expect(screen.getByText("post")).toBeInTheDocument();
+    expect(screen.getByText("vhostOptions")).toBeInTheDocument();
     changeRadio(0);
     clickOption("locationRules");
 

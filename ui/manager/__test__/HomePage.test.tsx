@@ -10,9 +10,9 @@ describe("HomePage", () => {
     renderWithProviders(<HomePage />);
     expect(await screen.findByText("14")).toBeDefined();
     expect(
-      await screen.findByText("Configuration Manager")
+      await screen.findByText("configurationManager")
     ).toBeInTheDocument();
-    expect(await screen.findByText("Latest conf info")).toBeInTheDocument();
+    expect(await screen.findByText("currentConfiguration")).toBeInTheDocument();
     expect(await screen.findByText("anonymous")).toBeInTheDocument();
     expect(await screen.findByText("172.30.0.1")).toBeInTheDocument();
     expect(

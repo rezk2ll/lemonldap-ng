@@ -95,7 +95,7 @@ it("should lauch search for number", async () => {
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
   renderWithProviders(<HomePage />);
   await screen.findAllByText("14");
-  fireEvent.change(screen.getAllByPlaceholderText(t("search config num"))[0], {
+  fireEvent.change(screen.getAllByPlaceholderText(t("browse"))[0], {
     target: { value: 2 },
   });
   fireEvent.click(screen.getAllByText("go")[0]);

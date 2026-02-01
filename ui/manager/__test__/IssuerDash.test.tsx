@@ -100,7 +100,7 @@ describe("Issuer Dashboard", () => {
 
     renderWithProviders(<Configuration location={location} />);
     await screen.findAllByText("14");
-    expect(screen.getByText("OIDCServiceMetaData")).toBeDefined();
+    expect(screen.getByText("oidcServiceMetaData")).toBeDefined();
 
     changeRadio(0);
 

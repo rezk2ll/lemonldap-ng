@@ -7,9 +7,8 @@ import {
   waitFor,
 } from "@testing-library/react";
 import React, { PropsWithChildren } from "react";
-import { useTranslation } from "react-i18next";
 import { Provider } from "react-redux";
-import "../i18n";
+// Note: i18n is initialized in jest.setup.ts for tests
 
 import { MemoryRouter } from "react-router-dom";
 import type { AppStore, RootState } from "../app/store";
@@ -119,7 +118,6 @@ export function renderWithProviders(
   } = extendedRenderOptions;
 
   const Wrapper = ({ children }: PropsWithChildren) => {
-    useTranslation();
     return (
       <MemoryRouter initialEntries={["/manager.html"]}>
         <Provider store={store}>{children}</Provider>
