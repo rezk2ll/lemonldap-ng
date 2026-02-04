@@ -370,7 +370,6 @@ sub do {
         portalCode => $err,
     );
 
-    # Update history
     return $req->response if $err == PE_SENDRESPONSE;
 
     # Remove userData if authentication fails
