@@ -457,11 +457,7 @@ sub doPE {
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
-    if ( my $val =
-        $req->userData->{ { auth => '_auth', user => '_userDB' }->{$type} } )
-    {
-        return $val;
-    }
+
     if (
         my $mod = {
             auth     => '_authentication',
