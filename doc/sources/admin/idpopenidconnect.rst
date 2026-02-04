@@ -223,9 +223,10 @@ Options
       Tokens are in JWT format, this option lets you release the claims defined
       in the *Extra Claims* section inside the Access Token itself
    -  **Use refresh tokens** (since version ``2.0.7``): If this option
-      is enabled, LL::NG will issue a Refresh Token that can be used
-      to obtain new access tokens as long as the user session is still
-      valid
+      is enabled, LL::NG will issue an *online* Refresh Token that can
+      be used to obtain new access tokens as long as the user session
+      is still valid. This token is tied to the SSO session: it becomes
+      invalid when the user logs out or the session expires
    -  **User attribute**: Session field that will be used as main
       identifier (``sub``). Default value is ``whatToTrace``.
    -  **Additional audiences** (since version ``2.0.8``): You can
@@ -251,11 +252,26 @@ Options
       token will be generated every time.
    -  **Allow offline access** (since version ``2.0.7``): After enabling
       this feature, an application may request the **offline_access**
-      scope, and will obtain a Refresh Token that persists even after
-      the user has logged off. See
+      scope, and will obtain an *offline* Refresh Token that persists
+      even after the user has logged off. Unlike online refresh tokens,
+      offline tokens are not tied to the SSO session: they remain valid
+      until their own expiration time. See
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+
+      These two options are independent. When both are enabled, the type
+      of refresh token depends on the scope requested by the client:
+
+      - Without ``offline_access`` scope: an *online* refresh token is
+        issued (tied to the SSO session)
+      - With ``offline_access`` scope: an *offline* refresh token is
+        issued (survives logout)
+
+      If only **Allow offline access** is enabled (without **Use refresh
+      tokens**), applications will only receive a refresh token when
+      they explicitly request the ``offline_access`` scope. Without
+      that scope, no refresh token is issued.
    -  **Allow Native SSO for Mobile Apps** (since version ``2.21.0``): Allow
       relying party to request a **device_secret**. See
       https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
