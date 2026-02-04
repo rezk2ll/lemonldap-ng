@@ -202,6 +202,11 @@ count(1);
 
 $id = expectCookie($res);
 
+is( getSession($id)->data->{_auth},   "Apache", "expected _auth" );
+is( getSession($id)->data->{_choice}, "strong", "expected _choice" );
+is( getSession($id)->data->{_userDB}, "Demo",   "expected _userDB" );
+count(3);
+
 $client->logout($id);
 clean_sessions();
 done_testing( count() );
