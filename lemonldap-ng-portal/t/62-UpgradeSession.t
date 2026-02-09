@@ -53,6 +53,11 @@ ok(
 count(1);
 my $id = expectCookie($res);
 
+is( getSession($id)->data->{_auth},   "Demo", "expected _auth" );
+is( getSession($id)->data->{_userDB}, "Demo",   "expected _userDB" );
+is( getSession($id)->data->{_choice}, "weak", "expected _choice" );
+count(3);
+
 # Portal IS NOT a handler
 #########################
 ok(
@@ -203,8 +208,8 @@ count(1);
 $id = expectCookie($res);
 
 is( getSession($id)->data->{_auth},   "Apache", "expected _auth" );
-is( getSession($id)->data->{_choice}, "strong", "expected _choice" );
 is( getSession($id)->data->{_userDB}, "Demo",   "expected _userDB" );
+is( getSession($id)->data->{_choice}, "strong", "expected _choice" );
 count(3);
 
 $client->logout($id);
