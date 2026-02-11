@@ -160,7 +160,7 @@ JSON response:
     "sub" : "dwho"
    }
 
-Refresh an access token
+Refresh an Access token
 -----------------------
 
 If the Access token has expired, you can get a new one with the refresh token.
