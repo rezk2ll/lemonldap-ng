@@ -38,13 +38,13 @@ Required parameters:
  * Scope: depends on which information you want, we will use here `openid profile email`
  * Redirect URI: shoud match the value registered in your OIDC provider, we will use here `http://localhost`
 
-The OIDC provide will return the code in the location header, so we just output this reponse header:
+The OIDC provider will return the code in location header, so we just output this reponse header:
 
 .. code-block:: shell
 
    curl -s -D - -o /dev/null -b lemonldap=0640f95827111f00ba7ad5863ba819fe46cfbcecdb18ce525836369fb4c8350b 'https://oidctest.wsweet.org/oauth2/authorize?response_type=code&client_id=private&scope=openid+profile+email&redirect_uri=http://localhost' | grep -i '^location'
 
-The value of the location header is:
+Value of the location header is:
 
 .. code-block:: shell
 
@@ -53,7 +53,7 @@ The value of the location header is:
 
 So we get the code value: `294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17`
 
-This code has a short lifetime, we will use it to get access token and ID token in the next step
+This code has a short lifetime, we will use it to get Access token and ID token in next step
 
 Tokens
 ------
@@ -85,9 +85,9 @@ The JSON response looks like this:
     "token_type" : "Bearer"
    }
 
-The access token will be used for the last step, to retrieve information about the user.
+The Access token will be used for the last step, to retrieve information about the user.
 
-The ID Token is a JWT (JSON Web Token) and can be parsed easily, as this is the concatenation of 3 JSON strings encoded in base 64: `base64(header).base64(payload).base64(signature)`.
+The ID token is a JWT (JSON Web Token) and can be parsed easily, as this is the concatenation of 3 JSON strings encoded in base 64: `base64(header).base64(payload).base64(signature)`.
 
 Decoding the payload gives:
 
@@ -137,7 +137,7 @@ JSON response:
 Introspection
 -------------
 
-You can test access token validity with the introspection endpoint.
+You can test Access token validity with the introspection endpoint.
 
 Required parameters:
  * Client ID and Client Secret, used as basic authorization
@@ -163,7 +163,7 @@ JSON response:
 Refresh an access token
 -----------------------
 
-If the access token has expired, you can get a new one with the refresh token.
+If the Access token has expired, you can get a new one with the refresh token.
 
 Required parameters:
  * Grant type: we use here `refresh_token`, sent as POST data
