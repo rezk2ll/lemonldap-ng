@@ -175,13 +175,19 @@ Optional Patroni parameters:
 - **patroniCacheTTL**: Time-to-live in seconds for the cached leader information. If all Patroni APIs are temporarily unavailable, LLNG will use the last known leader if the cache is still valid (default: 60)
 - **patroniCircuitBreakerDelay**: Circuit breaker delay in seconds. When Patroni API requests fail, LLNG will wait this amount of time before retrying, using the cached leader in the meantime (default: 30)
 
-Alternative: DBD::Patroni
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Alternative: DBD::Patroni *(use with caution)*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As an alternative to LLNG's native Patroni support, you can use the
 `DBD::Patroni <https://metacpan.org/dist/DBD-Patroni>`_ Perl driver. This
 driver wraps DBD::Pg and handles Patroni leader discovery transparently at
 the DBI level.
+
+.. danger::
+
+   DBD::Patroni is a recent project that has not been extensively tested.
+   Please report any bugs, contribute improvements, or let us know if it
+   works well for you!
 
 **Additional features compared to native support:**
 
