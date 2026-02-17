@@ -106,7 +106,7 @@ ok( @c2 == 15, '15 keys changed or created in conf 2' )
 count(5);
 
 ok( $res = &client->jsonResponse('/confs/latest'), 'Get last config metadata' );
-ok( $res->{prev} == 1, ' Get previous configuration' );
+ok( $res->{prev}->{cfgNum} == 1, ' Get previous configuration' );
 count(2);
 
 unlink $confFiles->[1];

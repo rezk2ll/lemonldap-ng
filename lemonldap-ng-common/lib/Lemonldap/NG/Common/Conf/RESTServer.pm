@@ -918,9 +918,25 @@ sub metadata {
         my @a     = $self->confAcc->available;
         my $id    = -1;
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
-        if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
+        if ($ind) {
+            my $prevNum = $a[ $ind - 1 ];
+            my $prevConf =
+              $self->confAcc->getConf(
+                { cfgNum => $prevNum, raw => 1, noCache => 1 } );
+            $res->{prev} = {
+                cfgNum => $prevNum,
+                cfgLog => $prevConf->{cfgLog}
+            };
+        }
         if ( defined $ind and $ind < $#a ) {
-            $res->{next} = $a[ $ind + 1 ];
+            my $nextNum = $a[ $ind + 1 ];
+            my $nextConf =
+              $self->confAcc->getConf(
+                { cfgNum => $nextNum, raw => 1, noCache => 1 } );
+            $res->{next} = {
+                cfgNum => $nextNum,
+                cfgLog => $nextConf->{cfgLog}
+            };
         }
         if ( my $userid = $self->_userId($req) ) {
             $self->auditLog(
