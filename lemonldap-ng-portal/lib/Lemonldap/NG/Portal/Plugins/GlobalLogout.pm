@@ -53,6 +53,10 @@ sub init {
 # Look for user active SSO sessions and suggest to close them
 sub run {
     my ( $self, $req ) = @_;
+
+    # Skip if called from _triggerBackChannelLogout to avoid recursion
+    return PE_OK if $req->data->{_globalLogoutBCL};
+
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Check activation rule
@@ -158,6 +162,13 @@ sub globalLogout {
                         unless ( $storeId eq $_->{id} ) {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
+
+                            # Trigger back-channel logout before removal
+                            $req->data->{_globalLogoutBCL} = 1;
+                            $self->p->_triggerBackChannelLogout( $req,
+                                $as->data );
+                            delete $req->data->{_globalLogoutBCL};
+
                             $as->remove;
                             $count++;
                         }
@@ -276,6 +287,12 @@ sub removeOtherActiveSessions {
             $self->userLogger->info(
 "Remove \"$req->userData->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
             );
+
+            # Trigger back-channel logout before removal
+            $req->data->{_globalLogoutBCL} = 1;
+            $self->p->_triggerBackChannelLogout( $req, $as->data );
+            delete $req->data->{_globalLogoutBCL};
+
             $as->remove;
             $count++;
         }
