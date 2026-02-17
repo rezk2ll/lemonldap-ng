@@ -674,6 +674,7 @@ install_bin:	install_conf_dir
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/purgePersistentSessions \
+		${SRCPORTALDIR}/scripts/checkCrowdsec \
 		${SRCPORTALDIR}/scripts/crowdsecBan \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \

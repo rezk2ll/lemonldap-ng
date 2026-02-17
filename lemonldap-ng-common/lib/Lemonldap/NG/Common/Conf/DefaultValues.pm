@@ -70,6 +70,7 @@ sub defaultValues {
         'crowdsecAction'                 => 'reject',
         'crowdsecAgent'                  => 0,
         'crowdSecAgentResponseCode'      => 404,
+        'crowdsecBanDuration'            => '4h',
         'cspConnect'                     => '\'self\'',
         'cspDefault'                     => '\'self\'',
         'cspFont'                        => '\'self\'',

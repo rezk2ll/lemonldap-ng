@@ -44,9 +44,9 @@ our @pList = (
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions         => '::Plugins::Refresh',
-    crowdsec                => '::Plugins::CrowdSec',
-    crowdsecAgent           => '::Plugins::CrowdSecAgent',
     externalMenu            => '::Plugins::ExternalMenu',
+    crowdsecAgent           => '::Plugins::CrowdSecAgent',
+    crowdsec                => '::Plugins::CrowdSec',
     locationDetect          => '::Plugins::LocationDetect',
     globalLogoutRule        => '::Plugins::GlobalLogout',
     samlFederationFiles     => '::Plugins::SamlFederation',

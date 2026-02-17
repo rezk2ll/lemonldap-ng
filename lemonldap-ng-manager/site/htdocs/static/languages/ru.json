@@ -286,6 +286,7 @@
 "crowdsec":"Активация",
 "crowdsecAction":"Действие",
 "crowdsecAgent":"Активация",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Check delay",
 "crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",

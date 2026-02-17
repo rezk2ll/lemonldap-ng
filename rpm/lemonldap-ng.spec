@@ -699,6 +699,7 @@ fi
 %{_mandir}/man1/purgeCentralCache*
 %{_mandir}/man1/purgePersistentSessions*
 %{lm_sharedir}/portal
+%{lm_bindir}/checkCrowdsec
 %{lm_bindir}/purgeCentralCache
 %{lm_bindir}/downloadSamlMetadata
 %{lm_bindir}/purgePersistentSessions

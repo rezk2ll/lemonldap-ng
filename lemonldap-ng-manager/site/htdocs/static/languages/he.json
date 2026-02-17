@@ -286,6 +286,7 @@
 "crowdsec":"הפעלה",
 "crowdsecAction":"פעולה",
 "crowdsecAgent":"הפעלה",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Check delay",
 "crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",

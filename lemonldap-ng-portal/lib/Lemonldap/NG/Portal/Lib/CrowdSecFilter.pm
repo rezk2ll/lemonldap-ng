@@ -4,7 +4,7 @@ use strict;
 use Mouse::Role;
 use Regexp::Assemble;
 
-use constant knownCat      => (qw(url));
+use constant knownCat      => (qw(url urlskip));
 use constant knownSuffixes => (qw(re txt));
 
 # Initialization functions for CrowdsecFilter feature
@@ -19,7 +19,7 @@ sub initializeFilters {
                 $re->add( map { qr/(?i)$_/ } @{ $filters->{$cat}->{re} } )
                   if $filters->{$cat}->{re};
                 $re->add( map { qr/(?i)\Q$_\E/ } @{ $filters->{$cat}->{txt} } )
-                  if @{ $filters->{$cat}->{txt} };
+                  if $filters->{$cat}->{txt};
             };
             if ($@) {
                 $self->logger->error("Unable to parst category $cat: $@");
@@ -51,7 +51,7 @@ sub parseFilters {
             if ($cat) {
                 $self->parseFilters( $path, $res, $cat );
             }
-            elsif ( my ($t) = grep { $file =~ m/^$_/ } knownCat ) {
+            elsif ( my ($t) = grep { $file =~ m/^${_}(?:[_\s-]|$)/ } knownCat ) {
                 $self->parseFilters( $path, $res, $t );
             }
             else {

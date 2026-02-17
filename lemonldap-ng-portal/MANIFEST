@@ -200,6 +200,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/checkCrowdsec
 scripts/crowdsecBan
 scripts/downloadSamlMetadata
 scripts/lemonldap-ng-portal.preset

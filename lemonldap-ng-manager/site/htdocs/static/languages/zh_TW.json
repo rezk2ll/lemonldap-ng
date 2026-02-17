@@ -286,6 +286,7 @@
 "crowdsec":"啟用",
 "crowdsecAction":"動作",
 "crowdsecAgent":"啟用",
+"crowdsecBanDuration":"Ban duration",
 "crowdsecBlockDelay":"Check delay",
 "crowdsecFilters":"Filters directory",
 "crowdsecIgnoreFailures":"Ignore Crowdsec failures",
