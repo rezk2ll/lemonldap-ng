@@ -1,4 +1,4 @@
-CREATE UNLOGGED TABLE sessions (
+CREATE TABLE sessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
@@ -25,7 +25,7 @@ CREATE INDEX i_p__whatToTrace           ON psessions ((a_session ->> '_whatToTra
 CREATE INDEX i_p__webAuthnUserHandle    ON psessions ((a_session ->> '_webAuthnUserHandle'));
 
 
-CREATE UNLOGGED TABLE samlsessions (
+CREATE TABLE samlsessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
@@ -47,7 +47,7 @@ CREATE INDEX i_o_user_session_id ON oidcsessions ((a_session ->> 'user_session_i
 CREATE INDEX i_o__oidc_sid       ON oidcsessions ((a_session ->> '_oidc_sid'));
 CREATE INDEX i_o__oidc_sub       ON oidcsessions ((a_session ->> '_oidc_sub'));
 
-CREATE UNLOGGED TABLE cassessions (
+CREATE TABLE cassessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
