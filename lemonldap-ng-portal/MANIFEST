@@ -1037,7 +1037,8 @@ t/CasHookPlugin.pm
 t/ChoiceHookPlugin.pm
 t/crowdsec-filters/bad.url.re
 t/crowdsec-filters/bad.url.txt
-t/crowdsec-filters/url1/bad.txt
+t/crowdsec-filters/skip.urlskip.txt
+t/crowdsec-filters/url_1/bad.txt
 t/Custom.pm
 t/CustomMenu.pm
 t/DbiCustomHash.pm
