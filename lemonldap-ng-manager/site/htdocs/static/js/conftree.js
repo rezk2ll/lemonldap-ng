@@ -307,6 +307,13 @@ function templates(tpl,key) {
                },
                {
                   "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequireIss",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequireIss",
+                  "title" : "oidcOPMetaDataOptionsRequireIss",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
                   "title" : "oidcOPMetaDataOptionsStoreIDToken",

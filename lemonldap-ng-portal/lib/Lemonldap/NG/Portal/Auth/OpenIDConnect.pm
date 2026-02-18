@@ -165,6 +165,28 @@ sub extractFormInfo {
 
         $self->logger->debug("Using OpenIDConnect Provider $op");
 
+        # RFC 9207: Verify iss parameter if present or required
+        my $iss          = $req->param('iss');
+        my $expected_iss = $self->opMetadata->{$op}->{conf}->{issuer};
+
+        if ($iss) {
+            unless ( $iss eq $expected_iss ) {
+                $self->userLogger->error(
+                    "Issuer mismatch: received '$iss', expected '$expected_iss'"
+                );
+                return PE_OIDC_AUTH_ERROR;
+            }
+            $self->logger->debug("Issuer verification passed");
+        }
+        elsif ( $self->conf->{oidcOPMetaDataOptions}->{$op}
+            ->{oidcOPMetaDataOptionsRequireIss} )
+        {
+            $self->userLogger->error(
+                "Missing iss parameter in authorization response (required by config)"
+            );
+            return PE_OIDC_AUTH_ERROR;
+        }
+
         # Check error
         my $error = $req->param("error");
         if ($error) {

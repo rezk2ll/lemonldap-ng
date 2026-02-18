@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Do not add JWT typ header",
 "oidcOPMetaDataOptionsPrompt":"Вызвать",
 "oidcOPMetaDataOptionsProtocol":"Протокол",
+"oidcOPMetaDataOptionsRequireIss":"Issuer required",
 "oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Правило разрешения",
 "oidcOPMetaDataOptionsScope":"Объем",

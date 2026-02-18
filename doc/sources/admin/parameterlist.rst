@@ -2188,6 +2188,11 @@ oidcOPMetaDataOptionsRequirePkce
     :Description: Use PKCE with this OP
     :Used by portal: yes
 
+oidcOPMetaDataOptionsRequireIss
+    :Location: OpenID Connect Providers » *configuration key* » Options » Configuration » Issuer required (RFC 9207)
+    :Description: Require iss parameter in authorization response (RFC 9207)
+    :Used by portal: yes
+
 oidcOPMetaDataOptionsResolutionRule
     :Location: OpenID Connect Providers » *configuration key* » Display » Resolution rule
     :Used by portal: yes

@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Ne pas ajouter l'en-tête typ",
 "oidcOPMetaDataOptionsPrompt":"Interaction",
 "oidcOPMetaDataOptionsProtocol":"Protocole",
+"oidcOPMetaDataOptionsRequireIss":"Issuer exigé",
 "oidcOPMetaDataOptionsRequirePkce":"PKCE exigé",
 "oidcOPMetaDataOptionsResolutionRule":"Règle de résolution",
 "oidcOPMetaDataOptionsScope":"Scope",

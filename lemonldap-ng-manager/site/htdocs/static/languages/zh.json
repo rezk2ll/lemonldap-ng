@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Do not add JWT typ header",
 "oidcOPMetaDataOptionsPrompt":"提示",
 "oidcOPMetaDataOptionsProtocol":"協定",
+"oidcOPMetaDataOptionsRequireIss":"Issuer required",
 "oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"解析規則",
 "oidcOPMetaDataOptionsScope":"範圍",

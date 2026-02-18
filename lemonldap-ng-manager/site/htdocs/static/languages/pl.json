@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Nie dodawaj nagłówka typu JWT",
 "oidcOPMetaDataOptionsPrompt":"Prompt",
 "oidcOPMetaDataOptionsProtocol":"Protokół",
+"oidcOPMetaDataOptionsRequireIss":"Issuer required",
 "oidcOPMetaDataOptionsRequirePkce":"Wymagane PKCE",
 "oidcOPMetaDataOptionsResolutionRule":"Reguła rozstrzygania",
 "oidcOPMetaDataOptionsScope":"Zakres",
