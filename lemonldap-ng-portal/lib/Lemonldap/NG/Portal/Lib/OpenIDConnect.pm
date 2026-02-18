@@ -2801,6 +2801,16 @@ sub validatePKCEChallenge {
     my ( $self, $code_verifier, $code_challenge, $code_challenge_method ) = @_;
 
     unless ($code_challenge) {
+
+        # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
+        # Reject code_verifier if no code_challenge was sent during authorization
+        if ($code_verifier) {
+            $self->userLogger->error(
+                "PKCE downgrade attack: code_verifier provided "
+              . "but no code_challenge was sent during authorization"
+            );
+            return 0;
+        }
         $self->logger->debug("PKCE was not requested by the RP");
         return 1;
     }
