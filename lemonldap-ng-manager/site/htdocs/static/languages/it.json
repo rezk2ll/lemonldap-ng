@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Do not add JWT typ header",
 "oidcOPMetaDataOptionsPrompt":"Richiesta",
 "oidcOPMetaDataOptionsProtocol":"Protocollo",
+"oidcOPMetaDataOptionsRequireIss":"Issuer required",
 "oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Regola di risoluzione",
 "oidcOPMetaDataOptionsScope":"Scopo",

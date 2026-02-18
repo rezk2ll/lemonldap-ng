@@ -5297,6 +5297,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Use PKCE with this OP',
         },
+        oidcOPMetaDataOptionsRequireIss => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Require iss parameter in authorization response (RFC 9207)',
+        },
         oidcOPMetaDataOptionsUserinfoSource => {
             type    => 'select',
             default => 'userinfo',

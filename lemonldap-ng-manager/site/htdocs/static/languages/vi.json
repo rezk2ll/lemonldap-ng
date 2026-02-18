@@ -748,6 +748,7 @@
 "oidcOPMetaDataOptionsNoJwtHeader":"Do not add JWT typ header",
 "oidcOPMetaDataOptionsPrompt":"Nhắc nhở",
 "oidcOPMetaDataOptionsProtocol":"Giao thức",
+"oidcOPMetaDataOptionsRequireIss":"Issuer required",
 "oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Quy tắc phân giải ",
 "oidcOPMetaDataOptionsScope":"Phạm vi",

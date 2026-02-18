@@ -182,6 +182,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcOPMetaDataOptionsRequirePkce',
+                            'oidcOPMetaDataOptionsRequireIss',
                             'oidcOPMetaDataOptionsStoreIDToken',
                             'oidcOPMetaDataOptionsConfigurationURI',
                             'oidcOPMetaDataOptionsJWKSTimeout',

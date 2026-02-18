@@ -540,6 +540,9 @@ sub sendOidcResponse {
     my ( $self, $req, $flow, $response_mode, $redirect_uri, $response_params )
       = @_;
 
+    # RFC 9207: Add iss parameter to prevent mix-up attacks
+    $response_params->{iss} = $self->get_issuer($req);
+
     $response_mode //= $self->getDefaultResponseModeForFlow($flow);
 
     if ( $response_mode eq "query" ) {
