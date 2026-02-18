@@ -750,6 +750,7 @@ t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-PKCE-2.t
 t/32-Auth-and-issuer-OIDC-PKCE.t
+t/32-Auth-and-issuer-OIDC-RFC9207-iss.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-Auth-OIDC-JWKS-Refresh.t
 t/32-Auth-OIDC-Parameters.t
