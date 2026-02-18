@@ -1592,27 +1592,26 @@ sub _triggerBackChannelLogout {
     my $originalUserData    = $req->userData;
     my $originalSessionInfo = $req->sessionInfo;
     my $originalId          = $req->id;
+    my @steps               = @{ $req->steps || [] };
+    my $noFail              = $req->data->{nofail};
+    my $originalError = $req->error;
 
     # Inject the data of the session being deleted
     $req->userData($sessionData);
     $req->sessionInfo($sessionData);
     $req->id( $sessionData->{_session_id} );
+    $req->steps( [ @{ $self->beforeLogout } ] );
 
     # Iterate over beforeLogout entry points
-    foreach my $sub ( @{ $self->beforeLogout } ) {
-        if ( my ( $module, $method ) = $sub =~ /^(.*)::(\w+)$/ ) {
-            if ( my $obj = $self->loadedModules->{$module} ) {
-                $self->logger->debug("Calling $sub for BCL");
-                eval { $obj->$method($req) };
-                $self->logger->warn("BCL error in $sub: $@") if $@;
-            }
-        }
-    }
+    $self->process( $req, nofail => 1 );
 
     # Restore the original context
     $req->userData($originalUserData);
     $req->sessionInfo($originalSessionInfo);
     $req->id($originalId);
+    $req->steps( \@steps );
+    $req->data->{nofail} = $noFail;
+    $req->error($originalError);
 
     return;
 }
