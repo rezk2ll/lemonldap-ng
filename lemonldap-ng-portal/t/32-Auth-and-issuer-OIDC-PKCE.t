@@ -116,6 +116,22 @@ subtest "PKCE required/PKCE flow/invalid verifier fails" => sub {
     expectReject( $res, 400, "invalid_grant" );
 };
 
+# RFC 9700 section 2.1.1: PKCE downgrade attack protection
+subtest "not required/no PKCE flow/code_verifier rejected (downgrade attack)" => sub {
+    my $code = codeAuthorize(
+        $op, $id,
+        {
+            %test_authorize_params,
+            client_id => "rp",
+            # No code_challenge sent
+        }
+    );
+
+    my $res = codeGrant( $op, "rp", $code, "http://rp.com/",
+        code_verifier => $code_verifier );
+    expectReject( $res, 400, "invalid_grant" );
+};
+
 clean_sessions();
 done_testing();
 
