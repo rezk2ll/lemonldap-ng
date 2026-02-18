@@ -248,8 +248,20 @@ Options
 
 -  **Security**
 
-   -  **Require PKCE** (since version ``2.0.4``): A code challenge is
-      required at Tokens endpoint (see :rfc:`7636`)
+   -  **Require PKCE** (since version ``2.0.4``): Controls PKCE validation
+      at the Authorization and Token endpoints (see :rfc:`7636`). Available modes:
+
+      - **Disabled**: PKCE is optional. If provided, it will be validated.
+        For confidential clients, ``client_secret`` is required.
+        For public clients, no authentication is required.
+      - **Required**: PKCE is mandatory. Requests without ``code_challenge``
+        are rejected at the Authorization endpoint. For confidential clients,
+        both PKCE and ``client_secret`` are required.
+      - **PKCE or Secret** (since version ``2.20.0``): For **public clients**,
+        either PKCE or ``client_secret`` is required (at least one). This allows
+        the same ``client_id`` to be used by mobile apps (with PKCE) and backend
+        services (with secret). For confidential clients, this mode behaves
+        like **Disabled** (secret always required, PKCE optional).
    -  **Invalidate refresh tokens after use** (since version ``2.20.0``): Use
       this option to prevent Refresh Tokens from being re-used. A new refresh
       token will be generated every time.

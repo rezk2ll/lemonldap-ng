@@ -880,8 +880,13 @@ sub _authorizeEndpoint {
     # Create session_state
     my $session_state = $self->createSessionState( $req->id, $client_id );
 
-    # Check if PKCE is required
-    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE}
+   # Check if PKCE is required
+   # RequirePKCE=1 (or any truthy value except 2): PKCE is mandatory
+   # RequirePKCE=2: PKCE or client_secret (checked at token endpoint)
+   # Backward compatibility: JSON::true or any truthy value != 2 is treated as 1
+    my $require_pkce =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE};
+    if ( $require_pkce && $require_pkce != 2
         and !$oidc_request->{'code_challenge'} )
     {
         return $self->returnRedirectError(
@@ -1502,14 +1507,14 @@ sub token {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
-    my ($rp) = $self->checkEndPointAuthenticationCredentials($req);
+    my ( $rp, $method ) = $self->checkEndPointAuthenticationCredentials($req);
     return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
 
     # Autorization Code grant
     if ( $grant_type eq 'authorization_code' ) {
-        return $self->_handleAuthorizationCodeGrant( $req, $rp );
+        return $self->_handleAuthorizationCodeGrant( $req, $rp, $method );
     }
 
     # Refresh token
@@ -1830,7 +1835,7 @@ sub _handlePasswordGrant {
 }
 
 sub _handleAuthorizationCodeGrant {
-    my ( $self, $req, $rp ) = @_;
+    my ( $self, $req, $rp, $method ) = @_;
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my $code      = $req->param('code');
 
@@ -1847,7 +1852,29 @@ sub _handleAuthorizationCodeGrant {
 
     $codeSession->remove();
 
-    # Check PKCE
+    # Check PKCE requirement based on RP configuration
+    my $has_pkce   = $codeSession->data->{code_challenge} ? 1 : 0;
+    my $has_secret = ( $method && $method ne 'none' ) ? 1 : 0;
+    my $is_public = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic};
+    my $require_pkce =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE} || 0;
+
+    # Check "PKCE or secret" mode (mode 2)
+    if ( $is_public and $require_pkce == 2 ) {
+        unless ( $has_pkce || $has_secret ) {
+            $self->userLogger->error(
+                "Relying Party $rp requires PKCE or valid secret");
+            return $self->invalidClientResponse($req);
+        }
+    }
+
+    # Check PKCE requirement (mode 1: always required)
+    if ( $require_pkce and $require_pkce != 2 and !$has_pkce ) {
+        $self->userLogger->error("Relying Party $rp requires PKCE");
+        return $self->invalidClientResponse($req);
+    }
+
+    # Validate PKCE challenge
     unless (
         $self->validatePKCEChallenge(
             $req->param('code_verifier'),

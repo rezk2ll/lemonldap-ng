@@ -970,6 +970,7 @@
 "persistentStorage":"Tập lệnh Apache :: Session",
 "persistentStorageOptions":"Tham số mô-đun Apache :: Session",
 "pickFontAwesome":"or input the code of a Font Awesome icon",
+"pkceOrSecret":"PKCE or Secret",
 "plugins":"Plugins",
 "port":"Cổng",
 "portal":"URL",

@@ -970,6 +970,7 @@
 "persistentStorage":"أباتشي :: وحدة الجلسة",
 "persistentStorageOptions":"أباتشي :: معايير وحدة الجلسة",
 "pickFontAwesome":"or input the code of a Font Awesome icon",
+"pkceOrSecret":"PKCE or Secret",
 "plugins":"الإضافات",
 "port":"المنفذ",
 "portal":"يو آر إل",
