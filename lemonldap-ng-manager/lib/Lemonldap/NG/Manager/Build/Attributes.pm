@@ -279,7 +279,6 @@ use constant oidcEncAlgorithmAlg => [
     #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
     #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
     #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
-    { k => '',               v => 'None' },
     { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
     { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
     { k => 'RSA1_5',         v => 'RSA1_5' },
@@ -3818,7 +3817,7 @@ sub attributes {
             ],
             default => '',
         },
-        samlSPMetaDataOptionsForceNameIDFormat    => { type => 'bool' },
+        samlSPMetaDataOptionsForceNameIDFormat   => { type => 'bool' },
         samlSPMetaDataOptionsNameIDSessionKey    => { type => 'text' },
         samlSPMetaDataOptionsNotOnOrAfterTimeout => {
             type    => 'int',
@@ -5038,40 +5037,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         oidcServiceEncAlgorithmAlg => {
-            type   => 'select',
-            select => [
-
-                # Symetric encryption not supported
-                #{ k => 'A128KW',             v => 'A128KW' },
-                #{ k => 'A192KW',             v => 'A192KW' },
-                #{ k => 'A256KW',             v => 'A256KW' },
-                #{ k => 'A128GCMKW',          v => 'A128GCMKW' },
-                #{ k => 'A192GCMKW',          v => 'A192GCMKW' },
-                #{ k => 'A256GCMKW',          v => 'A256GCMKW' },
-                #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
-                #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
-                #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
-                { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
-                { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
-                { k => 'RSA1_5',         v => 'RSA1_5' },
-                { k => 'ECDH-ES',        v => 'ECDH-ES' },
-                { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
-                { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
-                { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
-            ],
+            type          => 'select',
+            select        => oidcEncAlgorithmAlg,
             default       => 'RSA-OAEP',
             documentation => 'JWT encryption algorithme',
         },
         oidcServiceEncAlgorithmEnc => {
-            type   => 'select',
-            select => [
-                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
-                { k => 'A256GCM',       v => 'A256GCM' },
-                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
-                { k => 'A192GCM',       v => 'A192GCM' },
-                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
-                { k => 'A128GCM',       v => 'A128GCM' },
-            ],
+            type          => 'select',
+            select        => oidcEncAlgorithmEnc,
             default       => 'A256GCM',
             documentation => 'JWT encryption algorithme',
         },
@@ -5300,7 +5273,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsRequireIss => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Require iss parameter in authorization response (RFC 9207)',
+            documentation =>
+              'Require iss parameter in authorization response (RFC 9207)',
         },
         oidcOPMetaDataOptionsUserinfoSource => {
             type    => 'select',
@@ -5370,21 +5344,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsUserInfoSignAlg => {
             type   => 'select',
             select => [
-                { k => '',      v => 'JSON' },
-                { k => 'none',  v => 'JWT/None' },
-                { k => 'HS256', v => 'JWT/HS256' },
-                { k => 'HS384', v => 'JWT/HS384' },
-                { k => 'HS512', v => 'JWT/HS512' },
-                { k => 'RS256', v => 'JWT/RS256' },
-                { k => 'RS384', v => 'JWT/RS384' },
-                { k => 'RS512', v => 'JWT/RS512' },
-                { k => 'PS256', v => 'JWT/PS256' },
-                { k => 'PS384', v => 'JWT/PS384' },
-                { k => 'PS512', v => 'JWT/PS512' },
-                { k => 'ES256', v => 'JWT/ES256' },
-                { k => 'ES384', v => 'JWT/ES384' },
-                { k => 'ES512', v => 'JWT/ES512' },
-                { k => 'EdDSA', v => 'JWT/EdDSA' },
+                { k => '',     v => 'JSON' },
+                { k => 'none', v => 'None' },
+                @{&oidcSigAlgorithmAlg},
             ],
             default => '',
         },
@@ -5529,8 +5491,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
               'Relying party JWKS endpoint (to get encryption keys)',
         },
         oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg => {
-            type          => 'select',
-            select        => oidcEncAlgorithmAlg,
+            type   => 'select',
+            select =>
+              [ { k => '', 'v' => 'None' }, @{ &oidcEncAlgorithmAlg, } ],
             documentation => '"alg" algorithm for access_token encryption',
         },
         oidcRPMetaDataOptionsAccessTokenEncContentEncAlg => {
@@ -5540,8 +5503,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => '"enc" algorithm for access_token encryption',
         },
         oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg => {
-            type          => 'select',
-            select        => oidcEncAlgorithmAlg,
+            type   => 'select',
+            select =>
+              [ { k => '', 'v' => 'None' }, @{ &oidcEncAlgorithmAlg, } ],
             documentation => '"alg" algorithm for id_token encryption',
         },
         oidcRPMetaDataOptionsIdTokenEncContentEncAlg => {
@@ -5551,8 +5515,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => '"enc" algorithm for id_token encryption',
         },
         oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg => {
-            type          => 'select',
-            select        => oidcEncAlgorithmAlg,
+            type   => 'select',
+            select => [ { k => '', v => 'None' }, @{&oidcEncAlgorithmAlg} ],
             documentation => '"alg" algorithm for user_info encryption',
         },
         oidcRPMetaDataOptionsUserInfoEncContentEncAlg => {
@@ -5562,8 +5526,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => '"enc" algorithm for user_info encryption',
         },
         oidcRPMetaDataOptionsLogoutEncKeyMgtAlg => {
-            type          => 'select',
-            select        => oidcEncAlgorithmAlg,
+            type   => 'select',
+            select => [ { k => '', v => 'None' }, @{&oidcEncAlgorithmAlg} ],
             documentation => '"alg" algorithm for logout token encryption',
         },
         oidcRPMetaDataOptionsLogoutEncContentEncAlg => {
