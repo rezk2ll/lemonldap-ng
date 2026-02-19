@@ -1572,17 +1572,17 @@ sub cspGetHost {
     return;
 }
 
-# Methid that triggers back-channel logout notifications to federated
+# Method that triggers back-channel logout notifications to federated
 # applications for a session being removed remotely (e.g., by GlobalLogout or
 # SingleSession).
 #
 # @param $req The current request object
 # @param $sessionData Hashref of the session data being deleted
-# @return nothing
+# @return PE_OK on success, error code otherwise
 sub _triggerBackChannelLogout {
     my ( $self, $req, $sessionData ) = @_;
 
-    return unless $sessionData && ref($sessionData) eq 'HASH';
+    return PE_OK unless $sessionData && ref($sessionData) eq 'HASH';
 
     $self->logger->debug(
         "Triggering back-channel logout for session $sessionData->{_session_id}"
@@ -1594,7 +1594,7 @@ sub _triggerBackChannelLogout {
     my $originalId          = $req->id;
     my @steps               = @{ $req->steps || [] };
     my $noFail              = $req->data->{nofail};
-    my $originalError = $req->error;
+    my $originalError       = $req->error;
 
     # Inject the data of the session being deleted
     $req->userData($sessionData);
@@ -1603,7 +1603,7 @@ sub _triggerBackChannelLogout {
     $req->steps( [ @{ $self->beforeLogout } ] );
 
     # Iterate over beforeLogout entry points
-    $self->process( $req, nofail => 1 );
+    my $result = $self->process( $req, nofail => 1 );
 
     # Restore the original context
     $req->userData($originalUserData);
@@ -1613,7 +1613,7 @@ sub _triggerBackChannelLogout {
     $req->data->{nofail} = $noFail;
     $req->error($originalError);
 
-    return;
+    return $result;
 }
 
 sub relativeUrl {
