@@ -3273,6 +3273,132 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsIntrospectionEncContentEncAlg' => {
+            'default' => 'A256GCM',
+            'select'  => [ {
+                    'k' => 'A256CBC-HS512',
+                    'v' => 'A256CBC-HS512'
+                },
+                {
+                    'k' => 'A256GCM',
+                    'v' => 'A256GCM'
+                },
+                {
+                    'k' => 'A192CBC-HS384',
+                    'v' => 'A192CBC-HS384'
+                },
+                {
+                    'k' => 'A192GCM',
+                    'v' => 'A192GCM'
+                },
+                {
+                    'k' => 'A128CBC-HS256',
+                    'v' => 'A128CBC-HS256'
+                },
+                {
+                    'k' => 'A128GCM',
+                    'v' => 'A128GCM'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'RSA-OAEP',
+                    'v' => 'RSA-OAEP'
+                },
+                {
+                    'k' => 'RSA-OAEP-256',
+                    'v' => 'RSA-OAEP-256'
+                },
+                {
+                    'k' => 'RSA1_5',
+                    'v' => 'RSA1_5'
+                },
+                {
+                    'k' => 'ECDH-ES',
+                    'v' => 'ECDH-ES'
+                },
+                {
+                    'k' => 'ECDH-ES+A128KW',
+                    'v' => 'ECDH-ES+A128KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A192KW',
+                    'v' => 'ECDH-ES+A192KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A256KW',
+                    'v' => 'ECDH-ES+A256KW'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsIntrospectionSignAlg' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'JSON'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'EdDSA'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcRPMetaDataOptionsJwks' => {
             'keyTest' => sub {
                 1;
