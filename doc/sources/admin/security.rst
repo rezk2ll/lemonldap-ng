@@ -448,8 +448,12 @@ OIDC
 See
 :ref:`openidconnectservice#security<openidconnectservice-security-parameters>`
 
-ANSSI security guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~~
+OIDC Security Guidelines
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-See
-:doc:`How to implement ANSSI security guidelines<anssi-oidc>`
+See :doc:`OpenID Connect Security<oidc-security>` for comprehensive security recommendations including:
+
+* RFC 9700 (OAuth 2.0 Security Best Current Practice)
+* RFC 9207 (Authorization Server Issuer Identification)
+* RFC 7636 (PKCE)
+* ANSSI security guidelines

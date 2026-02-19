@@ -19,6 +19,6 @@ Mini Howtos
    behindproxyminihowto
    useoutgoingproxy
    testopenidconnect
-   anssi-oidc
+   oidc-security
    oidc-proconnect
    Agent Connect (deprecated) <oidc-agent-connect>
