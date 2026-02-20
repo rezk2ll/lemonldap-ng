@@ -22,10 +22,11 @@ You can then create rules with these fields:
    (rules are evaluated by alphabetical order).
 -  **Rule**: The condition that will be evaluated. If this condition
    does not return true, then the session is refused.
--  **Message**: The message that will be displayed. That message can
-   contain session data as user attributes or macros.
+-  **Message**: A *Perl expression* that is evaluated and displayed to the user
+   when the rule does not match. It can contain session data as user attributes
+   or macros. **Don't forget to quote the text.**
 
 .. tip::
 
-    By example, you can set a message like this:
+    By example, you can set a message like this (including quotes):
     "hello $uid your are not allowed to login"
