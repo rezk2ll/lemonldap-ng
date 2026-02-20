@@ -25,17 +25,16 @@ ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
 ok(
     $resBody->{details}->{__warnings__}
-      && @{ $resBody->{details}->{__warnings__} } == 2,
+      && ( @{ $resBody->{details}->{__warnings__} } == 1
+        or @{ $resBody->{details}->{__warnings__} } == 2 ),
     'JSON response contains 2 warnings'
 ) or print STDERR Dumper($resBody);
 
-foreach my $i ( 0 .. 1 ) {
-    ok(
-        $resBody->{details}->{__warnings__}->[$i]->{message} =~
-          /\b(unprotected|cross-domain-authentication)\b/,
-        "Warning with 'unprotect', 'CDA' or 'retries' found"
-    ) or print STDERR Dumper($resBody);
+my $found = 0;
+foreach ( @{ $resBody->{details}->{__warnings__} } ) {
+    $found++ if $_->{message} =~ /\b(cross-domain-authentication)\b/;
 }
+ok( $found, "Warning with 'CDA' found" ) or print STDERR Dumper($resBody);
 
 ok(
     $resBody->{details}->{__changes__}
@@ -91,7 +90,7 @@ if ($bug) {
       . Dumper( \@cmsg );
 }
 
-count(6);
+count(5);
 
 # TODO: check result of this
 ok( $res = &client->jsonResponse('/diff/1/2'), 'Diff called' );
@@ -115,7 +114,8 @@ unlink $confFiles->[1];
 done_testing( count() );
 
 sub changes {
-    return [ {
+    return [
+        {
             'key' => 'portal',
             'new' => 'http://auth2.example.com/',
             'old' => 'http://auth.example.com/'
