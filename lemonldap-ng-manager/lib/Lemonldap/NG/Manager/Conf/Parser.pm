@@ -150,6 +150,7 @@ sub scanTree {
     foreach (qw(REMOTE_USER SUDO_USER USER)) {
         ( $envUser = $self->req->env->{$_} || $ENV{$_} ) and last;
     }
+    $envUser = '' unless $envUser =~ /\w/;
     $self->newConf->{cfgAuthor} =
       $self->req->userData->{ Lemonldap::NG::Handler::Main->tsv->{whatToTrace}
           || '_whatToTrace' }
