@@ -15,6 +15,65 @@ has ua => (
     }
 );
 
+has namedCalls => ( is => 'rw', default => sub { {} } );
+
+sub initNamedCallFromConf {
+    my ( $self, $name_conf, $name_internal, $mandatory ) = @_;
+
+    my $name_internal_url   = "${name_internal}Url";
+    my $name_internal_attrs = "${name_internal}Attrs";
+
+    if ( !$self->conf->{"${name_conf}Url"} ) {
+        $self->logger->debug("${name_conf}Url is missing");
+        return 0;
+    }
+    $self->namedCalls->{$name_internal}->{url} =
+      $self->conf->{"${name_conf}Url"};
+
+    while ( my ( $k, $rule_or_attr ) =
+        each %{ $self->conf->{"${name_conf}Args"} } )
+    {
+        my $rule;
+
+        # Tolerate using the name of an attribute instead of an actual
+        # perl expression for backward compatibility
+        if ( $rule_or_attr =~ /^\w+$/ ) {
+            $rule = $self->p->buildRule( "\$$rule_or_attr",
+                "REST $name_internal_attrs custom argument $k" );
+        }
+        else {
+            $rule = $self->p->buildRule( $rule_or_attr,
+                "REST $name_internal_attrs custom argument $k" );
+        }
+
+        next unless $rule;
+        $self->logger->debug("$name_conf: push verify attribute $k");
+        $self->namedCalls->{$name_internal}->{attrs}->{$k} = $rule;
+    }
+
+    return 1;
+}
+
+sub restNamedCall {
+    my ( $self, $req, $name, $initial_content, $session_info ) = @_;
+    my $url_accessor  = "${name}Url";
+    my $attr_accessor = "${name}Attrs";
+    my $url           = $self->namedCalls->{$name}->{url};
+
+    die "Could not find URL for $name REST call" unless $url;
+    my $content = { %{ $initial_content || {} } };
+    while ( my ( $json_key, $rule ) =
+        each %{ $self->namedCalls->{$name}->{attrs} } )
+    {
+        my $value = $rule->( $req, $session_info );
+        if ( defined $value ) {
+            $content->{$json_key} = $value;
+        }
+    }
+
+    return $self->restCall( $url, $content );
+}
+
 sub restCall {
     my ( $self, $url, $content ) = @_;
     $self->logger->debug("REST: trying to call $url with:");

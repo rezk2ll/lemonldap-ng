@@ -30,7 +30,7 @@ has findUserDBUrl => (
 sub init {
     my $self = shift;
 
-    unless ( $self->conf->{restUserDBUrl} ) {
+    unless ( $self->initNamedCallFromConf( 'restUserDB', 'user' ) ) {
         $self->logger->error('REST User data URL is not set');
         return 0;
     }
@@ -44,13 +44,14 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
     my $res;
     $res = eval {
-        $self->restCall(
-            $self->conf->{restUserDBUrl},
+        $self->restNamedCall(
+            $req, 'user',
             {
                 ( $args{useMail} ? 'mail' : 'user' ) => $req->user,
                 'useMail' => ( $args{useMail} ? JSON::true : JSON::false ),
 
-            }
+            },
+            {}
         );
     };
     if ($@) {

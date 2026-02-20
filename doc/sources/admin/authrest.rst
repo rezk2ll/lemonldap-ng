@@ -68,3 +68,27 @@ Password change URL       ``{"user":$user,"password":$password}`` ``{"result":tr
     set REST only as an Authentication backend, configure Null as your User
     Database, and make sure the REST authentication URL send all your user
     attributes in the ``info`` response key
+
+
+.. _rest-args:
+
+Additional arguments
+--------------------
+
+.. versionadded:: 2.23.0
+
+You can define additional arguments that will be sent along ``user``, ``password``, etc. in the body of the REST request.
+
+In the *arguments* section, specify the name of the JSON parameter as the *key* and a perl expression as the  *value*.
+
+However keep in mind that in most situations, user attributes will not be available yet. But you can still use CGI environment variables.
+
+For example, setting a key of ``ip`` and a value of ``$ENV{REMOTE_ADDR}`` will result in the following REST authentication request:
+
+.. code:: json
+
+    {
+      "ip": "127.0.0.1",
+      "password": "dwho",
+      "user": "dwho"
+    }

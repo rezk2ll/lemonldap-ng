@@ -4547,11 +4547,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'pcre'
         },
         'rest2fInitArgs' => {
-            'keyMsgFail' => '__badKeyName__',
-            'keyTest'    => qr/^\w+$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'rest2fInitUrl' => {
             'type' => 'url'
@@ -4566,14 +4566,21 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'rest2fVerifyArgs' => {
-            'type' => 'keyTextContainer'
-        },
-        'rest2fVerifyUrl' => {
             'keyMsgFail' => '__badKeyName__',
             'keyTest'    => qr/^\w+$/,
             'msgFail'    => '__badValue__',
             'test'       => qr/^\w+$/,
-            'type'       => 'url'
+            'type'       => 'keyTextContainer'
+        },
+        'rest2fVerifyUrl' => {
+            'type' => 'url'
+        },
+        'restAuthArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restAuthnLevel' => {
             'default' => 2,
@@ -4598,6 +4605,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restFindUserDBArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'restFindUserDBUrl' => {
             'type' => 'url'
         },
@@ -4605,8 +4619,22 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restPwdConfirmArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'restPwdConfirmUrl' => {
             'type' => 'url'
+        },
+        'restPwdModifyArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restPwdModifyUrl' => {
             'type' => 'url'
@@ -4614,6 +4642,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'restSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'restUserDBArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restUserDBUrl' => {
             'type' => 'url'
