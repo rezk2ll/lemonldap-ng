@@ -287,6 +287,14 @@ sub cTrees {
                         ]
                     },
                     {
+                        title => 'mtls',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsMtlsCertIdentifierType',
+                            'oidcRPMetaDataOptionsMtlsCertIdentifier',
+                        ]
+                    },
+                    {
                         title => 'algorithms',
                         form  => 'simpleInputContainer',
                         nodes => [

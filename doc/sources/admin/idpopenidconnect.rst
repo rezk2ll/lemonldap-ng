@@ -303,12 +303,29 @@ Options
    -  **Required authentication level**: Required authentication level to
       access this application. Since ``2.21.0`` this can be a Perl expression.
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
-   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
-   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
-   -  **Require "state" in authorization request**: Require 
-   -  **Require "nonce" in authorization request**: Require 
-   -  **userinfo endpoint authentication using header only**: 
+   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint.
+      Available methods are:
 
+      - ``client_secret_post``: Client ID and secret sent in POST body
+      - ``client_secret_basic``: Client ID and secret sent in HTTP Basic header
+      - ``client_secret_jwt``: JWT assertion signed with client secret (HMAC)
+      - ``private_key_jwt``: JWT assertion signed with client's private key
+      - ``tls_client_auth``: mTLS client certificate authentication (RFC 8705) *(since 2.23.0)*
+
+   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
+   -  **Require "state" in authorization request**: Require
+   -  **Require "nonce" in authorization request**: Require
+   -  **userinfo endpoint authentication using header only**:
+
+-  **mTLS (RFC 8705)** *(since 2.23.0)*
+
+   Configure expected client certificate attributes for mTLS authentication.
+   See :ref:`oidc-mtls` for detailed configuration.
+
+   -  **Certificate identifier type**: Type of certificate identifier to match
+      (Subject DN, SAN DNS, SAN Email, SAN IP, or SAN URI). Defaults to SAN DNS.
+   -  **Expected certificate identifier**: Expected value for the selected
+      identifier type
 
 -  **Algorithms**
 

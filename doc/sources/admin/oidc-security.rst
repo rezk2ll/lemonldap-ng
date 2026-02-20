@@ -115,6 +115,56 @@ Token Endpoint Authentication
   - ``client_secret_post`` - Secret in POST body
   - ``client_secret_jwt`` - HMAC-signed JWT
   - ``private_key_jwt`` - Asymmetric signed JWT (recommended)
+  - ``tls_client_auth`` - mTLS client certificate (RFC 8705, since 2.23.0)
+
+.. _oidc-mtls:
+
+mTLS Client Authentication (RFC 8705)
+"""""""""""""""""""""""""""""""""""""
+
+.. versionadded:: 2.23.0
+
+Mutual TLS (mTLS) authentication allows OAuth 2.0 clients to authenticate using
+TLS client certificates instead of a shared secret. This is described in
+:rfc:`8705`.
+
+**Web Server Configuration**
+
+The web server (Apache/Nginx) must be configured to request and validate client
+certificates on the following endpoints:
+
+- ``/oauth2/token`` - Token endpoint
+- ``/oauth2/introspect`` - Introspection endpoint
+- ``/oauth2/revoke`` - Revocation endpoint
+
+See :doc:`authssl` for Apache and Nginx configuration examples on how to
+request client certificates and pass them to LemonLDAP::NG via environment
+variables.
+
+**LemonLDAP::NG Configuration**
+
+Configuration is done per Relying Party in ``OpenID Connect Relying Parties`` > *RP name* > ``Options`` > ``mTLS``:
+
+- **Certificate identifier type**: Select the type of certificate attribute to match:
+
+  - *SAN DNS* (default): DNS name in the Subject Alternative Name extension
+  - *Subject DN*: Distinguished name of the certificate subject (e.g., ``CN=myclient,O=Example,C=FR``)
+  - *SAN Email*: Email address in the SAN extension
+  - *SAN IP*: IP address in the SAN extension
+  - *SAN URI*: URI in the SAN extension
+
+- **Expected certificate identifier**: The expected value for the selected
+  identifier type
+
+Both fields should be configured when using ``tls_client_auth`` method.
+The web server must export one of the following environment variables
+*(the ones chosen to identify clients)*:
+
+- ``SSL_CLIENT_S_DN``: Client certificate Subject DN
+- ``SSL_CLIENT_SAN_DNS_0``: First DNS SAN entry
+- ``SSL_CLIENT_SAN_Email_0``: First Email SAN entry
+- ``SSL_CLIENT_SAN_IP_0``: First IP SAN entry
+- ``SSL_CLIENT_SAN_URI_0``: First URI SAN entry
 
 Hashed Token Storage
 """"""""""""""""""""

@@ -2045,6 +2045,13 @@ sub checkEndPointAuthenticationCredentials {
             }
         }
 
+        # RFC 8705: mTLS client authentication
+        if ( $method eq 'tls_client_auth' ) {
+            unless ( $self->_validateMtlsClient( $req, $rp ) ) {
+                return undef;
+            }
+        }
+
         if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} ) {
             unless ( $method eq
                 $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} )
@@ -2057,6 +2064,70 @@ sub checkEndPointAuthenticationCredentials {
     $self->p->HANDLER->set_user( $req,
         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID} );
     return ( $rp, $method );
+}
+
+# Sent warning about uncofigured RP only one time
+our %warningSent;
+
+# RFC 8705: Validate mTLS client certificate
+sub _validateMtlsClient {
+    my ( $self, $req, $rp ) = @_;
+    my $rpOpts = $self->rpOptions->{$rp};
+
+    # Get certificate Subject DN from environment
+    my $cert_subject_dn = $req->env->{SSL_CLIENT_S_DN};
+    unless ($cert_subject_dn) {
+        $self->logger->error(
+            "No client certificate provided for mTLS authentication");
+        return 0;
+    }
+
+    $self->logger->debug(
+        "mTLS: Client certificate Subject DN: $cert_subject_dn");
+
+    # Get configured identifier type and expected value
+    # Default to DNS if no type specified
+    my $id_type =
+      $rpOpts->{oidcRPMetaDataOptionsMtlsCertIdentifierType} || 'DNS';
+    my $expected = $rpOpts->{oidcRPMetaDataOptionsMtlsCertIdentifier};
+
+    # No specific validation configured - accept any valid certificate
+    # (PKI validation is done by the web server)
+    unless ($expected) {
+        return 1 if $warningSent{$rp};
+        $warningSent{$rp} = 1;
+        $self->logger->warn(
+                "mTLS: No specific certificate validation configured for $rp, "
+              . "accept any PKI-validated certificate" );
+        return 1;
+    }
+
+    # Get actual value from certificate based on identifier type
+    my $actual = {
+        DN => $cert_subject_dn,
+        DNS => $req->env->{SSL_CLIENT_SAN_DNS_0}
+            || $req->env->{SSL_CLIENT_S_DN_CN},
+        Email => $req->env->{SSL_CLIENT_SAN_Email_0}
+            || $req->env->{SSL_CLIENT_S_DN_CN},
+        IP => $req->env->{SSL_CLIENT_SAN_IP_0},
+        URI => $req->env->{SSL_CLIENT_SAN_URI_0},
+    }->{$id_type};
+    unless ($actual) {
+        $self->logger->error("mTLS: '$id_type' value not found");
+        return 0;
+    }
+
+    # Compare actual vs expected
+    if ( $actual ne $expected ) {
+        $self->logger->error(
+                "mTLS: Certificate $id_type mismatch for $rp. "
+              . "Expected: $expected, Got: "
+              . ( $actual ) );
+        return 0;
+    }
+
+    $self->logger->debug("mTLS: $id_type match for $rp");
+    return 1;
 }
 
 # Get Client ID and Client Secret
@@ -2169,18 +2240,23 @@ sub getEndPointAuthenticationCredentials {
             $self->logger->error("Unsuported client_assertion_type $atype");
         }
     }
-    elsif ( $req->param('client_id')
-        and $req->body_parameters->{client_secret} )
-    {
-        $scheme = 'client_secret_post';
-        $self->logger->debug("Method client_secret_post used");
-        $client_id     = $req->param('client_id');
-        $client_secret = $req->param('client_secret');
-    }
     elsif ( $req->param('client_id') ) {
-        $scheme = 'none';
-        $self->logger->debug("Method none used");
-        $client_id = $req->param('client_id');
+        if ($req->body_parameters->{client_secret}) {
+            $scheme = 'client_secret_post';
+            $self->logger->debug("Method client_secret_post used");
+            $client_id     = $req->param('client_id');
+            $client_secret = $req->param('client_secret');
+        }
+        elsif ( $req->env->{SSL_CLIENT_S_DN} ) {
+            $scheme    = 'tls_client_auth';
+            $client_id = $req->param('client_id');
+            $self->logger->debug("Method tls_client_auth used");
+        }
+        else {
+            $scheme = 'none';
+            $self->logger->debug("Method none used");
+            $client_id = $req->param('client_id');
+        }
     }
 
     return ( $client_id, $client_secret, $scheme );

@@ -5277,7 +5277,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'client_secret_basic', v => 'client_secret_basic' },
                 { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
                 { k => 'private_key_jwt',     v => 'private_key_jwt' },
+                { k => 'tls_client_auth',     v => 'tls_client_auth' },
             ],
+        },
+        oidcRPMetaDataOptionsMtlsCertIdentifierType => {
+            type   => 'select',
+            select => [
+                { k => '',        v => 'SAN DNS' },
+                { k => 'DN',      v => 'Subject DN' },
+                { k => 'Email',   v => 'SAN Email' },
+                { k => 'IP',      v => 'SAN IP' },
+                { k => 'URI',     v => 'SAN URI' },
+            ],
+            documentation =>
+              'Client certificate identifier type for mTLS (RFC 8705)',
+        },
+        oidcRPMetaDataOptionsMtlsCertIdentifier => {
+            type          => 'text',
+            documentation =>
+              'Expected client certificate identifier value (RFC 8705)',
         },
         oidcRPMetaDataOptionsAuthRequiredForAuthorize => {
             type    => 'bool',
