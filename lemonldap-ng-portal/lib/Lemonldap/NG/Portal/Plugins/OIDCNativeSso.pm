@@ -4,7 +4,6 @@ use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
-use Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
@@ -13,9 +12,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';
 
 use constant hook => {
 
@@ -30,25 +29,6 @@ use constant hook => {
     # Step 3: give new access_token when device_secret is valid
     oidcGotTokenExchange => 'tokenExchangeHook',
 };
-
-has oidc => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        $_[0]
-          ->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::OpenIDConnect'};
-    }
-);
-
-sub init {
-    my ($self) = @_;
-    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
-        $self->logger->error(
-            'This plugin can be used only if OIDC server is enabled');
-        return 0;
-    }
-    1;
-}
 
 use constant sessionKind => 'OIDCI';
 
