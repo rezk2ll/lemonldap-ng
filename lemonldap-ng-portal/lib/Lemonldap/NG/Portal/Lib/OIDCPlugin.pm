@@ -17,6 +17,12 @@ has oidc => (
     }
 );
 
+has path => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub { $_[0]->oidc->path }
+);
+
 sub init {
     my ($self) = @_;
     unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
