@@ -728,7 +728,7 @@ sub _user {
     chomp $sysUser;
     my $envUser;
     foreach (qw(REMOTE_USER SUDO_USER USER)) {
-        ( $envUser = $self->req->env->{$_} || $ENV{$_} ) and last;
+        ( $envUser = $ENV{$_} ) and last;
     }
     $envUser = undef unless $envUser =~ /\w/;
     if ($sysUser) {
