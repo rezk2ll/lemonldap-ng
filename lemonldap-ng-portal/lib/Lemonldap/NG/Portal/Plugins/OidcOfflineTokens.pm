@@ -13,9 +13,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
-extends qw(Lemonldap::NG::Portal::Main::Plugin
+extends qw(Lemonldap::NG::Portal::Lib::OIDCPlugin
   Lemonldap::NG::Portal::Lib::OtherSessions
 );
 
@@ -27,25 +27,12 @@ has rule => (
 );
 with 'Lemonldap::NG::Portal::MenuTab';
 
-has oidc => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        $_[0]
-          ->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::OpenIDConnect'};
-    }
-);
-
 sub init {
-    my ( $self, $req, $session ) = @_;
+    my ($self) = @_;
 
+    return unless $self->SUPER::init;
     $self->addAuthRoute( myoffline => { ':key' => 'delOffline' }, ['DELETE'] );
-    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
-        $self->logger->error(
-            'This plugin can be used only if OIDC server is enabled');
-        return 0;
-    }
-    return 1;
+    1;
 }
 
 sub display {

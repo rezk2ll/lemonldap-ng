@@ -80,6 +80,7 @@ lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
+lib/Lemonldap/NG/Portal/Lib/OIDCPlugin.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
