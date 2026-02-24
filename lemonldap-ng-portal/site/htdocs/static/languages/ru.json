@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Услуга предоставляется",
 "sessionsDeleted":"Следующие сессии были закрыты",
 "sfaManager":"Менеджер 2FA",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Показать/Скрыть пароли",
 "spoofId":"Поддельный идентификатор",
 "startTime":"Дата создания",

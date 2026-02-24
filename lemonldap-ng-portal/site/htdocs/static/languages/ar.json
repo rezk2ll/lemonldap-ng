@@ -325,6 +325,7 @@
 "serviceProvidedBy":"الخدمة المقدمة من قبل",
 "sessionsDeleted":"الجلسات التالية تم غلقها",
 "sfaManager":"مدير 2ndFA",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"إظهار/إخفاء كلمات المرور",
 "spoofId":"معرف مزيف",
 "startTime":"تاريخ الإنشاء",

@@ -325,6 +325,7 @@
 "serviceProvidedBy":"השירות בחסות",
 "sessionsDeleted":"ההפעלות הבאות נסגרו",
 "sfaManager":"מנהל אימות דו־שלבי",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"הצגת/הסתרת סיסמאות",
 "spoofId":"מזהה מזויף",
 "startTime":"תאריך יצירה",

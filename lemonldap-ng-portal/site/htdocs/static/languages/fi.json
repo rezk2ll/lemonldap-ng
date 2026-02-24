@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Palvelun toteuttaa",
 "sessionsDeleted":"Seuraavat istunnot on suljettu",
 "sfaManager":"2FA-hallinta",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Näytä/Piilota salasanat",
 "spoofId":"Väärennetty tunniste",
 "startTime":"Luontipäivämäärä",

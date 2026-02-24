@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Servis sağlayıcısı",
 "sessionsDeleted":"Aşağıdaki oturumlar kapatıldı",
 "sfaManager":"2ndFA Yöneticisi",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Parolayı göster/gizle",
 "spoofId":"Gizlenen ID",
 "startTime":"Oluşturulma tarihi",
