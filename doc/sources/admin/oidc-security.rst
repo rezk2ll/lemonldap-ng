@@ -17,6 +17,7 @@ LemonLDAP::NG implements security recommendations from:
 * **RFC 7636** - Proof Key for Code Exchange (PKCE)
 * **RFC 7662** - OAuth 2.0 Token Introspection
 * **RFC 9068** - JWT Profile for OAuth 2.0 Access Tokens
+* **RFC 9701** - JWT Response for OAuth 2.0 Token Introspection
 * **RFC 9207** - OAuth 2.0 Authorization Server Issuer Identification
 * **RFC 9700** - OAuth 2.0 Security Best Current Practice
 * **ANSSI Guidelines** and **France-Connect+ compliance** - French National Cybersecurity Agency recommendations
@@ -186,6 +187,7 @@ For sensitive data, encrypt tokens in addition to signing. Encryption can be app
 - **ID Token**: returned in token endpoint responses
 - **UserInfo**: returned by the UserInfo endpoint
 - **Access Token**: if using JWT format (RFC 9068)
+- **Introspection response**: if using JWT format (RFC 9701, since 2.23.0)
 
 .. attention::
 
@@ -197,6 +199,7 @@ For sensitive data, encrypt tokens in addition to signing. Encryption can be app
 - **ID Token Encryption content encryption algorithm**
 - **Access Token Encryption algorithms** (if JWT format)
 - **UserInfo Encryption algorithms**
+- **Introspection Encryption algorithms** (if JWT format, since 2.23.0)
 
 Other Options
 ~~~~~~~~~~~~~
@@ -463,6 +466,23 @@ RFC 7636 - PKCE
 
 - **OP**: Require PKCE per RP
 - **RP**: Enable PKCE per OP
+
+RFC 9701 - JWT Response for Token Introspection
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+.. versionadded:: 2.23.0
+
+RFC 9701 allows returning introspection responses as signed (and optionally encrypted) JWTs instead of plain JSON. This provides:
+
+- **Integrity**: The response is signed, ensuring it hasn't been tampered with
+- **Confidentiality**: Optional encryption protects sensitive token metadata
+- **Non-repudiation**: The signature proves the response came from the authorization server
+
+**Configuration** (per Relying Party): ``OpenID Connect Relying Parties`` > *RP name* > ``Options`` > ``Algorithms``:
+
+- **Introspection response format**: Select signature algorithm (RS256, ES256, etc.)
+- **Introspection Encryption key management algorithm**: Optional encryption
+- **Introspection Encryption content encryption algorithm**: Encryption content algorithm
 
 
 Security Checklists

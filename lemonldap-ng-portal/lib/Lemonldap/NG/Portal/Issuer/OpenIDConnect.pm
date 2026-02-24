@@ -2482,7 +2482,48 @@ sub introspection {
             $self->logger->warn("Count not find session tied to Access Token");
         }
     }
-    return $self->p->sendJSONresponse( $req, $response );
+
+    # RFC 9701: JWT Response for OAuth 2.0 Token Introspection
+    my $introspection_sign_alg =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIntrospectionSignAlg};
+
+    unless ($introspection_sign_alg) {
+
+        # Default behavior: return JSON response (RFC 7662)
+        return $self->p->sendJSONresponse( $req, $response );
+    }
+
+    # RFC 9701: wrap response in token_introspection claim
+    my $jwt_payload = {
+        iss                 => $self->get_issuer($req),
+        aud                 => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
+        iat                 => time(),
+        token_introspection => $response,
+    };
+
+    my $introspection_jwt = $self->createJWT(
+        $jwt_payload,
+        $introspection_sign_alg,
+        $rp,
+        { typ => 'token-introspection+jwt' }
+    );
+
+    # Apply encryption if configured
+    my $enc_alg =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg};
+    if ($enc_alg) {
+        my $enc_enc =
+          $self->rpOptions->{$rp}
+          ->{oidcRPMetaDataOptionsIntrospectionEncContentEncAlg}
+          || 'A256GCM';
+        $introspection_jwt =
+          $self->encryptToken( $rp, $introspection_jwt, $enc_alg, $enc_enc );
+    }
+
+    return $self->p->sendBinaryResponse(
+        $req, $introspection_jwt,
+        type => 'application/token-introspection+jwt'
+    );
 }
 
 sub unauthRevokeToken {
@@ -2690,6 +2731,12 @@ sub registration {
       $client_metadata->{id_token_encrypted_response_enc};
     my $userInfoEncAlg = $client_metadata->{userinfo_encrypted_response_alg};
     my $userInfoEncEnc = $client_metadata->{userinfo_encrypted_response_enc};
+    my $introspectionSignAlg =
+      $client_metadata->{introspection_signed_response_alg};
+    my $introspectionEncAlg =
+      $client_metadata->{introspection_encrypted_response_alg};
+    my $introspectionEncEnc =
+      $client_metadata->{introspection_encrypted_response_enc};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2751,6 +2798,16 @@ sub registration {
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg} = $userInfoEncEnc
       if $userInfoEncEnc;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIntrospectionSignAlg} = $introspectionSignAlg
+      if $introspectionSignAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg} = $introspectionEncAlg
+      if $introspectionEncAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIntrospectionEncContentEncAlg} =
+      $introspectionEncEnc
+      if $introspectionEncEnc;
 
     # TODO "jwks" support (when jwks_uri isn't available
 
@@ -2789,6 +2846,15 @@ sub registration {
         $registration_response->{'userinfo_signed_response_alg'} =
           $userinfo_signed_response_alg
           if defined $userinfo_signed_response_alg;
+        $registration_response->{'introspection_signed_response_alg'} =
+          $introspectionSignAlg
+          if defined $introspectionSignAlg;
+        $registration_response->{'introspection_encrypted_response_alg'} =
+          $introspectionEncAlg
+          if defined $introspectionEncAlg;
+        $registration_response->{'introspection_encrypted_response_enc'} =
+          $introspectionEncEnc
+          if defined $introspectionEncEnc;
     }
     else {
         $self->logger->error(

@@ -34,6 +34,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
+-  JWT Introspection response (Since ``2.23.0``) - See :rfc:`9701`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
@@ -310,6 +311,11 @@ Options
       return it as a JWT, using one of the available signature algorithms. 
    -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
+   -  **Introspection response format** (since version ``2.23.0``): By default,
+      Introspection is returned as a simple JSON object (RFC 7662). You can also choose to
+      return it as a JWT, using one of the available signature algorithms (RFC 9701).
+   -  **Introspection Encryption key management algorithm**: If Relying-Party require introspection response encryption, set here the key management algorithm (RFC 9701)
+   -  **Introspection Encryption content encryption algorithm**: If Relying-Party require introspection response encryption, set here the content encryption algorithm (RFC 9701)
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
 

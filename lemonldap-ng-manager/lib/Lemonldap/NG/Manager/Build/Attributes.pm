@@ -5383,6 +5383,26 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => '',
         },
+        oidcRPMetaDataOptionsIntrospectionSignAlg => {
+            type    => 'select',
+            select  => [ { k => '', v => 'JSON' }, @{&oidcSigAlgorithmAlg}, ],
+            default => '',
+            documentation =>
+              'Introspection response signature algorithm (RFC 9701)',
+        },
+        oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg => {
+            type   => 'select',
+            select => [ { k => '', v => 'None' }, @{&oidcEncAlgorithmAlg} ],
+            documentation =>
+              '"alg" for introspection response encryption (RFC 9701)',
+        },
+        oidcRPMetaDataOptionsIntrospectionEncContentEncAlg => {
+            type          => 'select',
+            select        => oidcEncAlgorithmEnc,
+            default       => 'A256GCM',
+            documentation =>
+              '"enc" for introspection response encryption (RFC 9701)',
+        },
         oidcRPMetaDataOptionsAccessTokenJWT => { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenClaims =>
           { type => 'bool', default => 0 },
