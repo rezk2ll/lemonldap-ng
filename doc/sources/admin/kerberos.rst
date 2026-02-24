@@ -122,14 +122,6 @@ You have to run this command on Active Directory:
 
     You must use the UPPERCASE value of the domain name when generating the keytab
 
-.. attention::
-
-    The values passed in -crypto and -ptype depend on the
-    Active Directory version and the windows version of the workstations.
-    You can for example use RC4-HMAC-NT as crypto protocol if DES is not
-    supported by workstations (this the case by default for Window 8 for
-    example).
-
 The file ``auth.keytab`` should then be copied (with a secure media) to
 the Linux server (for example in ``/etc/lemonldap-ng``).
 
@@ -261,9 +253,14 @@ The result of the command should be:
 ::
 
    Keytab name: FILE:/etc/lemonldap-ng/auth.keytab
-   KVNO Timestamp         Principal
-   ---- ----------------- --------------------------------------------------------
-      3 01/01/70 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (arcfour-hmac)
+   KVNO Timestamp           Principal
+   ---- ------------------- ------------------------------------------------------
+      3 01/01/1970 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (DEPRECATED:des-cbc-crc)
+      3 01/01/1970 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (DEPRECATED:des-cbc-md5)
+      3 01/01/1970 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (DEPRECATED:arcfour-hmac)
+      3 01/01/1970 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (aes256-cts-hmac-sha1-96)
+      3 01/01/1970 01:00:00 HTTP/auth.example.com@EXAMPLE.COM (aes128-cts-hmac-sha1-96)
+
 
 The important things to check are:
 
