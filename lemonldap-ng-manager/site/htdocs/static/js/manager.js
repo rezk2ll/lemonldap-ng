@@ -528,6 +528,17 @@
     $scope.addSamlSP = function () {
       return $scope.newTemplateNode('samlSPMetaDataNode', 'samlPartnerName', 'sp-example');
     };
+    $scope.duplicateSamlSp = function () {
+      $scope.message = {
+        title: 'samlPartnerName',
+        field: 'name'
+      };
+      return $scope.showModal('prompt.html', 'sp-copy').then(function () {
+        var n;
+        n = $scope.result;
+        return $scope.duplicateNode(n, 'samlSPMetaDataNode', $scope.currentNode.title);
+      });
+    };
     $scope.addOidcOp = function () {
       return $scope.newTemplateNode('oidcOPMetaDataNode', 'oidcOPName', 'op-example');
     };
@@ -550,6 +561,17 @@
     };
     $scope.addCasApp = function () {
       return $scope.newTemplateNode('casAppMetaDataNode', 'casPartnerName', 'app-example');
+    };
+    $scope.duplicateCasApp = function () {
+      $scope.message = {
+        title: 'casPartnerName',
+        field: 'name'
+      };
+      return $scope.showModal('prompt.html', 'app-copy').then(function () {
+        var n;
+        n = $scope.result;
+        return $scope.duplicateNode(n, 'casAppMetaDataNode', $scope.currentNode.title);
+      });
     };
     $scope.addKey = function () {
       return $scope.newTemplateNode('keyNode', 'keyName', 'key-example');
