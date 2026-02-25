@@ -534,6 +534,17 @@
     $scope.addOidcRp = function () {
       return $scope.newTemplateNode('oidcRPMetaDataNode', 'oidcRPName', 'rp-example');
     };
+    $scope.duplicateOidcRp = function () {
+      $scope.message = {
+        title: 'oidcRPName',
+        field: 'name'
+      };
+      return $scope.showModal('prompt.html', 'rp-copy').then(function () {
+        var n;
+        n = $scope.result;
+        return $scope.duplicateNode(n, 'oidcRPMetaDataNode', $scope.currentNode.title);
+      });
+    };
     $scope.addCasSrv = function () {
       return $scope.newTemplateNode('casSrvMetaDataNode', 'casPartnerName', 'srv-example');
     };

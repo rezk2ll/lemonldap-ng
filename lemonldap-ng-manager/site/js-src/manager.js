@@ -607,6 +607,20 @@ llapp.controller('TreeCtrl', [
         'oidcRPName',
         'rp-example');
     };
+    $scope.duplicateOidcRp = function() {
+      $scope.message = {
+        title: 'oidcRPName',
+        field: 'name'
+      };
+      return $scope.showModal('prompt.html',
+        'rp-copy').then(function() {
+        var n;
+        n = $scope.result;
+        return $scope.duplicateNode(n,
+          'oidcRPMetaDataNode',
+          $scope.currentNode.title);
+      });
+    };
     $scope.addCasSrv = function() {
       return $scope.newTemplateNode('casSrvMetaDataNode',
         'casPartnerName',
