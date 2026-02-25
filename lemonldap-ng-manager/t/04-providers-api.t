@@ -558,11 +558,11 @@ $samlSp->{options}->{checkSLOMessageSignature} = 1;
 $samlSp->{options}->{encryptionMode}           = 'nameid';
 delete $samlSp->{options}->{sessionNotOnOrAfterTimeout};
 delete $samlSp->{exportedAttributes};
-$samlSp->{macros}->{family_name} = '$sn',
-  $samlSp->{exportedAttributes}->{cn}->{name}         = "cn",
-  $samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name",
-  $samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false",
-  checkUpdate( $test, 'saml/sp', 'mySamlSp1', $samlSp );
+$samlSp->{macros}->{family_name}                    = '$sn';
+$samlSp->{exportedAttributes}->{cn}->{name}         = "cn";
+$samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name";
+$samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false";
+checkUpdate( $test, 'saml/sp', 'mySamlSp1', $samlSp );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
     'options/checkSLOMessageSignature', 1 );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
