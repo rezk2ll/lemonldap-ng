@@ -54,6 +54,7 @@ The OAuth2 handler defines a few extra variables that you can use in
   ``clientcredentials``, ``password``
 * ``$_scope``: list of space-separated scopes granted by the Access Token
 * ``$_accessToken``: value of the access token, in case your application needs it as well
+* ``$_audiences`` (since *2.23.0*): list of audiences allowed for this token. You can use :ref:`listMatch($_audiences, "my.audience.com")<listMatch>` to check for the expected value. Audiences can be added to a token using the **Additional audiences** :doc:`OIDC relying party configuration parameter <idpopenidconnect>`.
 
 For example, to grant access to access tokens containing the ``write`` scope,
 use ::
