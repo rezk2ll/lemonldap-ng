@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_WAIT
 );
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 our @ALERTS = (
     PE_USERNOTFOUND,         PE_BADCREDENTIALS,
@@ -32,6 +32,14 @@ with 'Lemonldap::NG::Portal::Lib::CrowdSec';
 has rule => ( is => 'rw', default => sub { 0 } );
 
 has filters => ( is => 'rw', default => sub { {} } );
+
+has scenarios => ( is => 'rw', default => sub { {} } );
+
+has scenarioMaxFailures => ( is => 'rw', default => sub { {} } );
+
+has scenarioBanDuration => ( is => 'rw', default => sub { {} } );
+
+has scenarioTimeWindow => ( is => 'rw', default => sub { {} } );
 
 # Entrypoint
 use constant aroundSub => {
@@ -113,64 +121,64 @@ sub controlUrl {
         return $ret;
     }
 
-    return $ret unless $self->filters;
-    if (
-            $self->filters->{url}
-        and $req->env->{REQUEST_URI} =~ $self->filters->{url}
-        and not($self->filters->{urlskip}
-            and $req->env->{REQUEST_URI} =~ $self->filters->{urlskip} )
-      )
-    {
-        my $uri = $req->env->{REQUEST_URI};
-        my $msg = "Bad URI detected: $uri";
-        $self->alert( $req->address, $msg,
-            { scenario => 'llng/urlscan', reason => $msg, uri => $uri } )
-          ? $self->auditLog(
-            $req,
-            code         => 200,
-            message      => "Alert sent to Crowdsec: $msg",
-            ip           => $req->address,
-            uri          => $req->env->{REQUEST_URI},
-            matchingPart => $&,
-          )
-          : $self->logger->error(
-            "Unable to send alert to Crowdsec (was '$msg' for "
-              . $req->address );
+    return $ret unless %{ $self->filters };
 
-        $req->response(
+    # Use matchScenario to find matching scenario (with whitelist check)
+    my $uri = $req->env->{REQUEST_URI};
+    my ( $scenario, $cat, $maxFailures, $banDuration, $timeWindow ) =
+      $self->matchScenario($uri);
+
+    # No match or whitelisted
+    return $ret unless $scenario;
+
+    my $msg  = "Bad URI detected: $uri";
+    my $data = { scenario => $scenario, reason => $msg, uri => $uri };
+    $data->{maxFailures} = $maxFailures if defined $maxFailures;
+    $data->{banDuration} = $banDuration if defined $banDuration;
+    $data->{timeWindow}  = $timeWindow  if defined $timeWindow;
+    $self->alert( $req->address, $msg, $data )
+      ? $self->auditLog(
+        $req,
+        code     => 200,
+        message  => "Alert sent to Crowdsec: $msg",
+        ip       => $req->address,
+        uri      => $uri,
+        scenario => $scenario,
+      )
+      : $self->logger->error(
+        "Unable to send alert to Crowdsec (was '$msg' for " . $req->address );
+
+    $req->response(
 
         # Case "redirection", crowdSecAgentResponseValue is the "location" value
-            $self->conf->{crowdSecAgentResponseCode} =~ /^3/
-            ? $self->p->sendRawHtml(
-                $req,
-                $self->conf->{crowdSecAgentResponseValue},
-                {
-                    code    => $self->conf->{crowdSecAgentResponseCode},
-                    headers => [
-                        Location => (
-                            $self->conf->{crowdSecAgentResponseValue}
-                              || 'https://somewhere.else'
-                        )
-                    ],
-                }
-              )
+        $self->conf->{crowdSecAgentResponseCode} =~ /^3/
+        ? $self->p->sendRawHtml(
+            $req,
+            $self->conf->{crowdSecAgentResponseValue},
+            {
+                code    => $self->conf->{crowdSecAgentResponseCode},
+                headers => [
+                    Location => (
+                        $self->conf->{crowdSecAgentResponseValue}
+                          || 'https://somewhere.else'
+                    )
+                ],
+            }
+          )
 
-            # Case "custom response
-            : $self->conf->{crowdSecAgentResponseValue}
-            ? $self->p->sendRawHtml(
-                $req,
-                $self->conf->{crowdSecAgentResponseValue},
-                { code => $self->conf->{crowdSecAgentResponseCode} }
-              )
+        # Case "custom response
+        : $self->conf->{crowdSecAgentResponseValue} ? $self->p->sendRawHtml(
+            $req,
+            $self->conf->{crowdSecAgentResponseValue},
+            { code => $self->conf->{crowdSecAgentResponseCode} }
+          )
 
-            # Case "default Lemon response
-            : $self->sendError(
-                $req, '', $self->conf->{crowdSecAgentResponseCode}
-            )
-        );
-        return PE_SENDRESPONSE;
-    }
-    return $ret;
+        # Case "default Lemon response
+        : $self->sendError(
+            $req, '', $self->conf->{crowdSecAgentResponseCode}
+        )
+    );
+    return PE_SENDRESPONSE;
 }
 
 1;
