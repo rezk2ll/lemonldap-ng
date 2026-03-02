@@ -2883,6 +2883,9 @@ sub getAudiences {
 sub getUserIDForRP {
     my ( $self, $req, $rp, $data ) = @_;
 
+    # Use pre-computed sub if available (stored in online refresh tokens)
+    return $data->{_oidc_sub} if $data->{_oidc_sub};
+
     my $user_id_attribute =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsUserIDAttr}
       || $self->conf->{whatToTrace};

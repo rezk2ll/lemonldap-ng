@@ -1771,6 +1771,7 @@ sub _handlePasswordGrant {
                 user_session_id            => $req->id,
                 grant_type                 => "password",
                 $self->conf->{whatToTrace} => $user,
+                _oidc_sub => $self->getUserIDForRP( $req, $rp, $req->userData ),
             },
             0,
         );
@@ -1957,7 +1958,6 @@ sub _handleAuthorizationCodeGrant {
     elsif ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRefreshToken} ) {
         my $refreshTokenSession = $self->_generateRefreshToken(
             $req,
-
             $rp,
             {
                 redirect_uri => $codeSession->data->{redirect_uri},
@@ -1969,6 +1969,7 @@ sub _handleAuthorizationCodeGrant {
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
                 $self->conf->{whatToTrace} => $user,
+                _oidc_sub => $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
             },
             0,
         );
