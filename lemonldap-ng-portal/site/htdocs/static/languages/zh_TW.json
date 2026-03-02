@@ -325,6 +325,7 @@
 "serviceProvidedBy":"服務提供者",
 "sessionsDeleted":"以下工作階段已關閉",
 "sfaManager":"雙因素驗證管理程式",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"顯示／隱藏密碼",
 "spoofId":"Spoofed Id",
 "startTime":"建立日期",

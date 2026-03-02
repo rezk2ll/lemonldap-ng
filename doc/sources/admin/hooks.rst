@@ -1128,7 +1128,7 @@ sfRegisterDevice
 
 This hook is called immediately before registering a new second factor device
 into the user's persistent session.
-You can use it to abort the operation unless some condition is met, to modified
+You can use it to abort the operation unless some condition is met, to modify
 the stored data, or to change the authentication level obtained immediately
 after registration.
 
@@ -1139,6 +1139,7 @@ The hook's parameters are:
 * A hash containing the current registration state, which you can modify to change the authentication level. Its subkeys are
 
   * ``authenticationLevel``: authentication level granted by the module
+  * ``module``: the object of the current 2fa module. Can be used to retrieve the type or prefix of 2fa
 
 Sample code::
 
@@ -1157,6 +1158,48 @@ Sample code::
         # abort registration
         if ( $device->{name} =~ /invalid/i ) {
             return PE_ERROR;
+        }
+
+        return PE_OK;
+    }
+
+
+sfDeleteDevice
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23
+
+This hook is called immediately before removing a second factor device
+into the user's persistent session.
+You can use it to abort the operation unless some condition is met.
+
+The hook's parameters are:
+
+* A hash of session information
+* The second factor type,
+* Device registration date
+* A hash containing the current registration state. Its subkeys are
+
+  * ``module``: the object of the current 2fa module. Can be used to retrieve the type or prefix of 2fa
+
+Return value:
+
+  * ``PE_OK`` for success, any other value means an error. In case of error, you could specify a custom error message that would be returned by the SSO. To do so, just add an ``errorLabel`` key in ``$registration_state`` hash, with the value you want the SSO to return.
+
+Sample code::
+
+    use constant hook => { sfDeleteDevice => 'checkUserBefore2fDelete' };
+
+    sub checkUserBefore2fDelete {
+        my ( $self, $req, $info, $type, $epoch, $registration_state ) = @_;
+
+        my $module = $registration_state->{module};
+        my $mail = $info->{mail};
+
+        # Don't allow 2nd factor removal if user have no mail
+        unless ( $mail ) {
+            $registration_state->{errorLabel} = "deleteHookError";
+            return  PE_ERROR;
         }
 
         return PE_OK;

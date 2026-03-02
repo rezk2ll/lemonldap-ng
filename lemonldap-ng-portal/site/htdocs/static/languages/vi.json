@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Dịch vụ được cung cấp bởi",
 "sessionsDeleted":"Các phiên làm việc sau đã được đóng lại",
 "sfaManager":"2ndFA Manager",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Hiện/Ẩn mật khẩu",
 "spoofId":"Spoofed Id",
 "startTime":"Ngày tạo",

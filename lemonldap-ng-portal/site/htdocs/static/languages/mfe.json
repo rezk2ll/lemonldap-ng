@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Servis ki finn done par",
 "sessionsDeleted":"Bann sesion swivan finn ferme",
 "sfaManager":"2em FA Manager",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Montre/Kasiet bann modpas",
 "spoofId":"Id fos",
 "startTime":"Dat kreasion",

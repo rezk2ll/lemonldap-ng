@@ -325,6 +325,7 @@
 "serviceProvidedBy":"Service provided by",
 "sessionsDeleted":"The following sessions have been closed",
 "sfaManager":"2ndFA Manager",
+"sfDeleteDeviceHookError":"Error while deleting second factor",
 "showhidePasswords":"Show/Hide passwords",
 "spoofId":"Spoofed Id",
 "startTime":"Creation date",
