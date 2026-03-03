@@ -756,6 +756,7 @@ t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-Auth-OIDC-JWKS-Refresh.t
 t/32-Auth-OIDC-Parameters.t
 t/32-OIDC-admin-Back-Channel-Logout-sid.t
+t/32-OIDC-Back-Channel-Logout-custom-sub.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid-offline.t
