@@ -5468,7 +5468,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Declare this RP as public client',
         },
         oidcRPMetaDataOptionsRequirePKCE => {
-            type          => 'bool',
+            type   => 'select',
+            select => [
+                { k => '0', v => 'disabled' },
+                { k => '1', v => 'required' },
+                { k => '2', v => 'pkceOrSecret' },
+            ],
             default       => 0,
             documentation => 'Require PKCE',
         },

@@ -857,8 +857,22 @@ function templates(tpl,key) {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
+                  "select" : [
+                     {
+                        "k" : "0",
+                        "v" : "disabled"
+                     },
+                     {
+                        "k" : "1",
+                        "v" : "required"
+                     },
+                     {
+                        "k" : "2",
+                        "v" : "pkceOrSecret"
+                     }
+                  ],
                   "title" : "oidcRPMetaDataOptionsRequirePKCE",
-                  "type" : "bool"
+                  "type" : "select"
                },
                {
                   "default" : 0,

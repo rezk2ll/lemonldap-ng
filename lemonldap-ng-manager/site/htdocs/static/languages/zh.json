@@ -970,6 +970,7 @@
 "persistentStorage":"Apache::Session 模組",
 "persistentStorageOptions":"Apache::Session 模組參數",
 "pickFontAwesome":"or input the code of a Font Awesome icon",
+"pkceOrSecret":"PKCE or Secret",
 "plugins":"外掛程式",
 "port":"連接埠",
 "portal":"URL",

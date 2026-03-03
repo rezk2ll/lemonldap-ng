@@ -3535,7 +3535,20 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
-            'type'    => 'bool'
+            'select'  => [ {
+                    'k' => '0',
+                    'v' => 'disabled'
+                },
+                {
+                    'k' => '1',
+                    'v' => 'required'
+                },
+                {
+                    'k' => '2',
+                    'v' => 'pkceOrSecret'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsRtActivity' => {
             'default' => 0,

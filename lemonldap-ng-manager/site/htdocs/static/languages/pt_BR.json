@@ -970,6 +970,7 @@
 "persistentStorage":"módulo Apache::Session",
 "persistentStorageOptions":"Parâmetros do módulo Apache::Session",
 "pickFontAwesome":"ou insira o código de um ícone Font Awesome",
+"pkceOrSecret":"PKCE or Secret",
 "plugins":"Plugins",
 "port":"Porta",
 "portal":"URL",
