@@ -130,7 +130,7 @@ sub test_activation {
     );
 
     if ($activation) {
-        expectCookie($res);
+        expectRedirection( $res, qr'http://auth.sp.com/\?ticket=(.*)' );
     }
     else {
         expectPortalError( $res, 107 );

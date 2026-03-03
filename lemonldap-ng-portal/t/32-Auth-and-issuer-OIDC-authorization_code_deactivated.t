@@ -13,7 +13,7 @@ BEGIN {
 }
 
 my $debug = 'error';
-my ( $op, $rp, $res );
+my ( $op, $res );
 
 my $access_token;
 
@@ -30,8 +30,7 @@ LWP::Protocol::PSGI->register(
             $client = $op;
         }
         elsif ( $host eq 'rp' ) {
-            pass('  Request from OP to RP');
-            $client = $rp;
+            die;
         }
         else {
             fail('  Aborting REST request (external)');
@@ -86,7 +85,7 @@ SKIP: {
 
         my $op = register( 'op', sub { get_op() } );
 
-        test_activation( $rp, $op, 1 );
+        test_activation( $op, 1 );
       };
 
     subtest
@@ -96,7 +95,7 @@ SKIP: {
         $op = register( 'op',
             sub { get_op( oidcRPMetaDataOptionsActivation => 1 ) } );
 
-        test_activation( $rp, $op, 1 );
+        test_activation( $op, 1 );
       };
 
     subtest
@@ -106,12 +105,12 @@ SKIP: {
         my $op = register( 'op',
             sub { get_op( oidcRPMetaDataOptionsActivation => 0 ) } );
 
-        test_activation( $rp, $op, 0 );
+        test_activation( $op, 0 );
       };
 }
 
 sub test_activation {
-    my ( $rp, $op, $activation ) = @_;
+    my ( $op, $activation ) = @_;
 
     ok(
         $res = $op->_get('/oauth2/jwks'),
@@ -157,7 +156,7 @@ sub test_activation {
     count(1);
 
     if ($activation) {
-        my $idpId = expectCookie($res);
+        expectRedirection( $res, qr'http://auth.rp.com/\?.*code=.*' );
     }
     else {
         expectPortalError( $res, 107 );
@@ -198,7 +197,7 @@ sub get_op {
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
                         oidcRPMetaDataOptionsClientID          => "rpid",
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent     => 0,
+                        oidcRPMetaDataOptionsBypassConsent     => 1,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsRefreshToken      => 1,
                         oidcRPMetaDataOptionsUserIDAttr        => "",
