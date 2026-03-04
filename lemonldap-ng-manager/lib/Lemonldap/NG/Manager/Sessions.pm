@@ -124,8 +124,10 @@ sub userLogout {
                             token      => $sid,
                             raw        => 1,
                         );
+                        my $portal = $self->{portal};
+                        $portal =~ s#/+$##;
                         my $lreq = HTTP::Request->new(
-                            POST => "$self->{portal}/admintokenrevoke",
+                            POST => "$portal/admintokenrevoke",
                             [
                                 Authorization =>
                                   "Bearer $self->{tokenRevokeSecret}",
