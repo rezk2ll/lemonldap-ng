@@ -3,15 +3,22 @@ Available plugin hooks
 
 This page shows the list of hooks that you can use in your :doc:`custom plugins <plugincustom>`. Read the :doc:`plugincustom` page for full details on how to create and enable custom plugins.
 
+.. contents::
+   :local:
+   :depth: 1
+
 OpenID Connect Issuer hooks
 ---------------------------
 
+Authorization endpoint (/oauth2/authorize)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 oidcGotRequest
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.10
 
-This hook is triggered when LemonLDAP::NG received an authorization request on the `/oauth2/authorize` endpoint.
+This hook is triggered when LemonLDAP::NG received an authorization request on the ``/oauth2/authorize`` endpoint.
 
 The hook's parameter is a hash containing the authorization request parameters.
 
@@ -27,35 +34,6 @@ Sample code::
 
        return PE_OK;
    }
-
-oidcGotClientCredentialsGrant
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.12
-
-This hook is triggered when LemonLDAP::NG successfully authorized a :ref:`Client Credentials Grant <client-credentials-grant>`.
-
-The hook's parameters are:
-
-* A hash of the current session info
-* the configuration key of the relying party which is being identified
-
-.. versionchanged:: 2.21.0
-   You can use ``$info->{_scope}`` to update granted scopes in this hook
-
-Sample code::
-
-   use constant hook => {
-       oidcGotClientCredentialsGrant => 'addSessionVariable',
-   };
-
-   sub addSessionVariable {
-       my ( $self, $req, $info, $rp ) = @_;
-       $info->{is_client_credentials} = 1;
-
-       return PE_OK;
-   }
-
 
 oidcGenerateCode
 ~~~~~~~~~~~~~~~~
@@ -83,120 +61,12 @@ Sample code::
        return PE_OK;
    }
 
-oidcGenerateUserInfoResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.10
-
-This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint, or to compute a list of claims to be added in an ID or Access Token.
-
-The hook's parameter is a hash containing all the claims that are about to be released.
-
-.. versionchanged:: 2.0.15
-   Added the hash of current session data
-
-Sample code::
-
-   use constant hook => {
-       oidcGenerateUserInfoResponse => 'addClaimToUserInfo',
-   };
-
-   sub addClaimToUserInfo {
-       my ( $self, $req, $userinfo, $rp, $session_data) = @_;
-       my $scope = $session_data->{_scope};
-       $userinfo->{"userinfo_hook"} = 1;
-       return PE_OK;
-   }
-
-oidcGenerateIDToken
-~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.10
-
-This hook is triggered when LemonLDAP::NG is generating an ID Token.
-
-The hook's parameters are:
-
-* A hash of the claims to be contained in the ID Token
-* the configuration key of the relying party which will receive the token
-
-.. versionadded:: 2.22.0
-
-* A hash of session information
-* A hash of additional JWT headers
-
-Sample code::
-
-   use constant hook => {
-       oidcGenerateIDToken          => 'addClaimToIDToken',
-   };
-
-   sub addClaimToIDToken {
-       my ( $self, $req, $payload, $rp, $sessionInfo, $extra_headers ) = @_;
-       $payload->{"id_token_hook"} = 1;
-       return PE_OK;
-   }
-
-oidcGenerateAccessToken
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.12
-
-This hook is triggered when LemonLDAP::NG is generating an JWT-formatted Access Token
-
-The hook's parameters are:
-
-* A hash of the claims to be contained in the Access Token
-* the configuration key of the relying party which will receive the token
-
-.. versionadded:: 2.22.0
-
-* A hash of additional JWT headers
-
-Sample code::
-
-   use constant hook => {
-       oidcGenerateAccessToken          => 'addClaimToAccessToken',
-   };
-
-   sub addClaimToAccessToken {
-       my ( $self, $req, $payload, $rp, $extra_headers ) = @_;
-       $payload->{"access_token_hook"} = 1;
-       return PE_OK;
-   }
-
-oidcGenerateTokenResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.19.0
-
-This hook is triggered when LemonLDAP::NG has generated id_token and access_token
-
-The hook's parameters are:
-
-* the configuration key of the relying party which will receive the tokens
-* the prepared response before JSON encoding
-* the OIDC session content
-* the user's session content
-
-Sample code::
-
-    use constant hook => {
-        oidcGenerateTokenResponse      => 'addTokenToResponse',
-    };
-
-    sub addTokenToResponse {
-        my ( $self, $req, $tokensResponse, $oidcSession, $userSession ) = @_;
-        $tokensResponse->{mySpecialToken} = 'randomValue';
-        return PE_OK;
-    }
-
 oidcResolveScope
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.12
 
-This hook is triggered when LemonLDAP::NG is resolving scopes.
+This hook is triggered when LemonLDAP::NG is resolving scopes (on authorization and token endpoints).
 
 The hook's parameters are:
 
@@ -269,13 +139,44 @@ Sample code ::
     }
 
 
+Token endpoint (/oauth2/token)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGotClientCredentialsGrant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG successfully authorized a :ref:`Client Credentials Grant <client-credentials-grant>`.
+
+The hook's parameters are:
+
+* A hash of the current session info
+* the configuration key of the relying party which is being identified
+
+.. versionchanged:: 2.21.0
+   You can use ``$info->{_scope}`` to update granted scopes in this hook
+
+Sample code::
+
+   use constant hook => {
+       oidcGotClientCredentialsGrant => 'addSessionVariable',
+   };
+
+   sub addSessionVariable {
+       my ( $self, $req, $info, $rp ) = @_;
+       $info->{is_client_credentials} = 1;
+
+       return PE_OK;
+   }
+
 oidcGotOnlineRefresh
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
-online session
+online session (user session still exists).
 
 The hook's parameters are:
 
@@ -302,7 +203,7 @@ oidcGotOfflineRefresh
 .. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
-offline session
+offline session (user session no longer exists).
 
 The hook's parameters are:
 
@@ -323,7 +224,6 @@ Sample code::
        return PE_OK;
    }
 
-
 oidcGotTokenExchange
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -334,7 +234,6 @@ This hook is triggered when LemonLDAP::NG handles an OAuth 2.0 Token Exchange re
 It allows you to implement your own custom Token Exchange flow.
 
 You can look for parameters in ``$req``. If you find a combination of parameters that you support, set ``$req->response`` and return ``PE_SENDRESPONSE``. Else, return ``PE_OK`` to continue or ``PE_ERROR`` to fail.
-
 
 Sample code::
 
@@ -360,6 +259,127 @@ Sample code::
         }
         return PE_OK;
     }
+
+oidcGenerateTokenResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.19.0
+
+This hook is triggered when LemonLDAP::NG has generated id_token and access_token
+and is about to send the token response.
+
+The hook's parameters are:
+
+* the configuration key of the relying party which will receive the tokens
+* the prepared response before JSON encoding
+* the OIDC session content
+* the user's session content
+
+Sample code::
+
+    use constant hook => {
+        oidcGenerateTokenResponse      => 'addTokenToResponse',
+    };
+
+    sub addTokenToResponse {
+        my ( $self, $req, $tokensResponse, $oidcSession, $userSession ) = @_;
+        $tokensResponse->{mySpecialToken} = 'randomValue';
+        return PE_OK;
+    }
+
+
+Token generation
+^^^^^^^^^^^^^^^^
+
+oidcGenerateAccessToken
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is generating a JWT-formatted Access Token.
+
+The hook's parameters are:
+
+* A hash of the claims to be contained in the Access Token
+* the configuration key of the relying party which will receive the token
+
+.. versionadded:: 2.22.0
+
+* A hash of additional JWT headers
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateAccessToken          => 'addClaimToAccessToken',
+   };
+
+   sub addClaimToAccessToken {
+       my ( $self, $req, $payload, $rp, $extra_headers ) = @_;
+       $payload->{"access_token_hook"} = 1;
+       return PE_OK;
+   }
+
+oidcGenerateIDToken
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.10
+
+This hook is triggered when LemonLDAP::NG is generating an ID Token.
+
+The hook's parameters are:
+
+* A hash of the claims to be contained in the ID Token
+* the configuration key of the relying party which will receive the token
+
+.. versionadded:: 2.22.0
+
+* A hash of session information
+* A hash of additional JWT headers
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateIDToken          => 'addClaimToIDToken',
+   };
+
+   sub addClaimToIDToken {
+       my ( $self, $req, $payload, $rp, $sessionInfo, $extra_headers ) = @_;
+       $payload->{"id_token_hook"} = 1;
+       return PE_OK;
+   }
+
+
+UserInfo endpoint (/oauth2/userinfo)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGenerateUserInfoResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.10
+
+This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint, or to compute a list of claims to be added in an ID or Access Token.
+
+The hook's parameter is a hash containing all the claims that are about to be released.
+
+.. versionchanged:: 2.0.15
+   Added the hash of current session data
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateUserInfoResponse => 'addClaimToUserInfo',
+   };
+
+   sub addClaimToUserInfo {
+       my ( $self, $req, $userinfo, $rp, $session_data) = @_;
+       my $scope = $session_data->{_scope};
+       $userinfo->{"userinfo_hook"} = 1;
+       return PE_OK;
+   }
+
+
+Dynamic RP configuration
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 getOidcRpConfig
 ~~~~~~~~~~~~~~~
@@ -401,11 +421,119 @@ the RP configuration ::
    }
 
 
+OpenID Connect Authentication Hooks
+-----------------------------------
+
+oidcGenerateAuthenticationRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building the Authentication Request that will be sent to an OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of request parameters that will be added to the OP's ``authorization_endpoint``.
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateAuthenticationRequest  => 'genAuthRequest',
+   };
+
+   sub genAuthRequest {
+       my ( $self, $req, $op, $authorize_request_params ) = @_;
+
+       $authorize_request_params->{my_param} = "my value";
+       return PE_OK;
+   }
+
+
+
+oidcGenerateTokenRequest
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building the Token Request from that will be sent to an OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of request parameters that will be sent in the body of the request to the ``token_endpoint``.
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateTokenRequest => 'genTokenRequest',
+   };
+
+   sub genTokenRequest {
+       my ( $self, $req, $op, $token_request_params) = @_;
+
+       $token_request_params->{my_param} = "my value";
+       return PE_OK;
+   }
+
+oidcGotIDToken
+^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully received and decoded the ID Token from an external OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of the decoded ID Token payload
+
+Sample code::
+
+   use constant hook => {
+       oidcGotIDToken  => 'modifyIDToken',
+   };
+
+   sub modifyIDToken {
+       my ( $self, $req, $op, $id_token_payload_hash ) = @_;
+
+       # do some post-processing on the `sub` claim
+       $id_token_payload_hash->{sub} = lc($id_token_payload_hash->{sub});
+       return PE_OK;
+   }
+
+oidcGotUserInfo
+^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully received the UserInfo response from an external OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of decoded UserInfo payload
+
+Sample code::
+
+   use constant hook => {
+       oidcGotUserInfo  => 'modifyUserInfo',
+   };
+
+   sub modifyUserInfo {
+       my ( $self, $req, $op, $userinfo_content ) = @_;
+
+       # Custom attribute processing
+       $userinfo_content->{my_attribute} = 1;
+       return PE_OK;
+   }
+
+
 SAML service hooks
 ------------------
 
 getSamlConfig
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.16
 
@@ -451,7 +579,7 @@ SAML Issuer hooks
 -----------------
 
 samlGotAuthnRequest
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.10
 
@@ -472,7 +600,7 @@ Sample code::
    }
 
 samlBuildAuthnResponse
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.10
 
@@ -493,7 +621,7 @@ Sample code::
    }
 
 samlGotLogoutRequest
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.10
 
@@ -514,7 +642,7 @@ Sample code::
    }
 
 samlGotLogoutResponse
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.10
 
@@ -535,7 +663,7 @@ Sample code::
    }
 
 samlBuildLogoutResponse
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.10
 
@@ -555,11 +683,63 @@ Sample code::
        # Your code here
    }
 
+SAML Authentication hooks
+-------------------------
+
+samlGenerateAuthnRequest
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building a SAML authentication request for an external IDP
+
+The hook's parameters are:
+
+* The configuration key of the IDP
+* The ``Lasso::Login`` object
+
+Sample code::
+
+   use constant hook => {
+       samlGenerateAuthnRequest    => 'genRequest',
+   };
+
+   sub genRequest {
+       my ( $self, $req, $idp, $login ) = @_;
+
+       # Your code here
+   }
+
+samlGotAuthnResponse
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully validated a SAML authentication response from an IDP
+
+The hook's parameters are:
+
+* The configuration key of the IDP
+* The ``Lasso::Login`` object
+
+Sample code::
+
+   use constant hook => {
+       samlGotAuthnResponse    => 'gotResponse',
+   };
+
+   sub gotResponse {
+       my ( $self, $req, $idp, $login ) = @_;
+
+       # Your code here
+   }
+
+
 CAS Issuer hooks
 -----------------
 
 casGotRequest
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
 
@@ -585,7 +765,7 @@ Sample code::
 
 
 casGenerateServiceTicket
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
 
@@ -611,7 +791,7 @@ Sample code::
 
 
 casGenerateValidateResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
 
@@ -635,171 +815,11 @@ Sample code::
    }
 
 
-SAML Authentication hooks
--------------------------
-
-samlGenerateAuthnRequest
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered when LemonLDAP::NG is building a SAML authentication request for an external IDP
-
-The hook's parameters are:
-
-* The configuration key of the IDP
-* The ``Lasso::Login`` object
-
-Sample code::
-
-   use constant hook => {
-       samlGenerateAuthnRequest    => 'genRequest',
-   };
-
-   sub genRequest {
-       my ( $self, $req, $idp, $login ) = @_;
-
-       # Your code here
-   }
-
-samlGotAuthnResponse
-~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered after LemonLDAP::NG successfully validated a SAML authentication response from an IDP
-
-The hook's parameters are:
-
-* The configuration key of the IDP
-* The ``Lasso::Login`` object
-
-Sample code::
-
-   use constant hook => {
-       samlGotAuthnResponse    => 'gotResponse',
-   };
-
-   sub gotResponse {
-       my ( $self, $req, $idp, $login ) = @_;
-
-       # Your code here
-   }
-
-
-OpenID Connect Authentication Hooks
------------------------------------
-
-oidcGenerateAuthenticationRequest
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered when LemonLDAP::NG is building the Authentication Request that will be sent to an OpenID Provider
-
-The hook's parameters are:
-
-* The configuration key of the OP
-* A hash reference of request parameters that will be added to the OP's ``authorization_endpoint``.
-
-Sample code::
-
-   use constant hook => {
-       oidcGenerateAuthenticationRequest  => 'genAuthRequest',
-   };
-
-   sub genAuthRequest {
-       my ( $self, $req, $op, $authorize_request_params ) = @_;
-
-       $authorize_request_params->{my_param} = "my value";
-       return PE_OK;
-   }
-
-
-
-oidcGenerateTokenRequest
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered when LemonLDAP::NG is building the Token Request from that will be sent to an OpenID Provider
-
-The hook's parameters are:
-
-* The configuration key of the OP
-* A hash reference of request parameters that will be sent in the body of the request to the ``token_endpoint``.
-
-Sample code::
-
-   use constant hook => {
-       oidcGenerateTokenRequest => 'genTokenRequest',
-   };
-
-   sub genTokenRequest {
-       my ( $self, $req, $op, $token_request_params) = @_;
-
-       $token_request_params->{my_param} = "my value";
-       return PE_OK;
-   }
-
-oidcGotIDToken
-~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered after LemonLDAP::NG successfully received and decoded the ID Token from an external OpenID Provider
-
-The hook's parameters are:
-
-* The configuration key of the OP
-* A hash reference of the decoded ID Token payload
-
-Sample code::
-
-   use constant hook => {
-       oidcGotIDToken  => 'modifyIDToken',
-   };
-
-   sub modifyIDToken {
-       my ( $self, $req, $op, $id_token_payload_hash ) = @_;
-
-       # do some post-processing on the `sub` claim
-       $id_token_payload_hash->{sub} = lc($id_token_payload_hash->{sub});
-       return PE_OK;
-   }
-
-oidcGotUserInfo
-~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.0.15
-
-This hook is triggered after LemonLDAP::NG successfully received the UserInfo response from an external OpenID Provider
-
-The hook's parameters are:
-
-* The configuration key of the OP
-* A hash reference of decoded UserInfo payload
-
-Sample code::
-
-   use constant hook => {
-       oidcGotUserInfo  => 'modifyUserInfo',
-   };
-
-   sub modifyUserInfo {
-       my ( $self, $req, $op, $userinfo_content ) = @_;
-
-       # Custom attribute processing
-       $userinfo_content->{my_attribute} = 1;
-       return PE_OK;
-   }
-
-
 DBI Authentication hooks
 ------------------------
 
 dbiVerifyPassword
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.20.0
 
@@ -851,7 +871,7 @@ Sample code::
 
 
 dbiHashPassword
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.20.0
 
@@ -906,7 +926,7 @@ Choice Authentication hooks
 ---------------------------
 
 getAuthChoice
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. versionadded:: 2.20.0
 
@@ -943,7 +963,7 @@ Password change hooks
 .. _passwordBeforeChange:
 
 passwordBeforeChange
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
 
@@ -978,7 +998,7 @@ Sample code::
 
 
 passwordAfterChange
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
 
@@ -1013,7 +1033,7 @@ Second factor hooks
 -------------------
 
 sfBeforeVerify
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 .. versionadded:: 2.18
 
@@ -1043,7 +1063,7 @@ Sample code::
     }
 
 sfAfterVerify
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. versionadded:: 2.20
 
@@ -1089,7 +1109,7 @@ Sample code::
 
 
 sfBeforeRetry
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. versionadded:: 2.19
 
@@ -1122,7 +1142,7 @@ Sample code::
     }
 
 sfRegisterDevice
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 .. versionadded:: 2.20
 
@@ -1165,7 +1185,7 @@ Sample code::
 
 
 sfDeleteDevice
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 .. versionadded:: 2.23
 
@@ -1210,7 +1230,7 @@ Generic hooks
 -------------
 
 sendHtml
-~~~~~~~~
+^^^^^^^^
 
 .. versionadded:: 2.17
 
@@ -1237,7 +1257,7 @@ Sample code::
     }
 
 unauthLogout
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 .. versionadded:: 2.22.0
 
