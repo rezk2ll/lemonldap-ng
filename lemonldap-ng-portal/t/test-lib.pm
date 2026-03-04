@@ -869,6 +869,14 @@ sub switch {
           . ' you can remove it from your tests' );
 }
 
+sub denyLwpRequests {
+    return sub {
+        my $req = Plack::Request->new(@_);
+        fail('External requests are not allowed. Attempted: ' . $req->uri);
+        return [ 500, [], [] ];
+    }
+}
+
 =head4 encodeUrl( $url );
 
 Encode URL like the handler would, see ::Handler::Main
