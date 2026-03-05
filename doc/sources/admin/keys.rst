@@ -27,6 +27,26 @@ Options
   instead.
 - **Comment**: set a comment to describe this key to your future self or fellow admins
 
+Exposing keys to applications
+-----------------------------
+
+LemonLDAP::NG uses *SAML Metadata* or *OpenID Connect JWKS* to expose its
+public keys to applications without having to manually configure the
+application.
+
+By default, the keys you manually add are not exposed. There are two ways to
+expose them:
+
+* Use a per-application metadata URL, such as:
+
+  * `/saml/metadata/idp?sp=<entityid>`
+  * `/oauth2/jwks?client_id=<clientid>`
+
+* Or set multiple values in each protocol's *Signing key name* option. The
+  first value will by used to sign protocol responses when no explicit key is
+  defined at the SP/RP level, and all other values will be exposed in global
+  metadata.
+
 
 Using placeholders
 ------------------
