@@ -436,8 +436,12 @@ sub tests {
             {
                 return 1;
             }
-            elsif ( $conf->{keys}->{"default-saml-sig"} ) {
-                return 1;
+            else {
+                my ($key) = split( /\s*,\s*/,
+                    ( $conf->{samlServiceSignatureKey} || "" ) );
+                if ( $conf->{keys}->{$key} ) {
+                    return 1;
+                }
             }
 
             return ( 0,
