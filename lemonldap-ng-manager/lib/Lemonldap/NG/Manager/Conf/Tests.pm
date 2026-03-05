@@ -853,8 +853,12 @@ sub tests {
             {
                 return 1;
             }
-            elsif ( %{ $conf->{keys} || {} } ) {
-                return 1;
+            else {
+                my ($key) = split( /\s*,\s*/,
+                    ( $conf->{oidcServiceSignatureKey} || "" ) );
+                if ( $conf->{keys}->{$key} ) {
+                    return 1;
+                }
             }
 
             return ( 1,
