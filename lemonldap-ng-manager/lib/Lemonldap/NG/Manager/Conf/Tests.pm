@@ -444,36 +444,6 @@ sub tests {
                 'SAML service private and public keys signature must be set' );
         },
 
-        samlSignatureOverrideNeedsCertificate => sub {
-            return 1
-              if $conf->{samlServicePublicKeySig}
-              && $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
-
-            my @offenders;
-            for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
-                if ( $conf->{samlIDPMetaDataOptions}->{$idp}
-                    ->{samlIDPMetaDataOptionsSignatureMethod} )
-                {
-                    push @offenders, $idp;
-                }
-            }
-            for my $sp ( keys %{ $conf->{samlSPMetaDataOptions} } ) {
-                if ( $conf->{samlSPMetaDataOptions}->{$sp}
-                    ->{samlSPMetaDataOptionsSignatureMethod} )
-                {
-                    push @offenders, $sp;
-                }
-            }
-            return @offenders
-              ? (
-                0,
-                "Cannot set non-default signature method on "
-                  . join( ", ", @offenders )
-                  . " unless SAML signature key is in certificate form"
-              )
-              : 1;
-        },
-
         samlSignatureUnsupportedAlg => sub {
             return 1 unless $conf->{issuerDBSAMLActivation};
             return 1
