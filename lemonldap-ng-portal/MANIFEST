@@ -381,6 +381,9 @@ site/htdocs/static/common/js/portal.min.js.map
 site/htdocs/static/common/js/ppolicy.js
 site/htdocs/static/common/js/ppolicy.min.js
 site/htdocs/static/common/js/ppolicy.min.js.map
+site/htdocs/static/common/js/recaptchav2.js
+site/htdocs/static/common/js/recaptchav2.min.js
+site/htdocs/static/common/js/recaptchav2.min.js.map
 site/htdocs/static/common/js/recaptchav3.js
 site/htdocs/static/common/js/recaptchav3.min.js
 site/htdocs/static/common/js/recaptchav3.min.js.map
@@ -475,6 +478,7 @@ site/js-src/oidcOfflineTokens.js
 site/js-src/password2fregistration.js
 site/js-src/portal.js
 site/js-src/ppolicy.js
+site/js-src/recaptchav2.js
 site/js-src/recaptchav3.js
 site/js-src/redirect.js
 site/js-src/registerbrowser.js

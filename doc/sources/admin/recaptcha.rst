@@ -28,3 +28,9 @@ should be set to :
 ::
 
   https://www.google.com https://www.gstatic.com 'self'
+
+
+.. important::
+   Starting from version 2.23.0, authentication form is locked until ReCaptcha
+   is loaded. On slow networks, this avoids getting "Bad captcha" answers,
+   especially with ReCaptcha version 3
