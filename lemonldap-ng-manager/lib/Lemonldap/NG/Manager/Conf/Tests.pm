@@ -1107,6 +1107,30 @@ sub tests {
             return 1;
         },
 
+        webAuthnRequiresToken => sub {
+            if (
+                grep { $_->[0] eq "WebAuthn" }
+                map  { [ split( /;\s*/, $_ ) ] }
+                values %{ $conf->{authChoiceModules} }
+              )
+            {
+                if ( $conf->{requireToken} == 0 ) {
+                    return ( 0,
+                        "WebAuthn authentication requires using a token" );
+                }
+                elsif ( $conf->{requireToken} == 1 ) {
+                    return 1;
+                }
+                else {
+                    return ( 1,
+                            "WebAuthn authentication requires a token"
+                          . " but a rule was defined for token use."
+                          . " WebAuthn might not work in some situations" );
+                }
+            }
+            return 1;
+        },
+
         # FindUser requires Impersonation and attributes
         findUserWithoutImpersonationOrAttributes => sub {
             return ( -1,
