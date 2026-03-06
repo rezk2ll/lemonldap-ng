@@ -1333,6 +1333,9 @@ sub registerLogin {
       unless ( $self->conf->{loginHistoryEnabled}
         and defined $req->authResult );
 
+    # Do not store login blocked by BruteForceProtection (#3561)
+    return if $req->authResult == PE_WAIT;
+
     # Check old login history
     if ( $req->sessionInfo->{loginHistory} ) {
 

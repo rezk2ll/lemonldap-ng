@@ -56,16 +56,26 @@ sub init {
 
     my $maxAge = $self->conf->{bruteForceProtectionMaxAge} || 300;
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
-        my $lockTimes = @{ $self->lockTimes } =
+        my @parsedTimes =
           sort { $a <=> $b }
-          map {
-            my $time = s/\D//r;
-            abs $time < $self->conf->{bruteForceProtectionMaxLockTime}
-              ? abs $time
-              : ()
-          }
-          grep /\d+/,
+          map  { abs( s/\D//r ) }
+          grep {/\d+/}
           split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
+
+        my @filteredOut =
+          grep { $_ >= $self->conf->{bruteForceProtectionMaxLockTime} }
+          @parsedTimes;
+        if (@filteredOut) {
+            $self->logger->warn(
+                'BruteForceProtection: ignoring lock times >= maxLockTime ('
+                  . $self->conf->{bruteForceProtectionMaxLockTime}
+                  . '): '
+                  . join( ', ', @filteredOut ) );
+        }
+
+        my $lockTimes = @{ $self->lockTimes } =
+          grep { $_ < $self->conf->{bruteForceProtectionMaxLockTime} }
+          @parsedTimes;
 
         unless ($lockTimes) {
             @{ $self->lockTimes } = ( 15, 30, 60, 300, 600 );
@@ -135,12 +145,6 @@ sub run {
         if ( $waitingTime && $delta < $waitingTime ) {
             $self->userLogger->warn("BruteForceProtection enabled");
             $req->authResult(PE_WAIT);
-
-            # Do not store failed login if last tempo or max tempo is reached
-            $self->p->registerLogin( $req, $req->{user} )
-              if ( $waitingTime < $self->conf->{bruteForceProtectionMaxLockTime}
-                && $waitingTime <
-                $self->lockTimes->[ scalar @{ $self->lockTimes } - 1 ] );
             $req->lockTime( $waitingTime - $delta );
             return PE_WAIT;
         }

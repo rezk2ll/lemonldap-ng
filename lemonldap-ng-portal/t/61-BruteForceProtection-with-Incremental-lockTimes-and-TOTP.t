@@ -131,7 +131,7 @@ SKIP: {
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=dwho'),
+            IO::String->new('user=dwho&password=ohwd'),
             length => 23,
             accept => 'text/html',
         ),
@@ -142,7 +142,9 @@ SKIP: {
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%(\d{2}) <span trspan="seconds">seconds</span>%,
         "LockTime = $1" );
-    ok( $1 < 30 && $1 >= 25, 'LockTime in range' )
+
+    # With fix #3561: blocked attempts not stored, countFailed stays 1
+    ok( $1 <= 14 && $1 >= 10, 'LockTime in range (~12s)' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(4);
 
@@ -156,19 +158,19 @@ SKIP: {
             length => 23,
             accept => 'text/html',
         ),
-        '2nd Bad Auth query'
+        '3rd Bad Auth query'
     );
     ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
         'Rejected -> Protection enabled' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ m%(\d{2}) <span trspan="seconds">seconds</span>%,
+    ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
         "LockTime = $1" );
-    ok( $1 < 60 && $1 >= 55, 'LockTime in range' )
+    ok( $1 < 12 && $1 > 6, 'LockTime in range' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(4);
 
     # Waiting
-    Time::Fake->offset("+70s");
+    Time::Fake->offset("+20s");
     ## Try to connect
     ok(
         $res = $client->_post(
