@@ -680,6 +680,7 @@ t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
 t/30-Auth-and-issuer-SAML-Metadata.t
 t/30-Auth-and-issuer-SAML-POST-Choice-2FA.t
+t/30-Auth-and-issuer-SAML-POST-deactivated.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
@@ -714,6 +715,7 @@ t/30-SAML-ReAuth.t
 t/30-SAML-RelayState.t
 t/30-SAML-Response.t
 t/30-SAML-SP-rule.t
+t/31-Auth-and-issuer-CAS-declared-app-deactivated.t
 t/31-Auth-and-issuer-CAS-declared-app-multiple-urls.t
 t/31-Auth-and-issuer-CAS-declared-app-userattr.t
 t/31-Auth-and-issuer-CAS-declared-app.t
@@ -746,6 +748,7 @@ t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-info.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-none-alg.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
+t/32-Auth-and-issuer-OIDC-authorization_code_deactivated.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
