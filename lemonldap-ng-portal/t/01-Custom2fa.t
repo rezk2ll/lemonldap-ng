@@ -13,13 +13,17 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            customPlugins          => "t::Test2FA t::Test2FRegister t::sfHookPlugin",
-            restSessionServer      => 1,
+            customPlugins     => "t::Test2FA t::Test2FRegister t::sfHookPlugin",
+            restSessionServer => 1,
             test2fSelfRegistration => 1,
             test2fActivation       => 'has2f("test")',
             test2fUserCanRemoveKey => 1,
             sfRequired             => '$uid eq "dwho"',
             sfRetries              => 1,
+            macros                 => {
+                _whatToTrace => '$uid',
+                mfa          => '$_2f ? 1 : 0',
+            },
         }
     }
 );
@@ -111,7 +115,8 @@ subtest "Register 2FA on first login" => sub {
         $client, $id,
         uid                 => "dwho",
         _2f                 => "test",
-        authenticationLevel => 7
+        authenticationLevel => 7,
+        mfa                 => 1,
     );
     my $devices = from_json( getPSession("dwho")->data->{_2fDevices} );
     is( $devices->[0]->{_private}, "myprivateinfo", "Correct private info" );
@@ -182,6 +187,7 @@ subtest "Login with 2FA" => sub {
         uid                 => "dwho",
         _2f                 => "test",
         authenticationLevel => "7",
+        mfa                 => 1,
     );
 };
 
@@ -317,7 +323,7 @@ subtest "Delete 2FA" => sub {
 
     expectXpath( $res, '//span[@device="test"]' );
 
-    my ($epoch) = grep(/epoch=/, split("\n", $res->[2]->[0]));
+    my ($epoch) = grep( /epoch=/, split( "\n", $res->[2]->[0] ) );
     $epoch =~ s/^.*epoch='([0-9]+)'.*$/$1/;
 
     # Testing hook returning an error + a custom error label
@@ -325,7 +331,7 @@ subtest "Delete 2FA" => sub {
         $res = $client->_post(
             '/2fregisters/test/delete',
             {
-                epoch => "$epoch",
+                epoch      => "$epoch",
                 hookStatus => "deleteHookFail",
             },
             cookie => "lemonldap=$id",
@@ -337,10 +343,7 @@ subtest "Delete 2FA" => sub {
     # Testing delete fail because of missing epoch param
     ok(
         $res = $client->_post(
-            '/2fregisters/test/delete',
-            {
-            },
-            cookie => "lemonldap=$id",
+            '/2fregisters/test/delete', {}, cookie => "lemonldap=$id",
         ),
         'Post delete 2FA with missing epoch param'
     );
@@ -357,11 +360,12 @@ subtest "Delete 2FA" => sub {
         ),
         'Post delete 2FA with hook success'
     );
-    is( expectJSON($res)->{result}, 1, "Correct response from sfDeleteDevice hook" );
+    is( expectJSON($res)->{result},
+        1, "Correct response from sfDeleteDevice hook" );
 
     # Testing that device list is empty
     my $devices = from_json( getPSession("dwho")->data->{_2fDevices} );
-    ok (@$devices == 0, "Empty list of 2FA, device correctly deleted");
+    ok( @$devices == 0, "Empty list of 2FA, device correctly deleted" );
 
 };
 
