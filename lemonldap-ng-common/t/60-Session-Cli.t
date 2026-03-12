@@ -175,6 +175,25 @@ sub resetSessions {
                         }
                     ]
                 ),
+                "_loginHistory" => {
+                    'successLogin' => [
+                        {
+                            '_utime' => 1710239445,
+                            'ipAddr' => '192.168.1.1',
+                        },
+                        {
+                            '_utime' => 1710153045,
+                            'ipAddr' => '10.0.0.5',
+                        },
+                    ],
+                    'failedLogin' => [
+                        {
+                            '_utime' => 1710235522,
+                            'ipAddr' => '192.168.1.100',
+                            'error'  => 5,
+                        },
+                    ],
+                },
                 "_session_uid" => "dwho",
             }
         }
@@ -404,6 +423,45 @@ $res = getJson( "consents", {}, "get", "dwho" );
 is( ( keys %{$res} ),     1,     "Found one consent" );
 is( $res->{'rp-example'}, undef, "Consent for test-rp removed" );
 ok( $res->{'rp-example2'}, "Consent for test-rp2 still present" );
+
+# History tests
+resetSessions;
+subtest 'History commands' => sub {
+
+    # Test history lastsuccessdate
+    my ($stdout, $stderr) = Test::Output::output_from(
+        sub { $cli->run( "history", {}, "lastsuccessdate", "dwho" ); }
+    );
+    like( $stdout, qr/Mar.*2024/, "lastsuccessdate shows date" );
+    is( $stderr, '', "No error on lastsuccessdate" );
+
+    # Test history lastfailuredate
+    ($stdout, $stderr) = Test::Output::output_from(
+        sub { $cli->run( "history", {}, "lastfailuredate", "dwho" ); }
+    );
+    like( $stdout, qr/Mar.*2024.*\(5\)/, "lastfailuredate shows date with error code" );
+    is( $stderr, '', "No error on lastfailuredate" );
+
+    # Test history get (JSON output)
+    $res = getJson( "history", {}, "get", "dwho" );
+    ok( $res->{successLogin}, "history get has successLogin" );
+    ok( $res->{failedLogin},  "history get has failedLogin" );
+    is( @{ $res->{successLogin} }, 2, "Found 2 successful logins" );
+    is( @{ $res->{failedLogin} },  1, "Found 1 failed login" );
+
+    # Check all fields are present
+    ok( $res->{successLogin}[0]{_utime}, "successLogin has _utime" );
+    ok( $res->{successLogin}[0]{ipAddr}, "successLogin has ipAddr" );
+    ok( $res->{successLogin}[0]{date},   "successLogin has human-readable date" );
+    is( $res->{failedLogin}[0]{error}, 5, "failedLogin has error code" );
+
+    # Test error case: user without history
+    ($stdout, $stderr) = Test::Output::output_from(
+        sub { $cli->run( "history", {}, "lastsuccessdate", "rtyler" ); }
+    );
+    is( $stdout, '', "No stdout on missing history" );
+    like( $stderr, qr/No login history found/, "Error message on stderr" );
+};
 
 rmtree $dir;
 done_testing();
