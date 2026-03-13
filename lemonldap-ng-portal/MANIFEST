@@ -302,7 +302,6 @@ site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
 site/htdocs/static/common/co.png
 site/htdocs/static/common/css/entropy.css
 site/htdocs/static/common/css/entropy.min.css
-site/htdocs/static/common/de.png
 site/htdocs/static/common/en.png
 site/htdocs/static/common/es.png
 site/htdocs/static/common/favicon.ico
@@ -440,7 +439,6 @@ site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
 site/htdocs/static/common/zh_TW.png
 site/htdocs/static/languages/ar.json
-site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/es.json
 site/htdocs/static/languages/fi.json
