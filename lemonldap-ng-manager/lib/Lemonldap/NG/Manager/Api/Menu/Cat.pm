@@ -21,7 +21,7 @@ sub getMenuCatByConfKey {
         "[API] Menu Category $confKey configuration requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $menuCat = $self->_getMenuCatByConfKey( $conf, $confKey );
 
@@ -53,7 +53,7 @@ sub findMenuCatByConfKey {
         "[API] Find Menu Categories by confKey regexp $pattern requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my @menuCats =
       map { $_ =~ $pattern ? $self->_getMenuCatByConfKey( $conf, $_ ) : () }
@@ -247,7 +247,7 @@ sub _pushMenuCat {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }

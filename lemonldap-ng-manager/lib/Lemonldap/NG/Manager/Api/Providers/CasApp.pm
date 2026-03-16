@@ -20,7 +20,7 @@ sub getCasAppByConfKey {
     $self->logger->debug("[API] CAS App $confKey configuration requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $casApp = $self->_getCasAppByConfKey( $conf, $confKey );
 
@@ -52,7 +52,7 @@ sub findCasAppByConfKey {
         "[API] Find CAS Apps by confKey regexp $pattern requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my @casApps =
       map { $_ =~ $pattern ? $self->_getCasAppByConfKey( $conf, $_ ) : () }
@@ -79,7 +79,7 @@ sub findCasAppsByServiceUrl {
         "[API] Find CAS Apps by service URL $serviceUrl requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $casApp = $self->_getCasAppByServiceUrl( $conf, $serviceUrl );
     return $self->sendError( $req,
@@ -402,7 +402,7 @@ sub _pushCasApp {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }

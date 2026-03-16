@@ -20,7 +20,7 @@ sub getOidcRpByConfKey {
     $self->logger->debug("[API] OIDC RP $confKey configuration requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $oidcRp = $self->_getOidcRpByConfKey( $conf, $confKey );
 
@@ -53,7 +53,7 @@ sub findOidcRpByConfKey {
         "[API] Find OIDC RPs by confKey regexp $pattern requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my @oidcRps =
       map { $_ =~ $pattern ? $self->_getOidcRpByConfKey( $conf, $_ ) : () }
@@ -79,7 +79,7 @@ sub findOidcRpByClientId {
     $self->logger->debug("[API] Find OIDC RPs by clientId $clientId requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $oidcRp = $self->_getOidcRpByClientId( $conf, $clientId );
     return $self->sendError( $req,
@@ -479,7 +479,7 @@ sub _pushOidcRp {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }
