@@ -17,6 +17,7 @@
 "PE110":"Overenie druhého faktora zlyhalo, skúste to znova",
 "PE111":"Heslo je príliš dlhé",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"Polia používateľského mena a hesla musia byť vyplnené",
 "PE20":"Žiadny backend hesiel nie je definovaný",
 "PE21":"Váš účet je zablokovaný",
