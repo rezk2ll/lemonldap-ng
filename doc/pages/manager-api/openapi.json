@@ -217,6 +217,16 @@
                }
             },
             "description" : "Response to API health check"
+         },
+         "Unavailable" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/Error"
+                  }
+               }
+            },
+            "description" : "The new configuration could not be saved, this is usually a lock-related temporary condition"
          }
       },
       "schemas" : {
@@ -1447,6 +1457,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Create a new Menu Application within a Menu Category",
@@ -1539,6 +1552,9 @@
                },
                "404" : {
                   "$ref" : "#/components/responses/NotFound"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Deletes a Menu Application",
@@ -1628,6 +1644,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Updates a Menu Application",
@@ -1678,6 +1697,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Replaces a Menu Application",
@@ -1709,6 +1731,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Create a new Menu Category",
@@ -1783,6 +1808,9 @@
                },
                "404" : {
                   "$ref" : "#/components/responses/NotFound"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Deletes a Menu Category",
@@ -1854,6 +1882,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Updates a Menu Category",
@@ -1895,6 +1926,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Replaces a Menu Category",
@@ -1926,6 +1960,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Create a new CAS Application",
@@ -2032,6 +2069,9 @@
                },
                "404" : {
                   "$ref" : "#/components/responses/NotFound"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Deletes a CAS Application",
@@ -2103,6 +2143,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Updates a CAS Application.",
@@ -2144,6 +2187,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Replaces a CAS Application",
@@ -2175,6 +2221,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Create a new OpenID Connect Relying Party",
@@ -2281,6 +2330,9 @@
                },
                "404" : {
                   "$ref" : "#/components/responses/NotFound"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Deletes a OpenID Connect Relying Party",
@@ -2352,6 +2404,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Updates an OpenID Connect Relying Party",
@@ -2393,6 +2448,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Replaces an OpenID Connect Relying Party",
@@ -2424,6 +2482,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Create a new SAML Service provider",
@@ -2530,6 +2591,9 @@
                },
                "404" : {
                   "$ref" : "#/components/responses/NotFound"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Deletes a SAML Service Provider",
@@ -2601,6 +2665,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Updates a SAML Service.",
@@ -2642,6 +2709,9 @@
                },
                "409" : {
                   "$ref" : "#/components/responses/Conflict"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/Unavailable"
                }
             },
             "summary" : "Replaces a SAML Service",
