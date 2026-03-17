@@ -645,6 +645,79 @@ Sample code::
        return PE_OK;
    }
 
+oidcGotAuthenticationResponse
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG receives an authentication response
+(authorization callback) from an external OpenID Provider. It allows you to
+process or modify the callback parameters before they are used, for example
+to handle JARM (JWT Secured Authorization Response Mode) responses.
+
+The hook's parameters are:
+
+* A hash reference containing all callback parameters extracted from the request.
+  You can read or modify these values. Only the values in this hash will be used
+  by LemonLDAP::NG (not the raw request parameters).
+
+Keys in the callback_params hash:
+
+* ``state``: The state parameter (string or hashref, see below)
+* ``code``: The authorization code
+* ``error``: Error code if the authorization failed
+* ``error_description``: Human-readable error description
+* ``error_uri``: URI with more information about the error
+* ``iss``: Issuer identifier (RFC 9207)
+
+**State handling:**
+
+* If ``state`` is a **scalar** (string), LemonLDAP::NG will call ``extractState``
+  to restore session data from the state token.
+* If ``state`` is a **hashref**, LemonLDAP::NG assumes your hook has already
+  extracted the state and will use it directly. The hashref must contain:
+  ``_oidcOPCurrent``, ``_oidcNonce``, and optionally ``urldc``.
+
+This allows hooks that decode wrapped responses (like JARM) to call
+``extractState`` themselves when they need the OP configuration to verify
+the JWT signature.
+
+Sample code::
+
+   use constant hook => {
+       oidcGotAuthenticationResponse => 'processCallback',
+   };
+
+   sub processCallback {
+       my ( $self, $req, $callback_params ) = @_;
+
+       # Check if this is a JARM response
+       my $jarm_response = $req->param('response');
+       if ($jarm_response) {
+           # Decode JWT (without verification to get claims first)
+           my $claims = decode_jwt($jarm_response);
+           my $state = $claims->{state};
+
+           # Extract state to get OP configuration (required before verification)
+           $self->extractState($req, $state);
+           my $op = $req->data->{_oidcOPCurrent};
+
+           # Now verify the JWT with OP's keys
+           # ... verification code ...
+
+           # Set callback params from JWT claims
+           # Keep state as scalar - LLNG will skip extractState since we already called it
+           # Alternatively, pass extracted state as hashref to skip extractState
+           $callback_params->{state} = {
+               _oidcOPCurrent => $req->data->{_oidcOPCurrent},
+               _oidcNonce     => $req->data->{_oidcNonce},
+               urldc          => $req->data->{_url},
+           };
+           $callback_params->{code} = $claims->{code};
+       }
+       return PE_OK;
+   }
+
 
 SAML service hooks
 ------------------

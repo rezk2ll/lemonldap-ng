@@ -765,6 +765,7 @@ t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid.t
 t/32-OIDC-bad-auth-method.t
 t/32-OIDC-ClaimTypes.t
+t/32-OIDC-Client-Hooks.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
@@ -1067,6 +1068,7 @@ t/LogoutFail.pm
 t/main-idps-renater-metadata.xml
 t/main-sps-renater-metadata.xml
 t/oidc-lib.pm
+t/OidcClientHookPlugin.pm
 t/OidcHookPlugin.pm
 t/parse-dir.pm
 t/PasswordHookPlugin.pm
