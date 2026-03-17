@@ -2505,6 +2505,10 @@ sub introspection {
                   unless defined $response->{$_}
                   and $response->{$_} || length( $response->{$_} ) > 0;
             }
+
+            # Hook for plugins to modify introspection response
+            $self->p->processHook( $req, 'oidcBuildIntrospectionResponse',
+                $response, $rp, $oidcSession->data );
         }
         else {
             $self->logger->warn("Count not find session tied to Access Token");

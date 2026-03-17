@@ -45,6 +45,7 @@ use constant hook => {
     oidcGotTokenExchange              => 'tokenExchange',
     getOidcRpConfig                   => 'getRp',
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
+    oidcBuildIntrospectionResponse    => 'buildIntrospectionResponse',
 };
 
 sub addClaimToIDToken {
@@ -220,6 +221,15 @@ sub allowOnlyLocalhost {
     # Returning PE_OK means that we defer the decision to
     # LemonLDAP::NG's built-in logic, which is to only allow
     # explicitely declared URIs
+
+    return PE_OK;
+}
+
+sub buildIntrospectionResponse {
+    my ( $self, $req, $response, $rp, $token_data ) = @_;
+
+    # Add custom claim to introspection response
+    $response->{introspection_hook} = "hooked";
 
     return PE_OK;
 }
