@@ -138,6 +138,41 @@ Sample code ::
         return PE_OK;
     }
 
+oidcBuildAuthorizationResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is about to send an authorization
+response to a Relying Party (after the ``/oauth2/authorize`` endpoint completes).
+It allows you to modify the response parameters before they are sent, for example
+to implement JARM (JWT Secured Authorization Response Mode).
+
+The hook's parameters are:
+
+* A hash reference of the OIDC authorization request parameters
+* The configuration key of the relying party
+* A hash reference of response parameters that will be sent (can be modified)
+
+The response_params hash may contain keys such as ``code``, ``state``,
+``id_token``, ``access_token``, ``token_type``, ``expires_in``, ``scope``,
+and ``session_state``, depending on the flow used.
+
+Sample code::
+
+   use constant hook => {
+       oidcBuildAuthorizationResponse => 'wrapResponse',
+   };
+
+   sub wrapResponse {
+       my ( $self, $req, $oidc_request, $rp, $response_params ) = @_;
+
+       # Add a custom parameter to the response
+       $response_params->{custom_param} = "custom_value";
+
+       return PE_OK;
+   }
+
 
 Token endpoint (/oauth2/token)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

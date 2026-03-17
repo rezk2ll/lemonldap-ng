@@ -45,6 +45,7 @@ use constant hook => {
     oidcGotTokenExchange              => 'tokenExchange',
     getOidcRpConfig                   => 'getRp',
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
+    oidcBuildAuthorizationResponse    => 'buildAuthzResponse',
 };
 
 sub addClaimToIDToken {
@@ -220,6 +221,15 @@ sub allowOnlyLocalhost {
     # Returning PE_OK means that we defer the decision to
     # LemonLDAP::NG's built-in logic, which is to only allow
     # explicitely declared URIs
+
+    return PE_OK;
+}
+
+sub buildAuthzResponse {
+    my ( $self, $req, $oidc_request, $rp, $response_params ) = @_;
+
+    # Add a custom parameter to the authorization response
+    $response_params->{authz_hook} = "hooked";
 
     return PE_OK;
 }
