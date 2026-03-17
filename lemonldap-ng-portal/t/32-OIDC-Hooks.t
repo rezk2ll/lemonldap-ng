@@ -65,9 +65,10 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                 }
             },
-            oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig  => oidc_cert_op_public_sig,
-            customPlugins            => 't::OidcHookPlugin',
+            oidcServicePrivateKeySig            => oidc_key_op_private_sig,
+            oidcServicePublicKeySig             => oidc_cert_op_public_sig,
+            oidcServiceAllowDynamicRegistration => 1,
+            customPlugins                       => 't::OidcHookPlugin',
         }
     }
 );
@@ -515,6 +516,52 @@ ok(
     'oidcGenerateMetadata hook added custom grant type'
 );
 count(1);
+
+# --------------------------------------------------------------------------
+# Test oidcGotRegistrationRequest and oidcRegisterClient hooks
+# --------------------------------------------------------------------------
+note "Testing oidcGotRegistrationRequest and oidcRegisterClient hooks";
+
+# Test that registration is denied by hook for matching denied pattern
+my $reg_metadata = to_json( {
+        redirect_uris => ["https://denied.example.com/callback"],
+        client_name   => "Test Client"
+    }
+);
+ok(
+    $res = $op->_post(
+        "/oauth2/register",
+        IO::String->new($reg_metadata),
+        accept => 'application/json',
+        length => length($reg_metadata),
+        type   => 'application/json',
+    ),
+    "Registration attempt with denied redirect_uri"
+);
+
+is( $res->[0], 400, "Registration denied by hook returns 400" );
+
+# Test that registration succeeds for allowed redirect_uri
+$reg_metadata = to_json( {
+        redirect_uris => ["https://allowed.example.com/callback"],
+        client_name   => "Test Allowed Client"
+    }
+);
+ok(
+    $res = $op->_post(
+        "/oauth2/register",
+        IO::String->new($reg_metadata),
+        accept => 'application/json',
+        length => length($reg_metadata),
+        type   => 'application/json',
+    ),
+    "Registration attempt with allowed redirect_uri"
+);
+
+# RFC 7591: Successful registration returns 201 Created
+is( $res->[0], 201, "Registration returns 201 Created" );
+$json = from_json( $res->[2]->[0] );
+ok( $json->{client_id}, "Registration succeeded with client_id" );
 
 clean_sessions();
 done_testing();

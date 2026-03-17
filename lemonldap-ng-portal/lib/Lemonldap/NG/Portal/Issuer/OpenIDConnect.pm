@@ -2747,13 +2747,7 @@ sub registration {
     $self->logger->notice(
         "OpenID Connect Registration request from $source_ip");
 
-    # Check dynamic registration is allowed
-    unless ( $self->conf->{oidcServiceAllowDynamicRegistration} ) {
-        $self->logger->error("Dynamic registration is not allowed");
-        return $self->p->sendError( $req, 'server_error' );
-    }
-
-    # Get client metadata
+    # Get client metadata first (needed for hook)
     my $client_metadata_json = $req->content;
     return $self->p->sendError( $req, 'Missing POST data', 400 )
       unless ($client_metadata_json);
@@ -2763,6 +2757,23 @@ sub registration {
     my $client_metadata = $self->decodeClientMetadata($client_metadata_json)
       or return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     my $registration_response = {};
+
+    # Check dynamic registration is allowed
+    unless ( $self->conf->{oidcServiceAllowDynamicRegistration} ) {
+        $self->logger->error("Dynamic registration is not allowed");
+        return $self->p->sendError( $req, 'server_error' );
+    }
+
+# Let hooks filter registration requests
+# PE_SENDRESPONSE means the hook's decision is final, result is in $state->{result}
+    my $state = {};
+    my $h     = $self->p->processHook( $req, 'oidcGotRegistrationRequest',
+        $client_metadata, $state );
+    return $state->{result} if $h == PE_SENDRESPONSE;
+    if ( $h != PE_OK ) {
+        $self->logger->error("oidcGotRegistrationRequest hook failed");
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
 
     # Check redirect_uris
     my $redirect_uris = $client_metadata->{redirect_uris};
@@ -2831,95 +2842,122 @@ sub registration {
     $conf->{cfgAuthorIP} = $source_ip;
     $conf->{cfgVersion}  = $VERSION;
 
-    $conf->{oidcRPMetaDataExportedVars}->{$rp} = {};
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsClientID} =
-      $client_id;
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-      = $client_secret;
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsDisplayName} =
-      $client_name;
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsIcon} =
-      $logo_uri;
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg}
-      = $id_token_signed_response_alg;
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRedirectUris}
-      = join( ' ', @$redirect_uris );
-    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRequestUris} =
+    # Build RP options from client metadata
+    my $rp_options = {
+        oidcRPMetaDataOptionsClientID       => $client_id,
+        oidcRPMetaDataOptionsDisplayName    => $client_name,
+        oidcRPMetaDataOptionsIcon           => $logo_uri,
+        oidcRPMetaDataOptionsIDTokenSignAlg => $id_token_signed_response_alg,
+        oidcRPMetaDataOptionsRedirectUris   => join( ' ', @$redirect_uris ),
+    };
+    $rp_options->{oidcRPMetaDataOptionsClientSecret} = $client_secret
+      if defined $client_secret;
+    $rp_options->{oidcRPMetaDataOptionsRequestUris} =
       join( ' ', @$request_uris )
       if $request_uris and @$request_uris;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
+    $rp_options->{oidcRPMetaDataOptionsUserInfoSignAlg} =
+      $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
 
     if ($backchannel_logout_uri) {
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
-          = 'back';
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
-          = $backchannel_logout_uri;
-        $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+        $rp_options->{oidcRPMetaDataOptionsLogoutType} = 'back';
+        $rp_options->{oidcRPMetaDataOptionsLogoutUrl} = $backchannel_logout_uri;
+        $rp_options->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
     }
     elsif ($frontchannel_logout_uri) {
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
-          = 'front';
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
-          = $frontchannel_logout_uri;
-        $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+        $rp_options->{oidcRPMetaDataOptionsLogoutType} = 'front';
+        $rp_options->{oidcRPMetaDataOptionsLogoutUrl} =
+          $frontchannel_logout_uri;
+        $rp_options->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $frontchannel_logout_session_required;
     }
     $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
       $jwksUri
       if $jwksUri;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg} = $encryptedResponseAlg
+    $rp_options->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg} =
+      $encryptedResponseAlg
       if $encryptedResponseAlg;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg} = $encryptedResponseEnc
+    $rp_options->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg} =
+      $encryptedResponseEnc
       if $encryptedResponseEnc;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg} = $userInfoEncAlg
+    $rp_options->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg} = $userInfoEncAlg
       if $userInfoEncAlg;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg} = $userInfoEncEnc
+    $rp_options->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg} =
+      $userInfoEncEnc
       if $userInfoEncEnc;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIntrospectionSignAlg} = $introspectionSignAlg
+    $rp_options->{oidcRPMetaDataOptionsIntrospectionSignAlg} =
+      $introspectionSignAlg
       if $introspectionSignAlg;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg} = $introspectionEncAlg
+    $rp_options->{oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg} =
+      $introspectionEncAlg
       if $introspectionEncAlg;
-    $conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIntrospectionEncContentEncAlg} =
+    $rp_options->{oidcRPMetaDataOptionsIntrospectionEncContentEncAlg} =
       $introspectionEncEnc
       if $introspectionEncEnc;
 
     # TODO "jwks" support (when jwks_uri isn't available
 
     # Exported Vars
+    my $exported_vars = {};
     if (
         ref( $self->conf->{oidcServiceDynamicRegistrationExportedVars} ) eq
         'HASH' )
     {
-        $conf->{oidcRPMetaDataExportedVars}->{$rp} =
+        $exported_vars =
           $self->conf->{oidcServiceDynamicRegistrationExportedVars};
     }
 
     # Extra claims
+    my $extra_claims = {};
     if (
         ref( $self->conf->{oidcServiceDynamicRegistrationExtraClaims} ) eq
         'HASH' )
     {
-        $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp} =
+        $extra_claims =
           $self->conf->{oidcServiceDynamicRegistrationExtraClaims};
     }
+
+    # Build newRp structure (same shape as getOidcRpConfig)
+    # Hooks can modify this to adjust the RP config before save
+    my $newRp = {
+        confKey     => $rp,
+        options     => $rp_options,
+        attributes  => $exported_vars,
+        macros      => {},
+        scopeRules  => {},
+        extraClaims => $extra_claims,
+    };
+
+    # Allow hooks to modify the new RP config before saving
+    # $client_metadata is passed for read-only context
+    $h = $self->p->processHook( $req, 'oidcRegisterClient',
+        $newRp, $client_metadata );
+    if ( $h != PE_OK ) {
+        $self->logger->error("oidcRegisterClient hook failed");
+        return $self->p->sendError( $req, 'server_error', 500 );
+    }
+
+    # Apply newRp to configuration
+    $rp            = $newRp->{confKey};
+    $client_id     = $newRp->{options}->{oidcRPMetaDataOptionsClientID};
+    $client_secret = $newRp->{options}->{oidcRPMetaDataOptionsClientSecret};
+
+    $conf->{oidcRPMetaDataOptions}->{$rp}      = $newRp->{options};
+    $conf->{oidcRPMetaDataExportedVars}->{$rp} = $newRp->{attributes};
+    $conf->{oidcRPMetaDataMacros}->{$rp}       = $newRp->{macros}
+      if %{ $newRp->{macros} };
+    $conf->{oidcRPMetaDataScopeRules}->{$rp} = $newRp->{scopeRules}
+      if %{ $newRp->{scopeRules} };
+    $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp} = $newRp->{extraClaims}
+      if %{ $newRp->{extraClaims} };
 
     if ( $self->confAcc->saveConf($conf) > 0 ) {
 
         # Send registration response
-        $registration_response->{'client_id'}            = $client_id;
-        $registration_response->{'client_secret'}        = $client_secret;
+        $registration_response->{'client_id'}     = $client_id;
+        $registration_response->{'client_secret'} = $client_secret
+          if defined $client_secret;
         $registration_response->{'client_id_issued_at'}  = $registration_time;
         $registration_response->{'client_id_expires_at'} = 0;
         $registration_response->{'client_name'}          = $client_name;

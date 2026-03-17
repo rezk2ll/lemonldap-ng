@@ -49,6 +49,8 @@ use constant hook => {
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
     oidcGotTokenRequest               => 'gotTokenRequest',
     oidcGenerateRefreshToken          => 'generateRefreshToken',
+    oidcGotRegistrationRequest        => 'gotRegistrationRequest',
+    oidcRegisterClient                => 'registerClient',
     oidcGenerateMetadata              => 'addCustomMetadata',
 };
 
@@ -256,6 +258,31 @@ sub generateRefreshToken {
 
     # Mark that this hook was called
     $generateRefreshTokenCalled = 1;
+
+    return PE_OK;
+}
+
+sub gotRegistrationRequest {
+    my ( $self, $req, $client_metadata, $state ) = @_;
+
+    # Deny registration for clients with a specific redirect_uri pattern
+    my $redirect_uris = $client_metadata->{redirect_uris} || [];
+    for my $uri (@$redirect_uris) {
+        if ( $uri =~ /^https:\/\/denied\.example\.com\// ) {
+            $state->{result} =
+              $self->p->sendError( $req, 'registration_not_allowed', 403 );
+            return PE_DONE;    # Decision is final
+        }
+    }
+
+    return PE_OK;    # Defer to default behavior
+}
+
+sub registerClient {
+    my ( $self, $req, $newRp, $client_metadata ) = @_;
+
+    # Add a custom option to the new RP
+    $newRp->{options}->{oidcRPMetaDataOptionsBypassConsent} = 1;
 
     return PE_OK;
 }

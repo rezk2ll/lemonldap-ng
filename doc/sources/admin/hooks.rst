@@ -569,6 +569,100 @@ Sample code::
    }
 
 
+Dynamic Registration (/oauth2/register)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGotRegistrationRequest
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG receives an OAuth2 dynamic client
+registration request. It is only called when
+``oidcServiceAllowDynamicRegistration`` is enabled.
+
+It allows custom plugins to filter or reject specific registration requests.
+
+The hook receives the client registration metadata and a ``$state`` hash
+reference. When returning ``PE_SENDRESPONSE``, the hook's decision is final and
+``$state->{result}`` is returned as the HTTP response (same pattern as
+``oidcValidateRedirectUri``).
+
+The hook should return:
+
+* ``PE_OK`` to allow the registration to proceed normally
+* ``PE_SENDRESPONSE`` to return ``$state->{result}`` as the final response
+
+Sample code::
+
+   use constant hook => {
+       oidcGotRegistrationRequest => 'filterRegistration',
+   };
+
+   sub filterRegistration {
+       my ( $self, $req, $client_metadata, $state ) = @_;
+
+       # Only allow native apps with loopback URIs
+       my $redirect_uris = $client_metadata->{redirect_uris};
+       return PE_OK unless $redirect_uris && ref($redirect_uris) eq 'ARRAY';
+
+       foreach my $uri (@$redirect_uris) {
+           unless ( $uri =~
+               /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/.*)?$/i )
+           {
+               $state->{result} =
+                   $self->p->sendError( $req, 'invalid_request', 400 );
+               return PE_SENDRESPONSE;
+           }
+       }
+
+       return PE_OK;
+   }
+
+oidcRegisterClient
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered just before saving the new RP configuration during
+OAuth2 dynamic client registration.
+
+It allows custom plugins to modify the new RP's configuration before it is
+saved. The hook receives a ``$newRp`` hash reference with the same structure
+as ``getOidcRpConfig``:
+
+* ``confKey``: the configuration key for the new RP
+* ``options``: hash of RP options (includes ``oidcRPMetaDataOptionsClientID``,
+  ``oidcRPMetaDataOptionsClientSecret``, etc.)
+* ``attributes``: hash of exported variables
+* ``macros``: hash of macros
+* ``scopeRules``: hash of scope rules
+* ``extraClaims``: hash of extra claims
+
+The ``$client_metadata`` is also passed as a second parameter for read-only
+context. Modifying it has no effect on the saved configuration.
+
+Sample code::
+
+   use constant hook => {
+       oidcRegisterClient => 'supportPublicClients',
+   };
+
+   sub supportPublicClients {
+       my ( $self, $req, $newRp, $client_metadata ) = @_;
+       my $token_endpoint_auth_method =
+           $client_metadata->{token_endpoint_auth_method} || 'client_secret_basic';
+
+       # Support public clients (no secret)
+       if ( $token_endpoint_auth_method eq 'none' ) {
+           $self->logger->info("Registering public client");
+           delete $newRp->{options}->{oidcRPMetaDataOptionsClientSecret};
+       }
+
+       return PE_OK;
+   }
+
+
 Dynamic RP configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
