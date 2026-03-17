@@ -218,7 +218,7 @@ sub load_config {
     my $config = {};
     my $res =
       $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
-    if ( $res != PE_OK ) {
+    if ( $res and $res != PE_OK ) {
         return;
     }
 
