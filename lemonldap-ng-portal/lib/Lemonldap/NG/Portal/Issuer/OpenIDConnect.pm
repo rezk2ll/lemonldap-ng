@@ -1577,6 +1577,16 @@ sub token {
 
     # Unknown or unspecified grant type
     else {
+
+        # Hook to allow plugins to handle custom grant_types
+        # (e.g., CIBA, Device Authorization RFC 8628)
+        my $h =
+          $self->p->processHook( $req, 'oidcUnknownGrantType', $rp,
+            $grant_type );
+        if ( $h == PE_SENDRESPONSE ) {
+            return $req->response;
+        }
+
         $self->userLogger->error(
             $grant_type
             ? "Unknown grant type: $grant_type"

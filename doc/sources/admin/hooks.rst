@@ -323,6 +323,46 @@ Sample code::
     }
 
 
+oidcUnknownGrantType
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when the token endpoint receives an unknown or unsupported
+grant_type. It allows plugins to handle custom grant types such as:
+
+* CIBA (Client-Initiated Backchannel Authentication)
+* Device Authorization Grant (RFC 8628)
+
+The hook's parameters are:
+
+* the configuration key of the relying party
+* the grant_type string that was received
+
+The hook should return:
+
+* ``PE_SENDRESPONSE`` to take over the response (plugin must set ``$req->response``)
+* ``PE_OK`` to fall through to the standard unsupported_grant_type error
+
+Sample code::
+
+   use constant hook => {
+       oidcUnknownGrantType => 'handleCustomGrant',
+   };
+
+   sub handleCustomGrant {
+       my ( $self, $req, $rp, $grant_type ) = @_;
+       if ( $grant_type eq 'urn:openid:params:grant-type:ciba' ) {
+           # Handle CIBA grant
+           return PE_SENDRESPONSE;
+       }
+       elsif ( $grant_type eq 'urn:ietf:params:oauth:grant-type:device_code' ) {
+           # Handle Device Authorization Grant (RFC 8628)
+           return PE_SENDRESPONSE;
+       }
+       return PE_OK;
+   }
+
 Token generation
 ^^^^^^^^^^^^^^^^
 
