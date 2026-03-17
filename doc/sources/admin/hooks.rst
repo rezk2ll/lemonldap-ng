@@ -404,6 +404,37 @@ Sample code::
        return PE_OK;
    }
 
+oidcGenerateRefreshToken
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is generating a Refresh Token.
+It allows plugins to add data to the refresh token session or reject the
+token generation by returning a non-PE_OK value.
+
+The hook's parameters are:
+
+* A hash of the refresh token session data (which you can modify)
+* the configuration key of the relying party
+* a boolean indicating if this is an offline refresh token (true) or online (false)
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateRefreshToken => 'addDataToRefreshToken',
+   };
+
+   sub addDataToRefreshToken {
+       my ( $self, $req, $refresh_info, $rp, $offline ) = @_;
+       if ( my $data = $req->data->{my_data} ) {
+           $refresh_info->{my_data} = $data;
+       }
+       # $offline is true for offline_access tokens
+       $refresh_info->{is_offline} = $offline ? 1 : 0;
+       return PE_OK;
+   }
+
 oidcGenerateIDToken
 ~~~~~~~~~~~~~~~~~~~
 

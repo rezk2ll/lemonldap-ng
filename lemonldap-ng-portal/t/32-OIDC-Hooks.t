@@ -355,6 +355,30 @@ is( $json->{custom_grant}, 1,
 is( $json->{grant_type}, "urn:test:custom_grant",
     "Correct grant_type in hook response" );
 
+# --------------------------------------------------------------------------
+# Test oidcGenerateRefreshToken hook
+# --------------------------------------------------------------------------
+note "Testing oidcGenerateRefreshToken hook";
+
+# Reset hook marker
+$t::OidcHookPlugin::generateRefreshTokenCalled = '';
+
+# Get a new refresh token
+$code = codeAuthorize(
+    $op, $idpId,
+    {
+        response_type => 'code',
+        scope         => 'openid profile offline_access',
+        client_id     => 'rpid',
+        state         => 'teststate3',
+        redirect_uri  => 'http://rp2.com/',
+    }
+);
+$json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
+ok( $json->{refresh_token}, "Refresh token present" );
+ok( $t::OidcHookPlugin::generateRefreshTokenCalled,
+    "oidcGenerateRefreshToken hook was called" );
+
 clean_sessions();
 done_testing();
 

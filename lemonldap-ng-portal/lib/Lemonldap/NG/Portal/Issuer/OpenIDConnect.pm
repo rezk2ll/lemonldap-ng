@@ -3308,6 +3308,10 @@ sub _convertOldFormatConsents {
 sub _generateRefreshToken {
     my ( $self, $req, $rp, $info, $offline ) = @_;
 
+    # Allow plugins to add data to refresh token
+    my $h = $self->p->processHook( $req, 'oidcGenerateRefreshToken', $info, $rp, $offline );
+    return if $h;
+
     my $user  = $info->{_session_uid};
     my $token = $self->newRefreshToken( $rp, $info, $offline );
     if ($token) {

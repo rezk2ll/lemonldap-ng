@@ -7,6 +7,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_SENDRESPONSE PE_DONE);
 use Data::Dumper;
 use Test::More;
 
+our $generateRefreshTokenCalled = '';
+
 has confEnabled => (
     is      => 'rw',
     default => 1,
@@ -48,6 +50,7 @@ use constant hook => {
     oidcGenerateAuthorizationResponse => 'buildAuthzResponse',
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
     oidcGotTokenRequest               => 'gotTokenRequest',
+    oidcGenerateRefreshToken          => 'generateRefreshToken',
 };
 
 sub addClaimToIDToken {
@@ -262,6 +265,18 @@ sub gotTokenRequest {
         );
         return PE_SENDRESPONSE;
     }
+
+    return PE_OK;
+}
+
+sub generateRefreshToken {
+    my ( $self, $req, $info, $rp, $offline ) = @_;
+
+    # Add custom data to refresh token
+    $info->{refresh_hook} = "hooked_$rp";
+
+    # Mark that this hook was called
+    $generateRefreshTokenCalled = 1;
 
     return PE_OK;
 }
