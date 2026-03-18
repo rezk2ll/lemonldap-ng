@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Artan gecikme",
 "bruteForceProtectionLockTimes":"Artan gecikme zamanı",
 "bruteForceProtectionMaxAge":"Maksimum ömür",
-"bruteForceProtectionMaxFailed":"İzin verilen başarısız girişler",
+"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
 "bruteForceProtectionMaxLockTime":"Maksimum kilit süresi",
 "bruteForceProtectionTempo":"Kilit süresi",
 "cacheTagSalt":"Cache-busting salt",

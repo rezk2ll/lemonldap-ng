@@ -151,8 +151,9 @@ sub run {
         return PE_OK;
     }
 
+    # Include current failed attempt in the count
     return PE_OK
-      if ( $countFailed < $self->maxFailed );
+      if ( $countFailed + 1 < $self->maxFailed );
 
     # Delta between current attempt and last failed login
     my $delta = $lastFailedLoginEpoch ? $now - $lastFailedLoginEpoch : 0;

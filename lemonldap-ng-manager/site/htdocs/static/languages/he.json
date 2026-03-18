@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Incremental lock",
 "bruteForceProtectionLockTimes":"Incremental lock times",
 "bruteForceProtectionMaxAge":"גיל מרבי",
-"bruteForceProtectionMaxFailed":"כמות כניסות כושלות מותרת",
+"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
 "bruteForceProtectionMaxLockTime":"זמן הנעילה המרבי",
 "bruteForceProtectionTempo":"זמן נעילה",
 "cacheTagSalt":"Cache-busting salt",

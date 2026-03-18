@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Incremental lock",
 "bruteForceProtectionLockTimes":"Incremental lock times",
 "bruteForceProtectionMaxAge":"Età massima",
-"bruteForceProtectionMaxFailed":"Allowed failed logins",
+"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
 "bruteForceProtectionMaxLockTime":"Maximum lock time",
 "bruteForceProtectionTempo":"Lock time",
 "cacheTagSalt":"Cache-busting salt",

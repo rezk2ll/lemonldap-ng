@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"khóa gia tăng",
 "bruteForceProtectionLockTimes":"Lần khóa gia tăng",
 "bruteForceProtectionMaxAge":"Thời hạn tối đa",
-"bruteForceProtectionMaxFailed":"Cho phép đăng nhập không thành công",
+"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
 "bruteForceProtectionMaxLockTime":"Thời gian khóa tối đa",
 "bruteForceProtectionTempo":"thời gian khóa",
 "cacheTagSalt":"Cache-busting salt",

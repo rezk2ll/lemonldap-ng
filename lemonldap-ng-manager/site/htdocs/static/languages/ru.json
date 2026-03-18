@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Инкрементная блокировка",
 "bruteForceProtectionLockTimes":"Время инкрементной блокировки",
 "bruteForceProtectionMaxAge":"Максимальный возраст",
-"bruteForceProtectionMaxFailed":"Разрешенные неудачные попытки входа",
+"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
 "bruteForceProtectionMaxLockTime":"Максимальное время блокировки",
 "bruteForceProtectionTempo":"Время блокировки",
 "cacheTagSalt":"Cache-busting salt",
