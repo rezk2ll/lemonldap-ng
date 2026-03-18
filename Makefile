@@ -125,6 +125,9 @@ LLNGAPPDIR=$(LMPREFIX)/llng-server
 UWSGIUSER=$(APACHEUSER)
 UWSGIGROUP=$(APACHEGROUP)
 
+# Perl site lib directory (for llng-build-manager-files)
+INSTALLSITELIB=$(shell perl -V:installsitelib | perl -pe "s/.*='(.*)';/\$$1/")
+
 # RC/systemd
 WITHRC=yes
 WITHSYSTEMD=yes
@@ -227,7 +230,7 @@ MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN)
 
 # GENERATED SRC FILES
-MANAGERJSONSRC= scripts/jsongenerator.pl \
+MANAGERJSONSRC= scripts/jsongenerator \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
@@ -380,7 +383,7 @@ debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/scripts/purgeCent
 		> debian/liblemonldap-ng-portal-perl.cron.d
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
-	./scripts/jsongenerator.pl
+	./scripts/jsongenerator
 
 common_conf:	${SRCCOMMONDIR}/Makefile
 
@@ -686,6 +689,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
+		${SRCMANAGERDIR}/scripts/llng-build-manager-files \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-sessions \
 		${SRCCOMMONDIR}/scripts/importMetadata \
@@ -717,6 +721,9 @@ install_bin:	install_conf_dir
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*
+	# llng-build-manager-files placeholders
+	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)#g; s#__INSTALLSITELIB__#$(INSTALLSITELIB)#g; s#__DOCDIR__#$(DEFDOCDIR)#g;' \
+		$(RBINDIR)/llng-build-manager-files
 	# Cron files
 	@if [ "x$(WITHRC)" = "xyes" ]; then \
 		install -v -d $(RCRONDIR); \

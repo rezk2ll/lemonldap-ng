@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Wrapper script that calls llng-build-manager-files to generate Manager JSON files
+# This is used during development builds (make json)
+#
+
+perl -Ilemonldap-ng-manager/lib -Ilemonldap-ng-common/lib -Ilemonldap-ng-handler/lib -Ilemonldap-ng-portal/lib \
+    lemonldap-ng-manager/scripts/llng-build-manager-files \
+    --struct-file=lemonldap-ng-manager/site/htdocs/static/struct.json \
+    --conftree-file=lemonldap-ng-manager/site/htdocs/static/js/conftree.js \
+    --manager-constants-file=lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
+    --manager-attributes-file=lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Attributes.pm \
+    --default-values-file=lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
+    --conf-constants-file=lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/Constants.pm \
+    --first-lmconf-file=_example/conf/lmConf-1.json \
+    --reverse-tree-file=lemonldap-ng-manager/site/htdocs/static/reverseTree.json \
+    --portal-constants-file=lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Main/Constants.pm \
+    --handler-status-constants-file=lemonldap-ng-handler/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
+    --doc-constants-file=doc/sources/admin/error_codes.rst \
+    "$@"

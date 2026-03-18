@@ -7,6 +7,7 @@ usr/share/lemonldap-ng/bin/lemonldap-ng-cli
 usr/share/lemonldap-ng/bin/llngDeleteSession
 usr/share/lemonldap-ng/bin/llngUserAttributes
 usr/share/lemonldap-ng/bin/lmConfigEditor
+usr/share/lemonldap-ng/bin/llng-build-manager-files
 usr/share/lemonldap-ng/manager
 usr/share/man/man3/Lemonldap::NG::Manager*
 usr/share/perl5/Lemonldap/NG/Manager*

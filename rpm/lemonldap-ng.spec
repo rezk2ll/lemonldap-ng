@@ -685,10 +685,12 @@ fi
 %{lm_examplesdir}/manager
 %{lm_bindir}/crowdsecBan
 %{lm_bindir}/lmConfigEditor
+%{lm_bindir}/llng-build-manager-files
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
 %{lm_bindir}/llngUserAttributes
 %{_mandir}/man1/lemonldap-ng-cli*
+%{_mandir}/man1/llng-build-manager-files*
 %{_mandir}/man1/importMetadata*
 %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
