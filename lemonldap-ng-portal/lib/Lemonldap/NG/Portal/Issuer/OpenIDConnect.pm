@@ -982,19 +982,27 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            ( $code  ? ( code  => $code )  : () ),
+            ( $state ? ( state => $state ) : () ),
+            (
+                $session_state
+                ? ( session_state => $session_state )
+                : ()
+            ),
+        };
+
+        my $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                ( $code  ? ( code  => $code )  : () ),
-                ( $state ? ( state => $state ) : () ),
-                (
-                    $session_state
-                    ? ( session_state => $session_state )
-                    : ()
-                ),
-            }
+            $response_params
         );
     }
 
@@ -1072,28 +1080,36 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            id_token => $id_token,
+            (
+                $access_token
+                ? (
+                    token_type   => 'bearer',
+                    access_token => $access_token
+                  )
+                : ()
+            ),
+            ( $expires_in ? ( expires_in => $expires_in )    : () ),
+            ( $state      ? ( state      => $state )         : () ),
+            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            (
+                $session_state ? ( session_state => $session_state )
+                : ()
+            )
+        };
+
+        my $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                id_token => $id_token,
-                (
-                    $access_token
-                    ? (
-                        token_type   => 'bearer',
-                        access_token => $access_token
-                      )
-                    : ()
-                ),
-                ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                ( $state      ? ( state      => $state )         : () ),
-                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                (
-                    $session_state ? ( session_state => $session_state )
-                    : ()
-                )
-            }
+            $response_params
         );
     }
 
@@ -1204,32 +1220,40 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            code => $code,
+            (
+                $access_token
+                ? (
+                    token_type   => 'bearer',
+                    access_token => $access_token
+                  )
+                : ()
+            ),
+            (
+                $id_token ? ( id_token => $id_token )
+                : ()
+            ),
+            ( $expires_in ? ( expires_in => $expires_in )    : () ),
+            ( $state      ? ( state      => $state )         : () ),
+            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            (
+                $session_state ? ( session_state => $session_state )
+                : ()
+            )
+        };
+
+        my $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                code => $code,
-                (
-                    $access_token
-                    ? (
-                        token_type   => 'bearer',
-                        access_token => $access_token
-                      )
-                    : ()
-                ),
-                (
-                    $id_token ? ( id_token => $id_token )
-                    : ()
-                ),
-                ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                ( $state      ? ( state      => $state )         : () ),
-                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                (
-                    $session_state ? ( session_state => $session_state )
-                    : ()
-                )
-            }
+            $response_params
         );
     }
 
