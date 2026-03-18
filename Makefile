@@ -39,7 +39,7 @@ UNCOMPRESS=tar xzf
 LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
-UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
+UGLIFYJSVERSION=$(shell uglifyjs --version 2>/dev/null|perl -pe 's/^[^\d]*(\d).*$$/$$1/' 2>/dev/null)
 CHOWN=chown
 CHGRP=chgrp
 CHMOD=chmod
@@ -357,13 +357,18 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
 	@yui-compressor $*.css > $*.min.css
 
 %.min.js: %.js
-	@echo "Compressing $*.js"
-	@if test "$(UGLIFYJSVERSION)" = 2; then \
-		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
+	@if which uglifyjs >/dev/null 2>&1; then \
+		echo "Compressing $*.js"; \
+		if test "$(UGLIFYJSVERSION)" = 2; then \
+			cd `dirname $*`; \
+			uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
+		else \
+			cd `dirname $*`; \
+			uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
+		fi; \
 	else \
-		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
+		echo "Copying $*.js (uglifyjs not available)"; \
+		cp $*.js $*.min.js; \
 	fi
 
 # Perl libraries configuration
