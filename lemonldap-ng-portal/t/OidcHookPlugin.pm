@@ -46,7 +46,7 @@ use constant hook => {
     getOidcRpConfig                   => 'getRp',
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
     oidcGenerateAuthorizationResponse => 'buildAuthzResponse',
-    oidcBuildIntrospectionResponse    => 'buildIntrospectionResponse',
+    oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
 };
 
 sub addClaimToIDToken {
