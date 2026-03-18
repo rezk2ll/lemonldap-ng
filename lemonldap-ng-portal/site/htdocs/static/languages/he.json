@@ -17,6 +17,7 @@
 "PE110":"האימות הדו־שלבי נכשל, נא לנסות שוב",
 "PE111":"הסיסמה ארוכה מדי",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"יש למלא את שדות המשתמש והסיסמה",
 "PE20":"לא צוין מנגנון סיסמאות",
 "PE21":"החשבון שלך נעול",

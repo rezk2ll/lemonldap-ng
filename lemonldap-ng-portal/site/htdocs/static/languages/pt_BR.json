@@ -17,6 +17,7 @@
 "PE110":"A validação do segundo fator falhou, por favor tente novamente",
 "PE111":"Password too long",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"Os campos de usuário e senha devem ser preenchidos",
 "PE20":"Não há backend de senhas definido",
 "PE21":"A sua conta está bloqueada",

@@ -17,6 +17,7 @@
 "PE110":"Second factor validation failed, please retry",
 "PE111":"Password too long",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"必須填寫使用者與密碼欄位",
 "PE20":"No password backend defined",
 "PE21":"您的帳號已鎖定",

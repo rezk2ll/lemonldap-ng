@@ -122,6 +122,7 @@ sub portalConstants {
         PE_RETRY_2FA                         => 110,
         PE_PP_PASSWORD_TOO_LONG              => 111,
         PE_PP_PASSWORD_EXPIRES_SOON          => 112,
+        PE_ISSUERTIMEOUT                     => 113,
     };
 }
 
