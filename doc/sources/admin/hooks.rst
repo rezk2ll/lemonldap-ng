@@ -413,6 +413,38 @@ Sample code::
    }
 
 
+Introspection endpoint (/oauth2/introspect)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcBuildIntrospectionResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is building the token introspection response.
+It allows plugins to modify the introspection response.
+
+The hook's parameters are:
+
+* A hash of the introspection response (which you can modify)
+* the configuration key of the relying party making the introspection request
+* A hash of the access token session data
+
+Sample code::
+
+   use constant hook => {
+       oidcBuildIntrospectionResponse => 'modifyIntrospection',
+   };
+
+   sub modifyIntrospection {
+       my ( $self, $req, $response, $rp, $token_data ) = @_;
+       if ( my $data = $token_data->{my_data} ) {
+           $response->{my_claim} = $data;
+       }
+       return PE_OK;
+   }
+
+
 Dynamic RP configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^
 

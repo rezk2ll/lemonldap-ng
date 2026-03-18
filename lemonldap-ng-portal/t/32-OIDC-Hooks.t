@@ -58,10 +58,11 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRedirectUris  => 'http://dev.com/',
                 },
                 oauth => {
-                    oidcRPMetaDataOptionsDisplayName  => "oauth",
-                    oidcRPMetaDataOptionsClientID     => "oauth",
-                    oidcRPMetaDataOptionsClientSecret => "service",
-                    oidcRPMetaDataOptionsUserIDAttr   => "",
+                    oidcRPMetaDataOptionsDisplayName                 => "oauth",
+                    oidcRPMetaDataOptionsClientID                    => "oauth",
+                    oidcRPMetaDataOptionsClientSecret                => "service",
+                    oidcRPMetaDataOptionsUserIDAttr                  => "",
+                    oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                 }
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
@@ -287,6 +288,48 @@ $op->p->HANDLER->checkConf(1);
 $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
 expectJWT( $json->{access_token},
     scope => "openid profile email my_hooked_scope myscope refreshed_french" );
+
+# --------------------------------------------------------------------------
+# Test oidcBuildIntrospectionResponse hook
+# --------------------------------------------------------------------------
+note "Testing oidcBuildIntrospectionResponse hook";
+
+# Get a token via client credentials to introspect
+$query = "grant_type=client_credentials&scope=openid";
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("oauth:service"),
+        },
+    ),
+    "Get client credentials token"
+);
+$json = expectJSON($res);
+my $cc_token = $json->{access_token};
+ok( $cc_token, "Got access token" );
+
+# Introspect to verify hook
+$query = "token=$cc_token";
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length $query,
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("oauth:service"),
+        },
+    ),
+    "Introspect token"
+);
+
+$json = expectJSON($res);
+is( $json->{introspection_hook}, "hooked",
+    "oidcBuildIntrospectionResponse hook modified response" );
 
 clean_sessions();
 done_testing();

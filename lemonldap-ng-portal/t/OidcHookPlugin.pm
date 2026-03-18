@@ -45,7 +45,8 @@ use constant hook => {
     oidcGotTokenExchange              => 'tokenExchange',
     getOidcRpConfig                   => 'getRp',
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
-    oidcGenerateAuthorizationResponse    => 'buildAuthzResponse',
+    oidcGenerateAuthorizationResponse => 'buildAuthzResponse',
+    oidcBuildIntrospectionResponse    => 'buildIntrospectionResponse',
 };
 
 sub addClaimToIDToken {
@@ -230,6 +231,15 @@ sub buildAuthzResponse {
 
     # Add a custom parameter to the authorization response
     $response_params->{authz_hook} = "hooked";
+
+    return PE_OK;
+}
+
+sub buildIntrospectionResponse {
+    my ( $self, $req, $response, $rp, $token_data ) = @_;
+
+    # Add custom claim to introspection response
+    $response->{introspection_hook} = "hooked";
 
     return PE_OK;
 }

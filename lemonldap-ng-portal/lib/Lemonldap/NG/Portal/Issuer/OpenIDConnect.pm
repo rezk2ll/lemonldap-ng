@@ -992,7 +992,7 @@ sub _authorizeEndpoint {
             ),
         };
 
-        my $h = $self->p->processHook(
+        $h = $self->p->processHook(
             $req, 'oidcGenerateAuthorizationResponse',
             $oidc_request, $rp, $response_params
         );
@@ -2529,6 +2529,10 @@ sub introspection {
                   unless defined $response->{$_}
                   and $response->{$_} || length( $response->{$_} ) > 0;
             }
+
+            # Hook for plugins to modify introspection response
+            $self->p->processHook( $req, 'oidcBuildIntrospectionResponse',
+                $response, $rp, $oidcSession->data );
         }
         else {
             $self->logger->warn("Count not find session tied to Access Token");
