@@ -1536,6 +1536,35 @@ sub token {
 
     my $grant_type = $req->param('grant_type') || '';
 
+    # Hook to allow plugins to handle custom grant_types or modify parameters
+    # (e.g., CIBA, Device Authorization RFC 8628)
+    # PE_OK => continue processing
+    # PE_SENDRESPONSE => return custom response (for custom grant types)
+    my $h =
+      $self->p->processHook( $req, 'oidcGotTokenRequest', $rp, $grant_type );
+    if ( $h == PE_SENDRESPONSE ) {
+        return $req->response;
+    }
+
+    # A plugin may refuse this request
+    elsif ($h) {
+        if ( $h > 0 ) {
+            $self->auditLog(
+                $req,
+                code    => 'ISSUER_OIDC_BAD_REQUEST',
+                rp      => $rp,
+                message =>
+"An oidcGotTokenRequest plugin rejected this request with code $h",
+            );
+            return $self->sendOIDCError( $req, 'Bad request', 400 );
+        }
+        else {
+            $self->logger->error(
+                "An oidcGotTokenRequest plugin returned an usable code: $h");
+            return $self->sendOIDCError( $req, 'Server error', 500 );
+        }
+    }
+
     # Autorization Code grant
     if ( $grant_type eq 'authorization_code' ) {
         return $self->_handleAuthorizationCodeGrant( $req, $rp, $method );

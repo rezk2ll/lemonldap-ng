@@ -47,6 +47,7 @@ use constant hook => {
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
     oidcGenerateAuthorizationResponse => 'buildAuthzResponse',
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
+    oidcGotTokenRequest               => 'gotTokenRequest',
 };
 
 sub addClaimToIDToken {
@@ -240,6 +241,27 @@ sub buildIntrospectionResponse {
 
     # Add custom claim to introspection response
     $response->{introspection_hook} = "hooked";
+
+    return PE_OK;
+}
+
+sub gotTokenRequest {
+    my ( $self, $req, $rp, $grant_type ) = @_;
+
+    # Handle a custom grant type for testing
+    if ( $grant_type eq 'urn:test:custom_grant' ) {
+        $req->response(
+            $self->p->sendJSONresponse(
+                $req,
+                {
+                    custom_grant => 1,
+                    grant_type   => $grant_type,
+                    rp           => $rp,
+                }
+            )
+        );
+        return PE_SENDRESPONSE;
+    }
 
     return PE_OK;
 }

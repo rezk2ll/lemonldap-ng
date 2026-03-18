@@ -331,6 +331,30 @@ $json = expectJSON($res);
 is( $json->{introspection_hook}, "hooked",
     "oidcGenerateIntrospectionResponse hook modified response" );
 
+# --------------------------------------------------------------------------
+# Test oidcGotTokenRequest hook
+# --------------------------------------------------------------------------
+note "Testing oidcGotTokenRequest hook";
+
+$query = "grant_type=urn:test:custom_grant";
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("oauth:service"),
+        },
+    ),
+    "Custom grant type via oidcGotTokenRequest hook"
+);
+$json = expectJSON($res);
+is( $json->{custom_grant}, 1,
+    "oidcGotTokenRequest hook handled custom grant type" );
+is( $json->{grant_type}, "urn:test:custom_grant",
+    "Correct grant_type in hook response" );
+
 clean_sessions();
 done_testing();
 
