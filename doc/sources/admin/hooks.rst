@@ -138,7 +138,7 @@ Sample code ::
         return PE_OK;
     }
 
-oidcBuildAuthorizationResponse
+oidcGenerateAuthorizationResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
@@ -161,7 +161,7 @@ and ``session_state``, depending on the flow used.
 Sample code::
 
    use constant hook => {
-       oidcBuildAuthorizationResponse => 'wrapResponse',
+       oidcGenerateAuthorizationResponse => 'wrapResponse',
    };
 
    sub wrapResponse {

@@ -45,7 +45,7 @@ use constant hook => {
     oidcGotTokenExchange              => 'tokenExchange',
     getOidcRpConfig                   => 'getRp',
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
-    oidcBuildAuthorizationResponse    => 'buildAuthzResponse',
+    oidcGenerateAuthorizationResponse    => 'buildAuthzResponse',
 };
 
 sub addClaimToIDToken {

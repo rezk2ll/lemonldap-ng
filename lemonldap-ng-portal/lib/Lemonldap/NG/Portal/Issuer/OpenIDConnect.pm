@@ -993,7 +993,7 @@ sub _authorizeEndpoint {
         };
 
         my $h = $self->p->processHook(
-            $req, 'oidcBuildAuthorizationResponse',
+            $req, 'oidcGenerateAuthorizationResponse',
             $oidc_request, $rp, $response_params
         );
         return $h if ( $h != PE_OK );
@@ -1100,7 +1100,7 @@ sub _authorizeEndpoint {
         };
 
         my $h = $self->p->processHook(
-            $req, 'oidcBuildAuthorizationResponse',
+            $req, 'oidcGenerateAuthorizationResponse',
             $oidc_request, $rp, $response_params
         );
         return $h if ( $h != PE_OK );
@@ -1244,7 +1244,7 @@ sub _authorizeEndpoint {
         };
 
         my $h = $self->p->processHook(
-            $req, 'oidcBuildAuthorizationResponse',
+            $req, 'oidcGenerateAuthorizationResponse',
             $oidc_request, $rp, $response_params
         );
         return $h if ( $h != PE_OK );

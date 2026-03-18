@@ -159,10 +159,10 @@ ok(
     "Get authorization code"
 );
 
-# Check that both oidcGenerateCode (hooked=1) and oidcBuildAuthorizationResponse (authz_hook=hooked) hooks work
+# Check that both oidcGenerateCode (hooked=1) and oidcGenerateAuthorizationResponse (authz_hook=hooked) hooks work
 my ($redir_url) = expectRedirection( $res, qr#(http://rp2\.com/\?.*)# );
 like( $redir_url, qr/\bhooked=1\b/, "oidcGenerateCode hook modified redirect_uri" );
-like( $redir_url, qr/\bauthz_hook=hooked\b/, "oidcBuildAuthorizationResponse hook added parameter" );
+like( $redir_url, qr/\bauthz_hook=hooked\b/, "oidcGenerateAuthorizationResponse hook added parameter" );
 my ($code) = ( $redir_url =~ /\bcode=([^\&]+)/ );
 
 # Exchange code for AT
