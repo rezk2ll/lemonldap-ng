@@ -287,9 +287,9 @@ expectJWT( $json->{access_token},
     scope => "openid profile email my_hooked_scope myscope refreshed_french" );
 
 # --------------------------------------------------------------------------
-# Test oidcBuildIntrospectionResponse hook
+# Test oidcGenerateIntrospectionResponse hook
 # --------------------------------------------------------------------------
-note "Testing oidcBuildIntrospectionResponse hook";
+note "Testing oidcGenerateIntrospectionResponse hook";
 
 # Get a token via client credentials to introspect
 $query = "grant_type=client_credentials&scope=openid";
@@ -326,7 +326,7 @@ ok(
 
 $json = expectJSON($res);
 is( $json->{introspection_hook}, "hooked",
-    "oidcBuildIntrospectionResponse hook modified response" );
+    "oidcGenerateIntrospectionResponse hook modified response" );
 
 clean_sessions();
 done_testing();

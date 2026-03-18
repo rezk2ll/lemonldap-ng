@@ -381,7 +381,7 @@ Sample code::
 Introspection endpoint (/oauth2/introspect)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-oidcBuildIntrospectionResponse
+oidcGenerateIntrospectionResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
@@ -398,7 +398,7 @@ The hook's parameters are:
 Sample code::
 
    use constant hook => {
-       oidcBuildIntrospectionResponse => 'modifyIntrospection',
+       oidcGenerateIntrospectionResponse => 'modifyIntrospection',
    };
 
    sub modifyIntrospection {

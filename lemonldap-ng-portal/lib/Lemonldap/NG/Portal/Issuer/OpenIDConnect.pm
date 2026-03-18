@@ -2507,7 +2507,7 @@ sub introspection {
             }
 
             # Hook for plugins to modify introspection response
-            $self->p->processHook( $req, 'oidcBuildIntrospectionResponse',
+            $self->p->processHook( $req, 'oidcGenerateIntrospectionResponse',
                 $response, $rp, $oidcSession->data );
         }
         else {
