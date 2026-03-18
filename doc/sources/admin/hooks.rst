@@ -323,16 +323,17 @@ Sample code::
     }
 
 
-oidcUnknownGrantType
-~~~~~~~~~~~~~~~~~~~~
+oidcGotTokenRequest
+~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
-This hook is triggered when the token endpoint receives an unknown or unsupported
-grant_type. It allows plugins to handle custom grant types such as:
+This hook is triggered when the token endpoint receives a request, before
+processing any grant type. It allows plugins to:
 
-* CIBA (Client-Initiated Backchannel Authentication)
-* Device Authorization Grant (RFC 8628)
+* Modify request parameters for any grant type (authorization_code, refresh_token, etc.)
+* Log or audit all token requests
+* Handle custom grant types such as CIBA or Device Authorization Grant (RFC 8628)
 
 The hook's parameters are:
 
@@ -341,25 +342,34 @@ The hook's parameters are:
 
 The hook should return:
 
+* ``PE_OK`` to continue normal processing (use this when modifying parameters or logging)
 * ``PE_SENDRESPONSE`` to take over the response (plugin must set ``$req->response``)
-* ``PE_OK`` to fall through to the standard unsupported_grant_type error
 
 Sample code::
 
    use constant hook => {
-       oidcUnknownGrantType => 'handleCustomGrant',
+       oidcGotTokenRequest => 'handleTokenRequest',
    };
 
-   sub handleCustomGrant {
+   sub handleTokenRequest {
        my ( $self, $req, $rp, $grant_type ) = @_;
+
+       # Log all token requests
+       $self->logger->info("Token request for RP $rp with grant_type $grant_type");
+
+       # Handle custom grant types
        if ( $grant_type eq 'urn:openid:params:grant-type:ciba' ) {
            # Handle CIBA grant
+           $req->response( ... );
            return PE_SENDRESPONSE;
        }
        elsif ( $grant_type eq 'urn:ietf:params:oauth:grant-type:device_code' ) {
            # Handle Device Authorization Grant (RFC 8628)
+           $req->response( ... );
            return PE_SENDRESPONSE;
        }
+
+       # Continue with normal processing for standard grant types
        return PE_OK;
    }
 

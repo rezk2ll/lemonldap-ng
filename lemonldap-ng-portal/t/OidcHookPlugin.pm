@@ -47,7 +47,7 @@ use constant hook => {
     oidcValidateRedirectUri           => 'allowOnlyLocalhost',
     oidcGenerateAuthorizationResponse => 'buildAuthzResponse',
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
-    oidcUnknownGrantType              => 'unknownGrantType',
+    oidcGotTokenRequest               => 'gotTokenRequest',
 };
 
 sub addClaimToIDToken {
@@ -245,7 +245,7 @@ sub buildIntrospectionResponse {
     return PE_OK;
 }
 
-sub unknownGrantType {
+sub gotTokenRequest {
     my ( $self, $req, $rp, $grant_type ) = @_;
 
     # Handle a custom grant type for testing
