@@ -128,7 +128,9 @@ sub run {
         $self->logger->debug(" -> Delta = $delta");
 
         # Time to wait
-        my $waitingTime = $self->lockTimes->[ $countFailed - 1 ]
+        # countFailed is from history and doesn't include the current
+        # attempt, so use countFailed (not countFailed-1) as index
+        my $waitingTime = $self->lockTimes->[$countFailed]
           // $self->conf->{bruteForceProtectionMaxLockTime};
 
         # Reach last tempo. Stop to increase waiting time

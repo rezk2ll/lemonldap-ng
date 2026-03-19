@@ -54,7 +54,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-## Second allowed failed login
+## Second failed login -> now locked (maxFailed=2, this is the 2nd attempt)
 ok(
     $res = $client->_post(
         '/',
@@ -62,21 +62,7 @@ ok(
         length => 23,
         accept => 'text/html',
     ),
-    '2nd allowed Bad Auth query'
-);
-ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
-
-## First failed connection
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new('user=dwho&password=ohwd'),
-        length => 23,
-        accept => 'text/html',
-    ),
-    '1st Bad Auth query'
+    '2nd Bad Auth query -> locked'
 );
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
@@ -106,7 +92,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
 ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
-# With fix #3561: blocked attempts not stored, countFailed stays 2
+# With fix #3561: blocked attempts not stored, countFailed stays 1
 # lockTimes[1]=5, delta=4 → remaining ~1s
 ok( $1 <= 2 && $1 >= 0, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
@@ -126,7 +112,7 @@ ok(
     'Bad Auth after lock expired'
 );
 
-# delta=8 > 5 → not blocked, just bad credential, stored → count=3
+# delta=8 > 5 → not blocked, just bad credential, stored → count=2
 ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
     'Bad credential (lock expired)' )
   or print STDERR Dumper( $res->[2]->[0] );
@@ -148,7 +134,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
 ok( $res->[2]->[0] =~ m%(\d{1,2}) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
-# countFailed=3 → lockTimes[2]=10
+# countFailed=2 → lockTimes[2]=10
 ok( $1 <= 12 && $1 >= 8, 'LockTime in range (~10s)' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
@@ -188,7 +174,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-## Second failed - still allowed (maxFailed=2)
+## Second failed - now locked (maxFailed=2, this is the 2nd attempt)
 ok(
     $res = $client->_post(
         '/',
@@ -196,21 +182,7 @@ ok(
         length => 23,
         accept => 'text/html',
     ),
-    'Second Bad Auth'
-);
-ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
-
-## Third failed - triggers lock
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new('user=dwho&password=ohwd'),
-        length => 23,
-        accept => 'text/html',
-    ),
-    'Third Bad Auth triggers lock'
+    'Second Bad Auth triggers lock'
 );
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
@@ -218,7 +190,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
 ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
-# countFailed=2 → lockTimes[1]=5
+# countFailed=1 → lockTimes[1]=5 (first non-zero lock time after maxFailed=2 zeros)
 ok( $1 <= 6 && $1 >= 3, 'LockTime in range (~5s)' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
