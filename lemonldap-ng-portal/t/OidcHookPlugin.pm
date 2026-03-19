@@ -38,10 +38,6 @@ use constant hook => {
     oidcGenerateAccessToken           => 'addClaimToAccessToken',
     oidcGenerateTokenResponse         => 'addCustomToken',
     oidcGotClientCredentialsGrant     => 'oidcGotClientCredentialsGrant',
-    oidcGenerateAuthenticationRequest => 'genAuthRequest',
-    oidcGenerateTokenRequest          => 'genTokenRequest',
-    oidcGotUserInfo                   => 'modifyUserInfo',
-    oidcGotIDToken                    => 'modifyIDToken',
     oidcGotOnlineRefresh              => 'refreshHook',
     oidcGotOfflineRefresh             => 'refreshHook',
     oidcGotTokenExchange              => 'tokenExchange',
@@ -113,36 +109,6 @@ sub oidcGotClientCredentialsGrant {
     my ( $self, $req, $payload, $rp ) = @_;
     $payload->{"hooked_username"} = "hook";
     $payload->{"_scope"} .= " cc_hooked";
-    return PE_OK;
-}
-
-sub genTokenRequest {
-    my ( $self, $req, $op, $authorize_request_params ) = @_;
-
-    $authorize_request_params->{my_param} = "my value";
-    return PE_OK;
-}
-
-sub genAuthRequest {
-    my ( $self, $req, $op, $token_request_params ) = @_;
-
-    $token_request_params->{my_param} = "my value";
-    return PE_OK;
-}
-
-sub modifyIDToken {
-    my ( $self, $req, $op, $id_token_payload_hash ) = @_;
-
-    # do some post-processing on the `sub` claim
-    $req->sessionInfo->{id_token_hook} = "$op/" . $id_token_payload_hash->{sub};
-    return PE_OK;
-}
-
-sub modifyUserInfo {
-    my ( $self, $req, $op, $userinfo_content ) = @_;
-
-    # Custom attribute processing
-    $req->sessionInfo->{userinfo_hook} = "$op/" . $userinfo_content->{sub};
     return PE_OK;
 }
 

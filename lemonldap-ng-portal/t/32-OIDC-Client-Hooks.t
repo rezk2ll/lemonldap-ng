@@ -13,6 +13,9 @@ BEGIN {
 
 my ( $op, $rp, $res );
 
+# Track token request to verify hook parameter
+my $token_request_content = '';
+
 LWP::Protocol::PSGI->register(
     sub {
         my $req = Plack::Request->new(@_);
@@ -34,6 +37,10 @@ LWP::Protocol::PSGI->register(
         }
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
+            # Capture token request content for verification
+            if ( $url =~ /token/ ) {
+                $token_request_content = $s;
+            }
             ok(
                 $res = $client->_post(
                     $url, IO::String->new($s),
@@ -75,15 +82,36 @@ my $metadata = $res->[2]->[0];
 
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 
-# Reset hook marker before creating RP
+# Reset all hook markers before creating RP
 $t::OidcClientHookPlugin::authzCallbackHookCalled = '';
+$t::OidcClientHookPlugin::authRequestHookCalled   = '';
+$t::OidcClientHookPlugin::tokenRequestHookCalled  = '';
+$t::OidcClientHookPlugin::gotIDTokenHookCalled    = '';
+$t::OidcClientHookPlugin::gotUserInfoHookCalled   = '';
+$t::OidcClientHookPlugin::idTokenHookData         = '';
+$t::OidcClientHookPlugin::userInfoHookData        = '';
 
 ok( $rp = register( 'rp', sub { rp( $jwks, $metadata ) } ), 'RP portal' );
 
-# Query RP for auth
+# Query RP for auth - this triggers oidcGenerateAuthenticationRequest hook
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 my ( $url, $query ) =
   expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
+# --------------------------------------------------------------------------
+# Test oidcGenerateAuthenticationRequest hook
+# --------------------------------------------------------------------------
+ok(
+    $t::OidcClientHookPlugin::authRequestHookCalled,
+    'oidcGenerateAuthenticationRequest hook was called'
+);
+
+# Verify custom parameter was added to the auth request
+like(
+    $query,
+    qr/custom_auth_param=auth_hook_value/,
+    'oidcGenerateAuthenticationRequest hook added custom parameter to auth request'
+);
 
 # Push request to OP
 ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
@@ -118,7 +146,8 @@ ok(
 
 ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
-# Push OP response to RP - this triggers the oidcGotAuthenticationResponse hook
+# Push OP response to RP - this triggers oidcGotAuthenticationResponse hook
+# and then oidcGenerateTokenRequest, oidcGotIDToken, oidcGotUserInfo hooks
 ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 my $spId = expectCookie($res);
@@ -129,6 +158,49 @@ my $spId = expectCookie($res);
 ok(
     $t::OidcClientHookPlugin::authzCallbackHookCalled,
     'oidcGotAuthenticationResponse hook was called'
+);
+
+# --------------------------------------------------------------------------
+# Test oidcGenerateTokenRequest hook
+# --------------------------------------------------------------------------
+ok(
+    $t::OidcClientHookPlugin::tokenRequestHookCalled,
+    'oidcGenerateTokenRequest hook was called'
+);
+
+# Verify custom parameter was added to the token request
+like(
+    $token_request_content,
+    qr/custom_token_param=token_hook_value/,
+    'oidcGenerateTokenRequest hook added custom parameter to token request'
+);
+
+# --------------------------------------------------------------------------
+# Test oidcGotIDToken hook
+# --------------------------------------------------------------------------
+ok(
+    $t::OidcClientHookPlugin::gotIDTokenHookCalled,
+    'oidcGotIDToken hook was called'
+);
+
+is(
+    $t::OidcClientHookPlugin::idTokenHookData,
+    'op/french',
+    'oidcGotIDToken hook received correct OP name and sub'
+);
+
+# --------------------------------------------------------------------------
+# Test oidcGotUserInfo hook
+# --------------------------------------------------------------------------
+ok(
+    $t::OidcClientHookPlugin::gotUserInfoHookCalled,
+    'oidcGotUserInfo hook was called'
+);
+
+is(
+    $t::OidcClientHookPlugin::userInfoHookData,
+    'op/french',
+    'oidcGotUserInfo hook received correct OP name and sub'
 );
 
 clean_sessions();
