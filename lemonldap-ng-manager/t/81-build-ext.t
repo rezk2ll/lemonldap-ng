@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use File::Temp qw(tempdir);
+use File::Copy;
 use JSON;
 
 my $count = 0;
@@ -48,6 +49,16 @@ my $plugin_content = {
     constants => {
         PE_TEST_PLUGIN_ERROR => 250,
     },
+    lang => {
+        testTreeParam => {
+            en => 'Test tree parameter',
+            fr => 'Paramètre de test',
+        },
+        oidcRPMetaDataOptionsTestParam => {
+            en => 'Test OIDC parameter',
+            fr => 'Paramètre OIDC de test',
+        },
+    },
 };
 
 # Write plugin file
@@ -57,6 +68,19 @@ print $fh JSON->new->pretty->encode($plugin_content);
 close $fh;
 ok( -f $plugin_file, 'Plugin file created' );
 $count++;
+
+# Create temporary language directory with copies of real language files
+my $langdir = "$tmpdir/languages";
+mkdir $langdir or die "Cannot create lang dir: $!";
+my $real_langdir = 'site/htdocs/static/languages';
+if ( -d $real_langdir ) {
+    opendir my $dh, $real_langdir or die "Cannot open $real_langdir: $!";
+    for my $f ( grep { /\.json$/ } readdir $dh ) {
+        copy( "$real_langdir/$f", "$langdir/$f" )
+          or die "Cannot copy $f: $!";
+    }
+    closedir $dh;
+}
 
 # Output files
 my $struct_file       = "$tmpdir/struct.json";
@@ -88,6 +112,7 @@ my $cmd = join( ' ',
     "--reverse-tree-file=$reverse_tree_file",
     "--portal-constants-file=$portal_const_file",
     "--handler-status-constants-file=$handler_const",
+    "--lang-dir=$langdir",
     '2>&1'
 );
 
@@ -174,7 +199,45 @@ $count += 4;
     $count++;
 }
 
-# Test 6: Test without plugins directory (should work without errors)
+# Test 6: Check that translations were added to ALL language files
+{
+    my @lang_files = glob("$langdir/*.json");
+    ok( scalar @lang_files > 0, 'Language files exist in temp dir' );
+    $count++;
+
+    # Expected translations per language code
+    # Languages with specific translations get them; others fall back to English
+    my %expected = (
+        en => {
+            testTreeParam                  => 'Test tree parameter',
+            oidcRPMetaDataOptionsTestParam => 'Test OIDC parameter',
+        },
+        fr => {
+            testTreeParam                  => "Param\x{e8}tre de test",
+            oidcRPMetaDataOptionsTestParam => "Param\x{e8}tre OIDC de test",
+        },
+    );
+    my $en_fallback = $expected{en};
+
+    for my $lang_file ( sort @lang_files ) {
+        ( my $lang_code = $lang_file ) =~ s{.*/(.+)\.json$}{$1};
+        open my $fh, '<', $lang_file or die "Cannot read $lang_file: $!";
+        my $content = do { local $/; <$fh> };
+        close $fh;
+        my $lang_data = JSON->new->utf8->decode($content);
+
+        # Use specific expected values if available, otherwise English fallback
+        my $expect = $expected{$lang_code} || $en_fallback;
+
+        for my $key ( sort keys %$expect ) {
+            is( $lang_data->{$key}, $expect->{$key},
+                "[$lang_code] translation for $key" );
+            $count++;
+        }
+    }
+}
+
+# Test 7: Test without plugins directory (should work without errors)
 {
     my $empty_struct = "$tmpdir/empty_struct.json";
     my $cmd2         = join( ' ',
