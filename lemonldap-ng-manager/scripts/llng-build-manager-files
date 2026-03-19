@@ -16,6 +16,7 @@ use strict;
 use warnings;
 use Getopt::Long;
 use File::Basename qw(dirname basename);
+use Cwd qw(getcwd);
 use JSON;
 use Storable qw(dclone);
 
@@ -273,6 +274,9 @@ Lemonldap::NG::Manager::Build->run(
     handlerStatusConstantsFile => $handler_status_constants_file,
     docConstantsFile           => $doc_constants_file,
 );
+
+# 6b. Minify conftree.js
+minify_conftree($conftree_file);
 
 # 7. Update language files with translations from extensions
 if ( %$ext_lang && -d $lang_dir ) {
@@ -654,6 +658,84 @@ sub update_language_files {
             verbose "  Updated $lang_file\n";
         }
     }
+}
+
+sub minify_conftree {
+    my ($conftree_file) = @_;
+
+    # Get directory and basename for proper source map paths
+    my $dir      = dirname($conftree_file);
+    my $basename = basename($conftree_file);
+    my $min_basename = $basename;
+    $min_basename =~ s/\.js$/.min.js/;
+
+    # If source and min are the same (shouldn't happen), skip
+    if ( $min_basename eq $basename ) {
+        warn "Warning: Cannot determine minified filename for $conftree_file\n";
+        return;
+    }
+
+    verbose "Minifying $conftree_file -> $dir/$min_basename\n";
+
+    # Save current directory and change to target directory
+    my $orig_dir = getcwd();
+    chdir $dir or do {
+        warn "Warning: Cannot chdir to $dir: $!\n";
+        return;
+    };
+
+    my $success = 0;
+
+    # Check for uglifyjs
+    my $uglifyjs_version = `uglifyjs --version 2>/dev/null`;
+    if ( $? == 0 && $uglifyjs_version ) {
+        my ($major) = $uglifyjs_version =~ /^[^\d]*(\d)/;
+        $major //= 3;
+
+        my $cmd;
+        if ( $major == 2 ) {
+            $cmd =
+"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map '$min_basename.map' -o '$min_basename'";
+        }
+        else {
+            $cmd =
+"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
+        }
+
+        verbose "  Using uglifyjs (version $major)\n";
+        $success = ( system($cmd) == 0 );
+    }
+
+    # Check for terser if uglifyjs failed or not available
+    if ( !$success ) {
+        my $terser_version = `terser --version 2>/dev/null`;
+        if ( $? == 0 && $terser_version ) {
+            verbose "  Using terser\n";
+            my $cmd =
+"terser '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
+            $success = ( system($cmd) == 0 );
+        }
+    }
+
+    # No minifier available or all failed, just copy
+    if ( !$success ) {
+        verbose "  No minifier available, copying file\n";
+        copy_file( $basename, $min_basename );
+    }
+
+    # Restore original directory
+    chdir $orig_dir or warn "Warning: Cannot chdir back to $orig_dir: $!\n";
+}
+
+sub copy_file {
+    my ( $src, $dst ) = @_;
+    open my $in,  '<', $src or die "Cannot open $src: $!";
+    open my $out, '>', $dst or die "Cannot open $dst: $!";
+    while (<$in>) {
+        print $out $_;
+    }
+    close $in;
+    close $out;
 }
 
 __END__

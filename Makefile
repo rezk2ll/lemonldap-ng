@@ -230,7 +230,7 @@ MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN)
 
 # GENERATED SRC FILES
-MANAGERJSONSRC= scripts/jsongenerator \
+MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-manager-files \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
