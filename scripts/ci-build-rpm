@@ -13,7 +13,7 @@ if [ $dist = "centos" ] ; then
     alias dnf=yum
 fi
 
-dnf -y install epel-release make rpm-build
+dnf -y install epel-release make rpm-build perl-interpreter
 [ -x /usr/bin/crb ] && crb enable
 
 make dist

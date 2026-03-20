@@ -40,6 +40,7 @@ META.json
 META.yml
 README
 REST-API.md
+scripts/llng-build-manager-files
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
 site/api/api.fcgi
@@ -286,6 +287,7 @@ t/70-viewer.t
 t/71-viewer-without-diff.t
 t/72-appList-diff.t
 t/80-attributes.t
+t/81-build-ext.t
 t/90-translations.t
 t/91-no-console.log.t
 t/99-pod.t
