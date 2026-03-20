@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"增量鎖",
 "bruteForceProtectionLockTimes":"增量鎖時間",
 "bruteForceProtectionMaxAge":"最大時間",
-"bruteForceProtectionMaxFailed":"Failed logins before slowdown",
+"bruteForceProtectionMaxFailed":"Number of failed attempts triggering lockout",
 "bruteForceProtectionMaxLockTime":"Maximum lock time",
 "bruteForceProtectionTempo":"鎖時間",
 "cacheTagSalt":"Cache-busting salt",

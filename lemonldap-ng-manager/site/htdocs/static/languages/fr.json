@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Verrouillage incrémentiel",
 "bruteForceProtectionLockTimes":"Temps de verrouillage incrémentiel",
 "bruteForceProtectionMaxAge":"Age maximum des échecs",
-"bruteForceProtectionMaxFailed":"Nombre d'échecs avant ralentissement",
+"bruteForceProtectionMaxFailed":"Nombre de tentatives échouées déclenchant le verrouillage",
 "bruteForceProtectionMaxLockTime":"Temps maximum de verrouillage",
 "bruteForceProtectionTempo":"Temps de verrouillage",
 "cacheTagSalt":"Sel pour l'anti-cache",
