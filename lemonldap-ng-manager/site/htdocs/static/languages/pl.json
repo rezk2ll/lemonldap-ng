@@ -141,7 +141,7 @@
 "bruteForceProtectionIncrementalTempo":"Blokada przyrostowa",
 "bruteForceProtectionLockTimes":"Przyrostowe czasy blokady",
 "bruteForceProtectionMaxAge":"Maksymalny czas ważności",
-"bruteForceProtectionMaxFailed":"Dozwolone nieudane logowania",
+"bruteForceProtectionMaxFailed":"Number of failed attempts triggering lockout",
 "bruteForceProtectionMaxLockTime":"Maksymalny czas blokady",
 "bruteForceProtectionTempo":"Czas blokady",
 "cacheTagSalt":"Sól łamiąca pamięć podręczną",

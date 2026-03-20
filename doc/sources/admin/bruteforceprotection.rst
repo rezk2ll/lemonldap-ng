@@ -61,12 +61,31 @@ Lock time increases between each failed login attempt after allowed failed login
    bruteForceProtectionLockTimes = 5, 15, 60, 300, 600
    bruteForceProtectionMaxLockTime = 900
 
+**How it works:**
+
+The lock times list is prepended with zeros for the allowed failed logins.
+For example, with ``bruteForceProtectionMaxFailed = 3`` and
+``bruteForceProtectionLockTimes = 300, 600, 900``, the effective list becomes:
+``[0, 0, 300, 600, 900]``.
+
+The lock time is determined by the number of recent failed logins:
+
+- 1st and 2nd failed login: no lock (lock time = 0)
+- 3rd failed login: locked for 300 seconds (5 minutes)
+- 4th failed login: locked for 600 seconds (10 minutes)
+- And so on...
+
+When a user is locked, they must wait for the lock time to expire before
+attempting to log in again. Login attempts while locked (even with the
+correct password) are rejected but do **not** increase the failed login
+counter.
 
 .. note::
 
     Max lock time value is used if a lock time is missing
     (number of failed logins higher than listed lock time values).
-    Lock time values can not be higher than max lock time.
+    Lock time values higher than or equal to max lock time are ignored
+    (a warning is logged).
 
 
 Incremental lock time disabled
@@ -77,9 +96,9 @@ the lock time before trying to log in again.
 
 
 .. attention::
-    Number of failed login attempts history might be also higher than
-    number of incremental lock time value plus allowed failed login attempts.
-    Incremental lock time values list will be truncated if not.
+    Number of failed login attempts history must be higher than
+    the number of incremental lock time values plus allowed failed login attempts.
+    The incremental lock time values list will be truncated if not.
 
 
 .. danger::
