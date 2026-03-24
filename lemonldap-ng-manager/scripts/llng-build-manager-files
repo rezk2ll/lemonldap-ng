@@ -259,6 +259,26 @@ my $orig_constants =
 # 4. Load Build.pm (modules are already loaded, functions are patched)
 require Lemonldap::NG::Manager::Build;
 
+# 5b. Preserve DEFAULTCONFFILE and dirName from installed Constants.pm
+#     These values may have been customized by Makefile.PL (via LMNGCONFFILE
+#     and LMNGCONFDIR env vars). Build.pm regenerates Constants.pm with
+#     hardcoded defaults, so we read the current values and restore them after.
+my ( $saved_conffile, $saved_dirname );
+if ( $conf_constants_file ne '/dev/null' && -r $conf_constants_file ) {
+    open my $fh, '<', $conf_constants_file;
+    while (<$fh>) {
+        if (/^use constant DEFAULTCONFFILE\s*=>\s*"(.+)"\s*;/) {
+            $saved_conffile = $1;
+        }
+        elsif (/^\s*dirName\s*=>\s*'(.+)'\s*,/) {
+            $saved_dirname = $1;
+        }
+    }
+    close $fh;
+    verbose "  Preserved DEFAULTCONFFILE=$saved_conffile\n" if $saved_conffile;
+    verbose "  Preserved dirName=$saved_dirname\n"          if $saved_dirname;
+}
+
 # 6. Call Build.pm::run()
 verbose "Running Build.pm to generate files...\n";
 Lemonldap::NG::Manager::Build->run(
@@ -274,6 +294,33 @@ Lemonldap::NG::Manager::Build->run(
     handlerStatusConstantsFile => $handler_status_constants_file,
     docConstantsFile           => $doc_constants_file,
 );
+
+# 6a. Restore preserved DEFAULTCONFFILE and dirName in Constants.pm
+if ( $conf_constants_file ne '/dev/null' && ( $saved_conffile || $saved_dirname ) ) {
+    open my $fh, '<', $conf_constants_file or die "Cannot read $conf_constants_file: $!";
+    my $content = do { local $/; <$fh> };
+    close $fh;
+
+    my $modified = 0;
+    if ( $saved_conffile
+        && $content =~ s{^(use constant DEFAULTCONFFILE\s*=>\s*").*("\s*;)}{$1$saved_conffile$2}m )
+    {
+        $modified = 1;
+        verbose "  Restored DEFAULTCONFFILE=$saved_conffile\n";
+    }
+    if ( $saved_dirname
+        && $content =~ s{^(\s*dirName\s*=>\s*').*('\s*,)}{$1$saved_dirname$2}m )
+    {
+        $modified = 1;
+        verbose "  Restored dirName=$saved_dirname\n";
+    }
+
+    if ($modified) {
+        open my $out, '>', $conf_constants_file or die "Cannot write $conf_constants_file: $!";
+        print $out $content;
+        close $out;
+    }
+}
 
 # 6b. Minify conftree.js
 minify_conftree($conftree_file);
