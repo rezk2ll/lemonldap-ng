@@ -219,6 +219,10 @@ The hook's parameters are:
 * A hash of session data for the (internal) Refresh Token session
 * A hash of the user's session data
 
+.. versionchanged:: 2.23.0
+
+   The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
+
 Sample code::
 
    use constant hook => {
@@ -245,6 +249,10 @@ The hook's parameters are:
 * the configuration key of the relying party which received the grant
 * A hash of session data for the (internal) Refresh Token session, which also
   contains user attributes
+
+.. versionchanged:: 2.23.0
+
+   The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
 
 Sample code::
 
@@ -303,12 +311,20 @@ oidcGenerateTokenResponse
 This hook is triggered when LemonLDAP::NG has generated id_token and access_token
 and is about to send the token response.
 
+.. versionchanged:: 2.23.0
+
+   This hook is now also called during refresh token grants.
+   A sixth parameter ``$grant_type`` (``'authorization_code'`` or ``'refresh_token'``)
+   is passed to distinguish between grant types.
+   The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
+
 The hook's parameters are:
 
 * the configuration key of the relying party which will receive the tokens
 * the prepared response before JSON encoding
-* the OIDC session content
+* the OIDC session content (code session or refresh session)
 * the user's session content
+* the grant type string (``'authorization_code'`` or ``'refresh_token'``)
 
 Sample code::
 
@@ -317,7 +333,7 @@ Sample code::
     };
 
     sub addTokenToResponse {
-        my ( $self, $req, $tokensResponse, $oidcSession, $userSession ) = @_;
+        my ( $self, $req, $rp, $tokensResponse, $oidcSession, $userSession, $grant_type ) = @_;
         $tokensResponse->{mySpecialToken} = 'randomValue';
         return PE_OK;
     }
