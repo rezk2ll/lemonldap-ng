@@ -47,6 +47,7 @@ use constant hook => {
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
     oidcGotTokenRequest               => 'gotTokenRequest',
     oidcGenerateRefreshToken          => 'generateRefreshToken',
+    oidcGenerateMetadata              => 'addCustomMetadata',
 };
 
 sub addClaimToIDToken {
@@ -244,6 +245,13 @@ sub generateRefreshToken {
     # Mark that this hook was called
     $generateRefreshTokenCalled = 1;
 
+    return PE_OK;
+}
+
+sub addCustomMetadata {
+    my ( $self, $req, $metadata ) = @_;
+    $metadata->{custom_metadata_hook} = 'hooked';
+    push @{ $metadata->{grant_types_supported} }, 'urn:test:custom_grant';
     return PE_OK;
 }
 

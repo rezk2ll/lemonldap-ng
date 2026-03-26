@@ -10,6 +10,33 @@ This page shows the list of hooks that you can use in your :doc:`custom plugins 
 OpenID Connect Issuer hooks
 ---------------------------
 
+Discovery endpoint (/.well-known/openid-configuration)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGenerateMetadata
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is building the OpenID Connect
+discovery document (``/.well-known/openid-configuration``). It allows plugins
+to add custom metadata fields to the discovery response.
+
+The hook's parameter is a hash reference of the metadata document (which you can modify).
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateMetadata => 'addMetadata',
+   };
+
+   sub addMetadata {
+       my ( $self, $req, $metadata ) = @_;
+       $metadata->{my_custom_endpoint} = 'https://example.com/custom';
+       push @{ $metadata->{grant_types_supported} }, 'my_custom_grant';
+       return PE_OK;
+   }
+
 Authorization endpoint (/oauth2/authorize)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
