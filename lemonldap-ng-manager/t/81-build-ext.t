@@ -27,6 +27,14 @@ my $plugin_content = {
             default       => 'default_value',
             documentation => 'Test tree parameter',
         },
+
+        # Existing attribute with a new select option to append
+        authentication => {
+            type   => 'select',
+            select => [
+                { k => 'MyCustomAuth', v => 'My Custom Auth Module' },
+            ],
+        },
     },
     tree => {
         insert_into  => 'generalParameters/plugins',
@@ -197,6 +205,25 @@ $count += 4;
     like( $content, qr/testTreeParam.*default_value/s,
         'testTreeParam default value found in DefaultValues.pm' );
     $count++;
+}
+
+# Test 5b: Check that select options were appended (not replaced) for
+# existing attribute "authentication"
+{
+    open my $fh, '<', $attributes_file or die "Cannot read Attributes.pm: $!";
+    my $content = do { local $/; <$fh> };
+    close $fh;
+
+    # Original core options must still be present
+    like( $content, qr/'k'\s*=>\s*'LDAP'/,
+        'authentication still has original "LDAP" option' );
+    like( $content, qr/'k'\s*=>\s*'DBI'/,
+        'authentication still has original "DBI" option' );
+
+    # New option from extension must have been appended
+    like( $content, qr/'k'\s*=>\s*'MyCustomAuth'/,
+        'authentication has new "MyCustomAuth" option appended by extension' );
+    $count += 3;
 }
 
 # Test 6: Check that translations were added to ALL language files
