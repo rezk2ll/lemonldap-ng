@@ -2106,7 +2106,8 @@ sub _handleAuthorizationCodeGrant {
     };
 
     $self->p->processHook( $req, 'oidcGenerateTokenResponse', $rp,
-        $token_response, $codeSession->data, $apacheSession->data );
+        $token_response, $codeSession->data, $apacheSession->data,
+        'authorization_code' );
 
     my %update;
 
@@ -2201,6 +2202,7 @@ sub _handleRefreshTokenGrant {
         my $h = $self->p->processHook( $req, 'oidcGotOnlineRefresh', $rp,
             $refreshSession->data, $userData );
         if ( $h != PE_OK ) {
+            return $req->response if $h == PE_SENDRESPONSE;
             return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
@@ -2253,6 +2255,7 @@ sub _handleRefreshTokenGrant {
         my $h = $self->p->processHook( $req, 'oidcGotOfflineRefresh', $rp,
             $refreshSession->data );
         if ( $h != PE_OK ) {
+            return $req->response if $h == PE_SENDRESPONSE;
             return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
@@ -2324,6 +2327,11 @@ sub _handleRefreshTokenGrant {
         ),
         ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
+
+    # Allow plugins to modify token response (e.g., DPoP changing token_type)
+    my $h = $self->p->processHook( $req, 'oidcGenerateTokenResponse', $rp,
+        $token_response, $refreshSession->data, $userData, 'refresh_token' );
+    return $req->response if $h == PE_SENDRESPONSE;
 
     $self->logger->debug("Send token response");
 

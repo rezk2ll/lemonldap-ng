@@ -8,6 +8,8 @@ use Data::Dumper;
 use Test::More;
 
 our $generateRefreshTokenCalled = '';
+our $lastTokenResponseGrantType = '';
+our $refreshSendResponse        = 0;
 
 has confEnabled => (
     is      => 'rw',
@@ -100,8 +102,11 @@ sub addClaimToAccessToken {
 }
 
 sub addCustomToken {
-    my ( $self, $req, $rp, $response, $codeSession, $userSession ) = @_;
+    my ( $self, $req, $rp, $response, $codeSession, $userSession,
+        $grant_type )
+      = @_;
     $response->{custom_token} = 'CustomToken';
+    $lastTokenResponseGrantType = $grant_type || '';
     return PE_OK;
 }
 
@@ -114,6 +119,15 @@ sub oidcGotClientCredentialsGrant {
 
 sub refreshHook {
     my ( $self, $req, $rp, $refreshInfo, $sessionInfo ) = @_;
+
+    # Test PE_SENDRESPONSE support
+    if ($refreshSendResponse) {
+        $req->response(
+            [ 200, [ 'Content-Type' => 'text/plain' ], ['Direct response'] ]
+        );
+        return PE_SENDRESPONSE;
+    }
+
     my $uid = $refreshInfo->{uid} || ( "online_" . $sessionInfo->{uid} );
     $refreshInfo->{scope} = $refreshInfo->{scope} . " refreshed_" . $uid;
     return PE_OK;

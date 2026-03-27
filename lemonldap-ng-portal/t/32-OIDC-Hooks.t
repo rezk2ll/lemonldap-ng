@@ -191,6 +191,9 @@ my $refresh_token = $json->{refresh_token};
 ok( $refresh_token, 'Refresh token present' );
 my $customToken = $json->{custom_token};
 is( $customToken, 'CustomToken', 'Found custom token in token response' );
+is( $t::OidcHookPlugin::lastTokenResponseGrantType,
+    'authorization_code',
+    'oidcGenerateTokenResponse received grant_type=authorization_code' );
 my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token" );
 is( $id_token_payload->{id_token_hook_uid},
@@ -378,6 +381,104 @@ $json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
 ok( $json->{refresh_token}, "Refresh token present" );
 ok( $t::OidcHookPlugin::generateRefreshTokenCalled,
     "oidcGenerateRefreshToken hook was called" );
+
+# --------------------------------------------------------------------------
+# Test oidcGenerateTokenResponse grant_type in refresh grant
+# --------------------------------------------------------------------------
+note "Testing oidcGenerateTokenResponse grant_type parameter in refresh grant";
+
+$code = codeAuthorize(
+    $op, $idpId,
+    {
+        response_type => 'code',
+        scope         => 'openid profile email',
+        client_id     => 'rpid',
+        state         => 'teststate4',
+        redirect_uri  => 'http://rp2.com/',
+    }
+);
+
+$json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
+$refresh_token = $json->{refresh_token};
+ok( $refresh_token, 'Refresh token present' );
+
+$t::OidcHookPlugin::lastTokenResponseGrantType = '';
+$json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
+is( $t::OidcHookPlugin::lastTokenResponseGrantType,
+    'refresh_token',
+    'oidcGenerateTokenResponse received grant_type=refresh_token' );
+is( $json->{custom_token}, 'CustomToken',
+    'oidcGenerateTokenResponse hook modified refresh response' );
+
+# --------------------------------------------------------------------------
+# Test PE_SENDRESPONSE in oidcGotOnlineRefresh
+# --------------------------------------------------------------------------
+note "Testing PE_SENDRESPONSE in oidcGotOnlineRefresh";
+
+$code = codeAuthorize(
+    $op, $idpId,
+    {
+        response_type => 'code',
+        scope         => 'openid profile email',
+        client_id     => 'rpid',
+        state         => 'teststate5',
+        redirect_uri  => 'http://rp2.com/',
+    }
+);
+
+$json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
+$refresh_token = $json->{refresh_token};
+ok( $refresh_token, 'Refresh token present for PE_SENDRESPONSE test' );
+
+# Enable PE_SENDRESPONSE in hook
+$t::OidcHookPlugin::refreshSendResponse = 1;
+
+$res = refreshGrant( $op, 'rpid', $refresh_token );
+is( $res->[2]->[0], 'Direct response',
+    'Online refresh: PE_SENDRESPONSE returns hook response body' );
+
+# Disable and verify normal refresh still works
+$t::OidcHookPlugin::refreshSendResponse = 0;
+
+$res  = refreshGrant( $op, 'rpid', $refresh_token );
+$json = expectJSON($res);
+ok( $json->{access_token},
+    'Online refresh: normal refresh works after PE_SENDRESPONSE' );
+
+# --------------------------------------------------------------------------
+# Test PE_SENDRESPONSE in oidcGotOfflineRefresh
+# --------------------------------------------------------------------------
+note "Testing PE_SENDRESPONSE in oidcGotOfflineRefresh";
+
+$code = codeAuthorize(
+    $op, $idpId,
+    {
+        response_type => 'code',
+        scope         => 'openid profile email offline_access',
+        client_id     => 'rpid',
+        state         => 'teststate6',
+        redirect_uri  => 'http://rp2.com/',
+    }
+);
+
+$json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
+$refresh_token = $json->{refresh_token};
+ok( $refresh_token, 'Offline refresh token present for PE_SENDRESPONSE test' );
+
+# Enable PE_SENDRESPONSE in hook
+$t::OidcHookPlugin::refreshSendResponse = 1;
+
+$res = refreshGrant( $op, 'rpid', $refresh_token );
+is( $res->[2]->[0], 'Direct response',
+    'Offline refresh: PE_SENDRESPONSE returns hook response body' );
+
+# Disable and verify normal refresh still works
+$t::OidcHookPlugin::refreshSendResponse = 0;
+
+$res  = refreshGrant( $op, 'rpid', $refresh_token );
+$json = expectJSON($res);
+ok( $json->{access_token},
+    'Offline refresh: normal refresh works after PE_SENDRESPONSE' );
 
 clean_sessions();
 done_testing();
