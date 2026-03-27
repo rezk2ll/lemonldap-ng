@@ -301,7 +301,7 @@ sub display {
     }
 
     # 2.2 Case : display menu (with error or not)
-    elsif ( $req->error == PE_OK ) {
+    elsif ( $req->error == PE_OK || $req->error == PE_ISSUERTIMEOUT ) {
         $skinfile = 'menu';
 
         #utf8::decode($auth_user);

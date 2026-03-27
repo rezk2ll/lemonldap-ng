@@ -17,6 +17,7 @@
 "PE110":"Second factor validation failed, please retry",
 "PE111":"Password too long",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"Заполните поля пользователя и пароля",
 "PE20":"Серверная часть пароля не определена",
 "PE21":"Ваш аккаунт заблокирован",

@@ -17,6 +17,7 @@
 "PE110":"Weryfikacja drugiego czynnika nie powiodła się, spróbuj ponownie",
 "PE111":"Hasło jest za długie",
 "PE112":"Hasło wkrótce wygaśnie, zmień je teraz",
+"PE113":"Could not redirect to initial application",
 "PE2":"Nazwa użytkownika i hasło muszą być wypełnione",
 "PE20":"Brak zdefiniowanego zaplecza hasła",
 "PE21":"Twoje konto jest zablokowane",

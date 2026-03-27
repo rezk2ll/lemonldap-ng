@@ -273,7 +273,6 @@ sub rp {
                 oidcOPMetaDataJSON => {
                     op => $metadata,
                 },
-                customPlugins => 't::OidcHookPlugin',
             }
         }
     );

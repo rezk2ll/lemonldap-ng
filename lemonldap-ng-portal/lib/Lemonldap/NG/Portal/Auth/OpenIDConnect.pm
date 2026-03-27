@@ -141,12 +141,33 @@ sub extractFormInfo {
         $self->logger->debug(
             'OpenIDConnect callback URI detected: ' . $req->uri );
 
-        # AuthN Response
-        my $state = $req->param('state');
+        # Initialize callback_params with all known OIDC callback parameters
+        my $callback_params = {
+            state             => scalar( $req->param('state') ),
+            code              => scalar( $req->param('code') ),
+            error             => scalar( $req->param('error') ),
+            error_description => scalar( $req->param('error_description') ),
+            error_uri         => scalar( $req->param('error_uri') ),
+            iss               => scalar( $req->param('iss') ),
+        };
+
+        # Call hook - plugins can modify callback_params
+        my $hook_res = $self->p->processHook( $req, 'oidcGotAuthenticationResponse',
+            $callback_params );
+        return $hook_res if ( $hook_res != PE_OK and $hook_res > 0 );
 
         # Restore state
+        my $state = $callback_params->{state};
         if ($state) {
-            if ( $self->extractState( $req, $state ) ) {
+            # If state is a hashref, hook already extracted it - skip extractState
+            # If state is a scalar, call extractState
+            if ( ref($state) eq 'HASH' ) {
+                $self->logger->debug("State already extracted by hook");
+                $req->data->{_oidcOPCurrent} = $state->{_oidcOPCurrent};
+                $req->data->{_oidcNonce}     = $state->{_oidcNonce};
+                $req->data->{_url}           = $state->{urldc};
+            }
+            elsif ( $self->extractState( $req, $state ) ) {
                 $self->logger->debug("State $state extracted");
             }
             else {
@@ -166,7 +187,7 @@ sub extractFormInfo {
         $self->logger->debug("Using OpenIDConnect Provider $op");
 
         # RFC 9207: Verify iss parameter if present or required
-        my $iss          = $req->param('iss');
+        my $iss          = $callback_params->{iss};
         my $expected_iss = $self->opMetadata->{$op}->{conf}->{issuer};
 
         if ($iss) {
@@ -188,10 +209,10 @@ sub extractFormInfo {
         }
 
         # Check error
-        my $error = $req->param("error");
+        my $error = $callback_params->{error};
         if ($error) {
-            my $error_description = $req->param("error_description");
-            my $error_uri         = $req->param("error_uri");
+            my $error_description = $callback_params->{error_description};
+            my $error_uri         = $callback_params->{error_uri};
 
             $self->logger->error("Error returned by $op Provider: $error");
             $self->logger->error("Error description: $error_description")
@@ -202,7 +223,7 @@ sub extractFormInfo {
         }
 
         # Get access_token and id_token
-        my $code = $req->param("code");
+        my $code = $callback_params->{code};
 
         my $content =
           $self->getAuthorizationCodeAccessToken( $req, $op, $code );

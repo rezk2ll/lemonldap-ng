@@ -20,7 +20,7 @@ sub getMenuApp {
     my $appConfKey = $req->params('appConfKey');
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     # Check if catConfKey is defined
     return $self->sendError( $req,
@@ -94,7 +94,7 @@ sub findMenuAppByConfKey {
     );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     # Check if catConfKey is defined
     return $self->sendError( $req,
@@ -384,7 +384,7 @@ sub _pushMenuApp {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }

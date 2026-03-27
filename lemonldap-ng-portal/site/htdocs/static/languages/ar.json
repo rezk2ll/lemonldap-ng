@@ -17,6 +17,7 @@
 "PE110":"فشل التحقق من العامل الثاني، يرجى المحاولة مرة أخرى",
 "PE111":"كلمة المرور طويلة جداً",
 "PE112":"Password is about to expire, please change it now",
+"PE113":"Could not redirect to initial application",
 "PE2":"حقول المستخدم وكلمة المرور يجب ملؤهم",
 "PE20":"لا يوجد خلفية لكلمات المرور محددة",
 "PE21":"حسابك مقفل",

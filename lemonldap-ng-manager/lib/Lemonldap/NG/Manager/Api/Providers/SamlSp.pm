@@ -19,7 +19,7 @@ sub getSamlSpByConfKey {
     $self->logger->debug("[API] SAML SP $confKey configuration requested");
 
     # Get latest configuration
-    my $conf   = $self->_confAcc->getConf;
+    my $conf   = $self->_confAcc->getConf( { noCache => 1 } );
     my $samlSp = $self->_getSamlSpByConfKey( $conf, $confKey );
 
     # Check if confKey is defined
@@ -50,7 +50,7 @@ sub findSamlSpByConfKey {
         "[API] Find SAML SPs by confKey regexp $pattern requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
     my @samlSps =
       map { $_ =~ $pattern ? $self->_getSamlSpByConfKey( $conf, $_ ) : () }
       keys %{ $conf->{samlSPMetaDataXML} };
@@ -74,7 +74,7 @@ sub findSamlSpByEntityId {
     $self->logger->debug("[API] Find SAML SPs by entityId $entityId requested");
 
     # Get latest configuration
-    my $conf   = $self->_confAcc->getConf;
+    my $conf   = $self->_confAcc->getConf( { noCache => 1 } );
     my $samlSp = $self->_getSamlSpByEntityId( $conf, $entityId );
 
     return $self->sendError( $req,
@@ -437,7 +437,7 @@ sub _pushSamlSp {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }

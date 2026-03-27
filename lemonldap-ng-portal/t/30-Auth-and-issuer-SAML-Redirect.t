@@ -82,8 +82,9 @@ SKIP: {
         ),
         'Post delayed authentication request'
     );
-    expectRedirection( $res, 'http://auth.idp.com/saml' );
     my $idpId = expectCookie($res);
+    expectPortalError( $res, 113 );
+    expectXpath( $res, '//span[@trspan="connectedAs"]' );
 
     # Expect pdata to be cleared
     $pdata = expectCookie( $res, 'lemonldappdata' );

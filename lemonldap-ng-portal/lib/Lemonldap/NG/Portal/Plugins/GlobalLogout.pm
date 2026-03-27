@@ -11,6 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_SENDRESPONSE
+  PE_SLO_ERROR
 );
 
 our $VERSION = '2.22.0';
@@ -53,6 +54,10 @@ sub init {
 # Look for user active SSO sessions and suggest to close them
 sub run {
     my ( $self, $req ) = @_;
+
+    # Skip if called from _triggerBackChannelLogout to avoid recursion
+    return PE_OK if $req->data->{_globalLogoutBCL};
+
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Check activation rule
@@ -80,7 +85,8 @@ sub run {
         $nbr = $self->removeOtherActiveSessions( $req, $sessions );
         $self->userLogger->info("$nbr remaining session(s) removed");
 
-        return PE_OK;
+        # Return PE_SLO_ERROR if BCL failed, PE_OK otherwise
+        return $req->error || PE_OK;
     }
 
     # Prepare token
@@ -140,6 +146,7 @@ sub globalLogout {
                 my $req_user =
                   $req->userData->{ $self->{conf}->{whatToTrace} };
                 if ( $req_user eq $user ) {
+                    my $bclFailed = 0;
                     foreach (@$sessions) {
                         unless (
 
@@ -158,10 +165,20 @@ sub globalLogout {
                         unless ( $storeId eq $_->{id} ) {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
+
+                            # Trigger back-channel logout before removal
+                            $req->data->{_globalLogoutBCL} = 1;
+                            my $bclRes =
+                              $self->p->_triggerBackChannelLogout( $req,
+                                $as->data );
+                            delete $req->data->{_globalLogoutBCL};
+                            $bclFailed = 1 if $bclRes != PE_OK;
+
                             $as->remove;
                             $count++;
                         }
                     }
+                    $res = PE_SLO_ERROR if $bclFailed;
                 }
                 else {
                     $self->userLogger->warn(
@@ -182,9 +199,19 @@ sub globalLogout {
         }
     }
 
-    return $self->p->doPE( $req, $res ) if $res;
+    # Return error for blocking errors (not PE_SLO_ERROR)
+    return $self->p->doPE( $req, $res )
+      if $res && $res != PE_SLO_ERROR;
+
     $self->userLogger->info("$count remaining session(s) removed");
-    return $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
+
+    # Set error for display if BCL failed (non-blocking warning)
+
+    my $ret = $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
+    return $ret if $ret;
+    $ret = PE_SLO_ERROR if $res == PE_SLO_ERROR;
+    $req->error($ret);
+    return $ret;
 }
 
 sub activeSessions {
@@ -256,7 +283,8 @@ sub activeSessions {
 
 sub removeOtherActiveSessions {
     my ( $self, $req, $sessions ) = @_;
-    my $count = 0;
+    my $count     = 0;
+    my $bclFailed = 0;
     my $as;
 
     my $storeId =
@@ -276,10 +304,20 @@ sub removeOtherActiveSessions {
             $self->userLogger->info(
 "Remove \"$req->userData->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
             );
+
+            # Trigger back-channel logout before removal
+            $req->data->{_globalLogoutBCL} = 1;
+            my $bclRes = $self->p->_triggerBackChannelLogout( $req, $as->data );
+            delete $req->data->{_globalLogoutBCL};
+            $bclFailed = 1 if $bclRes != PE_OK;
+
             $as->remove;
             $count++;
         }
     }
+
+    # Set error if BCL failed (non-blocking warning)
+    $req->error(PE_SLO_ERROR) if $bclFailed;
 
     return $count;
 }

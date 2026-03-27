@@ -17,6 +17,7 @@
 "PE110":"İkinci faktör doğrulama başarısız, lütfen tekrar deneyin",
 "PE111":"Parola çok uzun",
 "PE112":"Parolanızın süresi dolmak üzere, lütfen hemen değiştirin",
+"PE113":"Could not redirect to initial application",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
 "PE21":"Hesabınız kilitli",

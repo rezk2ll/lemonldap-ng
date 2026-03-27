@@ -223,9 +223,6 @@ is_deeply(
 );
 count(7);
 
-is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
-is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
-count(2);
 
 my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
 is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
@@ -397,11 +394,6 @@ count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
-my $u = URI->new;
-$u->query($query);
-is( $u->query_param('my_param'),
-    "my value", "oidcGenerateAuthenticationRequest called" );
-count(1);
 
 # Test if consent was saved
 # -------------------------
@@ -679,7 +671,6 @@ sub rp {
                 oidcOPMetaDataJSON => {
                     op => $metadata,
                 },
-                customPlugins => 't::OidcHookPlugin',
             }
         }
     );

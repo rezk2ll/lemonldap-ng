@@ -143,7 +143,9 @@ my $id = expectCookie($res);
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
   or print STDERR Dumper( $res->[2]->[0] );
 my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-ok( @c == 4, 'Four entries found' )
+
+# History should have 3 entries (2 failed + 1 success, PE_WAIT not stored)
+ok( @c == 3, 'Three entries found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 

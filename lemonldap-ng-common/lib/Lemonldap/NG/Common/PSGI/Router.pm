@@ -146,7 +146,7 @@ sub handler {
     }
     my $res =
       $self->followPath( $req, $self->routes->{ $method }, \@path );
-    if ( $res and $head ) { $res->[2] = undef }
+    if ( $res and $head ) { $res->[2] = [] }
     return $res ? $res : $self->sendError( $req, 'Bad request', 400 );
 }
 

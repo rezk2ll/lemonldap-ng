@@ -218,7 +218,7 @@ sub load_config {
     my $config = {};
     my $res =
       $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
-    if ( $res != PE_OK ) {
+    if ( $res and $res != PE_OK ) {
         return;
     }
 
@@ -982,19 +982,27 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            ( $code  ? ( code  => $code )  : () ),
+            ( $state ? ( state => $state ) : () ),
+            (
+                $session_state
+                ? ( session_state => $session_state )
+                : ()
+            ),
+        };
+
+        $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                ( $code  ? ( code  => $code )  : () ),
-                ( $state ? ( state => $state ) : () ),
-                (
-                    $session_state
-                    ? ( session_state => $session_state )
-                    : ()
-                ),
-            }
+            $response_params
         );
     }
 
@@ -1072,28 +1080,36 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            id_token => $id_token,
+            (
+                $access_token
+                ? (
+                    token_type   => 'bearer',
+                    access_token => $access_token
+                  )
+                : ()
+            ),
+            ( $expires_in ? ( expires_in => $expires_in )    : () ),
+            ( $state      ? ( state      => $state )         : () ),
+            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            (
+                $session_state ? ( session_state => $session_state )
+                : ()
+            )
+        };
+
+        my $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                id_token => $id_token,
-                (
-                    $access_token
-                    ? (
-                        token_type   => 'bearer',
-                        access_token => $access_token
-                      )
-                    : ()
-                ),
-                ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                ( $state      ? ( state      => $state )         : () ),
-                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                (
-                    $session_state ? ( session_state => $session_state )
-                    : ()
-                )
-            }
+            $response_params
         );
     }
 
@@ -1204,32 +1220,40 @@ sub _authorizeEndpoint {
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
 
+        my $response_params = {
+            code => $code,
+            (
+                $access_token
+                ? (
+                    token_type   => 'bearer',
+                    access_token => $access_token
+                  )
+                : ()
+            ),
+            (
+                $id_token ? ( id_token => $id_token )
+                : ()
+            ),
+            ( $expires_in ? ( expires_in => $expires_in )    : () ),
+            ( $state      ? ( state      => $state )         : () ),
+            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            (
+                $session_state ? ( session_state => $session_state )
+                : ()
+            )
+        };
+
+        my $h = $self->p->processHook(
+            $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params
+        );
+        return $h if ( $h != PE_OK );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
             $oidc_request->{'redirect_uri'},
-            {
-                code => $code,
-                (
-                    $access_token
-                    ? (
-                        token_type   => 'bearer',
-                        access_token => $access_token
-                      )
-                    : ()
-                ),
-                (
-                    $id_token ? ( id_token => $id_token )
-                    : ()
-                ),
-                ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                ( $state      ? ( state      => $state )         : () ),
-                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                (
-                    $session_state ? ( session_state => $session_state )
-                    : ()
-                )
-            }
+            $response_params
         );
     }
 
@@ -1511,6 +1535,35 @@ sub token {
     return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
+
+    # Hook to allow plugins to handle custom grant_types or modify parameters
+    # (e.g., CIBA, Device Authorization RFC 8628)
+    # PE_OK => continue processing
+    # PE_SENDRESPONSE => return custom response (for custom grant types)
+    my $h =
+      $self->p->processHook( $req, 'oidcGotTokenRequest', $rp, $grant_type );
+    if ( $h == PE_SENDRESPONSE ) {
+        return $req->response;
+    }
+
+    # A plugin may refuse this request
+    elsif ($h) {
+        if ( $h > 0 ) {
+            $self->auditLog(
+                $req,
+                code    => 'ISSUER_OIDC_BAD_REQUEST',
+                rp      => $rp,
+                message =>
+"An oidcGotTokenRequest plugin rejected this request with code $h",
+            );
+            return $self->sendOIDCError( $req, 'Bad request', 400 );
+        }
+        else {
+            $self->logger->error(
+                "An oidcGotTokenRequest plugin returned an usable code: $h");
+            return $self->sendOIDCError( $req, 'Server error', 500 );
+        }
+    }
 
     # Autorization Code grant
     if ( $grant_type eq 'authorization_code' ) {
@@ -2053,7 +2106,8 @@ sub _handleAuthorizationCodeGrant {
     };
 
     $self->p->processHook( $req, 'oidcGenerateTokenResponse', $rp,
-        $token_response, $codeSession->data, $apacheSession->data );
+        $token_response, $codeSession->data, $apacheSession->data,
+        'authorization_code' );
 
     my %update;
 
@@ -2148,6 +2202,7 @@ sub _handleRefreshTokenGrant {
         my $h = $self->p->processHook( $req, 'oidcGotOnlineRefresh', $rp,
             $refreshSession->data, $userData );
         if ( $h != PE_OK ) {
+            return $req->response if $h == PE_SENDRESPONSE;
             return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
@@ -2200,6 +2255,7 @@ sub _handleRefreshTokenGrant {
         my $h = $self->p->processHook( $req, 'oidcGotOfflineRefresh', $rp,
             $refreshSession->data );
         if ( $h != PE_OK ) {
+            return $req->response if $h == PE_SENDRESPONSE;
             return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
@@ -2271,6 +2327,11 @@ sub _handleRefreshTokenGrant {
         ),
         ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
+
+    # Allow plugins to modify token response (e.g., DPoP changing token_type)
+    my $h = $self->p->processHook( $req, 'oidcGenerateTokenResponse', $rp,
+        $token_response, $refreshSession->data, $userData, 'refresh_token' );
+    return $req->response if $h == PE_SENDRESPONSE;
 
     $self->logger->debug("Send token response");
 
@@ -2505,6 +2566,10 @@ sub introspection {
                   unless defined $response->{$_}
                   and $response->{$_} || length( $response->{$_} ) > 0;
             }
+
+            # Hook for plugins to modify introspection response
+            $self->p->processHook( $req, 'oidcGenerateIntrospectionResponse',
+                $response, $rp, $oidcSession->data );
         }
         else {
             $self->logger->warn("Count not find session tied to Access Token");
@@ -3250,6 +3315,10 @@ sub _convertOldFormatConsents {
 
 sub _generateRefreshToken {
     my ( $self, $req, $rp, $info, $offline ) = @_;
+
+    # Allow plugins to add data to refresh token
+    my $h = $self->p->processHook( $req, 'oidcGenerateRefreshToken', $info, $rp, $offline );
+    return if $h;
 
     my $user  = $info->{_session_uid};
     my $token = $self->newRefreshToken( $rp, $info, $offline );
