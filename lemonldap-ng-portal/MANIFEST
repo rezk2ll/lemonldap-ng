@@ -898,6 +898,7 @@ t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Confirmation.t
 t/57-GlobalLogout-with-Double-cookies-Single-session.t
 t/57-GlobalLogout-with-Double-cookies.t
+t/57-GlobalLogout-with-OIDC-BCL.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
 t/57-LogoutForward.t
