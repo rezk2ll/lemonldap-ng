@@ -480,6 +480,29 @@ $json = expectJSON($res);
 ok( $json->{access_token},
     'Offline refresh: normal refresh works after PE_SENDRESPONSE' );
 
+# Testing oidcGenerateMetadata hook
+note "Testing oidcGenerateMetadata hook";
+ok(
+    $res = $op->_get(
+        '/.well-known/openid-configuration',
+        accept => 'application/json',
+    ),
+    'Get metadata'
+);
+count(1);
+expectOK($res);
+count(1);
+$json = expectJSON($res);
+count(1);
+ok( $json->{custom_metadata_hook} eq 'hooked',
+    'oidcGenerateMetadata hook added custom field' );
+count(1);
+ok( grep( { $_ eq 'urn:test:custom_grant' }
+        @{ $json->{grant_types_supported} } ),
+    'oidcGenerateMetadata hook added custom grant type'
+);
+count(1);
+
 clean_sessions();
 done_testing();
 

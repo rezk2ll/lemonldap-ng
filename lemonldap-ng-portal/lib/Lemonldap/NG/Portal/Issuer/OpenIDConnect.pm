@@ -3162,8 +3162,12 @@ sub metadata {
     my %args;
     $args{ttl} = $self->conf->{oidcServiceMetadataTtl}
       if $self->conf->{oidcServiceMetadataTtl};
-    return $self->p->sendJSONresponse( $req,
-        $self->metadataDoc( $self->get_issuer($req) ), %args );
+    my $metadata = $self->metadataDoc( $self->get_issuer($req) );
+
+    # Hook for plugins to add metadata fields (e.g., JARM, CIBA, PAR, DPoP)
+    $self->p->processHook( $req, 'oidcGenerateMetadata', $metadata );
+
+    return $self->p->sendJSONresponse( $req, $metadata, %args );
 }
 
 # Store request parameters in %ENV
