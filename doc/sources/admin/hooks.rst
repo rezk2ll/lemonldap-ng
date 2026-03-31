@@ -139,7 +139,7 @@ Sample code ::
     }
 
 oidcGenerateAuthorizationResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
@@ -514,7 +514,7 @@ Introspection endpoint (/oauth2/introspect)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 oidcGenerateIntrospectionResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
