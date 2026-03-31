@@ -18,14 +18,7 @@ my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
 # Redefine LWP methods for tests
-LWP::Protocol::PSGI->register(
-    sub {
-        my $req = Plack::Request->new(@_);
-        fail('POST should not launch SOAP requests');
-        count(1);
-        return [ 500, [], [] ];
-    }
-);
+LWP::Protocol::PSGI->register( denyLwpRequests() );
 
 SKIP: {
     unless (
@@ -89,8 +82,9 @@ SKIP: {
         ),
         'Post delayed authentication request'
     );
-    expectRedirection( $res, 'http://auth.idp.com/saml' );
     my $idpId = expectCookie($res);
+    expectPortalError( $res, 113 );
+    expectXpath( $res, '//span[@trspan="connectedAs"]' );
 
     # Expect pdata to be cleared
     $pdata = expectCookie( $res, 'lemonldappdata' );

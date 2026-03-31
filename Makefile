@@ -39,7 +39,7 @@ UNCOMPRESS=tar xzf
 LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
-UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
+UGLIFYJSVERSION=$(shell uglifyjs --version 2>/dev/null|perl -pe 's/^[^\d]*(\d).*$$/$$1/' 2>/dev/null)
 CHOWN=chown
 CHGRP=chgrp
 CHMOD=chmod
@@ -124,6 +124,9 @@ UWSGIYAMLDIR=$(LMPREFIX)/uwsgi
 LLNGAPPDIR=$(LMPREFIX)/llng-server
 UWSGIUSER=$(APACHEUSER)
 UWSGIGROUP=$(APACHEGROUP)
+
+# Perl site lib directory (for llng-build-manager-files)
+INSTALLSITELIB=$(shell perl -V:installsitelib | perl -pe "s/.*='(.*)';/\$$1/")
 
 # RC/systemd
 WITHRC=yes
@@ -227,7 +230,7 @@ MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN)
 
 # GENERATED SRC FILES
-MANAGERJSONSRC= scripts/jsongenerator.pl \
+MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-manager-files \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
@@ -354,13 +357,18 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
 	@yui-compressor $*.css > $*.min.css
 
 %.min.js: %.js
-	@echo "Compressing $*.js"
-	@if test "$(UGLIFYJSVERSION)" = 2; then \
-		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
+	@if which uglifyjs >/dev/null 2>&1; then \
+		echo "Compressing $*.js"; \
+		if test "$(UGLIFYJSVERSION)" = 2; then \
+			cd `dirname $*`; \
+			uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
+		else \
+			cd `dirname $*`; \
+			uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
+		fi; \
 	else \
-		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
+		echo "Copying $*.js (uglifyjs not available)"; \
+		cp $*.js $*.min.js; \
 	fi
 
 # Perl libraries configuration
@@ -380,7 +388,7 @@ debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/scripts/purgeCent
 		> debian/liblemonldap-ng-portal-perl.cron.d
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
-	./scripts/jsongenerator.pl
+	./scripts/jsongenerator
 
 common_conf:	${SRCCOMMONDIR}/Makefile
 
@@ -674,6 +682,7 @@ install_bin:	install_conf_dir
 		${SRCHANDLERDIR}/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/purgePersistentSessions \
+		${SRCPORTALDIR}/scripts/checkCrowdsec \
 		${SRCPORTALDIR}/scripts/crowdsecBan \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCPORTALDIR}/scripts/llngUserAttributes \
@@ -685,6 +694,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
+		${SRCMANAGERDIR}/scripts/llng-build-manager-files \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-sessions \
 		${SRCCOMMONDIR}/scripts/importMetadata \
@@ -716,6 +726,9 @@ install_bin:	install_conf_dir
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@$(CHMOD) +x $(RBINDIR)/*
+	# llng-build-manager-files placeholders
+	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)#g; s#__INSTALLSITELIB__#$(INSTALLSITELIB)#g; s#__DOCDIR__#$(DEFDOCDIR)#g;' \
+		$(RBINDIR)/llng-build-manager-files
 	# Cron files
 	@if [ "x$(WITHRC)" = "xyes" ]; then \
 		install -v -d $(RCRONDIR); \

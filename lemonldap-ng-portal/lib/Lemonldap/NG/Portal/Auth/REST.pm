@@ -16,12 +16,10 @@ extends qw(
 );
 
 # INITIALIZATION
-
 sub init {
     my $self = shift;
 
-    # Add warning in log
-    unless ( $self->conf->{restAuthUrl} ) {
+    if ( not $self->initNamedCallFromConf( 'restAuth', 'auth' ) ) {
         $self->logger->error('No REST Authentication URL given');
         return 0;
     }
@@ -32,8 +30,9 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
     my $res = eval {
-        $self->restCall( $self->conf->{restAuthUrl},
-            { user => $req->user, password => $req->data->{password} } );
+        $self->restNamedCall( $req,
+            'auth', { user => $req->user, password => $req->data->{password} },
+            {} );
     };
     if ($@) {
         $self->logger->error("Auth error: $@");

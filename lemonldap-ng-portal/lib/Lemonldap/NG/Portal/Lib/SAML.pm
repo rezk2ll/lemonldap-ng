@@ -441,6 +441,12 @@ sub load_sp_metadata {
 
     my $valid = 1;
 
+    # Check if SP is activated
+    unless ( $options->{samlSPMetaDataOptionsActivation} // 1 ) {
+        $self->logger->debug("SP $spConfKey deactivated");
+        return 0;
+    }
+
     # Access Rule
     my $rule = $options->{samlSPMetaDataOptionsRule};
     if ( length $rule ) {
@@ -3166,7 +3172,7 @@ sub getSamlSession {
 
     if ( $samlSession->error ) {
         if ($id) {
-            $self->userLogger->warn("SAML session $id isn't yet available");
+            $self->userLogger->warn("SAML session $id not found");
         }
         else {
             $self->logger->error("Unable to create new SAML session");

@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::UserDB::Combination;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.23.0';
 
 sub new {
     # Find a already loaded instance of ::Auth::Combination

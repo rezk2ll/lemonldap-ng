@@ -142,19 +142,23 @@ ok(
 count(1);
 expectReject($res);
 
-## Forth failed connection
+## Forth failed connection -> rejected (PE_WAIT at maxFailed)
 ok(
     $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
-        length => 23
+        length => 23,
+        accept => 'text/html',
     ),
     '4th Bad Auth query'
 );
 count(1);
-expectReject($res);
 
-## Fifth failed connection -> rejected
+ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Rejected -> Protection enabled' );
+count(1);
+
+## Fifth failed connection -> still rejected
 ok(
     $res = $client->_post(
         '/',
@@ -167,7 +171,7 @@ ok(
 count(1);
 
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
-    'Rejected -> Protection enabled' );
+    'Still rejected -> Protection enabled' );
 count(1);
 
 # Waiting
@@ -236,10 +240,10 @@ ok( $res->[2]->[0] =~ /<caption trspan="lastLoginsCaptionLabel">/,
 my @c  = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 my @cf = ( $res->[2]->[0] =~ /PE5<\/td>/gs );
 
-# History with 8 entries
-ok( @c == 8, ' -> Eight entries found' )
+# History with 7 entries (4 success + 3 failed, PE_WAIT not stored)
+ok( @c == 7, ' -> Seven entries found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( @cf == 4, "  -> Four 'failedLogin' entries found" )
+ok( @cf == 3, "  -> Three 'failedLogin' entries found" )
   or print STDERR Dumper( $res->[2]->[0] );
 count(5);
 

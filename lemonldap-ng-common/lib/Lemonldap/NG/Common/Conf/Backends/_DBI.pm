@@ -5,8 +5,9 @@ no strict 'refs';
 use utf8;
 use DBI;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.22.2';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Constants);
 our ( @EXPORT, %EXPORT_TAGS );
 
@@ -56,13 +57,19 @@ sub lastCfg {
 sub _dbh {
     my $self = shift;
     $self->{dbiTable} ||= "lmConfig";
-    return $self->{_dbh} if ( $self->{_dbh} and $self->{_dbh}->ping );
+    my $dbh = check_dbh( $self->{_dbh} );
+    return $dbh if $dbh;
+    delete $self->{_dbh};
     eval {
         $self->{_dbh} =
           DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
             $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
+        die unless $self->{_dbh}->ping;
     };
-    if ( $@ and &{ $self->{type} . "::beforeRetry" }($self) ) {
+    if (    $@
+        and $self->{type}->can('beforeRetry')
+        and $self->{type}->can('beforeRetry')->($self) )
+    {
         eval {
             $self->{_dbh} =
               DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
@@ -125,7 +132,10 @@ sub _execute {
         return UNKNOWN_ERROR;
     }
     my $execute = eval { $req->execute(@prms) };
-    if ( !$execute and &{ $self->{type} . "::beforeRetry" }($self) ) {
+    if (   !$execute
+        and $self->{type}->can('beforeRetry')
+        and $self->{type}->can('beforeRetry')->($self) )
+    {
         $req     = $self->_dbh->prepare($query);
         $execute = eval { $req->execute(@prms) };
     }

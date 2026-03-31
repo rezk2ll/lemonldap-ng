@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use Lemonldap::NG::Common::Util qw/display2F/;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::SecondFactor

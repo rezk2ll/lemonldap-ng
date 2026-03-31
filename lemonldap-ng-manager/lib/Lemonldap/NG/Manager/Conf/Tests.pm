@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -436,42 +436,16 @@ sub tests {
             {
                 return 1;
             }
-            elsif ( $conf->{keys}->{"default-saml-sig"} ) {
-                return 1;
+            else {
+                my ($key) = split( /\s*,\s*/,
+                    ( $conf->{samlServiceSignatureKey} || "" ) );
+                if ( $conf->{keys}->{$key} ) {
+                    return 1;
+                }
             }
 
             return ( 0,
                 'SAML service private and public keys signature must be set' );
-        },
-
-        samlSignatureOverrideNeedsCertificate => sub {
-            return 1
-              if $conf->{samlServicePublicKeySig}
-              && $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
-
-            my @offenders;
-            for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
-                if ( $conf->{samlIDPMetaDataOptions}->{$idp}
-                    ->{samlIDPMetaDataOptionsSignatureMethod} )
-                {
-                    push @offenders, $idp;
-                }
-            }
-            for my $sp ( keys %{ $conf->{samlSPMetaDataOptions} } ) {
-                if ( $conf->{samlSPMetaDataOptions}->{$sp}
-                    ->{samlSPMetaDataOptionsSignatureMethod} )
-                {
-                    push @offenders, $sp;
-                }
-            }
-            return @offenders
-              ? (
-                0,
-                "Cannot set non-default signature method on "
-                  . join( ", ", @offenders )
-                  . " unless SAML signature key is in certificate form"
-              )
-              : 1;
         },
 
         samlSignatureUnsupportedAlg => sub {
@@ -879,8 +853,12 @@ sub tests {
             {
                 return 1;
             }
-            elsif ( $conf->{keys}->{"default-oidc-sig"} ) {
-                return 1;
+            else {
+                my ($key) = split( /\s*,\s*/,
+                    ( $conf->{oidcServiceSignatureKey} || "" ) );
+                if ( $conf->{keys}->{$key} ) {
+                    return 1;
+                }
             }
 
             return ( 1,
@@ -911,7 +889,7 @@ sub tests {
             if (
                 @usingRSA
                 and not( $conf->{oidcServicePrivateKeySig}
-                    or $conf->{keys}->{"default-oidc-sig"} )
+                    or %{ $conf->{keys} || {} } )
               )
             {
                 my $msg =
@@ -1103,6 +1081,30 @@ sub tests {
                 return ( -1,
 'Password module is enabled without AuthChoice password backend'
                 ) unless $hasPwdBE;
+            }
+            return 1;
+        },
+
+        webAuthnRequiresToken => sub {
+            if (
+                grep { $_->[0] eq "WebAuthn" }
+                map  { [ split( /;\s*/, $_ ) ] }
+                values %{ $conf->{authChoiceModules} }
+              )
+            {
+                if ( $conf->{requireToken} == 0 ) {
+                    return ( 0,
+                        "WebAuthn authentication requires using a token" );
+                }
+                elsif ( $conf->{requireToken} == 1 ) {
+                    return 1;
+                }
+                else {
+                    return ( 1,
+                            "WebAuthn authentication requires a token"
+                          . " but a rule was defined for token use."
+                          . " WebAuthn might not work in some situations" );
+                }
             }
             return 1;
         },
@@ -1374,6 +1376,14 @@ sub tests {
               if $conf->{crowdsecMachineId} and $conf->{crowdsecPassword};
             return ( 0,
                 'Crowdsec Agent enabled without machine_id and password' );
+        },
+
+        # External menu URL must be a valid URL
+        externalMenuUrl => sub {
+            return 1 unless $conf->{externalMenu};
+            return ( 0, 'External menu URL looks invalid' )
+              unless $conf->{externalMenu} =~ m#^(\w+)://#;
+            return 1;
         },
     };
 }

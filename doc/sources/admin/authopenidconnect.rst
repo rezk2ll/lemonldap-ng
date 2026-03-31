@@ -232,6 +232,8 @@ Options
 Configuration
 """""""""""""
 -  **PKCE required**: A code challenge is required at Tokens endpoint (see :rfc:`7636`)
+-  **Issuer required (RFC 9207)**: Require iss parameter in authorization response
+   to prevent mix-up attacks (see :rfc:`9207`). *Since 2.23.0*
 -  **Store ID token**: Allows one to store the ID Token (JWT) inside user session.
    Do not enable it unless you need to replay this token on an application,
    or if you need the id_token_hint parameter when using logout.

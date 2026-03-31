@@ -34,6 +34,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
+-  JWT Introspection response (Since ``2.23.0``) - See :rfc:`9701`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
@@ -171,6 +172,8 @@ You can then set this RP configuration.
 Basic options
 ^^^^^^^^^^^^^
 
+-  **Activation** The user can activate and deactivate a RP. By default, RPs are
+   active upon creation.
 -  **Public client** (since version ``2.0.4``): Set this RP as public
    client, so authentication is not needed on tokens endpoint. Set this for
    mobile apps or native Javascript apps.
@@ -223,9 +226,10 @@ Options
       Tokens are in JWT format, this option lets you release the claims defined
       in the *Extra Claims* section inside the Access Token itself
    -  **Use refresh tokens** (since version ``2.0.7``): If this option
-      is enabled, LL::NG will issue a Refresh Token that can be used
-      to obtain new access tokens as long as the user session is still
-      valid
+      is enabled, LL::NG will issue an *online* Refresh Token that can
+      be used to obtain new access tokens as long as the user session
+      is still valid. This token is tied to the SSO session: it becomes
+      invalid when the user logs out or the session expires
    -  **User attribute**: Session field that will be used as main
       identifier (``sub``). Default value is ``whatToTrace``.
    -  **Additional audiences** (since version ``2.0.8``): You can
@@ -244,18 +248,45 @@ Options
 
 -  **Security**
 
-   -  **Require PKCE** (since version ``2.0.4``): A code challenge is
-      required at Tokens endpoint (see :rfc:`7636`)
+   -  **Require PKCE** (since version ``2.0.4``): Controls PKCE validation
+      at the Authorization and Token endpoints (see :rfc:`7636`). Available modes:
+
+      - **Disabled**: PKCE is optional. If provided, it will be validated.
+        For confidential clients, ``client_secret`` is required.
+        For public clients, no authentication is required.
+      - **Required**: PKCE is mandatory. Requests without ``code_challenge``
+        are rejected at the Authorization endpoint. For confidential clients,
+        both PKCE and ``client_secret`` are required.
+      - **PKCE or Secret** (since version ``2.20.0``): For **public clients**,
+        either PKCE or ``client_secret`` is required (at least one). This allows
+        the same ``client_id`` to be used by mobile apps (with PKCE) and backend
+        services (with secret). For confidential clients, this mode behaves
+        like **Disabled** (secret always required, PKCE optional).
    -  **Invalidate refresh tokens after use** (since version ``2.20.0``): Use
       this option to prevent Refresh Tokens from being re-used. A new refresh
       token will be generated every time.
    -  **Allow offline access** (since version ``2.0.7``): After enabling
       this feature, an application may request the **offline_access**
-      scope, and will obtain a Refresh Token that persists even after
-      the user has logged off. See
+      scope, and will obtain an *offline* Refresh Token that persists
+      even after the user has logged off. Unlike online refresh tokens,
+      offline tokens are not tied to the SSO session: they remain valid
+      until their own expiration time. See
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+
+      These two options are independent. When both are enabled, the type
+      of refresh token depends on the scope requested by the client:
+
+      - Without ``offline_access`` scope: an *online* refresh token is
+        issued (tied to the SSO session)
+      - With ``offline_access`` scope: an *offline* refresh token is
+        issued (survives logout)
+
+      If only **Allow offline access** is enabled (without **Use refresh
+      tokens**), applications will only receive a refresh token when
+      they explicitly request the ``offline_access`` scope. Without
+      that scope, no refresh token is issued.
    -  **Allow Native SSO for Mobile Apps** (since version ``2.21.0``): Allow
       relying party to request a **device_secret**. See
       https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
@@ -294,6 +325,11 @@ Options
       return it as a JWT, using one of the available signature algorithms. 
    -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
+   -  **Introspection response format** (since version ``2.23.0``): By default,
+      Introspection is returned as a simple JSON object (RFC 7662). You can also choose to
+      return it as a JWT, using one of the available signature algorithms (RFC 9701).
+   -  **Introspection Encryption key management algorithm**: If Relying-Party require introspection response encryption, set here the key management algorithm (RFC 9701)
+   -  **Introspection Encryption content encryption algorithm**: If Relying-Party require introspection response encryption, set here the content encryption algorithm (RFC 9701)
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
 
@@ -344,6 +380,8 @@ Options
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
 
+-  **Activation** The user can activate and deactivate a RP. By default, RPs are
+   active upon creation.
 -  **Comment**: set a comment
 
 Macros

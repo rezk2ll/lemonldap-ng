@@ -539,6 +539,10 @@ sub attributes {
                         'v' => 'None'
                     },
                     {
+                        'k' => 'Combination',
+                        'v' => 'combineMods'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -797,6 +801,10 @@ sub attributes {
         },
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
+        },
+        'casAppMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'casAppMetaDataOptionsAllowProxy' => {
             'default' => 1,
@@ -1314,6 +1322,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'crowdSecAgentResponseValue' => {
             'type' => 'text'
         },
+        'crowdsecBanDuration' => {
+            'default' => '4h',
+            'type'    => 'text'
+        },
         'crowdsecBlockDelay' => {
             'type' => 'int'
         },
@@ -1557,6 +1569,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'ext2FValidateCommand' => {
             'type' => 'text'
+        },
+        'externalMenu' => {
+            'default' => '',
+            'type'    => 'text'
         },
         'facebookAppId' => {
             'type' => 'text'
@@ -2744,6 +2760,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
         },
+        'oidcOPMetaDataOptionsRequireIss' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcOPMetaDataOptionsRequirePkce' => {
             'default' => 0,
             'type'    => 'bool'
@@ -3039,6 +3059,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsAdditionalAudiences' => {
             'type' => 'text'
         },
@@ -3260,6 +3284,132 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsIntrospectionEncContentEncAlg' => {
+            'default' => 'A256GCM',
+            'select'  => [ {
+                    'k' => 'A256CBC-HS512',
+                    'v' => 'A256CBC-HS512'
+                },
+                {
+                    'k' => 'A256GCM',
+                    'v' => 'A256GCM'
+                },
+                {
+                    'k' => 'A192CBC-HS384',
+                    'v' => 'A192CBC-HS384'
+                },
+                {
+                    'k' => 'A192GCM',
+                    'v' => 'A192GCM'
+                },
+                {
+                    'k' => 'A128CBC-HS256',
+                    'v' => 'A128CBC-HS256'
+                },
+                {
+                    'k' => 'A128GCM',
+                    'v' => 'A128GCM'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'RSA-OAEP',
+                    'v' => 'RSA-OAEP'
+                },
+                {
+                    'k' => 'RSA-OAEP-256',
+                    'v' => 'RSA-OAEP-256'
+                },
+                {
+                    'k' => 'RSA1_5',
+                    'v' => 'RSA1_5'
+                },
+                {
+                    'k' => 'ECDH-ES',
+                    'v' => 'ECDH-ES'
+                },
+                {
+                    'k' => 'ECDH-ES+A128KW',
+                    'v' => 'ECDH-ES+A128KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A192KW',
+                    'v' => 'ECDH-ES+A192KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A256KW',
+                    'v' => 'ECDH-ES+A256KW'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsIntrospectionSignAlg' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'JSON'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'EdDSA'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcRPMetaDataOptionsJwks' => {
             'keyTest' => sub {
                 1;
@@ -3388,7 +3538,20 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
-            'type'    => 'bool'
+            'select'  => [ {
+                    'k' => '0',
+                    'v' => 'disabled'
+                },
+                {
+                    'k' => '1',
+                    'v' => 'required'
+                },
+                {
+                    'k' => '2',
+                    'v' => 'pkceOrSecret'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsRtActivity' => {
             'default' => 0,
@@ -3490,59 +3653,59 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 },
                 {
                     'k' => 'none',
-                    'v' => 'JWT/None'
+                    'v' => 'None'
                 },
                 {
                     'k' => 'HS256',
-                    'v' => 'JWT/HS256'
+                    'v' => 'HS256'
                 },
                 {
                     'k' => 'HS384',
-                    'v' => 'JWT/HS384'
+                    'v' => 'HS384'
                 },
                 {
                     'k' => 'HS512',
-                    'v' => 'JWT/HS512'
+                    'v' => 'HS512'
                 },
                 {
                     'k' => 'RS256',
-                    'v' => 'JWT/RS256'
+                    'v' => 'RS256'
                 },
                 {
                     'k' => 'RS384',
-                    'v' => 'JWT/RS384'
+                    'v' => 'RS384'
                 },
                 {
                     'k' => 'RS512',
-                    'v' => 'JWT/RS512'
+                    'v' => 'RS512'
                 },
                 {
                     'k' => 'PS256',
-                    'v' => 'JWT/PS256'
+                    'v' => 'PS256'
                 },
                 {
                     'k' => 'PS384',
-                    'v' => 'JWT/PS384'
+                    'v' => 'PS384'
                 },
                 {
                     'k' => 'PS512',
-                    'v' => 'JWT/PS512'
+                    'v' => 'PS512'
                 },
                 {
                     'k' => 'ES256',
-                    'v' => 'JWT/ES256'
+                    'v' => 'ES256'
                 },
                 {
                     'k' => 'ES384',
-                    'v' => 'JWT/ES384'
+                    'v' => 'ES384'
                 },
                 {
                     'k' => 'ES512',
-                    'v' => 'JWT/ES512'
+                    'v' => 'ES512'
                 },
                 {
                     'k' => 'EdDSA',
-                    'v' => 'JWT/EdDSA'
+                    'v' => 'EdDSA'
                 }
             ],
             'type' => 'select'
@@ -4534,11 +4697,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'pcre'
         },
         'rest2fInitArgs' => {
-            'keyMsgFail' => '__badKeyName__',
-            'keyTest'    => qr/^\w+$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'rest2fInitUrl' => {
             'type' => 'url'
@@ -4553,14 +4716,21 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'rest2fVerifyArgs' => {
-            'type' => 'keyTextContainer'
-        },
-        'rest2fVerifyUrl' => {
             'keyMsgFail' => '__badKeyName__',
             'keyTest'    => qr/^\w+$/,
             'msgFail'    => '__badValue__',
             'test'       => qr/^\w+$/,
-            'type'       => 'url'
+            'type'       => 'keyTextContainer'
+        },
+        'rest2fVerifyUrl' => {
+            'type' => 'url'
+        },
+        'restAuthArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restAuthnLevel' => {
             'default' => 2,
@@ -4585,6 +4755,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restFindUserDBArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'restFindUserDBUrl' => {
             'type' => 'url'
         },
@@ -4592,8 +4769,22 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restPwdConfirmArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
         'restPwdConfirmUrl' => {
             'type' => 'url'
+        },
+        'restPwdModifyArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restPwdModifyUrl' => {
             'type' => 'url'
@@ -4601,6 +4792,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'restSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'restUserDBArgs' => {
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'restUserDBUrl' => {
             'type' => 'url'
@@ -5116,6 +5314,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'type'       => 'keyTextContainer'
         },
+        'samlSPMetaDataOptionsActivation' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'samlSPMetaDataOptionsAuthnLevel' => {
             'test' => sub {
                 return perlExpr(@_);
@@ -5186,6 +5388,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 }
             ],
             'type' => 'select'
+        },
+        'samlSPMetaDataOptionsForceNameIDFormat' => {
+            'type' => 'bool'
         },
         'samlSPMetaDataOptionsForceUTF8' => {
             'default' => 1,

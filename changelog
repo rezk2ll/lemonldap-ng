@@ -1,3 +1,14 @@
+lemonldap-ng (2.22.2) noble; urgency=medium
+
+  * Bugs:
+    * #3508: short SessionNotOnOrAfter causes redirection loop with mod_mellon
+    * #3515: Choice tab is not correctly selected after failure
+    * #3516: DBI doesn't clean cached connection which render it unusable
+    * #3531: OIDC : URI Encoded clientSecret evaluated as is without decoding it first
+    * #3532: Bad inheritance check into new "beforeRetry" method in Conf *DBI
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 29 Jan 2026 18:34:19 +0100
+
 lemonldap-ng (2.22.1) noble; urgency=medium
 
   * Bugs:

@@ -65,6 +65,7 @@
             "Cache::Cache" : "0",
             "Config::IniFiles" : "0",
             "Convert::PEM" : "0",
+            "Crypt::OpenSSL::Bignum" : "0",
             "Crypt::OpenSSL::RSA" : "0",
             "Crypt::OpenSSL::X509" : "0",
             "Crypt::Rijndael" : "0",
@@ -96,6 +97,6 @@
       ],
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
-   "version" : "v2.22.1",
+   "version" : "v2.22.2",
    "x_serialization_backend" : "JSON::PP version 4.16"
 }

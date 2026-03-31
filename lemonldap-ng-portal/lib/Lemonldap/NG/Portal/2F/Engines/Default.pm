@@ -28,7 +28,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -407,8 +407,12 @@ sub run {
     # Note that a rule may forbid access after (GrantSession plugin)
     unless (@am) {
 
+        my $modifiedSession = { %{ $req->sessionInfo // {} } };
+        $modifiedSession->{targetAuthnLevel} = $req->{pdata}->{targetAuthnLevel}
+          if $req->{pdata}->{targetAuthnLevel};
+
         # Except if 2FA is required, move to registration
-        if ( $self->sfReq->( $req, $req->sessionInfo ) ) {
+        if ( $self->sfReq->( $req, $modifiedSession ) ) {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
@@ -872,54 +876,46 @@ sub _continueLogin {
         $self->logger->debug(
             "Update sessionInfo with new authenticationLevel: $level");
         $req->sessionInfo->{authenticationLevel} = $level;
+    }
+    $req->sessionInfo->{_2f} = $prefix;
 
-        # Compute macros & local groups again with new authenticationLevel
-        $self->logger->debug("Compute macros and local groups...");
-        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
-        if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug("SFA: Process returned error: $error");
-            $req->error($error);
-            return $self->p->doPE( $req, $error );
+    # Compute macros & local groups again with new authenticationLevel and
+    # _2f macro
+    $self->logger->debug("Compute macros and local groups...");
+    $req->steps( [ 'setMacros', 'setLocalGroups' ] );
+    if ( my $error = $self->p->process($req) ) {
+        $self->logger->debug("SFA: Process returned error: $error");
+        $req->error($error);
+        return $self->p->doPE( $req, $error );
+    }
+    $self->logger->debug("De-duplicate groups...");
+    $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
+      keys %{ {
+            map { $_ => 1 } split $self->conf->{multiValuesSeparator},
+            $req->sessionInfo->{groups}
         }
-        $self->logger->debug("De-duplicate groups...");
-        $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
-          keys %{ {
-                map { $_ => 1 } split $self->conf->{multiValuesSeparator},
-                $req->sessionInfo->{groups}
-            }
-          };
+      };
 
-        $self->logger->debug("Filter macros...");
-        my %macros = (
-            map { $_ => $req->sessionInfo->{$_} }
-              keys %{ $self->{conf}->{macros} }
-        );
+    $self->logger->debug("Filter macros...");
+    my %macros = (
+        map { $_ => $req->sessionInfo->{$_} }
+          keys %{ $self->{conf}->{macros} }
+    );
 
-        $self->logger->debug(
+    $self->logger->debug(
 "Update session with new authenticationLevel, groups, hGroups and macros"
-        );
-        $self->p->updateSession(
-            $req,
-            {
-                authenticationLevel => $level,
-                groups              => $req->sessionInfo->{groups},
-                hGroups             => $req->sessionInfo->{hGroups},
-                _2f                 => $prefix,
-                _lastAuthnUTime     => time,
-                %macros
-            }
-        );
-    }
-    else {
-        # Only update _2f session key
-        $self->p->updateSession(
-            $req,
-            {
-                _lastAuthnUTime => time,
-                _2f             => $prefix,
-            }
-        );
-    }
+    );
+    $self->p->updateSession(
+        $req,
+        {
+            ( $level ? ( authenticationLevel => $level ) : () ),
+            groups          => $req->sessionInfo->{groups},
+            hGroups         => $req->sessionInfo->{hGroups},
+            _2f             => $prefix,
+            _lastAuthnUTime => time,
+            %macros
+        }
+    );
 
     $req->authResult(PE_SENDRESPONSE);
     return $self->p->do(

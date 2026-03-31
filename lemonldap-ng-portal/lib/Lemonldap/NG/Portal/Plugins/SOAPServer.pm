@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.23.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

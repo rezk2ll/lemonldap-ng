@@ -20,7 +20,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::RESTServer
 );
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -243,8 +243,15 @@ sub prx {
 
     my $response = $self->ua->get( $query->{url} );
     unless ( $response->code == 200 ) {
-        return $self->sendError( $req,
-            $response->code . " (" . $response->message . ")", 400 );
+        return $self->sendError(
+            $req,
+            "Received unexpected HTTP status code "
+              . $response->code . " ("
+              . $response->message
+              . ") when trying to load content from "
+              . $query->{url},
+            400
+        );
     }
     unless ( $response->header('Content-Type') =~
         m#^(?:application/json|(?:application|text)/.*xml).*$# )

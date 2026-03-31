@@ -118,8 +118,7 @@ sub _translateOptionConfToApi {
 sub _translateValueConfToApi {
     my ( $self, $optionName, $optionValue ) = @_;
 
-    if ( $self->_mustArrayizeOption($optionName))
-    {
+    if ( $self->_mustArrayizeOption($optionName) ) {
         return [ split( /\s+/, $optionValue, ) ];
     }
     else {
@@ -177,6 +176,20 @@ sub _saveApplyConf {
     my ( $self, $conf ) = @_;
     $self->_confAcc->saveConf($conf);
     $self->applyConf($conf);
+}
+
+sub _merge_hash {
+    my ( $self, $conf, $option, $provider, $hash_to_merge ) = @_;
+
+    while ( my ( $key, $value ) = each %{$hash_to_merge} ) {
+        if ( defined $value ) {
+            $conf->{$option}->{$provider}->{$key} = $value;
+        }
+        else {
+            delete $conf->{$option}->{$provider}->{$key};
+        }
+    }
+    return;
 }
 
 1;

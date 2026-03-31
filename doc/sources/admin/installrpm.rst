@@ -33,9 +33,15 @@ LemonLDAP::NG has dependencies which are not in base RHEL repositories.
 
 You need to enable `EPEL repositories <https://docs.fedoraproject.org/en-US/epel/#Quickstart>`__ before installing.
 
-On RHEL8 and derivatives, you also also need to enable the PowerTools repository in ``/etc/yum.repos.d``.
+On most community distributions, this is done with the following command ::
 
-On OracleLinux, the corresponding repo is called Oracle Linux 8 CodeReady Builder.
+    dnf install epel-release
+
+If you are using the official RHEL build, refer to the above documentation.
+
+In any case, after enabling EPEL, also enable the optional "CodeReady Builder" repository ::
+
+    crb enable
 
 Get the packages
 ----------------
@@ -81,7 +87,7 @@ Run this to update packages cache:
 
 ::
 
-   yum update
+   dnf update
 
 Official Fedora packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,19 +101,6 @@ RPMs are available on the `Download page <https://lemonldap-ng.org/download.html
 
 Package GPG signature
 ---------------------
-
-For EL7
-~~~~~~~
-
-Get the legacy `RPM signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ onto your LemonLDAP::NG server:
-
-::
-
-   curl https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
-
-
-For EL8 and higher
-~~~~~~~~~~~~~~~~~~
 
 Install the `GPG Security key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc>`__ on your LemonLDAP::NG server:
 
@@ -126,16 +119,16 @@ If the packages are stored in a yum repository:
 
 .. code-block:: shell
 
-   yum install lemonldap-ng
+   dnf install lemonldap-ng
 
    # If you use SELinux
-   yum install lemonldap-ng lemonldap-ng-selinux
+   dnf install lemonldap-ng lemonldap-ng-selinux
 
 You can also use yum on local RPMs file:
 
 ::
 
-   yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
+   dnf localinstall lemonldap-ng-* perl-Lemonldap-NG-*
 
 With RPM
 ~~~~~~~~
@@ -144,7 +137,7 @@ You have then to install all the downloaded packages:
 
 ::
 
-   yum install lemonldap-ng-* perl-Lemonldap-NG-*
+   dnf install lemonldap-ng-* perl-Lemonldap-NG-*
 
 
 .. tip::

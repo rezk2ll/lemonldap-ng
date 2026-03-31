@@ -59,10 +59,12 @@ You can then configure:
 - **Activation**: enable this plugin *(default: disabled)*
 - **Crowdsec agent ID**: machine_id registered in Crowdsec local server
 - **Password**: password
-- **Max failures allowed during delay**: maximume failures allowed in the delay.
-  If reached, the plugin will send a Crowdsec decision *(ban)*. 0 means that
+- **Max failures allowed during delay**: maximum failures allowed in the delay.
+  If reached, the plugin will send a CrowdSec decision *(ban)*. 0 means that
   no ban decision will be pushed
 - **Check delay**: number of seconds to consider failures. Default: 180
+- **Ban duration**: duration of the ban decision sent to CrowdSec
+  *(default: 4h)*. Accepts CrowdSec duration format (e.g. 4h, 1d, 30m)
 - **Filters directory**: directory where Crowdsec can find its filters. If
   not defined or empty, filters are disabled. See :ref:`Filters`
 - **Ban response code**: code for rejections based on filters *(default: 404)*
@@ -70,7 +72,10 @@ You can then configure:
 
 Note that:
 
-- Agent just push alerts, it never block anything. You must enable **Bouncer** to do this
+- Agent pushes alerts to CrowdSec. When the maximum failures threshold is
+  reached, it also pushes a ban decision that will be immediately available
+  to the **Bouncer**
+- You must enable **Bouncer** to block banned IPs
 - **Base URL of local API** has to be configured into ``Bouncer``.
 
 .. _Filters:
@@ -88,11 +93,13 @@ The category is the scope of the filter *(example: "url")* and the type is the
 format of the file *(example: "txt")*.
 The type is the suffix of the file, there are two ways to define the category:
 either by setting the category as second suffix in the main directory, either
-by storing the file into a subdirectory with a name starting by the category.
-Examples:
+by storing the file into a subdirectory named with the category followed by a
+separator (``_``, ``-`` or space) and an optional description, or exactly the
+category name. Examples:
 
 - ``bad.url.txt`` is a file formatted as "txt" and owned by category "url"
-- ``url1/bad.re`` is a file formatted as "re" and owned by category "url"
+- ``url_scanner/bad.re`` is a file formatted as "re" and owned by category "url"
+- ``urlskip-icons/icons.re`` is a file formatted as "re" and owned by category "urlskip"
 
 .. _Formats:
 

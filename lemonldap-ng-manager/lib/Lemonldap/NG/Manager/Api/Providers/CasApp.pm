@@ -20,7 +20,7 @@ sub getCasAppByConfKey {
     $self->logger->debug("[API] CAS App $confKey configuration requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $casApp = $self->_getCasAppByConfKey( $conf, $confKey );
 
@@ -52,7 +52,7 @@ sub findCasAppByConfKey {
         "[API] Find CAS Apps by confKey regexp $pattern requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my @casApps =
       map { $_ =~ $pattern ? $self->_getCasAppByConfKey( $conf, $_ ) : () }
@@ -79,7 +79,7 @@ sub findCasAppsByServiceUrl {
         "[API] Find CAS Apps by service URL $serviceUrl requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $casApp = $self->_getCasAppByServiceUrl( $conf, $serviceUrl );
     return $self->sendError( $req,
@@ -352,7 +352,8 @@ sub _pushCasApp {
         foreach ( keys %{ $push->{options} } ) {
             my $optionName = $self->_translateOptionApiToConf( $_, 'casApp' );
             my $optionValue =
-              $self->_translateValueApiToConf( $optionName, $push->{options}->{$_} );
+              $self->_translateValueApiToConf( $optionName,
+                $push->{options}->{$_} );
 
             $translatedOptions->{$optionName} = $optionValue;
         }
@@ -361,19 +362,16 @@ sub _pushCasApp {
             'casAppMetaDataNode' );
         return $res unless ( $res->{res} eq 'ok' );
 
-        foreach ( keys %{$translatedOptions} ) {
-            $conf->{casAppMetaDataOptions}->{$confKey}->{$_} =
-              $translatedOptions->{$_};
-        }
-
+        $self->_merge_hash( $conf, 'casAppMetaDataOptions', $confKey,
+            $translatedOptions );
     }
 
     if ( defined $push->{exportedVars} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{exportedVars} ) ) {
-            foreach ( keys %{ $push->{exportedVars} } ) {
-                $conf->{casAppMetaDataExportedVars}->{$confKey}->{$_} =
-                  $push->{exportedVars}->{$_};
-            }
+            $self->_merge_hash(
+                $conf,    'casAppMetaDataExportedVars',
+                $confKey, $push->{exportedVars}
+            );
         }
         else {
             return {
@@ -386,10 +384,8 @@ sub _pushCasApp {
 
     if ( defined $push->{macros} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
-            foreach ( keys %{ $push->{macros} } ) {
-                $conf->{casAppMetaDataMacros}->{$confKey}->{$_} =
-                  $push->{macros}->{$_};
-            }
+            $self->_merge_hash( $conf, 'casAppMetaDataMacros', $confKey,
+                $push->{macros} );
         }
         else {
             return {
@@ -402,7 +398,7 @@ sub _pushCasApp {
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
-            refConf => $self->_confAcc->getConf,
+            refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
             req     => {},
         }

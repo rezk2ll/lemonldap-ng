@@ -560,6 +560,10 @@
                   ],
                   "type" : "string"
                },
+               "activation" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
                "additionalAudiences" : {
                   "items" : {
                      "type" : "string"
@@ -647,6 +651,50 @@
                   ],
                   "type" : "string"
                },
+               "introspectionEncContentEncAlg" : {
+                  "default" : "A256GCM",
+                  "enum" : [
+                     "A256CBC-HS512",
+                     "A256GCM",
+                     "A192CBC-HS384",
+                     "A192GCM",
+                     "A128CBC-HS256",
+                     "A128GCM"
+                  ],
+                  "type" : "string"
+               },
+               "introspectionEncKeyMgtAlg" : {
+                  "enum" : [
+                     "",
+                     "RSA-OAEP",
+                     "RSA-OAEP-256",
+                     "RSA1_5",
+                     "ECDH-ES",
+                     "ECDH-ES+A128KW",
+                     "ECDH-ES+A192KW",
+                     "ECDH-ES+A256KW"
+                  ],
+                  "type" : "string"
+               },
+               "introspectionSignAlg" : {
+                  "enum" : [
+                     "",
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
                "jwks" : {
                   "type" : "string"
                },
@@ -730,7 +778,12 @@
                   "type" : "array"
                },
                "requirePKCE" : {
-                  "type" : "boolean"
+                  "enum" : [
+                     "0",
+                     "1",
+                     "2"
+                  ],
+                  "type" : "string"
                },
                "rtActivity" : {
                   "type" : "integer"
@@ -1108,6 +1161,10 @@
          },
          "casOptions" : {
             "properties" : {
+               "activation" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
                "allowProxy" : {
                   "default" : 1,
                   "type" : "boolean"
@@ -1173,6 +1230,10 @@
          },
          "samlOptions" : {
             "properties" : {
+               "activation" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
                "authnLevel" : {
                   "type" : "string"
                },
@@ -1216,6 +1277,9 @@
                      "ignore"
                   ],
                   "type" : "string"
+               },
+               "forceNameIDFormat" : {
+                  "type" : "boolean"
                },
                "forceUTF8" : {
                   "default" : 1,
@@ -1290,7 +1354,7 @@
    "info" : {
       "description" : "The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml",
       "title" : "LemonLDAP::NG Manager API",
-      "version" : "2.22.1"
+      "version" : "2.22.2"
    },
    "openapi" : "3.0.1",
    "paths" : {
@@ -2070,6 +2134,7 @@
             ]
          },
          "patch" : {
+            "description" : "This method merges the supplied JSON object with existing configuration. You\ncan delete a subkey from a top-level key by setting its value to `null`.  For\nexample:\n```\n{\n  \"macros\": {\n    \"addme\": \"newval\",\n    \"deleteme\": null\n  }\n}\n```\n",
             "operationId" : "updateCasApp",
             "parameters" : [
                {
@@ -2319,6 +2384,7 @@
             ]
          },
          "patch" : {
+            "description" : "This method merges the supplied JSON object with existing configuration. You\ncan delete a subkey from a top-level key by setting its value to `null`.  For\nexample:\n```\n{\n  \"macros\": {\n    \"addme\": \"newval\",\n    \"deleteme\": null\n  }\n}\n```\n",
             "operationId" : "updateOidcRp",
             "parameters" : [
                {
@@ -2568,6 +2634,7 @@
             ]
          },
          "patch" : {
+            "description" : "This method merges the supplied JSON object with existing configuration. You\ncan delete a subkey from a top-level key by setting its value to `null`.  For\nexample:\n```\n{\n  \"macros\": {\n    \"addme\": \"newval\",\n    \"deleteme\": null\n  }\n}\n```\n",
             "operationId" : "updateSamlSp",
             "parameters" : [
                {

@@ -239,6 +239,52 @@ sub codeGrant {
     return $res;
 }
 
+# Token request without client_secret (for public clients or PKCE-only auth)
+sub codeGrantNoSecret {
+    my ( $op, $clientid, $code, $redirect_uri, %other_params ) = @_;
+    my $query = buildForm( {
+            grant_type   => "authorization_code",
+            code         => $code,
+            redirect_uri => $redirect_uri,
+            client_id    => $clientid,
+            %other_params,
+        }
+    );
+
+    my $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+    );
+    return $res;
+}
+
+# Token request with explicit client_secret (for testing wrong credentials)
+sub codeGrantWithSecret {
+    my ( $op, $clientid, $clientsecret, $code, $redirect_uri, %other_params ) =
+      @_;
+    my $query = buildForm( {
+            grant_type   => "authorization_code",
+            code         => $code,
+            redirect_uri => $redirect_uri,
+            %other_params,
+        }
+    );
+
+    my $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic "
+              . encode_base64("$clientid:$clientsecret"),
+        },
+    );
+    return $res;
+}
+
 sub getUserinfo {
     my ( $op, $access_token ) = @_;
     my $res = $op->_post(

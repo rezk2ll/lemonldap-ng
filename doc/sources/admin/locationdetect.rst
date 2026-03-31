@@ -6,10 +6,30 @@ This plugin use GeoIP database and browser detection module to get city, country
 Required dependencies
 ---------------------
 
-You need to install the following Perl modules: ``HTTP::BrowserDetect``, ``GeoIP2``.
+You need to install the following Perl modules: ``HTTP::BrowserDetect``, ``MaxMind::DB::Reader``.
 
 GeoIP database
 --------------
+
+You can use either:
+
+* Any **DB-IP** databases
+* **MaxMind GeoLite2** databases (free account required)
+
+Using DB-IP (recommended for simplicity, no account required)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Download the free City database from `<https://db-ip.com/db/download/ip-to-city-lite>`__:
+
+.. code-block:: shell
+
+    YEAR_MONTH=$(date +%Y-%m)
+    wget "https://download.db-ip.com/free/dbip-city-lite-${YEAR_MONTH}.mmdb.gz"
+    gunzip dbip-city-lite-${YEAR_MONTH}.mmdb.gz
+    mv dbip-city-lite-${YEAR_MONTH}.mmdb /var/lib/GeoIP/dbip-city-lite.mmdb
+
+Using MaxMind GeoLite2
+~~~~~~~~~~~~~~~~~~~~~~
 
 Create an account on `<https://www.maxmind.com/en/home>`__ and put credentials in ``/etc/GeoIP.conf``:
 
@@ -27,7 +47,7 @@ Update database:
 
     geoipupdate -v
 
-The database files should present in ``/var/lib/GeoIP2/``.
+The database files should be present in ``/var/lib/GeoIP2/``.
 
 Configuration
 -------------

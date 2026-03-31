@@ -259,7 +259,8 @@ Analysis:
 -  MySQL/MariaDB is better to read than to write. Prefer PostgreSQL if
    you use "Session activity timeout"
 -  Logged tables decrease a lot insert performances with PostgreSQL, so
-   use unlogged tables for sessions except for persistent sessions
+   use unlogged tables for sessions except for persistent sessions and
+   for OIDC sessions if you're using offline sessions
 -  Redis is the best for main usage, except when using SAML, Single-Sessions
    and CAS
 -  Browseable::Postgres/PgHstore/PgJSON are the best solutions on

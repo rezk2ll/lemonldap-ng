@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -732,6 +732,9 @@ sub buildCookie {
                 name   => $self->conf->{cookieName},
                 value  => $req->id,
                 secure => $self->conf->{securedCookie},
+                $self->conf->{cookieExpiration}
+                ? ( max_age => $self->conf->{cookieExpiration} )
+                : (),
             )
         );
         if ( $self->conf->{securedCookie} >= 2 ) {
@@ -741,6 +744,9 @@ sub buildCookie {
                     name   => $self->conf->{cookieName} . "http",
                     value  => $req->{sessionInfo}->{_httpSession},
                     secure => 0,
+                    $self->conf->{cookieExpiration}
+                    ? ( max_age => $self->conf->{cookieExpiration} )
+                    : (),
                 )
             );
         }

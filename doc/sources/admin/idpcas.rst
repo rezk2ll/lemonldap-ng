@@ -116,6 +116,8 @@ list.
 Options
 ^^^^^^^
 
+-  **Activation** The user can activate and deactivate the CAS application. By
+   default, CAS applications are active upon creation.
 -  **Service URL**: the service (user-facing) URL(s) of the CAS-enabled
    application. Multiple URLs can be specified, separated by a space.
    See :ref:`idpcas-url-matching`.

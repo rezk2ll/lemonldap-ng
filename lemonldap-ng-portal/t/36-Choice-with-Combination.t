@@ -94,14 +94,11 @@ sub iniCmb {
 
                     authChoiceParam   => 'test',
                     authChoiceModules => {
-                        cmb => 'Custom;Custom;Null',
+                        cmb => 'Combination;Combination;Combination',
                         dbi =>
                           'DBI;DBI;Null;;;{"dbiAuthChain": "dbi:SQLite:dbname='
                           . $userdb_hero . '"}',
                     },
-                    customAuth   => "Lemonldap::NG::Portal::Auth::Combination",
-                    customUserDB =>
-                      "Lemonldap::NG::Portal::UserDB::Combination",
                     slaveUserHeader   => 'My-Test',
                     slaveExportedVars => {
                         name => 'Name',

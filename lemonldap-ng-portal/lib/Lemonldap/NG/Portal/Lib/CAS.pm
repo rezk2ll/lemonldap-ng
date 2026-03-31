@@ -82,7 +82,15 @@ sub loadApp {
 
     foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
 
+        $self->logger->debug("Processing CAS application: $_");
+
         my $valid = 1;
+
+        # Check if CAS application is activated
+        unless ( $self->conf->{casAppMetaDataOptions}->{$_}->{casAppMetaDataOptionsActivation} // 1) {
+            $self->logger->debug("Processing $_: CAS application deactivated");
+            next;
+        }
 
         # Load access rule
         my $rule =
@@ -178,7 +186,7 @@ sub getCasSession {
 
     if ( $casSession->error ) {
         if ($id) {
-            $self->userLogger->notice("CAS session $id isn't yet available");
+            $self->userLogger->notice("CAS session $id not found");
         }
         else {
             $self->logger->error("Unable to create new CAS session");

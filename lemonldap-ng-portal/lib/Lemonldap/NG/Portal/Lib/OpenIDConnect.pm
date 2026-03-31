@@ -22,10 +22,13 @@ use MIME::Base64
   qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
 use Scalar::Util qw/looks_like_number/;
 use URI;
+use URI::Escape qw(uri_unescape);
 use URI::QueryParam;
 
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
+
+our $VERSION = '2.23.0';
 
 use constant oidcErrorLevel => {
     server_error     => 'error',
@@ -148,6 +151,12 @@ sub load_rp_from_llng_conf {
 sub load_rp {
     my ( $self, %config ) = @_;
     my $rp = $config{confKey};
+
+    # Check if RP is activated
+    unless ( $config{options}->{oidcRPMetaDataOptionsActivation} // 1 ) {
+        $self->logger->debug("Processing $rp: RP Deactivated");
+        return 0;
+    }
 
     my $valid = 1;
 
@@ -541,6 +550,9 @@ sub isResponseModeAllowed {
 sub sendOidcResponse {
     my ( $self, $req, $flow, $response_mode, $redirect_uri, $response_params )
       = @_;
+
+    # RFC 9207: Add iss parameter to prevent mix-up attacks
+    $response_params->{iss} = $self->get_issuer($req);
 
     $response_mode //= $self->getDefaultResponseModeForFlow($flow);
 
@@ -1210,19 +1222,16 @@ sub getAuthorizationCode {
 
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
-
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-
-    my $at_info = {
-
+    my $at_info   = {
         scope     => $scope,
         rp        => $rp,
         client_id => $client_id,
         iat       => time,
         nbf       => time,
+        aud       => $self->getAudiences($rp),
         %{$info},
     };
-
     my $ttl =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
@@ -1430,7 +1439,7 @@ sub updateToken {
 
     if ( $oidcSession->error ) {
         $self->userLogger->warn(
-            "OpenIDConnect session $id isn't yet available");
+            "OpenIDConnect session $id not found");
         return undef;
     }
 
@@ -1444,6 +1453,8 @@ sub getOpenIDConnectSession {
     my $self = shift;
     my $id   = shift;
     my $type = shift;
+
+    my $type_log = $type || "session";
 
     # Check old method signature ($id, $type, $ttl, $info)
     my %opts =
@@ -1483,10 +1494,10 @@ sub getOpenIDConnectSession {
     if ( $oidcSession->error ) {
         if ($id) {
             $self->userLogger->warn(
-                "OpenIDConnect session $id isn't yet available");
+                "OpenIDConnect $type_log $id not found");
         }
         else {
-            $self->logger->error("Unable to create new OpenIDConnect session");
+            $self->logger->error("Unable to create new OpenIDConnect $type_log");
             $self->logger->error( $oidcSession->error );
         }
         return undef;
@@ -1509,7 +1520,7 @@ sub getOpenIDConnectSession {
         if (
             time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) )
         {
-            $self->logger->notice("Session $id has expired");
+            $self->logger->notice("OpenIDConnect $type_log $id has expired");
             return undef;
         }
     }
@@ -1517,7 +1528,7 @@ sub getOpenIDConnectSession {
     # Make sure the token is still valid, we already compensated for
     # different TTLs when storing _utime
     if ( time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) ) {
-        $self->logger->notice("Session $id has expired");
+        $self->logger->notice("OpenIDConnect $type_log $id has expired");
         return undef;
     }
 
@@ -1984,6 +1995,11 @@ sub getEndPointAuthenticationCredentials {
               split( ':', decode_base64($1), 2 );
         };
         $self->logger->error("Bad authentication header: $@") if ($@);
+
+        # Unescape clientId and clientSecret to be compliant with RFC 6749
+        # https://datatracker.ietf.org/doc/html/rfc6749
+        $client_id     = uri_unescape($client_id);
+        $client_secret = uri_unescape($client_secret);
 
         # Using multiple methods is an error
         if (
@@ -2796,6 +2812,16 @@ sub validatePKCEChallenge {
     my ( $self, $code_verifier, $code_challenge, $code_challenge_method ) = @_;
 
     unless ($code_challenge) {
+
+        # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
+        # Reject code_verifier if no code_challenge was sent during authorization
+        if ($code_verifier) {
+            $self->userLogger->error(
+                "PKCE downgrade attack: code_verifier provided "
+              . "but no code_challenge was sent during authorization"
+            );
+            return 0;
+        }
         $self->logger->debug("PKCE was not requested by the RP");
         return 1;
     }
@@ -2867,6 +2893,9 @@ sub getAudiences {
 # It can be a session attribute, or per-RP macro
 sub getUserIDForRP {
     my ( $self, $req, $rp, $data ) = @_;
+
+    # Use pre-computed sub if available (stored in online refresh tokens)
+    return $data->{_oidc_sub} if $data->{_oidc_sub};
 
     my $user_id_attribute =
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsUserIDAttr}

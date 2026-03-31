@@ -19,6 +19,24 @@ Template updates
 2.23.0
 ------
 
+Fix auto-translation
+^^^^^^^^^^^^^^^^^^^^
+
+Some web browsers might attempt to translate pages that are already in the correct language, to fix this, apply the following patch to ``header.tpl``
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/header.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/header.tpl
+    @@ -1,5 +1,5 @@
+     <!DOCTYPE html>
+    -<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    +<html xmlns="http://www.w3.org/1999/xhtml"<TMPL_IF "LANGUAGE"> lang="<TMPL_VAR "LANGUAGE">"</TMPL_IF>>
+     <head>
+      <title trspan="authPortal">Authentication portal</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
 Rename 2FA
 ^^^^^^^^^^
 

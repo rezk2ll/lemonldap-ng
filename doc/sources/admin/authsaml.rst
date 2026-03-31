@@ -193,6 +193,8 @@ Authentication request
    by IDP is the URL where the user must be redirected after
    authentication
 -  **Federation**: see :doc:`samlfederation`
+-  **Activation**: The user can activate and deactivate a SP. By default, SPs
+   are active upon creation.
 -  **Metadata URL**: Store the URL that can be used to refresh metadata
 -  **Comment**: set a comment
 

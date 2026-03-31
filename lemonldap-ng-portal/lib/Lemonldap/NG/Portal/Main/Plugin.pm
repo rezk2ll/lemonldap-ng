@@ -261,7 +261,7 @@ is called. Example:
 
   use constant afterSub => {
       getUser => 'mysub',
-  }
+  };
   sub mysub {
       my ( $self ,$req ) = @_;
       # Do something
@@ -291,7 +291,6 @@ LemonLDAP::NG code. Example:
   use constant hook => {
       oidcGenerateIDToken          => 'addClaimToIDToken'
   };
-
   sub addClaimToIDToken {
     my ( $self, $req, $payload, $rp ) = @_;
     $payload->{"id_token_hook"} = 1;

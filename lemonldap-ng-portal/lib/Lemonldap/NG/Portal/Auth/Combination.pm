@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use Scalar::Util 'weaken';
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 with 'Lemonldap::NG::Portal::Lib::OverConf';

@@ -415,9 +415,28 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthnLevel', 'restAuthUrl',
-                                'restUserDBUrl',  'restPwdConfirmUrl',
-                                'restPwdModifyUrl'
+                                'restAuthnLevel',
+                                {
+                                    title => 'url',
+                                    form  => 'simpleInputContainer',
+                                    help  => 'authrest.html',
+                                    nodes => [
+                                        'restAuthUrl',
+                                        'restUserDBUrl',
+                                        'restPwdConfirmUrl',
+                                        'restPwdModifyUrl',
+                                    ]
+                                },
+                                {
+                                    title => 'args',
+                                    help  => 'authrest.html#rest-args',
+                                    nodes => [
+                                        'restAuthArgs',
+                                        'restUserDBArgs',
+                                        'restPwdConfirmArgs',
+                                        'restPwdModifyArgs',
+                                    ]
+                                },
                             ]
                         },
                         {
@@ -933,6 +952,7 @@ sub tree {
                                 'findUserWildcard',
                                 'findUserControl',
                                 'restFindUserDBUrl',
+                                'restFindUserDBArgs',
                                 'findUserSearchingAttributes',
                                 'findUserExcludingAttributes'
                             ]
@@ -964,6 +984,10 @@ sub tree {
                             ],
                         },
                         {
+                            title => 'adminLogoutServer',
+                            nodes => ['adminLogoutServerSecret']
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html#plugin-options',
                             form  => 'simpleInputContainer',
@@ -971,10 +995,6 @@ sub tree {
                                 'customPlugins', 'customPluginsParams',
                                 'disabledPlugins'
                             ]
-                        },
-                        {
-                            title => 'adminLogoutServer',
-                            nodes => ['adminLogoutServerSecret']
                         },
                         'oidcOfflineTokens',
                     ]
@@ -1144,10 +1164,19 @@ sub tree {
                             nodes => [
                                 'rest2fActivation',
                                 'rest2fCodeActivation',
-                                'rest2fInitUrl',
-                                'rest2fInitArgs',
-                                'rest2fVerifyUrl',
-                                'rest2fVerifyArgs',
+                                {
+                                    title => 'url',
+                                    form  => 'simpleInputContainer',
+                                    help  => 'authrest.html',
+                                    nodes =>
+                                      [ 'rest2fInitUrl', 'rest2fVerifyUrl', ]
+                                },
+                                {
+                                    title => 'args',
+                                    help  => 'authrest.html#rest-args',
+                                    nodes =>
+                                      [ 'rest2fInitArgs', 'rest2fVerifyArgs', ]
+                                },
                                 'rest2fResendInterval',
                                 'rest2fAuthnLevel',
                                 'rest2fLabel',
@@ -1228,6 +1257,7 @@ sub tree {
                                                 'crowdsecPassword',
                                                 'crowdsecMaxFailures',
                                                 'crowdsecBlockDelay',
+                                                'crowdsecBanDuration',
                                                 'crowdsecFilters',
                                                 'crowdSecAgentResponseCode',
                                                 'crowdSecAgentResponseValue',
@@ -1330,6 +1360,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'jsRedirect',
+                                'externalMenu',
                                 'noAjaxHook',
                                 'skipRenewConfirmation',
                                 'skipUpgradeConfirmation',
@@ -1349,9 +1380,9 @@ sub tree {
                             title => 'eventsManagement',
                             help  => 'eventsmanagement.html',
                             nodes => [
-                                'messageBroker', 'messageBrokerOptions',
-                                'reloadTimeout', 'reloadUrls',
-                                'compactConf',   'eventQueueName',
+                                'reloadUrls',     'reloadTimeout',
+                                'compactConf',    'messageBroker',
+                                'eventQueueName', 'messageBrokerOptions',
                             ]
                         },
                     ]

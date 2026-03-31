@@ -259,26 +259,31 @@
 	"casAuthnLevel": 1,
 	"casAppMetaDataOptions": {
 		"cas-client-1": {
+			"casAppMetaDataOptionsActivation": 1,
 			"casAppMetaDataOptionsLogout": -1,
 			"casAppMetaDataOptionsUserAttribute": "uid",
 			"casAppMetaDataOptionsService": "http://cas-client-1.llng.localhost:3000/"
 		},
 		"cas-client-2": {
+			"casAppMetaDataOptionsActivation": 1,
 			"casAppMetaDataOptionsLogout": -1,
 			"casAppMetaDataOptionsUserAttribute": "uid",
 			"casAppMetaDataOptionsService": "http://cas-client-2.llng.localhost:3000/"
 		},
 		"cas-client-3": {
+			"casAppMetaDataOptionsActivation": 1,
 			"casAppMetaDataOptionsLogout": -1,
 			"casAppMetaDataOptionsUserAttribute": "uid",
 			"casAppMetaDataOptionsService": "http://cas-client-3.llng.localhost:3000/"
 		},
 		"cas-client-4": {
+			"casAppMetaDataOptionsActivation": 1,
 			"casAppMetaDataOptionsLogout": -1,
 			"casAppMetaDataOptionsUserAttribute": "uid",
 			"casAppMetaDataOptionsService": "http://cas-client-4.llng.localhost:3000/"
 		},
 		"cas-client-5": {
+			"casAppMetaDataOptionsActivation": 1,
 			"casAppMetaDataOptionsLogout": -1,
 			"casAppMetaDataOptionsUserAttribute": "uid",
 			"casAppMetaDataOptionsService": "http://cas-client-5.llng.localhost:3000/"
@@ -435,6 +440,7 @@
 			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
 			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
 			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+      "oidcRPMetaDataOptionsActivation": 1,
 			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
 			"oidcRPMetaDataOptionsAllowOffline": 0,
 			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
@@ -464,6 +470,7 @@
 			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
 			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
 			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+      "oidcRPMetaDataOptionsActivation": 1,
 			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
 			"oidcRPMetaDataOptionsAllowOffline": 0,
 			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
@@ -493,6 +500,7 @@
 			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
 			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
 			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+      "oidcRPMetaDataOptionsActivation": 1,
 			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
 			"oidcRPMetaDataOptionsAllowOffline": 0,
 			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
@@ -522,6 +530,7 @@
 			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
 			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
 			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+      "oidcRPMetaDataOptionsActivation": 1,
 			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
 			"oidcRPMetaDataOptionsAllowOffline": 0,
 			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
@@ -551,6 +560,7 @@
 			"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg": "A256GCM",
 			"oidcRPMetaDataOptionsAccessTokenJWT": 0,
 			"oidcRPMetaDataOptionsAccessTokenSignAlg": "RS256",
+      "oidcRPMetaDataOptionsActivation": 1,
 			"oidcRPMetaDataOptionsAllowClientCredentialsGrant": 0,
 			"oidcRPMetaDataOptionsAllowOffline": 0,
 			"oidcRPMetaDataOptionsAllowPasswordGrant": 0,
@@ -678,6 +688,7 @@
 	"samlMetadataForceUTF8": 1,
 	"samlSPMetaDataOptions": {
 		"saml-client-1": {
+      "samlSPMetaDataOptionsActivation": 1,
 			"samlSPMetaDataOptionsNameIDFormat": "",
 			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
 			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
@@ -691,6 +702,7 @@
 			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
 		},
 		"saml-client-2": {
+      "samlSPMetaDataOptionsActivation": 1,
 			"samlSPMetaDataOptionsNameIDFormat": "",
 			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
 			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
@@ -704,6 +716,7 @@
 			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
 		},
 		"saml-client-3": {
+      "samlSPMetaDataOptionsActivation": 1,
 			"samlSPMetaDataOptionsNameIDFormat": "",
 			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
 			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
@@ -717,6 +730,7 @@
 			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
 		},
 		"saml-client-4": {
+      "samlSPMetaDataOptionsActivation": 1,
 			"samlSPMetaDataOptionsNameIDFormat": "",
 			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
 			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,
@@ -730,6 +744,7 @@
 			"samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": 72000
 		},
 		"saml-client-5": {
+      "samlSPMetaDataOptionsActivation": 1,
 			"samlSPMetaDataOptionsNameIDFormat": "",
 			"samlSPMetaDataOptionsEnableIDPInitiatedURL": 0,
 			"samlSPMetaDataOptionsCheckSSOMessageSignature": 1,

@@ -13,6 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SIGNATURE_ERROR
   PE_SENDRESPONSE
   PE_USERNOTFOUND
+  PE_WAIT
 );
 
 our $VERSION = '2.22.0';
@@ -22,6 +23,7 @@ our @ALERTS = (
     PE_BADCERTIFICATE,       PE_MALFORMEDUSER,
     PE_SAML_SIGNATURE_ERROR, PE_OPENID_BADID,
     PE_CAPTCHAERROR,         PE_BADOTP,
+    PE_WAIT,
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -87,8 +89,9 @@ sub sendIpAlerts {
     }
     my $msg = 'Authentication failed: '
       . &Lemonldap::NG::Portal::Main::Constants::portalConsts->{$ret};
+    my $login = $req->user // '';
     $self->alert( $req->address, $msg,
-        { scenario => 'llng/badcredentials', reason => $msg, } )
+        { scenario => 'llng/badcredentials', reason => $msg, login => $login } )
       ? $self->auditLog(
         $req,
         code    => 200,
@@ -111,12 +114,17 @@ sub controlUrl {
     }
 
     return $ret unless $self->filters;
-    if (    $self->filters->{url}
-        and $req->env->{REQUEST_URI} =~ $self->filters->{url} )
+    if (
+            $self->filters->{url}
+        and $req->env->{REQUEST_URI} =~ $self->filters->{url}
+        and not($self->filters->{urlskip}
+            and $req->env->{REQUEST_URI} =~ $self->filters->{urlskip} )
+      )
     {
-        my $msg = 'Bad URI detected: ' . $req->env->{REQUEST_URI};
+        my $uri = $req->env->{REQUEST_URI};
+        my $msg = "Bad URI detected: $uri";
         $self->alert( $req->address, $msg,
-            { scenario => 'llng/urlscan', reason => $msg, } )
+            { scenario => 'llng/urlscan', reason => $msg, uri => $uri } )
           ? $self->auditLog(
             $req,
             code         => 200,
