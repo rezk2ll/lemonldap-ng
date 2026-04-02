@@ -734,6 +734,7 @@
 "oidcOPMetaDataOptionsAcrValues":"Giá trị ACR",
 "oidcOPMetaDataOptionsAuthnEndpointAuthMethod":"Authentication method for authorization code request",
 "oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg":"Signature algorithm for authorization code authentication",
+"oidcOPMetaDataOptionsAuthEndpointExtraParams":"Extra parameters for authorization code request",
 "oidcOPMetaDataOptionsCheckJWTSignature":"Kiểm tra chữ ký JWT",
 "oidcOPMetaDataOptionsClientID":"Client ID",
 "oidcOPMetaDataOptionsClientSecret":"Trình khách bí mật",

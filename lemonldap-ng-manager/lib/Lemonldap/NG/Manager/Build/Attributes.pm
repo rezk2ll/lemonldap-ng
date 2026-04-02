@@ -5263,6 +5263,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsMaxAge    => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsUiLocales => { type => 'text', },
         oidcOPMetaDataOptionsAcrValues => { type => 'text', },
+        oidcOPMetaDataOptionsAuthEndpointExtraParams => {
+            type          => 'keyTextContainer',
+            documentation =>
+              'Additional parameters for OpenID Connect Authorization endpoint',
+        },
         oidcOPMetaDataOptionsTokenEndpointAuthMethod => {
             type   => 'select',
             select => [

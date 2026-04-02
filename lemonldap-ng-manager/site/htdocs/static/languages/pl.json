@@ -734,6 +734,7 @@
 "oidcOPMetaDataOptionsAcrValues":"Wartości ACR",
 "oidcOPMetaDataOptionsAuthnEndpointAuthMethod":"Metoda uwierzytelniania dla żądania kodu autoryzacyjnego",
 "oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg":"Algorytm podpisu do uwierzytelniania kodem autoryzacyjnym",
+"oidcOPMetaDataOptionsAuthEndpointExtraParams":"Extra parameters for authorization code request",
 "oidcOPMetaDataOptionsCheckJWTSignature":"Sprawdź podpis JWT",
 "oidcOPMetaDataOptionsClientID":"Identyfikator klienta",
 "oidcOPMetaDataOptionsClientSecret":"Sekret klienta",
