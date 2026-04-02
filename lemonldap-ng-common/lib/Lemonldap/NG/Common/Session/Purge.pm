@@ -331,7 +331,7 @@ sub purge {
         $log .= join( ', ', @logentries );
     }
 
-    $self->logger->info($log);
+    $self->logger->notice($log);
     $self->logger->warn(
 "$total_error sessions remaining, try to purge them with force (option -f)"
     ) if $total_error;
@@ -674,7 +674,7 @@ sub persistentPurge {
         $log .= join( ', ', @logentries );
     }
 
-    $self->logger->info($log);
+    $self->logger->notice($log);
 
     return {
         success => 1,
