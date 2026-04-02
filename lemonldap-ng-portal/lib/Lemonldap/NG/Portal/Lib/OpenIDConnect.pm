@@ -458,6 +458,31 @@ sub buildAuthorizationCodeAuthnRequest {
         ( defined $nonce      ? ( nonce      => $nonce )      : () ),
         ( defined $login_hint ? ( login_hint => $login_hint ) : () ),
     };
+
+    my %custom_request_params;
+    while (
+        my ( $key, $value ) = each %{
+            $self->opOptions->{$op}
+              ->{oidcOPMetaDataOptionsAuthEndpointExtraParams} || {}
+        }
+      )
+    {
+
+        # If the value looks like JSON, decode it
+        if ( $value =~ /^[\[\{]/ ) {
+            my $try_json = eval { from_json($value) };
+            if ( defined($try_json) ) {
+                $value = $try_json;
+            }
+            else {
+                $self->logger->debug(
+                        "Unable to decode value for request parameter $key"
+                      . " as JSON: $@" );
+            }
+        }
+        $custom_request_params{$key} = $value;
+    }
+
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
         ( $display ? ( display => $display ) : () ),
@@ -473,7 +498,8 @@ sub buildAuthorizationCodeAuthnRequest {
         (
             defined($acr_values)
               && length($acr_values) ? ( acr_values => $acr_values ) : ()
-        )
+        ),
+        %custom_request_params,
     };
 
     # Call oidcGenerateAuthenticationRequest
@@ -514,10 +540,32 @@ sub buildAuthorizationCodeAuthnRequest {
                 'Unable to generate JWT, continue with unauthenticated query');
         }
     }
+
+    # Make sure request params all contain string data, since hooks or extra
+    # claims may have inserted a complex object
+
+    my %flat_authorize_request_params;
+    while ( my ( $key, $value ) = each %$authorize_request_params ) {
+        if ( ref($value) ) {
+            my $try_value  = eval { to_json($value) };
+            my $eval_error = $@;
+            if ( defined($try_value) ) {
+                $value = $try_value;
+            }
+            else {
+                $value = undef;
+                $self->logger->warn(
+                    "Could not add $key to Authorization request: $eval_error");
+            }
+        }
+
+        $flat_authorize_request_params{$key} = $value if defined($value);
+    }
+
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(%$authorize_request_params);
+      . build_urlencoded(%flat_authorize_request_params);
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
