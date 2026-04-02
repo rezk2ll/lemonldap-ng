@@ -5,6 +5,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
+use URI;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -37,6 +38,7 @@ LWP::Protocol::PSGI->register(
         }
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
+
             # Capture token request content for verification
             if ( $url =~ /token/ ) {
                 $token_request_content = $s;
@@ -95,8 +97,12 @@ ok( $rp = register( 'rp', sub { rp( $jwks, $metadata ) } ), 'RP portal' );
 
 # Query RP for auth - this triggers oidcGenerateAuthenticationRequest hook
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
-my ( $url, $query ) =
-  expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+my ($uri) =
+  expectRedirection( $res, qr#(http://auth.op.com/oauth2/authorize\?.*)$# );
+
+$uri = URI->new($uri);
+my $url   = $uri->path;
+my $query = $uri->query;
 
 # --------------------------------------------------------------------------
 # Test oidcGenerateAuthenticationRequest hook
@@ -106,11 +112,26 @@ ok(
     'oidcGenerateAuthenticationRequest hook was called'
 );
 
+my $params = $uri->query_form_hash;
+
 # Verify custom parameter was added to the auth request
-like(
-    $query,
-    qr/custom_auth_param=auth_hook_value/,
-    'oidcGenerateAuthenticationRequest hook added custom parameter to auth request'
+is( $params->{custom_auth_param}, "auth_hook_value",
+'oidcGenerateAuthenticationRequest hook added custom parameter to auth request'
+);
+is( $params->{badjson}, '{xx/h',
+    "Value that looks like json but isn't json is passed as-is" );
+my $decoded_claims = from_json( $params->{claims} );
+is_deeply(
+    $decoded_claims,
+    {
+        'id_token' => {
+            'amr' => {
+                'essential' => JSON::true,
+            },
+            'my_claim' => undef
+        }
+    },
+    "Claims parameter was correctly edited by the hook"
 );
 
 # Push request to OP
@@ -178,30 +199,20 @@ like(
 # --------------------------------------------------------------------------
 # Test oidcGotIDToken hook
 # --------------------------------------------------------------------------
-ok(
-    $t::OidcClientHookPlugin::gotIDTokenHookCalled,
-    'oidcGotIDToken hook was called'
-);
+ok( $t::OidcClientHookPlugin::gotIDTokenHookCalled,
+    'oidcGotIDToken hook was called' );
 
-is(
-    $t::OidcClientHookPlugin::idTokenHookData,
-    'op/french',
-    'oidcGotIDToken hook received correct OP name and sub'
-);
+is( $t::OidcClientHookPlugin::idTokenHookData,
+    'op/french', 'oidcGotIDToken hook received correct OP name and sub' );
 
 # --------------------------------------------------------------------------
 # Test oidcGotUserInfo hook
 # --------------------------------------------------------------------------
-ok(
-    $t::OidcClientHookPlugin::gotUserInfoHookCalled,
-    'oidcGotUserInfo hook was called'
-);
+ok( $t::OidcClientHookPlugin::gotUserInfoHookCalled,
+    'oidcGotUserInfo hook was called' );
 
-is(
-    $t::OidcClientHookPlugin::userInfoHookData,
-    'op/french',
-    'oidcGotUserInfo hook received correct OP name and sub'
-);
+is( $t::OidcClientHookPlugin::userInfoHookData,
+    'op/french', 'oidcGotUserInfo hook received correct OP name and sub' );
 
 clean_sessions();
 done_testing();
@@ -274,7 +285,13 @@ sub rp {
                         oidcOPMetaDataOptionsClientID => "rpid",
                         oidcOPMetaDataOptionsUseNonce => 1,
                         oidcOPMetaDataOptionsConfigurationURI =>
-                          "https://auth.op.com/.well-known/openid-configuration"
+"https://auth.op.com/.well-known/openid-configuration",
+                        oidcOPMetaDataOptionsAuthEndpointExtraParams => {
+                            myparam => '42',
+                            badjson => '{xx/',
+                            claims  =>
+'{ "id_token": { "amr": { "essential": true } } }',
+                        },
                     }
                 },
                 oidcOPMetaDataJWKS => {
