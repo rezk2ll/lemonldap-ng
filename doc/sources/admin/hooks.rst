@@ -640,6 +640,13 @@ Sample code::
        return PE_OK;
    }
 
+.. versionchanged:: 2.23.0
+
+Parameters specified in *Extra parameters for authorization code request* will
+be exposed to this hook as well. If they start with a ``[`` or a ``{``, they
+will be JSON-decoded automatically. LemonLDAP::NG will also automatically
+JSON-encode and URL-encode them before adding them to the authorization
+request.
 
 
 oidcGenerateTokenRequest
