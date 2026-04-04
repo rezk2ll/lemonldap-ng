@@ -81,6 +81,24 @@ has state_ott => (
     }
 );
 
+# Calculate conditional plugins to be loaded if required by a dynamic RP
+has _rpConditionalPlugins => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my %map;
+        for ( my $i = 0 ; $i < @Lemonldap::NG::Portal::Main::pList ; $i += 2 )
+        {
+            if ( $Lemonldap::NG::Portal::Main::pList[$i] =~
+                m{^or::oidcRPMetaDataOptions/\*/(.+)$} )
+            {
+                $map{$1} = $Lemonldap::NG::Portal::Main::pList[ $i + 1 ];
+            }
+        }
+        return \%map;
+    }
+);
+
 # METHODS
 
 # Load OpenID Connect Providers and JWKS data
@@ -319,6 +337,10 @@ sub load_rp {
         $self->rpScopeRules->{$rp} = $compiled_scope_rules;
         $self->rpRules->{$rp}      = $rule;
         $self->rpLevelRules->{$rp} = $levelrule;
+
+        # Ensure plugins required by this RP's options are loaded (#3587)
+        $self->_loadConditionalPlugins( $config{options} );
+
         return 1;
     }
     else {
@@ -327,6 +349,23 @@ sub load_rp {
             "Relying Party $rp has errors and will be ignored");
     }
     return 0;
+}
+
+# Plugins that must be loaded when specific RP options are enabled (#3587)
+# Built from @Lemonldap::NG::Portal::Main::pList entries matching
+# or::oidcRPMetaDataOptions/*/...
+sub _loadConditionalPlugins {
+    my ( $self, $options ) = @_;
+
+    while ( my ( $opt, $plugin ) = each %{ $self->_rpConditionalPlugins } ) {
+        next unless $options->{$opt};
+        my $full =
+          ( $plugin =~ /^::/ ) ? "Lemonldap::NG::Portal$plugin" : $plugin;
+        next if $self->p->loadedModules->{$full};
+        $self->logger->info(
+            "Dynamically loading plugin $plugin for RP option $opt");
+        $self->p->loadPlugin($plugin);
+    }
 }
 
 # Refresh JWKS data if needed
