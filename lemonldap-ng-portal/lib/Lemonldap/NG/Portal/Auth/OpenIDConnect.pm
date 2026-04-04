@@ -152,15 +152,17 @@ sub extractFormInfo {
         };
 
         # Call hook - plugins can modify callback_params
-        my $hook_res = $self->p->processHook( $req, 'oidcGotAuthenticationResponse',
+        my $hook_res =
+          $self->p->processHook( $req, 'oidcGotAuthenticationResponse',
             $callback_params );
         return $hook_res if ( $hook_res != PE_OK and $hook_res > 0 );
 
         # Restore state
         my $state = $callback_params->{state};
         if ($state) {
-            # If state is a hashref, hook already extracted it - skip extractState
-            # If state is a scalar, call extractState
+
+          # If state is a hashref, hook already extracted it - skip extractState
+          # If state is a scalar, call extractState
             if ( ref($state) eq 'HASH' ) {
                 $self->logger->debug("State already extracted by hook");
                 $req->data->{_oidcOPCurrent} = $state->{_oidcOPCurrent};
@@ -203,7 +205,7 @@ sub extractFormInfo {
             ->{oidcOPMetaDataOptionsRequireIss} )
         {
             $self->userLogger->error(
-                "Missing iss parameter in authorization response (required by config)"
+"Missing iss parameter in authorization response (required by config)"
             );
             return PE_OIDC_AUTH_ERROR;
         }
@@ -243,6 +245,21 @@ sub extractFormInfo {
         }
         else {
             $self->logger->debug("Token response is valid");
+        }
+
+        # Check if returned scopes match requested scopes (#3585)
+        # Ignore offline_access (often stripped by OP) and ordering differences
+        my $reqs = $self->opOptions->{$op}->{oidcOPMetaDataOptionsScope};
+        if ( my $recs = $token_response->{scope} ) {
+            my %scopes;
+            $scopes{$_} += 1 for split( /\s+/, $reqs );
+            $scopes{$_} -= 1 for split( /\s+/, $recs );
+            delete $scopes{offline_access};
+            if ( grep { $_ } values %scopes ) {
+                $self->userLogger->warn( "OP $op returned different scopes"
+                      . " than requested: requested='$reqs',"
+                      . " received='$recs'" );
+            }
         }
 
         my $access_token  = $token_response->{access_token};
