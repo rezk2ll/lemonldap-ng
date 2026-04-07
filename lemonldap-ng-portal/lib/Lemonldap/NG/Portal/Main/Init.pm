@@ -490,6 +490,11 @@ sub loadPlugin {
 
     my $full_name =
       ( $plugin =~ /^::/ ) ? "Lemonldap::NG::Portal$plugin" : $plugin;
+
+    # Skip if already loaded (avoids double-loading when
+    # _loadConditionalPlugins and enabledPlugins both trigger the same plugin)
+    return 1 if $self->loadedModules->{$full_name};
+
     if (
         grep {
             my $item_full_name =
@@ -695,13 +700,17 @@ sub loadModule {
         $self->logger->error("$module new() method returned undef");
         return 0;
     }
+    # Register before init so that plugins loaded during init (e.g. via
+    # _loadConditionalPlugins) can find this module in loadedModules
+    $self->loadedModules->{$module} = $obj;
+
     if ( $obj->can("init") and ( !$obj->init ) ) {
+        delete $self->loadedModules->{$module};
         $self->logger->error("$module init failed");
         $self->error("$module init failed");
         return 0;
     }
 
-    $self->loadedModules->{$module} = $obj;
     return $obj;
 }
 
