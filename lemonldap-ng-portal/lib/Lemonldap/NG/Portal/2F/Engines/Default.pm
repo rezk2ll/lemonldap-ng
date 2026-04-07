@@ -206,10 +206,12 @@ sub init {
     $self->addUnauthRoute( '2fchoice' => '_redirect', ['GET'] );
 
     # Registration base
-    $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
-    $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
+    $self->addAuthRoute(
+        '2fregisters' => '_registration_with_optional_token',
+        [ 'GET', 'POST' ]
+    );
     $self->addUnauthRoute(
-        '2fregisters' => 'restoreSession',
+        '2fregisters' => '_registration_with_mandatory_token',
         [ 'GET', 'POST' ]
     ) if ( $self->conf->{sfRequired} );
 
@@ -809,7 +811,17 @@ sub register {
     return $self->p->sendJSONresponse( $req, \@am );
 }
 
-sub restoreSession {
+sub _handle_registration {
+    my ( $self, $req, @path ) = @_;
+    if ( $req->method eq 'POST' ) {
+        return $self->register( $req, @path );
+    }
+    else {
+        return $self->_displayRegister( $req, @path );
+    }
+}
+
+sub _registration_with_token {
     my ( $self, $req, @path ) = @_;
 
     if ( my $token = $req->pdata->{sfRegToken} ) {
@@ -827,30 +839,52 @@ sub restoreSession {
 
             $req->userData( $req->sessionInfo );
             $req->data->{sfRegRequired} = 1;
-            if ( $req->method eq 'POST' ) {
-                my $res = $self->register( $req, @path );
 
-                if ( $req->data->{_2fRegistered} ) {
+            my $res = $self->_handle_registration( $req, @path );
+
+            if ( $req->data->{_2fRegistered} ) {
+                $self->regOtt->updateToken( $token,
+                    "_2f" => $req->userData->{'_2f'} );
+                if ( my $authnLevel =
+                    $req->userData->{registeredAuthenticationLevel} )
+                {
                     $self->regOtt->updateToken( $token,
-                        "_2f" => $req->userData->{'_2f'} );
-                    if ( my $authnLevel =
-                        $req->userData->{registeredAuthenticationLevel} )
-                    {
-                        $self->regOtt->updateToken( $token,
-                            "newAuthenticationLevel" => $authnLevel );
-                    }
+                        "newAuthenticationLevel" => $authnLevel );
                 }
-                return $res;
             }
-            else {
-                return $self->_displayRegister( $req, @path );
-            }
+            return $res;
         }
     }
-    $self->logger->warn(
-        "Cannot restore session state during mandatory 2FA registration");
-    return $self->p->sendRedirection( $req, $req->portal );
+    return;
 }
+
+sub _registration_with_optional_token {
+    my ( $self, $req, @path ) = @_;
+    my $res = $self->_registration_with_token( $req, @path );
+    if ($res) {
+        return $res;
+    }
+    else {
+        return $self->_handle_registration( $req, @path );
+    }
+}
+
+sub _registration_with_mandatory_token {
+    my ( $self, $req, @path ) = @_;
+
+    my $res = $self->_registration_with_token( $req, @path );
+    if ($res) {
+        return $res;
+    }
+    else {
+        $self->logger->warn(
+            "Cannot restore session state during mandatory 2FA registration");
+        return $self->p->sendRedirection( $req, $req->portal );
+    }
+}
+
+# LEGACY
+*restoreSession = \&_registration_with_mandatory_token;
 
 sub continueLoginAfterRegistration {
     my ( $self, $req ) = @_;
