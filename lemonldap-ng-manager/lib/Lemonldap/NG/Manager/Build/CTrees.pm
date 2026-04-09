@@ -202,6 +202,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsMaxAge',
                             'oidcOPMetaDataOptionsUiLocales',
                             'oidcOPMetaDataOptionsAcrValues',
+                            'oidcOPMetaDataOptionsAuthEndpointExtraParams',
                             'oidcOPMetaDataOptionsAuthnEndpointAuthMethod',
                             'oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg',
                             'oidcOPMetaDataOptionsTokenEndpointAuthMethod',
