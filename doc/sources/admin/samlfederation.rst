@@ -126,3 +126,16 @@ In order to provide a ``subject-id`` attribute, you must create a macro with
 The ``subject-id`` attribute will only be sent if the SP metadata contains the
 ``urn:oasis:names:tc:SAML:profiles:subject-id:req`` extension with a value of
 ``any`` or ``subject-id``
+
+eduPersonTargetedID
+-------------------
+
+If a SP declares that it wants an ``eduPersonTargetedID`` attribute,
+LemonLDAP::NG will automatically configure the default NameID format to
+*persistent* and will emit both a *persistent* NameID, and an
+``eduPersonTargetedID`` attribute that contains this NameID.
+
+If the SP requests a NameID format other than *persitent*, the
+``eduPersonTargetedID`` attribute will *not* be sent. You might need to create
+a per-SP configuration and set the *Force NameID format* option to work around
+this.
