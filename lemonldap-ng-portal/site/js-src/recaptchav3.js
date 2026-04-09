@@ -25,7 +25,14 @@ $(document).ready(function() {
   }
 
   // 4. Safety timeout (60 seconds for slow connections)
-  setTimeout(allowSubmit, 60000);
+  setTimeout(function() {
+    if (typeof grecaptcha === 'undefined') {
+      // This may happen if a captive portal or proxy altered the ReCaptcha script
+      alert('ReCaptcha failed to load. Please check your network connection.');
+      return;
+    }
+    allowSubmit();
+  }, 60000);
 
   // 5. Handle form submission
   $form.on('submit', function(e) {
@@ -36,8 +43,8 @@ $(document).ready(function() {
         $(e.currentTarget).unbind('submit').submit();
       });
     } else {
-      // Fallback if grecaptcha is not available
-      $(e.currentTarget).unbind('submit').submit();
+      // This may happen if a captive portal or proxy altered the ReCaptcha script
+      alert('ReCaptcha failed to load. Please check your network connection.');
     }
   });
 });
