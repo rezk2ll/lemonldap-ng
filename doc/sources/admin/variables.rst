@@ -167,6 +167,9 @@ Key                          Description
 \_oidc_refresh_token         OAuth2 Refresh Token. This should never be transmitted to applications
 \_oidc_consent_scope\_\ *rp* Scope for which consent was given for RP *rp*
 \_oidc_consent_time\_\ *rp*  Time when consent was given for RP *rp*
+\_oidc_sub                   `sub` claim received from the OP
+\_oidc_acr                   *Since 2.23.0*: `acr` claim received from the OP
+\_oidc_amr                   *Since 2.23.0*: `amr` claim received from the OP, serialized as a flat string, for use with :ref:`listMatch`
 ============================ ======================================================================
 
 Other
