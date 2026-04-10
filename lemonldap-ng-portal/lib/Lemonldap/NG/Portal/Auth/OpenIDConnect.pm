@@ -366,6 +366,12 @@ sub extractFormInfo {
         $req->data->{op_sid} = $id_token_payload_hash->{sid}
           if $id_token_payload_hash->{sid};
 
+        # Remember acr/amr claims
+        $req->data->{id_token_acr} = $id_token_payload_hash->{acr}
+          if $id_token_payload_hash->{acr};
+        $req->data->{id_token_amr} = $id_token_payload_hash->{amr}
+          if $id_token_payload_hash->{amr};
+
         # If access token TTL is given save expiration date
         # (with security margin)
         if ($expires_in) {
@@ -481,6 +487,21 @@ sub setAuthSessionInfo {
 
     if ( $req->data->{id_token_sub} ) {
         $req->{sessionInfo}->{_oidc_sub} = $req->data->{id_token_sub};
+    }
+
+    if ( $req->data->{id_token_acr} ) {
+        $req->{sessionInfo}->{_oidc_acr} = $req->data->{id_token_acr};
+    }
+
+    if ( $req->data->{id_token_amr} ) {
+        if ( ref( $req->data->{id_token_amr} ) eq "ARRAY" ) {
+            $req->{sessionInfo}->{_oidc_amr} =
+              join $self->conf->{multiValuesSeparator},
+              sort @{ $req->data->{id_token_amr} };
+        }
+        else {
+            $req->{sessionInfo}->{_oidc_amr} = $req->data->{id_token_amr};
+        }
     }
 
     # Keep ID Token in session
