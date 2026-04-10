@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Common::Util qw(isHiddenAttr);
+use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK

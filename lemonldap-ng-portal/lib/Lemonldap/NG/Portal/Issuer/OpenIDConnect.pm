@@ -992,10 +992,8 @@ sub _authorizeEndpoint {
             ),
         };
 
-        $h = $self->p->processHook(
-            $req, 'oidcGenerateAuthorizationResponse',
-            $oidc_request, $rp, $response_params
-        );
+        $h = $self->p->processHook( $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params );
         return $h if ( $h != PE_OK );
 
         return $self->sendOidcResponse(
@@ -1090,19 +1088,18 @@ sub _authorizeEndpoint {
                   )
                 : ()
             ),
-            ( $expires_in ? ( expires_in => $expires_in )    : () ),
-            ( $state      ? ( state      => $state )         : () ),
-            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            ( $expires_in              ? ( expires_in => $expires_in ) : () ),
+            ( $state                   ? ( state      => $state )      : () ),
+            ( ( $req_scope ne $scope ) ? ( scope      => $scope )      : () ),
             (
                 $session_state ? ( session_state => $session_state )
                 : ()
             )
         };
 
-        my $h = $self->p->processHook(
-            $req, 'oidcGenerateAuthorizationResponse',
-            $oidc_request, $rp, $response_params
-        );
+        my $h =
+          $self->p->processHook( $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params );
         return $h if ( $h != PE_OK );
 
         return $self->sendOidcResponse(
@@ -1234,19 +1231,18 @@ sub _authorizeEndpoint {
                 $id_token ? ( id_token => $id_token )
                 : ()
             ),
-            ( $expires_in ? ( expires_in => $expires_in )    : () ),
-            ( $state      ? ( state      => $state )         : () ),
-            ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+            ( $expires_in              ? ( expires_in => $expires_in ) : () ),
+            ( $state                   ? ( state      => $state )      : () ),
+            ( ( $req_scope ne $scope ) ? ( scope      => $scope )      : () ),
             (
                 $session_state ? ( session_state => $session_state )
                 : ()
             )
         };
 
-        my $h = $self->p->processHook(
-            $req, 'oidcGenerateAuthorizationResponse',
-            $oidc_request, $rp, $response_params
-        );
+        my $h =
+          $self->p->processHook( $req, 'oidcGenerateAuthorizationResponse',
+            $oidc_request, $rp, $response_params );
         return $h if ( $h != PE_OK );
 
         return $self->sendOidcResponse(
@@ -1907,8 +1903,8 @@ sub _handleAuthorizationCodeGrant {
 
     # Check PKCE requirement based on RP configuration
     my $has_pkce   = $codeSession->data->{code_challenge} ? 1 : 0;
-    my $has_secret = ( $method && $method ne 'none' ) ? 1 : 0;
-    my $is_public = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic};
+    my $has_secret = ( $method && $method ne 'none' )     ? 1 : 0;
+    my $is_public  = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic};
     my $require_pkce =
       $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE} || 0;
 
@@ -2037,8 +2033,7 @@ sub _handleAuthorizationCodeGrant {
     # For online access, if configured
     elsif ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRefreshToken} ) {
         my $refreshTokenSession = $self->_generateRefreshToken(
-            $req,
-            $rp,
+            $req, $rp,
             {
                 redirect_uri => $codeSession->data->{redirect_uri},
                 scope        => $scope,
@@ -2049,7 +2044,8 @@ sub _handleAuthorizationCodeGrant {
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
                 $self->conf->{whatToTrace} => $user,
-                _oidc_sub => $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
+                _oidc_sub                  =>
+                  $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
             },
             0,
         );
@@ -2588,18 +2584,15 @@ sub introspection {
 
     # RFC 9701: wrap response in token_introspection claim
     my $jwt_payload = {
-        iss                 => $self->get_issuer($req),
-        aud                 => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
-        iat                 => time(),
+        iss => $self->get_issuer($req),
+        aud => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
+        iat => time(),
         token_introspection => $response,
     };
 
-    my $introspection_jwt = $self->createJWT(
-        $jwt_payload,
-        $introspection_sign_alg,
-        $rp,
-        { typ => 'token-introspection+jwt' }
-    );
+    my $introspection_jwt =
+      $self->createJWT( $jwt_payload, $introspection_sign_alg, $rp,
+        { typ => 'token-introspection+jwt' } );
 
     # Apply encryption if configured
     my $enc_alg =
@@ -2613,10 +2606,8 @@ sub introspection {
           $self->encryptToken( $rp, $introspection_jwt, $enc_alg, $enc_enc );
     }
 
-    return $self->p->sendBinaryResponse(
-        $req, $introspection_jwt,
-        type => 'application/token-introspection+jwt'
-    );
+    return $self->p->sendBinaryResponse( $req, $introspection_jwt,
+        type => 'application/token-introspection+jwt' );
 }
 
 sub unauthRevokeToken {
@@ -3321,7 +3312,8 @@ sub _generateRefreshToken {
     my ( $self, $req, $rp, $info, $offline ) = @_;
 
     # Allow plugins to add data to refresh token
-    my $h = $self->p->processHook( $req, 'oidcGenerateRefreshToken', $info, $rp, $offline );
+    my $h = $self->p->processHook( $req, 'oidcGenerateRefreshToken', $info, $rp,
+        $offline );
     return if $h;
 
     my $user  = $info->{_session_uid};

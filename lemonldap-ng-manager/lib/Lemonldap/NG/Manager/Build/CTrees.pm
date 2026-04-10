@@ -303,7 +303,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
                             'oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg',
-                            'oidcRPMetaDataOptionsIntrospectionEncContentEncAlg',
+'oidcRPMetaDataOptionsIntrospectionEncContentEncAlg',
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
                         ],

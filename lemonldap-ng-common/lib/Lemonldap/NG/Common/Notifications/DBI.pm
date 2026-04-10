@@ -291,7 +291,7 @@ sub getIdentifier {
 
 sub _dbh {
     my $self = shift;
-    my $dbh = check_dbh( $self->{_dbh} );
+    my $dbh  = check_dbh( $self->{_dbh} );
     return $dbh if $dbh;
     delete $self->{_dbh};
     $self->logger->debug("Notification DBI connection lost, getting a new one");

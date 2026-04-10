@@ -388,7 +388,8 @@ sub run {
                   ->{samlSPMetaDataOptionsNameIDFormat} || "email";
                 eval {
 
-                    $login->request()->NameIDPolicy()
+                    $login->request()
+                      ->NameIDPolicy()
                       ->Format( $self->getNameIDFormat($nameIDFormatKey) );
                 };
 

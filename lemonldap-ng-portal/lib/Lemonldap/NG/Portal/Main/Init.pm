@@ -330,7 +330,7 @@ sub reloadConf {
     # Set asset tag from version and optional salt
     my $cacheTagSalt = $self->conf->{cacheTagSalt} // "";
     my $key          = $self->conf->{key}          // "";
-    my $digest = substr(
+    my $digest       = substr(
         MIME::Base64::encode_base64url(
             Digest::SHA::hmac_sha256(
                 $Lemonldap::NG::Portal::VERSION . $cacheTagSalt, $key
@@ -525,7 +525,7 @@ sub findEP {
     # Corresponding code paths must be removed
     my $is_only = 1;
     if ( $self->_loadedPlugins->{$module} ) {
-        $self->logger->debug( "Plugin $module has already been loaded once." );
+        $self->logger->debug("Plugin $module has already been loaded once.");
         $is_only = 0;
     }
     else {
@@ -700,6 +700,7 @@ sub loadModule {
         $self->logger->error("$module new() method returned undef");
         return 0;
     }
+
     # Register before init so that plugins loaded during init (e.g. via
     # _loadConditionalPlugins) can find this module in loadedModules
     $self->loadedModules->{$module} = $obj;
@@ -747,7 +748,7 @@ sub buildRule {
     my $overLoadedRule = $compiledRule;
     if ( $self->conf->{logParams} ) {
         $overLoadedRule = sub {
-            $self->_dump($_[0]);
+            $self->_dump( $_[0] );
             return $compiledRule->(@_);
         };
     }

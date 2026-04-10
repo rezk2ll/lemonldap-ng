@@ -198,12 +198,10 @@ our %badUrls = (
     # Test .re patterns (regex)
     'CVE test with regex pattern' =>
       [ '/foo/.%2E/.%2E/etc/passwd', 'llng/http-cve-test' ],
-    'CVE test exploit php' =>
-      [ '/exploit123.php', 'llng/http-cve-test' ],
+    'CVE test exploit php' => [ '/exploit123.php', 'llng/http-cve-test' ],
 
     # Test legacy format (file at root with category in filename)
-    'Legacy url pattern at root' =>
-      [ '/legacy-bad-pattern', 'llng/urlscan' ],
+    'Legacy url pattern at root' => [ '/legacy-bad-pattern', 'llng/urlscan' ],
 );
 subtest 'Report bad urls to Crowdsec with named scenarios', sub {
     my $prevBan = $ban;
@@ -401,8 +399,10 @@ subtest 'Admin probing ban with per-scenario maxFailures=3', sub {
     );
 
     # This 3rd bad URL should trigger a ban (maxFailures=3 for this scenario)
-    ok( $res = $client->_get( '/phpmyadmin', accept => 'text/html' ),
-        'Test bad url /phpmyadmin (3rd triggers ban due to per-scenario maxFailures)' );
+    ok(
+        $res = $client->_get( '/phpmyadmin', accept => 'text/html' ),
+'Test bad url /phpmyadmin (3rd triggers ban due to per-scenario maxFailures)'
+    );
     ok( $res->[0] == 404, '404 not found' );
 
     ok( $lastAlertTypeIsBan,    'Alert type is "ban"' );

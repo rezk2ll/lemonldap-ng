@@ -350,8 +350,8 @@ ENDKEY
             ),
             'Show 2FA Manager'
         );
-        my $epoch = getHtmlElement( $res,
-            "//td[\@class=\"data-epoch\"]/text()" )->shift;
+        my $epoch =
+          getHtmlElement( $res, "//td[\@class=\"data-epoch\"]/text()" )->shift;
         ok( $epoch, "Found $name among registered devices" );
         ok( $epoch, "Found epoch for $name" );
 

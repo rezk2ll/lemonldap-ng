@@ -223,7 +223,6 @@ is_deeply(
 );
 count(7);
 
-
 my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
 is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
 count(1);
@@ -393,7 +392,6 @@ ok(
 count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
-
 
 # Test if consent was saved
 # -------------------------

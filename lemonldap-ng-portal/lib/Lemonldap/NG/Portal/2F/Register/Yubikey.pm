@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::2F::Register::Yubikey;
 
 use strict;
 use Mouse;
-use JSON qw(from_json to_json);
+use JSON                                   qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_FORMEMPTY
   PE_ERROR

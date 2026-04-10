@@ -88,12 +88,14 @@ sub _search {
                 $selectField, $value, @fields );
         }
         elsif ( $self->opts->{where} =~ /^(\w+)\s*<\s*(.*)/ ) {
-            $res = Lemonldap::NG::Common::Apache::Session->searchLt( $args,
-                $1, $2, @fields );
+            $res =
+              Lemonldap::NG::Common::Apache::Session->searchLt( $args, $1, $2,
+                @fields );
         }
         elsif ( $self->opts->{where} =~ /^(\w+)\s*>\s*(.*)/ ) {
-            $res = Lemonldap::NG::Common::Apache::Session->searchGt( $args,
-                $1, $2, @fields );
+            $res =
+              Lemonldap::NG::Common::Apache::Session->searchGt( $args, $1, $2,
+                @fields );
         }
         else {
             die "Invalid --where option : " . $self->opts->{where};
@@ -658,8 +660,7 @@ sub _last_login_event {
 
 sub history_lastsuccessdate {
     my ( $self, $uid ) = @_;
-    return $self->_last_login_event( $uid, 'successLogin',
-        'successful login' );
+    return $self->_last_login_event( $uid, 'successLogin', 'successful login' );
 }
 
 sub history_lastfailuredate {
@@ -688,7 +689,7 @@ sub history_get {
             map {
                 {
                     %$_,
-                    date => scalar( localtime( $_->{_utime} ) ),
+                      date => scalar( localtime( $_->{_utime} ) ),
                 }
             } @$events
         ];

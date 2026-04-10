@@ -158,8 +158,7 @@ sub login {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $op, $uid ) = @_;
     my $res;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             user     => $uid,
             password => $uid,
         }
@@ -196,8 +195,7 @@ sub codeAuthorize {
 
 sub tokenExchange {
     my ( $op, $clientid, %params ) = @_;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
             %params
         }
@@ -302,8 +300,7 @@ sub getUserinfo {
 sub refreshGrant {
     my ( $op, $client_id, $refresh_token ) = @_;
 
-    $query = buildForm(
-        {
+    $query = buildForm( {
             grant_type    => 'refresh_token',
             refresh_token => $refresh_token,
         }
@@ -324,8 +321,7 @@ sub refreshGrant {
 
 sub introspect {
     my ( $op, $client_id, $token ) = @_;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             client_id     => $client_id,
             client_secret => $client_id,
             token         => $token,

@@ -16,10 +16,10 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INTERFACE
 
-use constant endAuth    => 'storeRememberedAuthChoice';
-use constant beforeAuth => 'checkRememberedAuthChoice';
+use constant endAuth      => 'storeRememberedAuthChoice';
+use constant beforeAuth   => 'checkRememberedAuthChoice';
 use constant beforeLogout => 'removeRememberedAuthChoice';
-use constant hook       => { getAuthChoice => "autoChoice", };
+use constant hook         => { getAuthChoice => "autoChoice", };
 
 has rule => ( is => 'rw', default => sub { 0 } );
 

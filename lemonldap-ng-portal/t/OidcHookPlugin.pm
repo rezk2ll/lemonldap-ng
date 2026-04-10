@@ -103,8 +103,7 @@ sub addClaimToAccessToken {
 }
 
 sub addCustomToken {
-    my ( $self, $req, $rp, $response, $codeSession, $userSession,
-        $grant_type )
+    my ( $self, $req, $rp, $response, $codeSession, $userSession, $grant_type )
       = @_;
     $response->{custom_token} = 'CustomToken';
     $lastTokenResponseGrantType = $grant_type || '';
@@ -124,8 +123,7 @@ sub refreshHook {
     # Test PE_SENDRESPONSE support
     if ($refreshSendResponse) {
         $req->response(
-            [ 200, [ 'Content-Type' => 'text/plain' ], ['Direct response'] ]
-        );
+            [ 200, [ 'Content-Type' => 'text/plain' ], ['Direct response'] ] );
         return PE_SENDRESPONSE;
     }
 

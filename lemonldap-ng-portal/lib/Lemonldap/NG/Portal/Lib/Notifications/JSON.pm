@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Lib::Notifications::JSON;
 
 use strict;
 use Mouse;
-use JSON qw(from_json);
+use JSON  qw(from_json);
 use POSIX qw(strftime);
 
 our $VERSION = '2.21.0';
@@ -145,7 +145,7 @@ sub viewNotification {
             $self->logger->debug("Get reference: $reference");
 
             # Check it in session
-            unless (exists $req->userData->{"notification_$reference"}
+            unless ( exists $req->userData->{"notification_$reference"}
                 and $req->userData->{"notification_$reference"} eq $epoch
                 and $reference eq $ref )
             {

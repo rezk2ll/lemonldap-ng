@@ -87,7 +87,9 @@ sub loadApp {
         my $valid = 1;
 
         # Check if CAS application is activated
-        unless ( $self->conf->{casAppMetaDataOptions}->{$_}->{casAppMetaDataOptionsActivation} // 1) {
+        unless ( $self->conf->{casAppMetaDataOptions}->{$_}
+            ->{casAppMetaDataOptionsActivation} // 1 )
+        {
             $self->logger->debug("Processing $_: CAS application deactivated");
             next;
         }
@@ -329,7 +331,7 @@ sub updateCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session, undef, 0);
+            my $casSession = $self->getCasSession( $cas_session, undef, 0 );
 
             # Delete session
             if ($casSession) {
@@ -373,7 +375,7 @@ sub deleteCasSecondarySessions {
             # Get session
             $self->logger->debug("Retrieve CAS session $cas_session");
 
-            my $casSession = $self->getCasSession($cas_session, undef, 0);
+            my $casSession = $self->getCasSession( $cas_session, undef, 0 );
 
             # Delete session
             $result = $self->deleteCasSession($casSession);
@@ -793,7 +795,7 @@ sub getAttributesFromServiceValidateResponse {
         {
 
             # There should be only on session
-            my $pgtIdSession = $self->getCasSession($id, undef, 0) or next;
+            my $pgtIdSession = $self->getCasSession( $id, undef, 0 ) or next;
             $pgtId = $pgtIdSession->data->{pgtId};
             $pgtIdSession->remove;
         }

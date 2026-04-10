@@ -133,9 +133,9 @@ sub listMatch {
     my @a;
 
     if ( $values[-1] eq '1' || $values[-1] eq '0' ) {
-        $flags = pop @values ? 'i' : '';        
+        $flags = pop @values ? 'i' : '';
     }
-    
+
     if ( ref($list) eq "ARRAY" ) {
         @a = @{$list};
     }

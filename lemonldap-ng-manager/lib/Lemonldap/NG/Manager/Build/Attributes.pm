@@ -3725,7 +3725,7 @@ sub attributes {
             msgFail    => '__badValue__',
             default    => {},
         },
-        samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataXML               => { type => 'file', },
         samlSPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
@@ -5351,7 +5351,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsActivation     => {
+        oidcRPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
         },

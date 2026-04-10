@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::SamlFederation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw( PE_OK);
-use Carp qw(croak);
+use Carp                                   qw(croak);
 use XML::LibXML::Reader;
 
 our $VERSION = '2.0.16';
@@ -335,8 +335,8 @@ sub get_federation {
     {
         $federation_name = $reader->getAttribute('Name');
         $cache_duration =
-        eval { parse_duration( $reader->getAttribute('cacheDuration') ) }
-        || $self->default_ttl;
+          eval { parse_duration( $reader->getAttribute('cacheDuration') ) }
+          || $self->default_ttl;
     }
     else {
         $self->logger->warn(

@@ -43,7 +43,11 @@ done_testing();
 sub try {
     ok( my $res = $client->_get( "/", accept => "text/html" ),
         "Get login form" );
-    expectXpath($res, '//div[@id="id_cmb"]//input[@id="userfield"]', "Found login form for cmb choice");
+    expectXpath(
+        $res,
+        '//div[@id="id_cmb"]//input[@id="userfield"]',
+        "Found login form for cmb choice"
+    );
     my $user = shift;
     my $s    = "user=$user&password=$user";
     $s .= "&test=$_[0]" if (@_);

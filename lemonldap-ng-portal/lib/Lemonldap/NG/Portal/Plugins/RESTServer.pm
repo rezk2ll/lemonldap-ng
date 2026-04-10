@@ -68,7 +68,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 use Lemonldap::NG::Common::Languages;
-use Lemonldap::NG::Common::Session qw(id2storage reHashedKinds);
+use Lemonldap::NG::Common::Session         qw(id2storage reHashedKinds);
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK

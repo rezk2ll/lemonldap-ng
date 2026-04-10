@@ -91,7 +91,7 @@ sub _redirect {
         my $mode = $req->param('openid.mode');
         unless ($mode) {
             $self->logger->debug('OpenID SP test');
-            return $self->p->doPE($req, PE_OPENID_EMPTY);
+            return $self->p->doPE( $req, PE_OPENID_EMPTY );
         }
         if ( $mode eq 'associate' ) {
             return $self->_openIDResponse( $req,

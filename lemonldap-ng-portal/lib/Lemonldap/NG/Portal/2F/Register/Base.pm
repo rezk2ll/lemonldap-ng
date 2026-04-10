@@ -135,25 +135,19 @@ sub delete {
       or return $self->p->sendError( $req,
         $self->prefix . '2f: "epoch" parameter is missing', 400 );
 
-    my $registration_state = {
-                               module => $self
-                             };
+    my $registration_state = { module => $self };
 
-    my $h = $self->p->processHook(
-                                   $req,
-                                   'sfDeleteDevice',
-                                   $req->userData,
-                                   $self->type,
-                                   $epoch,
-                                   $registration_state
-                                 );
+    my $h = $self->p->processHook( $req, 'sfDeleteDevice', $req->userData,
+        $self->type, $epoch, $registration_state );
 
-    if ( $h != PE_OK )
-    {
+    if ( $h != PE_OK ) {
+
         # Return custom error label if defined by sfDeleteDevice hook
         my $errorLabel = $registration_state->{errorLabel}
-                         // 'sfDeleteDeviceHookError';
-        $self->logger->error( $self->prefix . "2f: error in sfDeleteDevice hook: " . $errorLabel );
+          // 'sfDeleteDeviceHookError';
+        $self->logger->error( $self->prefix
+              . "2f: error in sfDeleteDevice hook: "
+              . $errorLabel );
         return $self->p->sendError( $req, $errorLabel, 400 );
     }
 
@@ -161,7 +155,8 @@ sub delete {
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {
-        $self->logger->error( $self->prefix . "2f: unable to delete device: 2FDeviceNotFound" );
+        $self->logger->error(
+            $self->prefix . "2f: unable to delete device: 2FDeviceNotFound" );
         return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
     }
 }
@@ -179,8 +174,14 @@ sub modify {
     my $label = $req->param('label')
       or return $self->p->sendError( $req,
         $self->prefix . '2f: "label" parameter is missing', 400 );
-    $self->logger->debug("Modifying 2FA device with the label " . $label);
-    if ( $self->update2fDevice($req, $req->userData, $self->type, "epoch", $epoch, "name", $label ) ) {
+    $self->logger->debug( "Modifying 2FA device with the label " . $label );
+    if (
+        $self->update2fDevice(
+            $req,   $req->userData, $self->type, "epoch",
+            $epoch, "name",         $label
+        )
+      )
+    {
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     $self->logger->error( $self->prefix . "2f: device not found" );
@@ -238,9 +239,9 @@ sub registerDevice {
     my ( $self, $req, $info, $device ) = @_;
 
     my $registration_state = {
-                               authenticationLevel => $self->authnLevel,
-                               module => $self
-                             };
+        authenticationLevel => $self->authnLevel,
+        module              => $self
+    };
 
     my $h = $self->p->processHook( $req, 'sfRegisterDevice', $info, $device,
         $registration_state );

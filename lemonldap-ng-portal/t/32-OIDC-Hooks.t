@@ -58,10 +58,10 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRedirectUris  => 'http://dev.com/',
                 },
                 oauth => {
-                    oidcRPMetaDataOptionsDisplayName                 => "oauth",
-                    oidcRPMetaDataOptionsClientID                    => "oauth",
-                    oidcRPMetaDataOptionsClientSecret                => "service",
-                    oidcRPMetaDataOptionsUserIDAttr                  => "",
+                    oidcRPMetaDataOptionsDisplayName  => "oauth",
+                    oidcRPMetaDataOptionsClientID     => "oauth",
+                    oidcRPMetaDataOptionsClientSecret => "service",
+                    oidcRPMetaDataOptionsUserIDAttr   => "",
                     oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                 }
             },
@@ -162,8 +162,10 @@ ok(
 
 # Check that both oidcGenerateCode (hooked=1) and oidcGenerateAuthorizationResponse (authz_hook=hooked) hooks work
 my ($redir_url) = expectRedirection( $res, qr#(http://rp2\.com/\?.*)# );
-like( $redir_url, qr/\bhooked=1\b/, "oidcGenerateCode hook modified redirect_uri" );
-like( $redir_url, qr/\bauthz_hook=hooked\b/, "oidcGenerateAuthorizationResponse hook added parameter" );
+like( $redir_url, qr/\bhooked=1\b/,
+    "oidcGenerateCode hook modified redirect_uri" );
+like( $redir_url, qr/\bauthz_hook=hooked\b/,
+    "oidcGenerateAuthorizationResponse hook added parameter" );
 my ($code) = ( $redir_url =~ /\bcode=([^\&]+)/ );
 
 # Exchange code for AT
@@ -331,8 +333,8 @@ ok(
 );
 
 $json = expectJSON($res);
-is( $json->{introspection_hook}, "hooked",
-    "oidcGenerateIntrospectionResponse hook modified response" );
+is( $json->{introspection_hook},
+    "hooked", "oidcGenerateIntrospectionResponse hook modified response" );
 
 # --------------------------------------------------------------------------
 # Test oidcGotTokenRequest hook
@@ -379,8 +381,10 @@ $code = codeAuthorize(
 );
 $json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
 ok( $json->{refresh_token}, "Refresh token present" );
-ok( $t::OidcHookPlugin::generateRefreshTokenCalled,
-    "oidcGenerateRefreshToken hook was called" );
+ok(
+    $t::OidcHookPlugin::generateRefreshTokenCalled,
+    "oidcGenerateRefreshToken hook was called"
+);
 
 # --------------------------------------------------------------------------
 # Test oidcGenerateTokenResponse grant_type in refresh grant
@@ -434,8 +438,11 @@ ok( $refresh_token, 'Refresh token present for PE_SENDRESPONSE test' );
 $t::OidcHookPlugin::refreshSendResponse = 1;
 
 $res = refreshGrant( $op, 'rpid', $refresh_token );
-is( $res->[2]->[0], 'Direct response',
-    'Online refresh: PE_SENDRESPONSE returns hook response body' );
+is(
+    $res->[2]->[0],
+    'Direct response',
+    'Online refresh: PE_SENDRESPONSE returns hook response body'
+);
 
 # Disable and verify normal refresh still works
 $t::OidcHookPlugin::refreshSendResponse = 0;
@@ -469,8 +476,11 @@ ok( $refresh_token, 'Offline refresh token present for PE_SENDRESPONSE test' );
 $t::OidcHookPlugin::refreshSendResponse = 1;
 
 $res = refreshGrant( $op, 'rpid', $refresh_token );
-is( $res->[2]->[0], 'Direct response',
-    'Offline refresh: PE_SENDRESPONSE returns hook response body' );
+is(
+    $res->[2]->[0],
+    'Direct response',
+    'Offline refresh: PE_SENDRESPONSE returns hook response body'
+);
 
 # Disable and verify normal refresh still works
 $t::OidcHookPlugin::refreshSendResponse = 0;
@@ -494,10 +504,13 @@ expectOK($res);
 count(1);
 $json = expectJSON($res);
 count(1);
-ok( $json->{custom_metadata_hook} eq 'hooked',
-    'oidcGenerateMetadata hook added custom field' );
+ok(
+    $json->{custom_metadata_hook} eq 'hooked',
+    'oidcGenerateMetadata hook added custom field'
+);
 count(1);
-ok( grep( { $_ eq 'urn:test:custom_grant' }
+ok(
+    grep( { $_ eq 'urn:test:custom_grant' }
         @{ $json->{grant_types_supported} } ),
     'oidcGenerateMetadata hook added custom grant type'
 );

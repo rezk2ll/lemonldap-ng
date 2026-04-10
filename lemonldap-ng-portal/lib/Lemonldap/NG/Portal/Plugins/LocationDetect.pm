@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Plugins::LocationDetect;
 
 use Mouse;
-use List::MoreUtils qw/uniq/;
-use Scalar::Util qw/blessed/;
+use List::MoreUtils                        qw/uniq/;
+use Scalar::Util                           qw/blessed/;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -103,11 +103,11 @@ sub getIpInfo {
     my ( $self, $req ) = @_;
 
     # Try to detect type of GeoIP database
-    my $type = $self->reader->metadata->{database_type};
+    my $type    = $self->reader->metadata->{database_type};
     my $hasCity = ( $type =~ /City/ );
 
-    my $city_display = "Unknown";
-    my $city_code    = "unknown";
+    my $city_display    = "Unknown";
+    my $city_code       = "unknown";
     my $country_display = "Unknown";
     my $country_code    = "unknown";
 
@@ -117,8 +117,7 @@ sub getIpInfo {
         if ( blessed($@) && $@->isa('Throwable::Error') ) {
             $msg = $@->message;
         }
-        $self->logger->warn(
-                "[LocationDetect] Could not resolve IP "
+        $self->logger->warn( "[LocationDetect] Could not resolve IP "
               . $req->address . ": "
               . $msg );
     }
