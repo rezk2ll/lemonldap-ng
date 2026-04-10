@@ -43,7 +43,7 @@ sub check {
 
     # Run TrustedBrowser challenge
     if ( $trustedBrowser->mustChallenge($req) ) {
-        return $trustedBrowser->challenge( $req, '#');
+        return $trustedBrowser->challenge( $req, '#' );
     }
     elsif ( my $state = $trustedBrowser->getKnownBrowserState($req) ) {
         return $self->skipAuthentication( $req, $state );

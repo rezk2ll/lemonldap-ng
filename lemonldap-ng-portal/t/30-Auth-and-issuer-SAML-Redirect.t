@@ -150,7 +150,7 @@ SKIP: {
         'SAMLResponse', 'RelayState' );
 
     my ($resp) = $query =~ qr/SAMLResponse=([^&]*)/;
-    my $message = decode_base64( URI::Escape::uri_unescape $resp);
+    my $message = decode_base64( URI::Escape::uri_unescape $resp );
     like(
         $message,
 qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"@,

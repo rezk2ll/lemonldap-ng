@@ -31,7 +31,7 @@ extends qw(
 
 # INTERFACE
 
-use constant beforeAuth => 'checkAlreadyTrusted';
+use constant beforeAuth   => 'checkAlreadyTrusted';
 use constant beforeLogout => 'logout';
 
 # INITIALIZATION

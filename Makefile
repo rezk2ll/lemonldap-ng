@@ -27,7 +27,7 @@ JSCOMPRESS=$(PROD)
 CSSCOMPRESS=$(PROD)
 
 # Perltidy version
-PERLTIDY_VERSION=20220217
+PERLTIDY_VERSION=20250105
 
 # External commands
 PERL=$$(which perl)

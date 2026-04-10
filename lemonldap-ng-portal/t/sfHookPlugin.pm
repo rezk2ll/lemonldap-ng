@@ -60,7 +60,7 @@ sub sfDeleteDevice {
     my $module = $registration_state->{module};
 
     # Test custom condition for making hook fail
-    if ( defined($req->userData->{hookStatus} ) ) {
+    if ( defined( $req->userData->{hookStatus} ) ) {
         $registration_state->{errorLabel} = $req->userData->{hookStatus};
         return PE_ERROR;
     }

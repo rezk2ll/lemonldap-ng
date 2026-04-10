@@ -120,7 +120,7 @@ sub _authAndTrace {
     die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
     my $portal = eval { $type->tsv->{portal}->($req) };
-    $self->logger->warn($@)  if $@;
+    $self->logger->warn($@) if $@;
 
     if ( $res < 300 ) {
         if ($noCall) {
@@ -162,7 +162,7 @@ sub user {
     my ( $self, $req ) = @_;
     return $req->userData
       || { $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
-          || _whatToTrace => 'anonymous' };
+        || _whatToTrace => 'anonymous' };
 }
 
 ## @method hashRef custom()

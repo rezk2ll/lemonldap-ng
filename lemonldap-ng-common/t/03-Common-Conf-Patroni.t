@@ -53,8 +53,7 @@ EOT
         setup_patroni_mock();
 
         ok(
-            $h = new Lemonldap::NG::Common::Conf(
-                {
+            $h = new Lemonldap::NG::Common::Conf( {
                     type        => 'Patroni',
                     dbiChain    => "DBI:SQLite:dbname=$db",
                     dbiUser     => '',
@@ -67,8 +66,9 @@ EOT
 
         ok( $h->can('_dbh'), 'Driver has _dbh method' );
         $h->store( { cfgNum => 1, test => 'ascii' } );
-        is( $h->{dbiChain},
-            'DBI:SQLite:dbname=noexist/patroniConf.sql;host=127.0.0.235;port=5432',
+        is(
+            $h->{dbiChain},
+'DBI:SQLite:dbname=noexist/patroniConf.sql;host=127.0.0.235;port=5432',
             'dbiChain updated with leader host/port'
         );
 
@@ -84,8 +84,7 @@ EOT
         plan tests => 2;
 
         ok(
-            $h = new Lemonldap::NG::Common::Conf(
-                {
+            $h = new Lemonldap::NG::Common::Conf( {
                     type           => 'Patroni',
                     dbiChain       => "DBI:SQLite:dbname=$db",
                     dbiUser        => '',
@@ -98,13 +97,12 @@ EOT
         );
 
         ok(
-            $h = new Lemonldap::NG::Common::Conf(
-                {
+            $h = new Lemonldap::NG::Common::Conf( {
                     type        => 'Patroni',
                     dbiChain    => "DBI:SQLite:dbname=$db",
                     dbiUser     => '',
                     dbiPassword => '',
-                    patroniUrl =>
+                    patroniUrl  =>
                       'http://db1.com/, http://db2.com/, http://db3.com/',
                 }
             ),
@@ -129,8 +127,7 @@ EOT
         setup_patroni_mock();
 
         ok(
-            $h = new Lemonldap::NG::Common::Conf(
-                {
+            $h = new Lemonldap::NG::Common::Conf( {
                     type            => 'Patroni',
                     dbiChain        => "DBI:SQLite:dbname=$db",
                     dbiUser         => '',
@@ -148,8 +145,10 @@ EOT
         # Simulate Patroni API failure
         LWP::Protocol::PSGI->register(
             sub {
-                return [ 500, [ 'Content-Type' => 'text/plain' ],
-                    ['Server Error'] ];
+                return [
+                    500, [ 'Content-Type' => 'text/plain' ],
+                    ['Server Error']
+                ];
             }
         );
 
@@ -186,8 +185,7 @@ EOT
 EOT
         setup_patroni_mock();
 
-        $h = new Lemonldap::NG::Common::Conf(
-            {
+        $h = new Lemonldap::NG::Common::Conf( {
                 type        => 'Patroni',
                 dbiChain    => "DBI:SQLite:dbname=$db",
                 dbiUser     => '',
@@ -203,8 +201,11 @@ EOT
             eval { $h->store( { cfgNum => 7, test => 'split' } ); };
         }
 
-        like( $stderr, qr/Multiple leaders detected/,
-            'Split-brain warning logged' );
+        like(
+            $stderr,
+            qr/Multiple leaders detected/,
+            'Split-brain warning logged'
+        );
     };
 
     subtest 'Leader health state validation' => sub {
@@ -225,8 +226,7 @@ EOT
 EOT
         setup_patroni_mock();
 
-        $h = new Lemonldap::NG::Common::Conf(
-            {
+        $h = new Lemonldap::NG::Common::Conf( {
                 type        => 'Patroni',
                 dbiChain    => "DBI:SQLite:dbname=$db",
                 dbiUser     => '',
@@ -263,8 +263,7 @@ EOT
 EOT
         setup_patroni_mock();
 
-        $h = new Lemonldap::NG::Common::Conf(
-            {
+        $h = new Lemonldap::NG::Common::Conf( {
                 type        => 'Patroni',
                 dbiChain    => "DBI:SQLite:dbname=$db",
                 dbiUser     => '',
@@ -294,8 +293,7 @@ EOT
 EOT
         setup_patroni_mock();
 
-        $h = new Lemonldap::NG::Common::Conf(
-            {
+        $h = new Lemonldap::NG::Common::Conf( {
                 type        => 'Patroni',
                 dbiChain    => "DBI:SQLite:dbname=$db",
                 dbiUser     => '',

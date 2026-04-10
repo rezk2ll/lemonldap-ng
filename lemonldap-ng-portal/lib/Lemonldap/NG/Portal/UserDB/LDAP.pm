@@ -65,7 +65,7 @@ sub setGroups {
     my ( $self, $req ) = @_;
 
     # Bail out if we are being called out of sequence
-    return PE_OK unless ($req->data->{ldapentry});
+    return PE_OK unless ( $req->data->{ldapentry} );
 
     my $groups  = $req->{sessionInfo}->{groups}  || '';
     my $hGroups = $req->{sessionInfo}->{hGroups} || {};

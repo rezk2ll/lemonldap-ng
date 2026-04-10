@@ -14,8 +14,7 @@ ok( $app = module( Lemonldap::NG::Handler::PSGI::Try->new() ), 'New object' );
 init();
 
 ok(
-    $app->init(
-        {
+    $app->init( {
             configStorage       => { type => 'File', dirName => 't' },
             localSessionStorage => '',
             logLevel            => 'warn',

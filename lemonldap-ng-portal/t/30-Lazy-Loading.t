@@ -109,7 +109,7 @@ SKIP: {
         $mock->mock_info( {
                 confKey => 'dynamic_rp',
                 options => {
-                    oidcRPMetaDataOptionsClientID     => 'dynamic_client',
+                    oidcRPMetaDataOptionsClientID       => 'dynamic_client',
                     oidcRPMetaDataOptionsAllowNativeSso => 1,
                 },
             }

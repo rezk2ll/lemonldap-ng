@@ -34,8 +34,7 @@ my $res;
 my $client = register(
     'portal',
     sub {
-        LLNG::Manager::Test->new(
-            {
+        LLNG::Manager::Test->new( {
                 ini => {
                     logLevel    => 'error',
                     useSafeJail => 1,
@@ -84,8 +83,7 @@ my ( $cli, $app );
 $app = register( 'app', sub { LocalApp->run( $client->ini ) } );
 
 ok(
-    $res = $app->(
-        {
+    $res = $app->( {
             'HTTP_ACCEPT'          => 'text/html',
             'SCRIPT_NAME'          => '/',
             'SERVER_NAME'          => '127.0.0.1',
@@ -112,8 +110,7 @@ expectRedirection( $res, 'http://test.example.org/' );
 my $cid = expectCookie($res);
 
 ok(
-    $res = $app->(
-        {
+    $res = $app->( {
             'HTTP_ACCEPT'          => 'text/html',
             'SCRIPT_NAME'          => '/',
             'SERVER_NAME'          => '127.0.0.1',

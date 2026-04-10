@@ -265,7 +265,7 @@ sub getAlertsByIp {
 
         # Use per-scenario timeWindow if provided, otherwise use global config
         # Default: 900 seconds (15 minutes)
-        my $delay = $timeWindow // $self->conf->{crowdsecBlockDelay} // 900;
+        my $delay     = $timeWindow // $self->conf->{crowdsecBlockDelay} // 900;
         my $timeLimit = time - $delay;
 
         # API already filters by IP and scenario, just filter by time

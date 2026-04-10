@@ -54,7 +54,7 @@ count(1);
 my $id = expectCookie($res);
 
 is( getSession($id)->data->{_auth},   "Demo", "expected _auth" );
-is( getSession($id)->data->{_userDB}, "Demo",   "expected _userDB" );
+is( getSession($id)->data->{_userDB}, "Demo", "expected _userDB" );
 is( getSession($id)->data->{_choice}, "weak", "expected _choice" );
 count(3);
 

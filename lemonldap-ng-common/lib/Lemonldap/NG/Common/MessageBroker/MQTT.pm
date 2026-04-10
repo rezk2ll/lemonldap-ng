@@ -52,7 +52,7 @@ sub subscribe {
             $_[0] =~ s#llng/##;
             my $tmp = eval { JSON::from_json( $_[1] ) };
             if ($@) {
-                $self->{logger}->error("Bad message from MQTT server: $@")
+                $self->{logger}->error("Bad message from MQTT server: $@");
             }
             else {
                 push @{ $self->{messages}{ $_[0] } }, $tmp;

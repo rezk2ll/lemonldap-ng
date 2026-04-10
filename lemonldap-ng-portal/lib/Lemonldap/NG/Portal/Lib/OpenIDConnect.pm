@@ -87,8 +87,7 @@ has _rpConditionalPlugins => (
     lazy    => 1,
     default => sub {
         my %map;
-        for ( my $i = 0 ; $i < @Lemonldap::NG::Portal::Main::pList ; $i += 2 )
-        {
+        for ( my $i = 0 ; $i < @Lemonldap::NG::Portal::Main::pList ; $i += 2 ) {
             if ( $Lemonldap::NG::Portal::Main::pList[$i] =~
                 m{^or::oidcRPMetaDataOptions/\*/(.+)$} )
             {
@@ -1520,8 +1519,7 @@ sub updateToken {
     );
 
     if ( $oidcSession->error ) {
-        $self->userLogger->warn(
-            "OpenIDConnect session $id not found");
+        $self->userLogger->warn("OpenIDConnect session $id not found");
         return undef;
     }
 
@@ -1575,11 +1573,11 @@ sub getOpenIDConnectSession {
 
     if ( $oidcSession->error ) {
         if ($id) {
-            $self->userLogger->warn(
-                "OpenIDConnect $type_log $id not found");
+            $self->userLogger->warn("OpenIDConnect $type_log $id not found");
         }
         else {
-            $self->logger->error("Unable to create new OpenIDConnect $type_log");
+            $self->logger->error(
+                "Unable to create new OpenIDConnect $type_log");
             $self->logger->error( $oidcSession->error );
         }
         return undef;
@@ -2895,13 +2893,12 @@ sub validatePKCEChallenge {
 
     unless ($code_challenge) {
 
-        # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
-        # Reject code_verifier if no code_challenge was sent during authorization
+       # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
+       # Reject code_verifier if no code_challenge was sent during authorization
         if ($code_verifier) {
             $self->userLogger->error(
-                "PKCE downgrade attack: code_verifier provided "
-              . "but no code_challenge was sent during authorization"
-            );
+                    "PKCE downgrade attack: code_verifier provided "
+                  . "but no code_challenge was sent during authorization" );
             return 0;
         }
         $self->logger->debug("PKCE was not requested by the RP");

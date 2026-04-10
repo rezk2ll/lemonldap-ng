@@ -114,8 +114,7 @@ unlink $confFiles->[1];
 done_testing( count() );
 
 sub changes {
-    return [
-        {
+    return [ {
             'key' => 'portal',
             'new' => 'http://auth2.example.com/',
             'old' => 'http://auth.example.com/'

@@ -64,7 +64,7 @@ sub getPublicNotifs {
             }
         );
         $req->env->{DISPLAY_PUBLIC_NOTIFICATIONS} = 1 if $res;
-        $req->data->{customScript} .= <<EOF if $res;
+        $req->data->{customScript} .= <<EOF           if $res;
 <script type="application/init">
 {
   "publicNotifications": $res
