@@ -2849,16 +2849,7 @@ sub registration {
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
 
-    if ($frontchannel_logout_uri) {
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
-          = 'front';
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
-          = $frontchannel_logout_uri;
-        $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
-          $frontchannel_logout_session_required;
-    }
-    elsif ($backchannel_logout_uri) {
+    if ($backchannel_logout_uri) {
         $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
           = 'back';
         $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
@@ -2866,6 +2857,15 @@ sub registration {
         $conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
+    }
+    elsif ($frontchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'front';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $frontchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $frontchannel_logout_session_required;
     }
     $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
       $jwksUri
