@@ -5134,7 +5134,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         oidcServiceAllowDynamicRegistration => {
-            type          => 'bool',
+            type   => 'select',
+            select => [
+                { k => '0', v => 'disabled' },
+                { k => '1', v => 'confidentialOnly' },
+                { k => '2', v => 'allClients' },
+            ],
             default       => 0,
             documentation => 'OpenID Connect allow dynamic client registration',
         },

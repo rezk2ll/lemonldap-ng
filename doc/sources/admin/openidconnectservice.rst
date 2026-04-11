@@ -71,9 +71,26 @@ Dynamic registration
 If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options
 to define attributes and extra claims released when a new relying party is registered through ``/oauth2/register`` endpoint.
 
--  **Activation**: Set to 1 to allow clients to register themselves
+-  **Activation**:
+
+   -  ``0``: Disabled
+   -  ``1``: Confidential clients only (clients must use a secret-based
+      ``token_endpoint_auth_method``)
+   -  ``2``: All clients, including public clients
+      (``token_endpoint_auth_method=none``)
+
 -  **Exported vars**
 -  **Extra claims**
+
+All dynamically registered clients have ``RequirePKCE`` set to
+``pkceOrSecret`` (value 2). This means:
+
+-  Confidential clients (``client_secret_basic``, ``client_secret_post``,
+   ``client_secret_jwt``) can authenticate with their secret or PKCE
+-  ``private_key_jwt`` clients authenticate via signed JWT (requires
+   ``jwks_uri`` in the registration request)
+-  Public clients (``token_endpoint_auth_method=none``) are required to use
+   PKCE since they have no other authentication method
 
 .. warning::
     Dynamic Registration can be a security risk because a new configuration

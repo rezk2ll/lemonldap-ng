@@ -232,6 +232,7 @@ sub defaultValues {
         'oidcRPStateTimeout'                     => 600,
         'oidcServiceAccessTokenExpiration'       => 3600,
         'oidcServiceAllowAuthorizationCodeFlow'  => 1,
+        'oidcServiceAllowDynamicRegistration'    => 0,
         'oidcServiceAuthorizationCodeExpiration' => 60,
         'oidcServiceEncAlgorithmAlg'             => 'RSA-OAEP',
         'oidcServiceEncAlgorithmEnc'             => 'A256GCM',

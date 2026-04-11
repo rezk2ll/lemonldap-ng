@@ -3738,7 +3738,20 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcServiceAllowDynamicRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'select'  => [ {
+                    'k' => '0',
+                    'v' => 'disabled'
+                },
+                {
+                    'k' => '1',
+                    'v' => 'confidentialOnly'
+                },
+                {
+                    'k' => '2',
+                    'v' => 'allClients'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcServiceAllowHybridFlow' => {
             'default' => 0,
