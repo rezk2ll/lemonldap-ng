@@ -60,6 +60,10 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/js/webauthn-json.browser-gl
 Copyright: GitHub, Inc.
 License: Expat
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/captchetat-js.js
+Copyright: AIFE
+License: ISC
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
 Copyright: Apache Software Foundation (ASF)
 License: Apache-2.0
@@ -2120,3 +2124,10 @@ License: OASIS
  DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
  WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR
  ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+License: ISC
+ ISC License
+
+ Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.

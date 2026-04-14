@@ -234,7 +234,7 @@ sub init_captcha {
 
     my $cacheTag = $self->p->cacheTag;
     $req->data->{customScript} .= <<"EOF";
-<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/captchetat-js.js?v=$cacheTag"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/captchetat-js.min.js?v=$cacheTag"></script>
 EOF
 
     my $nomCaptcha = $self->captcha_style_name;
