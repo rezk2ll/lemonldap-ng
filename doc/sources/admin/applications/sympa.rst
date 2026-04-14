@@ -146,8 +146,8 @@ authentication URL.
        # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
-       # Keep original hostname
-       fastcgi_param HOST $http_host;
+       # Prevent attacks on older Nginx versions (<1.29.5)
+       fastcgi_param HTTP_HOST $host;
        # Keep original request (LL::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
