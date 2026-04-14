@@ -524,7 +524,7 @@ included file):
        fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
-       fastcgi_param HOST $http_host;
+       fastcgi_param HTTP_HOST $host;
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 
