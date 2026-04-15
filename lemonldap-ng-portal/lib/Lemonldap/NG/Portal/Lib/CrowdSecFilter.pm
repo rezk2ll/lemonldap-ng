@@ -176,7 +176,13 @@ sub parseFilters {
             next unless /\w/;
             s/[\r\n]//g;
             s/^\s+//;
-            s/\s+$//;
+            # For regex files, preserve trailing escaped spaces (e.g. '\ ')
+            if ( $type eq 're' ) {
+                s/(?<!\\)\s+$//;
+            }
+            else {
+                s/\s+$//;
+            }
             push @{ $res->{$lcat}->{$type} }, $_;
             $c++;
         }
