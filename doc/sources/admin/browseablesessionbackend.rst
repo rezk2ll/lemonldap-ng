@@ -32,7 +32,7 @@ List of fields to index by session type
    * - Persistent sessions
      - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace \_webAuthnUserHandle [#]_
    * - CAS sessions
-     - \_session_kind \_utime \_cas\_id pgtIou
+     - \_session_kind \_utime \_cas\_id pgtIou auth_cas_ticket
    * - SAML sessions
      - \_session_kind \_utime \_saml_id ProxyID \_nameID \_assert_id \_art_id
    * - OIDC sessions

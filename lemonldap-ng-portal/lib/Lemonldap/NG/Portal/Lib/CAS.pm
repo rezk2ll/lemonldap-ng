@@ -193,6 +193,29 @@ sub getCasSession {
     return $casSession;
 }
 
+# Try to recover the SSO-CAS session corresponding to the ticket and return session data
+# If id is set to undef, return a new session
+sub getSSOSessionIdByTicket {
+    my ( $self, $ticket ) = @_;
+
+    my $moduleOptions;
+    if ( $self->conf->{casStorage} ) {
+        $moduleOptions = $self->conf->{casStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{casStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $cas_sessions =
+        $module->searchOn( $moduleOptions, "auth_cas_ticket", $ticket );
+
+    my (undef, $cas_session) = %$cas_sessions;
+    return $cas_session && $cas_session->{_cas_id};   
+}
+
 # Return an error for CAS VALIDATE request
 sub returnCasValidateError {
     my ( $self, $req ) = @_;
