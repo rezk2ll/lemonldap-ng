@@ -57,6 +57,13 @@ ok( $res->[2]->[0] eq 'Unauth', 'Get unauth result' )
   or print "Expect Unauth, got $res->[2]->[0]\n";
 count(3);
 
+ok( $res = $client->_head('/test'), 'Get response with HEAD method' );
+ok( $res->[0] == 200,              'Response code is 200' )
+  or print "Expect 200, got $res->[0]\n";
+ok( ref($res->[2]) eq 'ARRAY', 'Get array ref' )
+  or print 'Expect array ref, got ' . ref($res->[2]) . "\n";
+count(3);
+
 # Auth tests
 ok(
     $res = $client->_get(

@@ -168,6 +168,33 @@ sub _get {
     );
 }
 
+sub _head {
+    my ( $self, $path, $query, $host, $cookie, %custom ) = @_;
+    $query //= '';
+    $host ||= 'test1.example.com';
+    return $self->app->( {
+            'HTTP_ACCEPT'          => 'text/html',
+            'SCRIPT_NAME'          => 'lmAuth',
+            'SERVER_NAME'          => '127.0.0.1',
+            'QUERY_STRING'         => $query,
+            'HTTP_CACHE_CONTROL'   => 'max-age=0',
+            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'PATH_INFO'            => $path,
+            'REQUEST_METHOD'       => 'HEAD',
+            'REQUEST_URI'          => '/lmauth',
+            'X_ORIGINAL_URI'       => $path . ( $query ? "?$query" : '' ),
+            'SERVER_PORT'          => '80',
+            'SERVER_PROTOCOL'      => 'HTTP/1.1',
+            'HTTP_USER_AGENT'      =>
+              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
+            'REMOTE_ADDR' => '127.0.0.1',
+            'HTTP_HOST'   => $host,
+            ( $cookie ? ( HTTP_COOKIE => $cookie ) : ( HTTP_COOKIE => '' ) ),
+            %custom,
+        }
+    );
+}
+
 package ReloadCounter;
 use Mouse;
 has counter => ( is => 'rw', default => 0 );
