@@ -758,7 +758,7 @@ sub getSkin {
             }
             else {
                 $self->logger->warn(
-                    "User tries to access to nonexistent skin dir $skinParam");
+                    "User tries to access nonexistent skin dir $skinParam");
             }
         }
         else {

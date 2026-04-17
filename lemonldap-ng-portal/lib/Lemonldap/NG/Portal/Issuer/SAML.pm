@@ -549,7 +549,7 @@ sub run {
                             'User '
                               . $req->sessionInfo->{ $self->conf->{whatToTrace}
                               }
-                              . " is not authorized to access to $spConfKey"
+                              . " is not authorized to access $spConfKey"
                         ),
                         res        => PE_UNAUTHORIZEDPARTNER,
                         userLogger => 1,
@@ -1330,7 +1330,7 @@ sub run {
                     message   => (
                             'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is authorized to access to $sp."
+                          . " is authorized to access $sp."
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
@@ -1379,7 +1379,7 @@ sub run {
                     message   => (
                             'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is authorized to access to $sp."
+                          . " is authorized to access $sp."
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),

@@ -486,7 +486,7 @@ sub _checkErrorsInAuthorizeEndpoint {
                 msg => (
                         'User '
                       . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                      . " is not authorized to access to $rp"
+                      . " is not authorized to access $rp"
                 ),
                 res        => PE_UNAUTHORIZEDPARTNER,
                 userLogger => 1,
@@ -903,7 +903,7 @@ sub _authorizeEndpoint {
 
         # MUST ensure that the prompt parameter contains consent unless
         # other conditions for processing the request permitting offline
-        # access to the requested resources are in place; unless one or
+        # access the requested resources are in place; unless one or
         # both of these conditions are fulfilled, then it MUST ignore
         # the offline_access request,
         unless ( $bypassConsent
@@ -977,7 +977,7 @@ sub _authorizeEndpoint {
             message => (
                     'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $rp"
+                  . " is authorized to access $rp"
             ),
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
@@ -1073,7 +1073,7 @@ sub _authorizeEndpoint {
             message => (
                     'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $rp"
+                  . " is authorized to access $rp"
             ),
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
@@ -1212,7 +1212,7 @@ sub _authorizeEndpoint {
             message => (
                     'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $rp"
+                  . " is authorized to access $rp"
             ),
             user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
         );
@@ -1772,7 +1772,7 @@ sub _handlePasswordGrant {
         unless ( $rule->( $req, $ruleVariables ) ) {
             $self->userLogger->warn( 'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is not authorized to access to $rp" );
+                  . " is not authorized to access $rp" );
             $self->p->deleteSession($req);
             return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
