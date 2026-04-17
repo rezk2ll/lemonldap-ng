@@ -16,8 +16,10 @@ my $client = LLNG::Manager::Test->new( {
             userDB            => 'Same',
             passwordDB        => 'Choice',
             authChoiceModules => {
-                '1_Demo'  => 'Demo;Demo;Null',
-                '2_Slave' => 'Slave;Demo;Null',
+                '1_Demo'     => 'Demo;Demo;Null',
+                '2_Slave'    => 'Slave;Demo;Null',
+                '3_SlaveSSL' =>
+'Slave;Demo;Null;;;{"slaveVar": "SSL_CLIENT_S_DN", "slaveRegexp": "myproxy[123].test.fr", "slaveUserHeader": "UID", "slaveExportedVars": ""}',
             },
             slaveUserHeader   => 'My-Test',
             slaveExportedVars => {
@@ -37,7 +39,6 @@ ok(
             HTTP_MY_TEST => 'dwho',
             HTTP_NAME    => 'Dr Who',
         }
-
     ),
     'Auth query'
 );
@@ -58,11 +59,43 @@ ok(
             HTTP_MY_TEST => 'dwho',
             HTTP_NAME    => 'Dr Who',
         }
-
     ),
     'Auth query'
 );
-count(1);
+ok( $res->[0] == 200, 'Get 200' ) or explain( $res->[0], 200 );
+count(2);
+
+# Bad certificate with right module
+ok(
+    $res = $client->_get(
+        '/',
+        query  => 'lmAuth=3_SlaveSSL',
+        ip     => '127.0.0.2',
+        custom => {
+            SSL_CLIENT_S_DN => 'myproxy.test.fr',
+            HTTP_UID        => 'dwho',
+        }
+    ),
+    'Auth query'
+);
+ok( $res->[0] == 401, 'Get 401' ) or explain( $res->[0], 401 );
+count(2);
+
+# Good certificate with right module
+ok(
+    $res = $client->_get(
+        '/',
+        query  => 'lmAuth=3_SlaveSSL',
+        ip     => '127.0.0.2',
+        custom => {
+            SSL_CLIENT_S_DN => 'myproxy1.test.fr',
+            HTTP_UID        => 'dwho',
+        }
+    ),
+    'Auth query'
+);
+ok( $res->[0] == 200, 'Get 200' ) or explain( $res->[0], 200 );
+count(2);
 
 expectOK($res);
 expectCookie($res);
