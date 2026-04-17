@@ -584,7 +584,7 @@ sub replacePlaceholders {
 
     my $placeholder_config = {};
     if ( $self->{useServerEnv} ) {
-        $placeholder_config->{SERVERENV} = sub { %ENV{ $_[0] } };
+        $placeholder_config->{SERVERENV} = sub { $ENV{ $_[0] } };
     }
     if ( my $moduleList = $self->{configPlaceHolderModules} ) {
         for my $moduledef ( split( /[,\s]+/, $moduleList ) ) {
