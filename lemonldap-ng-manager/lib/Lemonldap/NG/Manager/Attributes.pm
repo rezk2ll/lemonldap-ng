@@ -5725,7 +5725,14 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'    => qr/^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$/,
             'type'    => 'text'
         },
+        'slaveRegexp' => {
+            'default' => '',
+            'type'    => 'pcre'
+        },
         'slaveUserHeader' => {
+            'type' => 'text'
+        },
+        'slaveVar' => {
             'type' => 'text'
         },
         'SMTPAuthPass' => {

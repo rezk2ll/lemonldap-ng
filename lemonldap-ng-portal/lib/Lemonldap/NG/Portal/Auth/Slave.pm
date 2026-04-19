@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.23';
+our $VERSION = '2.23.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth

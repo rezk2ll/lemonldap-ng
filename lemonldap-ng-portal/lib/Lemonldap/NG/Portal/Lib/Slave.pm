@@ -9,7 +9,7 @@ use strict;
 use Mouse;
 use Net::CIDR;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.23.0';
 
 # RUNNING METHODS
 

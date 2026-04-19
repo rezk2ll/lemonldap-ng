@@ -4714,7 +4714,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 2,
             documentation => 'Slave authentication level',
         },
-        slaveUserHeader   => { type => 'text', },
+        slaveUserHeader => { type => 'text', },
+        slaveVar        => { type => 'text', },
+        slaveRegexp     => {
+            type          => 'pcre',
+            default       => '',
+            documentation => 'Regular expression to test Slave var',
+        },
         slaveExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
