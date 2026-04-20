@@ -463,8 +463,10 @@ sub tree {
                                     help  => 'authslave.html',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'slaveMasterIP', 'slaveVar',
-                                        'slaveRegexp',   'slaveHeaderName',
+                                        'slaveMasterIP',
+                                        'slaveVar',
+                                        'slaveRegexp',
+                                        'slaveHeaderName',
                                         'slaveHeaderContent',
                                     ]
                                 },
@@ -476,12 +478,9 @@ sub tree {
                             help  => 'authssl.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'SSLAuthnLevel',
-                                'SSLVar',
-                                'SSLIssuerVar',
-                                'sslByAjax',
-                                'sslHost',
-                                'SSLVarIf',
+                                'SSLAuthnLevel', 'SSLVar',
+                                'SSLIssuerVar',  'sslByAjax',
+                                'sslHost',       'SSLVarIf',
                             ]
                         },
                         {
@@ -489,10 +488,8 @@ sub tree {
                             help  => 'authtwitter.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'twitterAuthnLevel',
-                                'twitterKey',
-                                'twitterSecret',
-                                'twitterAppName',
+                                'twitterAuthnLevel', 'twitterKey',
+                                'twitterSecret',     'twitterAppName',
                                 'twitterUserField'
                             ]
                         },
@@ -501,8 +498,7 @@ sub tree {
                             help  => 'authwebid.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'webIDAuthnLevel',
-                                'webIDExportedVars',
+                                'webIDAuthnLevel', 'webIDExportedVars',
                                 'webIDWhitelist'
                             ]
                         },
@@ -511,12 +507,9 @@ sub tree {
                             help  => 'authcustom.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'customAuth',
-                                'customUserDB',
-                                'customPassword',
-                                'customRegister',
-                                'customResetCertByMail',
-                                'customAddParams',
+                                'customAuth',            'customUserDB',
+                                'customPassword',        'customRegister',
+                                'customResetCertByMail', 'customAddParams',
                             ]
                         },
                     ],
@@ -530,8 +523,7 @@ sub tree {
                             help  => 'idpcas.html#enabling-cas',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBCASActivation',
-                                'issuerDBCASPath',
+                                'issuerDBCASActivation', 'issuerDBCASPath',
                                 'issuerDBCASRule',
                             ]
                         },
@@ -540,8 +532,7 @@ sub tree {
                             help  => 'idpsaml.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBSAMLActivation',
-                                'issuerDBSAMLPath',
+                                'issuerDBSAMLActivation', 'issuerDBSAMLPath',
                                 'issuerDBSAMLRule'
                             ]
                         },
@@ -650,12 +641,9 @@ sub tree {
                     help  => 'ssocookie.html',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'cookieName',
-                        '*domain',
-                        'cda',
-                        'httpOnly',
-                        'securedCookie',
-                        'sameSite',
+                        'cookieName',    '*domain',
+                        'cda',           'httpOnly',
+                        'securedCookie', 'sameSite',
                         'cookieExpiration',
                     ]
                 },
@@ -685,10 +673,8 @@ sub tree {
                             title => 'multipleSessions',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'singleSession',
-                                'singleIP',
-                                'singleUserByIP',
-                                'notifyDeleted',
+                                'singleSession',  'singleIP',
+                                'singleUserByIP', 'notifyDeleted',
                                 'notifyOther'
                             ]
                         },
@@ -1018,8 +1004,7 @@ sub tree {
                             help  => 'plugincustom.html#plugin-options',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'customPlugins',
-                                'customPluginsParams',
+                                'customPlugins', 'customPluginsParams',
                                 'disabledPlugins'
                             ]
                         },
@@ -1135,16 +1120,11 @@ sub tree {
                             help  => 'mail2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'mail2fActivation',
-                                'mail2fCodeRegex',
-                                'mail2fTimeout',
-                                'mail2fSubject',
-                                'mail2fBody',
-                                'mail2fSessionKey',
-                                'mail2fResendInterval',
-                                'mail2fAuthnLevel',
-                                'mail2fLabel',
-                                'mail2fLogo'
+                                'mail2fActivation',     'mail2fCodeRegex',
+                                'mail2fTimeout',        'mail2fSubject',
+                                'mail2fBody',           'mail2fSessionKey',
+                                'mail2fResendInterval', 'mail2fAuthnLevel',
+                                'mail2fLabel',          'mail2fLogo'
                             ]
                         },
                         {
@@ -1152,14 +1132,10 @@ sub tree {
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'ext2fActivation',
-                                'ext2fCodeActivation',
-                                'ext2FSendCommand',
-                                'ext2FValidateCommand',
-                                'ext2fResendInterval',
-                                'ext2fAuthnLevel',
-                                'ext2fLabel',
-                                'ext2fLogo',
+                                'ext2fActivation',     'ext2fCodeActivation',
+                                'ext2FSendCommand',    'ext2FValidateCommand',
+                                'ext2fResendInterval', 'ext2fAuthnLevel',
+                                'ext2fLabel',          'ext2fLogo',
                             ]
                         },
                         {
@@ -1167,12 +1143,9 @@ sub tree {
                             help  => 'okta2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'okta2fActivation',
-                                'okta2fAdminURL',
-                                'okta2fApiKey',
-                                'okta2fLoginAttribute',
-                                'okta2fAuthnLevel',
-                                'okta2fLabel',
+                                'okta2fActivation', 'okta2fAdminURL',
+                                'okta2fApiKey',     'okta2fLoginAttribute',
+                                'okta2fAuthnLevel', 'okta2fLabel',
                                 'okta2fLogo',
                             ]
                         },
