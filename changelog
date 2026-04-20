@@ -1,3 +1,16 @@
+lemonldap-ng (2.22.3) noble; urgency=medium
+
+  * Bugs:
+    * #3567: _2f cannot be used in a macro
+    * #3568: [security:low] "hidden" attributes are displayed in the session explorer
+    * #3572: manager api: config save errors are not detected (2.22)
+    * #3592: OIDC dynamic registration broken with Front-Channel-Logout
+
+  * WebServer Confs:
+    * #3556: [security:high] bypass handler access control with Nginx default configuration
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 20 Apr 2026 10:42:54 +0200
+
 lemonldap-ng (2.22.2) noble; urgency=medium
 
   * Bugs:
