@@ -19,7 +19,7 @@ my $client = LLNG::Manager::Test->new( {
                 '1_Demo'     => 'Demo;Demo;Null',
                 '2_Slave'    => 'Slave;Demo;Null',
                 '3_SlaveSSL' =>
-'Slave;Demo;Null;;;{"slaveVar": "SSL_CLIENT_S_DN", "slaveRegexp": "myproxy[123].test.fr", "slaveUserHeader": "UID", "slaveExportedVars": ""}',
+'Slave;Demo;Null;;;{"slaveCertificateField": "SSL_CLIENT_S_DN", "slaveCertificateRegexp": "myproxy[123].test.fr", "slaveUserHeader": "UID", "slaveExportedVars": ""}',
             },
             slaveUserHeader   => 'My-Test',
             slaveExportedVars => {

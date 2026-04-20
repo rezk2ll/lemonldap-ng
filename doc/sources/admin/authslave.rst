@@ -42,7 +42,7 @@ Security
    By example: ``127.0.0.2, 192.168.1.1 10.20.30.0/24``. A blank value disables this checking.
 -  **Extracted certificate field**: must be set to the Apache/Nginx environment variable
    containing the ``cn`` attribute. A blank value disables this checking.
--  **Regexp to match field**: regular expression used for testing client certificate ``cn``
+-  **Regexp to test extracted certificate field**: regular expression used for testing client certificate ``cn``
 -  **Control header name**: header containing value to check.
    A blank value disables this checking.
 -  **Control header content**: value to check. A blank value disables this checking.

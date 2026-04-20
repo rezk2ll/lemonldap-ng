@@ -5702,6 +5702,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 2,
             'type'    => 'int'
         },
+        'slaveCertificateField' => {
+            'type' => 'text'
+        },
+        'slaveCertificateRegexp' => {
+            'default' => '',
+            'type'    => 'pcre'
+        },
         'slaveDisplayLogo' => {
             'default' => 0,
             'type'    => 'bool'
@@ -5725,14 +5732,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'    => qr/^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$/,
             'type'    => 'text'
         },
-        'slaveRegexp' => {
-            'default' => '',
-            'type'    => 'pcre'
-        },
         'slaveUserHeader' => {
-            'type' => 'text'
-        },
-        'slaveVar' => {
             'type' => 'text'
         },
         'SMTPAuthPass' => {

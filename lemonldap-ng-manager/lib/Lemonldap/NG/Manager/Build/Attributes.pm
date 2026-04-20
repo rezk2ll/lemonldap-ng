@@ -4715,8 +4715,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Slave authentication level',
         },
         slaveUserHeader => { type => 'text', },
-        slaveVar        => { type => 'text', },
-        slaveRegexp     => {
+        slaveCertificateField        => { type => 'text', },
+        slaveCertificateRegexp     => {
             type          => 'pcre',
             default       => '',
             documentation => 'Regular expression to test Slave var',

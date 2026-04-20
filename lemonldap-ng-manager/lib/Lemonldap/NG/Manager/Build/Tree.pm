@@ -460,12 +460,12 @@ sub tree {
                                 'slaveDisplayLogo',
                                 {
                                     title => 'security',
-                                    help  => 'authslave.html',
+                                    help  => 'authslave.html#security',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'slaveMasterIP',
-                                        'slaveVar',
-                                        'slaveRegexp',
+                                        'slaveCertificateField',
+                                        'slaveCertificateRegexp',
                                         'slaveHeaderName',
                                         'slaveHeaderContent',
                                     ]

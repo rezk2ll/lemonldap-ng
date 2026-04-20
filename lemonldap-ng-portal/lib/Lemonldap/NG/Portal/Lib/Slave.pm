@@ -78,12 +78,12 @@ sub checkHeader {
 sub checkCertificate {
     my ( $self, $req ) = @_;
     return 1
-      unless ( $self->conf->{slaveVar}
-        && $self->conf->{slaveRegexp} );
+      unless ( $self->conf->{slaveCertificateField}
+        && $self->conf->{slaveCertificateRegexp} );
 
-    my $regexp  = $self->conf->{slaveRegexp};
-    my $subject = $req->env->{ $self->conf->{slaveVar} };
-    $self->logger->debug( "Required Slave var: $self->{conf}->{slaveVar}"
+    my $regexp  = $self->conf->{slaveCertificateRegexp};
+    my $subject = $req->env->{ $self->conf->{slaveCertificateField} };
+    $self->logger->debug( "Required Slave var: $self->{conf}->{slaveCertificateField}"
           . "\nReceived Slave var content: $subject" );
 
     return 1
