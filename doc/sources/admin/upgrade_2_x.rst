@@ -15,22 +15,29 @@ Known issues
 Security issue involving Nginx handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A security issue has been detected in LemonLDAP::NG and has been fixed in versions 2.16.8, 2.21.4, and 2.22.3.
+In Nginx < 1.29.5, a hacker can workaround the correlation between a Nginx virtualHost and the "Host" field.
+And despite its documentation and the RFC 9112, Nginx builds automatically the HTTP_HOST variable based on the
+maybe-forged host header (fastCGI or uWSGI).
+F5 fixes this but doesn't want to consider this as a security issue, therefore there will be no fix for previous
+versions.
 
-If you install a previous version and do the upgrade, you are still vulnerable, and MUST **apply a fix on your virtual hosts**.
+In Lemonldap-NG context this security issue may allow an attacker who has a valid account to gain privileges to
+handler protected application, including the LemonLDAP::NG manager application if not protected by other means.
 
-The security issue allows an attacker who has a valid account to gain privileges to any handler protected application, including the LemonLDAP::NG manager application if not protected by other means.
+Default Nginx files installed in versions 2.16.8, 2.21.4, and 2.22.3 may help **but are not enough to fix the issue**.
 
 You are vulnerable if you have:
 
-* Nginx (< 1.29.5) as web server, AND
-* a virtual host protected by handler (remote or local), or a manager protected by lemonldap (protection = manager, or protection = [some rule]) AND
-* no network component able to block the bad request (haproxy blocks the poisoned requests for example)
+* Nginx (< 1.29.5) as web server, AND one of:
+
+  * ``$http_host`` variable is used in your Nginx files
+  * OR you didn't force ``HTTP_HOST`` in your FastCGI/uWSGI parameters
+
+* AND no network component able to block the bad request (haproxy blocks the poisoned requests for example)
 
 If so, you MUST apply this fix for every virtual host.
 
-
-You must spot these lines::
+You must spot these lines anywhere you're using FastCGI *(including Lemonldap-NG files of course)*::
 
     fastcgi_param HOST $http_host;
     # or if using uwsgi server:
@@ -46,25 +53,13 @@ and **replace** them by::
 
     If the HOST variable is not defined in a protected handler virtual host, you MUST still **add** the HTTP_HOST as defined above
 
-For precaution measures, it is also recommanded to fix the Host header sent to backends. You should spot this line::
+For precaution measures, it is also recommended to fix the Host header sent when using Nginx as (reverse-)proxy. You should spot this line::
 
     proxy_set_header Host $http_host;
 
 and **replace** it by::
 
     proxy_set_header Host $host;
-
-
-You can check if you are vulnerable to this issue with such command::
-
-    curl -v \
-      --cookie "lemonldap=xxx" \
-      --header 'Host: auth.example.com' \
-      --request-target 'http://protected.example.com/' \
-      http://protected.example.com/
-
-where xxx is a user valid session cookie, auth.example.com is a handler protected virtual host with a low privileged requirement, and protected.example.com is a handler protected virtual host unallowed for given user in theory.
-
 
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
