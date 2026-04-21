@@ -12,6 +12,55 @@ Known issues
 
 * `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
 
+Security issue involving Nginx handlers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Nginx < 1.29.5, a hacker can workaround the correlation between a Nginx virtualHost and the "Host" field.
+And despite its documentation and the RFC 9112, Nginx builds automatically the HTTP_HOST variable based on the
+maybe-forged host header (fastCGI or uWSGI).
+F5 fixes this but doesn't want to consider this as a security issue, therefore there will be no fix for previous
+versions.
+
+In Lemonldap-NG context this security issue may allow an attacker who has a valid account to gain privileges to
+handler protected application, including the LemonLDAP::NG manager application if not protected by other means.
+
+Default Nginx files installed in versions 2.16.8, 2.21.4, and 2.22.3 may help **but are not enough to fix the issue**.
+
+You are vulnerable if you have:
+
+* Nginx (< 1.29.5) as web server, AND one of:
+
+  * ``$http_host`` variable is used in your Nginx files
+  * OR you didn't force ``HTTP_HOST`` in your FastCGI/uWSGI parameters
+
+* AND no network component able to block the bad request (haproxy blocks the poisoned requests for example)
+
+If so, you MUST apply this fix for every virtual host.
+
+You must spot these lines anywhere you're using FastCGI *(including Lemonldap-NG files of course)*::
+
+    fastcgi_param HOST $http_host;
+    # or if using uwsgi server:
+    #uwsgi_param HOST $http_host;
+
+and **replace** them by::
+
+    fastcgi_param HTTP_HOST $host;
+    # or if using uwsgi server:
+    #uwsgi_param HTTP_HOST $host;
+
+.. important::
+
+    If the HOST variable is not defined in a protected handler virtual host, you MUST still **add** the HTTP_HOST as defined above
+
+For precaution measures, it is also recommended to fix the Host header sent when using Nginx as (reverse-)proxy. You should spot this line::
+
+    proxy_set_header Host $http_host;
+
+and **replace** it by::
+
+    proxy_set_header Host $host;
+
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -151,8 +151,8 @@ Then you can take any virtual host and modify it:
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
-       # Keep original hostname
-       fastcgi_param HOST $http_host;
+       # Prevent attacks on older Nginx versions (<1.29.5)
+       fastcgi_param HTTP_HOST $host;
 
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI $original_uri;
@@ -226,8 +226,8 @@ Example of a protected virtual host for a local application:
        # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
-       # Keep original hostname
-       fastcgi_param HOST $http_host;
+       # Prevent attacks on older Nginx versions (<1.29.5)
+       fastcgi_param HTTP_HOST $host;
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI $original_uri;
      }
@@ -287,8 +287,8 @@ Reverse-Proxy
        # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
-       # Keep original hostname
-       fastcgi_param HOST $http_host;
+       # Prevent attacks on older Nginx versions (<1.29.5)
+       fastcgi_param HTTP_HOST $host;
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
@@ -321,7 +321,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
 
 .. code-block:: nginx
 
-    proxy_set_header Host $http_host;
+    proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -345,7 +345,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
-       uwsgi_param HOST $http_host;
+       uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        # Improve performances
        uwsgi_buffer_size 32k;
@@ -360,7 +360,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
-       uwsgi_param HOST $http_host;
+       uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE AuthBasic;
        # Improve performances
@@ -376,7 +376,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
-       uwsgi_param HOST $http_host;
+       uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE ServiceToken;
        # Improve performances
