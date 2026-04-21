@@ -346,6 +346,7 @@
 "decryptValueFunctions":"解密函式",
 "decryptValueRule":"使用規則",
 "default":"預設",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"預設值",
 "deleteEntry":"刪除",
 "deleteNotification":"刪除",

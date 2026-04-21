@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -261,7 +261,8 @@ sub defaultValuesInit {
             $class->tsv->{type}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostType};
             $class->tsv->{authnLevel}->{$vhost} =
-              $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel};
+                 $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel}
+              || $conf->{defaultAuthnLevel};
             $class->tsv->{serviceTokenTTL}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
             $class->tsv->{accessToTrace}->{$vhost} =

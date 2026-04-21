@@ -346,6 +346,7 @@
 "decryptValueFunctions":"Fonksiyonları çöz",
 "decryptValueRule":"Kuralı kullan",
 "default":"Varsayılan",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"Varsayılan kural",
 "deleteEntry":"Sil",
 "deleteNotification":"Sil",

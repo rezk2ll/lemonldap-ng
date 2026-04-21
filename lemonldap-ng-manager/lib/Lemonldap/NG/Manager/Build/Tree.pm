@@ -1222,6 +1222,7 @@ sub tree {
                                 'userControl',
                                 'browsersDontStorePassword',
                                 'portalForceAuthn',
+                                'defaultAuthnLevel',
                                 'portalForceAuthnInterval',
                                 'key',
                                 'trustedDomains',

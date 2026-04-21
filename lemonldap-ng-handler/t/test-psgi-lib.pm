@@ -73,7 +73,7 @@ sub init {
         },
         'ipAddr'              => '127.0.0.1',
         'mail'                => 'dwho@badwolf.org',
-        'authenticationLevel' => 1,
+        'authenticationLevel' => 2,
         '_utime'              => $now,
         '_passwordDB'         => 'Demo',
         '_auth'               => 'Demo',

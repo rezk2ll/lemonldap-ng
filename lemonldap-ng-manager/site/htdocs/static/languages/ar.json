@@ -346,6 +346,7 @@
 "decryptValueFunctions":"Decrypt functions",
 "decryptValueRule":"استخدام القاعدة",
 "default":"الاعْتيادي",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"القاعدة الاعتيادية ",
 "deleteEntry":"حذف",
 "deleteNotification":"حذف",

@@ -346,6 +346,7 @@
 "decryptValueFunctions":"פונקציות פענוח",
 "decryptValueRule":"להשתמש בכלל",
 "default":"ברירת מחדל",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"כלל ברירת מחדל",
 "deleteEntry":"מחיקה",
 "deleteNotification":"מחיקה",

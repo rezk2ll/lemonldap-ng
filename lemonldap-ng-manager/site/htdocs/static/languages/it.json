@@ -346,6 +346,7 @@
 "decryptValueFunctions":"Decrypt functions",
 "decryptValueRule":"Utilizza la regola",
 "default":"Predefinito",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"Regola predefinita",
 "deleteEntry":"Elimina",
 "deleteNotification":"Elimina",

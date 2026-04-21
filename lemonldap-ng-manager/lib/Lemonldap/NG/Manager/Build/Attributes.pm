@@ -321,6 +321,7 @@ sub attributes {
             default       => 5,
             flags         => 'hp',
         },
+        defaultAuthnLevel => { type => 'intOrNull' },
         defaultNewKeySize => {
             type          => 'int',
             documentation => 'Default size for new RSA key helper',
