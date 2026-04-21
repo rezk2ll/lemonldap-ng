@@ -336,7 +336,7 @@ sub check {
             $auth = $auth ? "allowed" : "forbidden";
             $self->logger->debug(
                     "checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is "
-                  . "$auth to access to $url" );
+                  . "$auth to access $url" );
 
             # Return VirtualHost headers
             $array_hdrs =

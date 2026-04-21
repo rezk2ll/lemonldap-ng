@@ -58,8 +58,8 @@ sub init {
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
         my @parsedTimes =
           sort { $a <=> $b }
-          map  { abs( s/\D//r ) }
-          grep {/\d+/}
+          map  { abs(s/\D//r) }
+          grep { /\d+/ }
           split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
 
         my @filteredOut =
@@ -67,9 +67,8 @@ sub init {
           @parsedTimes;
         if (@filteredOut) {
             $self->logger->warn(
-                'BruteForceProtection: ignoring lock times >= maxLockTime ('
-                  . $self->conf->{bruteForceProtectionMaxLockTime}
-                  . '): '
+                    'BruteForceProtection: ignoring lock times >= maxLockTime ('
+                  . $self->conf->{bruteForceProtectionMaxLockTime} . '): '
                   . join( ', ', @filteredOut ) );
         }
 

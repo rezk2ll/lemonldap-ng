@@ -66,7 +66,7 @@ sub checkHeader {
           . "\nReceived slave header content: $headerContent" );
 
     return 1
-      if (  $headerContent
+      if ( $headerContent
         && $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
 
     $self->userLogger->warn('Matching header not found for Slave module ');

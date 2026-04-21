@@ -12,7 +12,6 @@ our $VERSION = '2.23.0';
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
-
 # INITIALIZATION
 
 has logo     => ( is => 'rw', default => 'test.png' );
@@ -21,13 +20,11 @@ has template => ( is => 'ro', default => 'generic2fregister' );
 has welcome  => ( is => 'ro', default => 'generic2fwelcome' );
 has type     => ( is => 'ro', default => 'test' );
 
-
 use constant supportedActions => {
     register => "register",
     modify   => "modify",
     delete   => "delete",
 };
-
 
 sub register {
     my ( $self, $req ) = @_;
@@ -58,11 +55,10 @@ sub delete {
     my ( $self, $req ) = @_;
 
     # disable CSRF check
-    $req->headers->header('X-CSRF-Check' => 1);
+    $req->headers->header( 'X-CSRF-Check' => 1 );
 
     delete $req->userData->{hookStatus} if $req->userData->{hookStatus};
-    if( $req->param('hookStatus') )
-    {
+    if ( $req->param('hookStatus') ) {
         $req->userData->{hookStatus} = $req->param('hookStatus');
     }
 

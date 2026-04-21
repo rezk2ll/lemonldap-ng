@@ -10,8 +10,7 @@ BEGIN {
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                      => 'error',
             authentication                => 'Demo',
@@ -170,8 +169,10 @@ ok(
 );
 count(1);
 
-ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
-    'Still rejected -> Protection enabled' );
+ok(
+    $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Still rejected -> Protection enabled'
+);
 count(1);
 
 # Waiting

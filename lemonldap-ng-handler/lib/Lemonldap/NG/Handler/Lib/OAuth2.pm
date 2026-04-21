@@ -51,7 +51,7 @@ sub retrieveSession {
         ) unless $session->data->{_utime};
 
         my $ttl = $class->tsv->{timeout} - time + $session->data->{_utime};
-        $class->logger->debug( "Session TTL = $ttl" );
+        $class->logger->debug("Session TTL = $ttl");
 
         if ( time - $session->data->{_utime} > $class->tsv->{timeout} ) {
             $class->logger->info("Session $id expired");
@@ -103,7 +103,7 @@ sub fetchId {
         $req->data->{_accessToken}     = $access_token;
         $req->data->{_scope}           = $infos->{scope};
         $req->data->{_oidc_grant_type} = $infos->{grant_type};
-        $req->data->{_audiences} = $infos->{aud};
+        $req->data->{_audiences}       = $infos->{aud};
         $req->data->{_clientConfKey}   = $rp;
         if (    $class->tsv->{oauth2Options}->{$rp}
             and $class->tsv->{oauth2Options}->{$rp}->{clientId} )
@@ -204,7 +204,8 @@ sub _getTokenAttributes {
     my ( $class, $req ) = @_;
     my %res;
     for my $attr (
-        qw/_scope _clientConfKey _clientId _oidc_grant_type _accessToken _audiences/)
+        qw/_scope _clientConfKey _clientId _oidc_grant_type _accessToken _audiences/
+      )
     {
         if ( $req->data->{$attr} ) {
             $res{$attr} = $req->data->{$attr};

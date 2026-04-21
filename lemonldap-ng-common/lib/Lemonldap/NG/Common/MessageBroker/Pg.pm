@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::MessageBroker::Pg;
 
 use strict;
 use JSON;
-use POSIX qw(:signal_h);
+use POSIX                           qw(:signal_h);
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
 our $VERSION = '2.22.2';

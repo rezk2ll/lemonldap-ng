@@ -97,7 +97,7 @@ sub computeGetParams {
         }
         $self->userLogger->notice( 'User '
               . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-              . " is authorized to access to $vhost" );
+              . " is authorized to access $vhost" );
     }
     else {
         $self->logger->warn("IssuerGet: no configuration");

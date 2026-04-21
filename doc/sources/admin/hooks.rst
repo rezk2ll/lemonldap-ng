@@ -10,6 +10,33 @@ This page shows the list of hooks that you can use in your :doc:`custom plugins 
 OpenID Connect Issuer hooks
 ---------------------------
 
+Discovery endpoint (/.well-known/openid-configuration)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGenerateMetadata
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is building the OpenID Connect
+discovery document (``/.well-known/openid-configuration``). It allows plugins
+to add custom metadata fields to the discovery response.
+
+The hook's parameter is a hash reference of the metadata document (which you can modify).
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateMetadata => 'addMetadata',
+   };
+
+   sub addMetadata {
+       my ( $self, $req, $metadata ) = @_;
+       $metadata->{my_custom_endpoint} = 'https://example.com/custom';
+       push @{ $metadata->{grant_types_supported} }, 'my_custom_grant';
+       return PE_OK;
+   }
+
 Authorization endpoint (/oauth2/authorize)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -139,7 +166,7 @@ Sample code ::
     }
 
 oidcGenerateAuthorizationResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
@@ -514,7 +541,7 @@ Introspection endpoint (/oauth2/introspect)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 oidcGenerateIntrospectionResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
@@ -613,6 +640,13 @@ Sample code::
        return PE_OK;
    }
 
+.. versionchanged:: 2.23.0
+
+Parameters specified in *Extra parameters for authorization code request* will
+be exposed to this hook as well. If they start with a ``[`` or a ``{``, they
+will be JSON-decoded automatically. LemonLDAP::NG will also automatically
+JSON-encode and URL-encode them before adding them to the authorization
+request.
 
 
 oidcGenerateTokenRequest

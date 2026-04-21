@@ -122,7 +122,8 @@ sub addSessionDataToRemember {
 
 sub addEntryPoint {
     my ( $self, %entryPointDescription ) = @_;
-    return $self->p->_addPluginEntryPoint(%entryPointDescription, _pkg => ref($self));
+    return $self->p->_addPluginEntryPoint( %entryPointDescription,
+        _pkg => ref($self) );
 }
 
 1;

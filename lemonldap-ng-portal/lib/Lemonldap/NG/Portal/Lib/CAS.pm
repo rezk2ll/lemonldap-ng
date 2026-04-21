@@ -87,7 +87,9 @@ sub loadApp {
         my $valid = 1;
 
         # Check if CAS application is activated
-        unless ( $self->conf->{casAppMetaDataOptions}->{$_}->{casAppMetaDataOptionsActivation} // 1) {
+        unless ( $self->conf->{casAppMetaDataOptions}->{$_}
+            ->{casAppMetaDataOptionsActivation} // 1 )
+        {
             $self->logger->debug("Processing $_: CAS application deactivated");
             next;
         }

@@ -6,8 +6,8 @@ package Lemonldap::NG::Portal::2F::Yubikey;
 
 use strict;
 use Mouse;
-use JSON qw(from_json to_json);
-use Lemonldap::NG::Common::Util qw/display2F/;
+use JSON                                   qw(from_json to_json);
+use Lemonldap::NG::Common::Util            qw/display2F/;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR

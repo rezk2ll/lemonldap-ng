@@ -196,7 +196,7 @@ sub name {
 
     my $module = $req->data->{ "enabledMods" . $self->type }->[0];
     if ( my $sub = eval { $module->can('name') } ) {
-        return $sub->($module, $req, $type );
+        return $sub->( $module, $req, $type );
     }
     else {
         my $n = ref($module);
@@ -285,7 +285,7 @@ sub _buildAuthLoop {
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType = eval {
-                    $self->_authentication->modules->{$_}->getDisplayType( $req )
+                    $self->_authentication->modules->{$_}->getDisplayType($req);
                 } || 'logo';
 
                 $self->logger->debug(
@@ -343,7 +343,8 @@ sub _buildAuthLoop {
                 push @authLoop, $optionsLoop;
 
                 $self->logger->debug(
-                    "Authentication choice $name_without_space will be displayed");
+"Authentication choice $name_without_space will be displayed"
+                );
             }
             else {
                 $self->logger->debug(

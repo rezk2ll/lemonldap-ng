@@ -31,7 +31,7 @@ sub call {
             return $res;
         }
     }
-    my $app  = $self->app;
+    my $app = $self->app;
     @_ = $env;
     goto $app;
 }

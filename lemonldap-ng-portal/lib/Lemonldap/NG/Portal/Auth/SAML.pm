@@ -272,7 +272,8 @@ sub extractFormInfo {
             my $responseAuthnContext;
             eval {
                 $responseAuthnContext =
-                  $assertion->AuthnStatement()->AuthnContext()
+                  $assertion->AuthnStatement()
+                  ->AuthnContext()
                   ->AuthnContextClassRef();
             };
             if ($@) {
@@ -862,8 +863,9 @@ sub extractFormInfo {
         }
 
         $req->response(
-            $self->p->sendBinaryResponse( $req, $art_response,
-                type => 'text/xml' )
+            $self->p->sendBinaryResponse(
+                $req, $art_response, type => 'text/xml'
+            )
         );
         $req->user('SOAP client');
         return PE_SENDRESPONSE;

@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Plugins::AuthOidcPkce;
 
 use strict;
-use Digest::SHA qw(sha256);
+use Digest::SHA                            qw(sha256);
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 use MIME::Base64 'encode_base64url';
 use Mouse;

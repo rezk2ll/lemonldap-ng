@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::OIDCNativeSso;
 use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
-use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR

@@ -387,8 +387,8 @@ example:
 }
 ```
 EOF
-,
-                    'parameters'  => [ {
+                    ,
+                    'parameters' => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
@@ -599,7 +599,7 @@ example:
 }
 ```
 EOF
-,
+                    ,
                     'operationId' => 'updateOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
@@ -890,8 +890,8 @@ example:
 }
 ```
 EOF
-,
-                    'parameters'  => [ {
+                    ,
+                    'parameters' => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>

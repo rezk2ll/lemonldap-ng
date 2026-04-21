@@ -138,7 +138,8 @@ sub updateToken {
         }
         my $h = from_json( $data, { allow_nonref => 1 } );
         $h->{$k} = $v;
-        $self->cache->set( $id, to_json($h), ($h->{tokenTimeoutTimestamp} - time) . ' s' );
+        $self->cache->set( $id, to_json($h),
+            ( $h->{tokenTimeoutTimestamp} - time ) . ' s' );
         return $id;
     }
     else {

@@ -73,8 +73,7 @@ sub new {
         if ($show) {
             my $name = $_;
             $name = 'info' if ( $_ eq 'notice' );
-            eval
-              qq'sub $_ {shift->{log}->$name(\@_)}';
+            eval qq'sub $_ {shift->{log}->$name(\@_)}';
             die $@ if ($@);
         }
         else {

@@ -3726,7 +3726,7 @@ sub attributes {
             msgFail    => '__badValue__',
             default    => {},
         },
-        samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataXML               => { type => 'file', },
         samlSPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
@@ -5264,6 +5264,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsMaxAge    => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsUiLocales => { type => 'text', },
         oidcOPMetaDataOptionsAcrValues => { type => 'text', },
+        oidcOPMetaDataOptionsAuthEndpointExtraParams => {
+            type          => 'keyTextContainer',
+            documentation =>
+              'Additional parameters for OpenID Connect Authorization endpoint',
+        },
         oidcOPMetaDataOptionsTokenEndpointAuthMethod => {
             type   => 'select',
             select => [
@@ -5347,7 +5352,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsActivation     => {
+        oidcRPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
         },

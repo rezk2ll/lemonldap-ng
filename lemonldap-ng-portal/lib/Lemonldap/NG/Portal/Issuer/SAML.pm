@@ -388,7 +388,8 @@ sub run {
                   ->{samlSPMetaDataOptionsNameIDFormat} || "email";
                 eval {
 
-                    $login->request()->NameIDPolicy()
+                    $login->request()
+                      ->NameIDPolicy()
                       ->Format( $self->getNameIDFormat($nameIDFormatKey) );
                 };
 
@@ -548,7 +549,7 @@ sub run {
                             'User '
                               . $req->sessionInfo->{ $self->conf->{whatToTrace}
                               }
-                              . " is not authorized to access to $spConfKey"
+                              . " is not authorized to access $spConfKey"
                         ),
                         res        => PE_UNAUTHORIZEDPARTNER,
                         userLogger => 1,
@@ -802,68 +803,62 @@ sub run {
                 # Name is required
                 next unless $name;
 
-                # Lookup attribute value in SP macros or session
-                my $value;
-                if ( $self->spMacros->{$spConfKey}->{$_} ) {
-                    $value = $self->spMacros->{$spConfKey}->{$_}
-                      ->( $req, $req->{sessionInfo} );
-                }
-                else {
-                    $value = $req->{sessionInfo}->{$_};
-                }
+                if ( $_ eq "__persistent_name_id" ) {
 
-                # Check whether the value is required or not
-                unless ( defined $value ) {
-                    if ($mandatory) {
+                    my $value;
+
+                    # If a persistent nameID is returned as the NameID,
+                    # reuse it as the attribute value
+                    if ( $login->nameIdentifier->Format eq
+                        $self->getNameIDFormat("persistent") )
+                    {
+                        $value = $login->nameIdentifier;
+
+                    }
+
+                    # Check whether the value is required or not
+                    unless ( defined $value ) {
+                        if ($mandatory) {
+                            return $self->_failAuthnRequest(
+                                $req,
+                                msg => (
+                                        "Persistent NameID is required to set"
+                                      . " SAML $name attribute ($sp)"
+                                ),
+                                res     => PE_ISSUERMISSINGREQATTR,
+                                logInfo => {
+                                    sp        => $spConfKey,
+                                    entity_id => $sp,
+                                },
+                            );
+                        }
+                        else {
+                            $self->logger->debug(
+                                    "SAML2 attribute $name has no value"
+                                  . " but is not mandatory ($sp), skip it" );
+                            next;
+                        }
+                    }
+
+                    $self->logger->debug( "SAML2 attribute $name will be set"
+                          . " with persistent NameID" );
+
+                    # SAML2 attribute
+                    my $attribute =
+                      $self->createAttribute( $name, $format, $friendly_name );
+
+                    unless ($attribute) {
                         return $self->_failAuthnRequest(
                             $req,
-                            msg => (
-                                    "Session key $_ is required to set"
-                                  . " SAML $name attribute ($sp)"
-                            ),
-                            res     => PE_ISSUERMISSINGREQATTR,
+                            msg     => "Unable to create a new SAML attribute",
                             logInfo => {
                                 sp        => $spConfKey,
                                 entity_id => $sp,
                             },
                         );
                     }
-                    else {
-                        $self->logger->debug(
-                                "SAML2 attribute $name has no value"
-                              . " but is not mandatory ($sp), skip it" );
-                        next;
-                    }
-                }
 
-                $self->logger->debug( "SAML2 attribute $name will be set"
-                      . " with $_ session key ($sp)" );
-
-                # SAML2 attribute
-                my $attribute =
-                  $self->createAttribute( $name, $format, $friendly_name );
-
-                unless ($attribute) {
-                    return $self->_failAuthnRequest(
-                        $req,
-                        msg     => "Unable to create a new SAML attribute",
-                        logInfo => {
-                            sp        => $spConfKey,
-                            entity_id => $sp,
-                        },
-                    );
-                }
-
-                # Set attribute value(s)
-                my @values = split $self->conf->{multiValuesSeparator}, $value;
-                my @saml2values;
-
-                foreach (@values) {
-
-                    # SAML2 attribute value
-                    my $saml2value = $self->createAttributeValue( $_,
-                        $self->spOptions->{$sp}
-                          ->{samlSPMetaDataOptionsForceUTF8} );
+                    my $saml2value = $self->createAttributeValue($value);
 
                     unless ($saml2value) {
                         $self->checkLassoError($@);
@@ -878,19 +873,108 @@ sub run {
                         );
                     }
 
-                    push @saml2values, $saml2value;
+                    $attribute->AttributeValue($saml2value);
 
-                    $self->logger->debug("Push $_ in SAML attribute $name");
+                    # Push attribute in attribute list
+                    push @attributes, $attribute;
+
+                    # For logging
+                    $log_attributes{ $friendly_name || $name } =
+                      [ eval { $value->dump } ];
 
                 }
+                else {
+                    # Lookup attribute value in SP macros or session
+                    my $value;
+                    if ( $self->spMacros->{$spConfKey}->{$_} ) {
+                        $value = $self->spMacros->{$spConfKey}->{$_}
+                          ->( $req, $req->{sessionInfo} );
+                    }
+                    else {
+                        $value = $req->{sessionInfo}->{$_};
+                    }
 
-                $attribute->AttributeValue(@saml2values);
+                    # Check whether the value is required or not
+                    unless ( defined $value ) {
+                        if ($mandatory) {
+                            return $self->_failAuthnRequest(
+                                $req,
+                                msg => (
+                                        "Session key $_ is required to set"
+                                      . " SAML $name attribute ($sp)"
+                                ),
+                                res     => PE_ISSUERMISSINGREQATTR,
+                                logInfo => {
+                                    sp        => $spConfKey,
+                                    entity_id => $sp,
+                                },
+                            );
+                        }
+                        else {
+                            $self->logger->debug(
+                                    "SAML2 attribute $name has no value"
+                                  . " but is not mandatory ($sp), skip it" );
+                            next;
+                        }
+                    }
 
-                # Push attribute in attribute list
-                push @attributes, $attribute;
+                    $self->logger->debug( "SAML2 attribute $name will be set"
+                          . " with $_ session key ($sp)" );
 
-                # For logging
-                $log_attributes{ $friendly_name || $name } = [@values];
+                    # SAML2 attribute
+                    my $attribute =
+                      $self->createAttribute( $name, $format, $friendly_name );
+
+                    unless ($attribute) {
+                        return $self->_failAuthnRequest(
+                            $req,
+                            msg     => "Unable to create a new SAML attribute",
+                            logInfo => {
+                                sp        => $spConfKey,
+                                entity_id => $sp,
+                            },
+                        );
+                    }
+
+                    # Set attribute value(s)
+                    my @values = split $self->conf->{multiValuesSeparator},
+                      $value;
+                    my @saml2values;
+
+                    foreach (@values) {
+
+                        # SAML2 attribute value
+                        my $saml2value = $self->createAttributeValue( $_,
+                            $self->spOptions->{$sp}
+                              ->{samlSPMetaDataOptionsForceUTF8} );
+
+                        unless ($saml2value) {
+                            $self->checkLassoError($@);
+                            return $self->_failAuthnRequest(
+                                $req,
+                                msg =>
+                                  "Unable to create a new SAML attribute value",
+                                logInfo => {
+                                    sp        => $spConfKey,
+                                    entity_id => $sp,
+                                },
+                            );
+                        }
+
+                        push @saml2values, $saml2value;
+
+                        $self->logger->debug("Push $_ in SAML attribute $name");
+
+                    }
+
+                    $attribute->AttributeValue(@saml2values);
+
+                    # Push attribute in attribute list
+                    push @attributes, $attribute;
+
+                    # For logging
+                    $log_attributes{ $friendly_name || $name } = [@values];
+                }
             }
 
             # Get response assertion
@@ -1246,7 +1330,7 @@ sub run {
                     message   => (
                             'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is authorized to access to $sp."
+                          . " is authorized to access $sp."
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),
@@ -1295,7 +1379,7 @@ sub run {
                     message   => (
                             'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is authorized to access to $sp."
+                          . " is authorized to access $sp."
                           . " SAML authentication response sent to"
                           . " SAML SP $spConfKey for $user$nameIDLog$attr_str"
                     ),

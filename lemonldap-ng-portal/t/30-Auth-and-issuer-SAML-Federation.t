@@ -119,6 +119,18 @@ SKIP: {
             'fa@badwolf.org',
             'Found attribute'
         );
+
+        my $nameIdValue = getXPath( $sr,
+'//saml:Subject//saml:NameID[@Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"]/text()'
+        );
+        ok( $nameIdValue, "Found persistent NameID" );
+
+        expectXPath(
+            $sr,
+'//saml:Attribute[@Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10"]/saml:AttributeValue/saml:NameID/text()',
+            $nameIdValue,
+            'eduPersonTargetedID matches NameID'
+        );
     };
 
 }

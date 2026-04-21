@@ -260,6 +260,10 @@ Protocol
 -  **ACR values**: Space-separated list of acceptable ACR values (example:
    'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
    supply one of the values listed here in the ID Token.
+-  **Extra parameters for authorization code request**: These additional
+   parameters will be added to the authorization request. URL-encoding is
+   automatically performed by LemonLDAP. This can be useful if you need to
+   specify a ``claims`` parameter.
 -  **Authentication method for authorization code request**: Require JWS authentication for code requests
 -  **Signature algorithm for authorization code authentication**: Fix signature algorithm to be used for JWS authentication for code requests
 -  **Token endpoint authentication method**: choice between

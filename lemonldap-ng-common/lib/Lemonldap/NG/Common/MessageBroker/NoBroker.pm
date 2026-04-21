@@ -7,9 +7,9 @@ package Lemonldap::NG::Common::MessageBroker::NoBroker;
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;
 
-our $VERSION = '2.23.0';
+our $VERSION   = '2.23.0';
 our $lastCheck = time;
-our $channels = {};
+our $channels  = {};
 
 sub new {
     my ( $class, $conf, $logger ) = @_;
