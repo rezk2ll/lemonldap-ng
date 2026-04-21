@@ -15,8 +15,6 @@
 "LDAPFilter":"預設過濾器",
 "OpenIDConnect":"OpenID 連線",
 "OptionalTitle":"可選的標題",
-"PE112":"Password is about to expire, please change it now",
-"PE75":"You came from an unaccredited client",
 "SMTP":"SMTP",
 "SMTPAuthPass":"密码",
 "SMTPAuthUser":"使用者",

@@ -15,8 +15,6 @@
 "LDAPFilter":"Фильтр по умолчанию",
 "OpenIDConnect":"OpenID Connect",
 "OptionalTitle":"Необязательное название",
-"PE112":"Password is about to expire, please change it now",
-"PE75":"You came from an unaccredited client",
 "SMTP":"SMTP",
 "SMTPAuthPass":"Пароль",
 "SMTPAuthUser":"Пользователь",

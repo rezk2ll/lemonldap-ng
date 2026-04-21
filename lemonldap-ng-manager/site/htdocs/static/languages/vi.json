@@ -15,8 +15,6 @@
 "LDAPFilter":"Bộ lọc mặc định",
 "OpenIDConnect":"Kết nối OpenID ",
 "OptionalTitle":"Tiêu đề tùy chọn",
-"PE112":"Password is about to expire, please change it now",
-"PE75":"You came from an unaccredited client",
 "SMTP":"SMTP",
 "SMTPAuthPass":"Mật khẩu",
 "SMTPAuthUser":"Người dùng",

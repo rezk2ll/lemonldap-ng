@@ -15,8 +15,6 @@
 "LDAPFilter":"فلتر الاعْتيادي",
 "OpenIDConnect":"أوبين أيدي كونيكت",
 "OptionalTitle":"عنوان الخيارات",
-"PE112":"Password is about to expire, please change it now",
-"PE75":"You came from an unaccredited client",
 "SMTP":"بروتوكول إرسال البريد SMTP",
 "SMTPAuthPass":"كلمة المرور",
 "SMTPAuthUser":"المستخدم",
