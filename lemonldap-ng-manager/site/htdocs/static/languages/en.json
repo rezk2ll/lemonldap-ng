@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Authentication level",
+"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"Exported variables",
 "slaveHeaderContent":"Control header content",

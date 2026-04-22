@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Éviter la confirmation de ré-authentification",
 "skipUpgradeConfirmation":"Éviter la confirmation d'élévation du niveau d'authentification",
 "slaveAuthnLevel":"Niveau d'authentification",
+"slaveCertificateField":"Champ extrait du certificat",
+"slaveCertificateRegexp":"Expression régulière pour tester le champ extrait du certificat",
 "slaveDisplayLogo":"Afficher le logo d'authentification",
 "slaveExportedVars":"Variables exportées",
 "slaveHeaderContent":"Contenu de l'en-tête de contrôle",

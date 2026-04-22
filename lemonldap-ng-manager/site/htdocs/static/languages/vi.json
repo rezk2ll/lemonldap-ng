@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Bỏ qua xác nhận xác thực lại",
 "skipUpgradeConfirmation":"Bỏ qua xác nhận nâng cấp",
 "slaveAuthnLevel":"Mức xác thực",
+"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Hiển thị logo xác thực",
 "slaveExportedVars":"Biến đã được xuất",
 "slaveHeaderContent":"Kiểm soát nội dung tiêu đề",

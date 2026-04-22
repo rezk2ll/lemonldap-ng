@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"مستوى إثبات الهوية",
+"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"المتغيرات المصدرة",
 "slaveHeaderContent":"التحكم في محتوى الهيدر",

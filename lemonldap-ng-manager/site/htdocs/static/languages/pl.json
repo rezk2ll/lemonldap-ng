@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Pomiń potwierdzenie ponownego uwierzytelnienia",
 "skipUpgradeConfirmation":"Pomiń potwierdzenie aktualizacji",
 "slaveAuthnLevel":"Poziom uwierzytelnienia",
+"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Wyświetl logo uwierzytelniające",
 "slaveExportedVars":"Wyeksportowane zmienne",
 "slaveHeaderContent":"Kontroluj zawartość nagłówka",

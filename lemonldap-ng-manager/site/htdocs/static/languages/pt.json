@@ -1336,6 +1336,8 @@
 "skipRenewConfirmation":"Pular confirmação de re-auth",
 "skipUpgradeConfirmation":"Pular confirmação de upgrade",
 "slaveAuthnLevel":"Nível de autenticação",
+"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Mostrar logo de autenticação",
 "slaveExportedVars":"Variáveis esportadas",
 "slaveHeaderContent":"Conteúdo do cabeçalho de controle",

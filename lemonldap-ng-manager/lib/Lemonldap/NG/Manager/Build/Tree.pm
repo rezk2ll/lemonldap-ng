@@ -455,9 +455,21 @@ sub tree {
                             help  => 'authslave.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'slaveAuthnLevel',    'slaveUserHeader',
-                                'slaveMasterIP',      'slaveHeaderName',
-                                'slaveHeaderContent', 'slaveDisplayLogo',
+                                'slaveAuthnLevel',
+                                'slaveUserHeader',
+                                'slaveDisplayLogo',
+                                {
+                                    title => 'security',
+                                    help  => 'authslave.html#security',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'slaveMasterIP',
+                                        'slaveCertificateField',
+                                        'slaveCertificateRegexp',
+                                        'slaveHeaderName',
+                                        'slaveHeaderContent',
+                                    ]
+                                },
                                 'slaveExportedVars',
                             ]
                         },

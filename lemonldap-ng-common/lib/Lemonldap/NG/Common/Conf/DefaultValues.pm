@@ -412,6 +412,7 @@ sub defaultValues {
         'singleSession'           => 0,
         'singleUserByIP'          => 0,
         'slaveAuthnLevel'         => 2,
+        'slaveCertificateRegexp'  => '',
         'slaveExportedVars'       => {},
         'SMTPServer'              => '',
         'SMTPTLS'                 => '',
