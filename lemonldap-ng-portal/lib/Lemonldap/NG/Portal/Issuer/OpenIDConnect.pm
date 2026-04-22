@@ -619,7 +619,9 @@ sub _authorizeEndpoint {
     my $response_type = $oidc_request->{'response_type'};
 
     my $spAuthnLevel = $self->rpLevelRules->{$rp}->( $req, $req->sessionInfo );
-    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
 
     # RP may increase, but not lower, the requirement set in LLNG conf
     if ( $oidc_request->{'acr_values'} ) {

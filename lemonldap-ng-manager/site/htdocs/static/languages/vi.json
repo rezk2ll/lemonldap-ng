@@ -346,6 +346,7 @@
 "decryptValueFunctions":"giải mã chức năng",
 "decryptValueRule":"Quy tắc sử dụng",
 "default":"Mặc định",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"Quy tắc mặc định",
 "deleteEntry":"Xóa",
 "deleteNotification":"Xóa",

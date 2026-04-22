@@ -106,10 +106,13 @@ sub loadApp {
         }
 
         # Required authentication level rule
-        my $levelrule = $self->conf->{casAppMetaDataOptions}->{$_}
-          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        my $levelrule =
+          $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsAuthnLevel}
+          || $self->conf->{defaultAuthnLevel}
+          || 0;
         $levelrule = $self->p->buildRule( $levelrule,
-            "required authentication level" . " rule for App $_" );
+            "Required authentication level rule for App $_" );
         unless ($levelrule) {
             $valid = 0;
         }

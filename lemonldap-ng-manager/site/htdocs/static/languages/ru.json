@@ -346,6 +346,7 @@
 "decryptValueFunctions":"Расшифровать функции",
 "decryptValueRule":"Использовать правило",
 "default":"По умолчанию",
+"defaultAuthnLevel":"Default required authentication level",
 "defaultRule":"Правило по умолчанию",
 "deleteEntry":"Удалить",
 "deleteNotification":"Удалить",

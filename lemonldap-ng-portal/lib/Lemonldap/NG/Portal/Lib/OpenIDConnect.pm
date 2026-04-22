@@ -36,6 +36,8 @@ use constant oidcErrorLevel => {
     consent_required => 'notice',
 };
 
+our $VERSION = '2.23.0';
+
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
@@ -201,9 +203,12 @@ sub load_rp {
     }
 
     # Required authentication level rule
-    my $levelrule = $config{options}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $levelrule =
+         $config{options}->{oidcRPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
     $levelrule = $self->p->buildRule( $levelrule,
-        "required authentication level rule for RP $rp" );
+        "Required authentication level rule for RP $rp" );
     unless ($levelrule) {
         $valid = 0;
     }
@@ -1743,7 +1748,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
