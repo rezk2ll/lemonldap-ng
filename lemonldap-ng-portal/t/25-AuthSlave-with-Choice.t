@@ -81,6 +81,22 @@ ok(
 ok( $res->[0] == 401, 'Get 401' ) or explain( $res->[0], 401 );
 count(2);
 
+# Bad configuration with right module
+ok(
+    $res = $client->_get(
+        '/',
+        query  => 'lmAuth=3_SlaveSSL',
+        ip     => '127.0.0.2',
+        custom => {
+            SSL_CLIENT_S_DN => '',
+            HTTP_UID        => 'dwho',
+        }
+    ),
+    'Auth query'
+);
+ok( $res->[0] == 401, 'Get 401' ) or explain( $res->[0], 401 );
+count(2);
+
 # Good certificate with right module
 ok(
     $res = $client->_get(

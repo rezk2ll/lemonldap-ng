@@ -60,34 +60,42 @@ sub checkHeader {
     my $slave_header = 'HTTP_' . uc( $self->conf->{slaveHeaderName} );
     $slave_header =~ s/\-/_/g;
     my $headerContent = $req->env->{$slave_header};
+    if ( $headerContent && length $headerContent ) {
+        $self->logger->debug(
+                "Required Slave header: $self->{conf}->{slaveHeaderName}"
+              . "\nReceived Slave header content: $headerContent" );
+        return 1
+          if ( $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
+    }
+    else {
+        $self->logger->notice("No Slave header content received");
+    }
 
-    $self->logger->debug(
-            "Required Slave header: $self->{conf}->{slaveHeaderName}"
-          . "\nReceived Slave header content: $headerContent" );
-
-    return 1
-      if ( $headerContent
-        && $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
-
-    $self->userLogger->warn('Matching header not found for Slave module ');
+    $self->userLogger->warn('Matching header not found for Slave module');
     return 0;
 }
 
 ## @method Lemonldap::NG::Portal::_Slave checkCertificate()
-# @return true if subject matches LL::NG conf
+# @return true if value matches LL::NG conf
 sub checkCertificate {
     my ( $self, $req ) = @_;
     return 1
       unless ( $self->conf->{slaveCertificateField}
         && $self->conf->{slaveCertificateRegexp} );
 
-    my $regexp  = $self->conf->{slaveCertificateRegexp};
-    my $subject = $req->env->{ $self->conf->{slaveCertificateField} };
-    $self->logger->debug( "Required Slave var: $self->{conf}->{slaveCertificateField}"
-          . "\nReceived Slave var content: $subject" );
-
-    return 1
-      if ( $subject =~ qr/$regexp/ );
+    my $regexp = $self->conf->{slaveCertificateRegexp};
+    my $value  = $req->env->{ $self->conf->{slaveCertificateField} };
+    if ( $value && length $value ) {
+        $self->logger->debug(
+                "Required Slave field: $self->{conf}->{slaveCertificateField}"
+              . "\nReceived Slave value: $value" );
+        return 1
+          if ( $value =~ qr/$regexp/ );
+    }
+    else {
+        $self->logger->notice(
+            "No subject found in certificate, check your configuration");
+    }
 
     $self->userLogger->warn(
         'Client certificate not accredited for Slave module');
