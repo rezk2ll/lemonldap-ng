@@ -4,12 +4,12 @@ Installation on Red Hat/CentOS
 
 .. attention::
 
-    LemonLDAP::NG requires at least Red Hat/CentOS 7
+    LemonLDAP::NG requires at least Red Hat/CentOS 8
 
 List of packages
 ----------------
 
-LemonLDAP::NG provides packages for RHEL (and derivatives) 7/8/9:
+LemonLDAP::NG provides packages for RHEL (and derivatives) 8/9/10:
 
 - ``lemonldap-ng``: metapackage, contains no file but dependencies on other
   packages
@@ -43,13 +43,21 @@ In any case, after enabling EPEL, also enable the optional "CodeReady Builder" r
 
     crb enable
 
-Get the packages
-----------------
+Install from official Fedora packages
+-------------------------------------
+
+.. code-block:: shell
+
+   dnf install lemonldap-ng
+
+   # If you use SELinux
+   dnf install lemonldap-ng lemonldap-ng-selinux
+
 
 .. _installrpm-yum-repository:
 
-YUM repository
-~~~~~~~~~~~~~~
+(alternative) Install from our YUM repository
+----------------------------------------------
 
 You can add this YUM repository to get recent packages:
 
@@ -72,50 +80,14 @@ You can add this YUM repository to get recent packages:
     Replace ``stable`` by ``2.0`` to avoid upgrade to next major
     version
 
-You may also need some extras packages for SAML, available here:
-
-::
-
-   [lemonldap-ng-extras]
-   name=LemonLDAP::NG extra packages
-   baseurl=https://lemonldap-ng.org/redhat/extras/$releasever
-   enabled=1
-   gpgcheck=1
-   gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
-
-Run this to update packages cache:
-
-::
-
-   dnf update
-
-Official Fedora packages
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Packages are available in EPEL, so you can choose to install them directly from here.
-
-Manual download
-~~~~~~~~~~~~~~~
-
-RPMs are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
-
-Package GPG signature
----------------------
-
 Install the `GPG Security key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc>`__ on your LemonLDAP::NG server:
 
 ::
 
    curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 
+Then, install the packages
 
-Install packages
-----------------
-
-With YUM
-~~~~~~~~
-
-If the packages are stored in a yum repository:
 
 .. code-block:: shell
 
@@ -124,27 +96,15 @@ If the packages are stored in a yum repository:
    # If you use SELinux
    dnf install lemonldap-ng lemonldap-ng-selinux
 
-You can also use yum on local RPMs file:
+(alternative) Manual download
+-----------------------------
 
-::
+RPMs are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
 
-   dnf localinstall lemonldap-ng-* perl-Lemonldap-NG-*
-
-With RPM
-~~~~~~~~
-
-You have then to install all the downloaded packages:
-
-::
+.. code-block:: shell
 
    dnf install lemonldap-ng-* perl-Lemonldap-NG-*
 
-
-.. tip::
-
-    You can choose to install only one component by choosing the
-    package ``lemonldap-ng-portal``, ``lemonldap-ng-handler`` or
-    ``lemonldap-ng-manager``.
 
 First configuration steps
 -------------------------
