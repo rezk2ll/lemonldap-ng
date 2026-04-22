@@ -59,7 +59,21 @@ sub addAuthRouteWithRedirect {
     my $self = shift;
     $self->logger->debug("Route with redirect to $_[0]");
     $self->addAuthRoute(@_);
-    $self->addUnauthRoute( $_[0] => '_auth_and_redirect', [ 'GET', 'POST' ] );
+    my $redirected = _replaceLeaves( $_[1] );
+    $self->addUnauthRoute( $_[0] => $redirected, [ 'GET', 'POST' ] );
+    return $self;
+}
+
+sub _replaceLeaves {
+    my ($node) = @_;
+    if ( ref($node) eq 'HASH' ) {
+        my %result;
+        foreach my $k ( keys %$node ) {
+            $result{$k} = _replaceLeaves( $node->{$k} );
+        }
+        return \%result;
+    }
+    return '_auth_and_redirect';
 }
 
 sub _auth_and_redirect {
