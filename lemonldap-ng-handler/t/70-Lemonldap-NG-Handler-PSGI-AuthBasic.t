@@ -5,15 +5,13 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 3;
+my $maintests = 5;
 
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        # authentication    => 'Demo',
-        # userDB            => 'Same',
-        # restSessionServer => 1,
-        logLevel     => 'error',
+        authentication    => 'Demo',
+        userDB            => 'Same',
         vhostOptions => {
             'test1.example.com' => {
                 vhostHttps           => 0,
@@ -45,23 +43,21 @@ ok(
     'Header WWW-Authenticate is set to Basic realm="LemonLDAP::NG"'
 ) or explain( \%h, 'WWW-Authenticate => realm' );
 
-# my $login = encode_base64("dwho:dwho");
-# ok(
-#     $res = $client->_get(
-#         '/', undef, 'test1.example.com', undef,
-#         VHOSTTYPE            => 'AuthBasic',
-#         HTTP_X_FORWARDED_FOR => '127.0.0.1',
-#         HTTP_AUTHORIZATION   => "Basic $login"
-#     ),
-#     'AuthBasic query'
-# );
-#
-# print STDERR Data::Dumper::Dumper($res);
-#
-# # Check headers
-# %h = @{ $res->[1] };
-# ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
-#   or explain( \%h, 'Auth-User => "dwho"' );
+my $login = encode_base64("dwho:dwho");
+ok(
+    $res = $client->_get(
+        '/', undef, 'test1.example.com', undef,
+        VHOSTTYPE            => 'AuthBasic',
+        HTTP_X_FORWARDED_FOR => '127.0.0.1',
+        HTTP_AUTHORIZATION   => "Basic $login"
+    ),
+    'AuthBasic query'
+);
+
+# Check headers
+%h = @{ $res->[1] };
+ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
+  or explain( \%h, 'Auth-User => "dwho"' );
 
 count($maintests);
 done_testing( count() );

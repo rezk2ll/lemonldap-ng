@@ -1,7 +1,7 @@
 # Base library for tests
 
 use strict;
-use 5.10.0;
+use warnings;
 use POSIX 'strftime';
 use Data::Dumper;
 use Time::Fake;
@@ -15,7 +15,7 @@ no warnings 'redefine';
 
 my $module;
 our $sessionId =
-  'f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545';
+  '71e4f2a03a64d468f0e0783fbcf3ba8d07a94ebfdc7605749c33547fa163cb55';
 our $file = "t/sessions/$sessionId";
 
 sub init {
