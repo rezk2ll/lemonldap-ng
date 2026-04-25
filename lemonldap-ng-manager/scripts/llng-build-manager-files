@@ -1008,33 +1008,33 @@ sub minify_conftree {
 
     my $success = 0;
 
-    # Check for uglifyjs
-    my $uglifyjs_version = `uglifyjs --version 2>/dev/null`;
-    if ( $? == 0 && $uglifyjs_version ) {
-        my ($major) = $uglifyjs_version =~ /^[^\d]*(\d)/;
-        $major //= 3;
-
-        my $cmd;
-        if ( $major == 2 ) {
-            $cmd =
-"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map '$min_basename.map' -o '$min_basename'";
-        }
-        else {
-            $cmd =
-"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
-        }
-
-        verbose "  Using uglifyjs (version $major)\n";
+    # Prefer terser
+    my $terser_version = `terser --version 2>/dev/null`;
+    if ( $? == 0 && $terser_version ) {
+        verbose "  Using terser\n";
+        my $cmd =
+"terser '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
         $success = ( system($cmd) == 0 );
     }
 
-    # Check for terser if uglifyjs failed or not available
+    # Fall back to uglifyjs
     if ( !$success ) {
-        my $terser_version = `terser --version 2>/dev/null`;
-        if ( $? == 0 && $terser_version ) {
-            verbose "  Using terser\n";
-            my $cmd =
-"terser '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
+        my $uglifyjs_version = `uglifyjs --version 2>/dev/null`;
+        if ( $? == 0 && $uglifyjs_version ) {
+            my ($major) = $uglifyjs_version =~ /^[^\d]*(\d)/;
+            $major //= 3;
+
+            my $cmd;
+            if ( $major == 2 ) {
+                $cmd =
+"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map '$min_basename.map' -o '$min_basename'";
+            }
+            else {
+                $cmd =
+"uglifyjs '$basename' --compress --mangle --comments '/Copyr/i' --source-map -o '$min_basename'";
+            }
+
+            verbose "  Using uglifyjs (version $major)\n";
             $success = ( system($cmd) == 0 );
         }
     }
