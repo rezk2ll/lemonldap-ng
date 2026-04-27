@@ -563,6 +563,23 @@ is( $res->[0], 201, "Registration returns 201 Created" );
 $json = from_json( $res->[2]->[0] );
 ok( $json->{client_id}, "Registration succeeded with client_id" );
 
+# Verify that the oidcRegisterClient hook modified the saved RP options
+my $savedConf = from_json(
+    do { local ( @ARGV, $/ ) = "$main::tmpDir/lmConf-2.json"; <> }
+);
+my ($newRpKey) =
+  grep {
+    ( $savedConf->{oidcRPMetaDataOptions}->{$_}
+          ->{oidcRPMetaDataOptionsClientID} || '' ) eq $json->{client_id}
+  } keys %{ $savedConf->{oidcRPMetaDataOptions} };
+ok( $newRpKey, "Newly registered RP found in saved configuration" );
+is(
+    $savedConf->{oidcRPMetaDataOptions}->{$newRpKey}
+      ->{oidcRPMetaDataOptionsBypassConsent},
+    1,
+    "oidcRegisterClient hook set BypassConsent on the new RP"
+);
+
 clean_sessions();
 done_testing();
 
