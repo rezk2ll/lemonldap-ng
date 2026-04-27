@@ -2764,12 +2764,11 @@ sub registration {
         return $self->p->sendError( $req, 'server_error' );
     }
 
-# Let hooks filter registration requests
-# PE_SENDRESPONSE means the hook's decision is final, result is in $state->{result}
-    my $state = {};
-    my $h     = $self->p->processHook( $req, 'oidcGotRegistrationRequest',
-        $client_metadata, $state );
-    return $state->{result} if $h == PE_SENDRESPONSE;
+    # Let hooks filter registration requests
+    # PE_SENDRESPONSE means the hook took over the response
+    my $h = $self->p->processHook( $req, 'oidcGotRegistrationRequest',
+        $client_metadata );
+    return $req->response if $h == PE_SENDRESPONSE;
     if ( $h != PE_OK ) {
         $self->logger->error("oidcGotRegistrationRequest hook failed");
         return $self->p->sendError( $req, 'invalid_request', 400 );

@@ -539,7 +539,7 @@ ok(
     "Registration attempt with denied redirect_uri"
 );
 
-is( $res->[0], 400, "Registration denied by hook returns 400" );
+is( $res->[0], 403, "Registration denied by hook returns 403" );
 
 # Test that registration succeeds for allowed redirect_uri
 $reg_metadata = to_json( {

@@ -263,15 +263,15 @@ sub generateRefreshToken {
 }
 
 sub gotRegistrationRequest {
-    my ( $self, $req, $client_metadata, $state ) = @_;
+    my ( $self, $req, $client_metadata ) = @_;
 
     # Deny registration for clients with a specific redirect_uri pattern
     my $redirect_uris = $client_metadata->{redirect_uris} || [];
     for my $uri (@$redirect_uris) {
         if ( $uri =~ /^https:\/\/denied\.example\.com\// ) {
-            $state->{result} =
-              $self->p->sendError( $req, 'registration_not_allowed', 403 );
-            return PE_DONE;    # Decision is final
+            $req->response(
+                $self->p->sendError( $req, 'registration_not_allowed', 403 ) );
+            return PE_SENDRESPONSE;
         }
     }
 

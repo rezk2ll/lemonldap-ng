@@ -583,15 +583,14 @@ registration request. It is only called when
 
 It allows custom plugins to filter or reject specific registration requests.
 
-The hook receives the client registration metadata and a ``$state`` hash
-reference. When returning ``PE_SENDRESPONSE``, the hook's decision is final and
-``$state->{result}`` is returned as the HTTP response (same pattern as
-``oidcValidateRedirectUri``).
+The hook receives the client registration metadata. To take over the response
+(for example to reject the request), set ``$req->response`` and return
+``PE_SENDRESPONSE``.
 
 The hook should return:
 
 * ``PE_OK`` to allow the registration to proceed normally
-* ``PE_SENDRESPONSE`` to return ``$state->{result}`` as the final response
+* ``PE_SENDRESPONSE`` to return ``$req->response`` as the final response
 
 Sample code::
 
@@ -600,7 +599,7 @@ Sample code::
    };
 
    sub filterRegistration {
-       my ( $self, $req, $client_metadata, $state ) = @_;
+       my ( $self, $req, $client_metadata ) = @_;
 
        # Only allow native apps with loopback URIs
        my $redirect_uris = $client_metadata->{redirect_uris};
@@ -610,8 +609,8 @@ Sample code::
            unless ( $uri =~
                /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/.*)?$/i )
            {
-               $state->{result} =
-                   $self->p->sendError( $req, 'invalid_request', 400 );
+               $req->response(
+                   $self->p->sendError( $req, 'invalid_request', 400 ) );
                return PE_SENDRESPONSE;
            }
        }
