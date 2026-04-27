@@ -222,7 +222,6 @@ MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSTATICDIR)/bwr/bootstrap/ \
 			$(RPORTALSTATICDIR)/bwr/font-awesome \
 			$(RPORTALSTATICDIR)/bwr/jquery-ui \
-			$(RPORTALSTATICDIR)/bwr/jquery.cookie \
 			$(RPORTALSTATICDIR)/bwr/jquery
 DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 \
 			pages/documentation/current/lib/scripts/jquery-ui*.js \

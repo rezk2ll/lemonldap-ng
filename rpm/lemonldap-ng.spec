@@ -350,7 +350,6 @@ Provides:       bundled(js-bootstrap) = 4.6.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
-Provides:       bundled(js-jquery-cookie) = 1.4.1
 Provides:       bundled(js-jssha) = 3.3.0
 Provides:       bundled(js-qrious) = 4.0.2
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}

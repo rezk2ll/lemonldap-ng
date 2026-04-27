@@ -51,6 +51,12 @@ $(window).on("load", function() {
 
 });
 
+function llngGetCookie(name) {
+  return document.cookie.split('; ').find(function(c) {
+    return c.substring(0, name.length + 1) === name + '=';
+  })?.substring(name.length + 1);
+}
+
 $(document).on( "portalLoaded", { }, function( event, info ) {
   // Make sure DOM is ready as well
   $( document ).ready(function() {
@@ -105,11 +111,11 @@ $(document).on( "portalLoaded", { }, function( event, info ) {
             else
             {
                 // launch authentication choice defined in cookie
-              var sslform = $("#id_" + $.cookie(rememberCookieName) + " form .sslclick");
+              var sslform = $("#id_" + llngGetCookie(rememberCookieName) + " form .sslclick");
               if (sslform.length) {
                   sslform.click();
               } else {
-                  var choiceform = $("#id_" + $.cookie(rememberCookieName) + " form");
+                  var choiceform = $("#id_" + llngGetCookie(rememberCookieName) + " form");
                   choiceform?.submit();
               }
             }
@@ -125,7 +131,7 @@ $(document).on( "portalLoaded", { }, function( event, info ) {
     {
         // if there is a rememberauthchoice cookie
         if (  ! ( typeof rememberCookieName === 'undefined' ) &&
-              ! ( typeof $.cookie(rememberCookieName) === 'undefined' )
+              ! ( typeof llngGetCookie(rememberCookieName) === 'undefined' )
            )
         {
             // show timer
