@@ -5,15 +5,13 @@ Upgrade from 2.x to 2.y
 Please apply general caution as you would with any software: have
 backups and a rollback plan ready!
 
-Known issues
--------------
+Known regressions in the latest released version
+------------------------------------------------
 
-.. Adjust for every new version that has known, unreleased bugs
-
-* `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
+None at the moment
 
 Security issue involving Nginx handlers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 In Nginx < 1.29.5, a hacker can workaround the correlation between a Nginx virtualHost and the "Host" field.
 And despite its documentation and the RFC 9112, Nginx builds automatically the HTTP_HOST variable based on the
@@ -61,15 +59,6 @@ and **replace** it by::
 
     proxy_set_header Host $host;
 
-Known regressions in the latest released version
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In LemonLDAP::NG 2.22.0, there is a regression impacting users of the LDAP,
-RDBI and MongoDB configuration backends that can lead to an HTTP 500 error.
-
-Impacted users can `apply a hotfix for this regression
-<https://gitlab.ow2.org/-/project/181/uploads/836c98294bfe901285074d6b1b6f8ee1/3502.diff>`__
-until 2.22.1 is released
 
 2.23.0
 ------
@@ -83,6 +72,13 @@ You you rely on this behavior, you can add a custom exported header such as
 
 * Key: ``Auth-Token``
 * Value: ``$_accessToken``
+
+JQuery Cookie is no longer bundled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LemonLDAP::NG no longer provides the ``jquery.cookie`` library. If you need this
+library in your custom JS code, you need to add it back to
+``/usr/share/lemonldap-ng/portal/htdocs/static/`` directory, or use a CDN.
 
 2.22.2
 ------
