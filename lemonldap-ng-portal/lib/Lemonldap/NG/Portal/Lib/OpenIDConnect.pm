@@ -36,8 +36,6 @@ use constant oidcErrorLevel => {
     consent_required => 'notice',
 };
 
-our $VERSION = '2.23.0';
-
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
