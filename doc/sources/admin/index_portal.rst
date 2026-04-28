@@ -6,6 +6,7 @@ Portal configuration
 
    portal
    portalcustom
+   bootstrapskin
    jqueryevents
    portalmenu
    portalservers

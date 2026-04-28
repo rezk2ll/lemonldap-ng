@@ -284,6 +284,38 @@ On Debian, you can install rollupjs and the needed dependencies with:
     apt install rollup node-rollup-plugin-babel
 
 
+Frontend dependencies
+~~~~~~~~~~~~~~~~~~~~~
+
+Portal frontend libraries are vendored and committed to the repository, so
+end users do **not** need npm to build or install LemonLDAP::NG. They live
+in two places:
+
+* the ``bootstrap`` skin assets (Bootstrap 5 JS bundle and Font Awesome 6)
+  under ``lemonldap-ng-portal/site/htdocs/static/bootstrap/``;
+* the remaining shared libraries (jQuery, jQuery UI, jsSHA, qrious,
+  fingerprintjs2) under ``lemonldap-ng-portal/site/htdocs/static/bwr/``.
+
+Maintainers can refresh all of these from npm with:
+
+::
+
+    make refresh_portal_vendor
+
+This runs ``npm install`` in ``lemonldap-ng-portal/`` based on
+``package.json``, then copies the relevant files from ``node_modules/`` into
+the skin directory and ``static/bwr/``. Review and commit the resulting
+changes.
+
+On Debian, the Bootstrap 5 JS bundle is replaced at install time by
+``libjs-bootstrap5`` (``make ... USEDEBIANLIBS=yes``); the skin CSS (a themed
+Sass build) and Font Awesome 6 stay vendored, as Debian does not web-serve a
+matching version.
+
+Bower (previously used) has been replaced by npm; ``bower.json`` and
+``.bowerrc`` are gone.
+
+
 Debugging
 ~~~~~~~~~
 

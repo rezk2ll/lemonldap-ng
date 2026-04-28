@@ -8,34 +8,33 @@
  <meta http-equiv="Pragma" content="no-cache" />
  <meta http-equiv="Expires" content="0" />
  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Bootstrap 5 CSS is compiled (with the skin's custom Sass tokens) into
+     styles.css, so it is always served from the skin — Debian's stock
+     libjs-bootstrap5 CSS would drop the theme. Font Awesome 6 is not served
+     under /javascript by Debian (the system package is v4), so it is also
+     served from the skin, except in useexternallibs mode where a FA6 CDN is
+     used. Only the Bootstrap JS bundle can come from libjs-bootstrap5. -->
 <!-- //if:usedebianlibs
- <link rel="stylesheet" type="text/css" href="/javascript/bootstrap4/css/bootstrap.min.css?v=<TMPL_VAR CACHE_TAG>" />
- <link rel="stylesheet" type="text/css" href="/javascript/font-awesome/css/font-awesome.min.css?v=<TMPL_VAR CACHE_TAG>" />
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/styles.min.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/all.min.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/v4-shims.min.css?v=<TMPL_VAR CACHE_TAG>" />
 //elsif:useexternallibs
- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/styles.min.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/v4-shims.min.css" />
 //elsif:cssminified
- <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/css/bootstrap.min.css?v=<TMPL_VAR CACHE_TAG>" />
- <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/font-awesome/css/font-awesome.min.css?v=<TMPL_VAR CACHE_TAG>" />
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/styles.min.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/all.min.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/v4-shims.min.css?v=<TMPL_VAR CACHE_TAG>" />
 //else -->
- <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/css/bootstrap.css?v=<TMPL_VAR CACHE_TAG>" />
- <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/font-awesome/css/font-awesome.css?v=<TMPL_VAR CACHE_TAG>" />
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/css/styles.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/all.css?v=<TMPL_VAR CACHE_TAG>" />
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/fontawesome/css/v4-shims.css?v=<TMPL_VAR CACHE_TAG>" />
 <!-- //endif -->
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SCRIPTNAME">portal.css" />
  <TMPL_IF NAME="CUSTOM_CSS">
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="CUSTOM_CSS">" />
  </TMPL_IF>
- <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
- <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
- <!--[if lt IE 9]>
-   <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-   <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
- <![endif]-->
  <link href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="FAVICON">" rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
  <link href="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="FAVICON">" rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
  <TMPL_IF NAME="PROVIDERURI">
@@ -44,17 +43,21 @@
  </TMPL_IF>
  <TMPL_INCLUDE NAME="../common/script.tpl">
 <!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/bootstrap5/js/bootstrap.bundle.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
-  <script type="text/javascript" src="/javascript/bootstrap4/js/bootstrap.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+ //elsif:useexternallibs
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
  //elsif:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/bootstrap.bundle.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
  //else -->
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/bootstrap.bundle.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.js?v=<TMPL_VAR CACHE_TAG>"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.js?v=<TMPL_VAR CACHE_TAG>"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js?v=<TMPL_VAR CACHE_TAG>"></script>
  <!-- //endif -->
  <TMPL_IF NAME="CUSTOM_JS">
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="CUSTOM_JS">"></script>

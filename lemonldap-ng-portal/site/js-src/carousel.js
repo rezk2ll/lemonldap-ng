@@ -71,14 +71,14 @@ $(window).on("load", function() {
   });
   // Append the carousel inner to the carousel container
   const previousButton =
-    $(`<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+    $(`<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only visually-hidden">Previous</span>
       </a>`);
   const nextButton =
-    $(`<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+    $(`<a class="carousel-control-next" href="#carousel" role="button" data-slide="next" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
+    <span class="sr-only visually-hidden">Next</span>
   </a>`);
 
   $("div.carousel").append(

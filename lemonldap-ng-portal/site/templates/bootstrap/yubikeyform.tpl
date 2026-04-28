@@ -1,8 +1,6 @@
 <div class="form">
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><label for="yubikeyOTPfield" class="mb-0"><i class="fa fa-chevron-right"></i></label></span>
-    </div>
+    <span class="input-group-text"><label for="yubikeyOTPfield" class="mb-0"><i class="fa fa-chevron-right"></i></label></span>
     <input id="yubikeyOTPfield"  name="yubikeyOTP" type="text" class="form-control" trplaceholder="enterYubikey" aria-required="true" autocomplete="off" />
   </div>
 

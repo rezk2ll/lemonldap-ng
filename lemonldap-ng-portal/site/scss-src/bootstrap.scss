@@ -1,0 +1,24 @@
+// LemonLDAP::NG portal — bootstrap skin entry point (Bootstrap 5).
+//
+// Compiled by `make scss` (sassc / node-sass) into:
+//   site/htdocs/static/bootstrap/css/styles.css
+//   site/htdocs/static/bootstrap/css/styles.min.css
+//
+// The Sass include path is the portal's `node_modules/`, so any
+// `@import "bootstrap5/scss/..."` resolves from there. `bootstrap5` is the
+// npm alias (see package.json) pointing at the Bootstrap 5 package.
+
+// 1. Bootstrap functions (so token overrides can use color-contrast etc.)
+@import "bootstrap5/scss/functions";
+
+// 2. Our token overrides BEFORE Bootstrap variables.
+@import "tokens";
+
+// 3. Bootstrap (variables, mixins, components, utilities, helpers).
+@import "bootstrap5/scss/bootstrap";
+
+// 4. Our component overrides AFTER Bootstrap.
+@import "components";
+
+// 5. Dark mode placeholder (intentionally empty for now).
+@import "dark";

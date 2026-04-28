@@ -8,15 +8,11 @@
       <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
       </TMPL_IF>
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
-        </div>
+        <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
         <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="user" aria-required="true"/>
       </div>
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><label for="urlfield" class="mb-0"><i class="fa fa-link"></i></label></span>
-        </div>
+        <span class="input-group-text"><label for="urlfield" class="mb-0"><i class="fa fa-link"></i></label></span>
         <input id="urlfield" name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="URL / DNS" aria-required="true" autocomplete="url" />
       </div>
       <button type="submit" class="btn btn-success">
@@ -35,7 +31,7 @@
       <div class ="col-12 col-sm-12 col-md-12 pb-3">
         <div class="card h-100 border-secondary">
           <div class="card-title text-center bg-light text-dark"><b><span trspan="headers">HEADERS</span></b></div>
-          <div class="card-text font-weight-bold m-2">
+          <div class="card-text fw-bold m-2">
             <TMPL_LOOP NAME="HEADERS">
               <TMPL_VAR NAME="key">: <TMPL_VAR NAME="value"><br/>
             </TMPL_LOOP>
@@ -53,7 +49,7 @@
           <TMPL_IF NAME="GROUPS">
             <div class="card-title text-center bg-light text-dark"><b><span trspan="groups_sso">SSO GROUPS</span></b></div>
             <TMPL_LOOP NAME="GROUPS">
-            <div class="card-text text-left ml-2"><TMPL_VAR NAME="value"></div>
+            <div class="card-text text-start ms-2"><TMPL_VAR NAME="value"></div>
             </TMPL_LOOP>
           </TMPL_IF>
         </div>

@@ -2,16 +2,12 @@
 <pre>echo -n "<TMPL_VAR NAME="TOKEN">"| gpg --clear-sign</pre>
 <div class="form">
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
-    </div>
+    <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
     <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN" ESCAPE=HTML>" trplaceholder="mail" required aria-required="true" />
   </div>
 
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><label for="passwordfield" class="mb-0"><i class="fa fa-lock"></i></label></span>
-    </div>
+    <span class="input-group-text"><label for="passwordfield" class="mb-0"><i class="fa fa-lock"></i></label></span>
     <textarea id="passwordfield" name="password" class="form-control" trplaceholder="Signed text" required aria-required="true"></textarea>
   </div>
 
@@ -45,7 +41,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_FINDUSER">
-    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#finduserModal">
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finduserModal">
       <span class="fa fa-search"></span>
       <span trspan="searchAccount">Search for an account</span>
     </button>

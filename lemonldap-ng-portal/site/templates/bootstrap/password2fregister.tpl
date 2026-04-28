@@ -7,11 +7,11 @@
     <div id="divToHide" class="card">
       <div class="card-body">
 
-        <div class="form-group">
+        <div class="mb-3">
           <label for="password"><span trspan="password">Password</span></label>
           <input type="password" id="password2f" class="form-control" name="password" autocomplete="new-password" />
         </div>
-        <div class="form-group">
+        <div class="mb-3">
           <label for="passwordverify"><span trspan="passwordverify">Verify Password</span></label>
           <input type="password"  id="password2fverify" class="form-control" name="passwordverify" autocomplete="new-password" />
         </div>

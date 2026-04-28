@@ -1,0 +1,159 @@
+// LemonLDAP::NG portal — component overrides for the bootstrap5 skin.
+//
+// Loaded AFTER Bootstrap. Keep rules narrow and component-scoped so future
+// Bootstrap upgrades don't fight us. Avoid !important.
+
+// Page chrome --------------------------------------------------------------
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main,
+.main,
+#wrap {
+  flex: 1 0 auto;
+}
+
+// Login card centring (mirrors current bootstrap skin behaviour) ----------
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4rem);
+  padding: 1.5rem 1rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 28rem;
+  border: 1px solid var(--bs-border-color);
+  background-color: var(--bs-body-bg);
+  box-shadow: 0 .5rem 1.5rem rgba(33, 48, 63, .08);
+}
+
+.login-card .card-header {
+  background: transparent;
+  border-bottom: 0;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.login-card .card-body {
+  padding: 1.5rem 2rem 2rem;
+}
+
+// Auth forms layout (login, password, etc.) ------------------------------
+.login,
+.password {
+  text-align: center;
+  padding: 1.25rem;
+}
+
+div.form {
+  margin: 0 auto;
+  max-width: 22rem;
+}
+
+.notif div.form {
+  max-width: 64rem;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: .75rem;
+  cursor: pointer;
+}
+
+div.actions {
+  margin-top: .75rem;
+}
+
+div.actions a,
+div.actions button {
+  margin-top: .625rem;
+}
+
+// Allow long button labels to wrap nicely
+.btn {
+  white-space: normal;
+}
+
+.btn span.fa,
+.btn .fa-solid,
+.btn .fa-regular,
+.btn .fa-brands {
+  padding-right: .5rem;
+}
+
+// Buttons inside auth flows feel calmer -----------------------------------
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+// Notifications & alerts ---------------------------------------------------
+.alert {
+  border: 0;
+  box-shadow: 0 .125rem .5rem rgba(33, 48, 63, .04);
+}
+
+// 2FA chooser tiles --------------------------------------------------------
+.sf-list .sf-item {
+  display: flex;
+  align-items: center;
+  padding: .75rem 1rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  margin-bottom: .5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.sf-list .sf-item:hover,
+.sf-list .sf-item:focus {
+  background-color: var(--bs-tertiary-bg);
+  border-color: var(--bs-primary);
+}
+
+.sf-list .sf-item .sf-icon {
+  font-size: 1.25rem;
+  margin-right: .75rem;
+}
+
+// Page header (rendered by templates/bootstrap/customheader.tpl) ---------
+#header {
+  padding: 1.25rem 0 .5rem;
+  text-align: center;
+}
+
+#header img {
+  max-height: 6rem;
+  width: auto;
+  margin-bottom: 1rem;
+  background-color: rgba(255, 255, 255, .8);
+}
+
+// Page footer (rendered by templates/bootstrap/footer.tpl) ----------------
+#footer {
+  flex-shrink: 0;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  background-color: rgba(255, 255, 255, .9);
+  border-top: 1px solid var(--bs-border-color);
+  text-align: center;
+  color: var(--bs-secondary-color);
+  font-size: .875rem;
+}
+
+#footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+#footer a:hover,
+#footer a:focus {
+  color: var(--bs-primary);
+}

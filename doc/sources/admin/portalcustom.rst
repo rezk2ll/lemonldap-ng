@@ -284,6 +284,9 @@ Default skin
 You can change the default skin in Manager: ``General Parameters`` >
 ``Portal`` > ``Customization`` > ``Default skin``.
 
+The built-in skin is ``bootstrap`` (default), based on Bootstrap 5.3 and
+Font Awesome 6 — see :doc:`bootstrapskin`.
+
 Select the ``Custom`` skin, then set the name of the skin you want to
 use in the input below.
 
