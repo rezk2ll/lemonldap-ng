@@ -55,8 +55,7 @@ system.
 
 =over
 
-=item Add "C<customPlugins = ::Plugins::PublicPages>" in your lemonldap-ng.ini
-file
+=item Add "C<::Plugins::PublicPages>" to custom plugins list
 
 =item Create a "public" subdir in your template directory
 
