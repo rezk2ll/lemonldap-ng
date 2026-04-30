@@ -254,9 +254,6 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
-site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
-site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js
-site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js.map
