@@ -137,7 +137,11 @@ sub _registrationchallenge {
         },
         challenge              => $challenge_base64,
         attestation            => $attestation,
-        pubKeyCredParams       => [],
+        pubKeyCredParams       => [
+            { type => 'public-key', alg => -7   },    # ES256
+            { type => 'public-key', alg => -257 },    # RS256
+            { type => 'public-key', alg => -37  },    # PS256
+        ],
         authenticatorSelection => { (
                 $userVerification ? ( userVerification => $userVerification )
                 : ()
