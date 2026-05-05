@@ -57,6 +57,10 @@ our @pList = (
       '::Plugins::AuthOidcPkce',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsTokenXAuthorizedRP' =>
       '::Plugins::OIDCInternalTokenExchange',
+    'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowPasswordGrant' =>
+      '::Plugins::OIDCPasswordGrant',
+'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowClientCredentialsGrant'
+      => '::Plugins::OIDCClientCredentialsGrant',
 );
 
 ##@method list enabledPlugins
