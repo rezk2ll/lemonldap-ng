@@ -29,6 +29,7 @@ Advanced features
    rules_examples
    parameterlist
    configtraefik
+   configcaddy
    installtarball
    installsles
    nodehandler
