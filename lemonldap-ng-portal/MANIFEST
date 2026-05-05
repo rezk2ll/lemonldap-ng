@@ -155,8 +155,10 @@ lib/Lemonldap/NG/Portal/Plugins/LocationDetect.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCClientCredentialsGrant.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCPasswordGrant.pm
 lib/Lemonldap/NG/Portal/Plugins/OidcOfflineTokens.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
