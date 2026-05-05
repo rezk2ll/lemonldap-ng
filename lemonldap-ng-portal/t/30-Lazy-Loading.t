@@ -101,8 +101,8 @@ SKIP: {
         # Verify NativeSso plugin is not loaded yet
         ok(
             !$client->p->loadedModules->{
-                'Lemonldap::NG::Portal::Plugins::OIDCNativeSso'},
-            'OIDCNativeSso not loaded initially'
+                'Lemonldap::NG::Portal::Plugins::OIDC::NativeSso'},
+            'OIDC::NativeSso not loaded initially'
         );
 
         # Configure mock to return an RP with AllowNativeSso
@@ -122,8 +122,8 @@ SKIP: {
         # Verify NativeSso plugin was loaded dynamically
         ok(
             $client->p->loadedModules->{
-                'Lemonldap::NG::Portal::Plugins::OIDCNativeSso'},
-            'OIDCNativeSso loaded after dynamic RP'
+                'Lemonldap::NG::Portal::Plugins::OIDC::NativeSso'},
+            'OIDC::NativeSso loaded after dynamic RP'
         );
     };
 

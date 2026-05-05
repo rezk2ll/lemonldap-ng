@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::OIDCPasswordGrant;
+package Lemonldap::NG::Portal::Plugins::OIDC::PasswordGrant;
 
 use strict;
 use Mouse;
@@ -203,5 +203,9 @@ sub _run {
 
     return $self->p->sendJSONresponse( $req, $token_response );
 }
+
+package Lemonldap::NG::Portal::Plugins::OIDCPasswordGrant;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::PasswordGrant');
 
 1;

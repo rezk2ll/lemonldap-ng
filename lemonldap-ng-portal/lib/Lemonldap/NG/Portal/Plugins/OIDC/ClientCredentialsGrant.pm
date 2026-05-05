@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::OIDCClientCredentialsGrant;
+package Lemonldap::NG::Portal::Plugins::OIDC::ClientCredentialsGrant;
 
 use strict;
 use Mouse;
@@ -120,5 +120,9 @@ sub _run {
     $self->logger->debug("Send token response");
     return $self->p->sendJSONresponse( $req, $token_response );
 }
+
+package Lemonldap::NG::Portal::Plugins::OIDCClientCredentialsGrant;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::ClientCredentialsGrant');
 
 1;
