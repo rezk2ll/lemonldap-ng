@@ -1309,6 +1309,7 @@
 "sfRequired":"Wymuś rejestrację 2FA przy logowaniu",
 "sfRetries":"Dozwolone ponowne próby",
 "sfaTitle":"Drugi czynnik uwierzytelniania",
+"shortTokenTTL":"Short token TTL",
 "show":"Pokaż",
 "showHelp":"Pokaż pomoc",
 "showLanguages":"Pokaż wybór języków",

@@ -5458,6 +5458,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'sfRetries' => {
             'type' => 'intOrNull'
         },
+        'shortTokenTTL' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
         'showLanguages' => {
             'default' => 1,
             'type'    => 'bool'

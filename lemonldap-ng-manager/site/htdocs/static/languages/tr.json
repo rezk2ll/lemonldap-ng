@@ -1309,6 +1309,7 @@
 "sfRequired":"Girişte 2FA kayıtlanmaya zorla",
 "sfRetries":"Allowed retries",
 "sfaTitle":"İki faktörlü kimlik doğrulaması",
+"shortTokenTTL":"Short token TTL",
 "show":"Görüntüle",
 "showHelp":"Yardımı görüntüle",
 "showLanguages":"Dil tercihini görüntüle",

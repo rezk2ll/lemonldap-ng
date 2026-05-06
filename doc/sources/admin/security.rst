@@ -341,7 +341,9 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    can recover SSO session name or OIDC access_token. Not enabled by default
    because it breaks exiting OIDC offline sessions.
    **Incompatible with "Proxy" authentication in SOAP mode**.
--  **CrowdSec Bouncer**: Set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
+-  **Short Token TTL**: time-to-live in seconds for machine-to-machine tokens
+   such as back-channel-logout requests. Default 30 seconds.
+-  **CrowdSec**: See :doc:`CrowdSec Bouncer plugin<crowdsec>`
 -  **Check HIBP API**: Set to 'On' to enable :doc:`Check HIBP API plugin<checkhibp>`
 -  **Check password entropy**: Set to 'On' to enable :doc:`Check password entropy plugin<checkentropy>`
 -  **New location warning**: Set to 'On' to enable :doc:`New location warning plugin<newlocationwarning>`

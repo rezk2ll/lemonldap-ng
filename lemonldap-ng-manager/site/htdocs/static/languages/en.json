@@ -1309,6 +1309,7 @@
 "sfRequired":"Force 2FA registration at login",
 "sfRetries":"Allowed retries",
 "sfaTitle":"Second factors authentication",
+"shortTokenTTL":"Short token TTL",
 "show":"Show",
 "showHelp":"Show help",
 "showLanguages":"Show languages choice",

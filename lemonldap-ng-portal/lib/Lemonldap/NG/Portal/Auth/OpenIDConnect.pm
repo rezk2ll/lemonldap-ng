@@ -622,7 +622,7 @@ sub backLogout {
     # TODO: validate "alg" header => prohibit "none" value
 
     # Required fields
-    foreach (qw(iss aud iat jti events)) {
+    foreach (qw(iss aud iat exp jti events)) {
         return $self->p->sendError( $req, "Missing $_", 400 )
           unless $payload->{$_};
     }

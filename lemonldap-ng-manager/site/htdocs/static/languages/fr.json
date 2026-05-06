@@ -1309,6 +1309,7 @@
 "sfRequired":"Exiger l'enrôlement d'un SF à l'authentification",
 "sfRetries":"Nombre de réessais",
 "sfaTitle":"Seconds facteurs d'authentification",
+"shortTokenTTL":"TTL des jetons courts",
 "show":"Montrer",
 "showHelp":"Montrer l'aide",
 "showLanguages":"Afficher le choix des langues",
