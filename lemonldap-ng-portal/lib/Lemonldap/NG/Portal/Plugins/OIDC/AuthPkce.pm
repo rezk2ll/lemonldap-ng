@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::AuthOidcPkce;
+package Lemonldap::NG::Portal::Plugins::OIDC::AuthPkce;
 
 use strict;
 use Digest::SHA                            qw(sha256);
@@ -55,5 +55,9 @@ sub setPkce {
     }
     return PE_OK;
 }
+
+package Lemonldap::NG::Portal::Plugins::AuthOidcPkce;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::AuthPkce');
 
 1;

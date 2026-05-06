@@ -40,7 +40,7 @@ our @pList = (
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
-    oidcOfflineTokens                   => '::Plugins::OidcOfflineTokens',
+    oidcOfflineTokens                   => '::Plugins::OIDC::OfflineTokens',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions         => '::Plugins::Refresh',
@@ -52,15 +52,15 @@ our @pList = (
     samlFederationFiles     => '::Plugins::SamlFederation',
     adminLogoutServerSecret => '::Plugins::AdminLogout',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
-      '::Plugins::OIDCNativeSso',
+      '::Plugins::OIDC::NativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>
-      '::Plugins::AuthOidcPkce',
+      '::Plugins::OIDC::AuthPkce',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsTokenXAuthorizedRP' =>
-      '::Plugins::OIDCInternalTokenExchange',
+      '::Plugins::OIDC::InternalTokenExchange',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowPasswordGrant' =>
-      '::Plugins::OIDCPasswordGrant',
+      '::Plugins::OIDC::PasswordGrant',
 'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowClientCredentialsGrant'
-      => '::Plugins::OIDCClientCredentialsGrant',
+      => '::Plugins::OIDC::ClientCredentialsGrant',
 );
 
 ##@method list enabledPlugins
