@@ -41,7 +41,9 @@ our @pList = (
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
     oidcOfflineTokens                   => '::Plugins::OIDC::OfflineTokens',
-    adaptativeAuthenticationLevelRules  =>
+    oidcServiceAllowDynamicRegistration =>
+      '::Plugins::OIDC::DynamicRegistration',
+    adaptativeAuthenticationLevelRules =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions         => '::Plugins::Refresh',
     externalMenu            => '::Plugins::ExternalMenu',

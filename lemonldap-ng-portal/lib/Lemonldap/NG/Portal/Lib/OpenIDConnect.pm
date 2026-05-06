@@ -1261,10 +1261,6 @@ sub decodeTokenResponse {
     return decodeJSON(@_);
 }
 
-sub decodeClientMetadata {
-    return decodeJSON(@_);
-}
-
 sub decodeUserInfo {
     return decodeJSON(@_);
 }
