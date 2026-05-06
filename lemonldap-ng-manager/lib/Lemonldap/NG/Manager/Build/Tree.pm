@@ -1246,6 +1246,7 @@ sub tree {
                                 'tokenUseGlobalStorage',
                                 'strictTransportSecurityMax_Age',
                                 'hashedSessionStore',
+                                'shortTokenTTL',
                                 {
                                     title => 'Crowdsec',
                                     help  => 'crowdsec.html',

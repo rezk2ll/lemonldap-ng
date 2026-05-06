@@ -408,6 +408,7 @@ sub defaultValues {
         'sfRemovedNotifRef'       => 'RemoveSF',
         'sfRemovedNotifTitle'     => 'Second factor notification',
         'sfRequired'              => 0,
+        'shortTokenTTL'           => 30,
         'showLanguages'           => 1,
         'singleIP'                => 0,
         'singleSession'           => 0,

@@ -2576,6 +2576,7 @@ sub _backChannelLogout {
     #  - aud: audience
     #  - iat: issue at time
     #  - jti: JWT token id
+    #  - exp: token expiration time
     #  - events: should be :
     #   { 'http://schemas.openid.net/event/backchannel-logout"
     #     => {} } # or a JSON object
@@ -2596,6 +2597,7 @@ sub _backChannelLogout {
         sub => $userId,
         aud => $self->getAudiences($rp),
         iat => time,
+        exp => time + $self->conf->{shortTokenTTL},
 
         # Random string: no response expected from RP
         jti =>

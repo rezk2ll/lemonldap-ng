@@ -1327,6 +1327,7 @@
 "sfRequired":"Forçar o registro 2FA no login",
 "sfRetries":"Allowed retries",
 "sfaTitle":"Autenticação por Segundo Fatores",
+"shortTokenTTL":"Short token TTL",
 "show":"Mostrar",
 "showHelp":"Mostrar ajuda",
 "showLanguages":"Mostrar opções de idiomas",

@@ -1327,6 +1327,7 @@
 "sfRequired":"Принудительная регистрация 2FA при входе в систему",
 "sfRetries":"Allowed retries",
 "sfaTitle":"Двухфакторная аутентификация",
+"shortTokenTTL":"Short token TTL",
 "show":"Показать",
 "showHelp":"Показать справку",
 "showLanguages":"Показать выбор языка",

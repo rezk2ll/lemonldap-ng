@@ -1327,6 +1327,7 @@
 "sfRequired":"登入時強制雙因素註冊",
 "sfRetries":"Allowed retries",
 "sfaTitle":"雙因素驗證",
+"shortTokenTTL":"Short token TTL",
 "show":"顯示",
 "showHelp":"顯示說明",
 "showLanguages":"顯示語言選擇",
