@@ -128,7 +128,6 @@ lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
 lib/Lemonldap/NG/Portal/Plugins/AdminLogout.pm
-lib/Lemonldap/NG/Portal/Plugins/AuthOidcPkce.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BasePasswordPolicy.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
@@ -155,12 +154,13 @@ lib/Lemonldap/NG/Portal/Plugins/LocationDetect.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/AuthPkce.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/ClientCredentialsGrant.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDC/DynamicRegistration.pm
-lib/Lemonldap/NG/Portal/Plugins/OIDCClientCredentialsGrant.pm
-lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
-lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
-lib/Lemonldap/NG/Portal/Plugins/OidcOfflineTokens.pm
-lib/Lemonldap/NG/Portal/Plugins/OIDCPasswordGrant.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/InternalTokenExchange.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/NativeSso.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/OfflineTokens.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDC/PasswordGrant.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicNotifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
