@@ -1178,6 +1178,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Token timeout for forms',
         },
+        shortTokenTTL => {
+            default       => 30,
+            type          => 'int',
+            documentation => 'Short token timeout (for machines)',
+        },
         issuersTimeout => {
             default       => 120,
             type          => 'int',

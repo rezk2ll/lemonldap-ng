@@ -561,7 +561,7 @@ sub buildAuthorizationCodeAuthnRequest {
                 iss => $client_id,
                 aud => $aud,
                 jti => $self->generateNonce,
-                exp => time + 30,
+                exp => time + $self->conf->{shortTokenTTL},
                 iat => time,
                 %$authorize_request_params,
             },
@@ -894,7 +894,7 @@ sub getAccessTokenFromTokenEndpoint {
                     sub => $client_id,
                     aud => $access_token_uri,
                     jti => $self->generateNonce,
-                    exp => $time + 30,
+                    exp => $time + $self->conf->{shortTokenTTL},
                     iat => $time,
                 },
                 $alg, $op

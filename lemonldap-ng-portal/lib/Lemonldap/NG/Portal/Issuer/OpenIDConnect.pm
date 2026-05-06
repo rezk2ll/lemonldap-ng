@@ -2597,7 +2597,7 @@ sub _backChannelLogout {
         sub => $userId,
         aud => $self->getAudiences($rp),
         iat => time,
-        exp => time + 30,
+        exp => time + $self->conf->{shortTokenTTL},
 
         # Random string: no response expected from RP
         jti =>

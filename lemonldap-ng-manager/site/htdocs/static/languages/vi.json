@@ -1327,6 +1327,7 @@
 "sfRequired":"Buộc đăng ký 2FA khi đăng nhập",
 "sfRetries":"Allowed retries",
 "sfaTitle":"Xác thực yếu tố thứ hai",
+"shortTokenTTL":"Short token TTL",
 "show":"Hiển thị",
 "showHelp":"Hiển thị trợ giúp",
 "showLanguages":"Hiển thị lựa chọn ngôn ngữ",
