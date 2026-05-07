@@ -88,6 +88,62 @@ sub tests {
             );
         },
 
+        # Check if automatically displayed menu applications have VH configuration
+        menuAutoDisplayedVhostsHaveConf => sub {
+            my @pb;
+
+            # Known hosts: locationRules keys + every vhostAliases entry
+            my %known;
+            $known{ lc $_ } = 1 for keys %{ $conf->{locationRules} || {} };
+            foreach my $vh ( keys %{ $conf->{vhostOptions} || {} } ) {
+                my $aliases = $conf->{vhostOptions}->{$vh}->{vhostAliases};
+                next unless defined $aliases and length $aliases;
+                $known{ lc $_ } = 1 for split /\s+/, $aliases;
+            }
+
+            # Walk applicationList recursively (categories may be nested)
+            my %entries;
+            my $walk;
+            $walk = sub {
+                my $node = shift;
+                return unless ref $node eq 'HASH';
+                foreach my $key ( keys %$node ) {
+                    next if $key =~ /^(?:catname|type|options|order)$/;
+                    my $child = $node->{$key};
+                    next unless ref $child eq 'HASH';
+                    if ( ( $child->{type} // '' ) eq 'category' ) {
+                        $walk->($child);
+                    }
+                    elsif (
+                        ( $child->{options}->{display} // '' ) eq 'auto' )
+                    {
+                        my $uri = $child->{options}->{uri};
+                        next unless defined $uri and length $uri;
+                        my $u = URI->new($uri);
+                        next unless $u->can('host');
+                        my $h = $u->host;
+                        $entries{ lc $h } = 1 if defined $h and length $h;
+                    }
+                }
+            };
+            $walk->( $conf->{applicationList} );
+
+            foreach ( sort keys %entries ) {
+                push @pb, $_ unless $known{$_};
+            }
+
+            return (
+                1,
+                (
+                    @pb
+                    ? 'Menu applications '
+                      . join( ', ', @pb )
+                      . ' are automatically displayed but have no configuration'
+                    : undef
+                )
+            );
+        },
+
         # Check if virtual host do not contain a port
         vhostWithPort => sub {
             my @pb;
