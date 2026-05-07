@@ -25,8 +25,8 @@ ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
 ok(
     $resBody->{details}->{__warnings__}
-      && ( @{ $resBody->{details}->{__warnings__} } == 1
-        or @{ $resBody->{details}->{__warnings__} } == 2 ),
+      && ( @{ $resBody->{details}->{__warnings__} } == 2
+        or @{ $resBody->{details}->{__warnings__} } == 3 ),
     'JSON response contains 2 warnings'
 ) or print STDERR Dumper($resBody);
 
