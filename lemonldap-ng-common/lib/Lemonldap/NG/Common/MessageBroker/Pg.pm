@@ -5,7 +5,7 @@ use JSON;
 use POSIX                           qw(:signal_h);
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
-our $VERSION = '2.22.2';
+our $VERSION = '2.23';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;
@@ -81,12 +81,8 @@ sub _dbh {
         eval {
             alarm(10);
             $self->{_dbh} =
-              DBI->connect(
-                $self->{dbiChain},
-                $self->{dbiUser},
-                $self->{dbiPassword} ? $self->{dbiPassword} : undef,
-                { RaiseError => 1, AutoCommit => 1, }
-              );
+              DBI->connect( $self->{dbiChain}, $self->{dbiUser},
+                $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
 
             # Re subscribe to all channels when reconnecting
             $self->subscribe($_) foreach ( keys %{ $self->{messages} || {} } );
