@@ -294,6 +294,8 @@
 "crowdsecKey":"API 金鑰",
 "crowdsecMachineId":"Crowdsec agent ID",
 "crowdsecMaxFailures":"Max failures allowed during delay",
+"crowdsecMetricsEnabled":"Enable CrowdSec usage-metrics",
+"crowdsecMetricsInterval":"Usage-metrics flush interval (s)",
 "crowdsecPassword":"密码",
 "crowdsecUrl":"Base URL of local API",
 "cspConnect":"Ajax 目的地",

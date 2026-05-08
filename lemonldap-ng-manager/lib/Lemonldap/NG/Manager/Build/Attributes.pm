@@ -1551,6 +1551,16 @@ sub attributes {
             type          => 'text',
             documentation => 'Crowdsec filters directory',
         },
+        crowdsecMetricsEnabled => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable CrowdSec usage-metrics push',
+        },
+        crowdsecMetricsInterval => {
+            default       => 60,
+            type          => 'int',
+            documentation => 'CrowdSec usage-metrics flush interval (seconds)',
+        },
         crowdSecAgentResponseCode => {
             type          => 'int',
             default       => 404,

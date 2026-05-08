@@ -47,6 +47,47 @@ You can then configure:
   *(default: http://localhost:8080)*
 - **API key**: API key, usually given by ``cscli bouncers add mylemon``
 
+Usage metrics
+^^^^^^^^^^^^^
+
+The Bouncer can periodically push usage statistics to the CrowdSec local API
+endpoint ``/v1/usage-metrics``. Each request handled by the bouncer is
+counted as ``processed``; each banned IP is counted as ``dropped`` and is
+labelled by ``origin`` (the source of the decision, e.g. ``CAPI``,
+``crowdsecurity``, ``llng``) and ``ip_type`` (``ipv4`` or ``ipv6``).
+
+You can configure:
+
+- **Enable usage-metrics**: enable the periodic push *(default: disabled)*
+- **Flush interval (seconds)**: minimum delay between two pushes
+  *(default: 60)*. The flush is only triggered by an incoming request,
+  so on a low-traffic portal pushes happen later than the configured
+  interval.
+- **Bouncer name**: name reported to CrowdSec in the
+  ``remediation_components`` field *(default: ``llng``)*. Pick a unique
+  value if you run several bouncers against the same LAPI.
+
+.. note::
+
+   Each LLNG worker pushes its own counters independently, so
+   ``cscli metrics show bouncers`` aggregates values across all workers.
+
+Example output once metrics are pushed:
+
+.. code-block::
+
+   $ cscli metrics show bouncers
+   Bouncer Metrics (llng) since ...:
+   +-------------------+-----------+---------+
+   | Origin            | processed | dropped |
+   +-------------------+-----------+---------+
+   | CAPI              |           |       3 |
+   | crowdsecurity     |           |       1 |
+   | llng              |           |       2 |
+   +-------------------+-----------+---------+
+   |             Total |        42 |       6 |
+   +-------------------+-----------+---------+
+
 .. _Agent:
 
 Agent

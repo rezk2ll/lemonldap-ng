@@ -39,7 +39,8 @@ sub checkCrowdsec {
         return $sub->($req);
     }
     my $ip = $req->address;
-    my ( $ok, $err ) = $self->bouncer($ip);
+    my ( $ok, $err, $decision ) = $self->bouncer($ip);
+    $self->_recordRequest( $ip, $ok ? undef : $decision );
 
     # bouncer() answer $ok=0 only when Crowdsec response rejects the given IP
     return $sub->($req)

@@ -294,6 +294,8 @@
 "crowdsecKey":"Chave de API",
 "crowdsecMachineId":"Crowdsec agent ID",
 "crowdsecMaxFailures":"Max failures allowed during delay",
+"crowdsecMetricsEnabled":"Enable CrowdSec usage-metrics",
+"crowdsecMetricsInterval":"Usage-metrics flush interval (s)",
 "crowdsecPassword":"Senha",
 "crowdsecUrl":"URL base da API local",
 "cspConnect":"Destinos AJAX",

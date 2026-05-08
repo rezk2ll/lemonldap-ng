@@ -917,6 +917,7 @@ t/61-AdaptativeAuthenticationLevel.t
 t/61-BruteForceProtection-with-Incremental-lockTimes-and-TOTP.t
 t/61-BruteForceProtection-with-Incremental-lockTimes.t
 t/61-BruteForceProtection.t
+t/61-CrowdSec-metrics.t
 t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
 t/61-CrowdSecAgent.t
