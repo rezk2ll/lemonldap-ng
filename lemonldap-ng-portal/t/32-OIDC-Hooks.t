@@ -58,16 +58,17 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRedirectUris  => 'http://dev.com/',
                 },
                 oauth => {
-                    oidcRPMetaDataOptionsDisplayName                 => "oauth",
-                    oidcRPMetaDataOptionsClientID                    => "oauth",
-                    oidcRPMetaDataOptionsClientSecret                => "service",
-                    oidcRPMetaDataOptionsUserIDAttr                  => "",
+                    oidcRPMetaDataOptionsDisplayName  => "oauth",
+                    oidcRPMetaDataOptionsClientID     => "oauth",
+                    oidcRPMetaDataOptionsClientSecret => "service",
+                    oidcRPMetaDataOptionsUserIDAttr   => "",
                     oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                 }
             },
-            oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig  => oidc_cert_op_public_sig,
-            customPlugins            => 't::OidcHookPlugin',
+            oidcServicePrivateKeySig            => oidc_key_op_private_sig,
+            oidcServicePublicKeySig             => oidc_cert_op_public_sig,
+            oidcServiceAllowDynamicRegistration => 1,
+            customPlugins                       => 't::OidcHookPlugin',
         }
     }
 );
@@ -162,8 +163,10 @@ ok(
 
 # Check that both oidcGenerateCode (hooked=1) and oidcGenerateAuthorizationResponse (authz_hook=hooked) hooks work
 my ($redir_url) = expectRedirection( $res, qr#(http://rp2\.com/\?.*)# );
-like( $redir_url, qr/\bhooked=1\b/, "oidcGenerateCode hook modified redirect_uri" );
-like( $redir_url, qr/\bauthz_hook=hooked\b/, "oidcGenerateAuthorizationResponse hook added parameter" );
+like( $redir_url, qr/\bhooked=1\b/,
+    "oidcGenerateCode hook modified redirect_uri" );
+like( $redir_url, qr/\bauthz_hook=hooked\b/,
+    "oidcGenerateAuthorizationResponse hook added parameter" );
 my ($code) = ( $redir_url =~ /\bcode=([^\&]+)/ );
 
 # Exchange code for AT
@@ -331,8 +334,8 @@ ok(
 );
 
 $json = expectJSON($res);
-is( $json->{introspection_hook}, "hooked",
-    "oidcGenerateIntrospectionResponse hook modified response" );
+is( $json->{introspection_hook},
+    "hooked", "oidcGenerateIntrospectionResponse hook modified response" );
 
 # --------------------------------------------------------------------------
 # Test oidcGotTokenRequest hook
@@ -379,8 +382,10 @@ $code = codeAuthorize(
 );
 $json = expectJSON( codeGrant( $op, 'rpid', $code, "http://rp2.com/" ) );
 ok( $json->{refresh_token}, "Refresh token present" );
-ok( $t::OidcHookPlugin::generateRefreshTokenCalled,
-    "oidcGenerateRefreshToken hook was called" );
+ok(
+    $t::OidcHookPlugin::generateRefreshTokenCalled,
+    "oidcGenerateRefreshToken hook was called"
+);
 
 # --------------------------------------------------------------------------
 # Test oidcGenerateTokenResponse grant_type in refresh grant
@@ -434,8 +439,11 @@ ok( $refresh_token, 'Refresh token present for PE_SENDRESPONSE test' );
 $t::OidcHookPlugin::refreshSendResponse = 1;
 
 $res = refreshGrant( $op, 'rpid', $refresh_token );
-is( $res->[2]->[0], 'Direct response',
-    'Online refresh: PE_SENDRESPONSE returns hook response body' );
+is(
+    $res->[2]->[0],
+    'Direct response',
+    'Online refresh: PE_SENDRESPONSE returns hook response body'
+);
 
 # Disable and verify normal refresh still works
 $t::OidcHookPlugin::refreshSendResponse = 0;
@@ -469,8 +477,11 @@ ok( $refresh_token, 'Offline refresh token present for PE_SENDRESPONSE test' );
 $t::OidcHookPlugin::refreshSendResponse = 1;
 
 $res = refreshGrant( $op, 'rpid', $refresh_token );
-is( $res->[2]->[0], 'Direct response',
-    'Offline refresh: PE_SENDRESPONSE returns hook response body' );
+is(
+    $res->[2]->[0],
+    'Direct response',
+    'Offline refresh: PE_SENDRESPONSE returns hook response body'
+);
 
 # Disable and verify normal refresh still works
 $t::OidcHookPlugin::refreshSendResponse = 0;
@@ -479,6 +490,95 @@ $res  = refreshGrant( $op, 'rpid', $refresh_token );
 $json = expectJSON($res);
 ok( $json->{access_token},
     'Offline refresh: normal refresh works after PE_SENDRESPONSE' );
+
+# Testing oidcGenerateMetadata hook
+note "Testing oidcGenerateMetadata hook";
+ok(
+    $res = $op->_get(
+        '/.well-known/openid-configuration',
+        accept => 'application/json',
+    ),
+    'Get metadata'
+);
+count(1);
+expectOK($res);
+count(1);
+$json = expectJSON($res);
+count(1);
+ok(
+    $json->{custom_metadata_hook} eq 'hooked',
+    'oidcGenerateMetadata hook added custom field'
+);
+count(1);
+ok(
+    grep( { $_ eq 'urn:test:custom_grant' }
+        @{ $json->{grant_types_supported} } ),
+    'oidcGenerateMetadata hook added custom grant type'
+);
+count(1);
+
+# --------------------------------------------------------------------------
+# Test oidcGotRegistrationRequest and oidcRegisterClient hooks
+# --------------------------------------------------------------------------
+note "Testing oidcGotRegistrationRequest and oidcRegisterClient hooks";
+
+# Test that registration is denied by hook for matching denied pattern
+my $reg_metadata = to_json( {
+        redirect_uris => ["https://denied.example.com/callback"],
+        client_name   => "Test Client"
+    }
+);
+ok(
+    $res = $op->_post(
+        "/oauth2/register",
+        IO::String->new($reg_metadata),
+        accept => 'application/json',
+        length => length($reg_metadata),
+        type   => 'application/json',
+    ),
+    "Registration attempt with denied redirect_uri"
+);
+
+is( $res->[0], 403, "Registration denied by hook returns 403" );
+
+# Test that registration succeeds for allowed redirect_uri
+$reg_metadata = to_json( {
+        redirect_uris => ["https://allowed.example.com/callback"],
+        client_name   => "Test Allowed Client"
+    }
+);
+ok(
+    $res = $op->_post(
+        "/oauth2/register",
+        IO::String->new($reg_metadata),
+        accept => 'application/json',
+        length => length($reg_metadata),
+        type   => 'application/json',
+    ),
+    "Registration attempt with allowed redirect_uri"
+);
+
+# RFC 7591: Successful registration returns 201 Created
+is( $res->[0], 201, "Registration returns 201 Created" );
+$json = from_json( $res->[2]->[0] );
+ok( $json->{client_id}, "Registration succeeded with client_id" );
+
+# Verify that the oidcRegisterClient hook modified the saved RP options
+my $savedConf = from_json(
+    do { local ( @ARGV, $/ ) = "$main::tmpDir/lmConf-2.json"; <> }
+);
+my ($newRpKey) =
+  grep {
+    ( $savedConf->{oidcRPMetaDataOptions}->{$_}
+          ->{oidcRPMetaDataOptionsClientID} || '' ) eq $json->{client_id}
+  } keys %{ $savedConf->{oidcRPMetaDataOptions} };
+ok( $newRpKey, "Newly registered RP found in saved configuration" );
+is(
+    $savedConf->{oidcRPMetaDataOptions}->{$newRpKey}
+      ->{oidcRPMetaDataOptionsBypassConsent},
+    1,
+    "oidcRegisterClient hook set BypassConsent on the new RP"
+);
 
 clean_sessions();
 done_testing();

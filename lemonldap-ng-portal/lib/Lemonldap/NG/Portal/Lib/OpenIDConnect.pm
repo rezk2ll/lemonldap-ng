@@ -81,6 +81,23 @@ has state_ott => (
     }
 );
 
+# Calculate conditional plugins to be loaded if required by a dynamic RP
+has _rpConditionalPlugins => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my %map;
+        for ( my $i = 0 ; $i < @Lemonldap::NG::Portal::Main::pList ; $i += 2 ) {
+            if ( $Lemonldap::NG::Portal::Main::pList[$i] =~
+                m{^or::oidcRPMetaDataOptions/\*/(.+)$} )
+            {
+                $map{$1} = $Lemonldap::NG::Portal::Main::pList[ $i + 1 ];
+            }
+        }
+        return \%map;
+    }
+);
+
 # METHODS
 
 # Load OpenID Connect Providers and JWKS data
@@ -184,9 +201,12 @@ sub load_rp {
     }
 
     # Required authentication level rule
-    my $levelrule = $config{options}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+    my $levelrule =
+         $config{options}->{oidcRPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
     $levelrule = $self->p->buildRule( $levelrule,
-        "required authentication level rule for RP $rp" );
+        "Required authentication level rule for RP $rp" );
     unless ($levelrule) {
         $valid = 0;
     }
@@ -319,6 +339,10 @@ sub load_rp {
         $self->rpScopeRules->{$rp} = $compiled_scope_rules;
         $self->rpRules->{$rp}      = $rule;
         $self->rpLevelRules->{$rp} = $levelrule;
+
+        # Ensure plugins required by this RP's options are loaded (#3587)
+        $self->_loadConditionalPlugins( $config{options} );
+
         return 1;
     }
     else {
@@ -327,6 +351,23 @@ sub load_rp {
             "Relying Party $rp has errors and will be ignored");
     }
     return 0;
+}
+
+# Plugins that must be loaded when specific RP options are enabled (#3587)
+# Built from @Lemonldap::NG::Portal::Main::pList entries matching
+# or::oidcRPMetaDataOptions/*/...
+sub _loadConditionalPlugins {
+    my ( $self, $options ) = @_;
+
+    while ( my ( $opt, $plugin ) = each %{ $self->_rpConditionalPlugins } ) {
+        next unless $options->{$opt};
+        my $full =
+          ( $plugin =~ /^::/ ) ? "Lemonldap::NG::Portal$plugin" : $plugin;
+        next if $self->p->loadedModules->{$full};
+        $self->logger->info(
+            "Dynamically loading plugin $plugin for RP option $opt");
+        $self->p->loadPlugin($plugin);
+    }
 }
 
 # Refresh JWKS data if needed
@@ -458,6 +499,31 @@ sub buildAuthorizationCodeAuthnRequest {
         ( defined $nonce      ? ( nonce      => $nonce )      : () ),
         ( defined $login_hint ? ( login_hint => $login_hint ) : () ),
     };
+
+    my %custom_request_params;
+    while (
+        my ( $key, $value ) = each %{
+            $self->opOptions->{$op}
+              ->{oidcOPMetaDataOptionsAuthEndpointExtraParams} || {}
+        }
+      )
+    {
+
+        # If the value looks like JSON, decode it
+        if ( $value =~ /^[\[\{]/ ) {
+            my $try_json = eval { from_json($value) };
+            if ( defined($try_json) ) {
+                $value = $try_json;
+            }
+            else {
+                $self->logger->debug(
+                        "Unable to decode value for request parameter $key"
+                      . " as JSON: $@" );
+            }
+        }
+        $custom_request_params{$key} = $value;
+    }
+
     my $authorize_request_params = {
         %$authorize_request_oauth2_params,
         ( $display ? ( display => $display ) : () ),
@@ -473,7 +539,8 @@ sub buildAuthorizationCodeAuthnRequest {
         (
             defined($acr_values)
               && length($acr_values) ? ( acr_values => $acr_values ) : ()
-        )
+        ),
+        %custom_request_params,
     };
 
     # Call oidcGenerateAuthenticationRequest
@@ -494,7 +561,7 @@ sub buildAuthorizationCodeAuthnRequest {
                 iss => $client_id,
                 aud => $aud,
                 jti => $self->generateNonce,
-                exp => time + 30,
+                exp => time + $self->conf->{shortTokenTTL},
                 iat => time,
                 %$authorize_request_params,
             },
@@ -514,10 +581,32 @@ sub buildAuthorizationCodeAuthnRequest {
                 'Unable to generate JWT, continue with unauthenticated query');
         }
     }
+
+    # Make sure request params all contain string data, since hooks or extra
+    # claims may have inserted a complex object
+
+    my %flat_authorize_request_params;
+    while ( my ( $key, $value ) = each %$authorize_request_params ) {
+        if ( ref($value) ) {
+            my $try_value  = eval { to_json($value) };
+            my $eval_error = $@;
+            if ( defined($try_value) ) {
+                $value = $try_value;
+            }
+            else {
+                $value = undef;
+                $self->logger->warn(
+                    "Could not add $key to Authorization request: $eval_error");
+            }
+        }
+
+        $flat_authorize_request_params{$key} = $value if defined($value);
+    }
+
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(%$authorize_request_params);
+      . build_urlencoded(%flat_authorize_request_params);
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
@@ -805,7 +894,7 @@ sub getAccessTokenFromTokenEndpoint {
                     sub => $client_id,
                     aud => $access_token_uri,
                     jti => $self->generateNonce,
-                    exp => $time + 30,
+                    exp => $time + $self->conf->{shortTokenTTL},
                     iat => $time,
                 },
                 $alg, $op
@@ -1172,10 +1261,6 @@ sub decodeTokenResponse {
     return decodeJSON(@_);
 }
 
-sub decodeClientMetadata {
-    return decodeJSON(@_);
-}
-
 sub decodeUserInfo {
     return decodeJSON(@_);
 }
@@ -1433,8 +1518,7 @@ sub updateToken {
     );
 
     if ( $oidcSession->error ) {
-        $self->userLogger->warn(
-            "OpenIDConnect session $id not found");
+        $self->userLogger->warn("OpenIDConnect session $id not found");
         return undef;
     }
 
@@ -1488,11 +1572,11 @@ sub getOpenIDConnectSession {
 
     if ( $oidcSession->error ) {
         if ($id) {
-            $self->userLogger->warn(
-                "OpenIDConnect $type_log $id not found");
+            $self->userLogger->warn("OpenIDConnect $type_log $id not found");
         }
         else {
-            $self->logger->error("Unable to create new OpenIDConnect $type_log");
+            $self->logger->error(
+                "Unable to create new OpenIDConnect $type_log");
             $self->logger->error( $oidcSession->error );
         }
         return undef;
@@ -1658,7 +1742,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ( $jwks->{keys}
+        unless ($jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -2808,13 +2892,12 @@ sub validatePKCEChallenge {
 
     unless ($code_challenge) {
 
-        # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
-        # Reject code_verifier if no code_challenge was sent during authorization
+       # RFC 9700 section 2.1.1: Mitigate PKCE downgrade attacks
+       # Reject code_verifier if no code_challenge was sent during authorization
         if ($code_verifier) {
             $self->userLogger->error(
-                "PKCE downgrade attack: code_verifier provided "
-              . "but no code_challenge was sent during authorization"
-            );
+                    "PKCE downgrade attack: code_verifier provided "
+                  . "but no code_challenge was sent during authorization" );
             return 0;
         }
         $self->logger->debug("PKCE was not requested by the RP");

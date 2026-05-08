@@ -40,8 +40,10 @@ our @pList = (
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
     initializePasswordReset             => '::Plugins::InitializePasswordReset',
-    oidcOfflineTokens                   => '::Plugins::OidcOfflineTokens',
-    adaptativeAuthenticationLevelRules  =>
+    oidcOfflineTokens                   => '::Plugins::OIDC::OfflineTokens',
+    oidcServiceAllowDynamicRegistration =>
+      '::Plugins::OIDC::DynamicRegistration',
+    adaptativeAuthenticationLevelRules =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions         => '::Plugins::Refresh',
     externalMenu            => '::Plugins::ExternalMenu',
@@ -52,11 +54,15 @@ our @pList = (
     samlFederationFiles     => '::Plugins::SamlFederation',
     adminLogoutServerSecret => '::Plugins::AdminLogout',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowNativeSso' =>
-      '::Plugins::OIDCNativeSso',
+      '::Plugins::OIDC::NativeSso',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>
-      '::Plugins::AuthOidcPkce',
+      '::Plugins::OIDC::AuthPkce',
     'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsTokenXAuthorizedRP' =>
-      '::Plugins::OIDCInternalTokenExchange',
+      '::Plugins::OIDC::InternalTokenExchange',
+    'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowPasswordGrant' =>
+      '::Plugins::OIDC::PasswordGrant',
+'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsAllowClientCredentialsGrant'
+      => '::Plugins::OIDC::ClientCredentialsGrant',
 );
 
 ##@method list enabledPlugins

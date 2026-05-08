@@ -84,10 +84,12 @@ sub ask {
     $self->logger->debug(" -> Skip confirmation is enabled")
       if $self->conf->{"skip${action}Confirmation"};
 
-    $url = '' if $self->p->checkXSSAttack('url', $url);
-    $forceUpgrade = '' if $self->p->checkXSSAttack('forceUpgrade', $forceUpgrade);
+    $url          = '' if $self->p->checkXSSAttack( 'url', $url );
+    $forceUpgrade = ''
+      if $self->p->checkXSSAttack( 'forceUpgrade', $forceUpgrade );
 
     my $cacheTag = $self->p->cacheTag;
+
     # Display form
     return $self->p->sendHtml(
         $req,
@@ -126,14 +128,14 @@ sub confirm {
                 $upg = 1;
             }
             else {
-                return $self->p->doPE($req, PE_TOKENEXPIRED);
+                return $self->p->doPE( $req, PE_TOKENEXPIRED );
             }
         }
     }
 
     $req->steps( ['controlUrl'] );
     my $res = $self->p->process($req);
-    return $self->p->doPE($req, $res) if $res;
+    return $self->p->doPE( $req, $res ) if $res;
 
     if ( $upg or $req->param('confirm') and $req->param('confirm') == 1 ) {
         $req->data->{noerror} = 1;
@@ -172,7 +174,7 @@ sub confirm {
         # Go to portal
         $self->logger->debug("Upgrade session did not trigger -> Go to Portal");
         $req->mustRedirect(1);
-        return $self->p->doPE($req, PE_OK);
+        return $self->p->doPE( $req, PE_OK );
     }
 }
 

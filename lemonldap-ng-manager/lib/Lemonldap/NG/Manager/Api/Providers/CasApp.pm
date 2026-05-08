@@ -352,7 +352,8 @@ sub _pushCasApp {
         foreach ( keys %{ $push->{options} } ) {
             my $optionName = $self->_translateOptionApiToConf( $_, 'casApp' );
             my $optionValue =
-              $self->_translateValueApiToConf( $optionName, $push->{options}->{$_} );
+              $self->_translateValueApiToConf( $optionName,
+                $push->{options}->{$_} );
 
             $translatedOptions->{$optionName} = $optionValue;
         }
@@ -361,19 +362,16 @@ sub _pushCasApp {
             'casAppMetaDataNode' );
         return $res unless ( $res->{res} eq 'ok' );
 
-        foreach ( keys %{$translatedOptions} ) {
-            $conf->{casAppMetaDataOptions}->{$confKey}->{$_} =
-              $translatedOptions->{$_};
-        }
-
+        $self->_merge_hash( $conf, 'casAppMetaDataOptions', $confKey,
+            $translatedOptions );
     }
 
     if ( defined $push->{exportedVars} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{exportedVars} ) ) {
-            foreach ( keys %{ $push->{exportedVars} } ) {
-                $conf->{casAppMetaDataExportedVars}->{$confKey}->{$_} =
-                  $push->{exportedVars}->{$_};
-            }
+            $self->_merge_hash(
+                $conf,    'casAppMetaDataExportedVars',
+                $confKey, $push->{exportedVars}
+            );
         }
         else {
             return {
@@ -386,10 +384,8 @@ sub _pushCasApp {
 
     if ( defined $push->{macros} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
-            foreach ( keys %{ $push->{macros} } ) {
-                $conf->{casAppMetaDataMacros}->{$confKey}->{$_} =
-                  $push->{macros}->{$_};
-            }
+            $self->_merge_hash( $conf, 'casAppMetaDataMacros', $confKey,
+                $push->{macros} );
         }
         else {
             return {

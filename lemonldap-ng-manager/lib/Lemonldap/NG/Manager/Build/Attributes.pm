@@ -321,6 +321,7 @@ sub attributes {
             default       => 5,
             flags         => 'hp',
         },
+        defaultAuthnLevel => { type => 'intOrNull' },
         defaultNewKeySize => {
             type          => 'int',
             documentation => 'Default size for new RSA key helper',
@@ -1176,6 +1177,11 @@ sub attributes {
             default       => 120,
             type          => 'int',
             documentation => 'Token timeout for forms',
+        },
+        shortTokenTTL => {
+            default       => 30,
+            type          => 'int',
+            documentation => 'Short token timeout (for machines)',
         },
         issuersTimeout => {
             default       => 120,
@@ -3725,7 +3731,7 @@ sub attributes {
             msgFail    => '__badValue__',
             default    => {},
         },
-        samlSPMetaDataXML        => { type => 'file', },
+        samlSPMetaDataXML               => { type => 'file', },
         samlSPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
@@ -4714,7 +4720,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 2,
             documentation => 'Slave authentication level',
         },
-        slaveUserHeader   => { type => 'text', },
+        slaveUserHeader => { type => 'text', },
+        slaveCertificateField        => { type => 'text', },
+        slaveCertificateRegexp     => {
+            type          => 'pcre',
+            default       => '',
+            documentation => 'Regular expression to test Slave var',
+        },
         slaveExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
@@ -5127,7 +5139,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         oidcServiceAllowDynamicRegistration => {
-            type          => 'bool',
+            type   => 'select',
+            select => [
+                { k => '0', v => 'disabled' },
+                { k => '1', v => 'confidentialOnly' },
+                { k => '2', v => 'allClients' },
+            ],
             default       => 0,
             documentation => 'OpenID Connect allow dynamic client registration',
         },
@@ -5263,6 +5280,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsMaxAge    => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsUiLocales => { type => 'text', },
         oidcOPMetaDataOptionsAcrValues => { type => 'text', },
+        oidcOPMetaDataOptionsAuthEndpointExtraParams => {
+            type          => 'keyTextContainer',
+            documentation =>
+              'Additional parameters for OpenID Connect Authorization endpoint',
+        },
         oidcOPMetaDataOptionsTokenEndpointAuthMethod => {
             type   => 'select',
             select => [
@@ -5346,7 +5368,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsActivation     => {
+        oidcRPMetaDataOptionsActivation => {
             type    => 'bool',
             default => 1,
         },

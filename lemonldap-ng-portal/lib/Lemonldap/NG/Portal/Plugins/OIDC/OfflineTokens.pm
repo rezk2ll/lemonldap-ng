@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::OidcOfflineTokens;
+package Lemonldap::NG::Portal::Plugins::OIDC::OfflineTokens;
 
 use strict;
 use Mouse;
@@ -154,5 +154,9 @@ sub delOffline {
     #TODO : Call BackChannelLogout if needed
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
+
+package Lemonldap::NG::Portal::Plugins::OidcOfflineTokens;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::OfflineTokens');
 
 1;

@@ -374,7 +374,21 @@ sub openapi {
                     'tags'        => ['samlsp'],
                     'summary'     => 'Updates a SAML Service.',
                     'operationId' => 'updateSamlSp',
-                    'parameters'  => [ {
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "macros": {
+    "addme": "newval",
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
+                    'parameters' => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
@@ -572,6 +586,20 @@ sub openapi {
                 'patch' => {
                     'tags'        => ['oidcrp'],
                     'summary'     => 'Updates an OpenID Connect Relying Party',
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "macros": {
+    "addme": "newval",
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
                     'operationId' => 'updateOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
@@ -849,7 +877,21 @@ sub openapi {
                     'tags'        => ['casapp'],
                     'summary'     => 'Updates a CAS Application.',
                     'operationId' => 'updateCasApp',
-                    'parameters'  => [ {
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "macros": {
+    "addme": "newval",
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
+                    'parameters' => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>

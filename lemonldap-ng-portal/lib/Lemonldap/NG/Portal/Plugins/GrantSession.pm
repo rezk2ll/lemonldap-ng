@@ -46,6 +46,7 @@ sub run {
         return PE_BADCREDENTIALS;
     }
 
+    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         my $rule = $self->conf->{grantSessionRules}->{$_};
         $self->logger->debug("Grant session rule: $rule");
@@ -72,28 +73,21 @@ sub run {
                         $req, 'simpleInfo', params => { trspan => $msg }
                     )
                 );
-                $self->userLogger->error( 'User "'
-                      . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
-                      . " was not granted to open session (rule: $rule)" );
                 $req->urldc(
                     $self->p->buildUrl( $req->portal, { cancel => 1 } ) );
-                return $req->authResult(PE_SESSIONNOTGRANTED);
             }
             else {
-                $self->userLogger->error( 'User "'
-                      . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
-                      . '" was not granted to open session (rule: '
-                      . $self->conf->{grantSessionRules}->{$_}
-                      . ")" );
                 $req->urldc( $req->portal );
-                return $req->authResult(PE_SESSIONNOTGRANTED);
             }
+            $self->userLogger->warn(
+                "User $user was not granted to open session by rule: $rule")
+              if $user;
+            return $req->authResult(PE_SESSIONNOTGRANTED);
         }
     }
 
     # Log
-    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    my $mod  = $req->{sessionInfo}->{_auth};
+    my $mod = $req->{sessionInfo}->{_auth};
     $self->userLogger->notice(
         "Session granted for $user by $mod ($req->{sessionInfo}->{ipAddr})")
       if $user;

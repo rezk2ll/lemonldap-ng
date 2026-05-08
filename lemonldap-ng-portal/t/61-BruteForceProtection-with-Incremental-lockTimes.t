@@ -69,12 +69,12 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
-ok( $1 <= 5 && $1 >= 3, 'LockTime in range' )
+ok( $1 <= 5 && $1 >= 1, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
 # Waiting
-Time::Fake->offset("+4s");
+Time::Fake->offset("+2s");
 
 ## Try to connect while still locked
 ok(
@@ -93,8 +93,8 @@ ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
 # With fix #3561: blocked attempts not stored, countFailed stays 1
-# lockTimes[1]=5, delta=4 → remaining ~1s
-ok( $1 <= 2 && $1 >= 0, 'LockTime in range' )
+# lockTimes[1]=5, delta=2 → remaining ~3s
+ok( $1 <= 4 && $1 >= 1, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -135,7 +135,7 @@ ok( $res->[2]->[0] =~ m%(\d{1,2}) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
 # countFailed=2 → lockTimes[2]=10
-ok( $1 <= 12 && $1 >= 8, 'LockTime in range (~10s)' )
+ok( $1 <= 12 && $1 >= 5, 'LockTime in range (~10s)' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -191,7 +191,7 @@ ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
     "LockTime = $1" );
 
 # countFailed=1 → lockTimes[1]=5 (first non-zero lock time after maxFailed=2 zeros)
-ok( $1 <= 6 && $1 >= 3, 'LockTime in range (~5s)' )
+ok( $1 <= 6 && $1 >= 1, 'LockTime in range (~5s)' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 

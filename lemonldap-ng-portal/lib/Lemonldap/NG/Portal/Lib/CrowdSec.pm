@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SESSIONNOTGRANTED
 );
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 our $defaultBanValues = {
     events_count     => 1,
@@ -137,10 +137,13 @@ sub alert {
     my ($notBanned) = $self->bouncer($ip);
 
     $data ||= {};
-    my $max = $self->conf->{crowdsecMaxFailures};
+
+    # Use per-scenario maxFailures if provided, otherwise use global config
+    my $max = $data->{maxFailures} // $self->conf->{crowdsecMaxFailures};
 
     # Get both count and previous alerts for enrichment
-    my @prevAlerts = $self->getAlertsByIp( $ip, $data->{scenario} );
+    my @prevAlerts =
+      $self->getAlertsByIp( $ip, $data->{scenario}, $data->{timeWindow} );
 
     $data->{remediation} =
       ( $max and @prevAlerts >= ( $max - 1 ) and $notBanned )
@@ -221,7 +224,7 @@ sub _extractAlertContext {
 }
 
 sub getAlertsByIp {
-    my ( $self, $ip, $scenario ) = @_;
+    my ( $self, $ip, $scenario, $timeWindow ) = @_;
     $scenario ||= $defaultBanValues->{scenario};
     if ( my $token = $self->getToken ) {
 
@@ -260,8 +263,10 @@ sub getAlertsByIp {
             return ();
         }
 
-        # Default: 3 hours
-        my $timeLimit = time - ( $self->conf->{crowdsecBlockDelay} || 180 );
+        # Use per-scenario timeWindow if provided, otherwise use global config
+        # Default: 900 seconds (15 minutes)
+        my $delay     = $timeWindow // $self->conf->{crowdsecBlockDelay} // 900;
+        my $timeLimit = time - $delay;
 
         # API already filters by IP and scenario, just filter by time
         my @ipAlerts =
@@ -381,7 +386,8 @@ sub _banPayload {
     # Add decisions array when remediation is requested
     # This ensures the IP is immediately banned by CrowdSec
     if ( $data->{remediation} ) {
-        my $duration = $self->conf->{crowdsecBanDuration} || '4h';
+        my $duration =
+          $data->{banDuration} || $self->conf->{crowdsecBanDuration} || '4h';
         $alert->{decisions} = [ {
                 duration => $duration,
                 type     => 'ban',

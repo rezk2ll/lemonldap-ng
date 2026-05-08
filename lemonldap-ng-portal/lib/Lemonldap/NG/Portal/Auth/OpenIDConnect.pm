@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
-use MIME::Base64 qw/encode_base64 decode_base64/;
-use Scalar::Util qw/looks_like_number/;
-use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use MIME::Base64                           qw/encode_base64 decode_base64/;
+use Scalar::Util                           qw/looks_like_number/;
+use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
@@ -152,15 +152,17 @@ sub extractFormInfo {
         };
 
         # Call hook - plugins can modify callback_params
-        my $hook_res = $self->p->processHook( $req, 'oidcGotAuthenticationResponse',
+        my $hook_res =
+          $self->p->processHook( $req, 'oidcGotAuthenticationResponse',
             $callback_params );
         return $hook_res if ( $hook_res != PE_OK and $hook_res > 0 );
 
         # Restore state
         my $state = $callback_params->{state};
         if ($state) {
-            # If state is a hashref, hook already extracted it - skip extractState
-            # If state is a scalar, call extractState
+
+          # If state is a hashref, hook already extracted it - skip extractState
+          # If state is a scalar, call extractState
             if ( ref($state) eq 'HASH' ) {
                 $self->logger->debug("State already extracted by hook");
                 $req->data->{_oidcOPCurrent} = $state->{_oidcOPCurrent};
@@ -203,7 +205,7 @@ sub extractFormInfo {
             ->{oidcOPMetaDataOptionsRequireIss} )
         {
             $self->userLogger->error(
-                "Missing iss parameter in authorization response (required by config)"
+"Missing iss parameter in authorization response (required by config)"
             );
             return PE_OIDC_AUTH_ERROR;
         }
@@ -243,6 +245,21 @@ sub extractFormInfo {
         }
         else {
             $self->logger->debug("Token response is valid");
+        }
+
+        # Check if returned scopes match requested scopes (#3585)
+        # Ignore offline_access (often stripped by OP) and ordering differences
+        my $reqs = $self->opOptions->{$op}->{oidcOPMetaDataOptionsScope};
+        if ( my $recs = $token_response->{scope} ) {
+            my %scopes;
+            $scopes{$_} += 1 for split( /\s+/, $reqs );
+            $scopes{$_} -= 1 for split( /\s+/, $recs );
+            delete $scopes{offline_access};
+            if ( grep { $_ } values %scopes ) {
+                $self->userLogger->warn( "OP $op returned different scopes"
+                      . " than requested: requested='$reqs',"
+                      . " received='$recs'" );
+            }
         }
 
         my $access_token  = $token_response->{access_token};
@@ -348,6 +365,12 @@ sub extractFormInfo {
         # Remember sid claim if given
         $req->data->{op_sid} = $id_token_payload_hash->{sid}
           if $id_token_payload_hash->{sid};
+
+        # Remember acr/amr claims
+        $req->data->{id_token_acr} = $id_token_payload_hash->{acr}
+          if $id_token_payload_hash->{acr};
+        $req->data->{id_token_amr} = $id_token_payload_hash->{amr}
+          if $id_token_payload_hash->{amr};
 
         # If access token TTL is given save expiration date
         # (with security margin)
@@ -464,6 +487,21 @@ sub setAuthSessionInfo {
 
     if ( $req->data->{id_token_sub} ) {
         $req->{sessionInfo}->{_oidc_sub} = $req->data->{id_token_sub};
+    }
+
+    if ( $req->data->{id_token_acr} ) {
+        $req->{sessionInfo}->{_oidc_acr} = $req->data->{id_token_acr};
+    }
+
+    if ( $req->data->{id_token_amr} ) {
+        if ( ref( $req->data->{id_token_amr} ) eq "ARRAY" ) {
+            $req->{sessionInfo}->{_oidc_amr} =
+              join $self->conf->{multiValuesSeparator},
+              sort @{ $req->data->{id_token_amr} };
+        }
+        else {
+            $req->{sessionInfo}->{_oidc_amr} = $req->data->{id_token_amr};
+        }
     }
 
     # Keep ID Token in session
@@ -659,7 +697,7 @@ sub backLogout {
     # TODO: validate "alg" header => prohibit "none" value
 
     # Required fields
-    foreach (qw(iss aud iat jti events)) {
+    foreach (qw(iss aud iat exp jti events)) {
         return $self->p->sendError( $req, "Missing $_", 400 )
           unless $payload->{$_};
     }

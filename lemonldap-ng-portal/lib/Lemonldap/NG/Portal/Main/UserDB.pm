@@ -23,6 +23,7 @@ sub setGroups {
             $req->sessionInfo->{hGroups}->{$group} = { name => $group };
         }
     }
+
     # Populate $groups from $hGroups
     elsif ( ( $hGroups and keys %$hGroups ) and not $groups ) {
         $req->sessionInfo->{groups} =

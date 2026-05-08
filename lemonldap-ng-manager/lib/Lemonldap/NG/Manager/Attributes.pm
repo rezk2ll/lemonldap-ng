@@ -1475,6 +1475,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'defaultAuthnLevel' => {
+            'type' => 'intOrNull'
+        },
         'defaultNewKeySize' => {
             'default' => 2048,
             'type'    => 'int'
@@ -2622,6 +2625,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptionsAcrValues' => {
             'type' => 'text'
         },
+        'oidcOPMetaDataOptionsAuthEndpointExtraParams' => {
+            'type' => 'keyTextContainer'
+        },
         'oidcOPMetaDataOptionsAuthnEndpointAuthMethod' => {
             'select' => [ {
                     'k' => '',
@@ -3732,7 +3738,20 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcServiceAllowDynamicRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'select'  => [ {
+                    'k' => '0',
+                    'v' => 'disabled'
+                },
+                {
+                    'k' => '1',
+                    'v' => 'confidentialOnly'
+                },
+                {
+                    'k' => '2',
+                    'v' => 'allClients'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcServiceAllowHybridFlow' => {
             'default' => 0,
@@ -5671,6 +5690,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'sfRetries' => {
             'type' => 'intOrNull'
         },
+        'shortTokenTTL' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
         'showLanguages' => {
             'default' => 1,
             'type'    => 'bool'
@@ -5698,6 +5721,13 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'slaveAuthnLevel' => {
             'default' => 2,
             'type'    => 'int'
+        },
+        'slaveCertificateField' => {
+            'type' => 'text'
+        },
+        'slaveCertificateRegexp' => {
+            'default' => '',
+            'type'    => 'pcre'
         },
         'slaveDisplayLogo' => {
             'default' => 0,

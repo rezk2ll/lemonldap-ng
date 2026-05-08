@@ -763,6 +763,9 @@
   "required" : [ "service" ],
   "type" : "object",
   "properties" : {
+    "activation" : {
+      "type" : "boolean"
+    },
     "allowProxy" : {
       "type" : "boolean"
     },
@@ -984,6 +987,9 @@
       "default" : "RS256",
       "enum" : [ "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
     },
+    "activation" : {
+      "type" : "boolean"
+    },
     "additionalAudiences" : {
       "type" : "array",
       "items" : {
@@ -1049,6 +1055,19 @@
       "type" : "string",
       "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
     },
+    "introspectionEncContentEncAlg" : {
+      "type" : "string",
+      "default" : "A256GCM",
+      "enum" : [ "A256CBC-HS512", "A256GCM", "A192CBC-HS384", "A192GCM", "A128CBC-HS256", "A128GCM" ]
+    },
+    "introspectionEncKeyMgtAlg" : {
+      "type" : "string",
+      "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
+    },
+    "introspectionSignAlg" : {
+      "type" : "string",
+      "enum" : [ "", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
     "jwks" : {
       "type" : "string"
     },
@@ -1113,7 +1132,8 @@
       }
     },
     "requirePKCE" : {
-      "type" : "boolean"
+      "type" : "string",
+      "enum" : [ "0", "1", "2" ]
     },
     "rtActivity" : {
       "type" : "integer"
@@ -1292,6 +1312,9 @@
             defs["samlOptions"] = {
   "type" : "object",
   "properties" : {
+    "activation" : {
+      "type" : "boolean"
+    },
     "authnLevel" : {
       "type" : "string"
     },
@@ -1322,6 +1345,9 @@
     "federationRequiredAttributes" : {
       "type" : "string",
       "enum" : [ "", "optional", "ignore" ]
+    },
+    "forceNameIDFormat" : {
+      "type" : "boolean"
     },
     "forceUTF8" : {
       "type" : "boolean"
@@ -1698,7 +1724,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 2.22.1</div>
+              <div class="app-desc">Version: 2.22.2</div>
             <hr>
             <div>The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml</div>
           </div>
@@ -3993,7 +4019,18 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;macros&quot;: {
+    &quot;addme&quot;: &quot;newval&quot;,
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/cas/app/{confKey}</span></code></pre>
@@ -16388,7 +16425,18 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;macros&quot;: {
+    &quot;addme&quot;: &quot;newval&quot;,
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/oidc/rp/{confKey}</span></code></pre>
@@ -19113,7 +19161,18 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;macros&quot;: {
+    &quot;addme&quot;: &quot;newval&quot;,
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/saml/sp/{confKey}</span></code></pre>

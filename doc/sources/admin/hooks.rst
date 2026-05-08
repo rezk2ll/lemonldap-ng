@@ -10,6 +10,33 @@ This page shows the list of hooks that you can use in your :doc:`custom plugins 
 OpenID Connect Issuer hooks
 ---------------------------
 
+Discovery endpoint (/.well-known/openid-configuration)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGenerateMetadata
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG is building the OpenID Connect
+discovery document (``/.well-known/openid-configuration``). It allows plugins
+to add custom metadata fields to the discovery response.
+
+The hook's parameter is a hash reference of the metadata document (which you can modify).
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateMetadata => 'addMetadata',
+   };
+
+   sub addMetadata {
+       my ( $self, $req, $metadata ) = @_;
+       $metadata->{my_custom_endpoint} = 'https://example.com/custom';
+       push @{ $metadata->{grant_types_supported} }, 'my_custom_grant';
+       return PE_OK;
+   }
+
 Authorization endpoint (/oauth2/authorize)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -139,7 +166,7 @@ Sample code ::
     }
 
 oidcGenerateAuthorizationResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
@@ -514,7 +541,7 @@ Introspection endpoint (/oauth2/introspect)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 oidcGenerateIntrospectionResponse
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.23.0
 
@@ -538,6 +565,99 @@ Sample code::
        if ( my $data = $token_data->{my_data} ) {
            $response->{my_claim} = $data;
        }
+       return PE_OK;
+   }
+
+
+Dynamic Registration (/oauth2/register)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+oidcGotRegistrationRequest
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered when LemonLDAP::NG receives an OAuth2 dynamic client
+registration request. It is only called when
+``oidcServiceAllowDynamicRegistration`` is enabled.
+
+It allows custom plugins to filter or reject specific registration requests.
+
+The hook receives the client registration metadata. To take over the response
+(for example to reject the request), set ``$req->response`` and return
+``PE_SENDRESPONSE``.
+
+The hook should return:
+
+* ``PE_OK`` to allow the registration to proceed normally
+* ``PE_SENDRESPONSE`` to return ``$req->response`` as the final response
+
+Sample code::
+
+   use constant hook => {
+       oidcGotRegistrationRequest => 'filterRegistration',
+   };
+
+   sub filterRegistration {
+       my ( $self, $req, $client_metadata ) = @_;
+
+       # Only allow native apps with loopback URIs
+       my $redirect_uris = $client_metadata->{redirect_uris};
+       return PE_OK unless $redirect_uris && ref($redirect_uris) eq 'ARRAY';
+
+       foreach my $uri (@$redirect_uris) {
+           unless ( $uri =~
+               /^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/.*)?$/i )
+           {
+               $req->response(
+                   $self->p->sendError( $req, 'invalid_request', 400 ) );
+               return PE_SENDRESPONSE;
+           }
+       }
+
+       return PE_OK;
+   }
+
+oidcRegisterClient
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.0
+
+This hook is triggered just before saving the new RP configuration during
+OAuth2 dynamic client registration.
+
+It allows custom plugins to modify the new RP's configuration before it is
+saved. The hook receives a ``$newRp`` hash reference with the same structure
+as ``getOidcRpConfig``:
+
+* ``confKey``: the configuration key for the new RP
+* ``options``: hash of RP options (includes ``oidcRPMetaDataOptionsClientID``,
+  ``oidcRPMetaDataOptionsClientSecret``, etc.)
+* ``attributes``: hash of exported variables
+* ``macros``: hash of macros
+* ``scopeRules``: hash of scope rules
+* ``extraClaims``: hash of extra claims
+
+The ``$client_metadata`` is also passed as a second parameter for read-only
+context. Modifying it has no effect on the saved configuration.
+
+Sample code::
+
+   use constant hook => {
+       oidcRegisterClient => 'supportPublicClients',
+   };
+
+   sub supportPublicClients {
+       my ( $self, $req, $newRp, $client_metadata ) = @_;
+       my $token_endpoint_auth_method =
+           $client_metadata->{token_endpoint_auth_method} || 'client_secret_basic';
+
+       # Support public clients (no secret)
+       if ( $token_endpoint_auth_method eq 'none' ) {
+           $self->logger->info("Registering public client");
+           delete $newRp->{options}->{oidcRPMetaDataOptionsClientSecret};
+       }
+
        return PE_OK;
    }
 
@@ -613,6 +733,13 @@ Sample code::
        return PE_OK;
    }
 
+.. versionchanged:: 2.23.0
+
+Parameters specified in *Extra parameters for authorization code request* will
+be exposed to this hook as well. If they start with a ``[`` or a ``{``, they
+will be JSON-decoded automatically. LemonLDAP::NG will also automatically
+JSON-encode and URL-encode them before adding them to the authorization
+request.
 
 
 oidcGenerateTokenRequest

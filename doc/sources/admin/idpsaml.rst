@@ -99,7 +99,17 @@ For each attribute, you can set:
    for it. Optional attribute will be sent only if there is a value
    associated. Else it just will be sent through an attribute response,
    if explicitly requested in an attribute request.
--  **Format**: optional, SAML attribute format.
+-  **Format**: optional, SAML attribute name format.
+
+Special attributes
+^^^^^^^^^^^^^^^^^^
+
+The special variable name ``__persistent_name_id`` lets you define an attribute
+whose value is a persistent NameID object. It is mostly useful for the
+``eduPersonTargetedID`` legacy attribute. This attribute will only have a value
+if a *persistent* NameID is returned. So make sure that either the SP requests
+a a *persistent* NameID, or you forced the format to *persistent* in the
+*Authentication response* options.
 
 Options
 ^^^^^^^

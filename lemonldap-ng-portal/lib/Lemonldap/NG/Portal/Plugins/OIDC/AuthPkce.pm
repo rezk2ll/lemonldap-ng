@@ -1,7 +1,7 @@
-package Lemonldap::NG::Portal::Plugins::AuthOidcPkce;
+package Lemonldap::NG::Portal::Plugins::OIDC::AuthPkce;
 
 use strict;
-use Digest::SHA qw(sha256);
+use Digest::SHA                            qw(sha256);
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 use MIME::Base64 'encode_base64url';
 use Mouse;
@@ -55,5 +55,9 @@ sub setPkce {
     }
     return PE_OK;
 }
+
+package Lemonldap::NG::Portal::Plugins::AuthOidcPkce;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::AuthPkce');
 
 1;

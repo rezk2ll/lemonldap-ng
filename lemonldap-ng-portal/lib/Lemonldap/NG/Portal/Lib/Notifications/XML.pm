@@ -193,7 +193,7 @@ sub viewNotification {
             $self->logger->debug("Get reference $reference");
 
             # Check it in session
-            unless (exists $req->userData->{"notification_$reference"}
+            unless ( exists $req->userData->{"notification_$reference"}
                 and $req->userData->{"notification_$reference"} eq $epoch
                 and $reference eq $ref )
             {

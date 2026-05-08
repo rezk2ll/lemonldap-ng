@@ -46,7 +46,7 @@ If you use Nginx, you need to create the following configuration:
       fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
       fastcgi_pass_request_body  off;
       fastcgi_param CONTENT_LENGTH "";
-      fastcgi_param HOST $http_host;
+      fastcgi_param HTTP_HOST $host;
       fastcgi_param X_ORIGINAL_URI  $original_uri;
       auth_request_set $lmlocation $upstream_http_location;
     }
@@ -83,8 +83,8 @@ In addition you will need the below `proxy_params` configurations as defined in
 the nginx configuration above:
 .. code-block:: nginx
 
-   proxy_set_header Host $http_host;
-   proxy_set_header X-Forwarded-Host $http_host;
+   proxy_set_header Host $host;
+   proxy_set_header X-Forwarded-Host $host;
    proxy_set_header X-Real-IP $remote_addr;
    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 

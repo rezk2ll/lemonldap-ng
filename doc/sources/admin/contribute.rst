@@ -122,7 +122,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git uglifyjs rollup node-rollup-plugin-babel autopkgtest cpanminus
+   apt install make devscripts equivs yui-compressor git terser rollup node-rollup-plugin-babel autopkgtest cpanminus
 
 
 Install dependencies

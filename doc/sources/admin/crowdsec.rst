@@ -135,5 +135,69 @@ Examples:
 
 * **url**, if the required URI matches a given expression, then:
 
-  * an alert is sent to local Crowdsec server
+  * an alert is sent to local Crowdsec server *(scenario: llng/urlscan)*
   * the portal sends a ``404 Not found`` response
+
+* **urlskip**, whitelisted patterns that won't trigger alerts even if they
+  match other categories
+
+.. _Named Scenarios:
+
+**Named Scenarios**
+*******************
+
+You can define custom CrowdSec scenarios by creating a subdirectory with a
+``.scenario`` file. The ``.scenario`` file contains the scenario name that
+will be sent to CrowdSec.
+
+Example structure:
+
+.. code-block::
+
+   crowdsec-filters/
+   ├── url/                          # Legacy: uses llng/urlscan
+   │   └── bad.txt
+   ├── urlskip/                      # Whitelist (no alerts)
+   │   └── allowed.txt
+   ├── http-sensitive-files/         # Named scenario
+   │   ├── .scenario                 # Contains: llng/http-sensitive-files
+   │   └── patterns.txt
+   └── custom-scenario/              # User-defined scenario
+       ├── .scenario                 # Contains: custom/my-scenario
+       └── patterns.txt
+
+The ``.scenario`` file should contain a single line with the scenario name,
+for example:
+
+.. code-block::
+
+   llng/http-sensitive-files
+
+When a URI matches a pattern in a named scenario directory, the alert sent
+to CrowdSec will use this scenario name instead of the default ``llng/urlscan``.
+
+**Per-scenario configuration**
+
+You can override global settings for a specific scenario by adding special
+files in the scenario directory:
+
+* ``.maxfailures`` - Override ``crowdsecMaxFailures`` (integer)
+* ``.banduration`` - Override ``crowdsecBanDuration`` (duration string: 4h, 1d, 30m, etc.)
+
+Example:
+
+.. code-block::
+
+   crowdsec-filters/
+   └── http-admin-probing/
+       ├── .scenario         # Contains: llng/http-admin-probing
+       ├── .maxfailures      # Contains: 11
+       ├── .banduration      # Contains: 24h
+       └── patterns.txt
+
+In this example, the ``http-admin-probing`` scenario will:
+
+* Trigger a ban after 11 failures (instead of global ``crowdsecMaxFailures``)
+* Ban IPs for 24 hours (instead of global ``crowdsecBanDuration``)
+
+This is useful for tuning detection sensitivity per scenario type.

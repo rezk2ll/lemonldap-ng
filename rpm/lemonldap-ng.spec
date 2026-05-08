@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.22.2
+Version:        2.22.3
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -350,7 +350,6 @@ Provides:       bundled(js-bootstrap) = 4.6.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
-Provides:       bundled(js-jquery-cookie) = 1.4.1
 Provides:       bundled(js-jssha) = 3.3.0
 Provides:       bundled(js-qrious) = 4.0.2
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
@@ -748,6 +747,9 @@ fi
 
 
 %changelog
+* Mon Apr 20 2026 Clement Oudot <clement.oudot@worteks.com> - 2.22.3-1
+- Update to 2.22.3
+
 * Fri Jan 30 2026 Clement Oudot <clement.oudot@worteks.com> - 2.22.2-1
 - Update to 2.22.2
 

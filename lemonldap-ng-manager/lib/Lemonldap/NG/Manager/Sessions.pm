@@ -105,7 +105,7 @@ sub userLogout {
             if ( $sessions and %$sessions ) {
                 @keys = keys %$sessions;
                 foreach my $sid (@keys) {
-                    my $kind = $sessions->{$sid}->{_session_kind};
+                    my $kind            = $sessions->{$sid}->{_session_kind};
                     my $deletedByPortal = 0;
                     if (
                         $self->{tokenRevokeSecret}

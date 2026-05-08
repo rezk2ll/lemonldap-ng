@@ -9,7 +9,6 @@ my $maintests = 8;
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        logLevel         => 'error',
         zimbraPreAuthKey => '1234567890',
         zimbraUrl        => '/service/preauthtest ',
         zimbraSsoUrl     => '^/testsso  ',             # Bad URLs

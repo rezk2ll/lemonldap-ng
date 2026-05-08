@@ -97,7 +97,7 @@ sub getLdapConnection {
         ( $self->{ldapCAFile} ? ( cafile => $self->{ldapCAFile} ) : () ),
         ( $self->{ldapCAPath} ? ( capath => $self->{ldapCAPath} ) : () ),
         ( $self->{ldapPort}   ? ( port   => $self->{ldapPort} )   : () ),
-        raw => => qr/(?i:^jpegPhoto|;binary)/
+        raw => qr/(?i:^jpegPhoto|;binary)/
     );
 
     unless ($ldap) {

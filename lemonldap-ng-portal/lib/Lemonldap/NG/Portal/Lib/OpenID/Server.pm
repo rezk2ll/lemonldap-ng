@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::Lib::OpenID::Server;
 
 use strict;
-use base qw(Net::OpenID::Server);
+use base   qw(Net::OpenID::Server);
 use fields qw(_extensions);
 use Net::OpenID::Server;
 use Lemonldap::NG::Common::Regexp;

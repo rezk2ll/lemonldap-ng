@@ -30,17 +30,28 @@ Then, go in ``Slave parameters``:
 
 -  **Authentication level**: authentication level for this module
 -  **Header for user login**: header containing user main login
+-  **Display authentication logo**: display Slave logo
+
+
+Security
+^^^^^^^^
+
 -  **Master's IP address**: IP addresses of servers which are accredited to authenticate user.
    This is a security point to prevent someone to create a session by sending custom headers.
    You can set netblocks in CIDR notation or list IP addresses, space or comma separated.
    By example: ``127.0.0.2, 192.168.1.1 10.20.30.0/24``. A blank value disables this checking.
+-  **Extracted certificate field**: must be set to the Apache/Nginx environment variable
+   containing the ``cn`` attribute. A blank value disables this checking.
+-  **Regexp to test extracted certificate field**: regular expression used for testing client certificate ``cn``
 -  **Control header name**: header containing value to check.
    A blank value disables this checking.
 -  **Control header content**: value to check. A blank value disables this checking.
--  **Display authentication logo**: display Slave logo
 
-You have then to declare HTTP headers exported by the main SSO (in
-**Exported Variables**). Example :
+
+Exported Variables
+^^^^^^^^^^^^^^^^^^
+
+You have then to declare HTTP headers exported by the main SSO. Example :
 
 ================= ========================
 Key (LL::NG name) Value (HTTP header name)

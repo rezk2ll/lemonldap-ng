@@ -208,7 +208,7 @@ sub globalLogout {
     # Set error for display if BCL failed (non-blocking warning)
 
     my $ret = $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
-    return $ret if $ret;
+    return $ret         if $ret;
     $ret = PE_SLO_ERROR if $res == PE_SLO_ERROR;
     $req->error($ret);
     return $ret;

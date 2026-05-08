@@ -376,6 +376,7 @@ sub _pushOidcRp {
         $conf->{oidcRPMetaDataOptions}->{$confKey}            = {};
         $conf->{oidcRPMetaDataExportedVars}->{$confKey}       = {};
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
+        $conf->{oidcRPMetaDataScopeRules}->{$confKey}         = {};
         $conf->{oidcRPMetaDataMacros}->{$confKey}             = {};
         $translatedOptions = $self->_getDefaultValues('oidcRPMetaDataNode');
     }
@@ -387,7 +388,8 @@ sub _pushOidcRp {
             my $optionName = $self->_translateOptionApiToConf( $_, 'oidcRP' );
             eval {
                 my $optionValue =
-                  $self->_translateValueApiToConf( $optionName, $push->{options}->{$_} );
+                  $self->_translateValueApiToConf( $optionName,
+                    $push->{options}->{$_} );
                 $translatedOptions->{$optionName} = $optionValue;
             };
             if ($@) {
@@ -402,11 +404,8 @@ sub _pushOidcRp {
             'oidcRPMetaDataNode' );
         return $res unless ( $res->{res} eq 'ok' );
 
-        foreach ( keys %{$translatedOptions} ) {
-            $conf->{oidcRPMetaDataOptions}->{$confKey}->{$_} =
-              $translatedOptions->{$_};
-        }
-
+        $self->_merge_hash( $conf, 'oidcRPMetaDataOptions', $confKey,
+            $translatedOptions );
     }
 
     $conf->{oidcRPMetaDataOptions}->{$confKey}->{oidcRPMetaDataOptionsClientID}
@@ -415,10 +414,10 @@ sub _pushOidcRp {
 
     if ( defined $push->{exportedVars} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{exportedVars} ) ) {
-            foreach ( keys %{ $push->{exportedVars} } ) {
-                $conf->{oidcRPMetaDataExportedVars}->{$confKey}->{$_} =
-                  $push->{exportedVars}->{$_};
-            }
+            $self->_merge_hash(
+                $conf,    'oidcRPMetaDataExportedVars',
+                $confKey, $push->{exportedVars}
+            );
         }
         else {
             return {
@@ -431,10 +430,8 @@ sub _pushOidcRp {
 
     if ( defined $push->{macros} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
-            foreach ( keys %{ $push->{macros} } ) {
-                $conf->{oidcRPMetaDataMacros}->{$confKey}->{$_} =
-                  $push->{macros}->{$_};
-            }
+            $self->_merge_hash( $conf, 'oidcRPMetaDataMacros', $confKey,
+                $push->{macros} );
         }
         else {
             return {
@@ -447,10 +444,10 @@ sub _pushOidcRp {
 
     if ( defined $push->{scopeRules} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{scopeRules} ) ) {
-            foreach ( keys %{ $push->{scopeRules} } ) {
-                $conf->{oidcRPMetaDataScopeRules}->{$confKey}->{$_} =
-                  $push->{scopeRules}->{$_};
-            }
+            $self->_merge_hash(
+                $conf,    'oidcRPMetaDataScopeRules',
+                $confKey, $push->{scopeRules}
+            );
         }
         else {
             return {
@@ -463,10 +460,8 @@ sub _pushOidcRp {
 
     if ( defined $push->{extraClaims} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{extraClaims} ) ) {
-            foreach ( keys %{ $push->{extraClaims} } ) {
-                $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey}->{$_} =
-                  $push->{extraClaims}->{$_};
-            }
+            $self->_merge_hash( $conf, 'oidcRPMetaDataOptionsExtraClaims',
+                $confKey, $push->{extraClaims} );
         }
         else {
             return {

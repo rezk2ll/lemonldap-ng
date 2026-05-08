@@ -65,7 +65,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
-use Carp qw/shortmess/;
+use Carp                        qw/shortmess/;
 
 #use 5.10.0;
 
@@ -872,7 +872,7 @@ sub switch {
 sub denyLwpRequests {
     return sub {
         my $req = Plack::Request->new(@_);
-        fail('External requests are not allowed. Attempted: ' . $req->uri);
+        fail( 'External requests are not allowed. Attempted: ' . $req->uri );
         return [ 500, [], [] ];
     }
 }

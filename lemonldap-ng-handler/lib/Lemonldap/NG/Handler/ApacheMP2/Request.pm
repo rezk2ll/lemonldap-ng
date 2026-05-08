@@ -19,14 +19,14 @@ sub new {
     my $env      = {
 
         #%ENV,
-        HTTP_HOST      => $r->hostname,
-        REMOTE_ADDR    => $r->useragent_ip,
-        QUERY_STRING   => $args,
-        REQUEST_URI    => $uri_full,
-        PATH_INFO      => '',
-        SERVER_PORT    => $ENV{SERVER_PORT} || $r->get_server_port,
-        REQUEST_METHOD => $r->method,
-        UNIQUE_ID      => $r->subprocess_env('UNIQUE_ID'),
+        HTTP_HOST         => $r->hostname,
+        REMOTE_ADDR       => $r->useragent_ip,
+        QUERY_STRING      => $args,
+        REQUEST_URI       => $uri_full,
+        PATH_INFO         => '',
+        SERVER_PORT       => $ENV{SERVER_PORT} || $r->get_server_port,
+        REQUEST_METHOD    => $r->method,
+        UNIQUE_ID         => $r->subprocess_env('UNIQUE_ID'),
         'psgi.version'    => [ 1, 1 ],
         'psgi.url_scheme' => ( $ENV{HTTPS} || 'off' ) =~ /^(?:on|1)$/i
         ? 'https'

@@ -86,7 +86,7 @@ Error codes list
     ``PE_MAILCONFIRMOK``,72,"A confirmation mail has been sent"
     ``PE_RADIUSCONNECTFAILED``,73,"Radius connection has failed"
     ``PE_MUST_SUPPLY_OLD_PASSWORD``,74,"Old password is required"
-    ``PE_FORBIDDENIP``,75,"You came from an unaccredited IP address"
+    ``PE_FORBIDDENIP``,75,"You came from an unaccredited client"
     ``PE_CAPTCHAERROR``,76,"You failed at typing the captcha"
     ``PE_CAPTCHAEMPTY``,77,"You have to type the captcha"
     ``PE_REGISTERFIRSTACCESS``,78,"Please enter your information"

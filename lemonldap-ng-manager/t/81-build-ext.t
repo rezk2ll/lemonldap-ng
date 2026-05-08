@@ -31,16 +31,14 @@ my $plugin_content = {
         # Existing attribute with a new select option to append
         authentication => {
             type   => 'select',
-            select => [
-                { k => 'MyCustomAuth', v => 'My Custom Auth Module' },
-            ],
+            select =>
+              [ { k => 'MyCustomAuth', v => 'My Custom Auth Module' }, ],
         },
     },
     tree => {
         insert_into  => 'generalParameters/plugins',
         insert_after => 'stayConnected',
-        nodes        => [
-            {
+        nodes        => [ {
                 title => 'testPluginNode',
                 form  => 'simpleInputContainer',
                 nodes => ['testTreeParam'],
@@ -49,7 +47,8 @@ my $plugin_content = {
     },
     ctrees => {
         oidcRPMetaDataNode => {
-            insert_into  => 'oidcRPMetaDataOptions/oidcRPMetaDataOptionsAdvanced',
+            insert_into =>
+              'oidcRPMetaDataOptions/oidcRPMetaDataOptionsAdvanced',
             insert_after => 'oidcRPMetaDataOptionsTokenXAuthorizedRP',
             nodes        => ['oidcRPMetaDataOptionsTestParam'],
         },
@@ -107,8 +106,11 @@ ok( -f $script, 'Build script exists' );
 $count++;
 
 my $cmd = join( ' ',
-    'perl', '-Ilib', '-I../lemonldap-ng-common/lib',
-    '-I../lemonldap-ng-portal/lib', '-I../lemonldap-ng-handler/lib',
+    'perl',
+    '-Ilib',
+    '-I../lemonldap-ng-common/lib',
+    '-I../lemonldap-ng-portal/lib',
+    '-I../lemonldap-ng-handler/lib',
     $script,
     "--plugins-dir=$pluginsdir",
     "--struct-file=$struct_file",
@@ -121,8 +123,7 @@ my $cmd = join( ' ',
     "--portal-constants-file=$portal_const_file",
     "--handler-status-constants-file=$handler_const",
     "--lang-dir=$langdir",
-    '2>&1'
-);
+    '2>&1' );
 
 my $output = `$cmd`;
 my $rc     = $? >> 8;
@@ -131,9 +132,9 @@ ok( $rc == 0, "Script executed successfully (rc=$rc)" )
 $count++;
 
 # Verify output files exist
-ok( -f $struct_file,     'struct.json created' );
-ok( -f $conftree_file,   'conftree.js created' );
-ok( -f $attributes_file, 'Attributes.pm created' );
+ok( -f $struct_file,       'struct.json created' );
+ok( -f $conftree_file,     'conftree.js created' );
+ok( -f $attributes_file,   'Attributes.pm created' );
 ok( -f $portal_const_file, 'PortalConstants.pm created' );
 $count += 4;
 
@@ -143,10 +144,12 @@ $count += 4;
     my $content = do { local $/; <$fh> };
     close $fh;
 
-    like( $content, qr/oidcRPMetaDataOptionsTestParam/,
-        'oidcRPMetaDataOptionsTestParam found in Attributes.pm' );
-    like( $content, qr/testTreeParam/,
-        'testTreeParam found in Attributes.pm' );
+    like(
+        $content,
+        qr/oidcRPMetaDataOptionsTestParam/,
+        'oidcRPMetaDataOptionsTestParam found in Attributes.pm'
+    );
+    like( $content, qr/testTreeParam/, 'testTreeParam found in Attributes.pm' );
     $count += 2;
 }
 
@@ -156,15 +159,21 @@ $count += 4;
     my $content = do { local $/; <$fh> };
     close $fh;
 
-    like( $content, qr/oidcRPMetaDataOptionsTestParam/,
-        'oidcRPMetaDataOptionsTestParam found in conftree.js' );
+    like(
+        $content,
+        qr/oidcRPMetaDataOptionsTestParam/,
+        'oidcRPMetaDataOptionsTestParam found in conftree.js'
+    );
     $count++;
 
-    # Verify it's in the right position (after oidcRPMetaDataOptionsTokenXAuthorizedRP)
-    my $pos_token = index( $content, 'oidcRPMetaDataOptionsTokenXAuthorizedRP' );
-    my $pos_test  = index( $content, 'oidcRPMetaDataOptionsTestParam' );
-    ok( $pos_token > 0 && $pos_test > $pos_token,
-        'oidcRPMetaDataOptionsTestParam is after oidcRPMetaDataOptionsTokenXAuthorizedRP' );
+# Verify it's in the right position (after oidcRPMetaDataOptionsTokenXAuthorizedRP)
+    my $pos_token =
+      index( $content, 'oidcRPMetaDataOptionsTokenXAuthorizedRP' );
+    my $pos_test = index( $content, 'oidcRPMetaDataOptionsTestParam' );
+    ok(
+        $pos_token > 0 && $pos_test > $pos_token,
+'oidcRPMetaDataOptionsTestParam is after oidcRPMetaDataOptionsTokenXAuthorizedRP'
+    );
     $count++;
 }
 
@@ -174,23 +183,21 @@ $count += 4;
     my $content = do { local $/; <$fh> };
     close $fh;
 
-    like( $content, qr/testPluginNode/,
-        'testPluginNode found in struct.json' );
-    like( $content, qr/testTreeParam/,
-        'testTreeParam found in struct.json' );
+    like( $content, qr/testPluginNode/, 'testPluginNode found in struct.json' );
+    like( $content, qr/testTreeParam/,  'testTreeParam found in struct.json' );
     $count += 2;
 }
 
 # Test 4: Check that the new constant is in PortalConstants.pm
 {
-    open my $fh, '<', $portal_const_file or die "Cannot read PortalConstants.pm: $!";
+    open my $fh, '<', $portal_const_file
+      or die "Cannot read PortalConstants.pm: $!";
     my $content = do { local $/; <$fh> };
     close $fh;
 
     like( $content, qr/PE_TEST_PLUGIN_ERROR/,
         'PE_TEST_PLUGIN_ERROR found in PortalConstants.pm' );
-    like( $content, qr/250/,
-        'Constant value 250 found in PortalConstants.pm' );
+    like( $content, qr/250/, 'Constant value 250 found in PortalConstants.pm' );
     $count += 2;
 }
 
@@ -202,8 +209,11 @@ $count += 4;
     my $content = do { local $/; <$fh> };
     close $fh;
 
-    like( $content, qr/testTreeParam.*default_value/s,
-        'testTreeParam default value found in DefaultValues.pm' );
+    like(
+        $content,
+        qr/testTreeParam.*default_value/s,
+        'testTreeParam default value found in DefaultValues.pm'
+    );
     $count++;
 }
 
@@ -268,8 +278,11 @@ $count += 4;
 {
     my $empty_struct = "$tmpdir/empty_struct.json";
     my $cmd2         = join( ' ',
-        'perl', '-Ilib', '-I../lemonldap-ng-common/lib',
-        '-I../lemonldap-ng-portal/lib', '-I../lemonldap-ng-handler/lib',
+        'perl',
+        '-Ilib',
+        '-I../lemonldap-ng-common/lib',
+        '-I../lemonldap-ng-portal/lib',
+        '-I../lemonldap-ng-handler/lib',
         $script,
         "--struct-file=$empty_struct",
         "--conftree-file=$tmpdir/empty_conftree.js",
@@ -280,8 +293,7 @@ $count += 4;
         "--reverse-tree-file=$tmpdir/empty_reverseTree.json",
         "--portal-constants-file=$tmpdir/empty_PortalConstants.pm",
         "--handler-status-constants-file=$tmpdir/empty_StatusConstants.pm",
-        '2>&1'
-    );
+        '2>&1' );
 
     my $output2 = `$cmd2`;
     my $rc2     = $? >> 8;
@@ -295,8 +307,11 @@ $count += 4;
 {
     my $nodir_struct = "$tmpdir/nodir_struct.json";
     my $cmd3         = join( ' ',
-        'perl', '-Ilib', '-I../lemonldap-ng-common/lib',
-        '-I../lemonldap-ng-portal/lib', '-I../lemonldap-ng-handler/lib',
+        'perl',
+        '-Ilib',
+        '-I../lemonldap-ng-common/lib',
+        '-I../lemonldap-ng-portal/lib',
+        '-I../lemonldap-ng-handler/lib',
         $script,
         "--plugins-dir=/nonexistent/path",
         "--struct-file=$nodir_struct",
@@ -308,8 +323,7 @@ $count += 4;
         "--reverse-tree-file=$tmpdir/nodir_reverseTree.json",
         "--portal-constants-file=$tmpdir/nodir_PortalConstants.pm",
         "--handler-status-constants-file=$tmpdir/nodir_StatusConstants.pm",
-        '2>&1'
-    );
+        '2>&1' );
 
     my $output3 = `$cmd3`;
     my $rc3     = $? >> 8;

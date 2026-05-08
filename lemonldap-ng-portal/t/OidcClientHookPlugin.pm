@@ -17,7 +17,7 @@ our $idTokenHookData  = '';
 our $userInfoHookData = '';
 
 use constant hook => {
-    oidcGotAuthenticationResponse    => 'gotAuthzCallback',
+    oidcGotAuthenticationResponse     => 'gotAuthzCallback',
     oidcGenerateAuthenticationRequest => 'genAuthRequest',
     oidcGenerateTokenRequest          => 'genTokenRequest',
     oidcGotIDToken                    => 'gotIDToken',
@@ -41,6 +41,13 @@ sub genAuthRequest {
 
     # Add a custom parameter to the authentication request
     $auth_request_params->{custom_auth_param} = "auth_hook_value";
+
+    $auth_request_params->{badjson} .= "h";
+
+    # Make sure claims is received as json and set an additional one
+    if ( ref( $auth_request_params->{claims} ) ) {
+        $auth_request_params->{claims}->{id_token}->{my_claim} = undef;
+    }
 
     return PE_OK;
 }

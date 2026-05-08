@@ -457,9 +457,12 @@ sub load_sp_metadata {
     }
 
     # Required authentication level rule
-    my $levelrule = $options->{samlSPMetaDataOptionsAuthnLevel} || 0;
+    my $levelrule =
+         $options->{samlSPMetaDataOptionsAuthnLevel}
+      || $self->conf->{defaultAuthnLevel}
+      || 0;
     $levelrule = $self->p->buildRule( $levelrule,
-        "required authentication level rule for SP $spConfKey" );
+        "Required authentication level rule for SP $spConfKey" );
     unless ($levelrule) {
         $valid = 0;
     }
@@ -3213,9 +3216,9 @@ sub createAttribute {
     return $attribute;
 }
 
-## @method Lasso::Saml2AttributeValue createAttributeValue(string value, boolean force_utf8)
+## @method Lasso::Saml2AttributeValue createAttributeValue(value, force_utf8)
 # Create a new SAML attribute value
-# @param value Value to store
+# @param value Value to store (string or Lasso::Node)
 # @param force_utf8 set to 1 to decode UTF8 value
 # @return SAML attribute value
 sub createAttributeValue {
@@ -3226,11 +3229,6 @@ sub createAttributeValue {
     # Value is required
     return unless defined $value;
 
-    # Decode UTF-8
-    $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
-    $value = decode( "utf8", $value )                if $force_utf8;
-    $self->logger->debug("Create attribute value $value");
-
     # SAML2 attribute value
     eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
     if ($@) {
@@ -3238,22 +3236,26 @@ sub createAttributeValue {
         return;
     }
 
-    my @any;
+    my $content = $value;
 
-    # Text node
-    my $textNode;
-    eval { $textNode = Lasso::MiscTextNode->new(); };
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
+    # If a string was provided, wrap it in a TextNode
+    if ( !ref($content) ) {
+
+        # Decode UTF-8
+        $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
+        $value = decode( "utf8", $value )                if $force_utf8;
+        $self->logger->debug("Create attribute value $value");
+
+        eval { $content = Lasso::MiscTextNode->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            return;
+        }
+        $content->text_child(1);
+        $content->content($value);
     }
 
-    $textNode->text_child(1);
-    $textNode->content($value);
-
-    push @any, $textNode;
-
-    $saml2value->any(@any);
+    $saml2value->any($content);
 
     return $saml2value;
 }

@@ -121,6 +121,7 @@ sub get {
 }
 
 sub checkGet {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $test, $type, $confKey, $attrPath, $expectedValue ) = splice @_;
     my $res = get( $test, $type, $confKey );
     check200( $test, $res );
@@ -128,14 +129,33 @@ sub checkGet {
     my $key  = from_json( $res->[2]->[0] );
     for (@path) {
         if ( ref($key) eq 'ARRAY' ) {
-            $key = $key->[$_] || '';
+            if ( exists $key->[$_] ) {
+                if ( defined $key->[$_] ) {
+                    $key = $key->[$_];
+                }
+                else {
+                    $key = "_undef";
+                }
+            }
+            else {
+                $key = "_missing";
+            }
         }
         else {
-            $key = $key->{$_} || '';
+            if ( exists $key->{$_} ) {
+                if ( defined $key->{$_} ) {
+                    $key = $key->{$_};
+                }
+                else {
+                    $key = "_undef";
+                }
+            }
+            else {
+                $key = "_missing";
+            }
         }
     }
-    ok(
-        $key eq $expectedValue,
+    is( $key, $expectedValue,
 "$test: check if $attrPath value \"$key\" matches expected value \"$expectedValue\""
     );
     count(1);
@@ -347,7 +367,10 @@ my $oidcRp = {
         icon                   => 'web.png',
         postLogoutRedirectUris =>
           [ "http://url/logout1", "http://url/logout2" ],
-    }
+    },
+    scopeRules => {
+        "myscope" => 1,
+    },
 };
 
 $test = "OidcRp - Add should succeed";
@@ -356,6 +379,7 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',     'web.png' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientId', 'myOidcClient0' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/0',
     'http://url/1' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'scopeRules/myscope',   '1' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret' );
 
 $test = "OidcRp - Check attribute default value was set after add";
@@ -364,7 +388,8 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'RS256' );
 $test = "OidcRp - Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 
-$test = "OidcRp - Update should succeed and keep existing values";
+$test =
+  "OidcRp - Update should succeed, keep existing values, drop undefined ones";
 $oidcRp->{options}->{clientId}       = 'myOidcClient1';
 $oidcRp->{options}->{clientSecret}   = 'secret2';
 $oidcRp->{options}->{IDTokenSignAlg} = 'RS512';
@@ -372,7 +397,8 @@ delete $oidcRp->{options}->{icon};
 delete $oidcRp->{extraClaims};
 delete $oidcRp->{exportedVars};
 delete $oidcRp->{clientId};
-$oidcRp->{macros}->{given_name} = '$givenName';
+$oidcRp->{macros}->{given_name} = undef;
+$oidcRp->{macros}->{cn}         = '$cn';
 $oidcRp->{exportedVars}->{cn}   = 'cn';
 checkUpdate( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret2' );
@@ -381,7 +407,8 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'RS512' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',           'web.png' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',        'cn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/family_name', 'sn' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/given_name', '$givenName' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/cn',                '$cn' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/given_name', "_missing" );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
     'telephoneNumber' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/1',
@@ -431,7 +458,7 @@ checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/IDTokenSignAlg', 'RS256' );
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/redirectUris/0',
     'http://url/3' );
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/postLogoutRedirectUris/0',
-    '' );
+    '_missing' );
 
 $test = "OidcRp - Replace should fail on non existing or invalid options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
@@ -553,16 +580,19 @@ checkGet( $test, 'saml/sp', 'mySamlSp1', 'options/notOnOrAfterTimeout', 72000 );
 $test = "SamlSp -  Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'saml/sp', $samlSp );
 
-$test = "SamlSp -  Update should succeed and keep existing values";
+$test =
+  "SamlSp -  Update should succeed, keep existing values, drop undefined ones";
 $samlSp->{options}->{checkSLOMessageSignature} = 1;
 $samlSp->{options}->{encryptionMode}           = 'nameid';
 delete $samlSp->{options}->{sessionNotOnOrAfterTimeout};
 delete $samlSp->{exportedAttributes};
-$samlSp->{macros}->{family_name} = '$sn',
-  $samlSp->{exportedAttributes}->{cn}->{name}         = "cn",
-  $samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name",
-  $samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false",
-  checkUpdate( $test, 'saml/sp', 'mySamlSp1', $samlSp );
+$samlSp->{macros}->{family_name}                    = '$sn';
+$samlSp->{exportedAttributes}->{cn}->{name}         = "cn";
+$samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name";
+$samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false";
+$samlSp->{exportedAttributes}->{family_name}        = undef;
+
+checkUpdate( $test, 'saml/sp', 'mySamlSp1', $samlSp );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
     'options/checkSLOMessageSignature', 1 );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
@@ -574,6 +604,8 @@ checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/mandatory',
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/mandatory',
     'false' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/name', 'uid' );
+checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/family_name',
+    '_missing' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/given_name/name',
     'givenName' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/family_name', '$sn' );
@@ -699,13 +731,15 @@ checkGet( $test, 'cas/app', 'myCasApp1', 'options/rule', '$uid eq \'dwho\'' );
 $test = "CasApp - Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'cas/app', $casApp );
 
-$test = "CasApp - Update should succeed and keep existing values";
+$test =
+  "CasApp - Update should succeed, keep existing values, drop undefined ones";
 $casApp->{options}->{service}       = ['http://mycasapp.acme.com'];
 $casApp->{options}->{userAttribute} = 'cn';
 delete $casApp->{options}->{rule};
 delete $casApp->{macros};
 delete $casApp->{exportedVars};
-$casApp->{macros}->{given_name} = '$givenName';
+$casApp->{macros}->{given_name} = undef;
+$casApp->{macros}->{cn}         = '$cn';
 $casApp->{exportedVars}->{cn}   = 'uid';
 checkUpdate( $test, 'cas/app', 'myCasApp1', $casApp );
 checkGet( $test, 'cas/app', 'myCasApp1', 'options/service/0',
@@ -714,7 +748,8 @@ checkGet( $test, 'cas/app', 'myCasApp1', 'options/userAttribute', 'cn' );
 checkGet( $test, 'cas/app', 'myCasApp1', 'options/rule', '$uid eq \'dwho\'' );
 checkGet( $test, 'cas/app', 'myCasApp1', 'exportedVars/cn',   'uid' );
 checkGet( $test, 'cas/app', 'myCasApp1', 'exportedVars/uid',  'uid' );
-checkGet( $test, 'cas/app', 'myCasApp1', 'macros/given_name', '$givenName' );
+checkGet( $test, 'cas/app', 'myCasApp1', 'macros/cn',         '$cn' );
+checkGet( $test, 'cas/app', 'myCasApp1', 'macros/given_name', "_missing" );
 
 $test = "CasApp - Update should fail on non existing options";
 $casApp->{options}->{playingPossum} = 'elephant';

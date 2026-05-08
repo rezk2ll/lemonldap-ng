@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::OIDCInternalTokenExchange;
+package Lemonldap::NG::Portal::Plugins::OIDC::InternalTokenExchange;
 
 use strict;
 use Mouse;
@@ -63,5 +63,9 @@ sub getUid {
     my $session = $self->p->getApacheSession($id);
     return $session->data->{ $self->conf->{whatToTrace} };
 }
+
+package Lemonldap::NG::Portal::Plugins::OIDCInternalTokenExchange;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::InternalTokenExchange');
 
 1;

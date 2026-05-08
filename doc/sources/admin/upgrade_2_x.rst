@@ -5,22 +5,60 @@ Upgrade from 2.x to 2.y
 Please apply general caution as you would with any software: have
 backups and a rollback plan ready!
 
-Known issues
--------------
-
-.. Adjust for every new version that has known, unreleased bugs
-
-* `CDA no longer works <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3261>`__ in 2.20.0 when using Apache
-
 Known regressions in the latest released version
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------
 
-In LemonLDAP::NG 2.22.0, there is a regression impacting users of the LDAP,
-RDBI and MongoDB configuration backends that can lead to an HTTP 500 error.
+None at the moment
 
-Impacted users can `apply a hotfix for this regression
-<https://gitlab.ow2.org/-/project/181/uploads/836c98294bfe901285074d6b1b6f8ee1/3502.diff>`__
-until 2.22.1 is released
+Security issue involving Nginx handlers
+---------------------------------------
+
+In Nginx < 1.29.5, a hacker can workaround the correlation between a Nginx virtualHost and the "Host" field.
+And despite its documentation and the RFC 9112, Nginx builds automatically the HTTP_HOST variable based on the
+maybe-forged host header (fastCGI or uWSGI).
+F5 fixes this but doesn't want to consider this as a security issue, therefore there will be no fix for previous
+versions.
+
+In Lemonldap-NG context this security issue may allow an attacker who has a valid account to gain privileges to
+handler protected application, including the LemonLDAP::NG manager application if not protected by other means.
+
+Default Nginx files installed in versions 2.16.8, 2.21.4, and 2.22.3 may help **but are not enough to fix the issue**.
+
+You are vulnerable if you have:
+
+* Nginx (< 1.29.5) as web server, AND one of:
+
+  * ``$http_host`` variable is used in your Nginx files
+  * OR you didn't force ``HTTP_HOST`` in your FastCGI/uWSGI parameters
+
+* AND no network component able to block the bad request (haproxy blocks the poisoned requests for example)
+
+If so, you MUST apply this fix for every virtual host.
+
+You must spot these lines anywhere you're using FastCGI *(including Lemonldap-NG files of course)*::
+
+    fastcgi_param HOST $http_host;
+    # or if using uwsgi server:
+    #uwsgi_param HOST $http_host;
+
+and **replace** them by::
+
+    fastcgi_param HTTP_HOST $host;
+    # or if using uwsgi server:
+    #uwsgi_param HTTP_HOST $host;
+
+.. important::
+
+    If the HOST variable is not defined in a protected handler virtual host, you MUST still **add** the HTTP_HOST as defined above
+
+For precaution measures, it is also recommended to fix the Host header sent when using Nginx as (reverse-)proxy. You should spot this line::
+
+    proxy_set_header Host $http_host;
+
+and **replace** it by::
+
+    proxy_set_header Host $host;
+
 
 2.23.0
 ------
@@ -34,6 +72,13 @@ You you rely on this behavior, you can add a custom exported header such as
 
 * Key: ``Auth-Token``
 * Value: ``$_accessToken``
+
+JQuery Cookie is no longer bundled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LemonLDAP::NG no longer provides the ``jquery.cookie`` library. If you need this
+library in your custom JS code, you need to add it back to
+``/usr/share/lemonldap-ng/portal/htdocs/static/`` directory, or use a CDN.
 
 2.22.2
 ------

@@ -22,12 +22,12 @@ extends qw(
 sub init {
     my ($self) = @_;
 
-    # SAML service has been already loaded
-    $self->lassoServer(
-        $self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'}
-          ->lassoServer );
-
-    return 1;
+    my $module = $self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'};
+    if ($module and $module->lassoServer ) {
+        $self->lassoServer( $module->lassoServer );
+        return 1;
+    }
+    return 0;
 }
 
 # RUNNING METHODS

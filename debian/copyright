@@ -243,10 +243,6 @@ Files: lemonldap-ng-*/site/htdocs/static/bwr/jquery/*
 Copyright: 2010, The jQuery project and the jQuery UI team
 License: Expat
 
-Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery.cookie/*
-Copyright: 2010, Klaus Hartl (stilbuero.de)
-License: Expat
-
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery-ui/*
 Copyright: 2007, 2014 jQuery Foundation and other contributors
 License: Expat

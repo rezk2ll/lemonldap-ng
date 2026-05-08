@@ -16,6 +16,7 @@ my $res;
 my $lastAlertTypeIsBan;
 my $lastAlertLogin;
 my $lastAlertUri;
+my $lastAlertScenario;
 my $lastAlertHasDecisions;
 my $lastAlertMessage;
 my $lastAlertPreviousLogins;
@@ -65,6 +66,7 @@ LWP::Protocol::PSGI->register(
                               . ( $obj->[0]->{remediation} ? 'ban' : 'alert' )
                         );
                         $lastAlertTypeIsBan = $obj->[0]->{remediation};
+                        $lastAlertScenario  = $obj->[0]->{scenario};
 
                         # Check if decisions are present
                         $lastAlertHasDecisions =
@@ -136,7 +138,7 @@ my $client = LLNG::Manager::Test->new( {
             crowdsecMachineId   => 'llng',
             crowdsecPassword    => 'llngpwd',
             crowdsecAgent       => 1,
-            crowdsecFilters     => 't/crowdsec-filters',
+            crowdsecFilters     => 't/crowdsec-scenarii',
             crowdsecMaxFailures => 5,
             crowdsecBlockDelay  => 180,
         }
@@ -186,14 +188,25 @@ subtest 'Report unknown user to Crowdsec', sub {
 };
 
 our %badUrls = (
-    'Filter in a sub-directory named url_1' => '/bb/.htaccess',
-    'Filter type re in main directory'      => '/aa/phpmyadmin',
-    'Filter type txt in main directory'     => '/config.php',
+    'Sensitive file .htaccess' =>
+      [ '/bb/.htaccess', 'llng/http-sensitive-files' ],
+    'Admin probing phpmyadmin' =>
+      [ '/aa/phpmyadmin', 'llng/http-admin-probing' ],
+    'Sensitive file config.php' =>
+      [ '/config.php', 'llng/http-sensitive-files' ],
+
+    # Test .re patterns (regex)
+    'CVE test with regex pattern' =>
+      [ '/foo/.%2E/.%2E/etc/passwd', 'llng/http-cve-test' ],
+    'CVE test exploit php' => [ '/exploit123.php', 'llng/http-cve-test' ],
+
+    # Test legacy format (file at root with category in filename)
+    'Legacy url pattern at root' => [ '/legacy-bad-pattern', 'llng/urlscan' ],
 );
-subtest 'Report bad urls to Crowdsec', sub {
+subtest 'Report bad urls to Crowdsec with named scenarios', sub {
     my $prevBan = $ban;
     foreach my $subtest ( sort keys %badUrls ) {
-        my $url = $badUrls{$subtest};
+        my ( $url, $expectedScenario ) = @{ $badUrls{$subtest} };
         subtest $subtest => sub {
             ok( $res = $client->_get( $url, accept => 'text/html' ),
                 "Test bad url $url" );
@@ -202,6 +215,10 @@ subtest 'Report bad urls to Crowdsec', sub {
               or explain( $res->[2], 'Not found' );
             ok( $ban == ++$prevBan,    "Bad url detected" );
             ok( $lastAlertUri eq $url, "URI '$url' is in alert metadata" );
+            ok(
+                $lastAlertScenario eq $expectedScenario,
+                "Scenario is '$expectedScenario'"
+            ) or diag "Got scenario: $lastAlertScenario";
         };
     }
 };
@@ -209,12 +226,25 @@ subtest 'Report bad urls to Crowdsec', sub {
 subtest 'Whitelisted URL should not be blocked', sub {
     my $prevBan = $ban;
 
-    # /allowed-phpmyadmin matches the phpmyadmin regex but is whitelisted
-    ok( $res = $client->_get( '/allowed-phpmyadmin', accept => 'text/html' ),
-        "Test whitelisted url /allowed-phpmyadmin" );
+    # /allowed-admin is in urlskip, should not trigger alert
+    ok( $res = $client->_get( '/allowed-admin', accept => 'text/html' ),
+        "Test whitelisted url /allowed-admin" );
     ok( $res->[0] == 200, 'Got 200 OK (not blocked)' )
       or explain( $res, 'Expected 200' );
     ok( $ban == $prevBan, 'No alert sent for whitelisted URL' );
+};
+
+subtest 'Pattern matching is case-insensitive', sub {
+    my $prevBan = $ban;
+
+    ok( $res = $client->_get( '/.ENV', accept => 'text/html' ),
+        'Request to /.ENV (uppercase)' );
+    ok( $res->[0] == 404,   'Got 404' );
+    ok( $ban == ++$prevBan, 'Alert sent' );
+    ok(
+        $lastAlertScenario eq 'llng/http-sensitive-files',
+        "Scenario is 'llng/http-sensitive-files'"
+    );
 };
 
 # Test ban trigger with crowdsecMaxFailures
@@ -280,33 +310,14 @@ subtest 'Ban triggered after max failures', sub {
     @mockPreviousAlerts = ();
 };
 
-# Test urlscan ban trigger
-subtest 'URL scan ban triggered after max failures', sub {
+subtest 'Sensitive files ban triggered after max failures', sub {
 
-    # Setup mock previous alerts for URL scan (4 alerts to trigger ban)
+    # Setup mock previous alerts for sensitive files (4 alerts to trigger ban)
     my $now = time;
     @mockPreviousAlerts = ( {
             source   => { value => '127.0.0.1' },
-            scenario => 'llng/urlscan',
+            scenario => 'llng/http-sensitive-files',
             start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 90 ) ),
-            events   => [ {
-                    meta => [ { key => 'uri', value => '/wp-login.php' }, ]
-                }
-            ]
-        },
-        {
-            source   => { value => '127.0.0.1' },
-            scenario => 'llng/urlscan',
-            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 60 ) ),
-            events   => [ {
-                    meta => [ { key => 'uri', value => '/admin.php' }, ]
-                }
-            ]
-        },
-        {
-            source   => { value => '127.0.0.1' },
-            scenario => 'llng/urlscan',
-            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 45 ) ),
             events   => [ {
                     meta => [ { key => 'uri', value => '/.env' }, ]
                 }
@@ -314,10 +325,28 @@ subtest 'URL scan ban triggered after max failures', sub {
         },
         {
             source   => { value => '127.0.0.1' },
-            scenario => 'llng/urlscan',
+            scenario => 'llng/http-sensitive-files',
+            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 60 ) ),
+            events   => [ {
+                    meta => [ { key => 'uri', value => '/.git/config' }, ]
+                }
+            ]
+        },
+        {
+            source   => { value => '127.0.0.1' },
+            scenario => 'llng/http-sensitive-files',
+            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 45 ) ),
+            events   => [ {
+                    meta => [ { key => 'uri', value => '/config.php' }, ]
+                }
+            ]
+        },
+        {
+            source   => { value => '127.0.0.1' },
+            scenario => 'llng/http-sensitive-files',
             start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 30 ) ),
             events   => [ {
-                    meta => [ { key => 'uri', value => '/backup.sql' }, ]
+                    meta => [ { key => 'uri', value => '/composer.json' }, ]
                 }
             ]
         },
@@ -332,6 +361,58 @@ subtest 'URL scan ban triggered after max failures', sub {
     ok( $lastAlertHasDecisions, 'Alert contains decisions array' );
     ok( $lastAlertUri eq '/.htaccess',
         'Current URI "/.htaccess" is in metadata' );
+    ok(
+        $lastAlertScenario eq 'llng/http-sensitive-files',
+        'Scenario is llng/http-sensitive-files'
+    );
+
+    # Clean up mock alerts
+    @mockPreviousAlerts = ();
+};
+
+# Test per-scenario maxFailures override
+# http-admin-probing has .maxfailures=3 and .timewindow=60, so only 2 previous
+# alerts needed within the 60s window
+subtest 'Admin probing ban with per-scenario maxFailures=3', sub {
+
+    # Setup mock previous alerts (only 2, since maxFailures=3 for this scenario)
+    # Both must be within the 60s timeWindow
+    my $now = time;
+    @mockPreviousAlerts = ( {
+            source   => { value => '127.0.0.1' },
+            scenario => 'llng/http-admin-probing',
+            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 45 ) ),
+            events   => [ {
+                    meta => [ { key => 'uri', value => '/admin' }, ]
+                }
+            ]
+        },
+        {
+            source   => { value => '127.0.0.1' },
+            scenario => 'llng/http-admin-probing',
+            start_at => strftime( "%Y-%m-%dT%H:%M:%SZ", gmtime( $now - 20 ) ),
+            events   => [ {
+                    meta => [ { key => 'uri', value => '/wp-admin' }, ]
+                }
+            ]
+        },
+    );
+
+    # This 3rd bad URL should trigger a ban (maxFailures=3 for this scenario)
+    ok(
+        $res = $client->_get( '/phpmyadmin', accept => 'text/html' ),
+'Test bad url /phpmyadmin (3rd triggers ban due to per-scenario maxFailures)'
+    );
+    ok( $res->[0] == 404, '404 not found' );
+
+    ok( $lastAlertTypeIsBan,    'Alert type is "ban"' );
+    ok( $lastAlertHasDecisions, 'Alert contains decisions array' );
+    ok( $lastAlertUri eq '/phpmyadmin',
+        'Current URI "/phpmyadmin" is in metadata' );
+    ok(
+        $lastAlertScenario eq 'llng/http-admin-probing',
+        'Scenario is llng/http-admin-probing'
+    );
 
     # Clean up mock alerts
     @mockPreviousAlerts = ();

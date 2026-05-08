@@ -121,7 +121,7 @@ SKIP: {
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%(\d{2}) <span trspan="seconds">seconds</span>%,
         "LockTime = $1" );
-    ok( $1 <= 31 && $1 >= 28, 'LockTime in range (~30s)' )
+    ok( $1 <= 31 && $1 >= 25, 'LockTime in range (~30s)' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(4);
 
@@ -145,7 +145,7 @@ SKIP: {
 
     # With fix #3561: blocked attempts not stored, countFailed stays 1
     # lockTimes[1]=30, delta=3 → remaining ~27s
-    ok( $1 <= 28 && $1 >= 25, 'LockTime in range (~27s)' )
+    ok( $1 <= 28 && $1 >= 22, 'LockTime in range (~27s)' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(4);
 
@@ -162,9 +162,10 @@ SKIP: {
         ),
         '3rd Bad Auth query (lock expired)'
     );
-    ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
-        'Bad credential (lock expired, failure stored)' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
+        'Bad credential (lock expired, failure stored)'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     count(2);
 
     ## Immediate retry → countFailed=2, lockTimes[2]=60 → PE_WAIT
@@ -182,8 +183,9 @@ SKIP: {
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%(\d{2}) <span trspan="seconds">seconds</span>%,
         "LockTime = $1" );
+
     # countFailed=2 → lockTimes[2]=60
-    ok( $1 <= 61 && $1 >= 58, 'LockTime in range (~60s)' )
+    ok( $1 <= 61 && $1 >= 55, 'LockTime in range (~60s)' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(4);
 

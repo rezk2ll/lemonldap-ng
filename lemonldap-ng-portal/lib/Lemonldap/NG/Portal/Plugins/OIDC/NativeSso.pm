@@ -1,9 +1,9 @@
-package Lemonldap::NG::Portal::Plugins::OIDCNativeSso;
+package Lemonldap::NG::Portal::Plugins::OIDC::NativeSso;
 
 use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
-use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
@@ -255,5 +255,9 @@ sub tokenExchangeHook {
     # Else ignore this request
     return PE_OK;
 }
+
+package Lemonldap::NG::Portal::Plugins::OIDCNativeSso;
+
+our @ISA = ('Lemonldap::NG::Portal::Plugins::OIDC::NativeSso');
 
 1;

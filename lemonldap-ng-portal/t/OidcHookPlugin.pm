@@ -49,6 +49,9 @@ use constant hook => {
     oidcGenerateIntrospectionResponse => 'buildIntrospectionResponse',
     oidcGotTokenRequest               => 'gotTokenRequest',
     oidcGenerateRefreshToken          => 'generateRefreshToken',
+    oidcGotRegistrationRequest        => 'gotRegistrationRequest',
+    oidcRegisterClient                => 'registerClient',
+    oidcGenerateMetadata              => 'addCustomMetadata',
 };
 
 sub addClaimToIDToken {
@@ -102,8 +105,7 @@ sub addClaimToAccessToken {
 }
 
 sub addCustomToken {
-    my ( $self, $req, $rp, $response, $codeSession, $userSession,
-        $grant_type )
+    my ( $self, $req, $rp, $response, $codeSession, $userSession, $grant_type )
       = @_;
     $response->{custom_token} = 'CustomToken';
     $lastTokenResponseGrantType = $grant_type || '';
@@ -123,8 +125,7 @@ sub refreshHook {
     # Test PE_SENDRESPONSE support
     if ($refreshSendResponse) {
         $req->response(
-            [ 200, [ 'Content-Type' => 'text/plain' ], ['Direct response'] ]
-        );
+            [ 200, [ 'Content-Type' => 'text/plain' ], ['Direct response'] ] );
         return PE_SENDRESPONSE;
     }
 
@@ -258,6 +259,38 @@ sub generateRefreshToken {
     # Mark that this hook was called
     $generateRefreshTokenCalled = 1;
 
+    return PE_OK;
+}
+
+sub gotRegistrationRequest {
+    my ( $self, $req, $client_metadata ) = @_;
+
+    # Deny registration for clients with a specific redirect_uri pattern
+    my $redirect_uris = $client_metadata->{redirect_uris} || [];
+    for my $uri (@$redirect_uris) {
+        if ( $uri =~ /^https:\/\/denied\.example\.com\// ) {
+            $req->response(
+                $self->p->sendError( $req, 'registration_not_allowed', 403 ) );
+            return PE_SENDRESPONSE;
+        }
+    }
+
+    return PE_OK;    # Defer to default behavior
+}
+
+sub registerClient {
+    my ( $self, $req, $newRp, $client_metadata ) = @_;
+
+    # Add a custom option to the new RP
+    $newRp->{options}->{oidcRPMetaDataOptionsBypassConsent} = 1;
+
+    return PE_OK;
+}
+
+sub addCustomMetadata {
+    my ( $self, $req, $metadata ) = @_;
+    $metadata->{custom_metadata_hook} = 'hooked';
+    push @{ $metadata->{grant_types_supported} }, 'urn:test:custom_grant';
     return PE_OK;
 }
 

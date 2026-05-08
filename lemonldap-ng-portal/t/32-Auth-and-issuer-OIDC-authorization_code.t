@@ -188,11 +188,14 @@ ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
 ok( $res->{sid}, "get sid in userinfo" ) or print Dumper($res);
 count(3);
 
-ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-  or explain( $res, 'cn => Frédéric Accents' );
+$res = getSession($spId)->data;
+is( $res->{cn}, 'Frédéric Accents', 'UTF-8 values' );
 count(1);
 
-$res = getSession($spId)->data;
+is( $res->{'_oidc_acr'} => 'customacr-1',    "ACR is exposed" );
+is( $res->{'_oidc_amr'} => 'myamr1; myamr2', "AMR is exposed" );
+count(2);
+
 my $access_token_eol = $res->{_oidc_access_token_eol};
 my $access_token_old = $res->{_oidc_access_token};
 ok( $access_token_eol, 'OIDC EOL time is stored' );
@@ -222,7 +225,6 @@ is_deeply(
     "Complex JSON variable was imported as-is"
 );
 count(7);
-
 
 my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
 is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
@@ -393,7 +395,6 @@ ok(
 count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
-
 
 # Test if consent was saved
 # -------------------------
@@ -585,7 +586,11 @@ sub op {
                 oidcServiceAllowHybridFlow            => 1,
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
-                oidcRPMetaDataOptions                 => {
+                oidcServiceMetaDataAmrRules           => {
+                    myamr1 => '1',
+                    myamr2 => '1',
+                },
+                oidcRPMetaDataOptions => {
                     rp => {
                         oidcRPMetaDataOptionsDisplayName       => "RP",
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
