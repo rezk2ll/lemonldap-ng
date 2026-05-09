@@ -1080,56 +1080,56 @@ sub tests {
             return 1;
         },
 
-        # Relying Party / Service Provider / CAS Application names must not
-        # contain whitespace
+        # Relying Party / Service Provider / CAS Application names must
+        # contain only word characters (letters, digits, underscore)
         spNameNoWhitespace => sub {
             my @msg;
             foreach my $rpId ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } )
             {
-                if ( $rpId =~ /\s/ ) {
+                if ( $rpId !~ /^\w+$/ ) {
                     push @msg,
-                      "OIDC Relying Party name '$rpId' must not contain spaces";
+"OIDC Relying Party name '$rpId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} || {} } ) {
-                if ( $spId =~ /\s/ ) {
+                if ( $spId !~ /^\w+$/ ) {
                     push @msg,
-"SAML Service Provider name '$spId' must not contain spaces";
+"SAML Service Provider name '$spId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $casId ( keys %{ $conf->{casAppMetaDataOptions} || {} } )
             {
-                if ( $casId =~ /\s/ ) {
+                if ( $casId !~ /^\w+$/ ) {
                     push @msg,
-                      "CAS Application name '$casId' must not contain spaces";
+"CAS Application name '$casId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             return @msg ? ( 0, join( ', ', @msg ) ) : 1;
         },
 
-        # Identity Provider / OpenID Provider / CAS Server names must not
-        # contain whitespace
+        # Identity Provider / OpenID Provider / CAS Server names must
+        # contain only word characters (letters, digits, underscore)
         idpNameNoWhitespace => sub {
             my @msg;
             foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} || {} } ) {
-                if ( $idpId =~ /\s/ ) {
+                if ( $idpId !~ /^\w+$/ ) {
                     push @msg,
-"SAML Identity Provider name '$idpId' must not contain spaces";
+"SAML Identity Provider name '$idpId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $opId ( keys %{ $conf->{oidcOPMetaDataOptions} || {} } )
             {
-                if ( $opId =~ /\s/ ) {
+                if ( $opId !~ /^\w+$/ ) {
                     push @msg,
-"OIDC OpenID Provider name '$opId' must not contain spaces";
+"OIDC OpenID Provider name '$opId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach
               my $casSrvId ( keys %{ $conf->{casSrvMetaDataOptions} || {} } )
             {
-                if ( $casSrvId =~ /\s/ ) {
+                if ( $casSrvId !~ /^\w+$/ ) {
                     push @msg,
-                      "CAS Server name '$casSrvId' must not contain spaces";
+"CAS Server name '$casSrvId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             return @msg ? ( 0, join( ', ', @msg ) ) : 1;
