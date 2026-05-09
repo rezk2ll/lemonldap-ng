@@ -88,7 +88,7 @@ sub tests {
             );
         },
 
-        # Check if automatically displayed menu applications have VH configuration
+      # Check if automatically displayed menu applications have VH configuration
         menuAutoDisplayedVhostsHaveConf => sub {
             my @pb;
 
@@ -114,9 +114,7 @@ sub tests {
                     if ( ( $child->{type} // '' ) eq 'category' ) {
                         $walk->($child);
                     }
-                    elsif (
-                        ( $child->{options}->{display} // '' ) eq 'auto' )
-                    {
+                    elsif ( ( $child->{options}->{display} // '' ) eq 'auto' ) {
                         my $uri = $child->{options}->{uri};
                         next unless defined $uri and length $uri;
                         my $u = URI->new($uri);
@@ -1080,6 +1078,61 @@ sub tests {
                 }
             }
             return 1;
+        },
+
+        # Relying Party / Service Provider / CAS Application names must not
+        # contain whitespace
+        spNameNoWhitespace => sub {
+            my @msg;
+            foreach my $rpId ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } )
+            {
+                if ( $rpId =~ /\s/ ) {
+                    push @msg,
+                      "OIDC Relying Party name '$rpId' must not contain spaces";
+                }
+            }
+            foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} || {} } ) {
+                if ( $spId =~ /\s/ ) {
+                    push @msg,
+"SAML Service Provider name '$spId' must not contain spaces";
+                }
+            }
+            foreach my $casId ( keys %{ $conf->{casAppMetaDataOptions} || {} } )
+            {
+                if ( $casId =~ /\s/ ) {
+                    push @msg,
+                      "CAS Application name '$casId' must not contain spaces";
+                }
+            }
+            return @msg ? ( 0, join( ', ', @msg ) ) : 1;
+        },
+
+        # Identity Provider / OpenID Provider / CAS Server names must not
+        # contain whitespace
+        idpNameNoWhitespace => sub {
+            my @msg;
+            foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} || {} } ) {
+                if ( $idpId =~ /\s/ ) {
+                    push @msg,
+"SAML Identity Provider name '$idpId' must not contain spaces";
+                }
+            }
+            foreach my $opId ( keys %{ $conf->{oidcOPMetaDataOptions} || {} } )
+            {
+                if ( $opId =~ /\s/ ) {
+                    push @msg,
+"OIDC OpenID Provider name '$opId' must not contain spaces";
+                }
+            }
+            foreach
+              my $casSrvId ( keys %{ $conf->{casSrvMetaDataOptions} || {} } )
+            {
+                if ( $casSrvId =~ /\s/ ) {
+                    push @msg,
+                      "CAS Server name '$casSrvId' must not contain spaces";
+                }
+            }
+            return @msg ? ( 0, join( ', ', @msg ) ) : 1;
         },
 
         # Notification system required with removed SF notification
