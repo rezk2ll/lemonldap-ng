@@ -88,7 +88,7 @@ sub tests {
             );
         },
 
-        # Check if automatically displayed menu applications have VH configuration
+      # Check if automatically displayed menu applications have VH configuration
         menuAutoDisplayedVhostsHaveConf => sub {
             my @pb;
 
@@ -114,9 +114,7 @@ sub tests {
                     if ( ( $child->{type} // '' ) eq 'category' ) {
                         $walk->($child);
                     }
-                    elsif (
-                        ( $child->{options}->{display} // '' ) eq 'auto' )
-                    {
+                    elsif ( ( $child->{options}->{display} // '' ) eq 'auto' ) {
                         my $uri = $child->{options}->{uri};
                         next unless defined $uri and length $uri;
                         my $u = URI->new($uri);
@@ -1080,6 +1078,61 @@ sub tests {
                 }
             }
             return 1;
+        },
+
+        # Relying Party / Service Provider / CAS Application names must
+        # contain only word characters (letters, digits, underscore)
+        spNameNoWhitespace => sub {
+            my @msg;
+            foreach my $rpId ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } )
+            {
+                if ( $rpId !~ /^\w+$/ ) {
+                    push @msg,
+"OIDC Relying Party name '$rpId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} || {} } ) {
+                if ( $spId !~ /^\w+$/ ) {
+                    push @msg,
+"SAML Service Provider name '$spId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            foreach my $casId ( keys %{ $conf->{casAppMetaDataOptions} || {} } )
+            {
+                if ( $casId !~ /^\w+$/ ) {
+                    push @msg,
+"CAS Application name '$casId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            return @msg ? ( 0, join( ', ', @msg ) ) : 1;
+        },
+
+        # Identity Provider / OpenID Provider / CAS Server names must
+        # contain only word characters (letters, digits, underscore)
+        idpNameNoWhitespace => sub {
+            my @msg;
+            foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} || {} } ) {
+                if ( $idpId !~ /^\w+$/ ) {
+                    push @msg,
+"SAML Identity Provider name '$idpId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            foreach my $opId ( keys %{ $conf->{oidcOPMetaDataOptions} || {} } )
+            {
+                if ( $opId !~ /^\w+$/ ) {
+                    push @msg,
+"OIDC OpenID Provider name '$opId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            foreach
+              my $casSrvId ( keys %{ $conf->{casSrvMetaDataOptions} || {} } )
+            {
+                if ( $casSrvId !~ /^\w+$/ ) {
+                    push @msg,
+"CAS Server name '$casSrvId' must contain only word characters (letters, digits, underscore)";
+                }
+            }
+            return @msg ? ( 0, join( ', ', @msg ) ) : 1;
         },
 
         # Notification system required with removed SF notification
