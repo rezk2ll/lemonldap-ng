@@ -7,7 +7,7 @@ use DBI;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.22.2';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Constants);
 our ( @EXPORT, %EXPORT_TAGS );
 
@@ -61,11 +61,9 @@ sub _dbh {
     return $dbh if $dbh;
     delete $self->{_dbh};
     eval {
-        $self->{_dbh} = DBI->connect_cached(
-            $self->{dbiChain}, $self->{dbiUser},
-            $self->{dbiPassword} ? $self->{dbiPassword} : undef,
-            { RaiseError => 1, AutoCommit => 1, }
-        );
+        $self->{_dbh} =
+          DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
+            $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1, } );
         die unless $self->{_dbh}->ping;
     };
     if (    $@
