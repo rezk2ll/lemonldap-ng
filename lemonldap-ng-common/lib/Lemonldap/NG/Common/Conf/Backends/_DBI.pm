@@ -7,7 +7,7 @@ use DBI;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
-our $VERSION = '2.23';
+our $VERSION = '2.23.0';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Constants);
 our ( @EXPORT, %EXPORT_TAGS );
 
