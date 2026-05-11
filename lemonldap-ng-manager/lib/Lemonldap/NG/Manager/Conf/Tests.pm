@@ -10,6 +10,8 @@ use URI;
 
 our $VERSION = '2.23.0';
 
+use constant validPartnerName => qr/^[\w-]+$/;
+
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
 # subroutines to execute.
@@ -1086,20 +1088,20 @@ sub tests {
             my @msg;
             foreach my $rpId ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } )
             {
-                if ( $rpId !~ /^\w+$/ ) {
+                if ( $rpId !~ validPartnerName ) {
                     push @msg,
 "OIDC Relying Party name '$rpId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} || {} } ) {
-                if ( $spId !~ /^\w+$/ ) {
+                if ( $spId !~ validPartnerName ) {
                     push @msg,
 "SAML Service Provider name '$spId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $casId ( keys %{ $conf->{casAppMetaDataOptions} || {} } )
             {
-                if ( $casId !~ /^\w+$/ ) {
+                if ( $casId !~ validPartnerName ) {
                     push @msg,
 "CAS Application name '$casId' must contain only word characters (letters, digits, underscore)";
                 }
@@ -1112,14 +1114,14 @@ sub tests {
         idpNameNoWhitespace => sub {
             my @msg;
             foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} || {} } ) {
-                if ( $idpId !~ /^\w+$/ ) {
+                if ( $idpId !~ validPartnerName ) {
                     push @msg,
 "SAML Identity Provider name '$idpId' must contain only word characters (letters, digits, underscore)";
                 }
             }
             foreach my $opId ( keys %{ $conf->{oidcOPMetaDataOptions} || {} } )
             {
-                if ( $opId !~ /^\w+$/ ) {
+                if ( $opId !~ validPartnerName ) {
                     push @msg,
 "OIDC OpenID Provider name '$opId' must contain only word characters (letters, digits, underscore)";
                 }
@@ -1127,7 +1129,7 @@ sub tests {
             foreach
               my $casSrvId ( keys %{ $conf->{casSrvMetaDataOptions} || {} } )
             {
-                if ( $casSrvId !~ /^\w+$/ ) {
+                if ( $casSrvId !~ validPartnerName ) {
                     push @msg,
 "CAS Server name '$casSrvId' must contain only word characters (letters, digits, underscore)";
                 }
