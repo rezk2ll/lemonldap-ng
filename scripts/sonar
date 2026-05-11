@@ -15,7 +15,7 @@ for module in common handler portal manager; do
     cd lemonldap-ng-$module
     perlcritic --cruel --quiet --verbose "%f~|~%s~|~%l~|~%c~|~%m~|~%e~|~%p~||~%n" lib t > perlcritic_report.txt
     cover -delete
-    HARNESS_PERL_SWITCHES=-MDevel::Cover prove
+    HARNESS_PERL_SWITCHES=-MDevel::Cover prove -j4
     cover -report SonarGeneric
     sed -i "s,path=\"blib,path=\"lemonldap-ng-$module,g" cover_db/sonar_generic.xml
 
