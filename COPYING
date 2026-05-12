@@ -61,7 +61,7 @@ Copyright: GitHub, Inc.
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/captchetat-js.js
-Copyright: AIFE
+Copyright: AIFE <https://aife.economie.gouv.fr/>
 License: ISC
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
