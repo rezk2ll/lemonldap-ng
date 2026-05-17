@@ -370,13 +370,8 @@ sub _filterHash {
             and $apphash->{$key}->{type} eq "application" )
         {
 
-            # Find sub applications and filter them
-            foreach my $appkey ( keys %{ $apphash->{$key} } ) {
-                next if $appkey =~ /(type|options|catname|order)/;
-
-                # We have sub elements, so we filter them
-                $self->_filterHash( $req, $apphash->{$key} );
-            }
+            # Filter sub applications
+            $self->_filterHash( $req, $apphash->{$key} );
 
             # Check rights
             $self->logger->debug('Build menu applications list...');
