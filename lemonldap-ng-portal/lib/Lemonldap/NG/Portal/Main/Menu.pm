@@ -350,31 +350,36 @@ sub _filter {
     return $filteredHash;
 }
 
-## @method private string _filterHash(hashref apphash)
+## @method private string _filterHash(hashref apphash, string currentpath)
 # Remove unauthorized menu elements
 # @param $apphash Menu elements
+# @param $currentpath Path of the parent node in the menu tree, used as a
+#   qualified cache key for compiled "display" rules so that two homonymous
+#   applications living in distinct categories do not share the same rule.
 # @return filtered hash
 sub _filterHash {
-    my ( $self, $req, $apphash ) = @_;
+    my ( $self, $req, $apphash, $currentpath ) = @_;
+    $currentpath //= "";
 
     foreach my $key ( keys %$apphash ) {
         next if $key =~ /(type|options|catname|order)/;
+        my $path = $currentpath ? "$currentpath/$key" : $key;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
         {
 
             # Filter the category
-            $self->_filterHash( $req, $apphash->{$key} );
+            $self->_filterHash( $req, $apphash->{$key}, $path );
         }
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "application" )
         {
 
             # Filter sub applications
-            $self->_filterHash( $req, $apphash->{$key} );
+            $self->_filterHash( $req, $apphash->{$key}, $path );
 
             # Check rights
-            $self->logger->debug('Build menu applications list...');
+            $self->logger->debug("Checking display condition for $path");
             my $appdisplay = $apphash->{$key}->{options}->{display}
               || "auto";
             $apphash->{$key}->{options}->{uri} =~ URIRE;
@@ -405,13 +410,16 @@ sub _filterHash {
                 next;
             }
 
-            # If a specific rule exists, get it from cache or compile it
+            # If a specific rule exists, get it from cache or compile it.
+            # The cache key includes the full path because two applications
+            # in different categories may share the same short name with
+            # different display rules (#3612).
             if ( $appdisplay !~ /^auto$/i ) {
-                if ( $self->specific->{$key} ) {
-                    $cond = $self->specific->{$key};
+                if ( $self->specific->{$path} ) {
+                    $cond = $self->specific->{$path};
                 }
                 else {
-                    $cond = $self->specific->{$key} =
+                    $cond = $self->specific->{$path} =
                       $self->p->HANDLER->buildSub(
                         $self->p->HANDLER->substitute($appdisplay) );
                 }
