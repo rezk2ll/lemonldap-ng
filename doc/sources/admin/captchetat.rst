@@ -3,13 +3,13 @@ CaptchEtat
 
 |beta|
 
-this plugin has not been testing in production yet, its behavior and
+this plugin has not been tested in production yet, its behavior and
 parameters are subject to change in future versions
 
 Presentation
 ------------
 
-CaptchEtat is a CAPTCHA system provided by the french government
+CaptchEtat is a CAPTCHA system provided by the French government
 
 Configuration
 -------------
