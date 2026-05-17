@@ -35,7 +35,7 @@
                 setButtonTitle();
             })
             .catch(error => {
-                console.error('Erreur lors de la récupération du captcha');
+                console.error('Erreur lors de la récupération du captcha', error);
             });
     }
 
@@ -66,7 +66,7 @@
                 document.getElementById("captchetat-uuid").setAttribute("value", ID_CAPTCHA);
             })
             .catch(error => {
-                console.error('Erreur lors de la récupération du captcha');
+                console.error('Erreur lors de la récupération du captcha', error);
             });
     }
 
