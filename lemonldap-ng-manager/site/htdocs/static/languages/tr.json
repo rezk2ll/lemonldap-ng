@@ -1337,7 +1337,7 @@
 "skipRenewConfirmation":"Yeniden yetkilendirme doğrulamasını geç",
 "skipUpgradeConfirmation":"Yükseltme doğrulamasını geç",
 "slaveAuthnLevel":"Doğrulama seviyesi",
-"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateField":"Çıkartılmış sertifika alanı",
 "slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Doğrulama logosunu görüntüle",
 "slaveExportedVars":"Dışa aktarılan değişkenler",

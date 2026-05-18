@@ -1337,7 +1337,7 @@
 "skipRenewConfirmation":"跳過重新驗證確認",
 "skipUpgradeConfirmation":"跳過升級確認",
 "slaveAuthnLevel":"驗證等級",
-"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateField":"提取憑證欄位",
 "slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"顯示驗證圖示",
 "slaveExportedVars":"已匯出的變數",

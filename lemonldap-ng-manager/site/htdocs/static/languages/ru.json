@@ -1337,7 +1337,7 @@
 "skipRenewConfirmation":"Пропустить подтверждение повторной аутентификации",
 "skipUpgradeConfirmation":"Пропустить подтверждение обновления",
 "slaveAuthnLevel":"Уровень аутентификации",
-"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateField":"Извлеченное поле сертификата",
 "slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Отображать логотип аутентификации",
 "slaveExportedVars":"Экспортированные переменные",

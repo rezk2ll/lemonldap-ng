@@ -1337,7 +1337,7 @@
 "skipRenewConfirmation":"Saltar confirmación de reautorización",
 "skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Nivel de autentificación",
-"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateField":"Campo de certificado extraído",
 "slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"Mostrar logotipo de autentificación",
 "slaveExportedVars":"Variables exportadas",

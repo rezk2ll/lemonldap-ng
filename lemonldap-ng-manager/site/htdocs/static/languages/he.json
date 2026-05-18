@@ -1337,7 +1337,7 @@
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"דרגת אימות",
-"slaveCertificateField":"Extracted certificate field",
+"slaveCertificateField":"שדה אישור שחולץ",
 "slaveCertificateRegexp":"Regexp to test extracted certificate field",
 "slaveDisplayLogo":"הצגת לוגו אימות",
 "slaveExportedVars":"משתנים מיוצאים",
