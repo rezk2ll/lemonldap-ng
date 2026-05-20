@@ -45,6 +45,7 @@ and **replace** them by::
 
     fastcgi_param HTTP_HOST $host;
     # or if using uwsgi server:
+    # Do not set this line if your /etc/nginx/uwsgi_params contains already this line
     #uwsgi_param HTTP_HOST $host;
 
 .. important::

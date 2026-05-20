@@ -345,6 +345,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
+    # Do not set this line if your /etc/nginx/uwsgi_params contains already this line
        uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        # Improve performances
@@ -360,6 +361,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
+    # Do not set this line if your /etc/nginx/uwsgi_params contains already this line
        uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE AuthBasic;
@@ -376,6 +378,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
        uwsgi_pass 127.0.0.1:5000;
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
+    # Do not set this line if your /etc/nginx/uwsgi_params contains already this line
        uwsgi_param HTTP_HOST $host;
        uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE ServiceToken;
