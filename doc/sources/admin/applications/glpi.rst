@@ -22,9 +22,10 @@ In Lemonldap you will need to create a new Virtual Host as follows:
 
 On the virtual host the `Access rules` can be configured to `accept` as the
 `Default rule`. This is for testing purposes but you can read the following
-[documentation](https://lemonldap-ng.org/documentation/latest/writingrulesand_headers.html#rules).
+`documentation <https://lemonldap-ng.org/documentation/latest/writingrulesand_headers.html#rules>`__.
 
 In `Exported headers` the attributes picked sent to GLPI need to be configured:
+
 .. code-block:: bash
 
    AUTH-GIVENNAME => $givenName
@@ -71,16 +72,16 @@ If you use Nginx, you need to create the following configuration:
     }
   }
 
-The above example is a modified configuration that can be found here:
-https://lemonldap-ng.org/documentation/latest/configvhost.html
+The above example is a modified configuration that can be found 
+`here <https://lemonldap-ng.org/documentation/latest/configvhost.html>`__.
 
 Take note of the `proxy_set_header` and `auth_request_set` configurations at the
 end the nginx configuration block. This follows a specific convention which is
-described on this page for Apache2 and Nginx:
-https://lemonldap-ng.org/documentation/latest/header_remote_user_conversion.html.
+described on this page for `Apache2 and Nginx <https://lemonldap-ng.org/documentation/latest/header_remote_user_conversion.html>`__.
 
 In addition you will need the below `proxy_params` configurations as defined in
 the nginx configuration above:
+
 .. code-block:: nginx
 
    proxy_set_header Host $host;
@@ -88,7 +89,7 @@ the nginx configuration above:
    proxy_set_header X-Real-IP $remote_addr;
    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-For GLPI >= 0.71, it is a simple configuration in GLPI: Setup → Authentication.
+For GLPI it is a simple configuration in GLPI: Setup → Authentication.
 In “External authentications” click “Others authentication methods” and in the
 section "Other authentication sent in the HTTP request" you will need to
 configure the following:
