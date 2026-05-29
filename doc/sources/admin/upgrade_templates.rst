@@ -73,6 +73,22 @@ A new update button is added in 2FA manager to let users rename their 2FA.
                          device='<TMPL_VAR NAME="type">'
     
 
+Typo in oidcOfflineTokens.tpl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/oidcOfflineTokens.tpl b/lemonldap-ng-portal/site/templates/bootstrap/oidcOfflineTokens.tpl
+    index 2080d70f5ca15748e2c59908a3e753df1a06740e..cc7ad752c5e30eb27097345d7bcbf003d43a2794 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/oidcOfflineTokens.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/oidcOfflineTokens.tpl
+    @@ -1,4 +1,4 @@
+    -<script type="text/javascript" src="<TMPL_VAR NAME="js">""></script>
+    +<script type="text/javascript" src="<TMPL_VAR NAME="js">"></script>
+     <script type="application/init">
+     {"sessions":<TMPL_VAR NAME="sessions">}
+     </script>
+
 2.22.0
 ------
 
