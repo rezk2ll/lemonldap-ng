@@ -1,3 +1,83 @@
+lemonldap-ng (2.23.0) noble; urgency=medium
+
+  * Bugs:
+    * #3469: No authentication triggered at server side with Webauthn + requireToken disabled
+    * #3484: Configuration keys missing when creating an OIDC RP containing space character
+    * #3491: New OIDC offline tokens menu breaks portal display
+    * #3501: Using "skip" in PSGI::Try exposes session information from previous requests
+    * #3504: Serialization of data into session. (JSON Object for example)
+    * #3511: Manager: "Mauvaise requête" when accessing to "Authentication parameters"
+    * #3512: Warning and errors when configuring OIDC with a global key
+    * #3530: Crowdsec agent: decision not sent with immediate application
+    * #3541: Incorrect _auth session key after session upgrade
+    * #3543: GlobalLogout plugin does not launch real logouts
+    * #3544: lang="en" html tag causes "double" translation
+    * #3560: Back-Channel Logout triggered by adminLogout plugin and with custom UserIDAttr fails
+    * #3561: Incorrect behaviour in bruteforceprotection plugin
+    * #3563: Config save error when using a custom SAML key + custom signature method
+    * #3566: PG MessageBroker password is required although using TLS authentication
+    * #3583: Invalid PSGI body response with HEAD method
+    * #3596: @onReload corrupted
+    * #3607: Browser registration may fail silently in rare case due to missing zero-padded TOTP
+    * #3609: OpenID backchannel logout missing required exp claim
+    * #3610: WebAuthn registration fails on Android >= 15 with passkey providers
+    * #3612: Applications randomly disappear from portal menu
+    * #3613: Unable to start with a cached configuration
+
+  * New features:
+    * #812: Request individual OIDC claims when delegating to OpenID Provider
+    * #3078: Allow transmission of extra attributes in Auth/UserDB/Password::REST
+    * #3253: Allow SP/RP/Apps to be enabled or disabled
+    * #3400: API for secrets retrieval
+    * #3517: Allow Combination to be used inside a Choice
+    * #3524: 2F::TOTP should implement SHA2
+    * #3536: Add option to force SAML NameID format
+    * #3538: Plugin to replace menu by a redirection to an external menu
+    * #3565: Provide a CaptchEtat integration
+    * #3584: Extra authorization request parameters for OpenID Connect authentication
+    * #3590: Expose ACR/AMR in session data when authenticating with an OIDC provider
+
+  * Improvements:
+    * #2485: SAML : support eduPersonTargetedID attributes
+    * #3402: Update or drop portal german translation
+    * #3419: 2FA registered device names should be editable
+    * #3455: When using Google-ReCaptcha, block "submit" until JS are downloaded
+    * #3471: Manager api: allow removal of subkeys in PATCH
+    * #3477: Add manager conf. test to check if auto displayed application in menu has configuration
+    * #3496: OAuth2 handler should check if protected VH matches audience
+    * #3497: X_LLNG_TOKEN header is not deleted
+    * #3499: Access Token is transmitted to application by OAuth2 Handler
+    * #3520: Append an option to set a global default required authentication level
+    * #3522: Confusing behavior when issuersTimeout is reached
+    * #3526: CAS application matching is non deterministic
+    * #3528: Add context when generating a Crowdsec decision
+    * #3529: Add "decision" metadata into Crowsec decisions to have an immediate ban
+    * #3537: LocationDetect plugin isn't compatible with generic MaxMind-DB
+    * #3540: Mandatory 2FA registration during session upgrade is confusing
+    * #3548: Implement RFC 9700 OAuth 2.0: Security Best Current Practice
+    * #3551: Implement JWS/JWE for introspection responses (RFC 9701)
+    * #3555: Create hook sfDeleteDevice
+    * #3558: [manager] add "duplicate" button for OIDC/SAML/CAS clients
+    * #3559: Crowdsec: add named filter scenarii
+    * #3569: Add history commands in lemonldap-ng-sessions
+    * #3577: Add OIDC hooks
+    * #3578: Document how to use Lemonldap-NG with Caddy platform
+    * #3579: Script to regenerate manager files (better external plugin support)
+    * #3585: Auth::OpenIDConnect should log refused scopes
+    * #3587: getOidcRpConfig should reload `Main::Plugins` conditional plugins
+    * #3593: OIDC Dynamic registration: priority to back-channel-logout
+    * #3594: Support token_endpoint_auth_method in OIDC Dynamic Registration
+    * #3597: Check Slave client by using mTLS
+    * #3604: Documentation on Public Pages is incomplete
+    * #3614: Redundant N-times recursion when filtering nested sub-applications in the portal menu
+
+  * Templates:
+    * #3419: 2FA registered device names should be editable
+    * #3491: New OIDC offline tokens menu breaks portal display
+    * #3603: [security:low] Deprecated jquery.cookie lib used by portal
+
+ -- Clément OUDOT <clement@worteks-ader.home>  Fri, 29 May 2026 10:11:40 +0200
+
 lemonldap-ng (2.22.3) noble; urgency=medium
 
   * Bugs:
