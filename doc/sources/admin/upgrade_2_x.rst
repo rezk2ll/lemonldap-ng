@@ -81,6 +81,15 @@ LemonLDAP::NG no longer provides the ``jquery.cookie`` library. If you need this
 library in your custom JS code, you need to add it back to
 ``/usr/share/lemonldap-ng/portal/htdocs/static/`` directory, or use a CDN.
 
+New index on CAS session
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This new version can now manage backchannel logoutRequest coming from a CAS server (LL::NG configred as CAS client).
+
+You need to add an index on CAS sessions table on ``auth_cas_ticket`` if you use a DB backend, and you want to use this new feature without impacting performances.
+
+See ``sessions.my.sql`` and ``sessions.pg.sql`` to get SQL instructions.
+
 2.22.2
 ------
 

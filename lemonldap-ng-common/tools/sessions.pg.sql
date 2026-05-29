@@ -51,7 +51,8 @@ CREATE TABLE cassessions (
     id varchar(64) not null primary key,
     a_session jsonb
 );
-CREATE INDEX i_c__session_kind ON cassessions ((a_session ->> '_session_kind'));
-CREATE INDEX i_c__utime        ON cassessions ((cast(a_session ->> '_utime' as bigint)));
-CREATE INDEX i_c__cas_id       ON cassessions ((a_session ->> '_cas_id'));
-CREATE INDEX i_c_pgtIou        ON cassessions ((a_session ->> 'pgtIou'));
+CREATE INDEX i_c__session_kind   ON cassessions ((a_session ->> '_session_kind'));
+CREATE INDEX i_c__utime          ON cassessions ((cast(a_session ->> '_utime' as bigint)));
+CREATE INDEX i_c__cas_id         ON cassessions ((a_session ->> '_cas_id'));
+CREATE INDEX i_c_pgtIou          ON cassessions ((a_session ->> 'pgtIou'));
+CREATE INDEX i_c_auth_cas_ticket ON cassessions ((a_session ->> 'auth_cas_ticket'));
