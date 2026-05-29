@@ -10,8 +10,9 @@ Portal configuration
    portalmenu
    portalservers
    captcha
-   public_pages
+   captchetat
    recaptcha
+   public_pages
    secondfactor
    keys
    index_protocols
