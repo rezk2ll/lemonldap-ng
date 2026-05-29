@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.23.0';
 
 extends qw(
   Lemonldap::NG::Portal::Auth::_WebForm

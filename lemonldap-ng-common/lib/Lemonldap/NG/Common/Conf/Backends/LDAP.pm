@@ -11,7 +11,7 @@ use Net::LDAP;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.23.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::getLdapConnection = \&getLdapConnection;

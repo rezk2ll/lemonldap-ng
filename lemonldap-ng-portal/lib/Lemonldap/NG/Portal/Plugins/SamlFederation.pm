@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants qw( PE_OK);
 use Carp                                   qw(croak);
 use XML::LibXML::Reader;
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.23.0';
 
 use constant hook => { getSamlConfig => 'getSamlConfig' };
 

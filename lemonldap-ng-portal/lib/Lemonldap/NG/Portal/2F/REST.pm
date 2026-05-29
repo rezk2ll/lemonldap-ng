@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.23.0';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::Code2F

@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::PSGI;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Common::PSGI';
 

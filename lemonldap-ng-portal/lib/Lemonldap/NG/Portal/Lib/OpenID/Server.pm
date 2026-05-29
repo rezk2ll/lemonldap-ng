@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Regexp;
 
 use constant DEBUG => 0;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.23.0';
 
 use constant OPENID2_NS => 'http://specs.openid.net/auth/2.0';
 

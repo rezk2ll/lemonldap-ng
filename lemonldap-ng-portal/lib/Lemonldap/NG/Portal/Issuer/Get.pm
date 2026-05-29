@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_GET_SERVICE_NOT_ALLOWED URIRE
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
