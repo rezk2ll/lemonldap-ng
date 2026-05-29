@@ -178,7 +178,7 @@ bruteForceProtectionMaxAge
     :Used by portal: yes
 
 bruteForceProtectionMaxFailed
-    :Location: General Parameters » Advanced parameters » Security » Brute-force attack protection » Allowed failed logins
+    :Location: General Parameters » Advanced parameters » Security » Brute-force attack protection » Number of failed attempts triggering lockout
     :Description: Max allowed failed login
     :Used by portal: yes
 
@@ -251,6 +251,11 @@ casAppMetaDataNodes
 casAppMetaDataOptions
     :Location: Options
     :Description: Root of CAS app options
+    :Used by portal: yes
+
+casAppMetaDataOptionsActivation
+    :Location: CAS Applications » *configuration key* » Options » Activation
+    :Description: Activate CAS application
     :Used by portal: yes
 
 casAppMetaDataOptionsAllowProxy
@@ -709,6 +714,11 @@ crowdsecAgent
     :Description: Enable plugin to report auth failures to Crowdsec (simple alert)
     :Used by portal: yes
 
+crowdsecBanDuration
+    :Location: General Parameters » Advanced parameters » Security » Crowdsec » Agent » Ban duration
+    :Description: Crowdsec-Agent ban duration (e.g. 4h, 1d)
+    :Used by portal: yes
+
 crowdsecBlockDelay
     :Location: General Parameters » Advanced parameters » Security » Crowdsec » Agent » Check delay
     :Description: Crowdsec-Agent check delay
@@ -912,6 +922,10 @@ decryptValueFunctions
 decryptValueRule
     :Location: General Parameters » Plugins » Decrypt value » Use rule
     :Description: Decrypt value activation rule
+    :Used by portal: yes
+
+defaultAuthnLevel
+    :Location: General Parameters » Advanced parameters » Security » Default required authentication level
     :Used by portal: yes
 
 defaultNewKeySize
@@ -2122,6 +2136,11 @@ oidcOPMetaDataOptionsAcrValues
     :Location: OpenID Connect Providers » *configuration key* » Options » Protocol » ACR values
     :Used by portal: yes
 
+oidcOPMetaDataOptionsAuthEndpointExtraParams
+    :Location: OpenID Connect Providers » *configuration key* » Options » Protocol » Extra parameters for authorization code request
+    :Description: Additional parameters for OpenID Connect Authorization endpoint
+    :Used by portal: yes
+
 oidcOPMetaDataOptionsAuthnEndpointAuthMethod
     :Location: OpenID Connect Providers » *configuration key* » Options » Protocol » Authentication method for authorization code request
     :Used by portal: yes
@@ -2183,14 +2202,14 @@ oidcOPMetaDataOptionsPrompt
     :Location: OpenID Connect Providers » *configuration key* » Options » Protocol » Prompt
     :Used by portal: yes
 
+oidcOPMetaDataOptionsRequireIss
+    :Location: OpenID Connect Providers » *configuration key* » Options » Configuration » Issuer required
+    :Description: Require iss parameter in authorization response (RFC 9207)
+    :Used by portal: yes
+
 oidcOPMetaDataOptionsRequirePkce
     :Location: OpenID Connect Providers » *configuration key* » Options » Configuration » PKCE required
     :Description: Use PKCE with this OP
-    :Used by portal: yes
-
-oidcOPMetaDataOptionsRequireIss
-    :Location: OpenID Connect Providers » *configuration key* » Options » Configuration » Issuer required (RFC 9207)
-    :Description: Require iss parameter in authorization response (RFC 9207)
     :Used by portal: yes
 
 oidcOPMetaDataOptionsResolutionRule
@@ -2295,6 +2314,10 @@ oidcRPMetaDataOptionsAccessTokenSignAlg
     :Location: OpenID Connect Relying Parties » *configuration key* » Options » Algorithms » Access Token signature algorithm
     :Used by portal: yes
 
+oidcRPMetaDataOptionsActivation
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Activation
+    :Used by portal: yes
+
 oidcRPMetaDataOptionsAdditionalAudiences
     :Location: OpenID Connect Relying Parties » *configuration key* » Options » Advanced » Additional audiences
     :Used by portal: yes
@@ -2392,6 +2415,21 @@ oidcRPMetaDataOptionsIdTokenEncContentEncAlg
 oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg
     :Location: OpenID Connect Relying Parties » *configuration key* » Options » Algorithms » ID Token Encryption key management alg
     :Description: "alg" algorithm for id_token encryption
+    :Used by portal: yes
+
+oidcRPMetaDataOptionsIntrospectionEncContentEncAlg
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Algorithms » Introspection encryption content encryption algorithm
+    :Description: "enc" for introspection response encryption (RFC 9701)
+    :Used by portal: yes
+
+oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Algorithms » Introspection encryption key management algorithm
+    :Description: "alg" for introspection response encryption (RFC 9701)
+    :Used by portal: yes
+
+oidcRPMetaDataOptionsIntrospectionSignAlg
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Algorithms » Introspection response format
+    :Description: Introspection response signature algorithm (RFC 9701)
     :Used by portal: yes
 
 oidcRPMetaDataOptionsJwks
@@ -3467,12 +3505,12 @@ rest2fCodeActivation
     :Used by portal: yes
 
 rest2fInitArgs
-    :Location: General Parameters » Second factors » REST second factor » Init arguments
+    :Location: General Parameters » Second factors » REST second factor » Arguments » Init arguments
     :Description: Args for REST 2F init
     :Used by portal: yes
 
 rest2fInitUrl
-    :Location: General Parameters » Second factors » REST second factor » Init URL
+    :Location: General Parameters » Second factors » REST second factor » URL » Init URL
     :Description: REST 2F init URL
     :Used by portal: yes
 
@@ -3492,13 +3530,18 @@ rest2fResendInterval
     :Used by portal: yes
 
 rest2fVerifyArgs
-    :Location: General Parameters » Second factors » REST second factor » Verify arguments
-    :Description: Args for REST 2F init
+    :Location: General Parameters » Second factors » REST second factor » Arguments » Verify arguments
+    :Description: Args for REST 2F verify
     :Used by portal: yes
 
 rest2fVerifyUrl
-    :Location: General Parameters » Second factors » REST second factor » Verify URL
-    :Description: REST 2F init URL
+    :Location: General Parameters » Second factors » REST second factor » URL » Verify URL
+    :Description: REST 2F verify URL
+    :Used by portal: yes
+
+restAuthArgs
+    :Location: General Parameters » Authentication parameters » REST parameters » Arguments » Authentication arguments
+    :Description: Extra args for REST Auth request
     :Used by portal: yes
 
 restAuthServer
@@ -3507,7 +3550,7 @@ restAuthServer
     :Used by portal: yes
 
 restAuthUrl
-    :Location: General Parameters » Authentication parameters » REST parameters » Authentication URL
+    :Location: General Parameters » Authentication parameters » REST parameters » URL » Authentication URL
     :Used by portal: yes
 
 restAuthnLevel
@@ -3530,6 +3573,11 @@ restExportSecretKeys
     :Description: Allow to export secret keys in REST session server
     :Used by portal: yes
 
+restFindUserDBArgs
+    :Location: General Parameters » Plugins » Search for user account » User accounts arguments
+    :Description: Extra args for REST FindUser request
+    :Used by portal: yes
+
 restFindUserDBUrl
     :Location: General Parameters » Plugins » Search for user account » User accounts URL
     :Used by portal: yes
@@ -3539,12 +3587,22 @@ restPasswordServer
     :Description: Enable REST password reset server
     :Used by portal: yes
 
+restPwdConfirmArgs
+    :Location: General Parameters » Authentication parameters » REST parameters » Arguments » Password confirmation arguments
+    :Description: Extra args for REST password confirm request
+    :Used by portal: yes
+
 restPwdConfirmUrl
-    :Location: General Parameters » Authentication parameters » REST parameters » Password confirmation URL
+    :Location: General Parameters » Authentication parameters » REST parameters » URL » Password confirmation URL
+    :Used by portal: yes
+
+restPwdModifyArgs
+    :Location: General Parameters » Authentication parameters » REST parameters » Arguments » Password change arguments
+    :Description: Extra args for REST password modify request
     :Used by portal: yes
 
 restPwdModifyUrl
-    :Location: General Parameters » Authentication parameters » REST parameters » Password change URL
+    :Location: General Parameters » Authentication parameters » REST parameters » URL » Password change URL
     :Used by portal: yes
 
 restSessionServer
@@ -3552,8 +3610,13 @@ restSessionServer
     :Description: Enable REST session server
     :Used by portal: yes
 
+restUserDBArgs
+    :Location: General Parameters » Authentication parameters » REST parameters » Arguments » User data arguments
+    :Description: Extra args for REST UserDB request
+    :Used by portal: yes
+
 restUserDBUrl
-    :Location: General Parameters » Authentication parameters » REST parameters » User data URL
+    :Location: General Parameters » Authentication parameters » REST parameters » URL » User data URL
     :Used by portal: yes
 
 sameSite
@@ -3878,6 +3941,10 @@ samlSPMetaDataOptions
     :Location: Options
     :Used by portal: yes
 
+samlSPMetaDataOptionsActivation
+    :Location: SAML Service Providers » *configuration key* » Options » Activation
+    :Used by portal: yes
+
 samlSPMetaDataOptionsAuthnLevel
     :Location: SAML Service Providers » *configuration key* » Options » Security » Required authentication level
     :Description: Authentication level requires to access to this SP
@@ -4192,6 +4259,11 @@ sfRetries
     :Description: Allowed number of retries
     :Used by portal: yes
 
+shortTokenTTL
+    :Location: General Parameters » Advanced parameters » Security » Short token TTL
+    :Description: Short token timeout (for machines)
+    :Used by portal: yes
+
 showLanguages
     :Location: General Parameters » Portal » Customization » Show languages choice
     :Description: Display langs icons
@@ -4227,6 +4299,15 @@ slaveAuthnLevel
     :Description: Slave authentication level
     :Used by portal: yes
 
+slaveCertificateField
+    :Location: General Parameters » Authentication parameters » Slave parameters » Security » Extracted certificate field
+    :Used by portal: yes
+
+slaveCertificateRegexp
+    :Location: General Parameters » Authentication parameters » Slave parameters » Security » Regexp to test extracted certificate field
+    :Description: Regular expression to test Slave var
+    :Used by portal: yes
+
 slaveDisplayLogo
     :Location: General Parameters » Authentication parameters » Slave parameters » Display authentication logo
     :Description: Display Slave authentication logo
@@ -4238,15 +4319,15 @@ slaveExportedVars
     :Used by portal: yes
 
 slaveHeaderContent
-    :Location: General Parameters » Authentication parameters » Slave parameters » Control header content
+    :Location: General Parameters » Authentication parameters » Slave parameters » Security » Control header content
     :Used by portal: yes
 
 slaveHeaderName
-    :Location: General Parameters » Authentication parameters » Slave parameters » Control header name
+    :Location: General Parameters » Authentication parameters » Slave parameters » Security » Control header name
     :Used by portal: yes
 
 slaveMasterIP
-    :Location: General Parameters » Authentication parameters » Slave parameters » Master's IP address
+    :Location: General Parameters » Authentication parameters » Slave parameters » Security » Master's IP address
     :Used by portal: yes
 
 slaveUserHeader
