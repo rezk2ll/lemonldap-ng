@@ -51,6 +51,7 @@ lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
+lib/Lemonldap/NG/Portal/Captcha/CaptchEtat.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha3.pm
 lib/Lemonldap/NG/Portal/Captcha/SecurityImage.pm
@@ -333,6 +334,9 @@ site/htdocs/static/common/js/autoRenew.min.js.map
 site/htdocs/static/common/js/captcha.js
 site/htdocs/static/common/js/captcha.min.js
 site/htdocs/static/common/js/captcha.min.js.map
+site/htdocs/static/common/js/captchetat-js.js
+site/htdocs/static/common/js/captchetat-js.min.js
+site/htdocs/static/common/js/captchetat-js.min.js.map
 site/htdocs/static/common/js/carousel.js
 site/htdocs/static/common/js/carousel.min.js
 site/htdocs/static/common/js/carousel.min.js.map
@@ -718,6 +722,7 @@ t/30-SAML-ReAuth.t
 t/30-SAML-RelayState.t
 t/30-SAML-Response.t
 t/30-SAML-SP-rule.t
+t/31-Auth-and-issuer-CAS-backchannel-logout.t
 t/31-Auth-and-issuer-CAS-declared-app-deactivated.t
 t/31-Auth-and-issuer-CAS-declared-app-multiple-urls.t
 t/31-Auth-and-issuer-CAS-declared-app-userattr.t
@@ -874,6 +879,7 @@ t/41-Captcha-old-api.t
 t/41-Captcha-with-LDAP.t
 t/41-Captcha-with-rule.t
 t/41-Captcha.t
+t/41-CaptchEtat.t
 t/41-Token-with-global-storage.t
 t/41-Token.t
 t/42-Register-Custom.t
