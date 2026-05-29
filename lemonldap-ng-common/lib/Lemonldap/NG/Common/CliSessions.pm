@@ -12,7 +12,7 @@ use Lemonldap::NG::Common::Util qw/getPSessionID genId2F/;
 use constant BACKENDS       => qw(global persistent oidc saml cas);
 use constant ISREFRESHTOKEN => '_type=refresh_token';
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 
 has opts => ( is => 'rw' );
 

@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::MessageBroker::MQTT;
 
 use strict;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.23.0';
 
 sub new {
     my ( $class, $conf, $logger ) = @_;

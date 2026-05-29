@@ -4,7 +4,7 @@ use strict;
 use Log::Log4perl;
 use Log::Log4perl::MDC;
 
-our $VERSION = '2.21.0';
+our $VERSION = '2.23.0';
 
 our $init = 0;
 

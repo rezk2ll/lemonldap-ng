@@ -5,7 +5,7 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.23.0';
 
 sub validateAudience {
     my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;

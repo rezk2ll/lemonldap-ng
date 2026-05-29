@@ -6,7 +6,7 @@ use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
 use Email::Date::Format   qw(email_date);
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.23.0';
 
 sub new {
     my ( $class, $conf ) = @_;

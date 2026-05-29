@@ -14,7 +14,7 @@ use Net::CIDR;
 use Digest::SHA;
 use Date::Parse;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.23.0';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Note that only functions, not methods, can be written here

@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::ReConstants;
 
 use constant booleanOptions => qr/^(?:json)$/;
 
-our $VERSION = '2.22.0';
+our $VERSION = '2.23.0';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');

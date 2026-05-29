@@ -2,7 +2,7 @@
 
 package Lemonldap::NG::Manager::Build::OpenApi;
 
-our $VERSION = '2.20.0';
+our $VERSION = '2.23.0';
 
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Api::Common;
