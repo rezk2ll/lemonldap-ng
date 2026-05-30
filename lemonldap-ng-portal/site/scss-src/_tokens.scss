@@ -1,4 +1,4 @@
-// LemonLDAP::NG portal — design tokens for the bootstrap5 skin.
+// LemonLDAP::NG portal — design tokens for the bootstrap skin (Bootstrap 5).
 //
 // These overrides are loaded BEFORE Bootstrap's variables (after its
 // functions), per the official BS5 customization pattern. Use this file to
@@ -6,37 +6,91 @@
 // rules.
 
 // Brand palette ------------------------------------------------------------
-$primary:       #2c7da0;
-$secondary:     #5e6e7e;
-$success:       #38b000;
-$info:          #1e96fc;
-$warning:       #f3a712;
-$danger:        #d62828;
+// Warm orange/brown — LemonLDAP::NG's identity is the lemon turned
+// citrus-amber. Pastel by default; saturated tints reserved for primary
+// action buttons.
+$primary:       #d97706;   // amber-600 (warm brand orange)
+$secondary:     #78716c;   // stone-500 (neutral, complements warm tones)
+$success:       #65a30d;   // lime-600 (works with the warm palette)
+$info:          #0891b2;   // cyan-600
+$warning:       #f59e0b;   // amber-500
+$danger:        #dc2626;   // red-600
 
-$body-bg:       #f5f7fa;
-$body-color:    #21303f;
+// Light, low-contrast canvas. The page background uses a pastel gradient
+// applied in _components.scss; this is the fallback solid color.
+$body-bg:    #fdf8f3;       // very pale peach/cream
+$body-color: #292524;       // stone-800
+
+// Surface colors -----------------------------------------------------------
+$light:        #faf6f1;
+$dark:         #1c1917;     // stone-900
 
 // Typography ---------------------------------------------------------------
 $font-family-sans-serif:
-  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-  "Noto Sans", "Liberation Sans", sans-serif,
+  "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+  Arial, "Noto Sans", "Liberation Sans", sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-size-base: 1rem;
-$line-height-base: 1.55;
+
+$font-size-base:    1rem;
+$line-height-base:  1.55;
 $headings-font-weight: 600;
+$headings-line-height: 1.25;
+$headings-color:    #1c1917; // stone-900
 
 // Shape --------------------------------------------------------------------
-$border-radius:    .5rem;
-$border-radius-sm: .375rem;
-$border-radius-lg: .75rem;
+// Generous rounding for a modern feel. Nothing harsh.
+$border-radius:    .75rem;
+$border-radius-sm: .5rem;
+$border-radius-lg: 1rem;
+$border-radius-xl: 1.25rem;
+$border-radius-2xl: 1.75rem;
 
-// Cards & forms feel a touch softer ----------------------------------------
-$card-border-color: rgba(33, 48, 63, .08);
-$card-box-shadow:   0 .125rem .5rem rgba(33, 48, 63, .06);
-$input-border-color: rgba(33, 48, 63, .15);
-$input-focus-border-color: tint-color($primary, 40%);
+// Borders ------------------------------------------------------------------
+$border-color: rgba(120, 113, 108, .15); // soft warm-stone tint
 
-// Enable rounded controls and modern focus rings everywhere
-$enable-shadows: true;
+// Cards --------------------------------------------------------------------
+$card-border-color: transparent;
+$card-border-width: 0;
+$card-cap-bg:       transparent;
+$card-bg:           #ffffff;
+$card-spacer-y:     1.5rem;
+$card-spacer-x:     1.75rem;
+
+// Forms --------------------------------------------------------------------
+$input-bg:                #ffffff;
+$input-border-color:      #e7e5e4;          // stone-200
+$input-focus-border-color: $primary;
+$input-focus-box-shadow:   0 0 0 .2rem rgba(217, 119, 6, .18);
+$input-padding-y:          .625rem;
+$input-padding-x:          .9rem;
+$input-border-radius:      $border-radius-sm;
+
+$input-group-addon-bg: #f5f5f4; // stone-100, warm soft
+
+// Buttons ------------------------------------------------------------------
+$btn-padding-y:       .625rem;
+$btn-padding-x:       1.25rem;
+$btn-font-weight:     500;
+$btn-border-radius:   $border-radius-sm;
+
+// Alerts -------------------------------------------------------------------
+$alert-border-width: 0;
+$alert-border-radius: $border-radius;
+$alert-padding-y:    .9rem;
+$alert-padding-x:    1.1rem;
+
+// Modals -------------------------------------------------------------------
+$modal-content-border-width: 0;
+$modal-content-border-radius: $border-radius-lg;
+$modal-content-box-shadow-xs: 0 1.5rem 3rem rgba(15, 23, 42, .18);
+$modal-content-box-shadow-sm-up: 0 1.5rem 3rem rgba(15, 23, 42, .18);
+
+// Navbar -------------------------------------------------------------------
+$navbar-padding-y:     .75rem;
+
+// Utilities ----------------------------------------------------------------
+$enable-shadows:   true;
 $enable-gradients: false;
-$enable-rounded: true;
+$enable-rounded:   true;
+$enable-transitions: true;
+$enable-smooth-scroll: true;
