@@ -62,7 +62,7 @@ options, etc.) work identically to the ``bootstrap`` skin — see
 :doc:`portalcustom` for the full list.
 
 Custom CSS overrides (``portalCustomCSS``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Drop a CSS file under ``/usr/share/lemonldap-ng/portal/htdocs/static/`` and
 reference it via ``portalCustomCSS``. It is loaded after the skin's
@@ -109,39 +109,70 @@ need to apply to your ``.tpl`` files and to any custom ``.css`` you ship.
 Class renames (BS 4 → BS 5)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-============================== ==============================
-Bootstrap 4                    Bootstrap 5
-============================== ==============================
-``data-toggle``                ``data-bs-toggle``
-``data-target``                ``data-bs-target``
-``data-dismiss``               ``data-bs-dismiss``
-``data-ride``                  ``data-bs-ride``
-``data-slide``                 ``data-bs-slide``
-``data-spy``                   ``data-bs-spy``
-``data-parent``                ``data-bs-parent``
-``data-backdrop``              ``data-bs-backdrop``
-``data-keyboard``              ``data-bs-keyboard``
-``pull-left`` / ``pull-right`` ``float-start`` / ``float-end``
-``float-left`` / ``float-right`` ``float-start`` / ``float-end``
-``text-left`` / ``text-right`` ``text-start`` / ``text-end``
-``ml-*`` / ``mr-*``            ``ms-*`` / ``me-*``
-``pl-*`` / ``pr-*``            ``ps-*`` / ``pe-*``
-``font-weight-bold``           ``fw-bold``
-``font-weight-normal``         ``fw-normal``
-``font-weight-light``          ``fw-light``
-``font-italic``                ``fst-italic``
-``sr-only``                    ``visually-hidden``
-``form-group``                 ``mb-3`` (or other margin utility)
-``form-row``                   ``row g-2`` (or similar)
-``custom-control custom-checkbox`` ``form-check``
-``custom-control-input``       ``form-check-input``
-``custom-control-label``       ``form-check-label``
-``custom-select``              ``form-select``
-``custom-range``               ``form-range``
-``badge-primary`` (etc.)       ``badge bg-primary`` (etc.)
-``btn-block``                  ``d-grid`` wrapper, or ``w-100``
-``close``                      ``btn-close`` (drop the inner ``×`` span)
-============================== ==============================
+.. list-table::
+   :header-rows: 1
+   :widths: 42 58
+
+   * - Bootstrap 4
+     - Bootstrap 5
+   * - ``data-toggle``
+     - ``data-bs-toggle``
+   * - ``data-target``
+     - ``data-bs-target``
+   * - ``data-dismiss``
+     - ``data-bs-dismiss``
+   * - ``data-ride``
+     - ``data-bs-ride``
+   * - ``data-slide``
+     - ``data-bs-slide``
+   * - ``data-spy``
+     - ``data-bs-spy``
+   * - ``data-parent``
+     - ``data-bs-parent``
+   * - ``data-backdrop``
+     - ``data-bs-backdrop``
+   * - ``data-keyboard``
+     - ``data-bs-keyboard``
+   * - ``pull-left`` / ``pull-right``
+     - ``float-start`` / ``float-end``
+   * - ``float-left`` / ``float-right``
+     - ``float-start`` / ``float-end``
+   * - ``text-left`` / ``text-right``
+     - ``text-start`` / ``text-end``
+   * - ``ml-*`` / ``mr-*``
+     - ``ms-*`` / ``me-*``
+   * - ``pl-*`` / ``pr-*``
+     - ``ps-*`` / ``pe-*``
+   * - ``font-weight-bold``
+     - ``fw-bold``
+   * - ``font-weight-normal``
+     - ``fw-normal``
+   * - ``font-weight-light``
+     - ``fw-light``
+   * - ``font-italic``
+     - ``fst-italic``
+   * - ``sr-only``
+     - ``visually-hidden``
+   * - ``form-group``
+     - ``mb-3`` (or other margin utility)
+   * - ``form-row``
+     - ``row g-2`` (or similar)
+   * - ``custom-control custom-checkbox``
+     - ``form-check``
+   * - ``custom-control-input``
+     - ``form-check-input``
+   * - ``custom-control-label``
+     - ``form-check-label``
+   * - ``custom-select``
+     - ``form-select``
+   * - ``custom-range``
+     - ``form-range``
+   * - ``badge-primary`` (etc.)
+     - ``badge bg-primary`` (etc.)
+   * - ``btn-block``
+     - ``d-grid`` wrapper, or ``w-100``
+   * - ``close``
+     - ``btn-close`` (drop the inner ``×`` span)
 
 Component restructurings
 ~~~~~~~~~~~~~~~~~~~~~~~~
