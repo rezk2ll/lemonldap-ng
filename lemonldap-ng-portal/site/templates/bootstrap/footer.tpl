@@ -1,5 +1,11 @@
   </div>
 
+  <TMPL_IF NAME="SCROLL_TOP">
+    <button type="button" class="btn btn-danger btn-lg" id="btn-back-to-top">
+      <span trspan="backToTop" hidden></span>  <i class="fa fa-chevron-up"></i>
+    </button>
+  </TMPL_IF>
+
   <div class="col-3 d-none d-xl-block" id="floating-menu"></div>
 
   <div id="footer">

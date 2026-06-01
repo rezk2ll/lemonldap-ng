@@ -12439,4 +12439,12 @@ div.actions button {
   color: var(--bs-primary);
 }
 
+#btn-back-to-top {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  display: none;
+  z-index: 1030;
+}
+
 /*# sourceMappingURL=styles.css.map */

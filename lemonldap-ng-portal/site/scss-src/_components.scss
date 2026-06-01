@@ -157,3 +157,12 @@ div.actions button {
 #footer a:focus {
   color: var(--bs-primary);
 }
+
+// Back-to-top button (shown by portal.js once the page is scrolled down) ----
+#btn-back-to-top {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  display: none;
+  z-index: 1030;
+}

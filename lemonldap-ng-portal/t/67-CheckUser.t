@@ -437,7 +437,7 @@ ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+ok( $res->[2]->[0] =~ m%<div class="card-text text-start ms-2">su</div>%,
     'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
@@ -498,7 +498,7 @@ ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+ok( $res->[2]->[0] =~ m%<div class="card-text text-start ms-2">su</div>%,
     'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
