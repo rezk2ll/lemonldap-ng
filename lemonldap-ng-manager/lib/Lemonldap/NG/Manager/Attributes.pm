@@ -1350,7 +1350,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'crowdsecMetricsInterval' => {
-            'default' => 60,
+            'default' => 300,
             'type'    => 'int'
         },
         'crowdsecPassword' => {

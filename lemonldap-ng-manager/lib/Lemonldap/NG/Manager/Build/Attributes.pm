@@ -1557,7 +1557,7 @@ sub attributes {
             documentation => 'Enable CrowdSec usage-metrics push',
         },
         crowdsecMetricsInterval => {
-            default       => 60,
+            default       => 300,
             type          => 'int',
             documentation => 'CrowdSec usage-metrics flush interval (seconds)',
         },
