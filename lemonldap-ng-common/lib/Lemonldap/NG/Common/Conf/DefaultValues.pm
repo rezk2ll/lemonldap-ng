@@ -71,6 +71,7 @@ sub defaultValues {
         'crowdsecAgent'                  => 0,
         'crowdSecAgentResponseCode'      => 404,
         'crowdsecBanDuration'            => '4h',
+        'crowdsecMetricsInterval'        => 300,
         'cspConnect'                     => '\'self\'',
         'cspDefault'                     => '\'self\'',
         'cspFont'                        => '\'self\'',

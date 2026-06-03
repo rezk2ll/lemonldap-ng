@@ -294,6 +294,8 @@
 "crowdsecKey":"khóa API",
 "crowdsecMachineId":"Crowdsec agent ID",
 "crowdsecMaxFailures":"Max failures allowed during delay",
+"crowdsecMetricsEnabled":"Enable CrowdSec usage-metrics",
+"crowdsecMetricsInterval":"Usage-metrics flush interval (s)",
 "crowdsecPassword":"Mật khẩu",
 "crowdsecUrl":"URL cơ sở của API cục bộ",
 "cspConnect":"Đích cúa Ajax",

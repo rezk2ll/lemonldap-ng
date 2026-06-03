@@ -1259,6 +1259,8 @@ sub tree {
                                                 'crowdsecAction',
                                                 'crowdsecUrl',
                                                 'crowdsecKey',
+                                                'crowdsecMetricsEnabled',
+                                                'crowdsecMetricsInterval',
                                             ],
                                         },
                                         {

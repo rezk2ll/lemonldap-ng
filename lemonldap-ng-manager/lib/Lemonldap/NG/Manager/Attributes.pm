@@ -1345,6 +1345,14 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'crowdsecMaxFailures' => {
             'type' => 'int'
         },
+        'crowdsecMetricsEnabled' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'crowdsecMetricsInterval' => {
+            'default' => 300,
+            'type'    => 'int'
+        },
         'crowdsecPassword' => {
             'type' => 'text'
         },
