@@ -174,7 +174,7 @@ sub date {
 
 ## @function integer dateToTime(string date)
 # Converts a LDAP date into epoch time or returns undef upon failure.
-# @param $date string Date in YYYYMMDDHHMMSS[+/-0000] format. It may contain a differential timezone, otherwise default TZ is GMT
+# @param $date string Date in YYYYMMDDHHMMSS[.fff][+/-0000] format.
 # @return Date converted to time
 sub dateToTime {
     my $date = shift;
@@ -182,7 +182,8 @@ sub dateToTime {
 
     # Parse date
     my ( $year, $month, $day, $hour, $min, $sec, $zone ) =
-      ( $date =~ /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})([-+\w]*)/ );
+      ( $date =~
+          /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(?:\.\d+)?([-+\w]*)/ );
 
  # Convert date to epoch time with GMT as default timezone if date contains none
     return str2time(
