@@ -44,6 +44,7 @@ override_dh_auto_install:
 			MANAGERDIR=$(LMSHAREDIR)/manager \
 			PORTALDIR=$(LMSHAREDIR)/portal \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
+			INSTALLSITELIB=/usr/share/perl5 \
 			TOOLSDIR=$(LMSHAREDIR)/ressources \
 			CONFDIR=/etc/lemonldap-ng \
 			CRONDIR=/etc/cron.d \
