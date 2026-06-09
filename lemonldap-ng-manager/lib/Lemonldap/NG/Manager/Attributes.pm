@@ -4732,11 +4732,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'rest2fVerifyArgs' => {
-            'keyMsgFail' => '__badKeyName__',
-            'keyTest'    => qr/^\w+$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
+            'msgFail' => '__badValue__',
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
         },
         'rest2fVerifyUrl' => {
             'type' => 'url'
