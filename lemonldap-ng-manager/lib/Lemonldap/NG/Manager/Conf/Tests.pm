@@ -1449,33 +1449,6 @@ sub tests {
                 'Signature algorithm is not allowed but set for: '
                   . join( ', ', @pb ) );
         },
-        oidcNativeSso => sub {
-            return ( 0, 'Native SSO without OIDC identity service' )
-              if $conf->{oidcServiceAllowNativeSso}
-              and not $conf->{issuerDBOpenIDConnectActivation};
-            return 1
-              unless $conf->{oidcRPMetaDataOptions}
-              and ref $conf->{oidcRPMetaDataOptions};
-            my @needNativeSso;
-            if ( $conf->{oidcRPMetaDataOptions}
-                and ref $conf->{oidcRPMetaDataOptions} )
-            {
-                for my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
-                    push @needNativeSso, $rp
-                      if $conf->{oidcRPMetaDataOptions}->{$rp}
-                      ->{oidcRPMetaDataOptionsAllowNativeSso};
-                }
-            }
-            if ( @needNativeSso and not $conf->{oidcServiceAllowNativeSso} ) {
-                return ( 1,
-                    "Native SSO isn't enabled but needed by: "
-                      . join( ', ', @needNativeSso ) );
-            }
-            if ( !@needNativeSso and $conf->{oidcServiceAllowNativeSso} ) {
-                return ( 1, 'Native SSO service enabled but useless' );
-            }
-            return 1;
-        },
         crowdSecBouncer => sub {
             return 1 unless $conf->{crowdsec};
             return 1 if $conf->{crowdsecKey};
