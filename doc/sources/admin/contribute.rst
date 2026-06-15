@@ -133,8 +133,8 @@ Install dependencies
     # Install build dependancies
     mk-build-deps debian/control
     sudo apt install ./lemonldap-ng-build-deps*deb
-    apt install apache2 libapache2-mod-fcgid libapache2-mod-perl2  # install Apache
-    cpanm Perl::Tidy@$(make tidyversion)
+    sudo apt install apache2 libapache2-mod-fcgid libapache2-mod-perl2
+    sudo cpanm Perl::Tidy@$(make tidyversion)
 
 For SAML:
 
