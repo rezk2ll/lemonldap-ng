@@ -2625,6 +2625,7 @@ sub attributes {
             test          => sub { return perlExpr(@_) },
             msgFail       => '__badValue__',
             documentation => 'Args for REST 2F init',
+            help          => 'rest2f.html#arguments',
         },
         rest2fVerifyUrl => {
             type          => 'url',
@@ -2632,11 +2633,10 @@ sub attributes {
         },
         rest2fVerifyArgs => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^\w+$/,
-            keyMsgFail    => '__badKeyName__',
-            test          => qr/^\w+$/,
+            test          => sub { return perlExpr(@_) },
             msgFail       => '__badValue__',
             documentation => 'Args for REST 2F verify',
+            help          => 'rest2f.html#arguments',
         },
         rest2fResendInterval => {
             type          => 'text',

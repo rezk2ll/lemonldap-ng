@@ -1752,7 +1752,7 @@ sub _handleAuthorizationCodeGrant {
                 grant_type      => "authorizationcode",
                 _oidc_sid       => $sid,
                 $self->conf->{whatToTrace} => $user,
-                _oidc_sub                  =>
+                _oidc_logout_sub           =>
                   $self->getUserIDForRP( $req, $rp, $apacheSession->data ),
             },
             0,

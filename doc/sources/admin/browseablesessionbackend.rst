@@ -28,7 +28,7 @@ List of fields to index by session type
    * - Session Type
      - Fields to index
    * - Sessions (global)
-     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user [#]_ mail [#]_ \_session_uid [#]_
+     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user [#]_ mail [#]_ \_session_uid [#]_ \_oidc_sub [#]_ \_oidc_sid [#]_
    * - Persistent sessions
      - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace \_webAuthnUserHandle [#]_
    * - CAS sessions
@@ -36,11 +36,13 @@ List of fields to index by session type
    * - SAML sessions
      - \_session_kind \_utime \_saml_id ProxyID \_nameID \_assert_id \_art_id
    * - OIDC sessions
-     - \_session_kind \_utime \_oidc_sid \_oidc_sub user_session_id
+     - \_session_kind \_utime user_session_id
 
 .. [#] ``user`` is used by :doc:`resetpassword`.
 .. [#] ``mail`` is used by :doc:`register`.
 .. [#] ``_session_uid`` is used by :doc:`trustedbrowser`.
+.. [#] ``_oidc_sub`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
+.. [#] ``_oidc_sid`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
 .. [#] ``_webAuthnUserHandle`` is used by :doc:`authwebauthn`.
 
 .. note::
