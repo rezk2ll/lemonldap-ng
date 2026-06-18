@@ -57,3 +57,10 @@ Proxy HTTP
 ::
 
    setsebool -P httpd_can_network_relay 1
+
+If you use Nginx + LUA
+----------------------
+
+::
+
+    setsebool -P httpd_execmem 1
