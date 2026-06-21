@@ -61,6 +61,16 @@ and **replace** it by::
     proxy_set_header Host $host;
 
 
+3.0.0
+------
+
+Default template changed
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Default template was updated to use Bootstrap version 5. You can
+:doc:`update your custom templates <upgrade_templates>` or
+`download old bootstrap4 template <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng-plugins>`__.
+
 2.23.1
 ------
 
