@@ -86,7 +86,7 @@ Red Hat/CentOS
 
 ::
 
-   yum install lemonldap-ng-nginx lemonldap-ng-fastcgi-server
+   dnf install lemonldap-ng-fastcgi-server
 
 Enable and start the service :
 
