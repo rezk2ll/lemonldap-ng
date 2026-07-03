@@ -1263,6 +1263,13 @@ sub tests {
                       unless $param;
                 }
             }
+            foreach ( my ( $k, $v ) =
+                sort keys %{ $conf->{authChoiceModules} } )
+            {
+                my ( $a, $u, $p, $url ) = split ';', $v;
+                return ( 0, "Choice $k has an invalid URL" )
+                  unless $url =~ m#^https?://#;
+            }
             return 1;
         },
 
