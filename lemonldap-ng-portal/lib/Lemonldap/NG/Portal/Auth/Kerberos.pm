@@ -52,12 +52,20 @@ sub initDisplay {
     $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
 
     if ( $self->conf->{krbByJs} ) {
-        $req->data->{customScript} .=
-            '<script type="text/javascript" src="'
-          . $self->p->staticPrefix
-          . '/common/js/'
-          . ( $from_self ? 'kerberos' : 'kerberosChoice' )
-          . '.min.js"></script>';
+
+        # During session upgrade, script is already injected by extractFormInfo
+        if ( $req->data->{_krbInitAlreadyDone} ) {
+            $req->data->{customScript} =~
+              s/kerberos.min.js/kerberosChoice.min.js/g;
+        }
+        else {
+            $req->data->{customScript} .=
+                '<script type="text/javascript" src="'
+              . $self->p->staticPrefix
+              . '/common/js/'
+              . ( $from_self ? 'kerberos' : 'kerberosChoice' )
+              . '.min.js"></script>';
+        }
     }
 }
 
