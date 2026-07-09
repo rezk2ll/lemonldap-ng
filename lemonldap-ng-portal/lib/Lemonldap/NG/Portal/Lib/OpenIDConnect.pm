@@ -287,7 +287,7 @@ sub load_rp {
             my %keys;
             my %validKeys;
             foreach my $key ( sort @{ $jwks->{keys} } ) {
-                my $type = lc( $key->{use} );
+                my $type = lc( $key->{use} // '' );
                 next unless $type =~ /^(?:enc|sig)$/;
                 $key->{alg} = 'RSA-OAEP'
                   if !$key->{alg} and $key->{kty} eq 'RSA';
