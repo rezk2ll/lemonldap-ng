@@ -66,6 +66,14 @@ sub initDisplay {
               . ( $from_self ? 'kerberos' : 'kerberosChoice' )
               . '.min.js"></script>';
         }
+
+        if ( $req->pdata->{krbDone} ) {
+            $req->data->{customScript} .=
+                '<script type="application/init">'
+              . '{ "krbDone": 1 }'
+              . '</script>';
+
+        }
     }
 }
 
@@ -96,6 +104,7 @@ sub extractFormInfo {
     if ($token_id) {
         my $token = $self->get_auth_token( $req, $token_id );
         if ( $token->{user} ) {
+            $req->pdata->{krbDone} = 1;
             return $self->_krbAuthFinish( $req, $token->{user} );
         }
         else {
