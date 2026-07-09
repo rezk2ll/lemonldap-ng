@@ -57,17 +57,26 @@ sub verify_external {
           . '2f: launching "Validate" command -> '
           . $self->conf->{ext2FValidateCommand} );
     $self->logger->debug(" code -> $code");
-    if ( my $c =
-        $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code ) )
-    {
+    my $c =
+      $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code );
+    if ( $c == 0 ) {
+        $self->logger->debug(
+            $self->prefix . "2f: validate command successful" );
+        return PE_OK;
+    }
+    elsif ( $c == -1 ) {
+        $self->logger->error(
+            $self->prefix . "2f: could not run validate command: $!" );
+    }
+    else {
         $self->userLogger->warn( $self->prefix
               . '2f: validation failed for '
               . $session->{ $self->conf->{whatToTrace} } );
+        my $rc = $c >> 8;
         $self->logger->error(
-            $self->prefix . "2f: validate command failed ($c)" );
-        return PE_BADOTP;
+            $self->prefix . "2f: validate command returned $rc" );
     }
-    return PE_OK;
+    return PE_BADOTP;
 }
 
 sub sendCode {
@@ -77,13 +86,21 @@ sub sendCode {
     $self->logger->debug( $self->prefix
           . '2f: launching "Send" command -> '
           . $self->conf->{ext2FSendCommand} );
-    if ( my $c =
-        $self->launch( $sessionInfo, $self->conf->{ext2FSendCommand}, $code ) )
-    {
-        $self->logger->error( $self->prefix . "2f: send command failed ($c)" );
-        return 0;
+    my $c =
+      $self->launch( $sessionInfo, $self->conf->{ext2FSendCommand}, $code );
+    if ( $c == 0 ) {
+        $self->logger->debug( $self->prefix . "2f: send command successful" );
+        return 1;
     }
-    return 1;
+    elsif ( $c == -1 ) {
+        $self->logger->error(
+            $self->prefix . "2f: could not run send command: $!" );
+    }
+    else {
+        my $rc = $c >> 8;
+        $self->logger->error( $self->prefix . "2f: send command returned $rc" );
+    }
+    return 0;
 }
 
 # system() is used with an array to avoid shell injection
