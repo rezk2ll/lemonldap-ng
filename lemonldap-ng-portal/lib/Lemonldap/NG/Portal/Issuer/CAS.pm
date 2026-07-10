@@ -493,6 +493,7 @@ sub run {
         return PE_OK;
     }
 
+    $self->logger->debug("URL $url not known by CAS issuer");
     return PE_OK;
 }
 
