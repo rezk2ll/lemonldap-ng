@@ -125,10 +125,12 @@ export function renderWithProviders(
     );
   };
 
-  return {
-    store,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
-  };
+  const view = render(ui, { wrapper: Wrapper, ...renderOptions });
+  // Annotate `store` with the named `AppStore` alias so the emitted type does
+  // not inline its dispatch type (which references a nested redux-thunk copy
+  // and triggers TS2742 "cannot be named" during the build).
+  const result: { store: AppStore } & typeof view = { store, ...view };
+  return result;
 }
 
 export const changeInput = async (index: number, value: string | number) => {

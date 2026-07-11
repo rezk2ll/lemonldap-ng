@@ -29,9 +29,9 @@ export const initialState: ConfigState = {
   data: { metadata: {} as MetaData, config: {} as llngConfig },
 };
 
-export const getConfigAsync = createAsyncThunk(
+export const getConfigAsync = createAsyncThunk<Object, number | undefined>(
   "config/fetchConfig",
-  async (num?: number): Promise<Object> => {
+  async (num): Promise<Object> => {
     const latestMetaresponse = await getMetadataConfig();
     if (latestMetaresponse.redirected) {
       window.location.assign(latestMetaresponse.url);

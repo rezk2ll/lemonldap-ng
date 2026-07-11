@@ -1,4 +1,8 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  type Middleware,
+} from "@reduxjs/toolkit";
 import configReducer from "../features/config/configSlice";
 import { createReduxHistoryContext } from "redux-first-history";
 import { createBrowserHistory, createMemoryHistory } from "history";
@@ -19,7 +23,7 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
     reducer: rootReducer,
     preloadedState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(routerMiddleware),
+      getDefaultMiddleware().concat(routerMiddleware as Middleware),
   });
 };
 
