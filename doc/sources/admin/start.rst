@@ -161,7 +161,6 @@ Combo Backends                                                       Authenticat
 ==================================================================== =============================================== ======== ========
 Obsolete Backends                                                    Authentication                                  Users    Password
 ==================================================================== =============================================== ======== ========
-:doc:`OpenID<authopenid>`                                            ✔                                               ✔
 :doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
 ==================================================================== =============================================== ======== ========
 
@@ -214,7 +213,6 @@ Protocol                                                              Service Pr
 :doc:`CAS 1.0 / 2.0 / 3.0<idpcas>`                                    ✔                ✔
 :doc:`SAML 2.0 / Shibboleth<idpsaml>`                                 ✔                ✔
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
-:doc:`OpenID 2.0<idpopenid>` *(deprecated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
 :doc:`Jitsi Meet Tokens<idpjitsimeettokens>`                                           ✔
 ===================================================================== ================ =================
