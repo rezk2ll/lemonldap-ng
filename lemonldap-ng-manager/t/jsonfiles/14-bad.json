@@ -313,10 +313,7 @@
       }, {
         "k": "Null",
         "v": "None"
-      }, {
-        "k": "OpenID",
-        "v": "OpenID"
-      }, {
+      },  {
         "k": "Proxy",
         "v": "Proxy"
       }, {
@@ -776,24 +773,7 @@
       "title": "nullParams",
       "type": "simpleInputContainer"
     }, {
-      "_nodes": [{
-        "default": 1,
-        "id": "openIdAuthnLevel",
-        "title": "openIdAuthnLevel",
-        "type": "int"
-      }, {
-        "cnodes": "openIdExportedVars",
-        "default": [],
-        "id": "openIdExportedVars",
-        "title": "openIdExportedVars",
-        "type": "keyTextContainer"
-      }, {
-        "id": "openIdSecret",
-        "title": "openIdSecret"
-      }, {
-        "id": "openIdIDPList",
-        "title": "openIdIDPList"
-      }],
+      "_nodes": [   ],
       "id": "openIdParams",
       "show": false,
       "title": "openIdParams"
@@ -1033,81 +1013,6 @@
           "title": "casStorageOptions",
           "type": "keyTextContainer",
           "nodes": []
-        }]
-      }]
-    }, {
-      "id": "issuerDBOpenID",
-      "title": "issuerDBOpenID",
-      "nodes": [{
-        "default": 0,
-        "id": "issuerDBOpenIDActivation",
-        "title": "issuerDBOpenIDActivation",
-        "type": "bool",
-        "data": 0
-      }, {
-        "default": "^/openidserver/",
-        "id": "issuerDBOpenIDPath",
-        "title": "issuerDBOpenIDPath",
-        "data": "^/openidserver/"
-      }, {
-        "default": 1,
-        "id": "issuerDBOpenIDRule",
-        "title": "issuerDBOpenIDRule",
-        "type": "boolOrExpr",
-        "data": 1
-      }, {
-        "id": "issuerDBOpenIDOptions",
-        "title": "issuerDBOpenIDOptions",
-        "nodes": [{
-          "id": "openIdIssuerSecret",
-          "title": "openIdIssuerSecret"
-        }, {
-          "id": "openIdAttr",
-          "title": "openIdAttr"
-        }, {
-          "id": "openIdSPList",
-          "title": "openIdSPList",
-          "type": "openidServerList"
-        }, {
-          "id": "openIdSreg",
-          "title": "openIdSreg",
-          "type": "simpleInputContainer",
-          "nodes": [{
-            "default": "cn",
-            "id": "openIdSreg_fullname",
-            "title": "openIdSreg_fullname",
-            "data": "cn"
-          }, {
-            "default": "uid",
-            "id": "openIdSreg_nickname",
-            "title": "openIdSreg_nickname",
-            "data": "uid"
-          }, {
-            "id": "openIdSreg_language",
-            "title": "openIdSreg_language"
-          }, {
-            "id": "openIdSreg_postcode",
-            "title": "openIdSreg_postcode"
-          }, {
-            "default": "_timezone",
-            "id": "openIdSreg_timezone",
-            "title": "openIdSreg_timezone",
-            "data": "_timezone"
-          }, {
-            "id": "openIdSreg_country",
-            "title": "openIdSreg_country"
-          }, {
-            "id": "openIdSreg_gender",
-            "title": "openIdSreg_gender"
-          }, {
-            "default": "mail",
-            "id": "openIdSreg_email",
-            "title": "openIdSreg_email",
-            "data": "mail"
-          }, {
-            "id": "openIdSreg_dob",
-            "title": "openIdSreg_dob"
-          }]
         }]
       }]
     }]

@@ -525,10 +525,6 @@ site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
 site/templates/bootstrap/oidcOfflineTokens.tpl
 site/templates/bootstrap/okta2fchoice.tpl
-site/templates/bootstrap/openid.tpl
-site/templates/bootstrap/openidform.tpl
-site/templates/bootstrap/openIdPol.tpl
-site/templates/bootstrap/openIdTrust.tpl
 site/templates/bootstrap/password.tpl
 site/templates/bootstrap/password2fcheck.tpl
 site/templates/bootstrap/password2fregister.tpl

@@ -47,8 +47,8 @@ ok(
     'JSON response contains 1 needConfirmation'
 ) or print STDERR Dumper($resBody);
 ok(
-    @{ $resBody->{details}->{__changes__} } == 24,
-    'JSON response contains 24 changes'
+    @{ $resBody->{details}->{__changes__} } == 23,
+    'JSON response contains 23 changes'
 ) or print STDERR Dumper($resBody);
 
 #print STDERR Dumper($resBody);
@@ -165,10 +165,6 @@ sub changes {
             'key' => 'passwordDB',
             'new' => 'LDAP',
             'old' => 'Demo'
-        },
-        {
-            'key' => 'openIdSPList',
-            'new' => '1;bad.com'
         },
         {
             'new' => 'Uid',

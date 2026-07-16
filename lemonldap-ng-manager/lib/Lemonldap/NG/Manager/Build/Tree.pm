@@ -348,14 +348,6 @@ sub tree {
                             nodes => ['nullAuthnLevel']
                         },
                         {
-                            title => 'openidParams',
-                            help  => 'authopenid.html',
-                            nodes => [
-                                'openIdAuthnLevel', 'openIdExportedVars',
-                                'openIdSecret',     'openIdIDPList'
-                            ]
-                        },
-                        {
                             title => 'oidcParams',
                             help  => 'authopenidconnect.html',
                             form  => 'simpleInputContainer',
@@ -545,39 +537,6 @@ sub tree {
                                 'issuerDBOpenIDConnectActivation',
                                 'issuerDBOpenIDConnectPath',
                                 'issuerDBOpenIDConnectRule',
-                            ]
-                        },
-                        {
-                            title => 'issuerDBOpenID',
-                            help  => 'idpopenid.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'issuerDBOpenIDActivation',
-                                'issuerDBOpenIDPath',
-                                'issuerDBOpenIDRule',
-                                {
-                                    title => 'issuerDBOpenIDOptions',
-                                    nodes => [
-                                        'openIdIssuerSecret',
-                                        'openIdAttr',
-                                        'openIdSPList',
-                                        {
-                                            title => 'openIdSreg',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'openIdSreg_fullname',
-                                                'openIdSreg_nickname',
-                                                'openIdSreg_language',
-                                                'openIdSreg_postcode',
-                                                'openIdSreg_timezone',
-                                                'openIdSreg_country',
-                                                'openIdSreg_gender',
-                                                'openIdSreg_email',
-                                                'openIdSreg_dob'
-                                            ]
-                                        }
-                                    ]
-                                }
                             ]
                         },
                         {

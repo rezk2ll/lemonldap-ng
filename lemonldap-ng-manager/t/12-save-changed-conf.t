@@ -38,17 +38,17 @@ ok( $found, "Warning with 'CDA' found" ) or print STDERR Dumper($resBody);
 
 ok(
     $resBody->{details}->{__changes__}
-      && @{ $resBody->{details}->{__changes__} } == 24,
-    'JSON response contains 24 changes'
+      && @{ $resBody->{details}->{__changes__} } == 23,
+    'JSON response contains 23 changes'
 ) or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__changes__}->[23]->{confCompacted} == 1,
+ok( $resBody->{details}->{__changes__}->[22]->{confCompacted} == 1,
     'Conf. has been compacted' )
   or print STDERR Dumper($resBody);
 
 my @removedKeys = split /; /,
-  $resBody->{details}->{__changes__}->[23]->{removedKeys};
-ok( @removedKeys == 59, 'All removed keys found' )
-  or print STDERR Dumper( \@removedKeys );
+  $resBody->{details}->{__changes__}->[22]->{removedKeys};
+ok( @removedKeys == 50, 'All removed keys found' )
+  or print STDERR Dumper( \@removedKeys, scalar(@removedKeys) );
 
 #print STDERR Dumper($resBody);
 ok( -f $confFiles->[1], 'File is created' );
@@ -162,10 +162,6 @@ sub changes {
             'key' => 'passwordDB',
             'new' => 'LDAP',
             'old' => 'Demo'
-        },
-        {
-            'key' => 'openIdSPList',
-            'new' => '1;bad.com'
         },
         {
             'new' => 'Uid',
