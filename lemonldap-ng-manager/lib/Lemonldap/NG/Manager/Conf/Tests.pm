@@ -195,9 +195,7 @@ sub tests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach
-              my $type (qw(Facebook Google OpenIDConnect SAML WebID))
-            {
+            foreach my $type (qw(Facebook Google OpenIDConnect SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )

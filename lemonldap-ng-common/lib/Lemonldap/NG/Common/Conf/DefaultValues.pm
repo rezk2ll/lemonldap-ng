@@ -446,8 +446,6 @@ sub defaultValues {
         'webauthn2fUserVerification' => 'preferred',
         'webauthnAppId'              => 1,
         'webauthnAuthnLevel'         => 3,
-        'webIDAuthnLevel'            => 1,
-        'webIDExportedVars'          => {},
         'whatToTrace'                => 'uid',
         'yubikey2fActivation'        => 0,
         'yubikey2fPublicIDSize'      => 12,

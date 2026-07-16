@@ -279,10 +279,6 @@
         "v": "Twitter"
       },
       {
-        "k": "WebID",
-        "v": "WebID"
-      },
-      {
         "k": "Yubikey",
         "v": "Yubikey"
       },
@@ -302,7 +298,6 @@
         "k": "CAS",
         "v": "Central Authentication Service (CAS)"
       },
-      
       {
         "k": "OpenIDConnect",
         "v": "OpenID Connect"
@@ -453,7 +448,6 @@
             "k": "Null",
             "v": "None"
           },
-          
           {
             "k": "OpenIDConnect",
             "v": "OpenID Connect"
@@ -487,10 +481,6 @@
             "v": "Twitter"
           },
           {
-            "k": "WebID",
-            "v": "WebID"
-          },
-          {
             "k": "Yubikey",
             "v": "Yubikey"
           }],
@@ -522,7 +512,6 @@
             "k": "Null",
             "v": "None"
           },
-          
           {
             "k": "OpenIDConnect",
             "v": "OpenID Connect"
@@ -542,10 +531,6 @@
           {
             "k": "Slave",
             "v": "Slave"
-          },
-          {
-            "k": "WebID",
-            "v": "WebID"
           }],
           [{
             "k": "AD",
@@ -1054,10 +1039,6 @@
           "v": "Twitter"
         },
         {
-          "k": "WebID",
-          "v": "WebID"
-        },
-        {
           "k": "Yubikey",
           "v": "Yubikey"
         },
@@ -1069,7 +1050,6 @@
           "k": "CAS",
           "v": "Central Authentication Service (CAS)"
         },
-        
         {
           "k": "OpenIDConnect",
           "v": "OpenID Connect"
@@ -1131,7 +1111,6 @@
       "title": "nullParams",
       "type": "simpleInputContainer"
     },
-    
     {
       "_nodes": [{
         "default": 1,
@@ -1323,29 +1302,6 @@
     },
     {
       "_nodes": [{
-        "default": 1,
-        "id": "webIDAuthnLevel",
-        "title": "webIDAuthnLevel",
-        "type": "int"
-      },
-      {
-        "cnodes": "webIDExportedVars",
-        "default": [],
-        "id": "webIDExportedVars",
-        "title": "webIDExportedVars",
-        "type": "keyTextContainer"
-      },
-      {
-        "id": "webIDWhitelist",
-        "title": "webIDWhitelist"
-      }],
-      "help": "authwebid.html",
-      "id": "webidParams",
-      "show": false,
-      "title": "webidParams"
-    },
-    {
-      "_nodes": [{
         "default": 3,
         "id": "yubikeyAuthnLevel",
         "title": "yubikeyAuthnLevel",
@@ -1460,7 +1416,6 @@
       "id": "issuerDBCAS",
       "title": "issuerDBCAS"
     },
-    
     {
       "_nodes": [{
         "default": "0",

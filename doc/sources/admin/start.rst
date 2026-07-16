@@ -144,7 +144,6 @@ Official Backends                                                    Authenticat
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
-:doc:`WebID<authwebid>`                                              ✔                                               ✔
 :doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔

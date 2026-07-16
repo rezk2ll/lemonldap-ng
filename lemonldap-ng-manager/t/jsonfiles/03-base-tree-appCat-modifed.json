@@ -309,10 +309,7 @@
       }, {
         "k": "Twitter",
         "v": "Twitter"
-      }, {
-        "k": "WebID",
-        "v": "WebID"
-      }, {
+      },  {
         "k": "Yubikey",
         "v": "Yubikey"
       }],
@@ -871,26 +868,7 @@
       "show": false,
       "title": "twitterParams",
       "type": "simpleInputContainer"
-    }, {
-      "_nodes": [{
-        "default": 1,
-        "id": "webIDAuthnLevel",
-        "title": "webIDAuthnLevel",
-        "type": "int"
-      }, {
-        "cnodes": "webIDExportedVars",
-        "default": [],
-        "id": "webIDExportedVars",
-        "title": "webIDExportedVars",
-        "type": "keyTextContainer"
-      }, {
-        "id": "webIDWhitelist",
-        "title": "webIDWhitelist"
-      }],
-      "id": "webIDParams",
-      "show": false,
-      "title": "webIDParams"
-    }, {
+    },  {
       "_nodes": [{
         "default": 3,
         "id": "yubikeyAuthnLevel",

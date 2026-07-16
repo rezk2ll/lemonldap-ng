@@ -346,7 +346,6 @@ Suggests: crowdsec,
           libnet-facebook-oauth2-perl,
           libnet-oauth-perl,
           libsoap-lite-perl,
-          libweb-id-perl,
           slapd
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
