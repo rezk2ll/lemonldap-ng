@@ -678,7 +678,6 @@ t/28-AuthChoice-with-info.t
 t/28-AuthChoice-with-over.t
 t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
-t/29-AuthChoice-pdata-override.t
 t/29-AuthGPG.t
 t/29-AuthKerberos-Choice.t
 t/29-AuthSSL.t
