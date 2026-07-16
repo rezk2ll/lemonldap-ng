@@ -142,7 +142,7 @@ print "<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n";
 print
 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
 print
-"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap.css\" type=\"text/css\" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bootstrap/css/styles.css\" type=\"text/css\" rel=\"stylesheet\">\n";
 print "<style>\n";
 print "$css\n";
 print "</style>\n";
@@ -151,7 +151,7 @@ print
 print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery-ui/jquery-ui.js\"></script>\n";
 print
-"<script src=\"$portal_url/static/bwr/bootstrap/dist/js/bootstrap.js\"></script>\n";
+"<script src=\"$portal_url/static/bootstrap/js/bootstrap.bundle.js\"></script>\n";
 print "</head>\n";
 print "<body>\n";
 

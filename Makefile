@@ -219,16 +219,23 @@ MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 			$(RMANAGERSTATICDIR)/bwr/angular-cookie/ \
 			$(RMANAGERSTATICDIR)/bwr/bootstrap/ \
 			$(RMANAGERSTATICDIR)/bwr/es5-shim/
-PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSTATICDIR)/bwr/bootstrap/ \
-			$(RPORTALSTATICDIR)/bwr/font-awesome \
-			$(RPORTALSTATICDIR)/bwr/jquery-ui \
-			$(RPORTALSTATICDIR)/bwr/jquery
+# For Debian builds, the Bootstrap 5 JS bundle is provided by libjs-bootstrap5
+# (served under /javascript/bootstrap5). The skin CSS is a themed build and
+# Font Awesome 6 is not web-served by Debian, so both stay in the skin.
+PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSTATICDIR)/bwr/jquery-ui \
+			$(RPORTALSTATICDIR)/bwr/jquery \
+			$(RPORTALSTATICDIR)/bootstrap/js/bootstrap.bundle.js \
+			$(RPORTALSTATICDIR)/bootstrap/js/bootstrap.bundle.min.js \
+			$(RPORTALSTATICDIR)/bootstrap/js/bootstrap.bundle.min.js.map
 DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 \
 			pages/documentation/current/lib/scripts/jquery-ui*.js \
 			pages/documentation/current/bootswatch/3.3.4/flatly/bootstrap.min.css
 DOCEXTERNALLIBS=$(DOCLIBSTOREMOVEFORDEBIAN)
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
-PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN)
+# In useexternallibs mode, Font Awesome is loaded from a CDN too, so the
+# vendored copy can also be dropped.
+PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) \
+			$(RPORTALSTATICDIR)/bootstrap/fontawesome
 
 # GENERATED SRC FILES
 MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-manager-files \
@@ -253,9 +260,14 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 
 
 # Javascript and CSS to minify
-JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js') \
+# NB: bootstrap.bundle*.js (vendored Bootstrap 5) ship their own minified
+# version, so they are excluded from the JS minifier.
+JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js' ! -name 'bootstrap.bundle*.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css')
+# NB: the bootstrap skin CSS is built by `make scss` (styles.css/.min.css) and
+# its fontawesome/ assets are vendored, so the whole bootstrap skin dir is left
+# out of the generic CSS minifier.
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css')
 
 # JS source files
 MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
@@ -325,9 +337,101 @@ all:	configure common handler manager portal documentation
 
 configure:	common_conf handler_conf portal_conf manager_conf
 
+# Refresh portal frontend assets from npm into site/htdocs/static/bwr/.
+# Maintainer-only target: requires npm. Vendored output is committed so end
+# users do NOT need npm to build or install the package.
+refresh_portal_vendor:
+	@echo "Refreshing portal frontend vendor assets via npm..."
+	@if ! which npm >/dev/null 2>&1; then \
+		echo "ERROR: npm is required for this target" >&2; exit 1; \
+	fi
+	@cd $(SRCPORTALDIR) && npm install --no-audit --no-fund --no-progress
+	@cd $(SRCPORTALDIR) && \
+		BWR=site/htdocs/static/bwr && \
+		NM=node_modules && \
+		install -d $$BWR/jquery/dist $$BWR/jquery-ui $$BWR/jssha/dist \
+		           $$BWR/qrious/dist $$BWR/fingerprintjs2 && \
+		cp $$NM/jquery/dist/jquery.js     $$BWR/jquery/dist/ && \
+		cp $$NM/jquery/dist/jquery.min.js $$BWR/jquery/dist/ && \
+		cp $$NM/jquery-ui-dist/jquery-ui.js     $$BWR/jquery-ui/ && \
+		cp $$NM/jquery-ui-dist/jquery-ui.min.js $$BWR/jquery-ui/ && \
+		cp $$NM/jssha/dist/sha1.js $$BWR/jssha/dist/ && \
+		cp $$NM/jssha/dist/sha1.js $$BWR/jssha/dist/sha1.min.js && \
+		cp $$NM/qrious/dist/qrious.js     $$BWR/qrious/dist/ && \
+		cp $$NM/qrious/dist/qrious.min.js $$BWR/qrious/dist/ && \
+		cp $$NM/fingerprintjs2/fingerprint2.js $$BWR/fingerprintjs2/ && \
+		cp $$NM/fingerprintjs2/fingerprint2.js $$BWR/fingerprintjs2/fingerprint2.min.js
+	@echo "Refreshing bootstrap skin assets (Bootstrap 5 JS, Font Awesome 6)..."
+	@cd $(SRCPORTALDIR) && \
+		BS=site/htdocs/static/bootstrap && \
+		NM=node_modules && \
+		install -d $$BS/js $$BS/fontawesome/css $$BS/fontawesome/webfonts && \
+		cp $$NM/bootstrap5/dist/js/bootstrap.bundle.js         $$BS/js/ && \
+		cp $$NM/bootstrap5/dist/js/bootstrap.bundle.min.js     $$BS/js/ && \
+		cp $$NM/bootstrap5/dist/js/bootstrap.bundle.min.js.map $$BS/js/ && \
+		cp $$NM/@fortawesome/fontawesome-free/css/all.css         $$BS/fontawesome/css/ && \
+		cp $$NM/@fortawesome/fontawesome-free/css/all.min.css     $$BS/fontawesome/css/ && \
+		cp $$NM/@fortawesome/fontawesome-free/css/v4-shims.css     $$BS/fontawesome/css/ && \
+		cp $$NM/@fortawesome/fontawesome-free/css/v4-shims.min.css $$BS/fontawesome/css/ && \
+		cp -r $$NM/@fortawesome/fontawesome-free/webfonts/. $$BS/fontawesome/webfonts/
+	@echo "Done. Review changes in $(SRCPORTALDIR)/site/htdocs/static/bwr/ and"
+	@echo "$(SRCPORTALDIR)/site/htdocs/static/bootstrap/ and commit."
+
+# SCSS compiler: prefer Debian sassc, fall back to node-sass (also Debian-packaged)
+SASS=$(shell which sassc 2>/dev/null || which node-sass 2>/dev/null)
+SASSNAME=$(notdir $(SASS))
+
+# bootstrap skin SCSS sources (Bootstrap 5)
+SCSSSRCDIR=$(SRCPORTALDIR)/site/scss-src
+SCSSSRCS=$(wildcard $(SCSSSRCDIR)/*.scss)
+BSCSSDIR=$(SRCPORTALDIR)/site/htdocs/static/bootstrap/css
+
+scss: $(BSCSSDIR)/styles.css $(BSCSSDIR)/styles.min.css
+
+$(BSCSSDIR)/styles.css: $(SCSSSRCS)
+	@if [ -z "$(SASS)" ]; then \
+		echo "ERROR: install 'sassc' (Debian: sassc) or 'node-sass' to compile SCSS" >&2; \
+		exit 1; \
+	fi
+	@mkdir -p $(@D)
+	@echo "Compiling $(SCSSSRCDIR)/bootstrap.scss with $(SASSNAME)"
+	@if [ "$(SASSNAME)" = "node-sass" ]; then \
+		$(SASS) --output-style expanded --source-map true \
+			--include-path $(SRCPORTALDIR)/node_modules \
+			$(SCSSSRCDIR)/bootstrap.scss $@; \
+	else \
+		$(SASS) -t expanded -m \
+			-I $(SRCPORTALDIR)/node_modules \
+			$(SCSSSRCDIR)/bootstrap.scss $@; \
+	fi
+
+$(BSCSSDIR)/styles.min.css: $(SCSSSRCS)
+	@if [ -z "$(SASS)" ]; then \
+		echo "ERROR: install 'sassc' (Debian: sassc) or 'node-sass' to compile SCSS" >&2; \
+		exit 1; \
+	fi
+	@mkdir -p $(@D)
+	@echo "Compiling $(SCSSSRCDIR)/bootstrap.scss (compressed) with $(SASSNAME)"
+	@if [ "$(SASSNAME)" = "node-sass" ]; then \
+		$(SASS) --output-style compressed --source-map true \
+			--include-path $(SRCPORTALDIR)/node_modules \
+			$(SCSSSRCDIR)/bootstrap.scss $@; \
+	else \
+		$(SASS) -t compressed -m \
+			-I $(SRCPORTALDIR)/node_modules \
+			$(SCSSSRCDIR)/bootstrap.scss $@; \
+	fi
+
 js: $(JSDSTFILES)
 
-minify: $(JSDSTFILES) $(JSMINFILES) $(CSSMINFILES)
+minify: $(JSDSTFILES) $(JSMINFILES) $(CSSMINFILES) scss_if_available
+
+scss_if_available:
+	@if [ -n "$(SASS)" ] && [ -d "$(SRCPORTALDIR)/node_modules/bootstrap5/scss" ]; then \
+		$(MAKE) scss; \
+	else \
+		echo "Skipping SCSS build (sassc/node-sass or bootstrap5 npm package missing)"; \
+	fi
 
 _rollup_portal:
 	@if which rollup >/dev/null; then \

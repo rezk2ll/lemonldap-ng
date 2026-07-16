@@ -1,6 +1,6 @@
 <div id="ppolicy" class="card p-3 mb-3 border-danger ppolicy">
   <span trspan="passwordPolicy">Please respect the following password policy:</span>
-  <ul class="fa-ul text-left">
+  <ul class="fa-ul text-start">
     <TMPL_LOOP NAME="PPOLICY_RULES">
         <TMPL_IF NAME="condition">
         <TMPL_IF NAME="customHtml"><TMPL_VAR NAME="customHtml"></TMPL_IF>

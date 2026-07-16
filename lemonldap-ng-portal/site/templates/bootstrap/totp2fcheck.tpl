@@ -17,9 +17,7 @@
     <input type="hidden" id="stayconnected" name="stayconnected" value="<TMPL_VAR NAME="STAYCONNECTED">" />
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
     <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><label for="extcode" class="mb-0"><i class="fa fa-lock"></i></label></span>
-      </div>
+      <span class="input-group-text"><label for="extcode" class="mb-0"><i class="fa fa-lock"></i></label></span>
       <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" required />
     </div>
   </div>

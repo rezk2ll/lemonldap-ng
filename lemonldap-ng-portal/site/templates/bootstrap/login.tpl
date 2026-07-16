@@ -24,20 +24,22 @@
 
     <!-- Authentication loop -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
 
     <a class="navbar-brand" href="<TMPL_VAR NAME="PORTAL_BASE">"><i class="fa fa-user-circle"></i></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Choice tabs -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav me-auto">
         <TMPL_LOOP NAME="AUTH_LOOP">
           <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#id_<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
         </TMPL_LOOP>
       </ul>
     </div>
 
+    </div>
     </nav>
 
     <div>
@@ -131,7 +133,7 @@
     <div class="input-group col-md-6 offset-md-3">
 
       <!-- Global checkbox for remembering the authentication choice for all modules -->
-      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
+      <div id="globalrememberauthchoicecontainer" class="input-group">
         <div class="input-group-text">
           <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
           <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
@@ -148,9 +150,7 @@
           <label id="rememberTimerLabel" trspan="rememberTimerLabel">s before automatic authentication</label>
         </p>
         <input id="rememberStopped" name="rememberStopped" type="hidden" value="">
-        <div class="input-group-append inout-group">
-          <button class="btn btn-danger" id="buttonRememberStopped"><i class="fa fa-stop-circle-o"></i> Stop</button>
-        </div>
+        <button class="btn btn-danger" id="buttonRememberStopped"><i class="fa fa-stop-circle-o"></i> Stop</button>
       </div>
     </div>
     </TMPL_IF>
@@ -288,7 +288,7 @@
     </div>
     <TMPL_IF NAME="DISPLAY_FINDUSER">
       <div class="actions">
-      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#finduserModal">
+      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finduserModal">
         <span class="fa fa-search"></span>
         <span trspan="searchAccount">Search for an account</span>
       </button>

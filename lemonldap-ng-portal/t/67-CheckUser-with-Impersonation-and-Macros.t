@@ -188,12 +188,12 @@ ok( $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
     'Found two well computed macros' )
   or explain( $res->[2]->[0], 'Macros not well computed' );
 ok(
-    $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">authGroup</div>%,
+    $res->[2]->[0] =~ m%<div class="card-text text-start ms-2">authGroup</div>%,
     'Found group "authGroup"'
 ) or explain( $res->[2]->[0], 'Group "authgroup"' );
 ok(
     $res->[2]->[0] =~
-      m%<div class="card-text text-left ml-2">realAuthGroup</div>%,
+      m%<div class="card-text text-start ms-2">realAuthGroup</div>%,
     'Found group "realAuthGroup"'
 ) or explain( $res->[2]->[0], 'Found group "realAuthGroup"' );
 count(7);

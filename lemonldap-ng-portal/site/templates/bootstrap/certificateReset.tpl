@@ -22,9 +22,7 @@
       <h3 trspan="certificateReset"> Reset Your Certificate</h3>
 
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><label for="mailfield" class="mb-0"><i class="fa fa-envelope"></i></label></span>
-        </div>
+        <span class="input-group-text"><label for="mailfield" class="mb-0"><i class="fa fa-envelope"></i></label></span>
         <input id="mailfield" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control"  trplaceholder="mail" required />
       </div>
 
@@ -72,23 +70,19 @@
       </p>
 
       <TMPL_IF NAME=CAPTCHA_SRC>
-        <div class="form-group">
+        <div class="mb-3">
           <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
         </div>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><label for="captchafield" class="mb-0"><i class="fa fa-eye"></i></label></span>
-          </div>
+          <span class="input-group-text"><label for="captchafield" class="mb-0"><i class="fa fa-eye"></i></label></span>
           <input id="captchafield" type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required autocomplete="off"/>
         </div>
       </TMPL_IF>
 
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
+        <div class="input-group-text">
             <input id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel" />
           </div>
-        </div>
         <p class="form-control">
           <label for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes , resend the mail</label>
         </p>
@@ -122,9 +116,7 @@
         <h3 trspan="certificateReset">Reset your Certificate</h3>
 
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><label for="certiffield" class="mb-0"><i class="fa fa-upload"></i></label></span>
-          </div>
+          <span class="input-group-text"><label for="certiffield" class="mb-0"><i class="fa fa-upload"></i></label></span>
               <input id="certiffield" name="certif" type="file" class="form-control" accept=".pem, .crt,application/x-pem-file", trplaceholder="UploadCertificate" required />
         </div>
 

@@ -17,9 +17,7 @@
     <input type="hidden" id="stayconnected" name="stayconnected" value="<TMPL_VAR NAME="STAYCONNECTED">" />
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
     <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><label for="password" class="mb-0"><i class="fa fa-lock"></i></label></span>
-      </div>
+      <span class="input-group-text"><label for="password" class="mb-0"><i class="fa fa-lock"></i></label></span>
       <input name="password" value="" type="password" class="form-control" id="password2f" trplaceholder="password" />
     </div>
   </div>

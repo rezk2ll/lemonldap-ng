@@ -85,7 +85,7 @@ m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form
 ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
 ok(
     $res->[2]->[0] =~
-      m%<select class="custom-select" id="findUser_cn" name="cn">%,
+      m%<select class="form-select" id="findUser_cn" name="cn">%,
     'id="findUser_cn"'
 ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 ok( $res->[2]->[0] =~ m%<option selected>Name...</option>%, 'Name...' )

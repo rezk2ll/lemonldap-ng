@@ -167,7 +167,7 @@ ok( $res->[2]->[0] !~ m%emptyHeader: %, 'emptyHeader not found' )
   or explain( $res->[2]->[0], 'Header Key: emptyHeader' );
 ok( $res->[2]->[0] =~ m%: rtyler%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+ok( $res->[2]->[0] =~ m%<div class="card-text text-start ms-2">su</div>%,
     'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )

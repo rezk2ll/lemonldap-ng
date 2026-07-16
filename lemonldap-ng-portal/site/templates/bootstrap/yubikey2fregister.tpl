@@ -14,15 +14,15 @@
           <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/yubikey.png" alt="Yubikey" title="Yubikey" />
         </div>
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="mb-3">
             <label for="UBKName"><span trspan="name">Name</span></label>
             <input type="text" class="form-control" id="UBKName" name="UBKName" value="MyYubikey" trplaceholder="name" />
           </div>
-          <div class="form-group">
+          <div class="mb-3">
             <label for="otp"><span trspan="id">Id</span></label>
             <input type="text" class="form-control" id="otp" name="otp" trplaceholder="Id" autocomplete="off" autofocus/>
           </div>
-          <input class="custom-control-input" type="submit" value="Submit" />
+          <input class="form-check-input" type="submit" value="Submit" />
         </div>
 
       </div>

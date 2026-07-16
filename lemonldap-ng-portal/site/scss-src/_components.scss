@@ -1,0 +1,271 @@
+// LemonLDAP::NG portal — component overrides for the bootstrap skin (Bootstrap 5).
+//
+// Loaded AFTER Bootstrap. Modern look with a soft pastel canvas, elevated
+// cards and contemporary typography. Keep rules narrow and component-scoped
+// so future Bootstrap upgrades don't fight us. Avoid !important.
+
+// Pastel canvas ------------------------------------------------------------
+//
+// A soft three-stop pastel gradient stays calm under any UI. The Perl
+// portal.css route may override this when the admin set a portalSkinBackground
+// image; both rules coexist cleanly.
+html,
+body {
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse at top left,     rgba(253, 186, 116, .35), transparent 55%), // peach
+    radial-gradient(ellipse at bottom right, rgba(252, 211, 77, .28),  transparent 55%), // amber
+    linear-gradient(180deg, #fffaf2 0%, #fdf3e7 100%);                                   // cream
+  background-attachment: fixed;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main,
+.main,
+#wrap {
+  flex: 1 0 auto;
+}
+
+// Page header --------------------------------------------------------------
+#header {
+  padding: 1.5rem 0 .75rem;
+  text-align: center;
+}
+
+#header img {
+  max-height: 5.5rem;
+  width: auto;
+  margin-bottom: 1rem;
+  padding: .5rem .75rem;
+  background-color: rgba(255, 255, 255, .75);
+  border-radius: var(--bs-border-radius);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, .04);
+  backdrop-filter: blur(4px);
+}
+
+// Cards (login, menu, password, errors…) -----------------------------------
+//
+// Cards are the visual centerpiece. Generous padding, comfortable rounding,
+// soft elevation. No border — Bootstrap 5 token already disables it.
+.card {
+  background-color: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, .04),
+    0 12px 28px rgba(15, 23, 42, .08);
+  border-radius: var(--bs-border-radius-xl);
+  overflow: hidden;
+}
+
+.card .card-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(15, 23, 42, .06);
+  padding: 1.25rem 1.75rem .75rem;
+}
+
+.card .card-body {
+  padding: 1.5rem 1.75rem;
+}
+
+// Auth forms layout (login, password, etc.) -------------------------------
+.login,
+.password {
+  text-align: center;
+  padding: 1.5rem 1.25rem;
+}
+
+div.form {
+  margin: 0 auto;
+  max-width: 22rem;
+}
+
+.notif div.form {
+  max-width: 64rem;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+div.actions {
+  margin-top: 1rem;
+}
+
+div.actions a,
+div.actions button {
+  margin-top: .625rem;
+}
+
+// Buttons ------------------------------------------------------------------
+.btn {
+  white-space: normal;
+  font-weight: 500;
+  letter-spacing: .01em;
+  transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-success,
+.btn-primary,
+.btn-danger,
+.btn-warning,
+.btn-info {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .08);
+}
+
+.btn-success:hover,
+.btn-primary:hover,
+.btn-danger:hover,
+.btn-warning:hover,
+.btn-info:hover {
+  box-shadow: 0 8px 20px rgba(15, 23, 42, .14);
+}
+
+.btn .fa,
+.btn span.fa,
+.btn .fa-solid,
+.btn .fa-regular,
+.btn .fa-brands {
+  margin-right: .5rem;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+// Form controls ------------------------------------------------------------
+.form-control,
+.form-select {
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+
+.form-control::placeholder {
+  color: #9ca3af; // slate-400
+}
+
+// Input groups: keep addons visually distinct but soft
+.input-group .input-group-text {
+  background-color: var(--bs-tertiary-bg);
+  border-color: var(--bs-border-color);
+  color: var(--bs-secondary-color);
+}
+
+// Alerts -------------------------------------------------------------------
+.alert {
+  box-shadow: 0 2px 6px rgba(15, 23, 42, .04);
+}
+
+// Notifications & legacy "message-*" classes (mapped to alert-* by JS) ----
+.message-positive { background-color: #ecfccb; color: #3f6212; } // lime
+.message-warning  { background-color: #fef3c7; color: #92400e; } // amber
+.message-negative { background-color: #fee2e2; color: #991b1b; } // red
+
+// Navbar -------------------------------------------------------------------
+.navbar {
+  position: relative;
+  z-index: 1030; // above .card (no z-index) so dropdown-menu pops over apps
+  border-radius: var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0 0;
+}
+
+.navbar.bg-light {
+  background-color: rgba(255, 255, 255, .85) !important;
+  backdrop-filter: blur(6px);
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+// 2FA chooser tiles --------------------------------------------------------
+.sf-list .sf-item {
+  display: flex;
+  align-items: center;
+  padding: .9rem 1.1rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  margin-bottom: .625rem;
+  text-decoration: none;
+  color: inherit;
+  background-color: #ffffff;
+  transition:
+    background-color .12s ease,
+    border-color .12s ease,
+    transform .08s ease,
+    box-shadow .12s ease;
+}
+
+.sf-list .sf-item:hover,
+.sf-list .sf-item:focus {
+  border-color: var(--bs-primary);
+  background-color: #fffaf2;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, .14);
+}
+
+.sf-list .sf-item .sf-icon {
+  font-size: 1.4rem;
+  margin-right: .9rem;
+  color: var(--bs-primary);
+}
+
+// Page footer --------------------------------------------------------------
+#footer {
+  flex-shrink: 0;
+  margin-top: 2.5rem;
+  padding: 1.25rem 0;
+  background-color: rgba(255, 255, 255, .75);
+  border-top: 1px solid rgba(15, 23, 42, .06);
+  text-align: center;
+  color: var(--bs-secondary-color);
+  font-size: .875rem;
+  backdrop-filter: blur(6px);
+}
+
+#footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#footer a:hover,
+#footer a:focus {
+  color: var(--bs-primary);
+}
+
+// Back-to-top button (shown by portal.js once the page is scrolled down) ----
+#btn-back-to-top {
+  position: fixed;
+  bottom: 70px;
+  right: 15px;
+  display: none;
+  z-index: 1030;
+}
+
+// Reduced motion -----------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .sf-list .sf-item,
+  .form-control,
+  .form-select {
+    transition: none;
+  }
+
+  .btn:hover,
+  .sf-list .sf-item:hover {
+    transform: none;
+  }
+}

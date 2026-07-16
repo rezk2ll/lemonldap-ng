@@ -12,7 +12,7 @@
         <div class="col-md-6 text-center">
           <input type="hidden" id="token" name="token" />
 
-          <div class="form-group">
+          <div class="mb-3">
             <label for="generic">&#x2460; <span trspan="genericRegisterPrompt">Enter your contact information</span></label>
             <input type="email" id="generic" class="form-control" name="generic" autocomplete="off" />
           </div>
@@ -27,11 +27,11 @@
         </div>
 
         <div class="col-md-6 text-center">
-          <div class="form-group">
+          <div class="mb-3">
             <label for="genericname">&#x2462; <span trspan="genericRegisterName">Name</span></label>
             <input type="text" class="form-control" id="genericname" name="genericname" value="MyContact" trplaceholder="name" />
           </div>
-          <div class="form-group">
+          <div class="mb-3">
             <label for="code">&#x2463; <span trspan="genericRegisterCode">Code</span></label>
             <input id="code" class="form-control" name="code" autocomplete="off" />
           </div>

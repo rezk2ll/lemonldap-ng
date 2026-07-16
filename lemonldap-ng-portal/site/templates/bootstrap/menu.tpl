@@ -9,8 +9,9 @@
   <div id="menu">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
     <a class="navbar-brand" href="<TMPL_VAR NAME="PORTAL_BASE">"><span trspan="home" hidden></span><i class="fa fa-home"></i></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -18,7 +19,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- Tabs list -->
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav me-auto">
         <TMPL_LOOP NAME="DISPLAY_MODULES">
 
           <TMPL_IF NAME="Appslist">
@@ -63,7 +64,7 @@
       <ul class="user nav navbar-nav navbar-right">
         <li class="nav-item dropdown">
           <TMPL_IF NAME="DropdownMenu">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER">
             <span class="caret"></span>
           </a>
@@ -112,6 +113,7 @@
     </div>
     </TMPL_IF>
 
+    </div>
     </nav>
 
     <!-- Tabs content -->
@@ -132,7 +134,7 @@
               <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
 
                 <div class="card-header text-white bg-secondary">
-                <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
+                <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-end" ></i></span></h4>
                 </div>
 
                   <TMPL_IF applications>

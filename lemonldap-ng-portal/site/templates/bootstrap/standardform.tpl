@@ -7,30 +7,22 @@
 <TMPL_ELSE>
 <div class="form">
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><label for="userfield" class="mb-0"><span trspan="login" hidden></span><i class="fa fa-user"></i></label></span>
-    </div>
+    <span class="input-group-text"><label for="userfield" class="mb-0"><span trspan="login" hidden></span><i class="fa fa-user"></i></label></span>
     <input id="userfield" name="user" type="text" class="form-control"
       value="<TMPL_IF NAME="ACTIVE_FORM"><TMPL_VAR NAME="LOGIN" ESCAPE=HTML></TMPL_IF>"
       trplaceholder="login" required aria-required="true" autocomplete="webauthn" <TMPL_UNLESS NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_UNLESS> />
   </div>
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><label for="passwordfield" class="mb-0"><span trspan="pwd" hidden></span><i class="fa fa-lock"></i></label></span>
-    </div>
+    <span class="input-group-text"><label for="passwordfield" class="mb-0"><span trspan="pwd" hidden></span><i class="fa fa-lock"></i></label></span>
     <TMPL_IF NAME="DONT_STORE_PASSWORD">
       <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true" <TMPL_IF NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_IF> />
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-        <div class="input-group-append">
-          <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
-        </div>
+        <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
       </TMPL_IF>
     <TMPL_ELSE>
       <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true" <TMPL_IF NAME="LOGIN"><TMPL_IF NAME="ACTIVE_FORM">autofocus</TMPL_IF></TMPL_IF> />
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-        <div class="input-group-append">
-          <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
-        </div>
+        <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
       </TMPL_IF>
     </TMPL_IF>
   </div>
@@ -64,7 +56,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_FINDUSER">
-    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#finduserModal">
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finduserModal">
       <span class="fa fa-search"></span>
       <span trspan="searchAccount">Search for an account</span>
     </button>

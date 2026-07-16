@@ -20,7 +20,7 @@
 
 <TMPL_IF NAME="DISPLAY_FINDUSER">
   <div class="actions">
-  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#finduserModal">
+  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finduserModal">
     <span class="fa fa-search"></span>
     <span trspan="searchAccount">Search for an account</span>
   </button>

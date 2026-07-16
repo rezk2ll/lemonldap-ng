@@ -23,9 +23,7 @@
       <h3 trspan="forgotPwd">Forgot your password?</h3>
 
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span  class="input-group-text"><label for="mail" class="mb-0"><span trspan="mail" hidden></span><i class="fa fa-envelope"></i></label></span>
-        </div>
+        <span  class="input-group-text"><label for="mail" class="mb-0"><span trspan="mail" hidden></span><i class="fa fa-envelope"></i></label></span>
         <input id="mail" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
       </div>
 
@@ -77,11 +75,9 @@
       </TMPL_IF>
 
       <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
+        <div class="input-group-text">
             <input id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel" />
           </div>
-        </div>
         <p class="form-control">
           <label for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
         </p>
@@ -119,54 +115,40 @@
 
         <div id="newpasswords">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><label for="newpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
-            </div>
+            <span class="input-group-text"><label for="newpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
             <TMPL_IF NAME="DONT_STORE_PASSWORD">
               <input id="newpassword" name="newpassword" type="text" class="form-control" trplaceholder="newPassword" autocomplete="off" required aria-required="true"/>
               <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
-                </div>
+                <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </TMPL_IF>
             <TMPL_ELSE>
               <input id="newpassword" name="newpassword" type="password" class="form-control" trplaceholder="newPassword" required aria-required="true"/>
               <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
-                </div>
+                <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </TMPL_IF>
             </TMPL_IF>
           </div>
 
-          <div class="form-group input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><label for="confirmpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
-            </div>
+          <div class="mb-3 input-group">
+            <span class="input-group-text"><label for="confirmpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
             <TMPL_IF NAME="DONT_STORE_PASSWORD">
               <input id="confirmpassword" name="confirmpassword" type="text" class="form-control" trplaceholder="confirmPwd" autocomplete="off" required aria-required="true"/>
               <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
-                </div>
+                <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </TMPL_IF>
             <TMPL_ELSE>
               <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" required aria-required="true"/>
               <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
-                </div>
+                <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </TMPL_IF>
             </TMPL_IF>
           </div>
         </div>
         <TMPL_IF NAME="DISPLAY_GENERATE_PASSWORD">
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
+          <div class="input-group-text">
               <input id="reset" type="checkbox" name="reset" aria-describedby="resetlabel" />
             </div>
-          </div>
           <p class="form-control">
             <label for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
           </p>

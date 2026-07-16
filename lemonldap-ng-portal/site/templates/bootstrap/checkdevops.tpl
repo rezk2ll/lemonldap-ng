@@ -11,7 +11,7 @@
   <TMPL_IF NAME="RULES">
       <div class="card col border-secondary">
         <div class="text-center bg-light text-dark"><b><span trspan="rules">RULES</span></b></div>
-        <div class="font-weight-bold">
+        <div class="fw-bold">
           <TMPL_LOOP NAME="RULES">
             <TMPL_VAR NAME="uri">: <span trspan="<TMPL_VAR NAME="access">"><TMPL_VAR NAME="access"></span><br/>
           </TMPL_LOOP>
@@ -21,7 +21,7 @@
   <TMPL_IF NAME="HEADERS">
       <div class="card col border-secondary">
         <div class="text-center bg-light text-dark"><b><span trspan="headers">HEADERS</span></b></div>
-        <div class="font-weight-bold">
+        <div class="fw-bold">
           <TMPL_LOOP NAME="HEADERS">
             <TMPL_VAR NAME="key">: <TMPL_VAR NAME="value"><br/>
           </TMPL_LOOP>

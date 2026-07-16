@@ -14,7 +14,7 @@
          </div>
 
          <div class="col-md-6">
-         <div class="form-group">
+         <div class="mb-3">
             <label for="keyName"><span trspan="name">Name</span></label>
             <input type="text" class="form-control" id="keyName" name="keyName" value="MyFidoKey" trplaceholder="name" />
          </div>

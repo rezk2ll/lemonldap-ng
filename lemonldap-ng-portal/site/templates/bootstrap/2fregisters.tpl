@@ -61,8 +61,8 @@
                     prefix='<TMPL_VAR NAME="prefix">'
                     class="btn btn-danger"
                     role="button"
-                    data-toggle="modal"
-                    data-target="#remove2fModal">
+                    data-bs-toggle="modal"
+                    data-bs-target="#remove2fModal">
                   <span class="fa fa-minus-circle"></span>
                   <span trspan="unregister">Unregister</span>
   	            </span>
@@ -81,18 +81,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="remove2fModalLabel"><span trspan="areYouSure">Are you sure ?</span></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <span trspan="remove2fWarning">This operation cannot be undone</span>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   <span trspan="cancel">Cancel</span>
           </button>
-          <button type="button" class="btn btn-danger remove2f" data-dismiss="modal">
+          <button type="button" class="btn btn-danger remove2f" data-bs-dismiss="modal">
             <span class="fa fa-minus-circle"></span>
             <span trspan="unregister">Unregister</span>
           </button>

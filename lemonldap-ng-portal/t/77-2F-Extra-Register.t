@@ -318,7 +318,7 @@ subtest "Register a 2F that is not always available on login" => sub {
     );
     like(
         $res->[2]->[0],
-        qr@data-target="#remove2fModal"@,
+        qr@data-bs-target="#remove2fModal"@,
         "Found remove button"
     );
     like(
@@ -338,7 +338,7 @@ subtest "Register a 2F that is not always available on login" => sub {
     );
     unlike(
         $res->[2]->[0],
-        qr@data-target="#remove2fModal"@,
+        qr@data-bs-target="#remove2fModal"@,
         "Remove button not displayed"
     );
     unlike(

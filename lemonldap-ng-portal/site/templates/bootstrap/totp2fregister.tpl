@@ -19,11 +19,11 @@
         </div>
 
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="mb-3">
             <label for="TOTPName">&#x2461; <span trspan="totpRegisterName">Name</span></label>
             <input type="text" class="form-control" id="TOTPName" name="TOTPName" value="MyTOTP" trplaceholder="name" />
           </div>
-          <div class="form-group">
+          <div class="mb-3">
             <label for="code">&#x2462; <span trspan="totpRegisterCode">Code</span></label>
             <input id="code" class="form-control" name="code" autocomplete="off" />
           </div>
