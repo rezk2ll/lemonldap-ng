@@ -61,6 +61,31 @@ and **replace** it by::
     proxy_set_header Host $host;
 
 
+2.23.1
+------
+
+SAML Common Domain Cookie now validates the return URL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SAML Common Domain Cookie (CDC) endpoint used to redirect to the ``url``
+parameter without any control on its origin, which allowed it to be abused as
+an open redirector (CWE-601).
+
+Starting from this version, the CDC endpoint only redirects to a return URL
+whose host belongs to:
+
+* a registered SAML federation member (any host found in the ``entityID`` or
+  endpoint ``Location`` of your declared SAML SP/IdP metadata), or
+* a domain listed in the ``trustedDomains`` configuration parameter, or
+* the portal hosting the CDC.
+
+Any other return URL is now rejected with an HTTP 400 error.
+
+Existing federations keep working without any change, since their members are
+already declared through SAML metadata. **However**, if your CDC is shared with
+partners whose return URL host is not present in the SAML metadata (for example
+non-LL::NG service providers), you must add their domain to ``trustedDomains``.
+
 2.23.0
 ------
 

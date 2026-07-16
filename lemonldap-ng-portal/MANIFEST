@@ -702,6 +702,7 @@ t/30-Auth-Oidc-Reauth.t
 t/30-Auth-ResolutionRule.t
 t/30-Auth-Saml-Reauth.t
 t/30-Auth-SAML-with-choice.t
+t/30-CDC-open-redirect.t
 t/30-CDC.t
 t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
