@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Captcha::SecurityImage;
 use strict;
 use Mouse;
 use MIME::Base64;
-use GD::SecurityImage use_magick => 1;
+use GD;
 
 our $VERSION = '2.0.15';
 
@@ -69,20 +69,100 @@ sub init {
 # Internal methods
 sub _getCaptcha {
     my ($self) = @_;
-    my $image = GD::SecurityImage->new(
-        width    => $self->width,
-        height   => $self->height,
-        lines    => $self->lines,
-        gd_font  => 'Giant',
-        scramble => $self->scramble,
-        rndmax   => $self->rndmax,
-    );
-    $image->random;
-    $image->create( 'normal', 'default', $self->fgColor, $self->bgColor );
-    my ( $imageData, $mimeType, $rdm ) = $image->out( force => 'png' );
-    my $img   = 'data:image/png;base64,' . encode_base64( $imageData, '' );
-    my $token = $self->ott->createToken( { captcha => $rdm } );
+
+    # Random numeric challenge (same charset as the historical default)
+    my $rdm = join '', map { int rand 10 } 1 .. $self->rndmax;
+
+    my $imageData = $self->_render($rdm);
+    my $img       = 'data:image/png;base64,' . encode_base64( $imageData, '' );
+    my $token     = $self->ott->createToken( { captcha => $rdm } );
     return ( $token, $img );
+}
+
+# Convert a '#RRGGBB' string to an (R, G, B) triplet, or fall back to @default
+sub _hex2rgb {
+    my ( $self, $hex, @default ) = @_;
+    return ( hex $1, hex $2, hex $3 )
+      if $hex
+      and $hex =~ /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
+    return @default;
+}
+
+# Render the challenge string as a PNG using GD only (no GD::SecurityImage)
+sub _render {
+    my ( $self, $string ) = @_;
+    my $w        = $self->width;
+    my $h        = $self->height;
+    my $scramble = $self->scramble;
+    my @bg       = $self->_hex2rgb( $self->bgColor, 0xFF, 0x64, 0x4B );
+    my @fg       = $self->_hex2rgb( $self->fgColor, 0x40, 0x30, 0x30 );
+
+    my $image = GD::Image->new( $w, $h, 1 );
+    $image->filledRectangle( 0, 0, $w - 1, $h - 1, $image->colorAllocate(@bg) );
+
+    my $font = GD::gdGiantFont();
+    my ( $fw, $fh ) = ( $font->width, $font->height );
+    my $n  = length $string;
+    my $cw = int( $w / ( $n + 1 ) );
+    my $x0 = int( ( $w - $cw * $n ) / 2 );
+
+    for my $i ( 0 .. $n - 1 ) {
+        my $char = substr $string, $i, 1;
+
+        # Draw the digit on a small buffer, slightly emboldened
+        my $glyph = GD::Image->new( $fw, $fh, 1 );
+        $glyph->filledRectangle( 0, 0, $fw - 1, $fh - 1,
+            $glyph->colorAllocate(@bg) );
+        my $fgcol = $glyph->colorAllocate(@fg);
+        $glyph->string( $font, 0, 0, $char, $fgcol );
+        $glyph->string( $font, 1, 0, $char, $fgcol );
+
+        # Scale the digit, centered, into a full-height cell tile whose
+        # background matches the canvas so it can be rotated seamlessly
+        my $tile = GD::Image->new( $cw, $h, 1 );
+        $tile->filledRectangle( 0, 0, $cw - 1, $h - 1,
+            $tile->colorAllocate(@bg) );
+        my $dh = int( $h * 0.6 ) + ( $scramble ? int( rand $h * 0.2 ) : 0 );
+        my $dw = int( $cw * 0.85 );
+        $tile->copyResampled(
+            $glyph, int( ( $cw - $dw ) / 2 ),
+            int( ( $h - $dh ) / 2 ),
+            0, 0, $dw, $dh, $fw, $fh
+        );
+
+        # Place it, rotated and vertically jittered when scrambling
+        my $angle = $scramble ? int( rand 81 ) - 40 : 0;
+        my $cx    = $x0 + $cw * $i + int( $cw / 2 );
+        my $cy    = int( $h / 2 ) +
+          ( $scramble ? int( rand $h * 0.2 ) - int( $h * 0.1 ) : 0 );
+        $image->copyRotated( $tile, $cx, $cy, 0, 0, $cw, $h, $angle );
+    }
+
+    # Speckle noise
+    for ( 1 .. int( $w * $h * 0.04 ) ) {
+        my @c =
+          rand() < 0.5
+          ? map { $_ - 20 + int rand 40 } @fg
+          : map { $_ - 20 + int rand 40 } @bg;
+        $image->setPixel( int( rand $w ), int( rand $h ),
+            $image->colorAllocate(@c) );
+    }
+
+    # Noise lines, mixing darker and lighter tones, over the glyphs
+    for ( 1 .. $self->lines * 2 ) {
+        my @c =
+          rand() < 0.5
+          ? map { $_ - 30 + int rand 40 } @fg
+          : map { $_ + int rand 40 } @bg;
+        $image->setThickness(1);
+        $image->line(
+            int( rand $w ), int( rand $h ),
+            int( rand $w ), int( rand $h ),
+            $image->colorAllocate(@c)
+        );
+    }
+
+    return $image->png;
 }
 
 sub _sendCaptcha {

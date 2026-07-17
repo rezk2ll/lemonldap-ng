@@ -15,9 +15,8 @@ Captchas are available on following forms:
 
 .. attention::
 
-    We use the GD::SecurityImage Perl module to generate images.
+    We use the GD Perl module to generate images.
     This module is required if you enable Captcha feature.
-    With Debian-based distributions, you may have to install 'gsfonts' package.
 
 Configuration
 -------------

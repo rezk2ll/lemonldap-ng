@@ -4,8 +4,7 @@ Uploaders: Yadd <yadd@debian.org>
 Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 10), po-debconf
-Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
-                     libapache-session-perl <!nocheck>,
+Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
                      libauthen-radius-perl <!nocheck>,
                      libcache-cache-perl <!nocheck>,
@@ -24,14 +23,13 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libdbi-perl <!nocheck>,
                      libemail-address-xs-perl | libemail-address-perl <!nocheck>,
                      libemail-sender-perl <!nocheck>,
-                     libgd-securityimage-perl <!nocheck>,
+                     libgd-perl <!nocheck>,
                      libglib-perl <!nocheck>,
                      libgssapi-perl <!nocheck>,
                      libhash-merge-simple-perl <!nocheck>,
                      libhtml-formattext-withlinks-perl <!nocheck>,
                      libhtml-template-perl <!nocheck>,
                      libhttp-message-perl <!nocheck>,
-                     libimage-magick-perl <!nocheck>,
                      libio-socket-timeout-perl <!nocheck>,
                      libio-string-perl,
                      libipc-run-perl <!nocheck>,
@@ -326,12 +324,11 @@ Depends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-
          libtext-unidecode-perl,
          ${misc:Depends},
          ${perl:Depends}
-Recommends: fonts-urw-base35 | gsfonts,
-            libauthen-sasl-perl,
+Recommends: libauthen-webauthn-perl,
             libauthen-webauthn-perl,
             libconvert-pem-perl,
             libcrypt-jwt-perl,
-            libgd-securityimage-perl,
+            libgd-perl,
             libio-socket-timeout-perl,
             libio-string-perl,
             libipc-run-perl,
@@ -346,7 +343,6 @@ Suggests: crowdsec,
           libglib-perl,
           libgssapi-perl,
           libhttp-browserdetect-perl,
-          libimage-magick-perl,
           liblasso-perl,
           liblist-moreutils-perl,
           libnet-facebook-oauth2-perl,
@@ -371,5 +367,5 @@ Description: Lemonldap::NG authentication portal part
  Lemonldap::NG::Portal provides the authentication portal.
  .
  You may have to install some suggested packages depending on plugins you
- enabled. For example, libgd-securityimage-perl and fonts-urw-base35 are needed
+ enabled. For example, libgd-perl is needed
  if you want to use Captcha,...

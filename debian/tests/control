@@ -5,8 +5,7 @@ Depends: @
  , libstring-random-perl
  , libemail-sender-perl
  , libmime-tools-perl
- , libgd-securityimage-perl
- , libimage-magick-perl
+ , libgd-perl
 Restrictions: allow-stderr, needs-root, skippable
 
 # debian/tests/runner launch pkg-perl-autopkgtest tests for each library
