@@ -2273,26 +2273,6 @@
          {
             "_nodes" : [
                {
-                  "cnodes" : "reloadUrls",
-                  "help" : "configlocation.html#configuration_reload",
-                  "id" : "reloadUrls",
-                  "title" : "reloadUrls",
-                  "type" : "keyTextContainer"
-               },
-               {
-                  "default" : 5,
-                  "id" : "reloadTimeout",
-                  "title" : "reloadTimeout",
-                  "type" : "int"
-               }
-            ],
-            "help" : "configlocation.html#configuration_reload",
-            "id" : "reloadParams",
-            "title" : "reloadParams"
-         },
-         {
-            "_nodes" : [
-               {
                   "default" : 0,
                   "id" : "stayConnected",
                   "title" : "stayConnected",

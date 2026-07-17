@@ -163,7 +163,6 @@
    "portalSkin" : "bootstrap",
    "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
    "registerDB" : "Demo",
-   "reloadUrls" : {},
    "securedCookie" : 0,
    "sessionDataToRemember" : {},
    "timeout" : 72000,

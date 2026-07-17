@@ -1078,8 +1078,6 @@
 "registerUrl":"URL della pagina di registrazione",
 "registerextra":"Registrable",
 "registerrule":"Registration rule",
-"reloadTimeout":"Ricarica il timeout",
-"reloadUrls":"Ricarica gli URL",
 "rememberAuthChoice":"Remember authentication choice",
 "rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Attivazione",

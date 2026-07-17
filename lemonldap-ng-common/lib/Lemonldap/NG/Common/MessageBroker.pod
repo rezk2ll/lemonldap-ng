@@ -47,8 +47,6 @@ launched when a message enter in the main events channel.
 
 =head1 METHODS
 
-Except C<applyConf>, all this methods must exist in a Message Broker.
-
 =head2 new
 
 Constructor. Arguments:
@@ -115,11 +113,6 @@ Arguments:
 =item * B<$channel>: the channel name
 
 =back
-
-=head2 applyConf
-
-Optional method called after configuration save. It is used only with default
-message broker to launch previous behavior: call all "reload URLs".
 
 =head1 MESSAGE FORMAT
 

@@ -530,18 +530,6 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
 
 
 %post common
-# Upgrade from previous version
-# See https://lemonldap-ng.org/documentation/1.0/upgrade
-if [ $1 -gt 1 ] ; then
-    if [ -e %{lm_confdir}/storage.conf \
-         -o -e %{lm_confdir}/apply.conf \
-         -o -e %{lm_confdir}/apps-list.xml ] ; then
-        # Run migration script
-        %{lm_bindir}/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
-        # Fix ownership
-        chgrp %{lm_apachegroup} %{lm_storagefile} || :
-    fi
-fi
 %systemd_post lemonldap-ng-rotateOidcKeys.timer
 
 %preun common
@@ -630,7 +618,6 @@ fi
 %{lm_bindir}/encryptTotpSecrets
 %{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata
-%{lm_bindir}/lmMigrateConfFiles2ini
 %{lm_bindir}/rotateOidcKeys
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}

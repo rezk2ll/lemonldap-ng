@@ -133,7 +133,6 @@ sub zeroConf {
             'Directory'     => $persistentSessionDir,
             'LockDirectory' => "$persistentSessionDir/lock"
         },
-        'reloadUrls'            => {},
         'sessionDataToRemember' => {},
         'notification'          => 1,
         'groups'                => {},

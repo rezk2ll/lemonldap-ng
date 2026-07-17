@@ -3425,16 +3425,6 @@ registerUrl
     :Description: URL of register page
     :Used by portal: yes
 
-reloadTimeout
-    :Location: General Parameters » Advanced parameters » Events management » Reload timeout
-    :Description: Configuration reload timeout
-    :Used by manager: yes
-
-reloadUrls
-    :Location: General Parameters » Advanced parameters » Events management » Reload URLs
-    :Description: URL to call on reload
-    :Used by portal: yes
-
 rememberAuthChoiceForgetAtLogout
     :Location: General Parameters » Plugins » Remember authentication choice » Forget auth choice at logout
     :Description: Forget Auth Choice at logout

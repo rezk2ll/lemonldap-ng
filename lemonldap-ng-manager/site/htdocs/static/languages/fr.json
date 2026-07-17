@@ -1078,8 +1078,6 @@
 "registerUrl":"URL de la page de création",
 "registerextra":"Enregistrable",
 "registerrule":"Règle d'enregistrement",
-"reloadTimeout":"Délai de mise à jour",
-"reloadUrls":"URLs de mise à jour",
 "rememberAuthChoice":"Se souvenir du choix d'authentification",
 "rememberAuthChoiceForgetAtLogout":"Oublier le choix à la déconnexion",
 "rememberAuthChoiceRule":"Activation",

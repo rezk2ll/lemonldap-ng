@@ -269,7 +269,7 @@ sub prx {
 
 # In this section, 3 methods:
 #  - getConfByNum: override SUPER method to be able to use Zero
-#  - newConf(), load a new configuration and invokes reloadUrls
+#  - newConf(), load a new configuration
 #  - newRawConf(): restore a saved conf
 
 sub getConfByNum {
@@ -387,11 +387,6 @@ sub newConf {
 
             $res->{result} = 1;
             $res->{cfgNum} = $s;
-            if ( my $status = $self->applyConf( $parser->newConf ) ) {
-                push @{ $res->{details}->{__applyResult__} },
-                  { message => "$_: $status->{$_}" }
-                  foreach ( keys %$status );
-            }
         }
         else {
             $self->auditLog(

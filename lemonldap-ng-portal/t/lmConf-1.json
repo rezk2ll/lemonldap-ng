@@ -133,7 +133,6 @@
     "LockDirectory": "t/sessions/saml/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
-  "reloadUrls": {},
   "requireToken": 0,
   "userDB": "Same",
   "vhostOptions": {

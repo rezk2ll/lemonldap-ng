@@ -133,9 +133,3 @@ msgstr ""
 "Anna Lemonldap::NGn käyttämän LDAP-tunnuksen salasana. Voit muokata tätä "
 "asetusta myöhemmin käyttäen ohjelmaa Lemonldap::NG manager."
 
-#. Type: boolean
-#. Description
-#: ../liblemonldap-ng-common-perl.templates:8001
-msgid ""
-"Lemonldap::NG configuration files have changed, try to migrate your files?"
-msgstr ""

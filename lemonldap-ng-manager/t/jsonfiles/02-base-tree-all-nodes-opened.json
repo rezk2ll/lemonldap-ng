@@ -1322,10 +1322,6 @@
       }]
     }]
   }, {
-    "id": "reloadUrls",
-    "title": "reloadUrls",
-    "type": "keyTextContainer"
-  }, {
     "id": "advancedParams",
     "title": "advancedParams",
     "nodes": [{

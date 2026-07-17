@@ -1175,11 +1175,6 @@
     "title": "sessionParams"
   }, {
     "_nodes": [{
-      "cnodes": "reloadUrls",
-      "id": "reloadUrls",
-      "title": "reloadUrls",
-      "type": "keyTextContainer"
-    }, {
       "default": 0,
       "id": "compactConf",
       "title": "compactConf",
