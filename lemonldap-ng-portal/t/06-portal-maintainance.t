@@ -32,7 +32,7 @@ ok( $res = $client->_get( '/lmerror/503', accept => 'text/html' ),
     'Attempt to access to /lmerror/503' );
 ok( $res->[0] == 200, 'Maintainance page is displayed' );
 
-my $client = LLNG::Manager::Test->new( {
+$client = LLNG::Manager::Test->new( {
         ini => {
             logLevel           => 'error',
             useRedirectOnError => 1,

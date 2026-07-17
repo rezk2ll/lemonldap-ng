@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
+use utf8;
 
 BEGIN {
     eval {
@@ -54,9 +55,7 @@ Go to Portal $url',
     ok(
         $res = $client->_post(
             '/register',
-            IO::String->new(
-                'firstname=Fôo&lastname=Bà Bar&mail=foobar%40badwolf.org'),
-            length => 53,
+            'firstname=Fôo&lastname=Bà Bar&mail=foobar%40badwolf.org',
             accept => 'text/html'
         ),
         'Ask to create account'
@@ -98,8 +97,7 @@ m#Congratulations! Your account has been succesfully created with (.+?) from \[(
     ) or explain( $mail, 'Custom done body' );
     $email  = $1;
     $ipAddr = $2;
-    ok( $email eq 'foobar@badwolf', 'Get good email' )
-      or explain( $email, 'email' );
+    is( $email, 'foobar@badwolf.org', 'Get good email' );
     ok( $ipAddr eq '127.0.0.1', 'Get good ipAddr' )
       or explain( $ipAddr, 'ipAddr' );
     ok(

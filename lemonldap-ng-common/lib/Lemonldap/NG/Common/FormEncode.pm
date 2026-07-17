@@ -6,8 +6,8 @@ use Exporter;
 our @ISA     = qw(Exporter);
 our $VERSION = '2.0.0';
 
-our @EXPORT_OK = qw(build_urlencoded);
-our @EXPORT    = qw(build_urlencoded);
+our @EXPORT_OK = qw(build_urlencoded build_urlencoded_utf8);
+our @EXPORT    = qw(build_urlencoded build_urlencoded_utf8);
 
 BEGIN {
     require Plack::Request;
@@ -18,11 +18,16 @@ sub build_urlencoded {
     my(%h)=@_;
     return join('&',map {my $v=URI::Escape::uri_escape($h{$_});"$_=$v"} keys %h);
 }
+sub build_urlencoded_utf8 {
+    my(%h)=@_;
+    return join('&',map {my $v=URI::Escape::uri_escape_utf8($h{$_});"$_=$v"} keys %h);
+}
 EOT
     }
     else {
         require WWW::Form::UrlEncoded;
-        *build_urlencoded = \&WWW::Form::UrlEncoded::build_urlencoded;
+        *build_urlencoded      = \&WWW::Form::UrlEncoded::build_urlencoded;
+        *build_urlencoded_utf8 = \&WWW::Form::UrlEncoded::build_urlencoded_utf8;
     }
 }
 

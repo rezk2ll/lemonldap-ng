@@ -15,7 +15,7 @@ sub new {
     $self->{deferDir} = $conf->{lokiDeferDir};
     $self->{url} = $conf->{lokiUrl} || 'http://localhost:3100/loki/api/v1/push';
     $self->{label} = $conf->{lokiLabel} || 'llng';
-    $self->{j}     = JSON->new->canonical;
+    $self->{j}     = JSON->new->canonical->utf8;
     $self->{ua}    = Lemonldap::NG::Common::UserAgent->new($conf)
       unless $self->{deferDir};
     $self->{instance}      = $conf->{lokiInstance} || hostname;

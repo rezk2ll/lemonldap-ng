@@ -1,4 +1,5 @@
 package t::TestStdLogger;
+use Encode;
 
 use strict;
 
@@ -32,6 +33,7 @@ sub debug  { $_[0]->{debug}->( $_[1] ) }
 
 sub logprint {
     my ( $level, $message ) = @_;
+    $message = encode( 'UTF-8', $message );
     my $tag =
       @main::currenthandler
       ? ( "[" . join( "->", @main::currenthandler ) . "] " )

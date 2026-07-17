@@ -1,5 +1,6 @@
 use warnings;
 use strict;
+use utf8;
 use IO::String;
 use Test::More;
 use LWP::UserAgent;

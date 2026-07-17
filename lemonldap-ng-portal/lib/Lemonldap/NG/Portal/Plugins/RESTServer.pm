@@ -520,7 +520,7 @@ sub updateMySession {
                     my $v;
                     if ( $key =~ /\*/ ) {
                         $key =~ s/\*/\.\*/g;
-                        if ( my ($k) = grep( /$key/, $req->params ) ) {
+                        if ( my ($k) = grep( /$key/, $req->param ) ) {
                             $v = $req->param($k);
                         }
                     }

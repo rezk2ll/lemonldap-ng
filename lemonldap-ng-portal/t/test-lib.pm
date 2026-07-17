@@ -106,11 +106,8 @@ Convenience method that builds a url-encoded query string from a hash of argumen
 =cut
 
 sub buildForm {
-    my $fields = shift;
-    my $query  = join( '&',
-        map { "$_=" . ( $fields->{$_} ? uri_escape( $fields->{$_} ) : '' ) }
-          keys(%$fields) );
-    return $query;
+    my $fields = shift || {};
+    return build_urlencoded_utf8(%$fields);
 }
 
 =head4 explain( $result, $expected_result )
@@ -461,7 +458,7 @@ sub getSessionAttributes {
     );
     count(1);
     expectOK($res);
-    ok( $res = eval { from_json( $res->[2]->[0] ) },
+    ok( $res = eval { decode_json( $res->[2]->[0] ) },
         "Deserialize session content" );
     count(1);
 
@@ -496,7 +493,7 @@ sub expectJSON {
         ' Content-Type is JSON' )
       or explain($res);
     my $json;
-    eval { $json = JSON::from_json( $res->[2]->[0] ) };
+    eval { $json = JSON::decode_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is valid JSON' );
     count(3);
     return $json;
@@ -897,6 +894,8 @@ package LLNG::Manager::Test;
 use strict;
 use Mouse;
 use IO::String;
+use Encode;
+use utf8;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
@@ -1029,6 +1028,13 @@ has ini => (
             no warnings 'redefine';
             eval
 'sub Lemonldap::NG::Common::Logger::Std::error {return $_[0]->warn($_[1])}';
+            $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{éacc} = {
+                uid  => 'éacc',
+                cn   => 'Étienne Accents',
+                mail => 'éacc@badwolf.org',
+                guy  => '',
+                type => '',
+            };
             $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
                 uid  => 'french',
                 cn   => 'Frédéric Accents',
@@ -1249,6 +1255,9 @@ sub _post {
 
     # If $body is a string, wrap in IO::Handle
     unless ( ref($body) ) {
+
+        # Make sure $body is binary
+        $body = encode( 'UTF-8', $body );
         $args{length} = length($body);
 
         # We must force a string copy here to avoid circular references

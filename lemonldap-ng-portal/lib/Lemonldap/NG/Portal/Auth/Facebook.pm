@@ -89,7 +89,6 @@ sub extractFormInfo {
 
             # Parse received data
             foreach ( keys %$data ) {
-                utf8::encode $data->{$_};
                 $self->logger->debug( "Facebook data $_: " . $data->{$_} );
             }
 

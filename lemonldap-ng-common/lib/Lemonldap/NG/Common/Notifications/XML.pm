@@ -73,7 +73,6 @@ sub newNotification {
         $root->appendChild($notif);
         $result->setDocumentElement($root);
         $result = $result->serialize;
-        utf8::encode($result);
         push @notifs, [ @data, $result ];
     }
     my $count;

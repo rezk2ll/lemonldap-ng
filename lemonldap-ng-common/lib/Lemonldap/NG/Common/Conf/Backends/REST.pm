@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::Backends::REST;
 
 use strict;
 use Lemonldap::NG::Common::UserAgent;
-use JSON qw(from_json to_json);
+use JSON;
 
 our $VERSION = '2.18.0';
 
@@ -53,7 +53,9 @@ sub getJson {
     my $resp = $self->ua->get( $self->base . $url, @_ );
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        eval {
+            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+        };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Request failed: $@\n";
             return undef;
@@ -107,13 +109,15 @@ sub store {
     return undef;
     my ( $self, $conf ) = @_;
     my $req = HTTP::Request->new( POST => $self->base );
-    $req->content( to_json($conf) );
+    $req->content( encode_json($conf) );
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);
 
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        eval {
+            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+        };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Unknown error: $@";
             return undef;

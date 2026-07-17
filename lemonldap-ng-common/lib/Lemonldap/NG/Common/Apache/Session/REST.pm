@@ -127,7 +127,9 @@ sub getJson {
     );
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        eval {
+            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+        };
         if ($@) {
             print STDERR "Unable to decode session: $@\n";
             return 0;
@@ -179,31 +181,6 @@ sub newSession {
     $self->generate unless ( $self->{data}->{_session_id} );
     $self->{data}->{_utime} = time;
 
-    #my $req = HTTP::Request->new( POST => $self->base );
-    #$req->content( to_json( { _utime => time } ) );
-    #$req->header( 'Content-Type' => 'application/json' );
-    #my $resp = $self->ua->request($req);
-    #if ( $resp->is_success ) {
-    #    my $res;
-    #    eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
-    #    if ( $@ or !$res->{result} ) {
-    #        die "Unable to create session: bad REST response $@";
-    #    }
-    #    $self->{data} = $res->{session};
-    #}
-    #else {
-    #    die "REST server returns " . $resp->status_line;
-    #}
-
-    ## Set cache
-    #if ( $self->{localStorage} ) {
-    #    my $id = $self->{data}->{_session_id};
-    #    if ( $self->cache->get($id) ) {
-    #        $self->cache->remove($id);
-    #    }
-    #    $self->cache->set( $id, to_json( $self->{data} ) );
-    #}
-
     return $self->{data};
 }
 
@@ -230,7 +207,7 @@ sub save {
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    my $content = to_json( $self->{data} );
+    my $content = to_json( $self->{data}, { utf8 => 1 } );
     $req->content($content);
     delete $self->{data}->{__secret};
     $req->header( 'Content-Type'   => 'application/json' );
@@ -239,7 +216,9 @@ sub save {
 
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        eval {
+            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+        };
         if ($@) {
             die "Bad REST response: $@";
         }
@@ -310,7 +289,7 @@ sub _getAll {
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    my $content = to_json( $self->{data} );
+    my $content = to_json( $self->{data}, utf8 => 1 );
     $req->content($content);
     $req->header( 'Content-Length' => length($content) );
     delete $self->{data}->{__secret};
@@ -319,7 +298,9 @@ sub _getAll {
 
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        eval {
+            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+        };
         if ($@) {
             die "Bad REST response: $@";
         }

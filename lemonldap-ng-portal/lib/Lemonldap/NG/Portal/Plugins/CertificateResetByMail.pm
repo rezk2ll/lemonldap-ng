@@ -1,7 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::CertificateResetByMail;
 
 use strict;
-use Encode;
 use Mouse;
 use Net::SSLeay;
 use DateTime::Format::RFC3339;

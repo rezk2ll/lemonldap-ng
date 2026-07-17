@@ -50,11 +50,6 @@ sub setSessionInfo {
 
     my $exportedAttr;
 
-    # Force UTF-8
-    my $force_utf8 =
-      $self->idpOptions->{$idpConfKey}->{samlIDPMetaDataOptionsForceUTF8}
-      if $idpConfKey;
-
     # Get all required attributes, not already set
     # in setAuthSessionInfo()
     if ($idpConfKey) {
@@ -95,10 +90,6 @@ sub setSessionInfo {
     # Add current IDP as Attribute Authority
     my $idp_metadata =
       $self->conf->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML};
-
-    if ( $self->conf->{samlMetadataForceUTF8} ) {
-        $idp_metadata = encode( "utf8", $idp_metadata );
-    }
 
     # Add this IDP to Lasso::Server as AA
     unless ( $self->addAA( $server, $idp_metadata ) ) {
@@ -157,7 +148,7 @@ sub setSessionInfo {
 
         # Try to get value
         my $value = $self->getAttributeValue( $name, $format, $friendly_name,
-            \@response_attributes, $force_utf8 );
+            \@response_attributes );
 
         unless ($value) {
             $self->logger->error(

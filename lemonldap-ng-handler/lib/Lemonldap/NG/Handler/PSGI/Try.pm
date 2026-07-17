@@ -131,9 +131,7 @@ sub _run {
                     return $res;
                 }
             }
-            $res = $self->handler($req);
-            push @{ $res->[1] }, $req->spliceHdrs;
-            return $res;
+            return $self->handlerWithResponseHeaders($req);
         }
     );
 
@@ -180,7 +178,7 @@ Lemonldap::NG::Handler::PSGI::Try - Special handler for Lemonldap::NG Portal
 
     # Will be called only if authorized
     my $userId = $self->userId;
-    my $book = $req->params('book');
+    my $book = $req->param('book');
     my $method = $req->method;
     ...
     $self->sendJSONresponse(...);

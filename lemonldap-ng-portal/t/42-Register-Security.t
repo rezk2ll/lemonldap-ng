@@ -1,7 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
-use IO::String;
+use utf8;
 
 BEGIN {
     eval {
@@ -45,9 +45,7 @@ SKIP: {
     ok(
         $res = $client->_post(
             '/register',
-            IO::String->new(
-                'firstname=fôo&lastname=bar&mail=foobar%40badwolf.org'),
-            length => 53,
+            'firstname=fôo&lastname=bar&mail=foobar%40badwolf.org',
             accept => 'text/html'
         ),
         'Ask to create account'

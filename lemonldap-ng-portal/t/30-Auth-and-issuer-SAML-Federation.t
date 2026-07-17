@@ -208,7 +208,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 0,
                         samlIDPMetaDataOptionsFederationEntityID       =>
                           'https://federation.renater.fr/',
                     },
@@ -220,7 +219,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsFederationEntityID       =>
                           'https://auth.centrale-marseille.fr/idp/shibboleth',
                     },

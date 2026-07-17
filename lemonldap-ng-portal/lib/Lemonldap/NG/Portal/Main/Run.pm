@@ -1020,6 +1020,19 @@ sub _dump {
     return;
 }
 
+sub _dump_string {
+    my ($self, $str) = @_;
+    use charnames ':full';
+    $self->logger->debug( '$str = "'.
+    join("",
+        map { $_ > 255                    # if wide character...
+            ? sprintf("\\N{%s}", charnames::viacode($_))
+            : ($_ < 0x20 or $_ >= 0x7F )  # if non printable
+            ? sprintf("\\N{%s}", charnames::viacode($_))
+            : quotemeta(chr($_))          # else quoted or as themselves
+        } unpack("W*", $str)) .'"');      # unpack Unicode characters
+}
+
 sub getSkinTplDir {
     my ( $self, $skin ) = @_;
 

@@ -58,7 +58,7 @@ sub new {
         ( $conf->{ldapPort}    ? ( port    => $conf->{ldapPort} )    : () ),
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
-        ( $conf->{ldapRaw}     ? ( raw     => $conf->{ldapRaw} )     : () ),
+        ( $conf->{ldapRaw}     ? ( raw     => qr/$conf->{ldapRaw}/ ) : () ),
     );
     unless ($self) {
         $portal->logger->error( "LDAP initialization error: " . $@ );
@@ -118,16 +118,13 @@ sub bind {
     $self->{portal}->logger->debug("Call bind for $dn") if $dn;
     unless ($dn) {
         $dn = $self->{conf}->{managerDn};
-        $args{password} =
-          decode( 'utf-8', $self->{conf}->{managerPassword} );
+        $args{password} = $self->{conf}->{managerPassword};
     }
     if ( $dn && $args{password} ) {
         if ( $self->{conf}->{ldapPwdEnc} ne 'utf-8' ) {
             eval {
-                my $tmp = encode(
-                    $self->{conf}->{ldapPwdEnc},
-                    decode( 'utf-8', $args{password} )
-                );
+                my $tmp =
+                  encode( $self->{conf}->{ldapPwdEnc}, $args{password} );
                 $args{password} = $tmp;
             };
             print STDERR "$@\n" if ($@);
@@ -347,7 +344,6 @@ sub userModifyPassword {
     my $err;
     my $mesg;
 
-    utf8::downgrade($dn);
     $self->{portal}->logger->debug("Call modify password for $dn");
 
     # Adjust configuration for AD
@@ -357,11 +353,10 @@ sub userModifyPassword {
         $passwordAttribute = "unicodePwd";
 
         # Encode password for AD
-        $newpassword = encode( "UTF-16LE",
-            decode( "UTF-8", chr(34) . $newpassword . chr(34) ) );
+        $newpassword = encode( "UTF-16LE", chr(34) . $newpassword . chr(34) );
         if ( $oldpassword and $asUser ) {
-            $oldpassword = encode( "UTF-16LE",
-                decode( "UTF-8", chr(34) . $oldpassword . chr(34) ) );
+            $oldpassword =
+              encode( "UTF-16LE", chr(34) . $oldpassword . chr(34) );
         }
         $self->{portal}->logger->debug("Active Directory mode enabled");
 
@@ -710,10 +705,6 @@ sub searchGroups {
 
                 # Launch group search
                 if ($group_value) {
-                    if ( $self->{conf}->{ldapGroupDecodeSearchedValue} ) {
-                        utf8::decode($group_value);
-                    }
-
                     if ( $dupcheck->{$group_value} ) {
                         $self->{portal}->logger->debug(
 "Disable search for $group_value, as it was already searched"

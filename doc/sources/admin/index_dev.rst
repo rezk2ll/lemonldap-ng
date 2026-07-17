@@ -12,3 +12,4 @@ Development
    customhandlers
    customconfigplaceholder
    oidctokenexchange
+   devutf8

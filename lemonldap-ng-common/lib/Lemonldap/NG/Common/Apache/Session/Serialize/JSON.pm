@@ -8,7 +8,7 @@ our $VERSION = '2.19.0';
 sub serialize {
     my $session = shift;
 
-    $session->{serialized} = to_json( $session->{data}, { allow_nonref => 1 } );
+    $session->{serialized} = to_json( $session->{data}, { allow_nonref => 1, utf8 => 1 } );
 }
 
 sub unserialize {
@@ -36,7 +36,7 @@ sub decodeThaw64 {
 sub _unserialize {
     my ( $serialized, $next ) = @_;
     my $tmp;
-    eval { $tmp = from_json( $serialized, { allow_nonref => 1 } ) };
+    eval { $tmp = from_json( $serialized, { allow_nonref => 1, utf8 => 1 } ) };
     if ($@) {
         eval {
             require Storable;

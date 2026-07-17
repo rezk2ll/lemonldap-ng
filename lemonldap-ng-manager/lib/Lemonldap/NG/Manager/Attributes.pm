@@ -2135,7 +2135,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'ldapRaw' => {
-            'type' => 'text'
+            'default' => '(?i:^jpegPhoto|;binary)',
+            'type'    => 'text'
         },
         'ldapSearchDeref' => {
             'default' => 'find',

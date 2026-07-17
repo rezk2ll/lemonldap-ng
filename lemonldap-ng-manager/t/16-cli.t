@@ -2,12 +2,14 @@ use warnings;
 use File::Copy;
 use File::Temp 'tempdir';
 use Test::More;
-use Test::Output;
 use JSON;
+use Encode;
+use utf8;
 use strict;
 require 't/test-lib.pm';
 
-my $tests = 23;
+use Test::Output;
+my $tests = 25;
 
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
@@ -35,6 +37,15 @@ combined_like( sub { llclient->run(@cmd) }, qr/Saved under/, '"addKey" OK' );
 $res = Test::Output::stdout_from( sub { llclient->run(@cmd) } );
 ok( $res =~ /^notification\s+=\s+1$/, '"get notification" OK' )
   or diag " $res";
+
+@cmd = qw(get applicationList/0001-cat/0002-app/options/name);
+$res =
+  decode( 'UTF-8', Test::Output::stdout_from( sub { llclient->run(@cmd) } ) );
+like(
+    $res,
+    qr#applicationList/0001-cat/0002-app/options/name = Application Tést 1$#,
+    '"get applicatio name" OK'
+);
 
 # Test 'addKey' command
 @cmd = qw(-yes 1 addKey locationRules/test1.example.com ^/reject deny);
@@ -68,13 +79,18 @@ combined_like( sub { llclient->run(@cmd) }, qr/Saved under/, '"addKey" OK' );
 $res = Test::Output::stdout_from( sub { llclient->run(@cmd) } );
 ok( $res =~ /^\s*(\{.*\})\s*$/s, '"save" result looks like JSON' );
 my $j;
-eval { $j = JSON::from_json($res) };
+eval { $j = JSON::decode_json($res) };
 is( $j->{cfgNum}, 1, "correct version number" );
 ok( not($@), ' result is JSON' ) or diag "error: $@";
+is( $j->{applicationList}->{'0001-cat'}->{'0002-app'}->{options}->{name},
+    "Application Tést 1" );
 
 # Test 'restore' command
-my $tmpFile = File::Temp->new();
+my ($tmpFile) = File::Temp->new();
+binmode $tmpFile, ':encoding(UTF-8)';
 print $tmpFile $res;
+close $tmpFile;
+
 @cmd = ( 'restore', $tmpFile->filename );
 combined_like(
     sub { llclient->run(@cmd) },
@@ -117,14 +133,13 @@ combined_like(
 );
 
 # Test 'purge' command
-my $client        = llclient;
 my $clientConfAcc = llclient->mgr->_confAcc;
 
 # Generate 3 forged configs
 &genConfFiles;
 @cmd = qw(-yes 1 purge --keep-last 2);
 combined_like(
-    sub { $client->run(@cmd) },
+    sub { llclient->run(@cmd) },
 
   # If there are 3 configs and we want to keep the last 2, one config is deleted
     qr/Deleted 1 configs/,
@@ -135,10 +150,9 @@ is( $clientConfAcc->available(),
 
 # Generate 3 forged configs
 &genConfFiles;
-$client = llclient;
-@cmd    = qw(-yes 1 purge --keep-recent 5);
+@cmd = qw(-yes 1 purge --keep-recent 5);
 combined_like(
-    sub { $client->run(@cmd) },
+    sub { llclient->run(@cmd) },
     qr/Deleted 2 configs/,
     'Configuration purge --keep-recent OK'
 );

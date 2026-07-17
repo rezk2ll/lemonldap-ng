@@ -430,8 +430,8 @@ sub notificationServer {
     }
     elsif ( $req->method =~ /^DELETE$/i ) {
         $self->p->logger->debug("DELETE request");
-        my $uid = $req->params('uid');
-        my $ref = $req->params('reference');
+        my $uid = $req->param('uid');
+        my $ref = $req->param('reference');
         return $self->p->sendError( $req,
             "Missing parameters -> uid: $uid / ref: $ref", 400 )
           unless ( $uid and $ref );

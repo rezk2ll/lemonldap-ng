@@ -14,10 +14,10 @@ extends 'Lemonldap::NG::Manager::Api::Common';
 sub getMenuApp {
     my ( $self, $req ) = @_;
 
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
-    my $appConfKey = $req->params('appConfKey');
+    my $appConfKey = $req->param('appConfKey');
 
     # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
@@ -72,13 +72,13 @@ sub getMenuApp {
 sub findMenuAppByConfKey {
     my ( $self, $req ) = @_;
 
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
     my $pattern = (
-        defined $req->params('uPattern')
-        ? $req->params('uPattern')
-        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
+        defined $req->param('uPattern')
+        ? $req->param('uPattern')
+        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -119,7 +119,7 @@ sub addMenuApp {
     my ( $self, $req ) = @_;
     my $add = $req->jsonBodyToObj;
 
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
@@ -179,10 +179,10 @@ sub addMenuApp {
 sub updateMenuApp {
     my ( $self, $req ) = @_;
 
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
-    my $appConfKey = $req->params('appConfKey')
+    my $appConfKey = $req->param('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -223,10 +223,10 @@ sub updateMenuApp {
 
 sub replaceMenuApp {
     my ( $self, $req ) = @_;
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
-    my $appConfKey = $req->params('appConfKey')
+    my $appConfKey = $req->param('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -285,10 +285,10 @@ sub replaceMenuApp {
 sub deleteMenuApp {
     my ( $self, $req ) = @_;
 
-    my $catConfKey = $req->params('confKey')
+    my $catConfKey = $req->param('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
 
-    my $appConfKey = $req->params('appConfKey')
+    my $appConfKey = $req->param('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
     $self->logger->debug(

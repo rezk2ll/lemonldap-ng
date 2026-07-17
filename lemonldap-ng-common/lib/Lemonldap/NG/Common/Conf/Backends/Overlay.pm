@@ -22,7 +22,7 @@ sub load {
             my $content = <$f>;
             close $f;
             if ( $file =~ $hashParameters ) {
-                eval { $content = JSON::from_json($content) };
+                eval { $content = JSON::decode_json($content) };
                 if ($@) {
                     push @errors, "Bad over file $file: $@";
                 }
@@ -55,8 +55,9 @@ sub store {
         my $data = delete $fields->{$file};
         if ( $self->{overlayWrite} ) {
             if ( open my $f, '>', "$self->{overlayDirectory}/$file" ) {
-                print $f (
-                    $file =~ $hashParameters ? JSON::to_json($data) : $data );
+                print $f ( $file =~ $hashParameters
+                    ? JSON::encode_json($data)
+                    : $data );
                 close $f;
             }
 
@@ -89,7 +90,7 @@ sub overList {
             my $content = <$f>;
             close $f;
             if ( $file =~ $hashParameters ) {
-                eval { $content = JSON::from_json($content) };
+                eval { $content = JSON::decode_json($content) };
                 if ($@) {
                     push @errors, "Bad over file $file: $@";
                 }

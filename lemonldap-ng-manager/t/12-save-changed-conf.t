@@ -47,7 +47,7 @@ ok( $resBody->{details}->{__changes__}->[23]->{confCompacted} == 1,
 
 my @removedKeys = split /; /,
   $resBody->{details}->{__changes__}->[23]->{removedKeys};
-ok( @removedKeys == 60, 'All removed keys found' )
+ok( @removedKeys == 59, 'All removed keys found' )
   or print STDERR Dumper( \@removedKeys );
 
 #print STDERR Dumper($resBody);
@@ -126,7 +126,7 @@ sub changes {
         },
         {
             'key' =>
-              'applicationList, Sample applications, Application Test 1, uri',
+              'applicationList, Sample applications, Application Tést 1, uri',
             'old' => 'http://test1.example.com/',
             'new' => 'http://testex.example.com/'
         },

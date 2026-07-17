@@ -2,7 +2,6 @@ package Lemonldap::NG::Common::Conf::Serializer;
 
 use strict;
 use utf8;
-use Encode;
 use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 
@@ -95,9 +94,6 @@ sub unserialize {
     foreach my $k ( keys %$fields ) {
         my $v = $fields->{$k};
         if ( $k =~ $hashParameters ) {
-            unless ( utf8::is_utf8($v) ) {
-                $v = encode( 'UTF-8', $v );
-            }
             $conf->{$k} = (
                 $v =~ /./
                 ? eval { from_json( $v, { allow_nonref => 1 } ) }
@@ -110,9 +106,6 @@ sub unserialize {
             }
         }
         elsif ( $k =~ $arrayParameters ) {
-            unless ( utf8::is_utf8($v) ) {
-                $v = encode( 'UTF-8', $v );
-            }
             $conf->{$k} = (
                 $v =~ /./
                 ? eval { from_json( $v, { allow_nonref => 1 } ) }

@@ -80,6 +80,7 @@ lib/Lemonldap/NG/Common/PSGI/Router.pm
 lib/Lemonldap/NG/Common/PSGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/PSGI/SOAPService.pm
 lib/Lemonldap/NG/Common/Regexp.pm
+lib/Lemonldap/NG/Common/Request/WithEncoding.pm
 lib/Lemonldap/NG/Common/Safelib.pm
 lib/Lemonldap/NG/Common/Session.pm
 lib/Lemonldap/NG/Common/Session/Purge.pm

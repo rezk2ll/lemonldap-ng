@@ -279,10 +279,6 @@ sub load_idp_from_conf {
         return;
     }
 
-    if ( $self->conf->{samlMetadataForceUTF8} ) {
-        $idp_metadata = encode( "utf8", $idp_metadata );
-    }
-
     # Store IDP entityID and Organization Name
     my ( $tmp, $entityID ) = ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
 
@@ -409,10 +405,6 @@ sub load_sp_from_conf {
 "Metadata for SP $spConfKey is in old format. Please reload them from Manager"
         );
         return;
-    }
-
-    if ( $self->conf->{samlMetadataForceUTF8} ) {
-        $sp_metadata = encode( "utf8", $sp_metadata );
     }
 
     # Get SP entityID
@@ -1155,11 +1147,7 @@ sub createAuthnRequest {
         or $method == $self->getHttpMethod("artifact-post") )
     {
 
-        # Get artifact ID and Content, and store them
-        my $artifact_id      = $login->get_artifact;
-        my $artifact_message = $login->get_artifact_message;
-
-        $self->storeArtifact( $artifact_id, $artifact_message );
+        $self->storeArtifact($login);
     }
     return $login;
 }
@@ -1544,18 +1532,16 @@ sub getAssertion {
     return $assertion;
 }
 
-## @method string getAttributeValue(string name, string format, string friendly_name, arrayref attributes, boolean force_utf8)
+## @method string getAttributeValue(string name, string format, string friendly_name, arrayref attributes)
 # Get SAML attribute value corresponding to name, format and friendly_name
 # Multivaluated values are separated by multiValuesSeparator
-# If force_utf8 flag is set, value is encoded in UTF-8
 # @param name SAML attribute name
 # @param format optional SAML attribute format
 # @param friendly_name optional SAML attribute friendly name
 # @param attributes Attributes
-# @param force_utf8 optional flag to force value in UTF-8
 # @return attribute value
 sub getAttributeValue {
-    my ( $self, $name, $format, $friendly_name, $attributes, $force_utf8 ) = @_;
+    my ( $self, $name, $format, $friendly_name, $attributes ) = @_;
     my $value;
 
     # Loop on attributes
@@ -1577,7 +1563,7 @@ sub getAttributeValue {
         $value = join(
             $self->{conf}->{multiValuesSeparator},
             map {
-                eval { $_->any->content }
+                eval { decode( 'UTF-8', $_->any->content ) }
                   || ()
             } @attr_values
         );
@@ -2065,7 +2051,11 @@ sub resolveArtifact {
 # @param session_id Session ID
 # @return result
 sub storeArtifact {
-    my ( $self, $id, $message, $session_id ) = @_;
+    my ( $self, $login, $session_id ) = @_;
+
+    # Get artifact ID and Content, and store them
+    my $id      = $login->get_artifact;
+    my $message = decode( 'UTF-8', $login->get_artifact_message );
 
     my $infos = {
         type    => 'artifact',    # Session type
@@ -2158,8 +2148,10 @@ sub createArtifactResponse {
 
     # Load artifact message into login response
     my $art_session = $self->loadArtifact($artifact_id);
-    utf8::decode( $art_session->{message} );
-    eval { $login->set_artifact_message( $art_session->{message} ); };
+
+    my $encoded_message = encode( 'UTF-8', $art_session->{message} );
+
+    eval { $login->set_artifact_message($encoded_message); };
     if ($@) {
         $self->checkLassoError($@);
         $self->logger->error("Cannot load artifact message");
@@ -3216,15 +3208,13 @@ sub createAttribute {
     return $attribute;
 }
 
-## @method Lasso::Saml2AttributeValue createAttributeValue(value, force_utf8)
+## @method Lasso::Saml2AttributeValue createAttributeValue(value)
 # Create a new SAML attribute value
 # @param value Value to store (string or Lasso::Node)
-# @param force_utf8 set to 1 to decode UTF8 value
 # @return SAML attribute value
 sub createAttributeValue {
-    my ( $self, $value, $force_utf8 ) = @_;
+    my ( $self, $value ) = @_;
     my $saml2value;
-    $force_utf8 = 1 unless defined($force_utf8);
 
     # Value is required
     return unless defined $value;
@@ -3240,10 +3230,6 @@ sub createAttributeValue {
 
     # If a string was provided, wrap it in a TextNode
     if ( !ref($content) ) {
-
-        # Decode UTF-8
-        $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
-        $value = decode( "utf8", $value )                if $force_utf8;
         $self->logger->debug("Create attribute value $value");
 
         eval { $content = Lasso::MiscTextNode->new(); };
@@ -3252,7 +3238,10 @@ sub createAttributeValue {
             return;
         }
         $content->text_child(1);
-        $content->content($value);
+
+        # Lasso expects binary values
+        my $encoded_value = encode( 'UTF-8', $value );
+        $content->content($encoded_value);
     }
 
     $saml2value->any($content);

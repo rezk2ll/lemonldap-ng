@@ -43,10 +43,10 @@ sub setTypes {
 
 sub delSession {
     my ( $self, $req ) = @_;
-    my $type = $req->params('sessionType');
+    my $type = $req->param('sessionType');
     my $mod  = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id );
     $self->auditLog(
@@ -69,7 +69,7 @@ sub deleteOIDCConsent {
     my ( $self, $req ) = @_;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
     # Try to read session
@@ -275,7 +275,7 @@ sub search2F {
     my $total = ( keys %$res );
     $self->logger->debug("2FA session(s) left : $total / $all");
 
-    if ( my $group = $req->params('groupBy') ) {
+    if ( my $group = $req->param('groupBy') ) {
         my $r;
         $group =~ s/\b_whatToTrace\b/$whatToTrace/o;
 
@@ -369,7 +369,7 @@ sub delete2F {
     my ( $self, $req ) = @_;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
     # Try to read session
@@ -564,7 +564,7 @@ sub getPersistentSession {
 sub getMod {
     my ( $self, $req ) = @_;
     my ( $s, $m );
-    unless ( $s = $req->params('sessionType') ) {
+    unless ( $s = $req->param('sessionType') ) {
         $self->error( $req->error('Session type is required') );
         return ();
     }
@@ -572,7 +572,7 @@ sub getMod {
         $self->error( $req->error('Unknown (or unconfigured) session type') );
         return ();
     }
-    if ( my $kind = $req->params('kind') ) {
+    if ( my $kind = $req->param('kind') ) {
         $m->{kind} = $kind;
     }
     return $m;

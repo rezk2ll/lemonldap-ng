@@ -2,6 +2,7 @@ package Lemonldap::NG::Common::Logger::Syslog;
 
 use strict;
 use Sys::Syslog qw(:standard :extended);
+use Encode;
 
 our $VERSION = '2.22.0';
 
@@ -40,8 +41,9 @@ sub new {
             my $name = $_;
             $name = 'warning' if ( $_ eq 'warn' );
             $name = 'err'     if ( $_ eq 'error' );
-            eval
-              qq'sub $_ {syslog("$name|".\$_[0]->{facility},"[$_] ". \$_[1])}';
+            eval qq'sub $_ {
+              syslog("$name|".\$_[0]->{facility},"[$_] ". encode("UTF-8", \$_[1]))
+              }';
             die $@ if ($@);
         }
         else {

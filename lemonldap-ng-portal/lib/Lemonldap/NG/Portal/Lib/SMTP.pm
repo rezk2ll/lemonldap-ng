@@ -76,7 +76,7 @@ sub translate {
       . " ($self->{conf}->{templateDir}/$lang_code.json or $self->{conf}->{templateDir}/common/mail/en.json)";
     $json = join '', <F>;
     close F;
-    my $lang = from_json( $json, { allow_nonref => 1 } );
+    my $lang = from_json( $json, { allow_nonref => 1, utf8 => 1 } );
     my $langOver =
       from_json( $self->p->getTrOver($req), { allow_nonref => 1 } );
 
@@ -121,8 +121,8 @@ sub send_mail {
     $self->logger->info("send_mail called to send \"$subject\" to $mail");
 
     # Encode the body with the given charset
-    $body    = encode( $self->charset, decode( 'utf-8', $body ) );
-    $subject = encode( $self->charset, decode( 'utf-8', $subject ) );
+    $body    = encode( $self->charset, $body );
+    $subject = encode( $self->charset, $subject );
 
     # Debug messages
     $self->logger->debug( "SMTP From " . $self->conf->{mailFrom} );

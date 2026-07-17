@@ -4,6 +4,7 @@
 package Lemonldap::NG::Handler::Server::Main;
 
 use strict;
+use Encode;
 
 our $VERSION = '2.19.0';
 
@@ -22,7 +23,8 @@ $ENV{LLNG_DEFAULTLOGGER} ||= defaultLogger;
 sub set_header_in {
     my ( $class, $req, %headers ) = @_;
     for my $k ( keys %headers ) {
-        $req->{env}->{ cgiName($k) } = $headers{$k};
+        my $value = encode( 'UTF-8', $headers{$k} );
+        $req->{env}->{ cgiName($k) } = $value;
     }
     push @{ $req->{respHeaders} }, %headers;
 }

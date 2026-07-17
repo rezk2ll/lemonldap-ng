@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Auth::SSL;
 
 use strict;
 use Mouse;
+use Encode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CERTIFICATEREQUIRED
   PE_ERROR
@@ -47,7 +48,7 @@ sub auth_route {
             $req,
             $ssl_user,
             {
-                _Issuer => $req->env->{ $self->issuer_var },
+                _Issuer => decode( 'UTF-8', $req->env->{ $self->issuer_var } ),
             }
         );
     }
@@ -60,17 +61,17 @@ sub auth_route {
 sub get_user_from_req {
     my ( $self, $req ) = @_;
 
-    my $field      = $self->subject_var;
-    my $issuer_var = $self->issuer_var;
-    if ( $req->env->{$issuer_var} ) {
-        $self->logger->debug(
-            'Received SSL issuer ' . $req->env->{$issuer_var} );
+    my $field        = $self->subject_var;
+    my $issuer_var   = $self->issuer_var;
+    my $issuer_value = decode( 'UTF-8', $req->env->{$issuer_var} );
+    if ($issuer_value) {
+        $self->logger->debug("Received SSL issuer $issuer_value");
 
-        if ( my $tmp = $self->conf->{SSLVarIf}->{ $req->env->{$issuer_var} } ) {
+        if ( my $tmp = $self->conf->{SSLVarIf}->{$issuer_value} ) {
             $field = $tmp;
         }
     }
-    my $value = $req->env->{$field};
+    my $value = decode( 'UTF-8', $req->env->{$field} );
     if ($value) {
         $self->logger->debug("Using SSL environment variable $field");
     }

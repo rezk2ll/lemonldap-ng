@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use IO::String;
 use strict;
+use utf8;
 
 require 't/test-lib.pm';
 

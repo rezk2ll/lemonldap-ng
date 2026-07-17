@@ -126,7 +126,7 @@ SKIP: {
     );
     is(
         $saml->idpOptions->{'https://idp4.crous-lorraine.fr/idp/shibboleth'}
-          ->{'samlIDPMetaDataOptionsForceUTF8'},
+          ->{'samlIDPMetaDataOptionsSignSLOMessage'},
         '0', "IDP option from federation defaults"
     );
     $saml->load_config("Notfound");
@@ -261,10 +261,9 @@ sub sp {
                         samlIDPMetaDataOptionsSSOBinding     => 'redirect',
                         samlIDPMetaDataOptionsSLOBinding     => 'redirect',
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
-                        samlIDPMetaDataOptionsSignSLOMessage => 1,
+                        samlIDPMetaDataOptionsSignSLOMessage => 0,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 0,
                         samlIDPMetaDataOptionsFederationEntityID       =>
                           'https://federation.renater.fr/',
                     },
@@ -276,7 +275,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsFederationEntityID       =>
                           'https://auth.centrale-marseille.fr/idp/shibboleth',
                     },
@@ -288,7 +286,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {

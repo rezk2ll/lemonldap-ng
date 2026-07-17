@@ -13,7 +13,7 @@ extends 'Lemonldap::NG::Manager::Api::Common';
 sub getSamlSpByConfKey {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug("[API] SAML SP $confKey configuration requested");
@@ -33,9 +33,9 @@ sub getSamlSpByConfKey {
 sub findSamlSpByConfKey {
     my ( $self, $req ) = @_;
     my $pattern = (
-        defined $req->params('uPattern')
-        ? $req->params('uPattern')
-        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
+        defined $req->param('uPattern')
+        ? $req->param('uPattern')
+        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -61,9 +61,9 @@ sub findSamlSpByConfKey {
 sub findSamlSpByEntityId {
     my ( $self, $req ) = @_;
     my $entityId = (
-        defined $req->params('uEntityId') ? $req->params('uEntityId')
+        defined $req->param('uEntityId') ? $req->param('uEntityId')
         : (
-            defined $req->params('entityId') ? $req->params('entityId')
+            defined $req->param('entityId') ? $req->param('entityId')
             : undef
         )
     );
@@ -140,7 +140,7 @@ sub addSamlSp {
 sub replaceSamlSp {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -180,7 +180,7 @@ sub replaceSamlSp {
 sub updateSamlSp {
     my ( $self, $req ) = @_;
     my $res;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -220,7 +220,7 @@ sub updateSamlSp {
 sub deleteSamlSp {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration

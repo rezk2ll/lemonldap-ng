@@ -34,6 +34,12 @@ License: Artistic or GPL-1+
 Comment: contains code from DateTime::Format::Duration::XSD by Smal D A,
  <mialinx@gmail.com>
 
+Files: lemonldap-ng-common/lib/Lemonldap/NG/Common/Request/WithEncoding.pm
+Copyright: 2025, Worteks <info@worteks.com>
+License: Artistic
+Comment: contains code from Plack::Request::WithEncoding by moznion
+ <moznion@gmail.com>
+
 Files: *.js
 Copyright: 2005-2025, Xavier Guimard <yadd@debian.org>
  2006-2025, Clement Oudot <clem.oudot@gmail.com>

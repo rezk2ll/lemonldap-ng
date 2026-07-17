@@ -304,7 +304,6 @@ sub display {
     elsif ( $req->error == PE_OK || $req->error == PE_ISSUERTIMEOUT ) {
         $skinfile = 'menu';
 
-        #utf8::decode($auth_user);
         %templateParams = (
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},

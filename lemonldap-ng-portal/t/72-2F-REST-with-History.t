@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
@@ -27,7 +28,7 @@ LWP::Protocol::PSGI->register(
         }
         return [
             200,
-            [ 'Content-Type' => 'application/json', 'Content-Length' => 12 ],
+            [ 'Content-Type' => 'application/json', ],
             ['{"result":1}']
         ];
     }

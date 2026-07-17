@@ -1,8 +1,10 @@
 use warnings;
 use Test::More;
 use IO::String;
+use Encode;
 use URI;
 use strict;
+use utf8;
 
 require 't/test-lib.pm';
 
@@ -38,7 +40,6 @@ sub testUserTokenSSLAuth {
                 sslByAjax         => 1,
                 sslHost           => 'https://authssl.example.com/authssl',
                 restSessionServer => 1,
-                customPlugins     => "t::CheckUserEncoding",
             }
         }
     );
@@ -68,42 +69,13 @@ sub testUserTokenSSLAuth {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'nossl', 'ajax_auth_token' );
 
-    # FIXME
-    subtest "Check workaround for #3180" => sub {
-        ok(
-            $res = $client->_get(
-                '/authssl',
-                accept => 'application/json',
-                custom => {
-                    SSL_CLIENT_S_DN_Custom   => 'dwhø',
-                    'SSL_CLIENT_I_DN_Custom' => 'cn=MyIssuer'
-                }
-            ),
-            'Auth query'
-        );
-        my $json = expectJSON($res);
-        ok( $json->{ajax_auth_token}, "User token was returned" );
-        my $ajax_auth_token = $json->{ajax_auth_token};
-
-        $query .= "&ajax_auth_token=$ajax_auth_token";
-
-        ok(
-            $res = $client->_post(
-                '/', IO::String->new($query),
-                length => length($query),
-                accept => 'text/html',
-            ),
-            'Post form'
-        );
-    };
-
     # AJAX request
     ok(
         $res = $client->_get(
             '/authssl',
             accept => 'application/json',
             custom => {
-                SSL_CLIENT_S_DN_Custom   => 'dwho',
+                SSL_CLIENT_S_DN_Custom   => encode_utf8('éacc'),
                 'SSL_CLIENT_I_DN_Custom' => 'cn=MyIssuer'
             }
         ),
@@ -125,13 +97,14 @@ sub testUserTokenSSLAuth {
     );
     my $id = expectCookie($res);
     expectRedirection( $res, 'http://test1.example.com/' );
+
     expectSessionAttributes(
         $client, $id,
         authenticationLevel => 5,
         _auth               => 'SSL',
         _Issuer             => 'cn=MyIssuer',
-        _user               => 'dwho',
-        uid                 => 'dwho'
+        _user               => 'éacc',
+        uid                 => 'éacc'
     );
 }
 
@@ -314,16 +287,3 @@ subtest 'SSLVarIf mechanism' => sub {
 };
 
 done_testing();
-
-package t::CheckUserEncoding;
-use Test::More;
-use Mouse;
-extends 'Lemonldap::NG::Portal::Main::Plugin';
-
-use constant afterSub => { extractFormInfo => 'mysub', };
-
-sub mysub {
-    my ( $self, $req ) = @_;
-    is( utf8::is_utf8( $req->user ) || 0, 0, '$req->user is a binary string' );
-    return 0;
-}

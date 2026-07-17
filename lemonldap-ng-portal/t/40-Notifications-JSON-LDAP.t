@@ -4,10 +4,11 @@ use strict;
 use IO::String;
 use Lemonldap::NG::Common::Notifications::LDAP "JSON";
 use Lemonldap::NG::Common::Logger::Std;
+use utf8;
 
 my $res;
 my $notif;
-my $maintests = 11;
+my $maintests = 12;
 my $logLevel  = 'error';
 require 't/test-lib.pm';
 my $file                       = tempdb();
@@ -52,7 +53,7 @@ SKIP: {
     "reference": "testref",
     "title": "Test title",
     "subtitle": "Test subtitle",
-    "text": "This is a test text",
+    "text": "This is a test text with spécial characters",
     "check": "Accept test"
     }';
     $notif->newNotification($xml);
@@ -65,7 +66,7 @@ SKIP: {
   "condition": "$env->{REMOTE_ADDR} =~ /127.0.0.1/",
   "title": "Test2 title",
   "subtitle": "Test2 subtitle",
-  "text": "This is a second test text",
+  "text": "This is a second test text with spécial characters",
   "check": ["Accept test","I am sure"]
 }';
     $notif->newNotification($xml);
@@ -78,7 +79,7 @@ SKIP: {
   "condition": "\'0\'",
   "title": "Test title",
   "subtitle": "Test subtitle",
-  "text": "This is a test text",
+  "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
     $notif->newNotification($xml);
@@ -91,7 +92,7 @@ SKIP: {
   "condition": "$env->{REMOTE_ADDR} =~ /127.1.1.1/",
   "title": "Test title",
   "subtitle": "Test subtitle",
-  "text": "This is a test text",
+  "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
     $notif->newNotification($xml);
@@ -103,7 +104,7 @@ SKIP: {
   "reference": "testref2",
   "title": "Test title",
   "subtitle": "Test subtitle",
-  "text": "This is a test text",
+  "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
     $notif->newNotification($xml);
@@ -144,6 +145,12 @@ SKIP: {
     ok( $refs[1] eq 'testref', '2nd reference found is "testref"' )
       or print STDERR Dumper( $res->[2]->[0] );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
+
+    my $notifTextFromPage = getHtmlElement( $res,
+'//input[@value="testref2"]/following-sibling::p[@class="notifText"][1]/text()'
+    )->pop->data;
+    is( $notifTextFromPage,
+        "This is a second test text with spécial characters" );
 
     # Verify that cookie is ciphered (session invalid)
     ok(

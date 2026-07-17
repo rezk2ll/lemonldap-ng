@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use strict;
 use Lemonldap::NG::Common::Session 'id2storage';
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;

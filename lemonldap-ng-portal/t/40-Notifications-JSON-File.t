@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use JSON;
 
@@ -48,10 +49,12 @@ sub store_notification {
                 "reference" => $reference,
                 "title"     => "Test title",
                 "subtitle"  => "Test subtitle",
-                "text"      => 'This is a test text for $uid',
-                "check"     => [ "Accept test", "Accept test2" ]
+                "text"      =>
+                  'This is a test text for $uid with spécial characters',
+                "check" => [ "Accept test", "Accept test2" ]
             }
-        ]
+        ],
+        { utf8 => 1 }
     );
     close F;
 }
@@ -160,7 +163,7 @@ sub test {
 
     is(
         getHtmlElement( $res, '//p[@class="notifText"]/text()' )->pop()->data,
-        "This is a test text for dwho",
+        "This is a test text for dwho with spécial characters",
         "Found notification text"
     );
     count(1);

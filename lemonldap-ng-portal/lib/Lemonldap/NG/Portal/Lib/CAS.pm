@@ -156,7 +156,7 @@ sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
     $self->logger->debug("Send response: $s");
     return $self->p->sendTextResponse( $req, $s,
-        type => 'application/soap+xml' );
+        type => 'application/soap+xml; charset=utf-8' );
 }
 
 # Try to recover the CAS session corresponding to id and return session data
@@ -844,7 +844,6 @@ sub getAttributesFromServiceValidateResponse {
             sub {
                 my $k = $_[0]->localname;
                 my $v = $_[0]->textContent;
-                utf8::encode($v);
                 $attrs->add( $k => $v );
             }
         );
@@ -937,7 +936,6 @@ sub _saml_validate_get_attributes {
                 $attributes->{$attribute_name} = [
                     map {
                         my $text = $_->textContent;
-                        utf8::encode($text);
                         $text =~ s/^\s+//;
                         $text =~ s/\s+$//;
                         $text;
@@ -1055,7 +1053,6 @@ sub returnSamlValidateSuccess {
                 my $attribute_value = $document->createElementNS(
                     "urn:oasis:names:tc:SAML:1.0:assertion",
                     "AttributeValue" );
-                utf8::downgrade($value);
                 $attribute_value->appendText($value);
                 $saml_attribute->appendChild($attribute_value);
                 $has_value = 1;
@@ -1066,7 +1063,6 @@ sub returnSamlValidateSuccess {
     }
 
     my $soap_response = $envelope->toString;
-    utf8::encode($soap_response);
     return $self->sendSoapResponse( $req, $soap_response );
 }
 
@@ -1121,7 +1117,6 @@ sub returnSamlValidateError {
     $status->appendChild($status_message);
 
     my $soap_response = $envelope->toString;
-    utf8::encode($soap_response);
     return $self->sendSoapResponse( $req, $soap_response );
 }
 

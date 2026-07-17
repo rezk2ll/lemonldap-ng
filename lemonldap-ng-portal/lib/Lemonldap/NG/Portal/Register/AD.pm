@@ -22,9 +22,6 @@ sub createUser {
     my $sn       = uc $req->data->{registerInfo}->{lastname};
     my $gn       = ucfirst $req->data->{registerInfo}->{firstname};
     my $password = $req->data->{registerInfo}->{password};
-    utf8::decode($sn);
-    utf8::decode($gn);
-    utf8::decode($password);
     my $mesg = $self->ldap->add(
         "cn=$name," . $self->conf->{ldapBase},
         attrs => [

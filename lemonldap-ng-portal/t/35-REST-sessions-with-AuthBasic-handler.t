@@ -1,6 +1,7 @@
 use warnings;
 use strict;
 use File::Temp 'tempdir';
+use utf8;
 use IO::String;
 use JSON;
 use MIME::Base64;

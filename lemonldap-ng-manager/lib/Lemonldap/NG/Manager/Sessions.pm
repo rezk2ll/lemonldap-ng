@@ -82,7 +82,7 @@ sub userLogout {
 
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, "session $id not found" );
@@ -191,7 +191,7 @@ sub delOIDCConsent {
     my $epoch  = $params->{epoch};
     my $rp     = $params->{rp};
 
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
     $req->parameters->set( 'sessionId', $self->_maybeDecryptSessionId($id) );
@@ -379,7 +379,7 @@ sub sessions {
 
     # If "groupBy" is asked, elements will be like:
     #   { uid => 'foo.bar', count => 3 }
-    elsif ( my $group = $req->params('groupBy') ) {
+    elsif ( my $group = $req->param('groupBy') ) {
         my $r;
         $group =~ s/\b_whatToTrace\b/$whatToTrace/o;
 
@@ -502,7 +502,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
 
     # Else if "orderBy" is asked, $res elements will be like:
     #   { uid => 'foo.bar', session => <sessionId> }
-    elsif ( my $f = $req->params('orderBy') ) {
+    elsif ( my $f = $req->param('orderBy') ) {
         my @fields = split /,/, $f;
         my @r      = map {
             my $tmp = { session => $self->_maybeEncryptSessionId($_) };
@@ -598,7 +598,7 @@ sub _maybeEncryptSessionId {
 
 sub delSession {
     my ( $self, $req ) = @_;
-    my $id = $req->params('sessionId')
+    my $id = $req->param('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
     $req->parameters->set( 'sessionId', $self->_maybeDecryptSessionId($id) );

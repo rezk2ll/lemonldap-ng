@@ -46,7 +46,7 @@ has conf => (
 sub _to_json {
     my $self = shift;
     my $obj  = shift;
-    return to_json( $obj, { pretty => 1, canonical => 1 } );
+    return to_json( $obj, { pretty => 1, canonical => 1, utf8 => 1 } );
 }
 
 sub _search {
@@ -158,7 +158,7 @@ sub backup {
         }
     }
     my $o = $self->stdout;
-    print $o to_json($res);
+    print $o to_json( $res, { utf8 => 1 } );
     return 0;
 }
 
@@ -176,7 +176,7 @@ sub restore {
         }
     }
     eval {
-        $obj = from_json($obj);
+        $obj = decode_json($obj);
         no warnings;
         %$obj;
     };

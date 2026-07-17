@@ -944,9 +944,7 @@ sub run {
                     foreach (@values) {
 
                         # SAML2 attribute value
-                        my $saml2value = $self->createAttributeValue( $_,
-                            $self->spOptions->{$sp}
-                              ->{samlSPMetaDataOptionsForceUTF8} );
+                        my $saml2value = $self->createAttributeValue($_);
 
                         unless ($saml2value) {
                             $self->checkLassoError($@);
@@ -1174,12 +1172,7 @@ sub run {
 
                 $self->logger->debug("SSO: artifact response is built");
 
-                # Get artifact ID and Content, and store them
-                my $artifact_id      = $login->get_artifact;
-                my $artifact_message = $login->get_artifact_message;
-
-                $self->storeArtifact( $artifact_id, $artifact_message,
-                    $session_id );
+                $self->storeArtifact( $login, $session_id );
             }
 
             # No artifact
@@ -1982,7 +1975,7 @@ sub authSloServer {
 sub sloResume {
     my ( $self, $req ) = @_;
 
-    my $ResumeParams = $req->params('ResumeParams');
+    my $ResumeParams = $req->param('ResumeParams');
 
     unless ($ResumeParams) {
         $self->logger->error("Could not find resumption info");
@@ -2569,9 +2562,7 @@ sub attributeServer {
                     }
 
                     # SAML2 attribute value
-                    my $saml2value = $self->createAttributeValue( $local_value,
-                        $self->spOptions->{$sp}
-                          ->{samlSPMetaDataOptionsForceUTF8} );
+                    my $saml2value = $self->createAttributeValue($local_value);
 
                     unless ($saml2value) {
                         return $self->p->sendError( $req,

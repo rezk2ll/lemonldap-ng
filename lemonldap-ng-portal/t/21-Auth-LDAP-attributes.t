@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 
 require 't/test-lib.pm';
@@ -58,7 +59,7 @@ SKIP: {
 
     ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8' );
     expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+    ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;
     ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
       or explain( $res, 'cn => Frédéric Accents' );
@@ -77,7 +78,7 @@ SKIP: {
 
     ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8' );
     expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+    ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;
     ok( $res->{cn} eq 'Русский', 'UTF-8 values' )
       or explain( $res, 'cn => Русский' );

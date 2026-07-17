@@ -625,7 +625,7 @@ sub _displayRegister {
     my @am;
     my %tplParams;
 
-    if ( $req->params("continue") ) {
+    if ( $req->param("continue") ) {
         %tplParams = (
             %tplParams,
             MSG   => 'your2faIsRegistered',
@@ -833,7 +833,7 @@ sub _registration_with_token {
             }
             $self->restore2faSessionInfo( $req, $sessionData );
 
-            if ( $req->params("continue") ) {
+            if ( $req->param("continue") ) {
                 return $self->continueLoginAfterRegistration($req);
             }
 

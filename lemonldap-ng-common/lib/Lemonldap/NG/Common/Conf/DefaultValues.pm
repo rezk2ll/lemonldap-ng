@@ -170,6 +170,7 @@ sub defaultValues {
         'ldapPasswordResetAttribute'      => 'pwdReset',
         'ldapPasswordResetAttributeValue' => 'TRUE',
         'ldapPwdEnc'                      => 'utf-8',
+        'ldapRaw'                         => '(?i:^jpegPhoto|;binary)',
         'ldapSearchDeref'                 => 'find',
         'ldapServer'                      => 'ldap://localhost',
         'ldapTimeout'                     => 10,

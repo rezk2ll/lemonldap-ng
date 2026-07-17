@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Logger::Log4perl;
 use strict;
 use Log::Log4perl;
 use Log::Log4perl::MDC;
+use Encode;
 
 our $VERSION = '2.23.0';
 
@@ -73,7 +74,9 @@ sub new {
         if ($show) {
             my $name = $_;
             $name = 'info' if ( $_ eq 'notice' );
-            eval qq'sub $_ {shift->{log}->$name(\@_)}';
+            eval qq'sub $_ {
+              \$_[0]->{log}->$name(encode("UTF-8", \$_[1]))
+            }';
             die $@ if ($@);
         }
         else {

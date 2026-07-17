@@ -53,7 +53,11 @@ sub handler {
         push @convertedHdrs, "Authorization" => $authorization;
     }
 
-    return [ 200, \@convertedHdrs, [] ];
+    return $self->sendEmptyResponse(
+        $req,
+        code    => 200,
+        headers => \@convertedHdrs
+    );
 }
 
 1;

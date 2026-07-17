@@ -4,6 +4,7 @@ use strict;
 use IO::String;
 use MIME::Base64;
 use XML::LibXML;
+use utf8;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -218,8 +219,7 @@ sub expectCasSuccess {
     for my $attr ( keys %$attributes ) {
         is_deeply( [
                 sort
-                  map { my $text = $_->data; utf8::encode($text); $text }
-                  $xpc->findnodes(
+                  map { $_->data } $xpc->findnodes(
                     "//samlp:Response/saml:Assertion/saml:AttributeStatement"
                       . "/saml:Attribute[\@AttributeName='$attr']"
                       . "/saml:AttributeValue/text()"

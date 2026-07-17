@@ -185,13 +185,11 @@ sub sregHook {
 
         # No choice for requested parameters: just an information
         foreach my $k (@req) {
-            utf8::decode( $msg{req}->{$k} );
             push @mreq, { k => $k, m => $msg{req}->{$k} };
         }
 
         # For optional parameters: checkboxes are displayed
         foreach my $k (@opt) {
-            utf8::decode( $msg{opt}->{$k} );
             push @mopt,
               {
                 k => $k,

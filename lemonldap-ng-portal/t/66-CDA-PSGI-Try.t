@@ -38,6 +38,7 @@ package main;
 
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 
 use Lemonldap::NG::Portal::Main::Constants qw(

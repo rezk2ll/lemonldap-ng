@@ -3,6 +3,8 @@ use Test::More;
 use strict;
 use IO::String;
 use File::Copy;
+use HTTP::Request::Common;
+use utf8;
 
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_RESETCERTIFICATE_INVALID PE_RESETCERTIFICATE_FORMEMPTY
@@ -68,11 +70,12 @@ use DateTime::Format::RFC3339;';
         'Post mail'
     );
 
-    ok( mail() =~ m#a href="http://other\.example\.com/certif\?(.*?)"#,
+    ok( mail() =~ m#http://other\.example\.com/certif\?(.*)#,
         'Found link in mail' )
       or explain( mail(), 'Found link in mail 1' );
 
     my $querymail = $query = $1;
+
     ok(
         $res = $client->_get(
             '/certificateReset',
@@ -114,101 +117,37 @@ u5i9b+lrWZeCtpVEPzSYpnBwGfepbZAzfVRKJm7wZPCe7KxqMGXQLVBkD8oN7vA1
 lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
 -----END CERTIFICATE-----";
 
-    open my $FH2, '>', '/tmp/v296ZJQ_kG';
-    print {$FH2} "$cert";
-    close $FH2;
+    my $req = POST(
+        "",
+        Content_Type => 'form-data',
+        Content      => [
+            'skin'  => 'bootstrap',
+            'url'   => '',
+            'token' => $inputs{'token'},
+            certif  => [
+                undef, "user.pem",
+                Content               => $cert,
+                'content-disposition' =>
+                  'form-data; name="certif"; filename="user.pem"',
+                'content-type' => 'application/x-x509-ca-cert'
+            ]
+        ]
+    );
+    my $body = $req->content;
 
-    $res = $client->app->( {
-            'plack.request.query' => bless( {
-                    'skin'       => $querytab{'skin'},
-                    'mail_token' => $querytab{'mail_token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'PATH_INFO'   => '/certificateReset',
-            'HTTP_ACCEPT' =>
-'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-            'REQUEST_METHOD'       => 'POST',
-            'HTTP_ORIGIN'          => 'http://auth.example.com',
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
-            'REQUEST_SCHEME'       => 'http',
-            'HTTP_CACHE_CONTROL'   => 'max-age=0',
-
-            'plack.request.merged' => bless( {
-                    'skin'       => $querytab{'skin'},
-                    'mail_token' => $querytab{'mail_token'},
-                    'url'        => '',
-                    'token'      => $inputs{'token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'REMOTE_PORT'                    => '36674',
-            'QUERY_STRING'                   => $querymail,
-            'SERVER_SIGNATURE'               => '',
-            'psgix.input.buffered'           => 1,
-            'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
-            'CONTENT_TYPE'                   =>
-'multipart/form-data; boundary=----WebKitFormBoundarybabRY9u6K9tERoLr',
-            'plack.request.upload' => bless( {
-                    'certif' => bless( {
-                            'headers' => bless( {
-                                    'content-disposition' =>
-'form-data; name="certif"; filename="user.pem"',
-                                    'content-type' =>
-                                      'application/x-x509-ca-cert',
-                                    '::std_case' => {
-                                        'content-disposition' =>
-                                          'Content-Disposition'
-                                    }
-                                },
-                                'HTTP::Headers'
-                            ),
-                            'filename' => 'user.pem',
-                            'tempname' => '/tmp/v296ZJQ_kG',
-                            'size'     => 1261
-                        },
-                        'Plack::Request::Upload'
-                    )
-                },
-                'Hash::MultiValue'
-            ),
-            'psgi.streaming'     => 1,
-            'plack.request.body' => bless( {
-                    'skin'  => 'bootstrap',
-                    'url'   => '',
-                    'token' => $inputs{'token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'SCRIPT_URL'   => '/certificateReset',
-            'SERVER_NAME'  => 'auth.example.com',
-            'HTTP_REFERER' => 'http://auth.example.com/certificateReset?'
-              . $querymail,
-            'HTTP_CONNECTION'     => 'close',
-            'CONTENT_LENGTH'      => '1759',
-            'SCRIPT_URI'          => 'http://auth.example.com/certificateReset',
-            'plack.cookie.parsed' => {
-                'llnglanguage' => 'fr'
-            },
-            'SERVER_PORT'     => '80',
-            'SERVER_NAME'     => 'auth.example.com',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'SCRIPT_NAME'     => '',
-            'HTTP_USER_AGENT' =>
-              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
-            'HTTP_COOKIE'         => 'llnglanguage=fr',
-            'REMOTE_ADDR'         => '127.0.0.1',
-            'REQUEST_URI'         => '/certificateReset?' . $querymail,
-            'plack.cookie.string' => 'llnglanguage=fr',
-            'SERVER_ADDR'         => '127.0.0.1',
-            'psgi.url_scheme'     => 'http',
-            'psgix.harakiri'      => '',
-            'HTTP_HOST'           => 'auth.example.com'
-        }
+    $res = $client->_post(
+        '/certificateReset', $body,
+        type   => join( "; ", $req->content_type ),
+        query  => $querymail,
+        cookie => "llnglanguage=fr",
+        accept => 'text/html'
     );
 
-    ok( mail() =~ /Votre certificat a bien été réinitialisé!/,
-        'Certificate has been reset' );
+    like(
+        mail(),
+        qr/Votre certificat a bien été réinitialisé!/,
+        'Certificate has been reset'
+    );
 
     # Test invalid certificate
 
@@ -229,7 +168,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
         ),
         'Post mail'
     );
-    ok( mail() =~ m#a href="http://other\.example\.com/certif\?(.*?)"#,
+    ok( mail() =~ m#http://other\.example\.com/certif\?(.*)#,
         'Found link in mail' )
       or explain( mail(), 'Found link in mail 2' );
     $querymail = $query = $1;
@@ -254,97 +193,30 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     # Create the certificate  file
     $cert = "INVALID CERTIFICATE";
 
-    open $FH2, '>', '/tmp/v296ZJQ_kG';
-    print {$FH2} "$cert";
-    close $FH2;
+    $req = POST(
+        "",
+        Content_Type => 'form-data',
+        Content      => [
+            'skin'  => 'bootstrap',
+            'url'   => '',
+            'token' => $inputs{'token'},
+            certif  => [
+                undef, "user.pem",
+                Content               => $cert,
+                'content-disposition' =>
+                  'form-data; name="certif"; filename="user.pem"',
+                'content-type' => 'application/x-x509-ca-cert'
+            ]
+        ]
+    );
+    $body = $req->content;
 
-    $res = $client->app->( {
-            'plack.request.query' => bless( {
-                    'skin'       => $querytab{'skin'},
-                    'mail_token' => $querytab{'mail_token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'PATH_INFO'   => '/certificateReset',
-            'HTTP_ACCEPT' =>
-'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-            'REQUEST_METHOD'       => 'POST',
-            'HTTP_ORIGIN'          => 'http://auth.example.com',
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
-            'REQUEST_SCHEME'       => 'http',
-            'HTTP_CACHE_CONTROL'   => 'max-age=0',
-
-            'plack.request.merged' => bless( {
-                    'skin'       => $querytab{'skin'},
-                    'mail_token' => $querytab{'mail_token'},
-                    'url'        => '',
-                    'token'      => $inputs{'token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'REMOTE_PORT'                    => '36674',
-            'QUERY_STRING'                   => $querymail,
-            'SERVER_SIGNATURE'               => '',
-            'psgix.input.buffered'           => 1,
-            'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
-            'CONTENT_TYPE'                   =>
-'multipart/form-data; boundary=----WebKitFormBoundarybabRY9u6K9tERoLr',
-            'plack.request.upload' => bless( {
-                    'certif' => bless( {
-                            'headers' => bless( {
-                                    'content-disposition' =>
-'form-data; name="certif"; filename="user.pem"',
-                                    'content-type' =>
-                                      'application/x-x509-ca-cert',
-                                    '::std_case' => {
-                                        'content-disposition' =>
-                                          'Content-Disposition'
-                                    }
-                                },
-                                'HTTP::Headers'
-                            ),
-                            'filename' => 'user.pem',
-                            'tempname' => '/tmp/v296ZJQ_kG',
-                            'size'     => 1261
-                        },
-                        'Plack::Request::Upload'
-                    )
-                },
-                'Hash::MultiValue'
-            ),
-            'psgi.streaming'     => 1,
-            'plack.request.body' => bless( {
-                    'skin'  => 'bootstrap',
-                    'url'   => '',
-                    'token' => $inputs{'token'}
-                },
-                'Hash::MultiValue'
-            ),
-            'SCRIPT_URL'   => '/certificateReset',
-            'SERVER_NAME'  => 'auth.example.com',
-            'HTTP_REFERER' => 'http://auth.example.com/certificateReset?'
-              . $querymail,
-            'HTTP_CONNECTION'     => 'close',
-            'CONTENT_LENGTH'      => '1759',
-            'SCRIPT_URI'          => 'http://auth.example.com/certificateReset',
-            'plack.cookie.parsed' => {
-                'llnglanguage' => 'fr'
-            },
-            'SERVER_PORT'     => '80',
-            'SERVER_NAME'     => 'auth.example.com',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'SCRIPT_NAME'     => '',
-            'HTTP_USER_AGENT' =>
-              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
-            'HTTP_COOKIE'         => 'llnglanguage=fr',
-            'REMOTE_ADDR'         => '127.0.0.1',
-            'REQUEST_URI'         => '/certificateReset?' . $querymail,
-            'plack.cookie.string' => 'llnglanguage=fr',
-            'SERVER_ADDR'         => '127.0.0.1',
-            'psgi.url_scheme'     => 'http',
-            'psgix.harakiri'      => '',
-            'HTTP_HOST'           => 'auth.example.com'
-        }
+    $res = $client->_post(
+        '/certificateReset', $body,
+        type   => join( "; ", $req->content_type ),
+        query  => $querymail,
+        cookie => "llnglanguage=fr",
+        accept => 'text/html'
     );
 
     my $trmsg = $res->[2]->[0];               # get html response

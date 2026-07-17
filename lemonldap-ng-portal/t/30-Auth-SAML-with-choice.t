@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 
 use IO::String;
 use LWP::UserAgent;
@@ -254,7 +255,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsSortNumber               => 2,
                         samlIDPMetaDataOptionsDisplayName              =>
                           'idp_Test_DisplayName',
@@ -268,7 +268,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsIcon => 'icons/sfa_manager.png',
                         samlIDPMetaDataOptionsTooltip => 'My_tooltip'
                     },
@@ -280,7 +279,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsSortNumber               => 1,
                         samlIDPMetaDataOptionsDisplayName => 'Test_Sort',
                     },
@@ -292,7 +290,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1
                     },
                 },
                 samlIDPMetaDataExportedAttributes => {

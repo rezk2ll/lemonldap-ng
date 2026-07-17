@@ -1247,7 +1247,7 @@ sub decodeJSON {
     my ( $self, $json ) = @_;
     my $json_hash;
 
-    eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
+    eval { $json_hash = from_json( $json, { allow_nonref => 1, utf8 => 1 } ); };
     return undef if ($@);
     unless ( ref $json_hash ) {
         $self->logger->error("Wanted a JSON object, got: $json_hash");

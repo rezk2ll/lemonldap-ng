@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;

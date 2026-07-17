@@ -12,9 +12,6 @@ our $VERSION = '2.0.10';
 sub _stripaccents {
     my ( $self, $str ) = @_;
 
-    # UTF8 really shouldn't be decoded here, but in PSGI layer instead
-    utf8::decode($str);
-
     # This method replaces all non-ascii characters by the
     # closest ascii lookalike
     my $res = unidecode($str);

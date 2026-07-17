@@ -45,7 +45,7 @@ my $baseconfig = {
     '1sample' => {
         'applicationtest1' => {
             'options' => {
-                'name' => 'Application Test 1',
+                'name' => 'Application Tést 1',
                 'uri'  => 'https://test.internal/'
             },
             'order' => 15,
@@ -226,7 +226,7 @@ subtest "Modify an application (option)" => sub {
         [ {
                 'applicationList' => {
                     'Sample applications' => {
-                        'Application Test 1' => {
+                        'Application Tést 1' => {
                             'options' => {
                                 'uri' => 'https://test.internal/'
                             }
@@ -237,7 +237,7 @@ subtest "Modify an application (option)" => sub {
             {
                 'applicationList' => {
                     'Sample applications' => {
-                        'Application Test 1' => {
+                        'Application Tést 1' => {
                             'options' => {
                                 'uri' => 'http://new.uri/'
                             }
@@ -264,7 +264,7 @@ subtest "Modify an application (name)" => sub {
                     'Sample applications' => {
                         'New application name' => {
                             'options' => {
-                                'name' => 'Application Test 1'
+                                'name' => 'Application Tést 1'
                             }
                         }
                     }
@@ -316,7 +316,7 @@ subtest "Multiple changes" => sub {
         [ {
                 'applicationList' => {
                     'Sample applications' => {
-                        'Application Test 1' => {
+                        'Application Tést 1' => {
                             'options' => {
                                 'newoption' => undef,
                                 'oldoption' => 'old'
@@ -344,7 +344,7 @@ subtest "Multiple changes" => sub {
                             'order' => 15,
                             'type'  => 'application'
                         },
-                        'Application Test 1' => {
+                        'Application Tést 1' => {
                             'options' => {
                                 'newoption' => 'new',
                                 'oldoption' => undef
@@ -363,10 +363,10 @@ subtest "Multiple applications with the same name" => sub {
         '1sample' => {
             'applicationtest1' => {
                 'options' => {
-                    'description' => 'Application Test 1',
+                    'description' => 'Application Tést 1',
                     'display'     => 'auto',
                     'logo'        => 'network.png',
-                    'name'        => 'Application Test 1',
+                    'name'        => 'Application Tést 1',
                     'tooltip'     => 'New app tooltip',
                     'uri'         => 'https://test.internal/'
                 },
@@ -375,10 +375,10 @@ subtest "Multiple applications with the same name" => sub {
             },
             'appli1' => {
                 'options' => {
-                    'description' => 'Application Test 1',
+                    'description' => 'Application Tést 1',
                     'display'     => 'auto',
                     'logo'        => 'network.png',
-                    'name'        => 'Application Test 1',
+                    'name'        => 'Application Tést 1',
                     'tooltip'     => 'New app tooltip',
                     'uri'         => 'https://test.example.com/'
                 },

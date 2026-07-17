@@ -6,10 +6,12 @@ use HTTP::Status;
 use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
+use Encode;
+use Plack::Util;
 
 our $VERSION = '2.23.0';
 
-our $_json = JSON->new->allow_nonref;
+our $_json = JSON->new->allow_nonref->utf8;
 
 # PROPERTIES
 
@@ -210,35 +212,39 @@ sub sendJSONresponse {
     $args{code}    ||= 200;
     $args{headers} ||= [ $req->spliceHdrs ];
     my $type = 'application/json; charset=utf-8';
+    my $json_binary;
     if ( ref $j ) {
         eval {
             if ( $args{pretty} ) {
 
                 # This avoids changing the settings of the $_json reference
-                $j = to_json(
+                $json_binary = to_json(
                     $j,
                     {
                         allow_nonref => 1,
                         pretty       => 1,
-                        canonical    => 1
+                        canonical    => 1,
+                        utf8         => 1,
                     }
                 );
             }
             else {
-                $j = $_json->encode($j);
+                $json_binary = $_json->encode($j);
             }
         };
         return $self->sendError( $req, $@ ) if ($@);
     }
-    utf8::downgrade($j);
+    elsif ( defined $j ) {
+        $json_binary = encode( 'UTF-8', $j );
+    }
     return $self->_buildPsgiResponse(
         $args{code},
         [
             'Content-Type'   => $type,
-            'Content-Length' => length($j),
+            'Content-Length' => length($json_binary),
             @{ $args{headers} }
         ],
-        [$j]
+        [$json_binary]
     );
 }
 
@@ -250,7 +256,7 @@ sub sendError {
 
     # SOAP responses
     if ( $req->env->{HTTP_SOAPACTION} ) {
-        my $s = '<soapenv:Body>
+        my $soap = '<soapenv:Body>
  <soapenv:Fault>
   <Faultcode>soapenv:Client</Faultcode>
   <Faultstring>' . $err . '.</Faultstring>
@@ -259,14 +265,15 @@ sub sendError {
   </Detail>
  </soapenv:Fault>
 </soapenv:Body>';
+        my $soap_binary = encode( 'UTF-8', $soap );
         return $self->_buildPsgiResponse(
             $code,
             [
                 'Content-Type'   => 'application/xml; charset=utf-8',
-                'Content-Length' => length($s),
+                'Content-Length' => length($soap_binary),
                 $req->spliceHdrs,
             ],
-            [$s]
+            [$soap_binary]
         );
     }
 
@@ -298,17 +305,18 @@ body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text
 }
 
 sub sendRawHtml {
-    my ( $self, $req, $s, %args ) = @_;
-    my $code    = $args{code}    || 200;
-    my $headers = $args{headers} || [ $req->spliceHdrs ];
+    my ( $self, $req, $html, %args ) = @_;
+    my $code        = $args{code}    || 200;
+    my $headers     = $args{headers} || [ $req->spliceHdrs ];
+    my $html_binary = encode( 'UTF-8', $html );
     return $self->_buildPsgiResponse(
         $code,
         [
             'Content-Type'   => 'text/html; charset=utf-8',
-            'Content-Length' => length($s),
+            'Content-Length' => length($html_binary),
             @{$headers},
         ],
-        [$s]
+        [$html_binary]
     );
 }
 
@@ -342,30 +350,29 @@ sub sendJs {
 
     # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
-    my $s =
+    my $script =
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
       . 'var portal="%s";', $sp, $sc, $self->languages,
       $portal;
-    $s .= $self->javascript($req) if ( $self->can('javascript') );
+    $script .= $self->javascript($req) if ( $self->can('javascript') );
+    my $script_binary = encode( 'UTF-8', $script );
     return $self->_buildPsgiResponse(
         200,
         [
             'Content-Type'   => 'application/javascript',
-            'Content-Length' => length($s),
+            'Content-Length' => length($script_binary),
             'Cache-Control'  => 'public,max-age=2592000',
         ],
-        [$s]
+        [$script_binary]
     );
 }
 
 sub sendTextResponse {
     my ( $self, $req, $text, %args ) = @_;
 
-    my $data = $text;
-
-    #my $data = Encode::encode( "UTF-8", $text );
+    my $data = encode( "UTF-8", $text );
 
     $args{type} ||= "text/plain; charset=utf-8";
 
@@ -387,6 +394,14 @@ sub sendBinaryResponse {
         ],
         [$data]
     );
+}
+
+sub sendEmptyResponse {
+    my ( $self, $req, %args ) = @_;
+    $args{code} ||= 200;
+    my $headers = $args{headers} || [ $req->spliceHdrs ];
+
+    return $self->_buildPsgiResponse( $args{code}, [ @$headers, ], [] );
 }
 
 sub sendHtml {
@@ -438,7 +453,8 @@ sub sendHtml {
     # Set headers
     my $hdrs = [ 'Content-Type' => 'text/html', @{ $args{headers} } ];
     $self->logger->debug("Sending $template");
-    return $self->_buildPsgiResponse( $args{code}, $hdrs, [ $htpl->output() ] );
+    my $output = encode( 'UTF-8', $htpl->output() );
+    return $self->_buildPsgiResponse( $args{code}, $hdrs, [$output] );
 }
 
 ###############
@@ -452,6 +468,7 @@ sub run {
         $self = $self->new($args);
         $self->init($args) or $self->logger->error('Initialization failed');
     }
+
     return $self->_run;
 }
 
@@ -525,9 +542,29 @@ sub sendRedirection {
     );
 }
 
+sub handlerWithResponseHeaders {
+    my ( $self, $req ) = @_;
+
+    my $res = $self->handler($req);
+
+    my @respHeaders = $req->spliceHdrs;
+
+    # Encode headers
+    @respHeaders = map { encode( 'UTF-8', $_ ) } @respHeaders;
+
+    push @{ $res->[1] }, @respHeaders;
+
+    return $res;
+}
+
 sub _buildPsgiResponse {
     my ( $self, $code, $header, $data ) = @_;
-    return [ $code, $header, $data ];
+
+    # Encode headers
+    my $binary_headers = [ map { encode( 'UTF-8', $_ ) } @{ $header || [] } ];
+
+    # Make sure all strings are binary
+    return [ $code, $binary_headers, $data ];
 }
 
 1;

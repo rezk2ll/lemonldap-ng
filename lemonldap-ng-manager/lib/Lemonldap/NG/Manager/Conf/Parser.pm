@@ -145,7 +145,7 @@ sub scanTree {
 
     # Set cfgNum to ref cfgNum (will be changed when saving), set other
     # metadata and set a value to the key if empty
-    $self->newConf->{cfgNum} = $self->req->params('cfgNum');
+    $self->newConf->{cfgNum} = $self->req->param('cfgNum');
     my $envUser;
     foreach (qw(REMOTE_USER SUDO_USER USER)) {
         ( $envUser = $self->req->env->{$_} || $ENV{$_} ) and last;

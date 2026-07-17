@@ -3,8 +3,9 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 
-my $str = "The LemonLDAP::NG team \x{c2}\x{a9}";
+my $str = "The LemonLDAP::NG team \x{a9}";
 
 require 't/test-lib.pm';
 

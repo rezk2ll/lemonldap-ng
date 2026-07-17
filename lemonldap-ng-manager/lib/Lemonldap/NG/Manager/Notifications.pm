@@ -185,7 +185,7 @@ sub notifications {
         }
     }
 
-    if ( my $groupBy = $req->params('groupBy') ) {
+    if ( my $groupBy = $req->param('groupBy') ) {
         my ( $length, $start, $r ) = ( 0, 0 );
         if ( $groupBy =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
             ( $groupBy, $length, $start ) = ( $1, $2, $3 );
@@ -224,7 +224,7 @@ sub notifications {
             $r;
         } keys %$notifs;
 
-        if ( my $orderBy = $req->params('orderBy') ) {
+        if ( my $orderBy = $req->param('orderBy') ) {
             my @fields = split /,/, $orderBy;
             while ( my $f = pop @fields ) {
                 @r = sort { $a->{$f} cmp $b->{$f} } @r;
@@ -346,7 +346,6 @@ sub newNotification {
 
     my $newNotif;
     if ( $self->notifFormat eq 'XML' ) {
-        utf8::decode( $json->{xml} );
         $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <root><notification #
           . join(
@@ -363,16 +362,18 @@ sub newNotification {
             $json->{$_} = $tmp->{$_} foreach ( keys %$tmp );
             delete $json->{xml};
         };
-        if ($@) {
-            $self->logger->error("Malformed notification $@");
-            return $self->sendError( $req, "Malformed notification: $@", 200 );
+        if ( my $err = $@ ) {
+            $self->logger->error("Malformed notification $err");
+            return $self->sendError( $req, "Malformed notification: $err",
+                200 );
         }
         $newNotif = to_json($json);
     }
 
     unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
-        $self->logger->error("Notification not created: $@");
-        return $self->sendError( $req, "Notification not created: $@", 200 );
+        my $err = $@;
+        $self->logger->error("Notification not created: $err");
+        return $self->sendError( $req, "Notification not created: $err", 200 );
     }
     else {
         return $self->sendJSONresponse( $req, { result => 1 } );
@@ -392,7 +393,7 @@ sub updateNotification {
         return $self->sendError( $req, 'Only "done=1" is accepted for now',
             200 );
     }
-    my $id = $req->params('notificationId') or die;
+    my $id = $req->param('notificationId') or die;
     my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
     my ( $n, $res );
     unless ( $n = $self->notifAccess->get( $uid, $ref ) ) {
@@ -424,13 +425,14 @@ sub deleteDoneNotification {
     my $res;
 
     # Purge notification
-    my $id = $req->params('notificationId') or die;
+    my $id = $req->param('notificationId') or die;
     my ( $uid, $ref, $date ) = ( $id =~ /([^_]+?)_([^_]+?)_(.+)/ );
     my $identifier = $self->notifAccess->getIdentifier( $uid, $ref, $date );
     unless ( eval { $self->notifAccess->purge($identifier) } ) {
-        $self->logger->warn("Notification $identifier not purged ($@)");
+        my $err = $@;
+        $self->logger->warn("Notification $identifier not purged ($err)");
         return $self->sendError( $req,
-            "Notification $identifier not purged ($@)", 400 );
+            "Notification $identifier not purged ($err)", 400 );
     }
 
     $self->logger->info("Notification $identifier purged");

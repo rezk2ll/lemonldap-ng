@@ -43,25 +43,29 @@ sub info {
     $conf->{cfgDate}     ||= 0;
     $conf->{cfgLog}      ||= "No log provided";
     if ( $self->json ) {
-        print JSON->new->pretty->allow_nonref->encode( {
-                num      => $conf->{cfgNum},
-                author   => $conf->{cfgAuthor},
-                authorIP => $conf->{cfgAuthorIP},
-                date     => $conf->{cfgDate},
-                version  => $conf->{cfgVersion},
-                log      => $conf->{cfgLog},
-            }
+        $self->output->print(
+            JSON->new->pretty->allow_nonref->encode( {
+                    num      => $conf->{cfgNum},
+                    author   => $conf->{cfgAuthor},
+                    authorIP => $conf->{cfgAuthorIP},
+                    date     => $conf->{cfgDate},
+                    version  => $conf->{cfgVersion},
+                    log      => $conf->{cfgLog},
+                }
+            )
         );
     }
     else {
-        print qq{
+        $self->output->print(
+            qq{
 Num      : $conf->{cfgNum}
 Author   : $conf->{cfgAuthor}
 Author IP: $conf->{cfgAuthorIP}
 Date     : } . localtime( $conf->{cfgDate} ) . qq{
 Version  : $conf->{cfgVersion}
 Log      : $conf->{cfgLog}
-};
+}
+        );
     }
 }
 
@@ -69,8 +73,8 @@ sub updateCache {
     my $self = shift;
     my $conf = $self->confAccess->getConf( { noCache => 2 } );
     die "Must not be launched as root" unless ($>);
-    print STDERR
-      qq{Cache updated to configuration $conf->{cfgNum} for user $>\n};
+    $self->error->print(
+        qq{Cache updated to configuration $conf->{cfgNum} for user $>\n});
 }
 
 sub testEmail {
@@ -82,7 +86,7 @@ sub testEmail {
         Lemonldap::NG::Common::EmailTransport::sendTestMail( $conf, $dest );
     };
     die $@ if $@;
-    print STDERR "Test email successfully sent to $dest\n";
+    $self->error->print("Test email successfully sent to $dest\n");
 }
 
 sub run {
