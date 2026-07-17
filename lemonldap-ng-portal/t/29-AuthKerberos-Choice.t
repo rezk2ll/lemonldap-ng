@@ -68,8 +68,8 @@ SKIP: {
         ok( $json->{ajax_auth_token}, "User token was returned" );
         my $ajax_auth_token = $json->{ajax_auth_token};
 
-        $query =~ s/ajax_auth_token=/ajax_auth_token=$ajax_auth_token/;
-        $query =~ s/lmAuth=\w+/lmAuth=1_Kerberos/;
+        $query =~ s/ajax_auth_token=[^&]*/ajax_auth_token=$ajax_auth_token/;
+        $query =~ s/lmAuth=[^&]*/lmAuth=1_Kerberos/;
 
         ok(
             $res = $client->_post(
