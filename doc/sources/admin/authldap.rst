@@ -87,15 +87,17 @@ Connection
 -  **Verify LDAP server certificate**: It is highly recommended to verify the
    identity of the remote server. This setting is only enforced for LDAPS or
    TLS connections.
--  **Users search base**: Base of search in the LDAP directory.
--  **Account**: DN used to connect to LDAP server. By default, anonymous
-   bind is used.
--  **Password**: password used to connect to LDAP server. By default,
-   anonymous bind is used.
--  **Connection timeout**: applies only when initiating the connection
--  **Operation timeout**: applies to all LDAP operations
+-  **Users search base**: Base of search in the LDAP directory
+-  **Account**: ``DN`` used to connect to LDAP server
+-  **Password**: Password used to connect to LDAP server
+-  **Client certificate**: Path of the client certificate to bind with. 
+   ``CN`` of the certificate will be used to connect to LDAP server.
+   ``CN`` sould be mapped to an accound with ``olcAuhtzRegexp`` directive.
+-  **Client key**: Path of the private key associated to client certificate
+-  **Connection timeout**: Applies only when initiating the connection
+-  **Operation timeout**: Applies to all LDAP operations
 -  **Version**: LDAP protocol version.
--  **Binary attributes**: regular expression matching binary attributes
+-  **Binary attributes**: Regular expression matching binary attributes
    (see
    `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
    documentation).
@@ -109,12 +111,16 @@ Connection
 
 .. attention::
 
-    LL::NG needs anonymous access to LDAP Directory
-    RootDSE in order to check LDAP connection.
+    mTLS bind will be used if no Account or Password is provided.
+
+    If no Accound/Password neither client Certificate/Private key is provided,
+    anonymous bind will be used.
+
+    LL::NG needs anonymous access to LDAP Directory RootDSE in order to check LDAP connection.
+
 
 Filters
 ~~~~~~~
-
 
 .. tip::
 
