@@ -1,4 +1,4 @@
-##@file
+#@file
 # Extends Net::LDAP
 package Lemonldap::NG::Portal::Lib::Net::LDAP;
 
@@ -10,7 +10,6 @@ use Lemonldap::NG::Portal::Main::Constants ':all';
 use Net::LDAP::Control::PasswordPolicy;
 use Encode;
 use utf8;
-use Authen::SASL;
 use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use Net::LDAP qw(LDAP_PP_PASSWORD_EXPIRED LDAP_PP_ACCOUNT_LOCKED
@@ -54,6 +53,7 @@ sub new {
       if $conf->{ldapClientCert};
     $tlsParams{clientkey} ||= $conf->{ldapClientKey}
       if $conf->{ldapClientKey};
+    require Authen::SASL if $conf->{ldapClientCert};
     $self = Net::LDAP->new(
         \@servers,
         onerror   => undef,
