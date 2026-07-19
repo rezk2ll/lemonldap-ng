@@ -15,12 +15,34 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { push } from "redux-first-history";
-import { useAppDispatch } from "../app/hooks";
 import i18n from "../i18n";
 import "./NavBar.css";
+
+// Each manager section is a separate SPA (separate HTML page + bundle).
+// Navigating between them is a full page load, like the legacy manager.
+// Items without a `target` are placeholders not implemented yet.
+const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
+  {
+    key: "Configuration",
+    icon: <SettingsOutlinedIcon fontSize="small" />,
+    target: "manager.new.html",
+  },
+  {
+    key: "sessions",
+    icon: <GroupOutlinedIcon fontSize="small" />,
+    target: "sessions.new.html",
+  },
+  {
+    key: "notifications",
+    icon: <NotificationsNoneOutlinedIcon fontSize="small" />,
+  },
+  {
+    key: "secondFactors",
+    icon: <SecurityOutlinedIcon fontSize="small" />,
+  },
+];
 
 function Navbar({
   htmlName,
@@ -32,7 +54,6 @@ function Navbar({
   toggleNavbar: Function;
 }) {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const partial = htmlName == "partial.html";
   return (
     <>
@@ -62,25 +83,25 @@ function Navbar({
           </Typography>
           {!partial && (
             <nav className="navMenu">
-              <div
-                className="navItem"
-                onClick={() => dispatch(push(htmlName))}
-              >
-                <SettingsOutlinedIcon fontSize="small" />
-                <span>{t("Configuration")}</span>
-              </div>
-              <div className="navItem">
-                <GroupOutlinedIcon fontSize="small" />
-                <span>{t("sessions")}</span>
-              </div>
-              <div className="navItem">
-                <NotificationsNoneOutlinedIcon fontSize="small" />
-                <span>{t("notifications")}</span>
-              </div>
-              <div className="navItem">
-                <SecurityOutlinedIcon fontSize="small" />
-                <span>{t("secondFactors")}</span>
-              </div>
+              {NAV_ITEMS.map((item) => {
+                const active = item.target === htmlName;
+                return (
+                  <div
+                    key={item.key}
+                    className={
+                      "navItem" +
+                      (active ? " active" : "") +
+                      (item.target ? "" : " disabled")
+                    }
+                    onClick={() => {
+                      if (item.target) window.location.assign(item.target);
+                    }}
+                  >
+                    {item.icon}
+                    <span>{t(item.key)}</span>
+                  </div>
+                );
+              })}
             </nav>
           )}
           <OptionMenu />

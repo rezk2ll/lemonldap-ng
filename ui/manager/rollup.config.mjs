@@ -1,6 +1,10 @@
 /**
  * rollup configuration file that reproduce `react-scripts build`
  *
+ * Builds one self-contained SPA per manager section (configuration,
+ * sessions, ...). Each entry produces its own HTML page + hashed bundle and
+ * shares the common source tree (Navbar, theme, tree, ...).
+ *
  * @copyright Yadd <yadd@debian.org>
  * license MIT
  */
@@ -23,27 +27,48 @@ import progress from "rollup-plugin-progress";
 // https://github.com/d3/d3-interpolate/issues/58
 const D3_WARNING = /Circular dependency.*d3-interpolate/;
 
-export default {
-  input: ["src/index.tsx"],
+const htmlTemplate =
+  (title) =>
+  ({ attributes, files, publicPath, bundle }) => {
+    let scripts = "";
+    files.js.forEach((b) => {
+      scripts += `<script src="${b.fileName}"></script>`;
+    });
+    const makeAttrs = (attrs = {}) =>
+      Object.entries(attrs)
+        .map(([key, value]) => `${key}="${value}"`)
+        .join(" ");
+    return `<!DOCTYPE html>
+<html ${makeAttrs(attributes.html)}>
+  <head>
+    <title>${title}</title>
+    <link rel="icon" href="/static/logos/favicon.ico" />
+  </head>
+  <body>
+    <div id="root" />
+    ${scripts}
+  </body>
+</html>`;
+  };
+
+// Build one SPA configuration.
+//  - input:    entry file
+//  - htmlName: output HTML page (also injected as REACT_APP_HTMLNAME)
+//  - prefix:   hashed bundle prefix (static/<prefix>-[hash].js)
+//  - title:    HTML <title>
+const makeConfig = ({ input, htmlName, prefix, title }) => ({
+  input: [input],
   output: {
     dir: "dist",
     format: "iife",
     sourcemap: true,
-    entryFileNames: "static/manager-[hash].js",
+    entryFileNames: `static/${prefix}-[hash].js`,
     inlineDynamicImports: true,
-    sourcemap: true, // Ensure source maps are generated
   },
   onwarn(warning, warn) {
-    if (D3_WARNING.test(warning)) {
-      return;
-    }
-    if (warning.code === "THIS_IS_UNDEFINED") {
-      return;
-    }
-    if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
-      return;
-    }
-
+    if (D3_WARNING.test(warning)) return;
+    if (warning.code === "THIS_IS_UNDEFINED") return;
+    if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
     warn(warning);
   },
   plugins: [
@@ -66,12 +91,11 @@ export default {
           ? JSON.stringify("development")
           : JSON.stringify("production"),
       preventAssignment: true,
-      "process.env.REACT_APP_HTMLNAME": '"manager.new.html"',
+      "process.env.REACT_APP_HTMLNAME": `"${htmlName}"`,
     }),
     typescript({
       tsconfig: "./tsconfig.build.json",
-      declaration: true,
-      declarationDir: "dist",
+      declaration: false,
     }),
     postcss({
       plugins: [
@@ -88,32 +112,25 @@ export default {
       React: "react",
     }),
     html({
-      fileName: "index.html",
-      title: "Lemonldap react Manager built with rollup",
-      template: ({ attributes, bundle, files, publicPath, title }) => {
-        let scripts = "";
-        files.js.forEach((bundle) => {
-          scripts += `<script src="${bundle.fileName}"></script>`;
-        });
-
-        const makeAttrs = (attrs = {}) =>
-          Object.entries(attrs)
-            .map(([key, value]) => `${key}="${value}"`)
-            .join(" ");
-
-        return `<!DOCTYPE html>
-<html ${makeAttrs(attributes.html)}>
-  <head>
-    <title>${title}</title>
-    <link rel="icon" href="/static/logos/favicon.ico" />
-  </head>
-  <body>
-    <div id="root" />
-    ${scripts}
-  </body>
-</html>`;
-      },
+      fileName: htmlName,
+      title,
+      template: htmlTemplate(title),
     }),
     terser(),
   ],
-};
+});
+
+export default [
+  makeConfig({
+    input: "src/index.tsx",
+    htmlName: "manager.new.html",
+    prefix: "manager",
+    title: "LemonLDAP::NG Manager",
+  }),
+  makeConfig({
+    input: "src/sessions.tsx",
+    htmlName: "sessions.new.html",
+    prefix: "sessions",
+    title: "LemonLDAP::NG Sessions",
+  }),
+];

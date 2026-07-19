@@ -56,6 +56,22 @@
   color: #fff;
 }
 
+.navItem.active {
+  background-color: rgba(255, 152, 0, 0.18);
+  color: #fff;
+  box-shadow: inset 3px 0 0 #ff9800;
+}
+
+.navItem.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.navItem.disabled:hover {
+  background-color: transparent;
+  color: rgb(209, 211, 223);
+}
+
 .navItem svg {
   opacity: 0.85;
   flex-shrink: 0;

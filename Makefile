@@ -543,13 +543,14 @@ manager:	manager_conf handler
 
 rollup_clean:
 	@rm -rf $(NEW_MGR_TMP_DIST) \
-		$(SRCMANAGERDIR)/site/htdocs/manager.new.html \
-		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js
+		$(SRCMANAGERDIR)/site/htdocs/*.new.html \
+		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js \
+		$(SRCMANAGERDIR)/site/htdocs/static/sessions-*.js
 	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
 
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	cp $(UIMANAGERDIR)/dist/static/*.js  $(SRCMANAGERDIR)/site/htdocs/static;
-	cp $(UIMANAGERDIR)/dist/index.html	$(SRCMANAGERDIR)/site/htdocs/manager.new.html
+	cp $(UIMANAGERDIR)/dist/*.new.html	$(SRCMANAGERDIR)/site/htdocs/
 
 $(NEW_MGR_TMP_DIST):
 	@$(MAKE) rollup_clean
