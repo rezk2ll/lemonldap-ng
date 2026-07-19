@@ -1,7 +1,7 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DownloadIcon from "@mui/icons-material/Download";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Tooltip } from "@mui/material";
 import { t } from "i18next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { push } from "redux-first-history";
@@ -70,18 +70,20 @@ export function HomePage() {
                   </Button>
                 </div>
                 <div className="search">
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<DownloadIcon />}
-                    onClick={async function () {
-                      await exportData("full", config.data.metadata.cfgNum);
-                    }}
-                  >
-                    {t("downloadIt")}
-                  </Button>
+                  <Tooltip title={t("downloadLastConf")}>
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="contained"
+                      tabIndex={-1}
+                      startIcon={<DownloadIcon />}
+                      onClick={async function () {
+                        await exportData("full", config.data.metadata.cfgNum);
+                      }}
+                    >
+                      {t("download")}
+                    </Button>
+                  </Tooltip>
                 </div>
                 <div className="search">
                   <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CloudUploadIcon />}>

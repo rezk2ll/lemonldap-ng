@@ -10,9 +10,10 @@ export const exportData = async (
   )}`;
   const link = document.createElement("a");
   link.href = jsonString;
-  link.download = `${data}-Conf-${num}.${
-    data === "samlMetadata" ? "xml" : "json"
-  }`;
+  link.download =
+    data === "full"
+      ? `lmConf-${num}.json`
+      : `${data}-Conf-${num}.${data === "samlMetadata" ? "xml" : "json"}`;
   link.click();
 };
 
