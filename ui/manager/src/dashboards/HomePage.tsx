@@ -56,7 +56,7 @@ export function HomePage() {
                   <Button
                     component="label"
                     role={undefined}
-                    variant="contained"
+                    variant="outlined"
                     startIcon={<OtherHousesIcon />}
                     onClick={async function () {
                       (window as any).links.map((el: { title: string; target: string }) => {
@@ -101,22 +101,22 @@ export function HomePage() {
                   </Button>
                 </div>
                 <div className="search">
-                  <Button variant="contained" onClick={() => dispatch(push(`#authParams/latest`))}>
+                  <Button variant="outlined" onClick={() => dispatch(push(`#authParams/latest`))}>
                     {t("authParams")}
                   </Button>
                 </div>
                 <div className="search">
-                  <Button variant="contained" onClick={() => dispatch(push(`#tree/latest`))}>
+                  <Button variant="outlined" onClick={() => dispatch(push(`#tree/latest`))}>
                     {t("tree")}
                   </Button>
                 </div>
-                <div className="search">
+                <div className="search search-browse">
                   <TextField
                     type="number"
                     size="small"
                     label={t("browse")}
                     error={Boolean(aimedConf && aimedConf <= 0)}
-                    helperText={`${"Enter only positive and non nul numbers"}`}
+                    helperText={aimedConf && aimedConf <= 0 ? "Enter only positive and non nul numbers" : ""}
                     placeholder={t("browse")}
                     onChange={(e) => SetAimedConf(Number(e.target.value))}
                     onKeyDown={(e) => {

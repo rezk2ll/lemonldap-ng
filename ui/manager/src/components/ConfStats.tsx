@@ -15,8 +15,24 @@ export function ConfStats({ config }: { config: llngConfig }) {
       ? Object.keys(config.casAppMetaDataOptions).length
       : 0);
   return (
-    <div>
-      <strong>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 16,
+        width: "100%",
+      }}
+    >
+      <strong
+        style={{
+          fontSize: "1.15rem",
+          color: "#26262b",
+          alignSelf: "stretch",
+          paddingBottom: 12,
+          borderBottom: "2px solid #f0f0f2",
+        }}
+      >
         {t("appNum")} ({appNum})
       </strong>
       <PieChart
