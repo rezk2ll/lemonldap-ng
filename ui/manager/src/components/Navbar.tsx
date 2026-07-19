@@ -1,6 +1,10 @@
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import  ChevronRight from "@mui/icons-material/ChevronRight"
 import MenuIcon from "@mui/icons-material/Menu";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import {
   Button,
   ButtonGroup,
@@ -57,37 +61,27 @@ function Navbar({
             />
           </Typography>
           {!partial && (
-            <>
-              <Typography
-                variant="h6"
-                component="div"
+            <nav className="navMenu">
+              <div
+                className="navItem"
                 onClick={() => dispatch(push(htmlName))}
-                style={{ cursor: "pointer", marginRight: "15px" }}
               >
-                {t("Configuration")}
-              </Typography>
-              <Typography
-                variant="h6"
-                component="div"
-                style={{ cursor: "pointer", marginRight: "15px" }}
-              >
-                {t("sessions")}
-              </Typography>
-              <Typography
-                variant="h6"
-                component="div"
-                style={{ cursor: "pointer", marginRight: "15px" }}
-              >
-                {t("notifications")}
-              </Typography>
-              <Typography
-                variant="h6"
-                component="div"
-                style={{ cursor: "pointer", marginRight: "15px" }}
-              >
-                {t("secondFactors")}
-              </Typography>
-            </>
+                <SettingsOutlinedIcon fontSize="small" />
+                <span>{t("Configuration")}</span>
+              </div>
+              <div className="navItem">
+                <GroupOutlinedIcon fontSize="small" />
+                <span>{t("sessions")}</span>
+              </div>
+              <div className="navItem">
+                <NotificationsNoneOutlinedIcon fontSize="small" />
+                <span>{t("notifications")}</span>
+              </div>
+              <div className="navItem">
+                <SecurityOutlinedIcon fontSize="small" />
+                <span>{t("secondFactors")}</span>
+              </div>
+            </nav>
           )}
           <OptionMenu />
         </div>

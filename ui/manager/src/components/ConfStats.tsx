@@ -49,7 +49,7 @@ export function ConfStats({ config }: { config: llngConfig }) {
                 value: config.samlSPMetaDataXML
                   ? Object.keys(config.samlSPMetaDataXML).length
                   : 0,
-                color: "#E38627",
+                color: "#FFB300",
               },
               {
                 id: 2,
@@ -61,7 +61,7 @@ export function ConfStats({ config }: { config: llngConfig }) {
                 value: config.locationRules
                   ? Object.keys(config.locationRules).length
                   : 0,
-                color: "#d65600",
+                color: "#FB8C00",
               },
               {
                 id: 3,
@@ -73,7 +73,7 @@ export function ConfStats({ config }: { config: llngConfig }) {
                 value: config.oidcRPMetaDataOptions
                   ? Object.keys(config.oidcRPMetaDataOptions).length
                   : 0,
-                color: "#C13C37",
+                color: "#F4511E",
               },
               {
                 id: 4,
@@ -85,14 +85,26 @@ export function ConfStats({ config }: { config: llngConfig }) {
                 value: config.casAppMetaDataOptions
                   ? Object.keys(config.casAppMetaDataOptions).length
                   : 0,
-                color: "#6A2135",
+                color: "#BF360C",
               },
             ].filter((el) => el.value !== 0),
-            innerRadius: 50,
+            innerRadius: 55,
+            paddingAngle: 2,
+            cornerRadius: 4,
           },
         ]}
-        height={200}
-        width={425}
+        height={280}
+        width={320}
+        margin={{ top: 10, bottom: 60, left: 10, right: 10 }}
+        slotProps={{
+          legend: {
+            direction: "row",
+            position: { horizontal: "middle", vertical: "bottom" },
+            padding: 0,
+            itemMarkWidth: 12,
+            itemMarkHeight: 12,
+          },
+        }}
       />
     </div>
   );
