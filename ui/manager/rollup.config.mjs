@@ -133,4 +133,10 @@ export default [
     prefix: "sessions",
     title: "LemonLDAP::NG Sessions",
   }),
+  makeConfig({
+    input: "src/notifications.tsx",
+    htmlName: "notifications.new.html",
+    prefix: "notifications",
+    title: "LemonLDAP::NG Notifications",
+  }),
 ];

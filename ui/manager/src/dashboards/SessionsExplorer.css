@@ -141,6 +141,17 @@
   font-style: italic;
 }
 
+.sessionsEmpty {
+  padding: 24px 12px;
+  color: #8a8a92;
+  font-style: italic;
+}
+
+.notifForm {
+  padding: 18px 22px;
+  max-width: 720px;
+}
+
 .sessionDetail {
   padding: 20px 24px;
 }

@@ -545,7 +545,8 @@ rollup_clean:
 	@rm -rf $(NEW_MGR_TMP_DIST) \
 		$(SRCMANAGERDIR)/site/htdocs/*.new.html \
 		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js \
-		$(SRCMANAGERDIR)/site/htdocs/static/sessions-*.js
+		$(SRCMANAGERDIR)/site/htdocs/static/sessions-*.js \
+		$(SRCMANAGERDIR)/site/htdocs/static/notifications-*.js
 	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
 
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
@@ -556,7 +557,7 @@ $(NEW_MGR_TMP_DIST):
 	@$(MAKE) rollup_clean
 	@set -ex; cd $(UIMANAGERDIR);\
 		npm ci || npm i; \
-		rollup -c
+		NODE_OPTIONS=--max-old-space-size=6144 rollup -c
 
 # Test targets
 # ------------

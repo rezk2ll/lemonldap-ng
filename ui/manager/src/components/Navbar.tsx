@@ -37,6 +37,7 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   {
     key: "notifications",
     icon: <NotificationsNoneOutlinedIcon fontSize="small" />,
+    target: "notifications.new.html",
   },
   {
     key: "secondFactors",
