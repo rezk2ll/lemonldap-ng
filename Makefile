@@ -546,7 +546,8 @@ rollup_clean:
 		$(SRCMANAGERDIR)/site/htdocs/*.new.html \
 		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js \
 		$(SRCMANAGERDIR)/site/htdocs/static/sessions-*.js \
-		$(SRCMANAGERDIR)/site/htdocs/static/notifications-*.js
+		$(SRCMANAGERDIR)/site/htdocs/static/notifications-*.js \
+		$(SRCMANAGERDIR)/site/htdocs/static/twofa-*.js
 	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
 
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)

@@ -139,4 +139,10 @@ export default [
     prefix: "notifications",
     title: "LemonLDAP::NG Notifications",
   }),
+  makeConfig({
+    input: "src/twofa.tsx",
+    htmlName: "2ndfa.new.html",
+    prefix: "twofa",
+    title: "LemonLDAP::NG Second Factors",
+  }),
 ];

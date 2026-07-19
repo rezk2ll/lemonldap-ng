@@ -42,6 +42,7 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   {
     key: "secondFactors",
     icon: <SecurityOutlinedIcon fontSize="small" />,
+    target: "2ndfa.new.html",
   },
 ];
 

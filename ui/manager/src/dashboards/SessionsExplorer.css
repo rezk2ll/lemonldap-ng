@@ -152,6 +152,13 @@
   max-width: 720px;
 }
 
+.twofaTypeFilters {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 0 4px;
+}
+
 .sessionDetail {
   padding: 20px 24px;
 }
