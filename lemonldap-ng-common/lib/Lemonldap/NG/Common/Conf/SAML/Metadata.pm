@@ -12,7 +12,6 @@ use Crypt::OpenSSL::X509;
 use HTML::Template;
 use MIME::Base64;
 use Safe;
-use Encode;
 
 our $VERSION = '2.22.0';
 

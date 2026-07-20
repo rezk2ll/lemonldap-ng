@@ -4,11 +4,12 @@ use strict;
 use Mouse;
 use JSON;
 use Plack::Request;
+use Lemonldap::NG::Common::Request::WithEncoding;
 use URI::Escape;
 
 our $VERSION = '2.19.0';
 
-our @ISA = ('Plack::Request');
+our @ISA = ('Lemonldap::NG::Common::Request::WithEncoding');
 
 #       http          ://  server   / path      ? query      # fragment
 # m|(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?|;
@@ -77,13 +78,19 @@ sub error {
     return $self->{error};
 }
 
-*params = \&Plack::Request::param;
+# DEPRECATED: for plugins
+sub params {
+    my $self = shift;
+    return $self->param(@_);
+}
 
 sub set_param {
     my ( $self, $k, $v ) = @_;
     $self->param;
     $self->env->{'plack.request.merged'}->{$k} =
       $self->env->{'plack.request.query'}->{$k} = $v;
+    $self->env->{'plack.request.withencoding.merged'}->{$k} =
+      $self->env->{'plack.request.withencoding.query'}->{$k} = $v;
 }
 
 sub wantJSON {
@@ -105,7 +112,7 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    my $j = eval { from_json( $self->content, { allow_nonref => 1 } ) };
+    my $j = eval { from_json( $self->content, { allow_nonref => 1, utf8 => 1 } ) };
     if ($@) {
         $self->error("$@$!");
         return undef;

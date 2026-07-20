@@ -1681,11 +1681,6 @@
     "title": "samlAttributeAuthorityDescriptor"
   }, {
     "_nodes": [{
-      "default": 1,
-      "id": "samlMetadataForceUTF8",
-      "title": "samlMetadataForceUTF8",
-      "type": "bool"
-    }, {
       "id": "samlStorage",
       "title": "samlStorage"
     }, {

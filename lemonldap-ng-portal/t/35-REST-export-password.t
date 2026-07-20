@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use Lemonldap::NG::Common::Session 'id2storage';
 use LWP::UserAgent;

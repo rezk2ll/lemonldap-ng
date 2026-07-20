@@ -32,7 +32,6 @@ my $conf = {
     'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
     'samlIDPSSODescriptorWantAuthnRequestsSigned' => 1,
-    'samlMetadataForceUTF8'                       => 1,
     'samlOrganizationDisplayName'                 => 'SP',
     'samlOrganizationName'                        => 'SP',
     'samlOrganizationURL'                         => 'http://www.sp.com',

@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use JSON;
 use strict;
+use utf8;
 
 my $langDir = 'site/htdocs/static/languages';
 

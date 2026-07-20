@@ -46,7 +46,7 @@ sub get {
 
     my $files;
     foreach my $file (@notif) {
-        unless ( open F, '<', $self->{dirName} . "/$file" ) {
+        unless ( open F, '<:encoding(UTF-8)', $self->{dirName} . "/$file" ) {
             $self->logger->error(
                 "Unable to read notification $self->{dirName}/$file");
             next;
@@ -71,7 +71,7 @@ sub getAccepted {
 
     my $files;
     foreach my $file (@notif) {
-        unless ( open F, '<', $self->{dirName} . "/$file" ) {
+        unless ( open F, '<:encoding(UTF-8)', $self->{dirName} . "/$file" ) {
             $self->logger->error(
                 "Unable to read notification $self->{dirName}/$file");
             next;
@@ -176,9 +176,8 @@ sub newNotif {
     return ( 0, 'This notification still exists' ) if ( -e $filename );
     my $old = ( $filename =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
     return ( 0, 'This notification has been done' ) if ( -e $old );
-    open my $F, '>', $filename
+    open my $F, '>:encoding(UTF-8)', $filename
       or return ( 0, "Unable to create $filename ($!)" );
-    binmode($F);
     print $F $content;
     return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
     return 1;

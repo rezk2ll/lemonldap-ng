@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use Time::Fake;
 use IO::String;
 use LWP::UserAgent;

@@ -14,7 +14,7 @@ extends 'Lemonldap::NG::Manager::Api::Common';
 sub getCasAppByConfKey {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug("[API] CAS App $confKey configuration requested");
@@ -35,9 +35,9 @@ sub findCasAppByConfKey {
     my ( $self, $req ) = @_;
 
     my $pattern = (
-        defined $req->params('uPattern')
-        ? $req->params('uPattern')
-        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
+        defined $req->param('uPattern')
+        ? $req->param('uPattern')
+        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -65,9 +65,9 @@ sub findCasAppsByServiceUrl {
     my ( $self, $req ) = @_;
 
     my $serviceUrl = (
-        defined $req->params('uServiceUrl') ? $req->params('uServiceUrl')
+        defined $req->param('uServiceUrl') ? $req->param('uServiceUrl')
         : (
-            defined $req->params('serviceUrl') ? $req->params('serviceUrl')
+            defined $req->param('serviceUrl') ? $req->param('serviceUrl')
             : undef
         )
     );
@@ -150,7 +150,7 @@ sub addCasApp {
 
 sub updateCasApp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -187,7 +187,7 @@ sub updateCasApp {
 
 sub replaceCasApp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -220,7 +220,7 @@ sub replaceCasApp {
 
 sub deleteCasApp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug(

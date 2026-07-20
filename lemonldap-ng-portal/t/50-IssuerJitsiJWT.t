@@ -5,6 +5,7 @@ use IO::String;
 use Crypt::JWT  qw(decode_jwt);
 use Digest::SHA qw(sha256_hex);
 use Lemonldap::NG::Portal::Main::Constants ':all';
+use utf8;
 
 require 't/test-lib.pm';
 require 't/oidc-lib.pm';

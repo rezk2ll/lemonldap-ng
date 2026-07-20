@@ -54,7 +54,7 @@ Lemonldap::NG.
 
     # Will be called only if authorized
     my $userId = $self->userId;
-    my $book = $req->params('book');
+    my $book = $req->param('book');
     my $method = $req->method;
     ...
     $self->sendJSONresponse(...);

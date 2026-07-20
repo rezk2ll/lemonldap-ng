@@ -1,7 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::Register;
 
 use strict;
-use Encode;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;

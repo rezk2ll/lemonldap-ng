@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
@@ -179,7 +180,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {
@@ -233,7 +233,6 @@ sub unknownsp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {

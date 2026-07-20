@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use Data::Dumper;
 
 require 't/test-lib.pm';

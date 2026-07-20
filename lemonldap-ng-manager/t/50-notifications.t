@@ -3,8 +3,8 @@
 use warnings;
 use Test::More;
 use strict;
-use IO::String;
 use JSON qw(from_json);
+use utf8;
 
 eval { mkdir 't/notifications' };
 `rm -rf t/notifications/*`;
@@ -12,40 +12,36 @@ require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
-'{"date":"2099-02-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
+'{"date":"2099-02-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
 my $res =
-  &client->jsonPostResponse( 'notifications/actives', '',
-    IO::String->new($notif),
-    'application/json', length($notif) );
+  &client->jsonPostResponse( 'notifications/actives', '', $notif,
+    'application/json' );
 ok( $res->{error} =~ /^Notification not created: Bad date/,
     'Notification not inserted' );
 count(1);
 
 $notif =
-'{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
+'{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
 $res =
-  &client->jsonPostResponse( 'notifications/actives', '',
-    IO::String->new($notif),
-    'application/json', length($notif) );
+  &client->jsonPostResponse( 'notifications/actives', '', $notif,
+    'application/json' );
 ok( $res->{error} =~ /^Notification not created: Bad date/,
     'Notification not inserted' );
 count(1);
 
 $notif =
-'{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
+'{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
 $res =
-  &client->jsonPostResponse( 'notifications/actives', '',
-    IO::String->new($notif),
-    'application/json', length($notif) );
+  &client->jsonPostResponse( 'notifications/actives', '', $notif,
+    'application/json' );
 ok( $res->{error} =~ /^Malformed date$/, 'Notification not inserted' );
 count(1);
 
 $notif =
-'{"date":"2099-12-31","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}", "condition": "1==1"}';
+'{"date":"2099-12-31","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}", "condition": "1==1"}';
 $res =
-  &client->jsonPostResponse( 'notifications/actives', '',
-    IO::String->new($notif),
-    'application/json', length($notif) );
+  &client->jsonPostResponse( 'notifications/actives', '', $notif,
+    'application/json' );
 
 ok( $res->{result}, 'Result is true' );
 count(1);
@@ -55,11 +51,8 @@ displayTests('actives');
 
 # Mark notification as done
 $notif = '{"done":1}';
-$res   = &client->jsonPutResponse(
-    'notifications/actives/dwho_Test',
-    '',                 IO::String->new($notif),
-    'application/json', length($notif)
-);
+$res   = &client->jsonPutResponse( 'notifications/actives/dwho_Test',
+    '', $notif, 'application/json', length($notif) );
 ok( $res->{result} == 1, 'Result = 1' );
 
 # Test that notification is not active now
@@ -133,7 +126,7 @@ sub displayTests {
                 'condition' => '1==1',
                 'date'      => '2099-12-31',
                 'reference' => 'Test',
-                'title'     => 'Test',
+                'title'     => 'Test©',
                 'uid'       => 'dwho'
             },
             "Notification is as expected"
@@ -163,7 +156,7 @@ sub displayTests {
                 'condition' => '1==1',
                 'date'      => '2099-12-31',
                 'reference' => 'Test',
-                'title'     => 'Test',
+                'title'     => 'Test©',
                 'uid'       => 'dwho'
             },
             "Notification is as expected"

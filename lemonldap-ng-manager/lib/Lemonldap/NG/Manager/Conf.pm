@@ -309,21 +309,21 @@ sub newConf {
 
     # Verify that cfgNum has been sent
     return $self->sendError( $req, "Missing configuration number", 400 )
-      unless ( defined $req->params('cfgNum') );
+      unless ( defined $req->param('cfgNum') );
 
     # # Verify that cfgDate has been sent
     # return $self->sendError( $req, "Missing configuration date", 400 )
-    #   unless ( defined $req->params('cfgDate') );
+    #   unless ( defined $req->param('cfgDate') );
 
     # Set current conf to cfgNum
     return $self->sendError(
         $req,
         "Configuration "
-          . $req->params('cfgNum')
+          . $req->param('cfgNum')
           . " not available "
           . $Lemonldap::NG::Common::Conf::msg,
         400
-    ) unless ( defined $self->getConfByNum( $req->params('cfgNum') ) );
+    ) unless ( defined $self->getConfByNum( $req->param('cfgNum') ) );
 
     # Parse new conf
     require Lemonldap::NG::Manager::Conf::Parser;
@@ -342,9 +342,9 @@ sub newConf {
     $self->logger->debug(
         "Current CfgNum/cfgDate: $currentCfgNum/$currentCfgDate");
     $parser->confChanged(1)
-      if ( $currentCfgNum ne $req->params('cfgNum')
-        || $req->params('cfgDate')
-        && $req->params('cfgDate') ne $currentCfgDate );
+      if ( $currentCfgNum ne $req->param('cfgNum')
+        || $req->param('cfgDate')
+        && $req->param('cfgDate') ne $currentCfgDate );
 
     my $res = { result => $parser->check( $self->p ) };
 
@@ -353,7 +353,7 @@ sub newConf {
     $res->{details}->{'__errors__'} = $parser->{errors}
       if ( @{ $parser->{errors} } );
     unless ( @{ $parser->{errors} } ) {
-        if ( @{ $parser->{needConfirmation} } && !$req->params('force') ) {
+        if ( @{ $parser->{needConfirmation} } && !$req->param('force') ) {
             $res->{needConfirm} = 1;
             $res->{details}->{'__needConfirmation__'} =
               $parser->{needConfirmation};
@@ -366,9 +366,9 @@ sub newConf {
     }
     if ( $res->{result} ) {
         my %args;
-        $args{force} = 1 if ( $req->params('force') );
-        if ( $req->params('cfgDate') ) {
-            $args{cfgDate}        = $req->params('cfgDate');
+        $args{force} = 1 if ( $req->param('force') );
+        if ( $req->param('cfgDate') ) {
+            $args{cfgDate}        = $req->param('cfgDate');
             $args{currentCfgDate} = $currentCfgDate;
         }
         my $s = UNKNOWN_ERROR;
@@ -447,7 +447,7 @@ sub newRawConf {
     $res->{details}->{'__errors__'} = $parser->{errors}
       if ( @{ $parser->{errors} } );
     unless ( @{ $parser->{errors} } ) {
-        if ( @{ $parser->{needConfirmation} } && !$req->params('force') ) {
+        if ( @{ $parser->{needConfirmation} } && !$req->param('force') ) {
             $res->{needConfirm} = 1;
             $res->{details}->{'__needConfirmation__'} =
               $parser->{needConfirmation};

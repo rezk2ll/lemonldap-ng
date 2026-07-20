@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use MIME::Base64;
 use URI;

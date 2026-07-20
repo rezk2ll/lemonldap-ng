@@ -2092,12 +2092,6 @@
     "id": "samlAdvanced",
     "title": "samlAdvanced",
     "nodes": [{
-      "default": 1,
-      "id": "samlMetadataForceUTF8",
-      "title": "samlMetadataForceUTF8",
-      "type": "bool",
-      "data": 1
-    }, {
       "id": "samlStorage",
       "title": "samlStorage"
     }, {

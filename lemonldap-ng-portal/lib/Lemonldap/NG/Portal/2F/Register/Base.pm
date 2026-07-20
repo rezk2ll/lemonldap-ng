@@ -83,7 +83,7 @@ sub checkNameSfa {
     my ( $self, $req, $type, $name ) = @_;
 
     $name ||= "My$type";
-    unless ( $name =~ /^[\w\s-]+$/ ) {
+    unless ( $name =~ /^[\w\s-]+$/a ) {
         $self->userLogger->error("$type name with bad character(s)");
         return;
     }

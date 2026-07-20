@@ -1,5 +1,6 @@
 use warnings;
 use Test::More;
+use utf8;
 use strict;
 use IO::String;
 use LWP::UserAgent;
@@ -291,7 +292,6 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsSignatureMethod => "RSA_SHA256",
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {

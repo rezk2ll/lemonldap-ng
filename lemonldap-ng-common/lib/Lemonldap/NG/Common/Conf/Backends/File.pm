@@ -88,6 +88,7 @@ sub store {
     }
     binmode(FILE);
     my $json_options = {
+        utf8         => 1,
         allow_nonref => 1,
         (
             $self->{prettyPrint}
@@ -124,7 +125,7 @@ sub load {
         binmode FILE;
         $f = join( '', <FILE> );
         close FILE;
-        eval { $ret = from_json( $f, { allow_nonref => 1 } ) };
+        eval { $ret = from_json( $f, { allow_nonref => 1, utf8 => 1 } ) };
         if ($@) {
             print STDERR "$@\n";
             $Lemonldap::NG::Common::Conf::msg .=

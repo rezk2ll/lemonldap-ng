@@ -6,7 +6,7 @@
           "description": "A simple application displaying authenticated user",
           "display": "auto",
           "logo": "demo.png",
-          "name": "Application Test 1",
+          "name": "Application Tést 1",
           "uri": "http://test1.example.com/"
         },
         "order": 2,

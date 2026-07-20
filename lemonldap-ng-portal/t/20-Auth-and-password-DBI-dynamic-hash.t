@@ -3,6 +3,7 @@ use MIME::Base64;
 
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use Digest::SHA;
 

@@ -32,14 +32,14 @@ sub getConfKey {
     $self->logger->debug("Search for $key in conf");
 
     # Verify that cfgNum has been asked
-    unless ( defined $req->params('cfgNum') ) {
+    unless ( defined $req->param('cfgNum') ) {
         $req->error("Missing configuration number");
         return undef;
     }
-    $self->logger->debug( "Cfgnum set to " . $req->params('cfgNum') );
+    $self->logger->debug( "Cfgnum set to " . $req->param('cfgNum') );
 
     # when 'latest' => replace by last cfgNum
-    if ( $req->params('cfgNum') eq 'latest' ) {
+    if ( $req->param('cfgNum') eq 'latest' ) {
         my $tmp = $self->confAcc->lastCfg;
         $req->set_param( 'cfgNum', $tmp );
         unless ($tmp) {
@@ -48,15 +48,15 @@ sub getConfKey {
             return undef;
         }
     }
-    elsif ( $req->params('cfgNum') !~ /^\d+$/ ) {
+    elsif ( $req->param('cfgNum') !~ /^\d+$/ ) {
         $req->error("cfgNum must be a number");
         return undef;
     }
     unless (
-        defined $self->getConfByNum( scalar( $req->params('cfgNum') ), @args ) )
+        defined $self->getConfByNum( scalar( $req->param('cfgNum') ), @args ) )
     {
         $req->error( "Configuration "
-              . $req->params('cfgNum')
+              . $req->param('cfgNum')
               . " is not available ("
               . $Lemonldap::NG::Common::Conf::msg
               . ')' );
@@ -823,7 +823,7 @@ sub keyNodes {
 #@return PSGI JSON response
 sub metadata {
     my ( $self, $req ) = @_;
-    if ( $req->params('full') and $req->params('full') !~ NO ) {
+    if ( $req->param('full') and $req->param('full') !~ NO ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
         if ( my $userid = $self->_userId($req) ) {
@@ -854,8 +854,8 @@ sub metadata {
             ],
         );
     }
-    elsif ( my $oidc = $req->params('oidcMetadata')
-        or $req->params('samlMetadata') )
+    elsif ( my $oidc = $req->param('oidcMetadata')
+        or $req->param('samlMetadata') )
     {
         my $c    = $self->getConfKey( $req, 'cfgNum' );
         my $type = $oidc ? 'OIDC' : 'SAML';

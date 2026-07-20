@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use URI::Escape;
 use Plack::Response;

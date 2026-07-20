@@ -3390,11 +3390,6 @@ sub attributes {
             documentation =>
               'Use certificate instead of public key in SAML responses',
         },
-        samlMetadataForceUTF8 => {
-            default       => 1,
-            type          => 'bool',
-            documentation => 'SAML force metadata UTF8 conversion',
-        },
         samlStorage => {
             type          => 'PerlModule',
             documentation => 'Apache::Session module to store SAML user data',
@@ -3631,10 +3626,6 @@ sub attributes {
         },
         samlIDPMetaDataOptionsComment => {
             type => 'longtext'
-        },
-        samlIDPMetaDataOptionsForceUTF8 => {
-            type    => 'bool',
-            default => 0,
         },
         samlIDPMetaDataOptionsSignSSOMessage => {
             type    => 'trool',
@@ -3884,10 +3875,6 @@ sub attributes {
         samlSPMetaDataOptionsEnableIDPInitiatedURL => {
             type    => 'bool',
             default => 0,
-        },
-        samlSPMetaDataOptionsForceUTF8 => {
-            type    => 'bool',
-            default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
             type          => 'text',
@@ -4260,7 +4247,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3,
             documentation => 'LDAP protocol version',
         },
-        ldapRaw                       => { type => 'text', },
+        ldapRaw => {
+            type    => 'text',
+            default => '(?i:^jpegPhoto|;binary)'
+        },
         ldapAllowResetExpiredPassword => {
             default       => 0,
             type          => 'bool',

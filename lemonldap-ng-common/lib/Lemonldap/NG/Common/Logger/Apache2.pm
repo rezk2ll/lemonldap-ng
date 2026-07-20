@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Logger::Apache2;
 
 use Apache2::ServerRec;
+use Encode;
 
 our $VERSION = '2.0.0';
 
@@ -9,9 +10,10 @@ sub new {
 }
 
 sub AUTOLOAD {
-    shift;
+    my ( $self, @args ) = @_;
     $AUTOLOAD =~ s/.*:://;
-    return Apache2::ServerRec->log->$AUTOLOAD(@_);
+    my $message = join( "", @args );
+    return Apache2::ServerRec->log->$AUTOLOAD( encode( 'UTF-8', $message_ ) );
 }
 
 1;

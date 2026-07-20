@@ -14,7 +14,7 @@ extends 'Lemonldap::NG::Manager::Api::Common';
 sub getOidcRpByConfKey {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug("[API] OIDC RP $confKey configuration requested");
@@ -36,9 +36,9 @@ sub findOidcRpByConfKey {
     my ( $self, $req ) = @_;
 
     my $pattern = (
-        defined $req->params('uPattern')
-        ? $req->params('uPattern')
-        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
+        defined $req->param('uPattern')
+        ? $req->param('uPattern')
+        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -66,9 +66,9 @@ sub findOidcRpByClientId {
     my ( $self, $req ) = @_;
 
     my $clientId = (
-        defined $req->params('uClientId') ? $req->params('uClientId')
+        defined $req->param('uClientId') ? $req->param('uClientId')
         : (
-            defined $req->params('clientId') ? $req->params('clientId')
+            defined $req->param('clientId') ? $req->param('clientId')
             : undef
         )
     );
@@ -158,7 +158,7 @@ sub addOidcRp {
 
 sub updateOidcRp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -206,7 +206,7 @@ sub updateOidcRp {
 
 sub replaceOidcRp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -259,7 +259,7 @@ sub replaceOidcRp {
 
 sub deleteOidcRp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration

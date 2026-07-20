@@ -119,7 +119,7 @@ SKIP: {
     ok( $json->{ajax_auth_token}, "User token was returned" );
     my $ajax_auth_token = $json->{ajax_auth_token};
 
-    $query =~ s/ajax_auth_token=/ajax_auth_token=$ajax_auth_token/;
+    $query =~ s/ajax_auth_token=0/ajax_auth_token=$ajax_auth_token/;
 
     ok(
         $res = $issuer->_post(
@@ -252,7 +252,6 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsForceAuthn               => 1,
                     }
                 },

@@ -105,11 +105,9 @@ sub get {
         my $f           = {};
         foreach (@notifValues) {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
-            $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
         my $xml = $f->{xml};
-        utf8::encode($xml);
         my $identifier =
           &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
         $result->{$identifier} = "$xml";
@@ -136,11 +134,9 @@ sub getAccepted {
         my $f           = {};
         foreach (@notifValues) {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
-            $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
         my $xml = $f->{xml};
-        utf8::encode($xml);
         my $identifier =
           &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
         $result->{$identifier} = "$xml";
@@ -164,7 +160,6 @@ sub getAll {
         my $f           = {};
         foreach (@notifValues) {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
-            $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
         $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
@@ -190,7 +185,6 @@ sub getExisting {
         my $f           = {};
         foreach (@notifValues) {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
-            $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
         $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
@@ -305,7 +299,6 @@ sub getDone {
         my $f           = {};
         foreach (@notifValues) {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
-            $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
         my @t = split( /\D+/, $f->{done} );
@@ -409,7 +402,7 @@ sub _store {
     # Store values as {key}value
     my @notifValues;
     foreach my $k ( keys %$fields ) {
-        my $v = encodeLdapValue( $fields->{$k} );
+        my $v = $fields->{$k};
         push @notifValues, "{$k}$v";
     }
 
@@ -429,38 +422,6 @@ sub _store {
 
     #$ldap->unbind() && delete $self->{ldap};
     return 1;
-}
-
-## @method object private encodeLdapValue()
-# encode ldap value in utf8 (try to encode to latin1, and if it fails, encode to utf8)
-# @param value value to encode
-# @return value encoded in utf8
-sub encodeLdapValue {
-    my $value = shift;
-
-    eval {
-        my $safevalue = $value;
-        Encode::from_to( $safevalue, "utf8", "iso-8859-1", Encode::FB_CROAK );
-    };
-    if ($@) {
-        Encode::from_to( $value, "iso-8859-1", "utf8", Encode::FB_CROAK );
-    }
-
-    return $value;
-
-}
-
-## @method object private decodeLdapValue()
-# decode ldap value from utf8 to latin1
-# @param value value to decode
-# @return value decoded in latin1
-sub decodeLdapValue {
-    my $value = shift;
-
-    Encode::from_to( $value, "utf8", "iso-8859-1", Encode::FB_CROAK );
-
-    return $value;
-
 }
 
 ## @method object private _ldap()
@@ -492,6 +453,7 @@ sub _ldap {
         \@servers,
         onerror   => undef,
         keepalive => 1,
+        raw => qr/(?i:^jpegPhoto|;binary)/,
         ( $self->ldapPort   ? ( port   => $self->ldapPort )   : () ),
         ( $self->ldapVerify ? ( verify => $self->ldapVerify ) : () ),
         ( $self->ldapCAFile ? ( cafile => $self->ldapCAFile ) : () ),

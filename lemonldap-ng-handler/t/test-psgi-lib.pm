@@ -6,6 +6,7 @@ use POSIX 'strftime';
 use Data::Dumper;
 use Time::Fake;
 use Plack::Builder;
+use utf8;
 use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 
 our $client;
@@ -59,7 +60,7 @@ sub init {
                 }
             ]
         },
-        'cn'              => 'Doctor Who',
+        'cn'              => 'Doctor Whò',
         '_lastAuthnUTime' => $now,
         '_whatToTrace'    => 'dwho',
         '_issuerDB'       => 'Null',

@@ -28,7 +28,7 @@ sub beforeRetry {
         foreach my $patroniUrl ( split /,\s*/, $self->{patroniUrl} ) {
             my $resp = $ua->get($patroniUrl);
             if ( $resp->is_success ) {
-                my $c = eval { JSON::from_json( $resp->decoded_content ) };
+                my $c = eval { JSON::decode_json( $resp->decoded_content ) };
                 if ( $@ or !$c->{members} or ref( $c->{members} ) ne 'ARRAY' ) {
                     print STDERR "Bad response from $patroniUrl: "
                       . $resp->decoded_content . "\n";

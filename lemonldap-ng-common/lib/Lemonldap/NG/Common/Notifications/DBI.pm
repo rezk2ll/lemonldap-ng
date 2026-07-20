@@ -9,7 +9,6 @@ use strict;
 use Mouse;
 use Time::Local;
 use DBI;
-use Encode;
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
 our $VERSION = '2.23.0';
@@ -66,9 +65,6 @@ sub get {
         # Get XML message
         my $xml = $h->{xml};
 
-        # Decode it to get the correct uncoded string
-        Encode::from_to( $xml, "utf8", "iso-8859-1", Encode::FB_CROAK );
-
         # Store message in result
         my $identifier =
           &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
@@ -95,9 +91,6 @@ sub getAccepted {
 
         # Get XML message
         my $xml = $h->{xml};
-
-        # Decode it to get the correct uncoded string
-        Encode::from_to( $xml, "utf8", "iso-8859-1", Encode::FB_CROAK );
 
         # Store message in result
         my $identifier =

@@ -1552,7 +1552,6 @@ sub tree {
                     title => 'samlAdvanced',
                     help  => 'samlservice.html#advanced',
                     nodes => [
-                        'samlMetadataForceUTF8',
                         'samlRelayStateTimeout',
                         'samlUseQueryStringSpecific',
                         'samlOverrideIDPEntityID',

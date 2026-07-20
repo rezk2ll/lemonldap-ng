@@ -22,7 +22,8 @@ sub new {
 
     foreach (qw(error warn notice info debug)) {
         if ($show) {
-            eval qq'sub $_ {\$_[0]->{broker}->publish("$brokerChannel", {
+            eval qq'sub $_ {
+            \$_[0]->{broker}->publish("$brokerChannel", {
                 type => "$type",
                 data => \$_[1],
                 time => time,

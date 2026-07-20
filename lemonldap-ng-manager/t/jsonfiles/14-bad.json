@@ -57,7 +57,7 @@
         "nodes": [{
           "title": "Sample applications",
           "nodes": [{
-            "title": "Application Test 1",
+            "title": "Application Tést 1",
             "id": "applicationList/0001-cat/0002-app",
             "type": "menuApp",
             "data": {
@@ -2108,12 +2108,6 @@
     "id": "samlAdvanced",
     "title": "samlAdvanced",
     "nodes": [{
-      "default": 1,
-      "id": "samlMetadataForceUTF8",
-      "title": "samlMetadataForceUTF8",
-      "type": "bool",
-      "data": 1
-    }, {
       "id": "samlStorage",
       "title": "samlStorage"
     }, {

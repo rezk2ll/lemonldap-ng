@@ -331,9 +331,6 @@ sub extractFormInfo {
                 $self->logger->debug(
                     "Try to set user value from SAML attribute $userAttribute");
 
-                my $force_utf8 =
-                  $self->idpOptions->{$idp}->{samlIDPMetaDataOptionsForceUTF8};
-
                 my $attr_statement = $assertion->AttributeStatement();
                 if ($attr_statement) {
 
@@ -343,7 +340,7 @@ sub extractFormInfo {
                     # Try to get value
                     my $value =
                       $self->getAttributeValue( $userAttribute, undef, undef,
-                        \@attributes, $force_utf8 );
+                        \@attributes);
 
                     # Store value as user
                     if ( defined $value ) {
@@ -1167,10 +1164,6 @@ sub setAuthSessionInfo {
         return PE_SAML_SSO_ERROR;
     }
 
-    # Force UTF-8
-    my $force_utf8 =
-      $self->idpOptions->{$idp}->{samlIDPMetaDataOptionsForceUTF8};
-
     # Try to get attributes if attribute statement is present in assertion
     my $attr_statement = $assertion->AttributeStatement();
     if ($attr_statement) {
@@ -1188,7 +1181,7 @@ sub setAuthSessionInfo {
             # Try to get value
             my $value =
               $self->getAttributeValue( $name, $format, $friendly_name,
-                \@attributes, $force_utf8 );
+                \@attributes);
 
             # Store value in sessionInfo
             $req->{sessionInfo}->{$_} = $value if defined $value;

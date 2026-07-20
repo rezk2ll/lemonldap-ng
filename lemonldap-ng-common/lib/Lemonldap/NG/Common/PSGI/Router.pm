@@ -212,7 +212,7 @@ Lemonldap::NG::Common::PSGI::Router - Base library for REST APIs of Lemonldap::N
   
   sub booksMethod {
     my ( $self, $req, @otherPathInfo ) = @_;
-    my $book = $req->params('book');
+    my $book = $req->param('book');
     my $method = $req->method;
     ...
     $self->sendJSONresponse(...);
@@ -324,7 +324,7 @@ Examples:
 
   $self->addRoute( books => { ':bookId' => 'book' }, ['GET'] );
 
-bookId parameter will be stored in $req->params('bookId');
+bookId parameter will be stored in $req->param('bookId');
 
 =item to manage http://.../books/127/pages/5 with page(), use:
 

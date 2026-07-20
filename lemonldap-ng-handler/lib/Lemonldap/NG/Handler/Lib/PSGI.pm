@@ -71,9 +71,7 @@ sub _run {
         return $self->psgiAdapter(
             sub {
                 my $req = $_[0];
-                my $res = $self->handler($req);
-                push @{ $res->[1] }, $req->spliceHdrs;
-                return $res;
+                return $self->handlerWithResponseHeaders($req);
             }
         );
     }
@@ -94,7 +92,7 @@ sub reload {
         sub {
             my $req = $_[0];
             $self->api->reload($req);
-            return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
+            return $self->sendEmptyResponse($req);
         }
     );
 }
@@ -124,17 +122,15 @@ sub _authAndTrace {
 
     if ( $res < 300 ) {
         if ($noCall) {
-            return [ $res, [ $req->spliceHdrs ], [] ];
+            return $self->sendEmptyResponse( $req, code => $res );
         }
         else {
             $self->logger->debug('User authenticated, calling handler()');
-            $res = $self->handler($req);
-            push @{ $res->[1] }, $req->spliceHdrs;
-            return $res;
+            return $self->handlerWithResponseHeaders($req);
         }
     }
     elsif ( $res < 400 ) {
-        return [ $res, [ $req->spliceHdrs ], [] ];
+        return $self->sendEmptyResponse( $req, code => $res );
     }
     else {
         my $s = ( $portal ? $portal . "/lmerror/$res" : '' );
@@ -144,15 +140,8 @@ sub _authAndTrace {
           . '<h1>Please wait</h1>'
           . qq{<p>An error occurs, you're going to be redirected to <a href="$s">$s</a>.</p>}
           . '</body></html>';
-        return [
-            $res,
-            [
-                $req->spliceHdrs,
-                'Content-Type'   => 'text/html',
-                'Content-Length' => length $s
-            ],
-            [$s]
-        ];
+
+        return $self->sendRawHtml( $req, $s, code => $res );
     }
 }
 

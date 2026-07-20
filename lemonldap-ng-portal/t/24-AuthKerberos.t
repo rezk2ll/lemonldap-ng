@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use IO::String;
 use strict;
+use utf8;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -102,7 +103,7 @@ SKIP: {
         ok( $json->{ajax_auth_token}, "User token was returned" );
         my $ajax_auth_token = $json->{ajax_auth_token};
 
-        $query =~ s/ajax_auth_token=/ajax_auth_token=$ajax_auth_token/;
+        $query =~ s/ajax_auth_token=0/ajax_auth_token=$ajax_auth_token/;
 
         ok(
             $res = $client->_post(

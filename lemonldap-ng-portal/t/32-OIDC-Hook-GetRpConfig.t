@@ -2,6 +2,7 @@ use warnings;
 no warnings 'once';
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;

@@ -27,8 +27,7 @@ sub _run {
         sub {
             my $req = $_[0];
             my $res = $self->_authAndTrace($req);
-            push @{ $res->[1] }, $req->spliceHdrs,
-              Cookie => ( $req->{Cookie} // '' );
+            push @{ $res->[1] }, Cookie => ( $req->{Cookie} // '' );
             return $res;
         }
     );

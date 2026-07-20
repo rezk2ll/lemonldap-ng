@@ -163,7 +163,7 @@ ok(
 );
 count(1);
 
-$query =~ s/user=dwho%20%2F%20rtyler/user=dwho/;
+$query =~ s/user=dwho\+%2F\+rtyler/user=dwho/;
 ok(
     $res = $client->_post(
         '/checkuser',

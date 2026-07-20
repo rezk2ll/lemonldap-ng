@@ -55,35 +55,36 @@ sub get {
             next;
         }
         if ( ref $value eq 'HASH' ) {
-            print "$key has the following keys:\n";
-            print "   $_\n" foreach ( sort keys %$value );
+            $self->output->print("$key has the following keys:\n");
+            $self->output->print("   $_\n") foreach ( sort keys %$value );
         }
         elsif ( ref $value eq 'ARRAY' ) {
-            print "$key is an array with values:\n";
+            $self->output->print("$key is an array with values:\n");
             foreach my $avalue (@$value) {
                 if ( ref $avalue eq 'HASH' ) {
-                    print "\tHash with following keys:\n";
-                    print "\t\t$_\n" foreach ( sort keys %$avalue );
+                    $self->output->print("\tHash with following keys:\n");
+                    $self->output->print("\t\t$_\n")
+                      foreach ( sort keys %$avalue );
                 }
                 elsif ( ref $value eq 'ARRAY' ) {
-                    print "\tArray with following keys:\n";
-                    print "\t\t$_\n" foreach (@$avalue);
+                    $self->output->print("\tArray with following keys:\n");
+                    $self->output->print("\t\t$_\n") foreach (@$avalue);
                 }
                 else {
                     $avalue //= '';
-                    print "\tValue = $avalue\n";
+                    $self->output->print("\tValue = $avalue\n");
                 }
             }
         }
         else {
             $value //= '';
-            print "$key = $value\n";
+            $self->output->print("$key = $value\n");
         }
     }
     if ( @keys == 1 ) {
         $res = $res->{ $keys[0] };
     }
-    print $self->jsonConverter->encode($res) if $self->json;
+    $self->output->print( $self->jsonConverter->encode($res) ) if $self->json;
 }
 
 sub set {
@@ -116,12 +117,12 @@ sub set {
         push @list, [ $key, $oldValue, $pairs{$key}, $value ];
     }
     unless ( $self->yes ) {
-        print "Proposed changes:\n";
-        printf $format, 'Key', 'Old value', 'New value';
+        $self->output->print("Proposed changes:\n");
+        $self->output->printf( $format, 'Key', 'Old value', 'New value' );
         foreach (@list) {
-            printf $format, @$_;
+            $self->output->printf( $format, @$_ );
         }
-        print "Confirm (N/y)? ";
+        $self->output->print("Confirm (N/y)? ");
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
             die "Aborting";
@@ -142,23 +143,23 @@ sub del {
     foreach my $key (@keys) {
         my $value = $self->_getKey($key);
         if ( ref $value eq 'HASH' ) {
-            print STDERR "$key seems to be a hash, delete refused\n";
+            $self->error->print("$key seems to be a hash, delete refused\n");
             next;
         }
         unless ( defined $value ) {
-            print STDERR "$key does not exists, skip it\n";
+            $self->error->print("$key does not exists, skip it\n");
             next;
         }
         $oldValues->{$key} = $value;
     }
     return unless keys %$oldValues;
     unless ( $self->yes ) {
-        print "Proposed changes:\n";
-        printf "%-25s | %-25s\n", 'Key', 'Old value';
+        $self->output->print("Proposed changes:\n");
+        $self->output->printf( "%-25s | %-25s\n", 'Key', 'Old value' );
         foreach ( keys %$oldValues ) {
-            printf "%-25s | %-25s\n", $_, $oldValues->{$_};
+            $self->output->printf( "%-25s | %-25s\n", $_, $oldValues->{$_} );
         }
-        print "Confirm (N/y)? ";
+        $self->output->print("Confirm (N/y)? ");
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
             die "Aborting";
@@ -189,7 +190,8 @@ sub merge {
                 $merging = YAML::LoadFile($file);
             };
             if ($@) {
-                print STDERR "Skipping invalid YAML file $file: " . $@;
+                $self->error->print(
+                    "Skipping invalid YAML file $file: " . $@ );
             }
         }
         else {
@@ -199,7 +201,8 @@ sub merge {
                 $merging = from_json(<$fh>);
             };
             if ($@) {
-                print STDERR "Skipping invalid JSON file $file: " . $@;
+                $self->error->print(
+                    "Skipping invalid JSON file $file: " . $@ );
             }
         }
         if ( ref($merging) eq "HASH" ) {
@@ -210,10 +213,11 @@ sub merge {
     die "Nothing to do" unless ref($new) eq "HASH";
 
     unless ( $self->yes ) {
-        print "Merge configuration changes from "
-          . join( " ", @valid_files ) . " \n";
-        print Dumper($new);
-        print "Confirm (N/y)? ";
+        $self->output->print( "Merge configuration changes from "
+              . join( " ", @valid_files )
+              . " \n" );
+        $self->output->print( Dumper($new) );
+        $self->output->print("Confirm (N/y)? ");
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
             die "Aborting";
@@ -419,7 +423,7 @@ sub lastCfg {
 sub save {
     my ($self) = @_;
     my $conf = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
-    print $self->jsonConverter->encode($conf);
+    $self->output->print( $self->jsonConverter->encode($conf) );
 }
 
 sub restore {
@@ -427,44 +431,41 @@ sub restore {
     unless ($file) {
         die "No file provided. Aborting";
     }
-    require IO::String;
     my $conf;
     if ( $file eq '-' ) {
+        binmode STDIN, ':encoding(UTF-8)';
         $conf = join '', <STDIN>;
     }
     else {
-        open( my $f, '<', $file ) or die "Unable to read $file: $!";
+        open( my $f, '<:encoding(UTF-8)', $file )
+          or die "Unable to read $file: $!";
         $conf = join '', <$f>;
         close $f;
         die "Empty or malformed file $file" unless ( $conf =~ /\w/s );
     }
     $self->logger->info("CLI: Restore conf.");
-    my $res = $self->_post( '/confs/raw', '', IO::String->new($conf),
-        'application/json', length($conf) );
+    my $response =
+      $self->jsonPostResponse( '/confs/raw', '', $conf, 'application/json' );
 
-    my $response = eval { from_json( $res->[2]->[0], { allow_nonref => 1 } ) };
-    if ( $res->[0] == 200 and $response->{result} == 1 ) {
-        print STDERR
-          "Configuration has been restored as version $response->{cfgNum}\n";
+    if ( $response->{result} == 1 ) {
+        $self->error->print(
+            "Configuration has been restored as version $response->{cfgNum}\n");
 
     }
     else {
         if ( my $message = $response->{error} ) {
-            print STDERR "Failed to restore configuration: $message\n";
+            $self->error->print("Failed to restore configuration: $message\n");
         }
         else {
-            print STDERR "The supplied configuration could not be restored"
-              . " because it contains errors:\n";
+            $self->error->print(
+                    "The supplied configuration could not be restored"
+                  . " because it contains errors:\n" );
 
             my @errors = eval {
                 map { $_->{message} } @{ $response->{details}->{__errors__} };
             };
             if (@errors) {
-                print STDERR " - $_\n" for @errors;
-            }
-            else {
-                use Data::Dumper;
-                print Dumper($res);
+                $self->error->print(" - $_\n") for @errors;
             }
         }
     }
@@ -488,11 +489,11 @@ sub rollback {
     my $s = $self->mgr->confAcc->saveConf($conf);
     if ( $s > 0 ) {
         $self->logger->info("CLI: Configuration $lastCfg has been rolled back");
-        print STDERR "Configuration $lastCfg has been rolled back\n";
+        $self->error->print("Configuration $lastCfg has been rolled back\n");
     }
     else {
         $self->logger->error("CLI: Failed to rollback configuration $lastCfg");
-        print STDERR "Failed to rollback configuration $lastCfg\n";
+        $self->error->print("Failed to rollback configuration $lastCfg\n");
     }
 }
 
@@ -540,9 +541,10 @@ sub purge {
 sub _config_delete {
     my ( $self, @to_delete ) = @_;
     unless ( $self->yes ) {
-        print "Configs that will be deleted: "
-          . _format_to_delete(@to_delete) . "\n";
-        print "Confirm (N/y)? ";
+        $self->output->print( "Configs that will be deleted: "
+              . _format_to_delete(@to_delete)
+              . "\n" );
+        $self->output->print("Confirm (N/y)? ");
         my $c = <STDIN>;
         unless ( $c =~ /^y(?:es)?$/ ) {
             die "Aborting";
@@ -552,7 +554,7 @@ sub _config_delete {
         $self->mgr->confAcc->delete($config_id);
     }
     $self->logger->info( "CLI: Deleted " . scalar @to_delete . " configs" );
-    print STDERR "Deleted " . scalar(@to_delete) . " configs\n";
+    $self->output->print( "Deleted " . scalar(@to_delete) . " configs\n" );
 }
 
 sub _format_to_delete {
@@ -625,13 +627,13 @@ sub _save {
             die "$msg";
         }
         else {
-            print STDERR "$msg\n";
+            $self->error->print("$msg\n");
         }
     }
     my $saveParams = { force => $self->force };
     if ( $self->force and $self->cfgNum ) {
         $self->logger->debug( "CLI: cfgNum forced with " . $self->cfgNum );
-        print STDERR "cfgNum forced with ", $self->cfgNum;
+        $self->error->print( "cfgNum forced with ", $self->cfgNum );
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
@@ -649,13 +651,14 @@ sub _save {
         $self->logger->debug(
             "CLI: Configuration $s has been saved by $new->{cfgAuthor}");
         $self->logger->info("CLI: Configuration $s saved");
-        print STDERR "Saved under number $s\n";
+        $self->error->print("Saved under number $s\n");
     }
     else {
         $self->logger->error("CLI: Configuration not saved!");
-        printf STDERR "Could not save configuration:";
-        printf STDERR $Lemonldap::NG::Common::Conf::msg;
-        printf STDERR "Modifications rejected: %s:\n", $parser->{message}
+        $self->error->printf("Could not save configuration:");
+        $self->error->printf($Lemonldap::NG::Common::Conf::msg);
+        $self->error->printf( "Modifications rejected: %s:\n",
+            $parser->{message} )
           if $parser->{message};
     }
 
@@ -674,7 +677,7 @@ sub _save {
             my $s = Dumper( $parser->{$_} );
             $s =~ s/\$VAR1\s*=\s*//;
             $s =~ s/__(\w+)__/$langMessages->{$1}/ if ( defined $langMessages );
-            printf STDERR "%-8s: %s", ucfirst($_), $s;
+            $self->error->printf( "%-8s: %s", ucfirst($_), $s );
         }
     }
 }
@@ -745,7 +748,7 @@ use Mouse;
 has cfgNum => ( is => 'rw' );
 has error  => ( is => 'rw' );
 
-sub params {
+sub param {
     my ( $self, $key ) = @_;
     return $self->{$key};
 }

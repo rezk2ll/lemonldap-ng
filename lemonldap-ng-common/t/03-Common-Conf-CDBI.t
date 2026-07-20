@@ -8,7 +8,9 @@ use warnings;
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More tests => 14;
+use Test::More tests => 17;
+use JSON;
+use utf8;
 
 BEGIN {
     use_ok('Lemonldap::NG::Common::Conf');
@@ -62,13 +64,27 @@ SKIP: {
         { cfgNum => 3, test => 'éà' }
     );
 
+    my $dbh = DBI->connect('DBI:SQLite:dbname=t/cdbiConf.sql');
     for ( my $i = 0 ; $i < @test ; $i++ ) {
         ok( $h->store( $test[$i] ) == $i + 1, "Test $i is stored" )
           or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
         my $cfg;
         ok( $cfg = $h->load( $i + 1 ), "Test $i can be read" )
           or print STDERR $Lemonldap::NG::Common::Conf::msg;
-        ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" );
+        ok( $cfg->{test} eq $test[$i]->{test},
+            "Test $i is restored from initial Perl value" );
+
+        # Get binary data
+        my @row = $dbh->selectrow_array(
+            "select data from lmConfig where cfgNum='$test[$i]->{cfgNum}'");
+
+        # UTF-8 + json decode
+        my $data = decode_json( $row[0] );
+        is(
+            $data->{test},
+            $test[$i]->{test},
+            "Value stored in sqlite is correctly encoded"
+        );
     }
 
     unlink 't/cdbiConf.sql';

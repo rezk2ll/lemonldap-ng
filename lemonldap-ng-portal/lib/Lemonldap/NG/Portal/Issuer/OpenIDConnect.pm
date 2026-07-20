@@ -2181,7 +2181,6 @@ sub userInfo {
 
     unless ($userinfo_sign_alg) {
         my $debug_response = to_json($userinfo_response);
-        utf8::downgrade($debug_response);
         $self->logger->debug( "Return UserInfo as JSON: " . $debug_response );
         return $self->p->sendJSONresponse( $req, $userinfo_response );
 

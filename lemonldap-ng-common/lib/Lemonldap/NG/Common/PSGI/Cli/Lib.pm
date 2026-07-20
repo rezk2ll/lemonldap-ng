@@ -3,13 +3,33 @@ package Lemonldap::NG::Common::PSGI::Cli::Lib;
 use strict;
 use JSON;
 use Mouse;
+use Encode;
 use Lemonldap::NG::Common::PSGI;
+use IO::String;
 
 our $VERSION = '2.0.10';
 
 has iniFile => ( is => 'ro', isa => 'Str' );
 
 has app => ( is => 'ro', isa => 'CodeRef' );
+
+has output => (
+    is      => "ro",
+    builder => sub {
+        open my $out_clone, '>&', \*STDOUT;
+        binmode $out_clone, ':encoding(UTF-8)';
+        $out_clone;
+    }
+);
+
+has error => (
+    is      => "ro",
+    builder => sub {
+        open my $err_clone, '>&', \*STDERR;
+        binmode $err_clone, ':encoding(UTF-8)';
+        $err_clone;
+    }
+);
 
 sub _get {
     my ( $self, $path, $query ) = @_;
@@ -37,6 +57,13 @@ sub _get {
 
 sub _post {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
+
+    if ( not ref($body) ) {
+        my $encoded = encode( 'UTF-8', $body );
+        $len  = length($encoded);
+        $body = IO::String->new($encoded);
+    }
+
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     return $self->app->( {
@@ -66,6 +93,13 @@ sub _post {
 
 sub _put {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
+
+    if ( not ref($body) ) {
+        my $encoded = encode( 'UTF-8', $body );
+        $len  = length($encoded);
+        $body = IO::String->new($encoded);
+    }
+
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     return $self->app->( {
@@ -95,6 +129,13 @@ sub _put {
 
 sub _patch {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
+
+    if ( not ref($body) ) {
+        my $encoded = encode( 'UTF-8', $body );
+        $len  = length($encoded);
+        $body = IO::String->new($encoded);
+    }
+
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     return $self->app->( {
@@ -152,10 +193,10 @@ sub jsonResponse {
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
         $Data::Dumper::Useperl = 1;
-        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        $self->error->print( "Result dump :\n" . Data::Dumper::Dumper($res) );
         die "Manager lib does not return a 200 code, aborting";
     }
-    my $href = from_json( $res->[2]->[0], { allow_nonref => 1 } )
+    my $href = from_json( $res->[2]->[0], { allow_nonref => 1, utf8 => 1 } )
       or die 'Response is not JSON';
     return $href;
 }
@@ -167,10 +208,10 @@ sub jsonPostResponse {
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
         $Data::Dumper::Useperl = 1;
-        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        $self->error->print( "Result dump :\n" . Data::Dumper::Dumper($res) );
         die "Manager lib does not return a 200 code, aborting";
     }
-    my $href = from_json( $res->[2]->[0], { allow_nonref => 1 } )
+    my $href = from_json( $res->[2]->[0], { allow_nonref => 1, utf8 => 1 } )
       or die 'Response is not JSON';
     return $href;
 }
@@ -182,10 +223,10 @@ sub jsonPutResponse {
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
         $Data::Dumper::Useperl = 1;
-        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        $self->error->print( "Result dump :\n" . Data::Dumper::Dumper($res) );
         die "Manager lib does not return a 200 code, aborting";
     }
-    my $href = from_json( $res->[2]->[0], { allow_nonref => 1 } )
+    my $href = from_json( $res->[2]->[0], { allow_nonref => 1, utf8 => 1 } )
       or die 'Response is not JSON';
     return $href;
 }

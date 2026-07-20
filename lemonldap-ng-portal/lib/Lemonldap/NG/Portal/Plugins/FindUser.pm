@@ -81,7 +81,7 @@ sub retreiveFindUserParams {
     @$searching = map {
         my ( $key, $value, $null ) = split '#', $_;
         $key =~ s/^(?:\d+_)?//;
-        my $param  = $req->params($key) // '';
+        my $param  = $req->param($key) // '';
         my @values = grep s/^(?:\d+_)?//,
           split( $self->conf->{multiValuesSeparator},
             $self->conf->{findUserSearchingAttributes}->{$_} || '' );

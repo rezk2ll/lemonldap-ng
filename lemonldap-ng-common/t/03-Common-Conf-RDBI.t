@@ -8,7 +8,9 @@ use warnings;
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More tests => 14;
+use Test::More tests => 22;
+use JSON;
+use utf8;
 
 BEGIN {
     use_ok('Lemonldap::NG::Common::Conf');
@@ -24,7 +26,7 @@ my $h;
 unlink 't/rdbiConf.sql';
 
 SKIP: {
-    eval { require DBI; };
+    eval { require DBI; require DBD::SQLite::Constants; };
     skip( "DBI not installed", 13 ) if ($@);
     my $skipSQLite = 0;
 
@@ -42,7 +44,6 @@ SKIP: {
     ok( $h->can('_dbh'), 'Driver is build' );
     eval { require DBD::SQLite };
     skip( "DBD::SQLite not installed", 11 ) if ($@);
-    ok( $h->_dbh->{sqlite_unicode} = 1, 'Set unicode' );
     ok(
         $h->_dbh->do(
 "CREATE TABLE lmConfig ( cfgNum int not null, field varchar(255) NOT NULL DEFAULT '', value longblob, PRIMARY KEY (cfgNum,field))"
@@ -53,22 +54,64 @@ SKIP: {
     my @test = (
 
         #  simple ascii
-        { cfgNum => 1, test => 'ascii' },
+        {
+            cfgNum               => 1,
+            test                 => 'ascii',
+            globalStorageOptions => { opt1 => 'ascii' }
+        },
 
         #  utf-8
-        { cfgNum => 2, test => 'Русский' },
+        {
+            cfgNum               => 2,
+            test                 => 'Русский',
+            globalStorageOptions => { opt1 => 'Русский' }
+        },
 
         #  compatible utf8/latin-1 char but with different codes
-        { cfgNum => 3, test => 'éà' }
+        { cfgNum => 3, test => 'éà', globalStorageOptions => { opt1 => 'éà' } }
     );
 
+    my $dbh = DBI->connect(
+        'DBI:SQLite:dbname=t/rdbiConf.sql',
+        '', '',
+        {
+            sqlite_unicode => 1,
+        }
+    );
     for ( my $i = 0 ; $i < @test ; $i++ ) {
         ok( $h->store( $test[$i] ) == $i + 1, "Test $i is stored" )
           or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
         my $cfg;
         ok( $cfg = $h->load( $i + 1 ), "Test $i can be read" )
-          or print STDERR "$Lemonldap::NG::Common::Conf::msg $!$@";
-        ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" );
+          or print STDERR $Lemonldap::NG::Common::Conf::msg;
+        ok( $cfg->{test} eq $test[$i]->{test},
+            "Test $i is restored from initial Perl value" );
+        ok(
+            $cfg->{globalStorageOptions}->{opt1} eq
+              $test[$i]->{globalStorageOptions}->{opt1},
+            "Test $i is restored from initial Perl value"
+        );
+
+        # Check data inside sqlite directly
+        my @row = $dbh->selectrow_array(
+                "select value from lmConfig where cfgNum='$test[$i]->{cfgNum}'"
+              . " and field='test'" );
+        my $value = $row[0];
+        is(
+            $value,
+            $test[$i]->{test},
+            "Value stored in sqlite is correctly encoded"
+        );
+
+        my @row2 = $dbh->selectrow_array(
+                "select value from lmConfig where cfgNum='$test[$i]->{cfgNum}'"
+              . " and field='globalStorageOptions'" );
+        my $value2 = from_json( $row2[0] );
+        is(
+            $value2->{opt1},
+            $test[$i]->{globalStorageOptions}->{opt1},
+            "Hash value stored in sqlite is correctly encoded"
+        );
     }
 
     unlink 't/rdbiConf.sql';

@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use utf8;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
@@ -119,7 +120,7 @@ ok(
     'Some session keys'
 );
 expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok(
     $res->{_session_id} eq
@@ -137,7 +138,7 @@ ok(
     'Retrieve error message: 9 from lang: fr'
 );
 expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok( $res->{lang} eq 'fr', ' Good lang' )
   or explain( $res, 'lang => fr' );
@@ -156,7 +157,7 @@ ok(
     'Retrieve ALL error messages from lang: es'
 );
 expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok( $res->{lang} eq 'es', ' Good lang' )
   or explain( $res, 'lang => es' );
@@ -171,7 +172,7 @@ count(6);
 ok( $res = $issuer->_get("/error"),
     'Retrieve ALL error messages from lang: en (default)' );
 expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok( $res->{lang} eq 'en', ' Good lang' )
   or explain( $res, 'lang => en' );

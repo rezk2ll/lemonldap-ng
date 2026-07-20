@@ -5,6 +5,7 @@ package Lemonldap::NG::Handler::PSGI::Main;
 
 use strict;
 use base 'Lemonldap::NG::Handler::Main';
+use Encode;
 our $VERSION = '2.19.0';
 
 # Specific modules and constants for Test or CGI
@@ -56,7 +57,9 @@ sub set_custom {
 sub set_header_in {
     my ( $class, $req, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $req->{env}->{ cgiName($h) } = $v if ( defined $v );
+        if ( defined $v ) {
+            $req->{env}->{ cgiName($h) } = encode( 'UTF-8', $v );
+        }
     }
 }
 

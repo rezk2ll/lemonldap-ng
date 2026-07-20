@@ -149,15 +149,22 @@ count(2);
 
 # Check headers
 %h = @{ $res->[1] };
-ok( $h{'Headername1'} eq 'Auth-User', 'Headername1 is set to "Auth-User"' )
-  or explain( \%h, 'Headername1 => "Auth-User"' );
-ok( $h{'Headervalue1'} eq 'dwho', 'Headervalue1 is set to "dwho"' )
-  or explain( \%h, 'Headervalue1 => "dwho"' );
+my %r = (
+    $h{'Headername1'} => $h{'Headervalue1'},
+    $h{'Headername2'} => $h{'Headervalue2'},
+);
+is_deeply(
+    \%r,
+    {
+        'Auth-Cn'   => 'Doctor Whò',
+        'Auth-User' => 'dwho'
+    }
+);
 ok(
     $h{'Lm-Remote-Custom'} eq 'dwho@badwolf.org',
     'Lm-Remote-Custom is set "dwho@badwolf.org"'
 ) or explain( \%h, 'Lm-Remote-User => "dwho@badwolf.org"' );
-count(3);
+count(2);
 
 # Request an URI protected by custom function -> allowed
 ok(

@@ -16,7 +16,7 @@ sub getSecondFactors {
     my ( $self, $req ) = @_;
     my ( $uid, $res );
 
-    $uid = $req->params('_uid')
+    $uid = $req->param('_uid')
       or return $self->searchSecondFactors($req);
 
     $self->logger->debug("[API] 2F for $uid requested");
@@ -33,10 +33,10 @@ sub getSecondFactorsByType {
     my ( $self, $req ) = @_;
     my ( $uid, $type, $res );
 
-    $uid = $req->params('_uid')
+    $uid = $req->param('_uid')
       or return $self->sendError( $req, 'Uid is missing', 400 );
 
-    $type = $req->params('type')
+    $type = $req->param('type')
       or return $self->sendError( $req, 'Type is missing', 400 );
 
     $self->logger->debug("[API] 2F for $uid with type $type requested");
@@ -53,10 +53,10 @@ sub getSecondFactorsById {
     my ( $self, $req ) = @_;
     my ( $uid, $id, $res );
 
-    $uid = $req->params('_uid')
+    $uid = $req->param('_uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
-    $id = $req->params('id')
+    $id = $req->param('id')
       or return $self->sendError( $req, 'id is missing', 400 );
 
     $self->logger->debug("[API] 2F for $uid with id $id requested");
@@ -82,7 +82,7 @@ sub deleteSecondFactors {
       and return $self->sendError( $req, 'Invalid URI, provide /id/ or /type/',
         400 );
 
-    $uid = $req->params('uid')
+    $uid = $req->param('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
     $self->logger->debug("[API] Delete all 2F for $uid requested");
@@ -138,10 +138,10 @@ sub deleteSecondFactorsById {
     my ( $self, $req ) = @_;
     my ( $uid, $id, $res );
 
-    $uid = $req->params('uid')
+    $uid = $req->param('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
-    $id = $req->params('id')
+    $id = $req->param('id')
       or return $self->sendError( $req, 'id is missing', 400 );
 
     $self->logger->debug("[API] Delete 2F for $uid with id $id requested");
@@ -162,10 +162,10 @@ sub deleteSecondFactorsByType {
     my ( $self, $req ) = @_;
     my ( $uid, $type, $res );
 
-    $uid = $req->params('uid')
+    $uid = $req->param('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
-    $type = $req->params('type')
+    $type = $req->param('type')
       or return $self->sendError( $req, 'type is missing', 400 );
 
     $self->logger->debug(
@@ -378,7 +378,7 @@ sub _getDevicesFromSessionData {
 sub addSecondFactor {
     my ( $self, $req ) = @_;
 
-    my $uid = $req->params('uid')
+    my $uid = $req->param('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
     $self->logger->debug("[API] Add 2F for $uid");
@@ -394,9 +394,9 @@ sub addSecondFactor {
       if ( defined $add->{epoch} );
 
     my $allow_create =
-      (      $req->params('create')
-          && $req->params('create') ne "false"
-          && $req->params('create') ne "0" );
+      (      $req->param('create')
+          && $req->param('create') ne "false"
+          && $req->param('create') ne "0" );
 
     my $res = $self->_add2F( $uid, undef, $add, $allow_create );
 
@@ -412,10 +412,10 @@ sub addSecondFactor {
 sub addSecondFactorByType {
     my ( $self, $req ) = @_;
 
-    my $uid = $req->params('uid')
+    my $uid = $req->param('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
-    my $type = $req->params('type')
+    my $type = $req->param('type')
       or return $self->sendError( $req, 'type is missing', 400 );
 
     my $add = $req->jsonBodyToObj;
@@ -425,9 +425,9 @@ sub addSecondFactorByType {
     $self->logger->debug("[API] Add $type 2F for $uid");
 
     my $allow_create =
-      (      $req->params('create')
-          && $req->params('create') ne "false"
-          && $req->params('create') ne "0" );
+      (      $req->param('create')
+          && $req->param('create') ne "false"
+          && $req->param('create') ne "0" );
 
     my $res = $self->_add2F( $uid, $type, $add, $allow_create );
 

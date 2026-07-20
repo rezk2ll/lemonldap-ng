@@ -71,7 +71,7 @@ sub sfDeleteDevice {
 sub sfAfterVerify {
     my ( $self, $req, $module, $session, $verify_result ) = @_;
 
-    if ( $req->params('failme') ) {
+    if ( $req->param('failme') ) {
         $verify_result->{result}  = PE_BADOTP;
         $verify_result->{retries} = 1;
     }

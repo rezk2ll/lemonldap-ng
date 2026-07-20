@@ -3748,10 +3748,6 @@ samlIDPMetaDataOptionsForceAuthn
     :Location: SAML Identity Providers » *configuration key* » Options » Force authentication
     :Used by portal: yes
 
-samlIDPMetaDataOptionsForceUTF8
-    :Location: SAML Identity Providers » *configuration key* » Session » Force UTF-8
-    :Used by portal: yes
-
 samlIDPMetaDataOptionsIcon
     :Location: SAML Identity Providers » *configuration key* » Display » Logo
     :Used by portal: yes
@@ -3864,11 +3860,6 @@ samlIDPSSODescriptorWantAuthnRequestsSigned
     :Description: SAML IDP want authn request signed
     :Used by portal: yes
 
-samlMetadataForceUTF8
-    :Location: SAML2 Service » Advanced » UTF8 metadata conversion
-    :Description: SAML force metadata UTF8 conversion
-    :Used by portal: yes
-
 samlNameIDFormatMapEmail
     :Location: SAML2 Service » NameID formats » Email
     :Description: SAML session parameter for NameID email
@@ -3974,10 +3965,6 @@ samlSPMetaDataOptionsFederationRequiredAttributes
 
 samlSPMetaDataOptionsForceNameIDFormat
     :Location: SAML Service Providers » *configuration key* » Options » Authentication response » Force NameID format
-    :Used by portal: yes
-
-samlSPMetaDataOptionsForceUTF8
-    :Location: SAML Service Providers » *configuration key* » Options » Authentication response » Force UTF-8
     :Used by portal: yes
 
 samlSPMetaDataOptionsNameIDFormat

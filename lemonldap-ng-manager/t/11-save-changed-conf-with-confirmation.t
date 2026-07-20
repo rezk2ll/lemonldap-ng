@@ -129,7 +129,7 @@ sub changes {
         },
         {
             'key' =>
-              'applicationList, Sample applications, Application Test 1, uri',
+              'applicationList, Sample applications, Application Tést 1, uri',
             'old' => 'http://test1.example.com/',
             'new' => 'http://testex.example.com/'
         },

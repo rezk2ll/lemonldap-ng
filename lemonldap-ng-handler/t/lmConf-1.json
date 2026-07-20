@@ -14,7 +14,8 @@
   "domain": "example.com",
   "exportedHeaders": {
     "test1.example.com": {
-      "Auth-User": "$uid"
+      "Auth-User": "$uid",
+      "Auth-Cn": "$cn"
     },
     "test2.example.com": {
       "Auth-User": "$uid"

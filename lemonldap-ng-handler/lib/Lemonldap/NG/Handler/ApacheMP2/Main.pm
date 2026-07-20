@@ -17,6 +17,7 @@ use APR::Table;
 use Apache2::Const -compile =>
   qw(FORBIDDEN HTTP_UNAUTHORIZED REDIRECT OK DECLINED DONE SERVER_ERROR AUTH_REQUIRED HTTP_SERVICE_UNAVAILABLE);
 use URI;
+use Encode;
 use base 'Lemonldap::NG::Handler::Main';
 
 use constant FORBIDDEN         => Apache2::Const::FORBIDDEN;
@@ -97,8 +98,8 @@ sub set_custom {
 sub set_header_in {
     my ( $class, $request, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        utf8::downgrade($v);
-        $request->env->{'psgi.r'}->headers_in->set( $h => $v );
+        $request->env->{'psgi.r'}
+          ->headers_in->set( $h => encode( 'UTF-8', $v ) );
     }
 }
 
