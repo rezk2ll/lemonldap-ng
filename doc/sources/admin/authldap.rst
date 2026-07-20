@@ -93,6 +93,7 @@ Connection
 -  **Client certificate**: Path of the client certificate to bind with. 
    ``CN`` of the certificate will be used to connect to LDAP server.
    ``CN`` sould be mapped to an accound with ``olcAuhtzRegexp`` directive.
+   This feature requires `Authen::SASL <https://metacpan.org/pod/Authen::SASL>`__.
 -  **Client key**: Path of the private key associated to client certificate
 -  **Connection timeout**: Applies only when initiating the connection
 -  **Operation timeout**: Applies to all LDAP operations
@@ -110,11 +111,6 @@ Connection
 
 
 .. attention::
-
-    mTLS bind will be used if no Account or Password is provided.
-
-    If no Accound/Password neither client Certificate/Private key is provided,
-    anonymous bind will be used.
 
     LL::NG needs anonymous access to LDAP Directory RootDSE in order to check LDAP connection.
 
