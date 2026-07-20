@@ -11,14 +11,9 @@ use Time::Local;
 use DBI;
 use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
-
-sub import {
-    shift;
-    return Lemonldap::NG::Common::Notifications->import(@_);
-}
 
 has dbiTable => (
     is      => 'ro',
@@ -62,13 +57,13 @@ sub get {
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
 
-        # Get XML message
-        my $xml = $h->{xml};
+        # Get message
+        my $content = $h->{content};
 
         # Store message in result
         my $identifier =
-          &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
-        $result->{$identifier} = $xml;
+          $self->getIdentifier( $h->{uid}, $h->{ref}, $h->{date} );
+        $result->{$identifier} = $content;
     }
     $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
     return $result;
@@ -89,13 +84,13 @@ sub getAccepted {
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
 
-        # Get XML message
-        my $xml = $h->{xml};
+        # Get content message
+        my $content = $h->{content};
 
         # Store message in result
         my $identifier =
-          &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
-        $result->{$identifier} = $xml;
+          $self->getIdentifier( $h->{uid}, $h->{ref}, $h->{date} );
+        $result->{$identifier} = $content;
     }
     $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
     return $result;
@@ -191,16 +186,16 @@ sub purge {
         $u, $r, $d );
 }
 
-## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)
+## @method boolean newNotif(string date, string uid, string ref, string condition, string content)
 # Insert a new notification
 # @param date Date
 # @param uid UID
 # @param ref Reference of the notification
 # @param condition Condition for the notification
-# @param xml XML notification
+# @param content content of the notification
 # @return true if succeed
 sub newNotif {
-    my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
+    my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
     my @t = split( /\D+/, $date );
     $t[1]--;
     eval {
@@ -211,12 +206,12 @@ sub newNotif {
       $condition =~ /.+/
       ? $self->_execute( 'INSERT INTO '
           . $self->dbiTable
-          . ' (date,uid,ref,cond,xml) VALUES(?,?,?,?,?)',
-        $date, $uid, $ref, $condition, $xml )
+          . ' (date,uid,ref,cond,content) VALUES(?,?,?,?,?)',
+        $date, $uid, $ref, $condition, $content )
       : $self->_execute( 'INSERT INTO '
           . $self->dbiTable
-          . ' (date,uid,ref,xml) VALUES(?,?,?,?)',
-        $date, $uid, $ref, $xml );
+          . ' (date,uid,ref,content) VALUES(?,?,?,?)',
+        $date, $uid, $ref, $content );
     return $res;
 }
 

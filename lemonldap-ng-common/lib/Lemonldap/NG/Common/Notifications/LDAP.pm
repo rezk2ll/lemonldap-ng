@@ -13,14 +13,9 @@ use MIME::Base64 qw/encode_base64url/;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '2.21.0';
+our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
-
-sub import {
-    shift;
-    return Lemonldap::NG::Common::Notifications->import(@_);
-}
 
 has ldapServer => (
     is      => 'ro',
@@ -107,10 +102,10 @@ sub get {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
             $f->{$k} = $v;
         }
-        my $xml = $f->{xml};
+        my $content = $f->{content};
         my $identifier =
-          &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
-        $result->{$identifier} = "$xml";
+          $self->getIdentifier( $f->{uid}, $f->{ref}, $f->{date} );
+        $result->{$identifier} = "$content";
         $self->logger->info("notification $identifier found");
 
     }
@@ -136,10 +131,10 @@ sub getAccepted {
             my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
             $f->{$k} = $v;
         }
-        my $xml = $f->{xml};
+        my $content = $f->{content};
         my $identifier =
-          &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
-        $result->{$identifier} = "$xml";
+          $self->getIdentifier( $f->{uid}, $f->{ref}, $f->{date} );
+        $result->{$identifier} = "$content";
         $self->logger->info("notification $identifier found");
 
     }
@@ -248,10 +243,10 @@ sub purge {
 # @param uid UID
 # @param ref Reference of the notification
 # @param condition Condition for the notification
-# @param xml XML notification
+# @param content Content of the notification
 # @return true if succeed
 sub newNotif {
-    my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
+    my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
     my $fns = $self->conf->{fileNameSeparator};
     $fns ||= '_';
     my @t = split( /\D+/, $date );
@@ -271,14 +266,14 @@ sub newNotif {
         "date" => "$date",
         "uid"  => "$uid",
         "ref"  => "$ref",
-        "xml"  => "$xml",
+        "content"  => "$content",
         "cond" => "$condition",
       }
       : {
         "date" => "$date",
         "uid"  => "$uid",
         "ref"  => "$ref",
-        "xml"  => "$xml",
+        "content"  => "$content",
       };
 
     return _store( $self, $cn, $fields );

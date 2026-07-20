@@ -12,7 +12,7 @@ require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
-'{"date":"2099-02-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-02-30","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
 my $res =
   &client->jsonPostResponse( 'notifications/actives', '', $notif,
     'application/json' );
@@ -21,7 +21,7 @@ ok( $res->{error} =~ /^Notification not created: Bad date/,
 count(1);
 
 $notif =
-'{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-13-30","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
 $res =
   &client->jsonPostResponse( 'notifications/actives', '', $notif,
     'application/json' );
@@ -30,7 +30,7 @@ ok( $res->{error} =~ /^Notification not created: Bad date/,
 count(1);
 
 $notif =
-'{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-05_12","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
 $res =
   &client->jsonPostResponse( 'notifications/actives', '', $notif,
     'application/json' );
@@ -38,7 +38,7 @@ ok( $res->{error} =~ /^Malformed date$/, 'Notification not inserted' );
 count(1);
 
 $notif =
-'{"date":"2099-12-31","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}", "condition": "1==1"}';
+'{"date":"2099-12-31","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}", "condition": "1==1"}';
 $res =
   &client->jsonPostResponse( 'notifications/actives', '', $notif,
     'application/json' );

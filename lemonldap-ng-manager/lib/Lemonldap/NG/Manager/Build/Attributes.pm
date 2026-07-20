@@ -1737,11 +1737,6 @@ sub attributes {
         },
 
         # Notification
-        oldNotifFormat => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Use old XML format for notifications',
-        },
         notificationWildcard => {
             type          => 'text',
             default       => 'allusers',
@@ -1751,10 +1746,6 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Enable PublicNotification plugin',
-        },
-        notificationXSLTfile => {
-            type          => 'text',
-            documentation => 'Custom XSLT document for notifications',
         },
         notification => {
             default       => 0,

@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTIFICATION
 );
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -82,23 +82,14 @@ sub init {
             "Unable to load Lemonldap::NG::Common::Notifications::$type: $@");
         return 0;
     }
-    $type->import( $self->conf->{oldNotifFormat} ? 'XML' : 'JSON' );
-
-    # TODO: use conf database?
     my $prms = {
         %{ $self->conf->{notificationStorageOptions} },
         p    => $self->p,
         conf => $self->p->conf
     };
+    $self->module( $self->p->loadModule('::Lib::Notifications::JSON') )
+      or return 0;
 
-    if ( $self->conf->{oldNotifFormat} ) {
-        $self->module( $self->p->loadModule('::Lib::Notifications::XML') )
-          or return 0;
-    }
-    else {
-        $self->module( $self->p->loadModule('::Lib::Notifications::JSON') )
-          or return 0;
-    }
     unless ( eval { $self->module->notifObject( $type->new($prms) ); } ) {
         $self->logger->error($@);
         return 0;
@@ -107,20 +98,7 @@ sub init {
     return 1;
 }
 
-#sub checkNotifForAuthUser {
-#    my ( $self, $req ) = @_;
-#    if ( my $notif = $self->checkForNotifications($req) ) {
-#
-#        # Cipher cookies
-#        return PE_NOTIFICATION;
-#    }
-#    else {
-#        return PE_OK;
-#    }
-#}
-
 # RUNNING METHODS
-
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;
     eval {

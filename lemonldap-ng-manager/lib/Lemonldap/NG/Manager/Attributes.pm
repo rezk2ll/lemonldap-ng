@@ -2581,9 +2581,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'allusers',
             'type'    => 'text'
         },
-        'notificationXSLTfile' => {
-            'type' => 'text'
-        },
         'notifyDeleted' => {
             'default' => 1,
             'type'    => 'bool'
@@ -4090,10 +4087,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'okta2fLogo' => {
             'type' => 'text'
-        },
-        'oldNotifFormat' => {
-            'default' => 0,
-            'type'    => 'bool'
         },
         'openIdAttr' => {
             'type' => 'text'

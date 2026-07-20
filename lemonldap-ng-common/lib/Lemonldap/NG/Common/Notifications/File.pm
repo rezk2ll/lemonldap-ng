@@ -10,17 +10,12 @@ use Mouse;
 use Time::Local;
 use MIME::Base64;
 
-our $VERSION = '2.21.0';
+our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
-sub import {
-    shift;
-    return Lemonldap::NG::Common::Notifications->import(@_);
-}
-
+has fileNameSeparator => ( is => 'rw', default => '_' );
 has dirName => ( is => 'ro', required => 1 );
-
 has table => (
     is      => 'rw',
     trigger => sub {
@@ -29,19 +24,16 @@ has table => (
     }
 );
 
-has fileNameSeparator => ( is => 'rw', default => '_' );
-
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
-    my $ext        = $self->extension;
     my $fns        = $self->{fileNameSeparator};
-    my $identifier = &getIdentifier( $self, $uid, $ref );
+    my $identifier = $self->getIdentifier( $uid, $ref );
 
     opendir D, $self->{dirName};
-    my @notif = grep /^\d{8}${fns}${identifier}\S*\.$ext$/, readdir(D);
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.json$/, readdir(D);
     closedir D;
 
     my $files;
@@ -60,13 +52,12 @@ sub get {
 # If $ref is set, returns only notification corresponding to this reference.
 sub getAccepted {
     my ( $self, $uid, $ref ) = @_;
-    return () unless ($uid);
-    my $ext        = $self->extension;
+    return () unless $uid;
     my $fns        = $self->{fileNameSeparator};
-    my $identifier = &getIdentifier( $self, $uid, $ref );
+    my $identifier = $self->getIdentifier( $uid, $ref );
 
     opendir D, $self->{dirName};
-    my @notif = grep /^\d{8}${fns}${identifier}\S*\.(?:done|$ext)$/, readdir(D);
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.(?:json|done)$/, readdir(D);
     closedir D;
 
     my $files;
@@ -87,13 +78,12 @@ sub getAccepted {
 # keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
-    my $ext  = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
-    @notif = grep /^\S*\.$ext$/, readdir(D);
+    @notif = grep /^\S*\.json$/, readdir(D);
     my %h = map {
-/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.$ext$/
+/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.json$/
           ? (
             $_ => {
                 date      => $1,
@@ -113,13 +103,12 @@ sub getAll {
 # keys date, uid, ref and condition.
 sub getExisting {
     my $self = shift;
-    my $ext  = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
-    @notif = grep /^\S*\.$ext$/, readdir(D);
+    @notif = grep /^\S*\.json$/, readdir(D);
     my %h = map {
-/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.(?:$ext|done)$/
+/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.(?:json|done)$/
           ? (
             $_ => {
                 date      => $1,
@@ -138,8 +127,7 @@ sub getExisting {
 # @param $myref identifier returned by get() or getAll()
 sub delete {
     my ( $self, $myref ) = @_;
-    my $ext = $self->extension;
-    my $new = ( $myref =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
+    my $new = ( $myref =~ /(.*?)(?:\.json)$/ )[0] . '.done';
     return rename( $self->{dirName} . "/$myref", $self->{dirName} . "/$new" );
 }
 
@@ -155,7 +143,6 @@ sub purge {
 # Insert a new notification
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
-    my $ext = $self->extension;
     my $fns = $self->{fileNameSeparator};
     $fns ||= '_';
     my @t = split( /\D+/, $date );
@@ -171,10 +158,10 @@ sub newNotif {
       . "/${date}${fns}${uid}${fns}"
       . encode_base64( $ref, '' );
     $filename .= "${fns}" . encode_base64( $condition, '' ) if $condition;
-    $filename .= ".$ext";
+    $filename .= ".json";
 
     return ( 0, 'This notification still exists' ) if ( -e $filename );
-    my $old = ( $filename =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
+    my $old = ( $filename =~ /(.*?)(?:\.json)$/ )[0] . '.done';
     return ( 0, 'This notification has been done' ) if ( -e $old );
     open my $F, '>:encoding(UTF-8)', $filename
       or return ( 0, "Unable to create $filename ($!)" );

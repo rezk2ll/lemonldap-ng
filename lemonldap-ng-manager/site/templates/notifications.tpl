@@ -142,12 +142,12 @@
           <tr>
             <th>{{translate('content')}}</th>
             <td>
-              <textarea rows=5 class="form-control" ng-model="form.xml"></textarea>
+              <textarea rows=5 class="form-control" ng-model="form.content"></textarea>
               <div class="alert alert-info">
                 <p>{{translate('allowedMarkups')}}</p>
                 <table border="0">
                  <thead>
-                  <tr><th>JSON</th><th>XML</th></tr>
+                  <tr><th>JSON</th></tr>
                  </thead>
                  <tbody><tr>
                   <td>
@@ -159,14 +159,6 @@
   "check": [ "...", "..." ]
 }
                     </pre>
-                  </td>
-                  <td>
-                    <ul>
-                      <li>&lt;title&gt;...&lt;/title&gt;</li>
-                      <li>&lt;subtitle&gt;...&lt;/subtitle&gt;</li>
-                      <li>&lt;text&gt;...&lt;/text&gt;</li>
-                      <li>&lt;check&gt;...&lt;/check&gt;</li>
-                    </ul>
                   </td>
                 </tr></tbody></table>
               </div>

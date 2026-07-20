@@ -18,10 +18,9 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0';
 
 has notifAccess => ( is => 'rw' );
-has notifFormat => ( is => 'rw' );
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -32,16 +31,6 @@ use constant icon         => 'bell';
 
 sub init {
     my ( $self, $conf ) = @_;
-
-    if ( $conf->{oldNotifFormat} ) {
-        Lemonldap::NG::Common::Notifications->import('XML');
-        $self->notifFormat('XML');
-    }
-    else {
-        Lemonldap::NG::Common::Notifications->import('JSON');
-        $self->notifFormat('JSON');
-    }
-
     unless ( $self->setNotifAccess($conf) ) {
         $self->addRoute( 'notifications.html', 'notEnabled', ['GET'] );
         $self->addRoute( notifications => 'notEnabled', ['GET'] );
@@ -83,17 +72,12 @@ sub init {
 
 sub setNotifAccess {
     my ( $self, $conf ) = @_;
-
-    # TODO: refresh system
     $self->{$_} //= $conf->{$_}
       foreach (
         qw/portal notification notificationStorage notificationStorageOptions/);
 
-    unless ( $self->{notification} ) {
-        return 0;
-    }
+    return 0 unless ( $self->{notification} );
 
-    # TODO: old parameters (with table)
     unless ( $self->{notificationStorage} ) {
         $self->handlerAbort( notifications =>
               'notificationStorage is not defined in configuration' );
@@ -210,7 +194,7 @@ sub notifications {
                 result => 1,
                 count  => $count,
                 values => $res,
-                total  => $total
+                total  => $total,
             }
         );
     }
@@ -236,7 +220,7 @@ sub notifications {
                 result => 1,
                 count  => scalar(@r),
                 values => \@r,
-                total  => $total
+                total  => $total,
             }
         );
     }
@@ -313,7 +297,7 @@ sub newNotification {
 
     $json->{reference} =~ s/_/-/g;    # Remove underscores (#2135)
 
-    foreach my $r (qw(uid reference xml)) {
+    foreach my $r (qw(uid reference content)) {
         return $self->sendError( $req, "Missing $r", 200 )
           unless ( $json->{$r} );
     }
@@ -345,30 +329,16 @@ sub newNotification {
     }
 
     my $newNotif;
-    if ( $self->notifFormat eq 'XML' ) {
-        $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<root><notification #
-          . join(
-            ' ',
-            map {
-                if ( my $t = $json->{$_} ) { $t =~ s/"/'/g; qq#$_="$t"# }
-                else                       { () }
-            } (qw(uid date reference condition))
-          ) . ">$json->{xml}</notification></root>";
+    eval {
+        my $tmp = from_json( $json->{content}, { allow_nonref => 1 } );
+        $json->{$_} = $tmp->{$_} foreach ( keys %$tmp );
+        delete $json->{content};
+    };
+    if ( my $err = $@ ) {
+        $self->logger->error("Malformed notification $err");
+        return $self->sendError( $req, "Malformed notification: $err", 200 );
     }
-    else {
-        eval {
-            my $tmp = from_json( $json->{xml}, { allow_nonref => 1 } );
-            $json->{$_} = $tmp->{$_} foreach ( keys %$tmp );
-            delete $json->{xml};
-        };
-        if ( my $err = $@ ) {
-            $self->logger->error("Malformed notification $err");
-            return $self->sendError( $req, "Malformed notification: $err",
-                200 );
-        }
-        $newNotif = to_json($json);
-    }
+    $newNotif = to_json($json);
 
     unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
         my $err = $@;

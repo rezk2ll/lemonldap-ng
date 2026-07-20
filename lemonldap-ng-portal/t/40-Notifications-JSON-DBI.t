@@ -19,7 +19,7 @@ SKIP: {
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
     $dbh->{sqlite_unicode} = 1;
     $dbh->do(
-'CREATE TABLE notifications (uid text,ref text,date datetime,xml text,cond text,done datetime)'
+'CREATE TABLE notifications (uid text,ref text,date datetime,content text,cond text,done datetime)'
     );
     $dbh->prepare(
 q{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00',?,null,null)}

@@ -869,8 +869,6 @@ sub tree {
                                 'publicNotifications',
                                 'notificationsExplorer',
                                 'notificationWildcard',
-                                'oldNotifFormat',
-                                'notificationXSLTfile',
                                 'notificationStorage',
                                 'notificationStorageOptions',
                                 {
