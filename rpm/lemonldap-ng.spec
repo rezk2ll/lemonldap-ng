@@ -345,6 +345,8 @@ Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
 Recommends:     perl(Net::OAuth)
 Recommends:     perl(Net::OpenID::Consumer)
+# LDAP mtls
+Recommends:     perl(Authen::SASL)
 Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-bootstrap) = 4.6.2
 Provides:       bundled(js-fingerprint2) = 2.1.4

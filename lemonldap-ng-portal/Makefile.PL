@@ -25,6 +25,7 @@ WriteMakefile(
     META_MERGE   => {
         'recommends' => {
             'Authen::Radius'              => 0,
+            'Authen::SASL'                => 0,
             'Authen::WebAuthn'            => 0,
             'Convert::Base32'             => 0,
             'HTML::FormatText::WithLinks' => 0,
