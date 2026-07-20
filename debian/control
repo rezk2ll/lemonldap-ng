@@ -327,6 +327,7 @@ Depends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-
          ${misc:Depends},
          ${perl:Depends}
 Recommends: fonts-urw-base35 | gsfonts,
+            libauthen-sasl-perl,
             libauthen-webauthn-perl,
             libconvert-pem-perl,
             libcrypt-jwt-perl,

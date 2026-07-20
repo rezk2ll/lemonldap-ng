@@ -2048,6 +2048,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 0,
             'type'    => 'bool'
         },
+        'ldapClientCert' => {
+            'type' => 'text'
+        },
+        'ldapClientKey' => {
+            'type' => 'text'
+        },
         'ldapExportedVars' => {
             'default' => {
                 'cn'   => 'cn',
@@ -4974,10 +4980,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
-        'samlIDPMetaDataOptionsForceUTF8' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'samlIDPMetaDataOptionsIcon' => {
             'type' => 'text'
         },
@@ -5200,10 +5202,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
-        'samlMetadataForceUTF8' => {
-            'default' => 1,
-            'type'    => 'bool'
-        },
         'samlNameIDFormatMapEmail' => {
             'default' => 'mail',
             'type'    => 'text'
@@ -5400,10 +5398,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlSPMetaDataOptionsForceNameIDFormat' => {
             'type' => 'bool'
-        },
-        'samlSPMetaDataOptionsForceUTF8' => {
-            'default' => 1,
-            'type'    => 'bool'
         },
         'samlSPMetaDataOptionsNameIDFormat' => {
             'default' => '',

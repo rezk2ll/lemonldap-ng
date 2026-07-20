@@ -1807,13 +1807,6 @@ function templates(tpl,key) {
          },
          {
             "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceUTF8",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceUTF8",
-            "title" : "samlIDPMetaDataOptionsForceUTF8",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsStoreSAMLToken",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsStoreSAMLToken",
             "title" : "samlIDPMetaDataOptionsStoreSAMLToken",
@@ -2276,13 +2269,6 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsNotOnOrAfterTimeout",
                   "title" : "samlSPMetaDataOptionsNotOnOrAfterTimeout",
                   "type" : "int"
-               },
-               {
-                  "default" : 1,
-                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceUTF8",
-                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceUTF8",
-                  "title" : "samlSPMetaDataOptionsForceUTF8",
-                  "type" : "bool"
                }
             ],
             "id" : "samlSPMetaDataOptionsAuthnResponse",

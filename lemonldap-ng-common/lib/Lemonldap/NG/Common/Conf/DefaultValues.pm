@@ -124,8 +124,8 @@ sub defaultValues {
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
         'hiddenAttributes'              => '_password _2fDevices',
-        'hideOldPassword'               =>  1,
-        'httpOnly'                      =>  1,
+        'hideOldPassword'               => 1,
+        'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices, _loginHistory',
         'impersonationIdRule'           => 1,
@@ -372,7 +372,6 @@ sub defaultValues {
         'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
         'samlIDPSSODescriptorWantAuthnRequestsSigned' => 1,
-        'samlMetadataForceUTF8'                       => 1,
         'samlNameIDFormatMapEmail'                    => 'mail',
         'samlNameIDFormatMapKerberos'                 => 'uid',
         'samlNameIDFormatMapWindows'                  => 'uid',
