@@ -900,6 +900,30 @@ sub tests {
             return ( 1, join( ', ', @msg ) );
         },
 
+        # Two ACR mapped on the same authentication level make the "acr"
+        # claim returned in ID tokens unpredictable
+        oidcAuthnContextUniqueness => sub {
+            my $acrs = $conf->{oidcServiceMetaDataAuthnContext};
+            return 1 unless ( $acrs and %$acrs );
+            my %levels;
+            foreach my $acr ( sort keys %$acrs ) {
+                push @{ $levels{ $acrs->{$acr} } }, $acr;
+            }
+            my @msg;
+            foreach my $level ( sort keys %levels ) {
+                push @msg,
+                  "level $level is shared by "
+                  . join( ', ', @{ $levels{$level} } )
+                  if @{ $levels{$level} } > 1;
+            }
+            return 1 unless @msg;
+            return ( 1,
+                    'Several OIDC authentication contexts share the same '
+                  . 'authentication level ('
+                  . join( '; ', @msg )
+                  . ')' );
+        },
+
         # Test if OIDC private and public keys signature keys are set
         oidcSecretKeys => sub {
             return 1 unless ( $conf->{issuerDBOpenIDConnectActivation} );

@@ -6,8 +6,10 @@ ProConnect
 Presentation
 ------------
 
-`ProConnect <https://agentconnect.gouv.fr/>`__ is an
+`ProConnect <https://www.proconnect.gouv.fr/>`__ is an
 authentication platform made by French government.
+It was formerly known as ``AgentConnect``, a name still used in its
+domain names.
 It relies on OpenID Connect protocol.
 
 To select on which Identity Provider the user will be redirected,
@@ -66,10 +68,36 @@ Add ProConnect as Relying Party, with these options:
   * uid: uid
   * usual_name: usual_name
 
-To match authencation levels required by ProConnect, you must adapt the corresponding levels in `OpenID Connect Service` > `Authentication context`. You need at least the `eidas1` level.
-
 .. tip::
    For test platform, you need to use the URLs listed on `this page <https://partenaires.proconnect.gouv.fr/docs/ressources/valeur_ac_domain>`__.
+
+Authentication levels
+^^^^^^^^^^^^^^^^^^^^^
+
+ProConnect requires an eIDAS authentication level, which it requests through
+the ``acr_values`` parameter. To match these levels, you must declare them in
+`OpenID Connect Service` > `Authentication context`, which maps each
+Authentication Context Class Reference (ACR) to an internal LL::NG
+authentication level. You need at least the ``eidas1`` level.
+
+You must then give your authentication modules the levels you mapped, so that
+a user authenticated by a given module reaches the expected eIDAS level.
+
+.. attention::
+
+   Give each authentication context a **distinct** level, and remove the
+   default ``loa-*`` entries you do not use.
+
+   LL::NG does not echo back the ACR requested by the Relying Party: it
+   recomputes it from the authentication level reached by the user. When
+   several contexts share the same level, the one sent back in the ``acr``
+   claim of the ID token is picked arbitrarily, so ProConnect may receive
+   ``loa-1`` where it expects ``eidas1``. Since ``2.24.0``, the Manager
+   raises a warning when this happens.
+
+   For the same reason, every level a user can actually reach should be
+   mapped to an ACR value. When it is not, LL::NG falls back to
+   ``loa-<level>``, which ProConnect does not know either.
 
 
 Configuration with CLI
@@ -77,7 +105,7 @@ Configuration with CLI
 
 If you want to configure it through CLI, you can adapt the following commands.
 
-* Main paarameters
+* Main parameters
 
 ::
 
@@ -106,7 +134,7 @@ If you want to configure it through CLI, you can adapt the following commands.
             oidcRPMetaDataExportedVars/rp-proconnect organizational_unit ou \
             oidcRPMetaDataExportedVars/rp-proconnect phone telephoneNumber \
             oidcRPMetaDataExportedVars/rp-proconnect preferred_username displayName \
-            oidcRPMetaDataExportedVars/rp-proconnect siret deparmentNumber \
+            oidcRPMetaDataExportedVars/rp-proconnect siret departmentNumber \
             oidcRPMetaDataExportedVars/rp-proconnect uid uid \
             oidcRPMetaDataExportedVars/rp-proconnect usual_name sn
 
@@ -138,7 +166,7 @@ Fill these informations:
 * Application name
 * Login URL: your portal URL with the OIDC callback parameter, for example: ``https://auth.example.com/?openidconnectcallback=1``
 * Logout URL: your portal URL with logout parameter, for example: ``https://auth.example.com/?logout=1``
-* Signature algorithm: use recommanded values, for example RS256
+* Signature algorithm: use recommended values, for example RS256
 
 Copy client ID and client secret, they are required to configure ProConnect OpenID Provider on LL::NG.
 
@@ -209,7 +237,7 @@ If you want to configure it through CLI, you can adapt the following commands.
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg RS256 \
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsCheckJWTSignature 1 \
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsClientID <client ID> \
-            oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsClientSecret <cliebt secret> \
+            oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsClientSecret <client secret> \
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsConfigurationURI <metadata URL> \
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsIDTokenMaxAge 30 \
             oidcOPMetaDataOptions/op-proconnect oidcOPMetaDataOptionsJWKSTimeout 0 \
