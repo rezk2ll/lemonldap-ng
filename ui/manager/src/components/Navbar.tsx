@@ -1,11 +1,11 @@
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
-import  ChevronRight from "@mui/icons-material/ChevronRight"
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import {
+  AppBar,
   Button,
   ButtonGroup,
   Divider,
@@ -13,7 +13,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Typography,
+  Toolbar,
 } from "@mui/material";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -46,6 +46,11 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   },
 ];
 
+// The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
+// the temporary Drawer used on narrow screens (< ~950px) to hold the section
+// links, instead of the old wide/narrow persistent left rail. Per-app pages
+// keep their own `.optionNavbar` left column, so we don't want a second
+// permanent left rail from the global nav.
 function Navbar({
   htmlName,
   open,
@@ -57,75 +62,79 @@ function Navbar({
 }) {
   const { t } = useTranslation();
   const partial = htmlName == "partial.html";
+
+  const renderNavItems = (closeDrawerOnClick: boolean) =>
+    NAV_ITEMS.map((item) => {
+      const active = item.target === htmlName;
+      return (
+        <div
+          key={item.key}
+          className={
+            "navItem" +
+            (active ? " active" : "") +
+            (item.target ? "" : " disabled")
+          }
+          onClick={() => {
+            if (item.target) window.location.assign(item.target);
+            if (closeDrawerOnClick) toggleNavbar();
+          }}
+        >
+          {item.icon}
+          <span>{t(item.key)}</span>
+        </div>
+      );
+    });
+
   return (
     <>
-      <Drawer
-        className={`navbar ${open ? "open" : "closed"}`}
-        variant="persistent"
-        open={open}
-        anchor="left"
-        sx={{
-          width: "250px",
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: "250px", boxSizing: "border-box" },
-        }}
-      >
-        <div className="drawer-header">
-          <IconButton color="inherit" onClick={(e) => toggleNavbar()}>
-            {open ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </div>
-        <div className="navbarOptions">
-          <Typography>
-            <img
-              src={`static/logos/llng-logo-32.png`}
-              alt="LemonLogo"
-              style={{ backgroundColor: "white" }}
-            />
-          </Typography>
+      <AppBar position="sticky" color="transparent" elevation={0} className="topNav">
+        <Toolbar className="topNavToolbar" disableGutters>
+          <img
+            className="brandLogo"
+            src={`static/logos/llng-logo-32.png`}
+            alt="LemonLogo"
+          />
           {!partial && (
-            <nav className="navMenu">
-              {NAV_ITEMS.map((item) => {
-                const active = item.target === htmlName;
-                return (
-                  <div
-                    key={item.key}
-                    className={
-                      "navItem" +
-                      (active ? " active" : "") +
-                      (item.target ? "" : " disabled")
-                    }
-                    onClick={() => {
-                      if (item.target) window.location.assign(item.target);
-                    }}
-                  >
-                    {item.icon}
-                    <span>{t(item.key)}</span>
-                  </div>
-                );
-              })}
+            <nav className="navMenu navMenuDesktop">
+              {renderNavItems(false)}
+              <LegacyUiSwitch />
             </nav>
           )}
-          {!partial && <LegacyUiSwitch />}
+          <div className="topNavSpacer" />
+          {!partial && (
+            <IconButton
+              className="navBurger"
+              aria-label="open navigation menu"
+              color="inherit"
+              onClick={() => toggleNavbar()}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <OptionMenu />
-        </div>
-      </Drawer>
-      <Drawer
-        variant="persistent"
-        className={`navbar ${!open ? "closed" : ""}`}
-        open={!open}
-        anchor="left"
-        sx={{
-          width: "40px",
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: "40px", boxSizing: "border-box" },
-        }}
-      >
-        <IconButton color="inherit" onClick={(e) => toggleNavbar()}>
-          {open ? <ChevronLeft /> : <ChevronRight />}
-        </IconButton>
-        <OptionMenu />
-      </Drawer>
+        </Toolbar>
+      </AppBar>
+      {!partial && (
+        <Drawer
+          className="navDrawerMobile"
+          anchor="left"
+          open={open}
+          onClose={() => toggleNavbar()}
+        >
+          <div className="navDrawerHeader">
+            <IconButton
+              aria-label="close navigation menu"
+              onClick={() => toggleNavbar()}
+            >
+              <ChevronLeft />
+            </IconButton>
+          </div>
+          <nav className="navMenu">
+            {renderNavItems(true)}
+            <LegacyUiSwitch />
+          </nav>
+        </Drawer>
+      )}
     </>
   );
 }
@@ -181,8 +190,12 @@ function OptionMenu() {
         id="menu-appbar"
         anchorEl={anchorEl}
         keepMounted
-        transformOrigin={{
+        anchorOrigin={{
           vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
           horizontal: "right",
         }}
         open={menuOpen}

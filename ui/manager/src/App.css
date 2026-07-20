@@ -1,12 +1,12 @@
 .App {
   text-align: center;
 }
-.open {
-  margin-left: 250px;
-}
 
-.closed {
-  margin-left: 40px;
+/* The global nav is a top AppBar now (see Navbar.tsx / NavBar.css), so the
+   page content simply flows below it instead of being offset by a left
+   margin for a persistent drawer. */
+.pageContent {
+  width: 100%;
 }
 
 .breadcrumbs {

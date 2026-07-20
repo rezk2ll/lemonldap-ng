@@ -3,11 +3,11 @@
   <head>
     <title>LemonLDAP::NG Sessions</title>
     <link rel="icon" href="<TMPL_VAR NAME="STATIC_PREFIX">logos/favicon.ico" />
-    <link rel="stylesheet" href="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.css?v=d80f0841ee08" />
+    <link rel="stylesheet" href="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.css?v=692fbb8cdb6a" />
   </head>
   <body>
     <div id="root" />
     <script src="<TMPL_VAR NAME="SCRIPTNAME">psgi.js"></script>
-    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.js?v=9c9c34c78c8e"></script>
+    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.js?v=3ee44077c201"></script>
   </body>
 </html>

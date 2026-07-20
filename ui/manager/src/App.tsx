@@ -15,7 +15,9 @@ function App({ htmlName }: { htmlName: string }) {
   const location = useAppSelector((state) => state.router.location);
   const infos = location?.hash.replace("#", "").split("/");
   const partial = htmlName === "partial.html" ? 1 : 0;
-  const [open, setOpen] = useState(window.outerWidth > 950);
+  // `open` now only drives the mobile section-links drawer (see Navbar), so
+  // it stays closed by default regardless of viewport width.
+  const [open, setOpen] = useState(false);
   const toggleNavbar = () => {
     setOpen(!open);
   };
@@ -28,7 +30,7 @@ function App({ htmlName }: { htmlName: string }) {
             path={htmlName}
             element={
               partial ? (
-                <div className={open ? "open" : "closed"}>
+                <div className="pageContent">
                   <PartialConfiguration
                     location={{
                       type: infos ? infos[0] : "",
@@ -42,7 +44,7 @@ function App({ htmlName }: { htmlName: string }) {
                   />
                 </div>
               ) : (
-                <div className={open ? "open" : "closed"}>
+                <div className="pageContent">
                   <Configuration
                     location={{
                       type: infos ? infos[0] : "",

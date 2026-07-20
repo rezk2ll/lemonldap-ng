@@ -6,11 +6,12 @@ import "./App.css";
 
 export default function NotificationsApp({ htmlName }: { htmlName: string }) {
   useTranslation();
-  const [open, setOpen] = useState(window.outerWidth > 950);
+  // `open` only drives the mobile section-links drawer (see Navbar).
+  const [open, setOpen] = useState(false);
   return (
     <Suspense fallback="loading">
       <Navbar htmlName={htmlName} open={open} toggleNavbar={() => setOpen(!open)} />
-      <div className={open ? "open" : "closed"}>
+      <div className="pageContent">
         <NotificationsExplorer />
       </div>
     </Suspense>
