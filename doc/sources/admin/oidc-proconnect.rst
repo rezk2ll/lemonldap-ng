@@ -80,8 +80,35 @@ the ``acr_values`` parameter. To match these levels, you must declare them in
 Authentication Context Class Reference (ACR) to an internal LL::NG
 authentication level. You need at least the ``eidas1`` level.
 
-You must then give your authentication modules the levels you mapped, so that
-a user authenticated by a given module reaches the expected eIDAS level.
+ProConnect defines three levels, described on the `partner website
+<https://partenaires.proconnect.gouv.fr/docs/fournisseur-service/niveaux-eidas>`__.
+The table below suggests a mapping consistent with the authentication levels
+LL::NG gives to its modules by default:
+
++------------+---------------+----------------------------------------+---------+
+| ACR        | eIDAS level   | Expected authentication                | LL::NG  |
++============+===============+========================================+=========+
+| ``eidas1`` | low           | password                               | 2       |
++------------+---------------+----------------------------------------+---------+
+| ``eidas2`` | substantial   | strong multi-factor authentication     | 3       |
++------------+---------------+----------------------------------------+---------+
+| ``eidas3`` | high          | hardware-based multi-factor            | 5       |
+|            |               | authentication                         |         |
++------------+---------------+----------------------------------------+---------+
+
+These values match the defaults of the corresponding modules: ``2`` for LDAP,
+DBI, PAM and REST authentication, ``3`` for WebAuthn and Kerberos, and ``5``
+for SSL client certificate. You must then give your authentication modules and
+your second factors the levels you mapped, so that a user authenticated by a
+given module reaches the expected eIDAS level.
+
+.. attention::
+
+   The eIDAS levels also carry requirements on **how the identity itself was
+   established** and on the proof of the user's link with their organization,
+   which LL::NG cannot enforce. Mapping authentication levels is necessary but
+   not sufficient to claim a given level: see the ANSSI reference mentioned by
+   ProConnect.
 
 .. attention::
 
