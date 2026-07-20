@@ -81,7 +81,6 @@
     "UA": "$ENV{HTTP_USER_AGENT}"
   },
   "portal": "http://auth.example.com/",
-  "reloadUrls": {},
   "userDB": "Demo",
   "vhostOptions": {
     "test2.example.com": {
