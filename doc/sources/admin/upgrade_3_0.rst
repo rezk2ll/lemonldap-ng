@@ -77,9 +77,16 @@ handle text containing non-ASCII characters will likely break.
 
 Refer to :doc:`devutf8` for a primer on how text should be handled from now on.
 
+XML format for notifications
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+XML format for notifications is not longer support. Notifications should be
+convert into JSON format.
+
+Refer to :doc:`notifications` section for more informations about notifications system.
+
 Reload URLs do not exist anymore
 --------------------------------
 
 The ``reloadUrls`` and ``reloadTimeout`` parameters have been removed, check out
-the :doc:`eventsmanagement` section for more information about configuration
-reload.
+the :doc:`eventsmanagement` section for more information about configuration reload.
