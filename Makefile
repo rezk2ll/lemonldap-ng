@@ -566,7 +566,7 @@ $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 $(NEW_MGR_TMP_DIST):
 	@$(MAKE) rollup_clean
 	@set -ex; cd $(UIMANAGERDIR);\
-		npm ci || npm i; \
+		npm ci --legacy-peer-deps || npm i --legacy-peer-deps; \
 		NODE_OPTIONS=--max-old-space-size=6144 rollup -c
 
 # Test targets

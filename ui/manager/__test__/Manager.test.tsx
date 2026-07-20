@@ -1,12 +1,10 @@
-import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { t } from "i18next";
 import { IssuerAssistant } from "../src/components/managerComponents/IssuerAssistant";
 import Manager from "../src/dashboards/Manager";
 import { renderWithProviders } from "../src/utils/test-utils";
-import preview from "jest-preview";
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("Filtering", () => {
   it("click should toggle filter", async () => {
@@ -174,7 +172,6 @@ describe("IssuerAssistants", () => {
 
     fireEvent.click(screen.getByText(t("doItTogether")));
     fireEvent.click(screen.getByText(t("newRSAKey")));
-    preview.debug();
     expect(await screen.findByDisplayValue("public")).toBeDefined();
     expect(await screen.findByDisplayValue("hash")).toBeDefined();
     expect(await screen.findByDisplayValue("private")).toBeDefined();
@@ -198,8 +195,8 @@ describe("IssuerAssistants", () => {
     expect(screen.getByTestId("issuer.toggle.saml")).toHaveClass("Mui-checked");
   });
   it("oidc assistant validate", async () => {
-    const setVisibleMock = jest.fn();
-    const ignoreMock = jest.fn();
+    const setVisibleMock = vi.fn();
+    const ignoreMock = vi.fn();
     renderWithProviders(
       <IssuerAssistant
         visible={true}
@@ -230,14 +227,14 @@ describe("IssuerAssistants", () => {
     fireEvent.change(screen.getAllByLabelText(t("upload"))[0], {
       target: { files: [file] },
     });
-    jest.fn().mockResolvedValue("file content");
+    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
     fireEvent.click(screen.getByText(t("confirm")));
     expect(setVisibleMock).toHaveBeenCalled();
   });
   it("oidc assistant cancel", async () => {
-    const setVisibleMock = jest.fn();
-    const ignoreMock = jest.fn();
+    const setVisibleMock = vi.fn();
+    const ignoreMock = vi.fn();
     renderWithProviders(
       <IssuerAssistant
         visible={true}

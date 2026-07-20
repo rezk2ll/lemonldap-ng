@@ -7,11 +7,11 @@ import {
 } from "../../../src/features/config/configAPI";
 import { llngConfig } from "../../../src/utils/types";
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("API functions", () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("should call getMetadataConfig with 'latest' if no num is passed", async () => {

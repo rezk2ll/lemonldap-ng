@@ -4,8 +4,8 @@ import { URLLoader } from "../../src/components/managerComponents/URLLoader";
 import { getFromURL } from "../../src/utils/getFromURL";
 import { renderWithProviders } from "../../src/utils/test-utils";
 
-global.fetch = jest.fn();
-jest.mock("../../src/utils/getFromURL");
+global.fetch = vi.fn();
+vi.mock("../../src/utils/getFromURL");
 
 describe("GenerateKeys function", () => {
   it("should export data successfully when URL is correctly set", async () => {
@@ -13,7 +13,7 @@ describe("GenerateKeys function", () => {
       data: { content: "mockContent" },
     });
 
-    const mockLoadFunction = jest.fn();
+    const mockLoadFunction = vi.fn();
 
     renderWithProviders(
       <URLLoader appName="testApp" loadFunction={mockLoadFunction} />

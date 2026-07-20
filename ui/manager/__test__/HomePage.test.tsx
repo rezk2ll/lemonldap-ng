@@ -2,8 +2,7 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { HomePage } from "../src/dashboards/HomePage";
 import { renderWithProviders } from "../src/utils/test-utils";
-import {debug} from "jest-preview"
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("HomePage", () => {
   it("homepage renders", async () => {

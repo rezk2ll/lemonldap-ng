@@ -1,5 +1,5 @@
 import { sendTestMail } from "../../src/utils/sentTestMail";
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 it("should send a test mail to the specified destination when called with a valid email", async () => {
   const mockResponse = { data: "success" };
   (fetch as jest.Mock).mockResolvedValueOnce({

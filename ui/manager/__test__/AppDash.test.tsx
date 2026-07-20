@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -12,9 +11,8 @@ import {
   clickOption,
   clickSubOption,
 } from "../src/utils/test-utils";
-import { debug } from "jest-preview";
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("Application Dashboard", () => {
   it('should render ApplicationDashboard for app type "native"', async () => {
@@ -328,7 +326,7 @@ describe("Application Dashboard", () => {
     fireEvent.change(screen.getByLabelText("upload"), {
       target: { files: [file] },
     });
-    jest.fn().mockResolvedValue("file content");
+    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
     clickSubOption("oidcRPMetaDataOptionsTimeouts");
     changeInput(0, 1);
@@ -366,7 +364,7 @@ describe("Application Dashboard", () => {
     fireEvent.change(screen.getByLabelText("upload"), {
       target: { files: [file] },
     });
-    jest.fn().mockResolvedValue("file content");
+    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
 
     clickOption("samlSPMetaDataExportedAttributes");

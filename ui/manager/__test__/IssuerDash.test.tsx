@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -11,7 +10,7 @@ import {
 } from "../src/utils/test-utils";
 
 beforeAll(() => {
-  global.fetch = jest.fn();
+  global.fetch = vi.fn();
 });
 describe("Issuer Dashboard", () => {
   it("should render simple SAML Dashboard", async () => {
@@ -42,7 +41,7 @@ describe("Issuer Dashboard", () => {
     fireEvent.change(screen.getAllByLabelText(t("upload"))[0], {
       target: { files: [file] },
     });
-    jest.fn().mockResolvedValue("file content");
+    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
     clickOption(t("providerOptions"));
     changeRadio(0);
@@ -124,7 +123,7 @@ describe("Issuer Dashboard", () => {
     fireEvent.change(screen.getAllByLabelText(t("upload"))[0], {
       target: { files: [file] },
     });
-    jest.fn().mockResolvedValue("file content");
+    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
 
     fireEvent.click(screen.getByText(t("newRSAKey")));

@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
@@ -10,7 +9,6 @@ import {
   changeSelect,
   clickOption,
 } from "../src/utils/test-utils";
-import { debug } from "jest-preview";
 
 describe("AuthParam Dashboard", () => {
   it("should render simple authparam Dashboard", async () => {
@@ -32,7 +30,6 @@ describe("AuthParam Dashboard", () => {
 
     fireEvent.click(screen.getByText(t("ldapGroups")));
     expect(screen.getAllByText(t("ldapGroupBase"))[0]).toBeVisible();
-    debug()
     fireEvent.click(
       screen.getByText(t("ldapPassword"), { selector: ".MuiAccordionSummary-content" })
     );
@@ -62,6 +59,10 @@ describe("AuthParam Dashboard", () => {
     changeInput(6, "test7");
     changeInput(7, "test8");
   });
+  // Exercises the AdvancedAuthParams selector for every authentication
+  // backend. It is the heaviest test (~8s) because it re-renders the whole
+  // Configuration per backend; it used to hang on an infinite render loop,
+  // now fixed by the non-numeric-configNum guard in *AuthParams.
   it('should render  AdvancedAuthParams for location type "authParams"', async () => {
     const location = { type: "authParams", info: { name: "latest" } };
 

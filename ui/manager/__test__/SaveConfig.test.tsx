@@ -5,8 +5,8 @@ import { SavePopup } from "../src/components/SavePopup";
 import { HomePage } from "../src/dashboards/HomePage";
 import { ConfigState } from "../src/features/config/configSlice";
 import { renderWithProviders } from "../src/utils/test-utils";
-global.fetch = jest.fn();
-jest.mock("../src/app/hooks");
+global.fetch = vi.fn();
+vi.mock("../src/app/hooks");
 
 const mockConfig = {
   data: {
@@ -77,7 +77,7 @@ it("should restore the configuration when a valid file is uploaded", async () =>
   );
   (fetch as jest.Mock).mockResolvedValueOnce(mockConfig.data.metadata);
   (useAppSelector as jest.Mock).mockReturnValue(mockConfig);
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
   renderWithProviders(<HomePage />);
   await screen.findAllByText("14");
@@ -91,7 +91,7 @@ it("should restore the configuration when a valid file is uploaded", async () =>
 
 it("should lauch search for number", async () => {
   (useAppSelector as jest.Mock).mockReturnValue(mockConfig);
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
   renderWithProviders(<HomePage />);
   await screen.findAllByText("14");
@@ -106,7 +106,7 @@ it("should lauch search for number", async () => {
 
 it("should go to latest", async () => {
   (useAppSelector as jest.Mock).mockReturnValueOnce(mockConfig);
-  const dispatch = jest.fn();
+  const dispatch = vi.fn();
   (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
 
   renderWithProviders(<HomePage />);
@@ -120,9 +120,9 @@ it("should go to latest", async () => {
 describe("save popup", () => {
   it("saves with warnings", async () => {
     (useAppSelector as jest.Mock).mockReturnValue(mockConfig);
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
-    const setOpenSavePopup = jest.fn();
+    const setOpenSavePopup = vi.fn();
     renderWithProviders(
       <SavePopup
         config={{
@@ -146,9 +146,9 @@ describe("save popup", () => {
   });
   it("doesnt save with errors", async () => {
     (useAppSelector as jest.Mock).mockReturnValue(mockConfig);
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     (useAppDispatch as jest.Mock).mockReturnValue(dispatch);
-    const setOpenSavePopup = jest.fn();
+    const setOpenSavePopup = vi.fn();
     renderWithProviders(
       <SavePopup
         config={{

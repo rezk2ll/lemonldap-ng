@@ -91,7 +91,7 @@ describe("CreationAssistant", () => {
     expect(screen.getByText(t("cancel"))).toBeInTheDocument();
   });
   it("allows user to confirm and close the modal", () => {
-    const closeModal = jest.fn();
+    const closeModal = vi.fn();
     renderWithProviders(<CreationAssistant closeModal={closeModal} />);
     fireEvent.click(screen.getByText(t("next"))); // Move to the last page
     fireEvent.click(screen.getByText("confirm"));

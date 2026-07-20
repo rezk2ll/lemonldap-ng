@@ -1,6 +1,6 @@
 import { GenerateEcKeys, NewCertificate } from "../../src/utils/generateKey";
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("GenerateKeys function", () => {
   it("should make a post request with the provided URL for RSA keys", async () => {

@@ -61,8 +61,12 @@ export function SimpleAuthParams() {
     state.router.location?.hash.replace("#authParams/", "")
   );
   useEffect(() => {
+    // A non-numeric configNum (e.g. a hash that is not "#authParams/<n>")
+    // must not trigger a fetch: getConfigAsync would update the config, the
+    // effect would run again on the new metadata and dispatch endlessly.
     if (
       configNum !== "latest" &&
+      !Number.isNaN(Number(configNum)) &&
       Number(configNum) !== Number(config.data.metadata.cfgNum)
     ) {
       dispatch(

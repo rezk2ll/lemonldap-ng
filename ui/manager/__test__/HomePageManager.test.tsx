@@ -1,12 +1,10 @@
-import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, screen } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
 import { renderWithProviders } from "../src/utils/test-utils";
 import { llngConfig } from "../src/utils/types";
 import { changeInput } from "../src/utils/test-utils";
-import { debug } from "jest-preview";
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 describe("Manager homepage", () => {
   it("New app", async () => {
@@ -141,7 +139,6 @@ describe("Manager homepage", () => {
     fireEvent.click(screen.getByText(t("confirm")));
 
     fireEvent.click(screen.getAllByTestId("SaveIcon")[0]);
-    debug();
     expect(screen.getByText(t("saveReport"))).toBeDefined();
     expect((fetch as jest.Mock).mock.calls[0][0]).toBe(
       "/manager.fcgi/confs/raw"
