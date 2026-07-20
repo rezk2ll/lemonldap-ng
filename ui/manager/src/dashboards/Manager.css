@@ -1,10 +1,32 @@
 .cfgNum {
-  border-radius: 3px;
-  margin: 5px;
-  padding: 1px;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-size: xx-large;
+  border-radius: 999px;
+  margin: 0 2px;
+  padding: 2px 12px;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  text-transform: none;
+  box-shadow: none !important;
+}
+
+/* Soft, tonal treatment instead of a fully saturated fill: keeps the
+   success/warning semantics (latest config vs. newer config available)
+   without shouting. */
+.cfgNum.MuiButton-containedSuccess {
+  background-color: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+}
+.cfgNum.MuiButton-containedSuccess:hover {
+  background-color: rgba(46, 125, 50, 0.2);
+}
+.cfgNum.MuiButton-containedWarning {
+  background-color: rgba(251, 192, 45, 0.28);
+  color: #a15c00;
+}
+.cfgNum.MuiButton-containedWarning:hover {
+  background-color: rgba(251, 192, 45, 0.4);
 }
 
 .grid {
@@ -12,16 +34,35 @@
   justify-content: center;
   margin-left: 2vw;
   margin-right: 5vw;
-  grid-gap: 5px;
+  grid-gap: 12px;
   flex-flow: column;
+  padding-top: 14px;
 }
 
 .top {
   display: flex;
+  /* wrap on narrow viewports so the header items never overlap */
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 2vw;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Keep the title/config badge/apps-overview cluster together on the left;
+   the divider + "new application" action are pushed to the right so the
+   header reads as a single toolbar rather than a loose row of controls. */
+.topIdentity {
+  display: flex;
   flex-flow: row;
   align-items: center;
-  padding: 2vw;
-  background-color: #d6d6d6;
+  gap: 10px;
+}
+
+.topDivider {
+  margin-left: auto;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .title {

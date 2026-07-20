@@ -1,42 +1,64 @@
 .card {
   background-color: white;
-  box-shadow: 1px 1px 1px #888888;
-  padding: 15px;
-  border-radius: 5px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-left: 4px solid transparent;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 1px 6px rgba(15, 23, 42, 0.04);
+  padding: 12px 20px;
+  border-radius: 10px;
   align-content: center;
   cursor: pointer;
   position: relative;
   flex-direction: row;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
 .cardInfo {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  /* Keep the type chip and the name together on the left; the actions are
+     pushed to the right with margin-left:auto on .name */
+  justify-content: flex-start;
   align-items: center;
-  gap:10px
+  gap: 14px;
 }
 .card:hover {
-  box-shadow: 5px 5px 5px #888888;
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.08),
+    0 10px 24px rgba(15, 23, 42, 0.08);
+  border-left-color: rgba(71, 85, 105, 0.55);
 }
 .maintenanceToggle {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 6px;
 }
 
 .card.Maintenance {
-  background-color: rgb(255, 152, 67);
+  background-color: #fff8f0;
+  border-left-color: #fb923c;
 }
 
 .card.issue {
-  color: white;
-  background-color: red;
+  color: #8a1c1c;
+  background-color: #fdf1f1;
+  border-left-color: #e53935;
 }
 
 .name {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding-left: 18px;
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
 }
 .menu-item {
   cursor: pointer;
@@ -57,8 +79,41 @@
   width: max-content;
 }
 
+.card .title2 {
+  padding: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+.card.issue .title2 {
+  color: #8a1c1c;
+}
+
 .bottomRectangle {
-  font-size: 12px;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 700;
   text-align: center;
-  margin: 1%;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  background-color: rgba(100, 116, 139, 0.14);
+  color: #334155;
+}
+.bottomRectangle .MuiChip-label {
+  padding: 0 10px;
+}
+/* Subtle per-type accent so the row of cards reads with a bit more rhythm,
+   without turning the chip into a loud badge. */
+.bottomRectangle.type-SPsaml {
+  background-color: rgba(13, 148, 136, 0.14);
+  color: #0f766e;
+}
+.bottomRectangle.type-RPoidc {
+  background-color: rgba(37, 99, 235, 0.14);
+  color: #1d4ed8;
+}
+.bottomRectangle.type-AppCas {
+  background-color: rgba(225, 29, 72, 0.14);
+  color: #be123c;
 }

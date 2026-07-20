@@ -256,23 +256,13 @@ textarea {
   padding: 20px;
 }
 
+/* Bottom-right floating action button: out of the top toolbar, so it never
+   overlaps the header actions. */
 .saveButton {
   position: fixed;
-  width: 75px;
-  height: 75px;
-  background: #ffdada;
-  cursor: pointer;
-  border: 2px solid red;
-  border-radius: 15%;
-  top: 5%;
-  right: 2%;
+  bottom: 24px;
+  right: 24px;
   z-index: 2000;
-  box-shadow: none;
-}
-@media (max-width: 500px) {
-  .saveButton {
-    bottom: 2%;
-  }
 }
 
 .notif {
@@ -495,43 +485,63 @@ textarea {
 
 .card {
   background-color: white;
-  box-shadow: 1px 1px 1px #888888;
-  padding: 15px;
-  border-radius: 5px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-left: 4px solid transparent;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 1px 6px rgba(15, 23, 42, 0.04);
+  padding: 12px 20px;
+  border-radius: 10px;
   align-content: center;
   cursor: pointer;
   position: relative;
   flex-direction: row;
+  transition:
+    transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
 .cardInfo {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  /* Keep the type chip and the name together on the left; the actions are
+     pushed to the right with margin-left:auto on .name */
+  justify-content: flex-start;
   align-items: center;
-  gap:10px
+  gap: 14px;
 }
 .card:hover {
-  box-shadow: 5px 5px 5px #888888;
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.08),
+    0 10px 24px rgba(15, 23, 42, 0.08);
+  border-left-color: rgba(71, 85, 105, 0.55);
 }
 .maintenanceToggle {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 6px;
 }
 
 .card.Maintenance {
-  background-color: rgb(255, 152, 67);
+  background-color: #fff8f0;
+  border-left-color: #fb923c;
 }
 
 .card.issue {
-  color: white;
-  background-color: red;
+  color: #8a1c1c;
+  background-color: #fdf1f1;
+  border-left-color: #e53935;
 }
 
 .name {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding-left: 18px;
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
 }
 .menu-item {
   cursor: pointer;
@@ -552,24 +562,67 @@ textarea {
   width: max-content;
 }
 
+.card .title2 {
+  padding: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+.card.issue .title2 {
+  color: #8a1c1c;
+}
+
 .bottomRectangle {
-  font-size: 12px;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 700;
   text-align: center;
-  margin: 1%;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  background-color: rgba(100, 116, 139, 0.14);
+  color: #334155;
+}
+.bottomRectangle .MuiChip-label {
+  padding: 0 10px;
+}
+/* Subtle per-type accent so the row of cards reads with a bit more rhythm,
+   without turning the chip into a loud badge. */
+.bottomRectangle.type-SPsaml {
+  background-color: rgba(13, 148, 136, 0.14);
+  color: #0f766e;
+}
+.bottomRectangle.type-RPoidc {
+  background-color: rgba(37, 99, 235, 0.14);
+  color: #1d4ed8;
+}
+.bottomRectangle.type-AppCas {
+  background-color: rgba(225, 29, 72, 0.14);
+  color: #be123c;
 }
 
 .filters {
   display: flex;
-  margin-left: 2vw;
   align-items: center;
-  vertical-align: middle;
+  gap: 12px;
+  padding: 10px 2vw;
+  background-color: #f7f7f8;
+  border-bottom: 1px solid #ededed;
 }
 
 .filter {
-  border: 0px;
-  margin: 5px;
-  font-size: larger;
-  color: #aaa;
+  border: 0;
+  margin: 0;
+}
+
+.filters .MuiOutlinedInput-root {
+  background-color: white;
+  border-radius: 8px;
+}
+
+.filters .MuiToggleButton-root {
+  border-radius: 8px;
+  border-color: rgba(15, 23, 42, 0.15);
 }
 
 .issuerAssistant {
@@ -634,23 +687,42 @@ textarea {
 
 .issuersList {
   background-color: white;
-  padding: 15px;
+  padding: 10px 2vw;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  gap: 28px;
   flex-wrap: wrap;
-  margin-left: -35px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .issuers {
-  font-size: large;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.issuers:hover {
+  background-color: rgba(15, 23, 42, 0.03);
+}
+
+/* The last toggle group only holds the overflow ("other issuers") menu
+   button: keep the SAML/OIDC/CAS switches grouped on the left and let this
+   one sit on the right, like a toolbar action. */
+.issuers:last-child {
+  margin-left: auto;
+  padding: 0;
 }
 
 .issuers label {
-  margin: 5px;
+  margin: 0;
   align-items: center;
   cursor: pointer;
+  font-weight: 600;
+  color: #334155;
 }
 
 .issuers img {
@@ -684,12 +756,34 @@ textarea {
 }
 
 .cfgNum {
-  border-radius: 3px;
-  margin: 5px;
-  padding: 1px;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-size: xx-large;
+  border-radius: 999px;
+  margin: 0 2px;
+  padding: 2px 12px;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  text-transform: none;
+  box-shadow: none !important;
+}
+
+/* Soft, tonal treatment instead of a fully saturated fill: keeps the
+   success/warning semantics (latest config vs. newer config available)
+   without shouting. */
+.cfgNum.MuiButton-containedSuccess {
+  background-color: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+}
+.cfgNum.MuiButton-containedSuccess:hover {
+  background-color: rgba(46, 125, 50, 0.2);
+}
+.cfgNum.MuiButton-containedWarning {
+  background-color: rgba(251, 192, 45, 0.28);
+  color: #a15c00;
+}
+.cfgNum.MuiButton-containedWarning:hover {
+  background-color: rgba(251, 192, 45, 0.4);
 }
 
 .grid {
@@ -697,16 +791,35 @@ textarea {
   justify-content: center;
   margin-left: 2vw;
   margin-right: 5vw;
-  grid-gap: 5px;
+  grid-gap: 12px;
   flex-flow: column;
+  padding-top: 14px;
 }
 
 .top {
   display: flex;
+  /* wrap on narrow viewports so the header items never overlap */
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 2vw;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Keep the title/config badge/apps-overview cluster together on the left;
+   the divider + "new application" action are pushed to the right so the
+   header reads as a single toolbar rather than a loose row of controls. */
+.topIdentity {
+  display: flex;
   flex-flow: row;
   align-items: center;
-  padding: 2vw;
-  background-color: #d6d6d6;
+  gap: 10px;
+}
+
+.topDivider {
+  margin-left: auto;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .title {

@@ -1,20 +1,10 @@
+/* Bottom-right floating action button: out of the top toolbar, so it never
+   overlaps the header actions. */
 .saveButton {
   position: fixed;
-  width: 75px;
-  height: 75px;
-  background: #ffdada;
-  cursor: pointer;
-  border: 2px solid red;
-  border-radius: 15%;
-  top: 5%;
-  right: 2%;
+  bottom: 24px;
+  right: 24px;
   z-index: 2000;
-  box-shadow: none;
-}
-@media (max-width: 500px) {
-  .saveButton {
-    bottom: 2%;
-  }
 }
 
 .notif {

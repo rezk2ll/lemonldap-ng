@@ -1,22 +1,41 @@
 .issuersList {
   background-color: white;
-  padding: 15px;
+  padding: 10px 2vw;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  gap: 28px;
   flex-wrap: wrap;
-  margin-left: -35px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .issuers {
-  font-size: large;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.issuers:hover {
+  background-color: rgba(15, 23, 42, 0.03);
+}
+
+/* The last toggle group only holds the overflow ("other issuers") menu
+   button: keep the SAML/OIDC/CAS switches grouped on the left and let this
+   one sit on the right, like a toolbar action. */
+.issuers:last-child {
+  margin-left: auto;
+  padding: 0;
 }
 
 .issuers label {
-  margin: 5px;
+  margin: 0;
   align-items: center;
   cursor: pointer;
+  font-weight: 600;
+  color: #334155;
 }
 
 .issuers img {

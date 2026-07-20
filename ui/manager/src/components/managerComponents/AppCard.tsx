@@ -69,7 +69,11 @@ function AppCard({
         onClick={() => dispatch(push(`#app/${type}/${info.name}`))}
       >
         <div className="cardInfo" data-testid="appcard">
-          <Chip label={t(type)} className="bottomRectangle" />
+          <Chip
+            label={t(type)}
+            size="small"
+            className={`bottomRectangle type-${type}`}
+          />
           <strong className="title2">
             {info.name} <span> {!rule ? "⚠️" : ""}</span>
           </strong>

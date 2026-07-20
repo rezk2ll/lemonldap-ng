@@ -185,26 +185,29 @@ export default function Manager() {
       return (
         <>
           <div className="top">
-            <strong className="title"> {t("currentConfiguration")}</strong>
-            <Button
-              variant="contained"
-              sx={{ verticalAlign: "top" }}
-              className="cfgNum"
-              color={config.data.metadata.next ? "warning" : "success"}
-              onClick={(e) => {
-                handleClick(e);
-              }}
-            >
-              {config.data.metadata.cfgNum}
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(push("#catandapp"));
-              }}
-            >
-              <WidgetsOutlinedIcon color="secondary" />
-            </Button>
-            <Divider />
+            <div className="topIdentity">
+              <strong className="title"> {t("currentConfiguration")}</strong>
+              <Button
+                variant="contained"
+                disableElevation
+                size="small"
+                className="cfgNum"
+                color={config.data.metadata.next ? "warning" : "success"}
+                onClick={(e) => {
+                  handleClick(e);
+                }}
+              >
+                {config.data.metadata.cfgNum}
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch(push("#catandapp"));
+                }}
+              >
+                <WidgetsOutlinedIcon color="secondary" />
+              </Button>
+            </div>
+            <Divider orientation="vertical" flexItem className="topDivider" />
             <AddApp />
           </div>
           <Issuers />

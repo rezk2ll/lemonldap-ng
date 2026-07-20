@@ -215,18 +215,35 @@ function OptionMenu() {
           {t("logout")}
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem disableRipple>
           <ButtonGroup
             variant="text"
             color="secondary"
-            aria-label="Basic button group"
+            aria-label="language selection"
+            sx={{ flexWrap: "wrap" }}
           >
             {(
-              window as unknown as Record<string, string[]>
-            ).availableLanguages.map((lang: string) => {
+              (window as unknown as Record<string, string[]>)
+                .availableLanguages || []
+            ).map((lang: string) => {
               return (
-                <Button onClick={() => handleLanguageChange(lang)} key={lang}>
-                  <img src={`static/logos/${lang}.png`} />
+                <Button
+                  onClick={() => handleLanguageChange(lang)}
+                  key={lang}
+                  title={lang}
+                  sx={{ minWidth: 0, px: 0.5, py: 0.25 }}
+                >
+                  {/* Flags live in the deployment's static directory, like in
+                      the legacy manager; go through staticPrefix, not a
+                      hardcoded /static */}
+                  <img
+                    src={`${
+                      (window as any).staticPrefix || "/static/"
+                    }logos/${lang}.png`}
+                    alt={lang}
+                    width={20}
+                    height={14}
+                  />
                 </Button>
               );
             })}
