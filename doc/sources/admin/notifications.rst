@@ -51,7 +51,7 @@ or in ``lemonldap-ng.ini`` [portal] section:
 Usage
 ^^^^^
 
-When enabled, create a notification for a "public" recipient. There are 3 types pf publibc recipients, "public-info", "public-warn", "public-error". Each will be displayed with a different color (respectively blue, yellow and red).
+When enabled, create a notification for a "public" recipient. There are 3 types of public recipients, "public-info", "public-warn", "public-error". Each will be displayed with a different color (respectively blue, yellow and red).
 
 Examples
 ^^^^^^^^
@@ -92,8 +92,7 @@ Explorer
 
 Notifications explorer allows users to see and display theirs accepted
 notifications. Disable by default, you just have to activate it in the
-Manager (``General Parameters`` » ``Plugins`` » ``Notifications`` »
-``Explorer``)
+Manager (``General Parameters`` » ``Plugins`` » ``Notifications`` » ``Explorer``)
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
@@ -102,7 +101,7 @@ or in ``lemonldap-ng.ini`` [portal] section:
    [portal]
    notificationsExplorer = 1
 
-By default, just the three last notifications are displayed. You can
+By default, just the last three notifications are displayed. You can
 modify this by editing ``lemonldap-ng.ini`` [portal] section:
 
 .. code-block:: ini
@@ -118,8 +117,8 @@ When enabled, ``/mynotifications`` URL path is handled by this plugin.
 .. attention::
 
     Listed notifications are extracted from users
-    persistent session (notification reference and accepted date). ONLY the
-    notifications explorer can found in notifications backend are available
+    persistent session (notification reference and accepted date).
+    ONLY notifications that explorer can find in notifications backend are available
     to be displayed. Notifications content (title, subtitle and so on...) is
     not stored into persistent session.
 
@@ -351,15 +350,13 @@ JSON
 
 .. tip::
 
-    JSON format notifications are displayed sorted by date and reference
+    Notifications are displayed sorted by date and reference
 
 
 Create new notifications with notifications explorer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, click on ``Notifications`` and then on the ``Create`` button.
-
-|image0|
 
 Then fill all inputs to create the notification. Only the condition is
 not mandatory.
@@ -369,8 +366,7 @@ When all is ok, click on ``Save``.
 Notification server
 ~~~~~~~~~~~~~~~~~~~
 
-LemonLDAP::NG provides two notification servers : SOAP and REST
-depending on format.
+LemonLDAP::NG provides a REST server.
 
 If enabled, the server URL is https://auth.your.domain/notifications.
 
@@ -397,7 +393,7 @@ Example:
 
 .. code::
 
-   # REST/SOAP functions for insert/delete/list notifications (disabled by default)
+   # REST functions for insert/delete/list notifications (disabled by default)
    <LocationMatch ^/(index\.fcgi/)?notifications>
        <IfVersion >= 2.3>
            Require ip 192.168.2.0/24
@@ -410,13 +406,13 @@ Example:
    </LocationMatch>
 
 
-JSON notifications through REST
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Notifications through REST
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Insertion example with REST API
 '''''''''''''''''''''''''''''''
 
-Using JSON, you just have to POST json files.
+You just have to POST json files.
 
 For example with curl:
 
@@ -427,8 +423,6 @@ For example with curl:
 Deletion example with REST API
 ''''''''''''''''''''''''''''''
 
-DELETE API is available with LLNG ≥ 2.0.6
-
 For example with curl:
 
 ::
@@ -437,8 +431,6 @@ For example with curl:
 
 List example with REST API
 ''''''''''''''''''''''''''
-
-GET API is available with LLNG ≥ 2.0.6
 
 For example with curl:
 
@@ -470,8 +462,6 @@ same UID. You will be prompted.
 Try also to create a global notification (to the uid "allusers"), and
 connect with any user, the message will be prompted.
 
-.. |image0| image:: /documentation/manager-notification.png
-   :class: align-center
 .. |image1| image:: /documentation/portal-notification.png
    :class: align-center
 
