@@ -116,13 +116,6 @@ Lemonldap::NG::Portal
 
 ::
 
-   XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration
-
-→ You do not use the new configuration syntax for application list. XML
-file is no more accepted.
-
-::
-
    Apache is not configured to authenticate users !
 
 → You use the Apache authentication backend, but Apache is not or bad

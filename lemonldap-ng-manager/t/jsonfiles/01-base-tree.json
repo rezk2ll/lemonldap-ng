@@ -1172,11 +1172,6 @@
     "id": "sessionParams",
     "title": "sessionParams"
   }, {
-    "cnodes": "reloadUrls",
-    "id": "reloadUrls",
-    "title": "reloadUrls",
-    "type": "keyTextContainer"
-  }, {
     "_nodes": [{
       "id": "customFunctions",
       "title": "customFunctions"

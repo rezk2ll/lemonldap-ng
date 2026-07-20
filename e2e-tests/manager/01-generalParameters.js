@@ -203,13 +203,5 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-reloadParams')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(12);
     });
-    it('General Parameters > Configuration relaod > Reload URLs => "New entry" button + 2 new URLS', function() {
-      element(by.id('t-reloadUrls')).click();
-      element(by.css('[ng-click="menuClick(button)"]')).click();
-      element(by.css('[ng-click="menuClick(button)"]')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(14);
-      expect(element.all(by.xpath('//tbody/tr')).count()).toEqual(2);
-      expect(element.all(by.xpath('//tbody/tr/td/input')).count()).toEqual(4);
-    });
   });
 });

@@ -1078,8 +1078,6 @@
 "registerUrl":"Zarejestruj adres URL strony",
 "registerextra":"podlegający rejestracji",
 "registerrule":"Zasada rejestracji",
-"reloadTimeout":"Limit czasu przeładowania",
-"reloadUrls":"Załaduj ponownie adresy URL",
 "rememberAuthChoice":"Zapamiętaj wybór uwierzytelniania",
 "rememberAuthChoiceForgetAtLogout":"Zapomnij o wyborze uwierzytelniania przy wylogowywaniu",
 "rememberAuthChoiceRule":"Aktywacja",

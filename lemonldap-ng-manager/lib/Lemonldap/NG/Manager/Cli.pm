@@ -650,8 +650,6 @@ sub _save {
             "CLI: Configuration $s has been saved by $new->{cfgAuthor}");
         $self->logger->info("CLI: Configuration $s saved");
         print STDERR "Saved under number $s\n";
-        $parser->{status} =
-          [ $self->mgr->hLoadedPlugins->{conf}->applyConf($new) ];
     }
     else {
         $self->logger->error("CLI: Configuration not saved!");
@@ -671,7 +669,7 @@ sub _save {
     }
 
     # Display result
-    foreach (qw(errors warnings status)) {
+    foreach (qw(errors warnings)) {
         if ( $parser->{$_} and @{ $parser->{$_} } ) {
             my $s = Dumper( $parser->{$_} );
             $s =~ s/\$VAR1\s*=\s*//;

@@ -157,11 +157,3 @@ msgstr ""
 "Introduzca la contraseña de la cuenta LDAP de Lemonldap::NG. Podrá modificar "
 "este valor desde el administrador de Lemonldap::NG."
 
-#. Type: boolean
-#. Description
-#: ../liblemonldap-ng-common-perl.templates:8001
-msgid ""
-"Lemonldap::NG configuration files have changed, try to migrate your files?"
-msgstr ""
-"Los archivos de configuración de Lemonldap::NG han cambiado. ¿Desea intentar "
-"migrar sus archivos?"

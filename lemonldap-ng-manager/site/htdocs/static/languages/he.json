@@ -1078,8 +1078,6 @@
 "registerUrl":"כתובת עמוד רישום",
 "registerextra":"Registrable",
 "registerrule":"Registration rule",
-"reloadTimeout":"Reload timeout",
-"reloadUrls":"רענון כתובות",
 "rememberAuthChoice":"Remember authentication choice",
 "rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"הפעלה",

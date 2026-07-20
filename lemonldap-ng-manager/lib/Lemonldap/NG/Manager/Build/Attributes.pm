@@ -501,19 +501,6 @@ sub attributes {
             default       => 'get',
             documentation => 'HTTP method for redirect page form',
         },
-        reloadTimeout => {
-            type          => 'int',
-            default       => 5,
-            documentation => 'Configuration reload timeout',
-            flags         => 'm',
-        },
-        reloadUrls => {
-            type          => 'keyTextContainer',
-            keyTest       => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
-            test          => $url,
-            msgFail       => '__badUrl__',
-            documentation => 'URL to call on reload',
-        },
         compactConf => {
             type          => 'bool',
             default       => 0,

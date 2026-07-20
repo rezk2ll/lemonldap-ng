@@ -1078,8 +1078,6 @@
 "registerUrl":"Register page URL",
 "registerextra":"Registrable",
 "registerrule":"Registration rule",
-"reloadTimeout":"Reload timeout",
-"reloadUrls":"Reload URLs",
 "rememberAuthChoice":"Remember authentication choice",
 "rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Activation",

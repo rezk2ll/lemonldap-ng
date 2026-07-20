@@ -135,15 +135,6 @@ msgstr ""
 "Indique aqui a palavra passe para a conta do Lemonldap::NG. Você pode "
 "modificar este valor posteriormente usando o gestor Lemonldap::NG."
 
-#. Type: boolean
-#. Description
-#: ../liblemonldap-ng-common-perl.templates:8001
-msgid ""
-"Lemonldap::NG configuration files have changed, try to migrate your files?"
-msgstr ""
-"Os ficheiros de configuração do Lemonldap::NG foram alterados, tentar migrar "
-"os seus ficheiros?"
-
 #, fuzzy
 #~| msgid "Lemonldap::NG DNS domain:"
 #~ msgid "Lemonldap::NG migration:"

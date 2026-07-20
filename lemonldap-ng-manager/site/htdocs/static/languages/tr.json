@@ -1078,8 +1078,6 @@
 "registerUrl":"Kayıt sayfası URL'si",
 "registerextra":"Kaydedilebilir",
 "registerrule":"Registration rule",
-"reloadTimeout":"Yeniden yükleme zaman aşımı",
-"reloadUrls":"URL'leri yeniden yükle",
 "rememberAuthChoice":"Kimlik doğrulama seçimini hatırla",
 "rememberAuthChoiceForgetAtLogout":"Forget auth choice at logout",
 "rememberAuthChoiceRule":"Aktivasyon",

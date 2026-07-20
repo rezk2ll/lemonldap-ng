@@ -351,7 +351,6 @@ use constant PORTALSECTION   => "portal";
 use constant HANDLERSECTION  => "handler";
 use constant MANAGERSECTION  => "manager";
 use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
-use constant APPLYSECTION            => "apply";
 
 # Default configuration backend
 use constant DEFAULTCONFBACKEND => "File";
@@ -379,7 +378,6 @@ our %EXPORT_TAGS = (
           HANDLERSECTION
           MANAGERSECTION
           SESSIONSEXPLORERSECTION
-          APPLYSECTION
           DEFAULTCONFBACKEND
           DEFAULTCONFBACKENDOPTIONS
           NO

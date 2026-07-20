@@ -1339,10 +1339,6 @@
       }]
     }]
   }, {
-    "id": "reloadUrls",
-    "title": "reloadUrls",
-    "type": "keyTextContainer"
-  }, {
     "default": 0,
     "id": "compactConf",
     "title": "compactConf",

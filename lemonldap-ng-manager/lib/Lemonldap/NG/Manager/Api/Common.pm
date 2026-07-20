@@ -175,7 +175,6 @@ sub _getSSOMod {
 sub _saveApplyConf {
     my ( $self, $conf ) = @_;
     $self->_confAcc->saveConf($conf);
-    $self->applyConf($conf);
 }
 
 sub _merge_hash {

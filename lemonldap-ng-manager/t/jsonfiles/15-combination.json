@@ -1868,13 +1868,6 @@
     "title": "sessionParams"
   },
   {
-    "cnodes": "reloadUrls",
-    "help": "configlocation.html#configuration_reload",
-    "id": "reloadUrls",
-    "title": "reloadUrls",
-    "type": "keyTextContainer"
-  },
-  {
     "_nodes": [{
       "id": "customFunctions",
       "title": "customFunctions"

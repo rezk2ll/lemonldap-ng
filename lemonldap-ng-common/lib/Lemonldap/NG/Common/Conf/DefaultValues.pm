@@ -334,7 +334,6 @@ sub defaultValues {
         'redirectFormMethod'           => 'get',
         'registerDB'                   => 'Null',
         'registerTimeout'              => 0,
-        'reloadTimeout'                => 5,
         'rememberAuthChoiceRule'       => 0,
         'rememberCookieName'           => 'llngrememberauthchoice',
         'rememberCookieTimeout'        => 31536000,

@@ -128,14 +128,6 @@ msgstr ""
 "Vložte heslo pro Lemonldap::NG LDAP účet. Hodnotu můžete později změnit "
 "pomocí Lemonldap::NG manažeru."
 
-#. Type: boolean
-#. Description
-#: ../liblemonldap-ng-common-perl.templates:8001
-msgid ""
-"Lemonldap::NG configuration files have changed, try to migrate your files?"
-msgstr ""
-"Konfigurační soubory Lemonldap::NG byly změněny, zkusíte své soubory převést?"
-
 #, fuzzy
 #~| msgid "Lemonldap::NG DNS domain:"
 #~ msgid "Lemonldap::NG migration:"
