@@ -76,11 +76,8 @@ sub setNotifAccess {
       foreach (
         qw/portal notification notificationStorage notificationStorageOptions/);
 
-    unless ( $self->{notification} ) {
-        return 0;
-    }
+    return 0 unless ( $self->{notification} );
 
-    # TODO: old parameters (with table)
     unless ( $self->{notificationStorage} ) {
         $self->handlerAbort( notifications =>
               'notificationStorage is not defined in configuration' );

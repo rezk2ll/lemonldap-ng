@@ -115,13 +115,6 @@ Usage
 
 When enabled, ``/mynotifications`` URL path is handled by this plugin.
 
-Known issue
-^^^^^^^^^^^
-
-An XML document can contain several notifications messages. Just the
-first one can be searched and displayed!
-
-
 .. attention::
 
     Listed notifications are extracted from users
@@ -273,7 +266,7 @@ Using notification system
 Notification format
 ~~~~~~~~~~~~~~~~~~~
 
-Notifications are JSON (default) or XML files containing:
+Notifications are JSON files containing:
 
 -  <notification> element(s) :
 
@@ -307,14 +300,10 @@ Notifications are JSON (default) or XML files containing:
 
 .. attention::
 
-    All other elements will be removed including HTML
-    elements like <b>.
+    All other elements will be removed including HTML elements like <b>.
 
 
 .. tip::
-
-    One notification XML document can contain several
-    notifications messages.
 
     Several notifications can be inserted with a single request by using an
     array of JSON (Tested with an array of 10,000 elements)
@@ -362,38 +351,13 @@ JSON
 
 .. tip::
 
-    JSON format notifications are displayed sorted by date and
-    reference
+    JSON format notifications are displayed sorted by date and reference
 
-XML
-'''
-
-.. code-block:: xml
-
-   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-   <root>
-   <notification uid="foo.bar" date="2009-01-27" reference="ABC">
-   <title>You have new authorizations</title>
-   <subtitle>Application 1</subtitle>
-   <text>You have been granted to access to appli-1</text>
-   <subtitle>Application 2</subtitle>
-   <text>You have been granted to access to appli-2</text>
-   <subtitle>Acceptation</subtitle>
-   <check>I know that I can access to appli-1 </check>
-   <check>I know that I can access to appli-2 </check>
-   </notification>
-   <notification uid="allusers" date="2009-01-27" reference="disclaimer" condition="$ipAddr =~ /^192/">
-   <title>This is your first access on this system</title>
-   <text>Be a nice user and do not break it please.</text>
-   <check>Of course I am not evil!</check>
-   </notification>
-   </root>
 
 Create new notifications with notifications explorer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Manager, click on ``Notifications`` and then on the ``Create``
-button.
+In Manager, click on ``Notifications`` and then on the ``Create`` button.
 
 |image0|
 
@@ -445,71 +409,6 @@ Example:
        </IfVersion>
    </LocationMatch>
 
-XML notifications through SOAP
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you use old XML format, new notifications can be inserted or deleted
-by using SOAP request, once SOAP is activated:
-
-\* Insertion example in Perl
-''''''''''''''''''''''''''''
-
-.. code-block:: perl
-
-   #!/usr/bin/perl
-
-   use SOAP::Lite;
-   use utf8;
-
-   my $lite = SOAP::Lite
-           ->uri('urn:Lemonldap::NG::Common::PSGI::SOAPService')
-           ->proxy('http://auth.example.com/notifications');
-
-
-   $r = $lite->newNotification(
-   '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-   <root>
-   <notification uid="foo.bar" date="2009-01-27" reference="ABC">
-   <text> You have been granted to access to appli-1 </text>
-   <text> You have been granted to access to appli-2 </text>
-   <check> I know that I can access to appli-1 </check>
-   <check> I know that I can access to appli-2 </check>
-   </notification>
-   </root>
-   ');
-
-   if ( $r->fault ) {
-       print STDERR "SOAP Error: " . $r->fault->{faultstring};
-   }
-   else {
-       my $res = $r->result();
-       print "$res notification(s) have been inserted\n";
-   }
-
-\* Deletion example in Perl
-'''''''''''''''''''''''''''
-
-.. code-block:: perl
-
-   #!/usr/bin/perl
-
-   use SOAP::Lite;
-   use utf8;
-
-   my $lite = SOAP::Lite
-           ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService')
-           ->proxy('http://auth.example.com/index.pl/notification');
-
-
-   $r = $lite->deleteNotification('foo.bar', 'ABC');
-
-   if ( $r->fault ) {
-       print STDERR "SOAP Error: " . $r->fault->{faultstring};
-   }
-   else {
-       my $res = $r->result();
-       print "$res notification(s) have been deleted\n";
-   }
 
 JSON notifications through REST
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
