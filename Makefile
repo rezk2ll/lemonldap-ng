@@ -284,7 +284,9 @@ CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
 UIMANAGERDIR=ui/manager
 NEW_MGR_SRC_FILES=$(shell find $(UIMANAGERDIR)/src ui/manager/*.*s $(UIMANAGERDIR)/src ui/manager/*.json -type f)
 NEW_MGR_TMP_DIST=$(UIMANAGERDIR)/dist
-NEW_MGR_DST=$(SRCMANAGERDIR)/site/htdocs/manager.new.html
+NEW_MGR_TPL_DIR=$(SRCMANAGERDIR)/site/templates/new
+NEW_MGR_JS_DIR=$(SRCMANAGERDIR)/site/htdocs/static/new
+NEW_MGR_DST=$(NEW_MGR_TPL_DIR)/manager.tpl
 
 # -------
 # TARGETS
@@ -540,19 +542,26 @@ manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
 # New manager targets
+#
+# The build result (templates and bundles) is committed, like the portal
+# vendored assets: neither the test server nor the install targets rebuild
+# it, and npm is not needed to build or install LemonLDAP::NG.
+# Maintainers refresh it explicitly with "make new_manager".
+
+new_manager: rollup_clean
+	@$(MAKE) $(NEW_MGR_DST)
 
 rollup_clean:
 	@rm -rf $(NEW_MGR_TMP_DIST) \
-		$(SRCMANAGERDIR)/site/htdocs/*.new.html \
-		$(SRCMANAGERDIR)/site/htdocs/static/manager-*.js \
-		$(SRCMANAGERDIR)/site/htdocs/static/sessions-*.js \
-		$(SRCMANAGERDIR)/site/htdocs/static/notifications-*.js \
-		$(SRCMANAGERDIR)/site/htdocs/static/twofa-*.js
+		$(NEW_MGR_TPL_DIR) \
+		$(NEW_MGR_JS_DIR)
 	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
 
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
-	cp $(UIMANAGERDIR)/dist/static/*.js  $(SRCMANAGERDIR)/site/htdocs/static;
-	cp $(UIMANAGERDIR)/dist/*.new.html	$(SRCMANAGERDIR)/site/htdocs/
+	@install -d $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
+	cp $(UIMANAGERDIR)/dist/static/new/*.js $(UIMANAGERDIR)/dist/static/new/*.css \
+		$(NEW_MGR_JS_DIR)/
+	cp $(UIMANAGERDIR)/dist/templates/new/*.tpl $(NEW_MGR_TPL_DIR)/
 
 $(NEW_MGR_TMP_DIST):
 	@$(MAKE) rollup_clean
@@ -594,7 +603,7 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 nox_e2e_test:
 	xvfb-run -a -s "-screen 0 800x600x16" $(MAKE) e2e_test
 
-prepare_test_server: $(NEW_MGR_DST)
+prepare_test_server:
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
 	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
@@ -1054,6 +1063,11 @@ install_manager_site:	install_conf_dir
 			cssminified $(CSSCOMPRESS) <$$f \
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
+	@if test -d $(SRCMANAGERDIR)/site/templates/new; then \
+		install -d $(RMANAGERTEMPLATESDIR)/new; \
+		cp -pR -f $(SRCMANAGERDIR)/site/templates/new/*.tpl \
+			$(RMANAGERTEMPLATESDIR)/new/; \
+	fi
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(MANAGEREXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \

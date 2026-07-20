@@ -1,0 +1,738 @@
+.App {
+  text-align: center;
+}
+.open {
+  margin-left: 250px;
+}
+
+.closed {
+  margin-left: 40px;
+}
+
+.breadcrumbs {
+  padding-top: 1vw;
+  padding-left: 2vw;
+  background-color: #f7f8fa;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .main {
+    margin-top: 100px;
+  }
+}
+
+.toggleButton {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  background-color: #aaa;
+  border: 1px solid black;
+  border-radius: 90px;
+  cursor: pointer;
+}
+
+.navbar {
+  z-index: 1100;
+}
+
+.navbar .MuiDrawer-paper {
+  color: rgb(209, 211, 223);
+  background-color: rgb(92, 93, 111);
+}
+
+.navbarclosed .MuiDrawer-paper {
+  width: 25px !important;
+}
+
+.navbar img {
+  display: block;
+  margin: 28px auto 24px;
+  width: 200px;
+  border-radius: 4px;
+}
+
+.navbarOptions p {
+  cursor: pointer;
+}
+
+.navbarOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-wrap: break-word;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 12px 0;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgb(209, 211, 223);
+  font-size: 1rem;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navItem:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.navItem.active {
+  background-color: rgba(255, 152, 0, 0.18);
+  color: #fff;
+  box-shadow: inset 3px 0 0 #ff9800;
+}
+
+.navItem.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.navItem.disabled:hover {
+  background-color: transparent;
+  color: rgb(209, 211, 223);
+}
+
+.navItem svg {
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.menuBurger {
+  position: fixed;
+  bottom: 10px;
+}
+
+.language-options {
+  display: flex;
+}
+
+.language-options span {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.authOptionChoices {
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(209, 211, 223);
+}
+
+.options {
+  text-align: left;
+  margin: 2%;
+}
+
+@media (max-width: 500px) {
+  .box th {
+    font-size: smaller;
+  }
+  .appDesc table {
+    width: 45vw;
+  }
+  select {
+    width: 5vh;
+  }
+}
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.appDesc {
+  margin: 2%;
+  border-radius: 15px;
+  flex-wrap: wrap;
+  height: 75vh;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.divider {
+  height: 80vh;
+}
+
+.box tr {
+  text-align: left;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #acacac;
+}
+
+.box tbody {
+  border-bottom: 2px solid #3f3f3f;
+}
+
+.box td {
+  padding-right: 2%;
+  flex-wrap: wrap;
+}
+
+.authLevel {
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.plus {
+  color: rgb(6, 190, 0);
+  font-size: xx-large;
+  background-color: transparent;
+}
+
+.minus {
+  color: red;
+  font-size: xx-large;
+  background-color: transparent;
+}
+
+.appDesc table {
+  width: 75%;
+  max-width: 100%;
+  flex-wrap: wrap;
+  border-collapse: collapse;
+}
+
+textarea {
+  height: 200px;
+  width: 100%;
+}
+
+.optionNavbar {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: rgb(37, 63, 63); */
+  padding: 2%;
+  color: rgb(95, 95, 95);
+  justify-content: space-around;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.optionNavbar :hover {
+  background-color: antiquewhite;
+}
+
+.optionNavbar.sub :hover {
+  background-color: rgb(248, 217, 177);
+}
+
+.option {
+  margin: 1%;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+}
+.suboption {
+  margin: 1%;
+  margin-left: 2%;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.suboption.selected {
+  background-color: rgb(248, 217, 177);
+}
+
+.option.selected {
+  background-color: antiquewhite;
+}
+
+.scopes {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.saveButton {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  background: #ffdada;
+  cursor: pointer;
+  border: 2px solid red;
+  border-radius: 15%;
+  top: 5%;
+  right: 2%;
+  z-index: 2000;
+  box-shadow: none;
+}
+@media (max-width: 500px) {
+  .saveButton {
+    bottom: 2%;
+  }
+}
+
+.notif {
+  position: fixed;
+  background-color: #fff;
+  left: 50%;
+  padding: 2px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  justify-items: center;
+  text-align: left;
+  top: 65px;
+  align-content: center;
+  z-index: 5000;
+}
+
+.notif.red {
+  background-color: rgb(255, 192, 192);
+}
+.notif.hidden {
+  visibility: hidden;
+}
+
+.catCard {
+  background-color: rgb(245, 245, 245);
+  border: 2px solid #acacac;
+  border-radius: 15px;
+  cursor: pointer;
+  text-align: left;
+  margin: 2%;
+}
+
+.catHeader {
+  background-color: #86868681;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  background-color: #2f3237;
+  width: 100%;
+  text-align: center;
+  color: #ffffffaf;
+}
+.footer span {
+  margin: 5px;
+}
+
+/* ---- Header / toolbar ---------------------------------------------------- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #e2e4e8;
+  padding: 20px 2vw 24px;
+}
+
+.head .title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #26262b;
+}
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+/* Push the "browse a configuration" group to the far right on wide screens. */
+.search-browse {
+  margin-left: auto;
+}
+
+/* ---- Content cards ------------------------------------------------------- */
+.desc {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+  padding: 28px 2vw;
+  overflow-wrap: break-word;
+}
+
+.descBox {
+  flex: 1 1 380px;
+  min-width: 300px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ---- "Current configuration" info table --------------------------------- */
+.infoTable {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.infoTable thead th {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #26262b;
+  padding: 0 0 12px;
+  border-bottom: 2px solid #f0f0f2;
+}
+
+.infoTable tbody th {
+  width: 38%;
+  padding: 11px 16px 11px 0;
+  color: #6b6b73;
+  font-weight: 600;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.infoTable tbody td {
+  padding: 11px 0;
+  color: #1f1f24;
+  word-break: break-word;
+}
+
+.infoTable tbody tr + tr th,
+.infoTable tbody tr + tr td {
+  border-top: 1px solid #f4f4f6;
+}
+
+.logo {
+  width: 20vw;
+}
+
+.tree {
+  flex-grow: 1;
+  text-align: left;
+  width: 40%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+  .tree {
+    width: 75%;
+    font-size: smaller;
+  }
+}
+
+.treePage {
+  display: flex;
+  text-align: left;
+  height: 85vh;
+}
+
+.treePage table {
+  width: 100%;
+}
+
+.nodeContent {
+  word-break: break-word;
+}
+
+.addButton {
+  left: 2vw;
+}
+
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  top: -30px;
+  padding: 1px 10px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: xx-large;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.createAssistant {
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+}
+
+.createAssistant select {
+  font-size: medium;
+}
+
+.createAssistant input {
+  font-size: medium;
+  margin: 2%;
+}
+
+.createAssistant textarea {
+  font-size: large;
+}
+
+.mandatoryField {
+  text-align: left;
+}
+
+.card {
+  background-color: white;
+  box-shadow: 1px 1px 1px #888888;
+  padding: 15px;
+  border-radius: 5px;
+  align-content: center;
+  cursor: pointer;
+  position: relative;
+  flex-direction: row;
+}
+
+.cardInfo {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  gap:10px
+}
+.card:hover {
+  box-shadow: 5px 5px 5px #888888;
+}
+.maintenanceToggle {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card.Maintenance {
+  background-color: rgb(255, 152, 67);
+}
+
+.card.issue {
+  color: white;
+  background-color: red;
+}
+
+.name {
+  display: flex;
+  flex-direction: row;
+}
+.menu-item {
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 28px;
+  border-bottom: 1px solid rgb(187, 187, 187);
+}
+
+.popupConf {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 5%;
+  border-radius: 15px;
+  text-align: center;
+  width: max-content;
+}
+
+.bottomRectangle {
+  font-size: 12px;
+  text-align: center;
+  margin: 1%;
+}
+
+.filters {
+  display: flex;
+  margin-left: 2vw;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.filter {
+  border: 0px;
+  margin: 5px;
+  font-size: larger;
+  color: #aaa;
+}
+
+.issuerAssistant {
+  padding: 3vh;
+  background-color: white;
+  z-index: 900;
+  border-radius: 15px;
+  text-align: center;
+  width: max-content;
+  height: max-content;
+  font-size: medium;
+}
+
+.issuerInitials {
+  margin-bottom: 5px;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+}
+
+.issuerAssistant Button {
+  border: none;
+  border-radius: 5px;
+  padding: 1vh 2vh;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.ignoreButton {
+  margin-left: 10px;
+}
+
+.ignoreButton:last-child {
+  margin-right: 0;
+}
+.issuerAssistant.hidden {
+  visibility: hidden;
+}
+
+.text {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formInput,
+.fileInput,
+.generateButton,
+.previousButton,
+.nextButton,
+.ignoreButton {
+  margin-top: 5px;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+}
+
+.ignoreButton {
+  margin-left: 10px;
+}
+
+.issuersList {
+  background-color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-left: -35px;
+}
+
+.issuers {
+  font-size: large;
+  display: flex;
+  align-items: center;
+}
+
+.issuers label {
+  margin: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.issuers img {
+  width: 40px;
+  top: 50%;
+  rotate: 90deg;
+  cursor: pointer;
+}
+
+.warningPopup {
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.otherIssuers {
+  background-color: coral;
+  width: 150px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 28px;
+  border-bottom: 1px solid rgb(187, 187, 187);
+}
+
+.cfgNum {
+  border-radius: 3px;
+  margin: 5px;
+  padding: 1px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-size: xx-large;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  margin-left: 2vw;
+  margin-right: 5vw;
+  grid-gap: 5px;
+  flex-flow: column;
+}
+
+.top {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 2vw;
+  background-color: #d6d6d6;
+}
+
+.title {
+  font-size: xx-large;
+}
+.title2 {
+  font-size: larger;
+  padding: 15px;
+  text-align: left;
+}
+.title3 {
+  font-size: large;
+  padding: 15px;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(232, 233, 235);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

@@ -1,8 +1,9 @@
 // Shared entry-point bootstrap for every manager SPA (configuration,
 // sessions, ...). It wraps the given app element with the common theme and
-// providers, loads psgi.js (which defines window.availableLanguages,
-// window.scriptname, window.menulinks, window.links...) before the first
-// render, and redirects to the portal when the user is not authenticated.
+// providers. psgi.js (which defines availableLanguages, scriptname,
+// menulinks, links...) is loaded by the template before this bundle, and
+// unauthenticated Ajax calls are redirected to the portal by the fetch
+// interceptor.
 import { green, grey, orange, yellow } from "@mui/material/colors";
 import {
   StyledEngineProvider,
@@ -14,11 +15,7 @@ import { createRoot } from "react-dom/client";
 import "./i18n";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import {
-  goToPortal,
-  handleUnauthorized,
-  installFetchInterceptor,
-} from "./utils/auth";
+import { installFetchInterceptor } from "./utils/auth";
 
 const theme = createTheme({
   palette: {
@@ -52,34 +49,9 @@ export function mountApp(children: ReactNode) {
     reportWebVitals();
   };
 
-  const bootstrap = async () => {
-    let response: Response;
-    try {
-      response = await fetch("/psgi.js", { credentials: "same-origin" });
-    } catch (e) {
-      // Cross-origin 302 to the portal blocked by CORS: authenticate.
-      goToPortal();
-      return;
-    }
-
-    // Not authenticated: the interceptor already redirected on 401; also
-    // cover a 302 to the portal that fetch already followed.
-    if (handleUnauthorized(response) || response.redirected) {
-      if (response.redirected) goToPortal(response.url.replace(/\?.*$/, ""));
-      return;
-    }
-
-    if (response.ok) {
-      // Execute psgi.js in the global scope so its top-level `var`
-      // declarations become window globals, exactly as a <script> tag would.
-      const code = await response.text();
-      const script = document.createElement("script");
-      script.text = code;
-      document.body.appendChild(script);
-    }
-
-    renderApp();
-  };
-
-  bootstrap();
+  // psgi.js is loaded by a <script> tag placed before this bundle in the
+  // template, so its globals are already set here. It used to be fetched and
+  // injected as an inline script, which a strict Content-Security-Policy
+  // forbids: its content is dynamic, so no hash can cover it.
+  renderApp();
 }

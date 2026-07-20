@@ -1,6 +1,5 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DownloadIcon from "@mui/icons-material/Download";
-import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import { Button, TextField, Tooltip } from "@mui/material";
 import { t } from "i18next";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -52,23 +51,6 @@ export function HomePage() {
                 <strong className="title">{t("configurationManager")}</strong>
               </div>
               <div className="search-container">
-                <div className="search">
-                  <Button
-                    component="label"
-                    role={undefined}
-                    variant="outlined"
-                    startIcon={<OtherHousesIcon />}
-                    onClick={async function () {
-                      (window as any).links.map((el: { title: string; target: string }) => {
-                        if (el.title === "conf") {
-                          window.location.assign(el.target);
-                        }
-                      });
-                    }}
-                  >
-                    {t("oldManager")}
-                  </Button>
-                </div>
                 <div className="search">
                   <Tooltip title={t("downloadLastConf")}>
                     <Button

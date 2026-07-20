@@ -27,22 +27,22 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   {
     key: "Configuration",
     icon: <SettingsOutlinedIcon fontSize="small" />,
-    target: "manager.new.html",
+    target: "manager.html",
   },
   {
     key: "sessions",
     icon: <GroupOutlinedIcon fontSize="small" />,
-    target: "sessions.new.html",
+    target: "sessions.html",
   },
   {
     key: "notifications",
     icon: <NotificationsNoneOutlinedIcon fontSize="small" />,
-    target: "notifications.new.html",
+    target: "notifications.html",
   },
   {
     key: "secondFactors",
     icon: <SecurityOutlinedIcon fontSize="small" />,
-    target: "2ndfa.new.html",
+    target: "2ndfa.html",
   },
 ];
 
@@ -106,6 +106,7 @@ function Navbar({
               })}
             </nav>
           )}
+          {!partial && <LegacyUiSwitch />}
           <OptionMenu />
         </div>
       </Drawer>
@@ -126,6 +127,28 @@ function Navbar({
         <OptionMenu />
       </Drawer>
     </>
+  );
+}
+
+// Leave the beta interface: dropping the cookie sends the user back to the
+// historical manager, which is served by the same routes.
+function LegacyUiSwitch() {
+  const { t } = useTranslation();
+  return (
+    <div
+      className="navItem legacyUiSwitch"
+      onClick={() => {
+        // Clear at the canonical path and at the current directory, to also
+        // drop a cookie left over at another path by an earlier session
+        for (const path of ["/", location.pathname.replace(/[^/]*$/, "")]) {
+          document.cookie = `llngmanagerbeta=; path=${path}; SameSite=Lax; Max-Age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        }
+        window.location.reload();
+      }}
+    >
+      <ChevronLeft fontSize="small" />
+      <span>{t("backToLegacyManager")}</span>
+    </div>
   );
 }
 

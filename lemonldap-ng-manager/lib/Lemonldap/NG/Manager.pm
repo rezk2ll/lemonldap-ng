@@ -25,8 +25,13 @@ extends qw(
 );
 
 has csp            => ( is => 'rw' );
+has betaCsp        => ( is => 'rw' );
+has cacheTag       => ( is => 'rw' );
 has loadedPlugins  => ( is => 'rw', default => sub { [] } );
 has hLoadedPlugins => ( is => 'rw', default => sub { {} } );
+
+# Name of the cookie used to opt-in the new (beta) manager interface
+use constant BETAUICOOKIE => 'llngmanagerbeta';
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -109,6 +114,31 @@ sub init {
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
 
+    # The new interface stylesheets are extracted to real files, covered by
+    # 'self'. MUI/Emotion still inserts <style> elements, but they are created
+    # empty and filled through insertRule(), which CSP does not police: only
+    # the empty element has to be allowed, by the SHA-256 of the empty string
+    $self->betaCsp( "default-src 'self' $portal;"
+          . "style-src 'self' "
+          . "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';"
+          . "img-src 'self' data:;font-src 'self' data:;"
+          . "frame-ancestors 'none';form-action 'self';" );
+
+    # Set asset tag from version and optional salt, like the portal does
+    require MIME::Base64;
+    require Digest::SHA;
+    $self->cacheTag(
+        substr(
+            MIME::Base64::encode_base64url(
+                Digest::SHA::hmac_sha256(
+                    $VERSION . ( $conf->{cacheTagSalt} // '' ),
+                    $conf->{key} // ''
+                )
+            ),
+            0, 8
+        )
+    );
+
     # Avoid restricted users to access configuration by default route
     my $defaultMod = $self->{defaultModule} =
       $self->{defaultModule} || $enabledModules[0];
@@ -163,6 +193,8 @@ sub tplParams {
         VERSION      => $VERSION,
         ALLOWBROWSER => $res,
         DOC_PREFIX   => ( $self->{docPrefix} || '/doc' ),
+        CACHE_TAG    => $self->cacheTag,
+        BETA_UI      => $self->betaUi($req),
     );
 }
 
@@ -191,11 +223,39 @@ sub javascript {
       );
 }
 
+## @method boolean betaUi($req)
+# Return true if the user opted in the new (beta) manager interface.
+# The cookie value is only tested against "1": it must never be used to
+# build a path.
+#
+# @param $req Lemonldap::NG::Common::PSGI::Request
+# @return true if new interface is requested
+sub betaUi {
+    my ( $self, $req ) = @_;
+    my $c = $req->cookies->{ +BETAUICOOKIE };
+    return ( defined $c and $c eq '1' ) ? 1 : 0;
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    my $beta = $self->betaUi($req);
+
+    # When the user opted in the new interface, look for templates in the
+    # "new" subdirectory first. Templates missing there are silently served
+    # from the standard directory by HTML::Template, which searches each
+    # entry of "path" in order.
+    # NB: the cookie is used as a boolean only, never interpolated in a path
+    if ( !$args{templateDir} and $beta ) {
+        my @dirs =
+          ref $self->templateDir eq 'ARRAY'
+          ? @{ $self->templateDir }
+          : ( $self->templateDir );
+        s#/+$## for @dirs;
+        $args{templateDir} = [ ( map { "$_/new" } @dirs ), @dirs ];
+    }
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
-      'Content-Security-Policy' => $self->csp,
+      'Content-Security-Policy' => ( $beta ? $self->betaCsp : $self->csp ),
       'X-Content-Type-Options'  => 'nosniff',
       'X-Frame-Options'         => 'DENY',
       'X-XSS-Protection'        => '1; mode=block';

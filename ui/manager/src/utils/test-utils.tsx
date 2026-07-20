@@ -104,7 +104,7 @@ export function renderWithProviders(
       },
       router: {
         location: {
-          pathname: "/manager.new.html",
+          pathname: "/manager.html",
           search: "",
           hash: "#conf/14",
           state: null,
