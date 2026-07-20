@@ -2044,6 +2044,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 0,
             'type'    => 'bool'
         },
+        'ldapClientCert' => {
+            'type' => 'text'
+        },
+        'ldapClientKey' => {
+            'type' => 'text'
+        },
         'ldapExportedVars' => {
             'default' => {
                 'cn'   => 'cn',

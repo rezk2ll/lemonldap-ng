@@ -4295,6 +4295,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               'Location of the CA directory for LDAP connections',
         },
+        ldapClientCert => {
+            type          => 'text',
+            documentation =>
+              'Location of the client certificate file for LDAP connections',
+        },
+        ldapClientKey => {
+            type          => 'text',
+            documentation =>
+              'Location of the client private key for LDAP connections',
+        },
 
         # SSL
         SSLAuthnLevel => {
