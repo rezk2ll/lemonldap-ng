@@ -815,8 +815,9 @@ sub getUser {
 
     # Search user in database
     $req->steps( [
-            'getUser',                 'setSessionInfo',
-            $self->p->groupsAndMacros, 'setLocalGroups'
+            'getUser',   'setSessionInfo',
+            'setGroups', 'setMacros',
+            'setLocalGroups'
         ]
     );
     my $error = $self->p->process( $req, ( $mail ? ( useMail => 1 ) : () ) );

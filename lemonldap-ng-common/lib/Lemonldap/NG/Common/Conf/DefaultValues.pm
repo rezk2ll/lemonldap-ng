@@ -372,7 +372,6 @@ sub defaultValues {
         'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
         'samlIDPSSODescriptorWantAuthnRequestsSigned' => 1,
-        'samlMetadataForceUTF8'                       => 1,
         'samlNameIDFormatMapEmail'                    => 'mail',
         'samlNameIDFormatMapKerberos'                 => 'uid',
         'samlNameIDFormatMapWindows'                  => 'uid',

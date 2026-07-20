@@ -1202,7 +1202,6 @@ sub tree {
                     nodes => [
                         'customFunctions',
                         'multiValuesSeparator',
-                        'groupsBeforeMacros',
                         {
                             title => 'SMTP',
                             help  => 'smtp.html',

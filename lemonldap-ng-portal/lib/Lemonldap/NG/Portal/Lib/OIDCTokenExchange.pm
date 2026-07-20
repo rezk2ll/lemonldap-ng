@@ -95,8 +95,8 @@ sub tokenExchange {
     $req->user($uid);
     $req->steps( [
             'getUser',        'setAuthSessionInfo',
-            'setSessionInfo', $self->p->groupsAndMacros,
-            'setLocalGroups'
+            'setSessionInfo', 'setGroups',
+            'setMacros',      'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process($req) ) {

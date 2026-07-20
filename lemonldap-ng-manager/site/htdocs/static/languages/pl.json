@@ -440,7 +440,6 @@
 "grantSessionRules":"Warunki otwarcia",
 "groupLDAPFilter":"Filtr grup",
 "groups":"Grupy",
-"groupsBeforeMacros":"Oblicz grupy przed makrami",
 "hGroups":"Grupy (HashRef)",
 "hashedSessionStore":"Przechowywanie sesji haszowanej",
 "hashkey":"Klucz",

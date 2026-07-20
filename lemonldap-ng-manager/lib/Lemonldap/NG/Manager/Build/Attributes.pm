@@ -529,11 +529,6 @@ sub attributes {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',
         },
-        groupsBeforeMacros => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Compute groups before macros',
-        },
         multiValuesSeparator => {
             type          => 'authParamsText',
             default       => '; ',

@@ -440,7 +440,6 @@
 "grantSessionRules":"תנאי פתיחה",
 "groupLDAPFilter":"Group Filter",
 "groups":"קבוצות",
-"groupsBeforeMacros":"לחשב את הקבוצות לפני תסריטי המאקרו",
 "hGroups":"קבוצות (HashRef)",
 "hashedSessionStore":"Hashed session storage",
 "hashkey":"מפתח",

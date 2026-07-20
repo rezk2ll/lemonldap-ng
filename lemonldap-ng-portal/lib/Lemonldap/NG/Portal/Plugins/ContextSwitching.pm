@@ -207,10 +207,11 @@ sub _switchContext {
 
     # Search user in database & create session
     $req->steps( [
-            'getUser',                  'setAuthSessionInfo',
-            'setSessionInfo',           $self->p->groupsAndMacros,
-            'setPersistentSessionInfo', 'setLocalGroups',
-            'store',                    'buildCookie'
+            'getUser',        'setAuthSessionInfo',
+            'setSessionInfo', 'setGroups',
+            'setMacros',      'setPersistentSessionInfo',
+            'setLocalGroups', 'store',
+            'buildCookie'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
@@ -247,7 +248,7 @@ sub _switchContext {
 
     # Compute groups & macros again with real authenticationLevel
     $req->steps(
-        [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        [ 'setSessionInfo', 'setGroups', 'setMacros', 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug(
             "ContextSwitching: Process returned error: $error");

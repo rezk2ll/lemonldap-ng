@@ -76,3 +76,10 @@ Because of the new way LemonLDAP::NG 3 handles text, existing plugins that
 handle text containing non-ASCII characters will likely break.
 
 Refer to :doc:`devutf8` for a primer on how text should be handled from now on.
+
+Reload URLs do not exist anymore
+--------------------------------
+
+The ``reloadUrls`` and ``reloadTimeout`` parameters have been removed, check out
+the :doc:`eventsmanagement` section for more information about configuration
+reload.
