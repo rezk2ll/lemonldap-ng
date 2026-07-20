@@ -1,20 +1,38 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+// psgi.js (loaded before this bundle) defines these globals. Fall back to
+// sensible defaults so the tests, which do not load psgi.js, still work.
+const staticPrefix = (window as any).staticPrefix || "/static/";
+const availableLanguages = (window as any).availableLanguages;
 
 i18n
-  // pass the i18n instance to react-i18next.
   .use(initReactI18next)
-  .use(Backend) // Use the backend to load translations
-
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
+  .use(Backend)
+  // Pick the language like the legacy manager does: the "llnglanguage" cookie
+  // first (so a language chosen in either interface is kept across a switch),
+  // then the browser languages, then English.
+  .use(LanguageDetector)
   .init({
-    lng: "en",
-    fallbackLng: 'en', // Use fallback language if translation is missing
+    fallbackLng: "en",
+    supportedLngs: Array.isArray(availableLanguages)
+      ? availableLanguages
+      : undefined,
+    // Match "fr" for a "fr-FR" browser locale, as the legacy manager did
+    load: "languageOnly",
+    nonExplicitSupportedLngs: true,
+    detection: {
+      order: ["cookie", "navigator"],
+      lookupCookie: "llnglanguage",
+      // Persist the choice in the same cookie the legacy manager reads
+      caches: ["cookie"],
+      cookieMinutes: 365 * 24 * 60,
+    },
     backend: {
-      // The API URL for translations
-      loadPath: "/static/languages/{{lng}}.json", // Adjust this to your API path
+      // Served from the deployment's static directory, not a hardcoded /static
+      loadPath: `${staticPrefix}languages/{{lng}}.json`,
     },
   });
 
