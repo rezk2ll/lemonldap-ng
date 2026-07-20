@@ -29,7 +29,7 @@ SKIP: {
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
     $dbh->do(
-'CREATE TABLE notifications (uid text,ref text,date datetime,xml text,cond text,done datetime)'
+'CREATE TABLE notifications (uid text,ref text,date datetime,content text,cond text,done datetime)'
     );
 
     use_ok('Lemonldap::NG::Manager::Cli::Lib');
@@ -46,7 +46,7 @@ SKIP: {
 
     # Try to create a notification
     my $notif =
-'{"date":"2099-02-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-02-30","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
     $res =
       $client->jsonPostResponse( 'notifications/actives', '', $notif,
         'application/json' );
@@ -54,7 +54,7 @@ SKIP: {
         'Notification not inserted' );
 
     $notif =
-'{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-13-30","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
     $res =
       $client->jsonPostResponse( 'notifications/actives', '', $notif,
         'application/json' );
@@ -62,19 +62,19 @@ SKIP: {
         'Notification not inserted' );
 
     $notif =
-'{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}"}';
+'{"date":"2099-05_12","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}"}';
     $res =
       $client->jsonPostResponse( 'notifications/actives', '', $notif,
         'application/json' );
     ok( $res->{error} =~ /^Malformed date$/, 'Notification not inserted' );
 
     $notif =
-'{"date":"2099-12-31","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test©\"}", "condition": "1==1"}';
+'{"date":"2099-12-31","uid":"dwho","reference":"Test","content":"{\"title\":\"Test©\"}", "condition": "1==1"}';
     $res =
       $client->jsonPostResponse( 'notifications/actives', '', $notif,
         'application/json' );
     $notif =
-'{"date":"2099-12-31","uid":"dwho","reference":"Test2","xml":"{\"title\":\"Test©\"}", "condition": "1==1"}';
+'{"date":"2099-12-31","uid":"dwho","reference":"Test2","content":"{\"title\":\"Test©\"}", "condition": "1==1"}';
     $res =
       $client->jsonPostResponse( 'notifications/actives', '', $notif,
         'application/json' );

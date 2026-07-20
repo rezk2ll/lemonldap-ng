@@ -46,7 +46,7 @@ SKIP: {
     );
     is( $result->code, 0, "Add branch" ) or diag $result->error;
 
-    my $xml = '
+    my $content = '
     {
     "uid": "dwho",
     "date": "2016-05-30",
@@ -56,9 +56,9 @@ SKIP: {
     "text": "This is a test text with spécial characters",
     "check": "Accept test"
     }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
-    $xml = '
+    $content = '
 {
   "uid": "dwho",
   "date": "2016-05-29",
@@ -69,9 +69,9 @@ SKIP: {
   "text": "This is a second test text with spécial characters",
   "check": ["Accept test","I am sure"]
 }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
-    $xml = '
+    $content = '
 {
   "uid": "dwho",
   "date": "2050-05-30",
@@ -82,9 +82,9 @@ SKIP: {
   "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
-    $xml = '
+    $content = '
 {
   "uid": "rtyler",
   "date": "2016-05-29",
@@ -95,9 +95,9 @@ SKIP: {
   "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
-    $xml = '
+    $content = '
 {
   "uid": "rtyler",
   "date": "2050-05-16",
@@ -107,7 +107,7 @@ SKIP: {
   "text": "This is a test text with spécial characters",
   "check": ["Accept test"]
 }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
