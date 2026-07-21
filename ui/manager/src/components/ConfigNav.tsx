@@ -47,7 +47,7 @@ const NAV_ITEMS: {
     match: ["authParams"],
   },
   {
-    key: "browseTree",
+    key: "advancedConfiguration",
     hash: "#tree/latest",
     icon: <AccountTreeOutlinedIcon fontSize="small" />,
     match: ["tree"],

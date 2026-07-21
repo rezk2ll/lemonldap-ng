@@ -70517,13 +70517,13 @@ Use the data prop if you want to provide your own handlers.`);
 	        }
 	    }, [selectedItem, tree, config]);
 	    if (tree) {
-	        return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("div", { className: "top", children: [jsxRuntimeExports.jsx(HomeButton, {}), jsxRuntimeExports.jsxs("strong", { className: "title", children: [t$2("Tree"), " / ", (_b = selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data) === null || _b === void 0 ? void 0 : _b.name, (selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data.help) ? (jsxRuntimeExports.jsx(Link$1, { target: "blank", href: config.managerDn +
-	                                        "/doc/pages/documentation/current/" +
-	                                        (selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data.help), children: jsxRuntimeExports.jsx(HelpOutlineIcon, { fontSize: "large" }) })) : (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}))] })] }), jsxRuntimeExports.jsxs("div", { className: "treePage", children: [jsxRuntimeExports.jsx("div", { className: "tree", ref: ref, children: jsxRuntimeExports.jsx(Tree, { disableDrag: true, rowHeight: height / 25, ref: treeRef, onToggle: function (itemId) {
+	        return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("div", { className: "treeHeader", children: [jsxRuntimeExports.jsx("strong", { className: "title", children: t$2("advancedConfiguration") }), ((_b = selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data) === null || _b === void 0 ? void 0 : _b.name) && (jsxRuntimeExports.jsx("span", { className: "treeBreadcrumb", children: selectedItem.data.name })), (selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data.help) && (jsxRuntimeExports.jsx(Link$1, { className: "treeHelp", target: "blank", href: config.managerDn +
+	                                "/doc/pages/documentation/current/" +
+	                                (selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data.help), children: jsxRuntimeExports.jsx(HelpOutlineIcon, {}) }))] }), jsxRuntimeExports.jsxs("div", { className: "treePage", children: [jsxRuntimeExports.jsx("div", { className: "tree", ref: ref, children: jsxRuntimeExports.jsx(Tree, { disableDrag: true, rowHeight: 34, ref: treeRef, onToggle: function (itemId) {
 	                                    ToggleConfTree(itemId, treeRef, tree, config, setItems);
 	                                }, height: height, width: width, onFocus: function (node) {
 	                                    setSelectedItem(node);
-	                                }, data: ITEMS, openByDefault: false, children: Node }) }), jsxRuntimeExports.jsx(Divider$1, { orientation: "vertical", flexItem: true }), jsxRuntimeExports.jsx("div", { style: { width: "100%" }, children: jsxRuntimeExports.jsx("div", { className: "nodeContent", children: ((_c = selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data) === null || _c === void 0 ? void 0 : _c.type) && (jsxRuntimeExports.jsx("table", { style: { width: "100%" }, children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx(TreeNodeType, { node: selectedItem, config: config }) }) })) }) })] })] }));
+	                                }, data: ITEMS, openByDefault: false, children: Node }) }), jsxRuntimeExports.jsx("div", { className: "treeDetail", children: jsxRuntimeExports.jsx("div", { className: "nodeContent", children: ((_c = selectedItem === null || selectedItem === void 0 ? void 0 : selectedItem.data) === null || _c === void 0 ? void 0 : _c.type) && (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx(TreeNodeType, { node: selectedItem, config: config }) }) })) }) })] })] }));
 	    }
 	    else {
 	        return (jsxRuntimeExports.jsx(Box$1, { sx: { display: "flex" }, children: jsxRuntimeExports.jsx(CircularProgress$1, {}) }));
@@ -70531,20 +70531,21 @@ Use the data prop if you want to provide your own handlers.`);
 	}
 	function Node(_a) {
 	    var node = _a.node, style = _a.style;
+	    var isLeaf = !node.isInternal;
 	    var Icon = node.isInternal
 	        ? node.isOpen
 	            ? KeyboardArrowDownIcon
 	            : KeyboardArrowRightIcon
 	        : EditIcon;
-	    return (jsxRuntimeExports.jsxs("div", { className: "treeitem", style: __assign(__assign({}, style), { cursor: "pointer" }), onClick: function () {
+	    return (
+	    // `style` carries react-arborist row positioning; React applies it through
+	    // the CSSOM, which the Content-Security-Policy allows (unlike a literal
+	    // style attribute). The per-level indent is added the same way.
+	    jsxRuntimeExports.jsx("div", { className: "treeitem" + (node.isSelected ? " selected" : ""), style: style, onClick: function () {
 	            if (node.data.type !== "simpleInputContainer") {
 	                node.toggle();
 	            }
-	        }, children: [jsxRuntimeExports.jsxs("div", { style: {
-	                    display: "flex",
-	                    alignItems: "center",
-	                    paddingLeft: "".concat(node.data.id.split(";").length, "px"),
-	                }, children: [jsxRuntimeExports.jsx(Icon, {}), jsxRuntimeExports.jsx(Typography$1, { variant: "body1", style: { marginLeft: "8px", wordBreak: "break-word" }, children: node === null || node === void 0 ? void 0 : node.data.name })] }), jsxRuntimeExports.jsx(Divider$1, { flexItem: true })] }));
+	        }, children: jsxRuntimeExports.jsxs("div", { className: "treeitemInner", style: { paddingLeft: node.level * 16 + 8 }, children: [jsxRuntimeExports.jsx(Icon, { fontSize: "small", className: isLeaf ? "treeLeafIcon" : "treeToggleIcon" }), jsxRuntimeExports.jsx("span", { className: "treeitemLabel", children: node === null || node === void 0 ? void 0 : node.data.name })] }) }));
 	}
 
 	function getTree() {
@@ -71561,7 +71562,7 @@ Use the data prop if you want to provide your own handlers.`);
 	        match: ["authParams"],
 	    },
 	    {
-	        key: "browseTree",
+	        key: "advancedConfiguration",
 	        hash: "#tree/latest",
 	        icon: jsxRuntimeExports.jsx(AccountTreeOutlinedIcon, { fontSize: "small" }),
 	        match: ["tree"],

@@ -71,6 +71,7 @@
 "adminLogoutServer":"Admin logout server",
 "adminLogoutServerSecret":"Secret",
 "advancedParams":"Parâmetros avançados",
+"advancedConfiguration":"Configuração avançada",
 "algorithms":"Algoritmos",
 "allowedMarkups":"Marcações permitidas:",
 "always":"Sempre",

@@ -71,6 +71,7 @@
 "adminLogoutServer":"Admin logout server",
 "adminLogoutServerSecret":"Secret",
 "advancedParams":"Gelişmiş parametreler",
+"advancedConfiguration":"Gelişmiş yapılandırma",
 "algorithms":"Algoritmalar",
 "allowedMarkups":"İzin verilen biçimlendirmeler:",
 "always":"Her zaman",

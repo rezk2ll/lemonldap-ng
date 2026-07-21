@@ -71,6 +71,7 @@
 "adminLogoutServer":"Admin logout server",
 "adminLogoutServerSecret":"Secret",
 "advancedParams":"進階參數",
+"advancedConfiguration":"高级配置",
 "algorithms":"Algorithms",
 "allowedMarkups":"允許的標記：",
 "always":"總是",

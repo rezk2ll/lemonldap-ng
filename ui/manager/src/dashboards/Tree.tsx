@@ -2,14 +2,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Link,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Link } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { NodeApi, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import useResizeObserver from "use-resize-observer";
@@ -18,7 +11,6 @@ import { findElementByTitleOrValue } from "../utils/searchIntree";
 import { llngConfig } from "../utils/types";
 import "./Tree.css";
 import { TreeNodeType } from "./TreeNode";
-import HomeButton from "../components/HomeButton";
 import { t } from "i18next";
 
 export function ToggleConfTree(
@@ -104,31 +96,30 @@ export default function TreeRender({
   if (tree) {
     return (
       <>
-        <div className="top">
-          <HomeButton />
-          <strong className="title">
-            {t("Tree")} / {selectedItem?.data?.name}
-            {selectedItem?.data.help ? (
-              <Link
-                target="blank"
-                href={
-                  config.managerDn +
-                  "/doc/pages/documentation/current/" +
-                  selectedItem?.data.help
-                }
-              >
-                <HelpOutlineIcon fontSize="large" />
-              </Link>
-            ) : (
-              <></>
-            )}
-          </strong>
+        <div className="treeHeader">
+          <strong className="title">{t("advancedConfiguration")}</strong>
+          {selectedItem?.data?.name && (
+            <span className="treeBreadcrumb">{selectedItem.data.name}</span>
+          )}
+          {selectedItem?.data.help && (
+            <Link
+              className="treeHelp"
+              target="blank"
+              href={
+                config.managerDn +
+                "/doc/pages/documentation/current/" +
+                selectedItem?.data.help
+              }
+            >
+              <HelpOutlineIcon />
+            </Link>
+          )}
         </div>
         <div className="treePage">
           <div className="tree" ref={ref}>
             <Tree
               disableDrag={true}
-              rowHeight={height / 25}
+              rowHeight={34}
               ref={treeRef}
               onToggle={(itemId) => {
                 ToggleConfTree(itemId, treeRef, tree, config, setItems);
@@ -144,16 +135,10 @@ export default function TreeRender({
               {Node}
             </Tree>
           </div>
-          <Divider orientation="vertical" flexItem />
-          <div style={{ width: "100%" }}>
+          <div className="treeDetail">
             <div className="nodeContent">
-              {/* <strong>Clicked Node</strong>
-{`: ${selectedItem?.data?.id}, `}
-<Typography variant="body2" color="textSecondary">
-type: {selectedItem?.data.type}
-</Typography> */}
               {selectedItem?.data?.type && (
-                <table style={{ width: "100%" }}>
+                <table>
                   <tbody>
                     <TreeNodeType node={selectedItem} config={config} />
                   </tbody>
@@ -174,6 +159,7 @@ type: {selectedItem?.data.type}
 }
 
 function Node({ node, style }: NodeRendererProps<treeFormat>) {
+  const isLeaf = !node.isInternal;
   const Icon = node.isInternal
     ? node.isOpen
       ? KeyboardArrowDownIcon
@@ -181,34 +167,25 @@ function Node({ node, style }: NodeRendererProps<treeFormat>) {
     : EditIcon;
 
   return (
+    // `style` carries react-arborist row positioning; React applies it through
+    // the CSSOM, which the Content-Security-Policy allows (unlike a literal
+    // style attribute). The per-level indent is added the same way.
     <div
-      className="treeitem"
-      style={{
-        ...style,
-        cursor: "pointer",
-      }}
+      className={"treeitem" + (node.isSelected ? " selected" : "")}
+      style={style}
       onClick={() => {
         if (node.data.type !== "simpleInputContainer") {
           node.toggle();
         }
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: `${node.data.id.split(";").length}px`,
-        }}
-      >
-        <Icon />
-        <Typography
-          variant="body1"
-          style={{ marginLeft: "8px", wordBreak: "break-word" }}
-        >
-          {node?.data.name}
-        </Typography>
+      <div className="treeitemInner" style={{ paddingLeft: node.level * 16 + 8 }}>
+        <Icon
+          fontSize="small"
+          className={isLeaf ? "treeLeafIcon" : "treeToggleIcon"}
+        />
+        <span className="treeitemLabel">{node?.data.name}</span>
       </div>
-      <Divider flexItem />
     </div>
   );
 }

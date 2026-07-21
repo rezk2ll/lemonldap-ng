@@ -71,6 +71,7 @@
 "adminLogoutServer":"Serwer wylogowania administratora",
 "adminLogoutServerSecret":"Tajny",
 "advancedParams":"Zaawansowane parametry",
+"advancedConfiguration":"Konfiguracja zaawansowana",
 "algorithms":"Algorytmy",
 "allowedMarkups":"Dozwolone znaczniki:",
 "always":"Zawsze",

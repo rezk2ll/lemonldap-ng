@@ -664,33 +664,123 @@ textarea {
   width: 20vw;
 }
 
-.tree {
-  flex-grow: 1;
-  text-align: left;
-  width: 40%;
-  justify-content: space-around;
-  flex-direction: column;
+/* ---- Header ------------------------------------------------------------- */
+.treeHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 2vw;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+.treeHeader .title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #26262b;
+}
+/* Selected node name, shown as a tonal pill next to the title */
+.treeBreadcrumb {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background-color: rgba(255, 152, 0, 0.14);
+  color: #b34700;
+  font-weight: 600;
+  font-size: 0.95rem;
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.treeHelp {
+  display: inline-flex;
+  color: #8a8a92;
+}
+.treeHelp:hover {
+  color: #b34700;
 }
 
-@media (max-width: 1000px) {
-  .tree {
-    width: 75%;
-    font-size: smaller;
-  }
-}
-
+/* ---- Two-pane layout ---------------------------------------------------- */
 .treePage {
   display: flex;
+  align-items: stretch;
   text-align: left;
-  height: 85vh;
+  height: calc(100vh - 140px);
+  min-height: 420px;
 }
 
-.treePage table {
-  width: 100%;
+.tree {
+  flex: 0 0 40%;
+  max-width: 480px;
+  min-width: 280px;
+  border-right: 1px solid #e2e4e8;
+  background-color: #fdfdfd;
+  overflow: hidden; /* react-arborist scrolls internally */
+}
+
+.treeDetail {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-y: auto;
+  background-color: #f7f8fa;
+  padding: 20px 24px;
 }
 
 .nodeContent {
   word-break: break-word;
+}
+.nodeContent table {
+  width: 100%;
+}
+
+/* ---- Tree rows ---------------------------------------------------------- */
+.treeitem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #3a3a42;
+  border-radius: 6px;
+  transition: background-color 0.12s ease;
+}
+.treeitem:hover {
+  background-color: rgba(255, 152, 0, 0.1);
+}
+.treeitem.selected {
+  background-color: rgba(255, 152, 0, 0.18);
+  color: #b34700;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #ff9800;
+}
+
+.treeitemInner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+.treeToggleIcon {
+  color: #9a9aa2;
+  flex: 0 0 auto;
+}
+.treeLeafIcon {
+  color: #ff9800;
+  flex: 0 0 auto;
+}
+.treeitem.selected .treeToggleIcon {
+  color: #b34700;
+}
+.treeitemLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 1000px) {
+  .tree {
+    flex-basis: 52%;
+    font-size: smaller;
+  }
 }
 
 .addButton {

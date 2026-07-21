@@ -71,6 +71,7 @@
 "adminLogoutServer":"Admin logout server",
 "adminLogoutServerSecret":"Secret",
 "advancedParams":"משתנים מתקדמים",
+"advancedConfiguration":"תצורה מתקדמת",
 "algorithms":"אלגוריתמים",
 "allowedMarkups":"סימונים מורשים:",
 "always":"תמיד",

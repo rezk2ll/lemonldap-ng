@@ -71,6 +71,7 @@
 "adminLogoutServer":"Serveur de déconnexion administratif",
 "adminLogoutServerSecret":"Secret",
 "advancedParams":"Paramètres avancés",
+"advancedConfiguration":"Configuration avancée",
 "algorithms":"Algorithmes",
 "allowedMarkups":"Balises autorisées :",
 "always":"Toujours",
