@@ -21,7 +21,7 @@ import {
   updateChoiceOverParam,
   updateChoiceParam,
 } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 function updateChoice(
   tableID: string,
   data: Record<string, string>,
@@ -148,7 +148,7 @@ export default function AuthChoiceContainerForm({
                         )
                       }
                     >
-                      {attributes.authChoiceModules.select[0].map((e) => {
+                      {attributes.authChoiceModules.select[0].map((e: any) => {
                         return (
                           <MenuItem key={e.v + "auth"} value={e.k}>
                             {t(e.v)}
@@ -175,7 +175,7 @@ export default function AuthChoiceContainerForm({
                         )
                       }
                     >
-                      {attributes.authChoiceModules.select[1].map((e) => {
+                      {attributes.authChoiceModules.select[1].map((e: any) => {
                         return (
                           <MenuItem key={e.v + "auth"} value={e.k}>
                             {t(e.v)}
@@ -202,7 +202,7 @@ export default function AuthChoiceContainerForm({
                         )
                       }
                     >
-                      {attributes.authChoiceModules.select[2].map((e) => {
+                      {attributes.authChoiceModules.select[2].map((e: any) => {
                         return (
                           <MenuItem key={e.v + "choice"} value={e.k}>
                             {t(e.v)}

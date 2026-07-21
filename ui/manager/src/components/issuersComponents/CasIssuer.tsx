@@ -10,7 +10,7 @@ import {
   updateConfigParams,
   updateModuleOpt,
 } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { TableVars } from "../applicationsComponents/TableVars";
 import BoolForm from "../../forms/BoolForm";
 import TextForm from "../../forms/TextForm";

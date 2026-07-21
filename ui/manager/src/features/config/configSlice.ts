@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { treeFormat } from "../../utils/recursTree";
 import { changeElementInConf } from "../../utils/searchIntree";
 import { MetaData, llngConfig } from "../../utils/types";

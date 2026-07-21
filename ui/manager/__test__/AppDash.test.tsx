@@ -308,7 +308,7 @@ describe("Application Dashboard", () => {
     changeSelect("RS256", 0, "EdDSA");
     expect(screen.getByText(t("EdDSA"))).toBeDefined();
     changeSelect("JSON", 0, "HS256");
-    expect(screen.getByText(t("JWT/HS256"))).toBeDefined();
+    expect(screen.getByText(t("HS256"))).toBeDefined();
 
     clickSubOption("oidcRPMetaDataOptionsScopes");
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);

@@ -17,9 +17,9 @@ import {
 } from "../../features/config/configSlice";
 import AuthChoiceContainerForm from "../../forms/AuthChoiceContainerForm";
 import CmbModuleContainerForm from "../../forms/CmbModuleContainerForm";
-import attributes from "../../static/attributes.json";
-import definitions from "../../static/definitions.json";
-import tree from "../../static/tree.json";
+import { attributes } from "../../metadata";
+import { definitions } from "../../metadata";
+import { tree } from "../../metadata";
 import { llngConfig } from "../../utils/types";
 import { TableVars } from "../applicationsComponents/TableVars";
 import { SAMLRenderer } from "./SAMLRenderer";

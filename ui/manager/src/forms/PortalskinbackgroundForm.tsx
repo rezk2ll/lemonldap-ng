@@ -1,7 +1,7 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { t } from "i18next";
 import { updateConfigParams } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 export default function PortalskinbackgroundForm({
   value,
   portal,
@@ -29,7 +29,7 @@ export default function PortalskinbackgroundForm({
               )
             }
           >
-            {attributes.portalSkinBackground.select.map((option) => (
+            {attributes.portalSkinBackground.select.map((option: any) => (
               <MenuItem value={option.k} key={option.k}>
                 {option.v}
               </MenuItem>

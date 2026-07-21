@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 import { llngConfig } from "./types";
 
 export interface TreeNode {

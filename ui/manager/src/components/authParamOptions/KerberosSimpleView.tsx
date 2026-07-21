@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateConfigParams } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import TextForm from "../../forms/TextForm";
 import BoolForm from "../../forms/BoolForm";
 

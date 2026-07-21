@@ -12,8 +12,8 @@ import {
   updateOidcRPMetaDataOptionsExtraClaims,
   updateOidcRPMetaDataScopeRules,
 } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
-import definitions from "../../static/definitions.json";
+import { attributes } from "../../metadata";
+import { definitions } from "../../metadata";
 import { TableVars } from "./TableVars";
 import TextForm from "../../forms/TextForm";
 import FileForm from "../../forms/FileForm";

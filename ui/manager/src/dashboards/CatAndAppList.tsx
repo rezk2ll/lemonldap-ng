@@ -4,7 +4,7 @@ import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { CatCard } from "../components/catAndAppComponents/CatCard";
 import { newCategory } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 import "./CatAndAppList.css";
 
 export function CatAndAppList() {

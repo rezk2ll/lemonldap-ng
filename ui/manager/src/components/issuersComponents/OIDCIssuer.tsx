@@ -17,7 +17,7 @@ import {
   updateModuleOpt,
 } from "../../features/config/configSlice";
 import OidcKeyForm from "../../forms/OidcKeyForm";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { llngConfig } from "../../utils/types";
 import { TableVars } from "../applicationsComponents/TableVars";
 import TextForm from "../../forms/TextForm";

@@ -23,7 +23,7 @@ import {
   updateModuleOpt,
   updateSfExtraOverParam,
 } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 
 function updateSfExtra(
   tableID: string,
@@ -174,7 +174,7 @@ export default function ContainerForm({
                         )
                       }
                     >
-                      {attributes.sfExtra.select.map((e) => {
+                      {attributes.sfExtra.select.map((e: any) => {
                         return (
                           <MenuItem key={e.v} value={e.k}>
                             {t(e.v)}

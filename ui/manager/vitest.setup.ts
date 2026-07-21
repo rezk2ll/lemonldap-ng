@@ -1,6 +1,14 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
+// The configuration metadata is fetched at runtime in the app; tests render
+// components synchronously, so preload the real JSON into the metadata module.
+import { setMetadata } from "./src/metadata";
+import attributes from "./src/static/attributes.json";
+import definitions from "./src/static/definitions.json";
+import tree from "./src/static/tree.json";
+setMetadata(attributes, definitions, tree);
+
 // Initialize i18n before tests to avoid HTTP backend issues
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";

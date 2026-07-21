@@ -3,7 +3,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { IconButton, TextField, Tooltip } from "@mui/material";
 import { t } from "i18next";
 import Markdown from "markdown-to-jsx";
-import definitions from "../static/definitions.json";
+import { definitions } from "../metadata";
 
 export default function KeyTextContainerForm({
   value,

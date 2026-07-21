@@ -11,7 +11,7 @@ import {
   updateOidcMetaDataOptions,
 } from "../../features/config/configSlice";
 import OidcAttributeContainerForm from "../../forms/OidcAttributeContainerForm";
-import definitions from "../../static/definitions.json";
+import { definitions } from "../../metadata";
 import "./AppPage.css";
 import { OidcOptionSelection, OptionOidc } from "./OptionOidc";
 import { TableVars } from "./TableVars";

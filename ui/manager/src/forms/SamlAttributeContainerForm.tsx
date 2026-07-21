@@ -21,8 +21,8 @@ import {
   newSamlMetadataExportedAttribute,
   updateSamlMetadataExportedAttribute,
 } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
-import definitions from "../static/definitions.json";
+import { attributes } from "../metadata";
+import { definitions } from "../metadata";
 
 export default function SamlAttributeContainerForm({
   value,
@@ -184,7 +184,7 @@ export default function SamlAttributeContainerForm({
                         }
                       >
                         {attributes.samlSPMetaDataExportedAttributes.select.map(
-                          (el) => {
+                          (el: any) => {
                             return (
                               <MenuItem key={el.k} value={el.k}>
                                 {t(el.v)}

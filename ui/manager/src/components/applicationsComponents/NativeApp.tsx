@@ -18,12 +18,12 @@ import {
   updateVhostOptions,
   updateVhostPost,
 } from "../../features/config/configSlice";
-import definitions from "../../static/definitions.json";
+import { definitions } from "../../metadata";
 import {
   transformJsonToList,
   transformListToJson,
 } from "../../utils/nativeRule";
-import attributes from "./../../static/attributes.json";
+import { attributes } from "./../../metadata";
 import "./AppPage.css";
 import { TableVars } from "./TableVars";
 import IntForm from "../../forms/IntForm";

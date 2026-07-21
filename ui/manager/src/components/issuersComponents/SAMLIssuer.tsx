@@ -23,7 +23,7 @@ import {
   updateConfigParams,
   updateModuleOpt,
 } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { exportData } from "../../utils/exportData";
 import { NewCertificate } from "../../utils/generateKey";
 import { handleChangeFile } from "../../utils/readFiles";

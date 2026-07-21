@@ -11,7 +11,7 @@ import { t } from "i18next";
 import { MouseEventHandler, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { delApp, newApp } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import "./CreationAssistant.css";
 import { MandatoryFields } from "./MandatoryFields";
 

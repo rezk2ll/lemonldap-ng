@@ -4,7 +4,7 @@ import { t } from "i18next";
 import { ChangeEvent } from "react";
 import { URLLoader } from "../components/managerComponents/URLLoader";
 import { VisuallyHiddenInput } from "../components/managerComponents/VisuallyHiddenInput";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 import { handleChangeFile } from "../utils/readFiles";
 export default function FileForm({
   value,

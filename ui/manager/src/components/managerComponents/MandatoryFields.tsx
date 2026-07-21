@@ -4,7 +4,7 @@ import {
   updateOIDCclientID,
   updateSamlSPMetadata,
 } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { useAppDispatch, useAppSelector } from "./../../app/hooks";
 import "./MandatoryField.css";
 import BoolForm from "../../forms/BoolForm";

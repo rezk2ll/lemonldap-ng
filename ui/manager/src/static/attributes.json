@@ -70,9 +70,16 @@
    "adaptativeAuthenticationLevelRules": {
       "type": "keyTextContainer"
    },
+   "adminLogoutServerSecret": {
+      "type": "text"
+   },
    "apacheAuthnLevel": {
       "default": 3,
       "type": "int"
+   },
+   "appAccessHistoryEnabled": {
+      "default": 0,
+      "type": "bool"
    },
    "applicationList": {
       "default": {
@@ -147,7 +154,7 @@
             },
             {
                "k": "OpenID",
-               "v": "OpenID"
+               "v": "OpenID 2.0 (deprecated)"
             },
             {
                "k": "OpenIDConnect",
@@ -179,7 +186,7 @@
             },
             {
                "k": "SSL",
-               "v": "SSL"
+               "v": "mTLS"
             },
             {
                "k": "Twitter",
@@ -187,7 +194,15 @@
             },
             {
                "k": "WebID",
-               "v": "WebID"
+               "v": "WebID (deprecated)"
+            },
+            {
+               "k": "WebAuthn",
+               "v": "WebAuthn"
+            },
+            {
+               "k": "Combination",
+               "v": "combineMods"
             },
             {
                "k": "Custom",
@@ -225,7 +240,7 @@
             },
             {
                "k": "OpenID",
-               "v": "OpenID"
+               "v": "OpenID 2.0 (deprecated)"
             },
             {
                "k": "OpenIDConnect",
@@ -253,7 +268,11 @@
             },
             {
                "k": "WebID",
-               "v": "WebID"
+               "v": "WebID (deprecated)"
+            },
+            {
+               "k": "Combination",
+               "v": "combineMods"
             },
             {
                "k": "Custom",
@@ -286,6 +305,10 @@
                "v": "None"
             },
             {
+               "k": "Combination",
+               "v": "combineMods"
+            },
+            {
                "k": "Custom",
                "v": "customModule"
             }
@@ -296,6 +319,10 @@
    "authChoiceParam": {
       "default": "lmAuth",
       "type": "text"
+   },
+   "authChoiceSelectOnly": {
+      "default": 0,
+      "type": "bool"
    },
    "authentication": {
       "default": "Demo",
@@ -350,7 +377,7 @@
          },
          {
             "k": "SSL",
-            "v": "SSL"
+            "v": "mTLS"
          },
          {
             "k": "Twitter",
@@ -358,7 +385,11 @@
          },
          {
             "k": "WebID",
-            "v": "WebID"
+            "v": "WebID (deprecated)"
+         },
+         {
+            "k": "WebAuthn",
+            "v": "WebAuthn"
          },
          {
             "k": "Demo",
@@ -378,7 +409,7 @@
          },
          {
             "k": "OpenID",
-            "v": "OpenID"
+            "v": "OpenID 2.0 (deprecated)"
          },
          {
             "k": "OpenIDConnect",
@@ -415,11 +446,11 @@
       "type": "keyTextContainer"
    },
    "available2F": {
-      "default": "UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password",
+      "default": "TOTP,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta",
       "type": "text"
    },
    "available2FSelfRegistration": {
-      "default": "Password,TOTP,U2F,WebAuthn,Yubikey",
+      "default": "Password,TOTP,WebAuthn,Yubikey",
       "type": "text"
    },
    "avoidAssignment": {
@@ -458,6 +489,9 @@
       "default": 30,
       "type": "int"
    },
+   "cacheTagSalt": {
+      "type": "text"
+   },
    "captcha": {
       "type": "PerlModule"
    },
@@ -466,15 +500,15 @@
    },
    "captcha_login_enabled": {
       "default": 0,
-      "type": "bool"
+      "type": "boolOrExpr"
    },
    "captcha_mail_enabled": {
       "default": 1,
-      "type": "bool"
+      "type": "boolOrExpr"
    },
    "captcha_register_enabled": {
       "default": 1,
-      "type": "bool"
+      "type": "boolOrExpr"
    },
    "captcha_size": {
       "default": 6,
@@ -516,8 +550,16 @@
    "casAppMetaDataOptions": {
       "type": "subContainer"
    },
+   "casAppMetaDataOptionsActivation": {
+      "default": 1,
+      "type": "bool"
+   },
+   "casAppMetaDataOptionsAllowProxy": {
+      "default": 1,
+      "type": "bool"
+   },
    "casAppMetaDataOptionsAuthnLevel": {
-      "type": "intOrNull"
+      "type": "text"
    },
    "casAppMetaDataOptionsComment": {
       "type": "longtext"
@@ -591,8 +633,11 @@
       "default": "",
       "type": "longtext"
    },
+   "casSrvMetaDataOptionsSamlValidate": {
+      "type": "bool"
+   },
    "casSrvMetaDataOptionsSortNumber": {
-      "type": "intOrNull"
+      "type": "int"
    },
    "casSrvMetaDataOptionsTooltip": {
       "type": "text"
@@ -703,6 +748,10 @@
    "checkHIBPURL": {
       "default": "https://api.pwnedpasswords.com/range/",
       "type": "url"
+   },
+   "checkMsg": {
+      "default": 5,
+      "type": "int"
    },
    "checkState": {
       "default": 0,
@@ -821,7 +870,7 @@
          },
          {
             "k": "SSL",
-            "v": "SSL"
+            "v": "mTLS"
          },
          {
             "k": "Twitter",
@@ -829,7 +878,11 @@
          },
          {
             "k": "WebID",
-            "v": "WebID"
+            "v": "WebID (deprecated)"
+         },
+         {
+            "k": "WebAuthn",
+            "v": "WebAuthn"
          },
          {
             "k": "Demo",
@@ -841,7 +894,7 @@
          },
          {
             "k": "OpenID",
-            "v": "OpenID"
+            "v": "OpenID 2.0 (deprecated)"
          },
          {
             "k": "OpenIDConnect",
@@ -957,8 +1010,16 @@
       "default": "86400",
       "type": "text"
    },
+   "crowdSecAgentResponseCode": {
+      "default": 404,
+      "type": "int"
+   },
+   "crowdSecAgentResponseValue": {
+      "type": "text"
+   },
    "crowdsec": {
-      "type": "bool"
+      "default": 0,
+      "type": "boolOrExpr"
    },
    "crowdsecAction": {
       "default": "reject",
@@ -974,7 +1035,42 @@
       ],
       "type": "select"
    },
+   "crowdsecAgent": {
+      "default": 0,
+      "type": "boolOrExpr"
+   },
+   "crowdsecBanDuration": {
+      "default": "4h",
+      "type": "text"
+   },
+   "crowdsecBlockDelay": {
+      "type": "int"
+   },
+   "crowdsecFilters": {
+      "type": "text"
+   },
+   "crowdsecIgnoreFailures": {
+      "default": 0,
+      "type": "bool"
+   },
    "crowdsecKey": {
+      "type": "text"
+   },
+   "crowdsecMachineId": {
+      "type": "text"
+   },
+   "crowdsecMaxFailures": {
+      "type": "int"
+   },
+   "crowdsecMetricsEnabled": {
+      "default": 0,
+      "type": "bool"
+   },
+   "crowdsecMetricsInterval": {
+      "default": 300,
+      "type": "int"
+   },
+   "crowdsecPassword": {
       "type": "text"
    },
    "crowdsecUrl": {
@@ -1109,6 +1205,9 @@
       "default": 0,
       "type": "boolOrExpr"
    },
+   "defaultAuthnLevel": {
+      "type": "intOrNull"
+   },
    "defaultNewKeySize": {
       "default": 2048,
       "type": "int"
@@ -1127,6 +1226,9 @@
       "default": 0,
       "type": "bool"
    },
+   "disabledPlugins": {
+      "type": "text"
+   },
    "displaySessionId": {
       "default": 1,
       "type": "bool"
@@ -1135,6 +1237,13 @@
       "default": "example.com",
       "msgFail": "__badDomainName__",
       "type": "text"
+   },
+   "eventQueueName": {
+      "default": "llng_events",
+      "type": "text"
+   },
+   "eventStatus": {
+      "type": "bool"
    },
    "exportedAttr": {
       "type": "text"
@@ -1177,6 +1286,10 @@
    "ext2fResendInterval": {
       "type": "text"
    },
+   "externalMenu": {
+      "default": "",
+      "type": "text"
+   },
    "facebookAppId": {
       "type": "text"
    },
@@ -1217,6 +1330,9 @@
    },
    "findUserWildcard": {
       "default": "*",
+      "type": "text"
+   },
+   "floatingCategoryName": {
       "type": "text"
    },
    "forceGlobalStorageIssuerOTT": {
@@ -1310,7 +1426,7 @@
       "type": "text"
    },
    "hideOldPassword": {
-      "default": 0,
+      "default": 1,
       "type": "bool"
    },
    "httpOnly": {
@@ -1530,12 +1646,42 @@
       ],
       "type": "select"
    },
+   "jitsiSigningKey": {
+      "default": "default-oidc-sig, old-oidc-sig, new-oidc-sig",
+      "type": "text"
+   },
    "jsRedirect": {
       "default": 0,
       "type": "boolOrExpr"
    },
    "key": {
       "type": "password"
+   },
+   "keyComment": {
+      "default": "",
+      "type": "text"
+   },
+   "keyId": {
+      "default": "",
+      "type": "text"
+   },
+   "keyNodes": {
+      "type": "keyNodeContainer"
+   },
+   "keyPrivate": {
+      "default": "",
+      "type": "EcOrRSAPrivateKey"
+   },
+   "keyPrivatePwd": {
+      "default": "",
+      "type": "password"
+   },
+   "keyPublic": {
+      "default": "",
+      "type": "EcOrRSAPublicKeyOrCertificate"
+   },
+   "keys": {
+      "type": "subContainer"
    },
    "krbAllowedDomains": {
       "type": "text"
@@ -1578,6 +1724,12 @@
       "default": 0,
       "type": "bool"
    },
+   "ldapClientCert": {
+      "type": "text"
+   },
+   "ldapClientKey": {
+      "type": "text"
+   },
    "ldapExportedVars": {
       "default": {
          "cn": "cn",
@@ -1587,6 +1739,9 @@
       "keyMsgFail": "__badVariableName__",
       "msgFail": "__badValue__",
       "type": "keyTextContainer"
+   },
+   "ldapForcePasswordChangeExpirationWarning": {
+      "type": "intOrNull"
    },
    "ldapGetUserBeforePasswordChange": {
       "default": 0,
@@ -1652,6 +1807,7 @@
       "type": "text"
    },
    "ldapRaw": {
+      "default": "(?i:^jpegPhoto|;binary)",
       "type": "text"
    },
    "ldapSearchDeref": {
@@ -1797,6 +1953,33 @@
       "default": {},
       "type": "keyTextContainer"
    },
+   "lokiAuthorization": {
+      "type": "text"
+   },
+   "lokiEnv": {
+      "type": "text"
+   },
+   "lokiInstance": {
+      "type": "text"
+   },
+   "lokiLabel": {
+      "type": "text"
+   },
+   "lokiService": {
+      "type": "text"
+   },
+   "lokiTenant": {
+      "type": "text"
+   },
+   "lokiTenantHeader": {
+      "type": "text"
+   },
+   "lokiUrl": {
+      "type": "text"
+   },
+   "lokiUserService": {
+      "type": "text"
+   },
    "lwpOpts": {
       "default": {
          "timeout": 10
@@ -1905,6 +2088,35 @@
    "max2FDevicesNameLength": {
       "default": 20,
       "type": "int"
+   },
+   "messageBroker": {
+      "select": [
+         {
+            "k": "",
+            "v": ""
+         },
+         {
+            "k": "::Redis",
+            "v": "Redis"
+         },
+         {
+            "k": "::Pg",
+            "v": "PostgreSQL"
+         },
+         {
+            "k": "::MQTT",
+            "v": "MQTT"
+         },
+         {
+            "k": "::Web",
+            "v": "Web"
+         }
+      ],
+      "type": "select"
+   },
+   "messageBrokerOptions": {
+      "default": {},
+      "type": "keyTextContainer"
    },
    "multiValuesSeparator": {
       "default": "; ",
@@ -2048,6 +2260,9 @@
    "oidcOPMetaDataOptionsAcrValues": {
       "type": "text"
    },
+   "oidcOPMetaDataOptionsAuthEndpointExtraParams": {
+      "type": "keyTextContainer"
+   },
    "oidcOPMetaDataOptionsAuthnEndpointAuthMethod": {
       "default": "get",
       "select": [
@@ -2180,10 +2395,19 @@
       "default": 0,
       "type": "int"
    },
+   "oidcOPMetaDataOptionsNoJwtHeader": {
+      "default": 0,
+      "type": "bool"
+   },
    "oidcOPMetaDataOptionsPrompt": {
       "type": "text"
    },
+   "oidcOPMetaDataOptionsRequireIss": {
+      "default": 0,
+      "type": "bool"
+   },
    "oidcOPMetaDataOptionsRequirePkce": {
+      "default": 0,
       "type": "bool"
    },
    "oidcOPMetaDataOptionsResolutionRule": {
@@ -2194,8 +2418,12 @@
       "default": "openid profile",
       "type": "text"
    },
+   "oidcOPMetaDataOptionsSigningKey": {
+      "default": "",
+      "type": "text"
+   },
    "oidcOPMetaDataOptionsSortNumber": {
-      "type": "intOrNull"
+      "type": "int"
    },
    "oidcOPMetaDataOptionsStoreIDToken": {
       "default": 0,
@@ -2223,6 +2451,64 @@
       ],
       "type": "select"
    },
+   "oidcOPMetaDataOptionsTokenEndpointAuthSigAlg": {
+      "default": "RS256",
+      "select": [
+         {
+            "k": "HS256",
+            "v": "HS256"
+         },
+         {
+            "k": "HS384",
+            "v": "HS384"
+         },
+         {
+            "k": "HS512",
+            "v": "HS512"
+         },
+         {
+            "k": "RS256",
+            "v": "RS256"
+         },
+         {
+            "k": "RS384",
+            "v": "RS384"
+         },
+         {
+            "k": "RS512",
+            "v": "RS512"
+         },
+         {
+            "k": "PS256",
+            "v": "PS256"
+         },
+         {
+            "k": "PS384",
+            "v": "PS384"
+         },
+         {
+            "k": "PS512",
+            "v": "PS512"
+         },
+         {
+            "k": "ES256",
+            "v": "ES256"
+         },
+         {
+            "k": "ES384",
+            "v": "ES384"
+         },
+         {
+            "k": "ES512",
+            "v": "ES512"
+         },
+         {
+            "k": "EdDSA",
+            "v": "EdDSA"
+         }
+      ],
+      "type": "select"
+   },
    "oidcOPMetaDataOptionsTooltip": {
       "type": "text"
    },
@@ -2235,6 +2521,27 @@
    },
    "oidcOPMetaDataOptionsUserAttribute": {
       "type": "text"
+   },
+   "oidcOPMetaDataOptionsUserinfoSource": {
+      "default": "userinfo",
+      "select": [
+         {
+            "k": "userinfo",
+            "v": "Userinfo endpoint"
+         },
+         {
+            "k": "id_token",
+            "v": "ID Token"
+         },
+         {
+            "k": "access_token",
+            "v": "Access Token"
+         }
+      ],
+      "type": "select"
+   },
+   "oidcOfflineTokens": {
+      "type": "bool"
    },
    "oidcRPCallbackGetParam": {
       "default": "openidconnectcallback",
@@ -2394,10 +2701,18 @@
       ],
       "type": "select"
    },
+   "oidcRPMetaDataOptionsActivation": {
+      "default": 1,
+      "type": "bool"
+   },
    "oidcRPMetaDataOptionsAdditionalAudiences": {
       "type": "text"
    },
    "oidcRPMetaDataOptionsAllowClientCredentialsGrant": {
+      "default": 0,
+      "type": "bool"
+   },
+   "oidcRPMetaDataOptionsAllowNativeSso": {
       "default": 0,
       "type": "bool"
    },
@@ -2435,15 +2750,18 @@
       "type": "select"
    },
    "oidcRPMetaDataOptionsAuthRequiredForAuthorize": {
+      "default": 0,
       "type": "bool"
    },
    "oidcRPMetaDataOptionsAuthnLevel": {
-      "type": "intOrNull"
+      "type": "text"
    },
    "oidcRPMetaDataOptionsAuthnRequireNonce": {
+      "default": 0,
       "type": "bool"
    },
    "oidcRPMetaDataOptionsAuthnRequireState": {
+      "default": 0,
       "type": "bool"
    },
    "oidcRPMetaDataOptionsAuthorizationCodeExpiration": {
@@ -2608,6 +2926,135 @@
       ],
       "type": "select"
    },
+   "oidcRPMetaDataOptionsIntrospectionEncContentEncAlg": {
+      "default": "A256GCM",
+      "select": [
+         {
+            "k": "A256CBC-HS512",
+            "v": "A256CBC-HS512"
+         },
+         {
+            "k": "A256GCM",
+            "v": "A256GCM"
+         },
+         {
+            "k": "A192CBC-HS384",
+            "v": "A192CBC-HS384"
+         },
+         {
+            "k": "A192GCM",
+            "v": "A192GCM"
+         },
+         {
+            "k": "A128CBC-HS256",
+            "v": "A128CBC-HS256"
+         },
+         {
+            "k": "A128GCM",
+            "v": "A128GCM"
+         }
+      ],
+      "type": "select"
+   },
+   "oidcRPMetaDataOptionsIntrospectionEncKeyMgtAlg": {
+      "select": [
+         {
+            "k": "",
+            "v": "None"
+         },
+         {
+            "k": "RSA-OAEP",
+            "v": "RSA-OAEP"
+         },
+         {
+            "k": "RSA-OAEP-256",
+            "v": "RSA-OAEP-256"
+         },
+         {
+            "k": "RSA1_5",
+            "v": "RSA1_5"
+         },
+         {
+            "k": "ECDH-ES",
+            "v": "ECDH-ES"
+         },
+         {
+            "k": "ECDH-ES+A128KW",
+            "v": "ECDH-ES+A128KW"
+         },
+         {
+            "k": "ECDH-ES+A192KW",
+            "v": "ECDH-ES+A192KW"
+         },
+         {
+            "k": "ECDH-ES+A256KW",
+            "v": "ECDH-ES+A256KW"
+         }
+      ],
+      "type": "select"
+   },
+   "oidcRPMetaDataOptionsIntrospectionSignAlg": {
+      "default": "",
+      "select": [
+         {
+            "k": "",
+            "v": "JSON"
+         },
+         {
+            "k": "HS256",
+            "v": "HS256"
+         },
+         {
+            "k": "HS384",
+            "v": "HS384"
+         },
+         {
+            "k": "HS512",
+            "v": "HS512"
+         },
+         {
+            "k": "RS256",
+            "v": "RS256"
+         },
+         {
+            "k": "RS384",
+            "v": "RS384"
+         },
+         {
+            "k": "RS512",
+            "v": "RS512"
+         },
+         {
+            "k": "PS256",
+            "v": "PS256"
+         },
+         {
+            "k": "PS384",
+            "v": "PS384"
+         },
+         {
+            "k": "PS512",
+            "v": "PS512"
+         },
+         {
+            "k": "ES256",
+            "v": "ES256"
+         },
+         {
+            "k": "ES384",
+            "v": "ES384"
+         },
+         {
+            "k": "ES512",
+            "v": "ES512"
+         },
+         {
+            "k": "EdDSA",
+            "v": "EdDSA"
+         }
+      ],
+      "type": "select"
+   },
    "oidcRPMetaDataOptionsJwks": {
       "type": "file"
    },
@@ -2704,7 +3151,11 @@
       "type": "select"
    },
    "oidcRPMetaDataOptionsLogoutUrl": {
-      "type": "url"
+      "type": "text"
+   },
+   "oidcRPMetaDataOptionsNoJwtHeader": {
+      "default": 0,
+      "type": "bool"
    },
    "oidcRPMetaDataOptionsOfflineSessionExpiration": {
       "type": "intOrNull"
@@ -2723,14 +3174,43 @@
       "default": 0,
       "type": "bool"
    },
+   "oidcRPMetaDataOptionsRefreshTokenRotation": {
+      "default": 0,
+      "type": "bool"
+   },
    "oidcRPMetaDataOptionsRequestUris": {
       "type": "text"
    },
    "oidcRPMetaDataOptionsRequirePKCE": {
       "default": 0,
-      "type": "bool"
+      "select": [
+         {
+            "k": "0",
+            "v": "disabled"
+         },
+         {
+            "k": "1",
+            "v": "required"
+         },
+         {
+            "k": "2",
+            "v": "pkceOrSecret"
+         }
+      ],
+      "type": "select"
+   },
+   "oidcRPMetaDataOptionsRtActivity": {
+      "default": 0,
+      "type": "int"
    },
    "oidcRPMetaDataOptionsRule": {
+      "type": "text"
+   },
+   "oidcRPMetaDataOptionsSigningKey": {
+      "default": "",
+      "type": "text"
+   },
+   "oidcRPMetaDataOptionsTokenXAuthorizedRP": {
       "type": "text"
    },
    "oidcRPMetaDataOptionsUserIDAttr": {
@@ -2812,64 +3292,65 @@
          },
          {
             "k": "none",
-            "v": "JWT/None"
+            "v": "None"
          },
          {
             "k": "HS256",
-            "v": "JWT/HS256"
+            "v": "HS256"
          },
          {
             "k": "HS384",
-            "v": "JWT/HS384"
+            "v": "HS384"
          },
          {
             "k": "HS512",
-            "v": "JWT/HS512"
+            "v": "HS512"
          },
          {
             "k": "RS256",
-            "v": "JWT/RS256"
+            "v": "RS256"
          },
          {
             "k": "RS384",
-            "v": "JWT/RS384"
+            "v": "RS384"
          },
          {
             "k": "RS512",
-            "v": "JWT/RS512"
+            "v": "RS512"
          },
          {
             "k": "PS256",
-            "v": "JWT/PS256"
+            "v": "PS256"
          },
          {
             "k": "PS384",
-            "v": "JWT/PS384"
+            "v": "PS384"
          },
          {
             "k": "PS512",
-            "v": "JWT/PS512"
+            "v": "PS512"
          },
          {
             "k": "ES256",
-            "v": "JWT/ES256"
+            "v": "ES256"
          },
          {
             "k": "ES384",
-            "v": "JWT/ES384"
+            "v": "ES384"
          },
          {
             "k": "ES512",
-            "v": "JWT/ES512"
+            "v": "ES512"
          },
          {
             "k": "EdDSA",
-            "v": "JWT/EdDSA"
+            "v": "EdDSA"
          }
       ],
       "type": "select"
    },
    "oidcRPMetaDataOptionsUserinfoRequireHeaderToken": {
+      "default": 0,
       "type": "bool"
    },
    "oidcRPMetaDataScopeRules": {
@@ -2890,7 +3371,21 @@
    },
    "oidcServiceAllowDynamicRegistration": {
       "default": 0,
-      "type": "bool"
+      "select": [
+         {
+            "k": "0",
+            "v": "disabled"
+         },
+         {
+            "k": "1",
+            "v": "confidentialOnly"
+         },
+         {
+            "k": "2",
+            "v": "allClients"
+         }
+      ],
+      "type": "select"
    },
    "oidcServiceAllowHybridFlow": {
       "default": 0,
@@ -2978,6 +3473,10 @@
       ],
       "type": "select"
    },
+   "oidcServiceEncryptionKey": {
+      "default": "default-oidc-enc",
+      "type": "text"
+   },
    "oidcServiceHideMetadata": {
       "type": "bool"
    },
@@ -3023,6 +3522,15 @@
       ],
       "type": "select"
    },
+   "oidcServiceMetaDataAmrRules": {
+      "default": {
+         "mfa": "$_2f",
+         "otp": "$_2f eq \"TOTP\"",
+         "pop": "$_auth eq \"WebAuthn\" or $_auth eq \"SSL\"",
+         "pwd": "$authenticationLevel == 2"
+      },
+      "type": "keyTextContainer"
+   },
    "oidcServiceMetaDataAuthnContext": {
       "default": {
          "loa-1": 1,
@@ -3044,6 +3552,9 @@
    "oidcServiceMetaDataCheckSessionURI": {
       "default": "checksession.html",
       "type": "text"
+   },
+   "oidcServiceMetaDataDisallowNoneAlg": {
+      "type": "bool"
    },
    "oidcServiceMetaDataEndSessionURI": {
       "default": "logout",
@@ -3068,6 +3579,14 @@
       "default": "register",
       "type": "text"
    },
+   "oidcServiceMetaDataRevokeURI": {
+      "default": "revoke",
+      "type": "text"
+   },
+   "oidcServiceMetaDataRpLogoutReturnURI": {
+      "default": "rlogoutreturn",
+      "type": "text"
+   },
    "oidcServiceMetaDataTokenURI": {
       "default": "token",
       "type": "text"
@@ -3075,6 +3594,9 @@
    "oidcServiceMetaDataUserInfoURI": {
       "default": "userinfo",
       "type": "text"
+   },
+   "oidcServiceMetadataTtl": {
+      "type": "int"
    },
    "oidcServiceNewKeyIdSig": {
       "type": "text"
@@ -3161,11 +3683,37 @@
    "oidcServicePublicKeySig": {
       "type": "EcOrRSAPublicKeyOrCertificate"
    },
+   "oidcServiceSignatureKey": {
+      "default": "default-oidc-sig, old-oidc-sig, new-oidc-sig",
+      "type": "text"
+   },
    "oidcStorage": {
       "type": "PerlModule"
    },
    "oidcStorageOptions": {
       "type": "keyTextContainer"
+   },
+   "okta2fActivation": {
+      "default": 0,
+      "type": "boolOrExpr"
+   },
+   "okta2fAdminURL": {
+      "type": "url"
+   },
+   "okta2fApiKey": {
+      "type": "text"
+   },
+   "okta2fAuthnLevel": {
+      "type": "intOrNull"
+   },
+   "okta2fLabel": {
+      "type": "text"
+   },
+   "okta2fLoginAttribute": {
+      "type": "text"
+   },
+   "okta2fLogo": {
+      "type": "text"
    },
    "oldNotifFormat": {
       "default": 0,
@@ -3307,6 +3855,10 @@
       "default": 1,
       "type": "boolOrExpr"
    },
+   "passwordPolicyMaxSize": {
+      "default": 0,
+      "type": "int"
+   },
    "passwordPolicyMinDigit": {
       "default": 0,
       "type": "int"
@@ -3373,6 +3925,9 @@
    "portalCustomJs": {
       "type": "text"
    },
+   "portalCustomTplParams": {
+      "type": "keyTextContainer"
+   },
    "portalDisplayAppslist": {
       "default": 1,
       "type": "boolOrExpr"
@@ -3395,6 +3950,10 @@
    },
    "portalDisplayLogout": {
       "default": 1,
+      "type": "boolOrExpr"
+   },
+   "portalDisplayOfflineTokens": {
+      "default": "$_auth eq 'OIDC'",
       "type": "boolOrExpr"
    },
    "portalDisplayOidcConsents": {
@@ -3442,7 +4001,7 @@
       "type": "bool"
    },
    "portalForceAuthnInterval": {
-      "default": 5,
+      "default": 30,
       "type": "int"
    },
    "portalMainLogo": {
@@ -3554,6 +4113,10 @@
       "default": 0,
       "type": "bool"
    },
+   "publicNotifications": {
+      "default": 0,
+      "type": "bool"
+   },
    "radius2fActivation": {
       "default": 0,
       "type": "boolOrExpr"
@@ -3569,6 +4132,9 @@
    },
    "radius2fLogo": {
       "type": "text"
+   },
+   "radius2fMsgAuth": {
+      "type": "bool"
    },
    "radius2fRequestAttributes": {
       "default": {},
@@ -3604,6 +4170,9 @@
       "keyMsgFail": "__badVariableName__",
       "msgFail": "__badValue__",
       "type": "keyTextContainer"
+   },
+   "radiusMsgAuth": {
+      "type": "bool"
    },
    "radiusRequestAttributes": {
       "default": {},
@@ -3693,6 +4262,10 @@
       "msgFail": "__badUrl__",
       "type": "keyTextContainer"
    },
+   "rememberAuthChoiceForgetAtLogout": {
+      "default": 0,
+      "type": "bool"
+   },
    "rememberAuthChoiceRule": {
       "default": 0,
       "type": "boolOrExpr"
@@ -3764,12 +4337,17 @@
       "type": "text"
    },
    "rest2fVerifyArgs": {
+      "msgFail": "__badValue__",
       "type": "keyTextContainer"
    },
    "rest2fVerifyUrl": {
       "keyMsgFail": "__badKeyName__",
       "msgFail": "__badValue__",
       "type": "url"
+   },
+   "restAuthArgs": {
+      "msgFail": "__badValue__",
+      "type": "keyTextContainer"
    },
    "restAuthServer": {
       "default": 0,
@@ -3794,6 +4372,10 @@
       "default": 0,
       "type": "bool"
    },
+   "restFindUserDBArgs": {
+      "msgFail": "__badValue__",
+      "type": "keyTextContainer"
+   },
    "restFindUserDBUrl": {
       "type": "url"
    },
@@ -3801,8 +4383,16 @@
       "default": 0,
       "type": "bool"
    },
+   "restPwdConfirmArgs": {
+      "msgFail": "__badValue__",
+      "type": "keyTextContainer"
+   },
    "restPwdConfirmUrl": {
       "type": "url"
+   },
+   "restPwdModifyArgs": {
+      "msgFail": "__badValue__",
+      "type": "keyTextContainer"
    },
    "restPwdModifyUrl": {
       "type": "url"
@@ -3810,6 +4400,10 @@
    "restSessionServer": {
       "default": 0,
       "type": "bool"
+   },
+   "restUserDBArgs": {
+      "msgFail": "__badValue__",
+      "type": "keyTextContainer"
    },
    "restUserDBUrl": {
       "type": "url"
@@ -3839,6 +4433,9 @@
    "samlAttributeAuthorityDescriptorAttributeServiceSOAP": {
       "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;",
       "type": "samlService"
+   },
+   "samlAuthnContextMapExtra": {
+      "type": "keyTextContainer"
    },
    "samlAuthnContextMapKerberos": {
       "default": 4,
@@ -4105,6 +4702,10 @@
       "default": -1,
       "type": "trool"
    },
+   "samlIDPMetaDataOptionsSignatureKey": {
+      "default": "",
+      "type": "text"
+   },
    "samlIDPMetaDataOptionsSignatureMethod": {
       "default": "",
       "select": [
@@ -4132,7 +4733,7 @@
       "type": "select"
    },
    "samlIDPMetaDataOptionsSortNumber": {
-      "type": "intOrNull"
+      "type": "int"
    },
    "samlIDPMetaDataOptionsStoreSAMLToken": {
       "default": 0,
@@ -4140,6 +4741,9 @@
    },
    "samlIDPMetaDataOptionsTooltip": {
       "type": "text"
+   },
+   "samlIDPMetaDataOptionsURL": {
+      "type": "url"
    },
    "samlIDPMetaDataOptionsUserAttribute": {
       "type": "text"
@@ -4223,7 +4827,6 @@
       "default": {},
       "keyMsgFail": "__badMetadataName__",
       "msgFail": "__badValue__",
-      "type": "samlAttributeContainer",
       "select": [
          {
             "k": "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified",
@@ -4237,7 +4840,8 @@
             "k": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
             "v": "Basic"
          }
-      ]
+      ],
+      "type": "samlAttributeContainer"
    },
    "samlSPMetaDataMacros": {
       "default": {},
@@ -4250,8 +4854,12 @@
       "keyMsgFail": "__badMetadataName__",
       "type": "keyTextContainer"
    },
+   "samlSPMetaDataOptionsActivation": {
+      "default": 1,
+      "type": "bool"
+   },
    "samlSPMetaDataOptionsAuthnLevel": {
-      "type": "intOrNull"
+      "type": "text"
    },
    "samlSPMetaDataOptionsCheckSLOMessageSignature": {
       "default": 1,
@@ -4320,6 +4928,9 @@
          }
       ],
       "type": "select"
+   },
+   "samlSPMetaDataOptionsForceNameIDFormat": {
+      "type": "bool"
    },
    "samlSPMetaDataOptionsForceUTF8": {
       "default": 1,
@@ -4397,6 +5008,10 @@
       "default": -1,
       "type": "trool"
    },
+   "samlSPMetaDataOptionsSignatureKey": {
+      "default": "",
+      "type": "text"
+   },
    "samlSPMetaDataOptionsSignatureMethod": {
       "default": "",
       "select": [
@@ -4422,6 +5037,9 @@
          }
       ],
       "type": "select"
+   },
+   "samlSPMetaDataOptionsURL": {
+      "type": "url"
    },
    "samlSPMetaDataXML": {
       "type": "file"
@@ -4458,6 +5076,10 @@
       "default": 1,
       "type": "bool"
    },
+   "samlServiceEncryptionKey": {
+      "default": "default-saml-enc",
+      "type": "text"
+   },
    "samlServicePrivateKeyEnc": {
       "default": "",
       "type": "RSAPrivateKey"
@@ -4480,6 +5102,10 @@
    "samlServicePublicKeySig": {
       "default": "",
       "type": "RSAPublicKeyOrCertificate"
+   },
+   "samlServiceSignatureKey": {
+      "default": "default-saml-sig",
+      "type": "text"
    },
    "samlServiceSignatureMethod": {
       "default": "RSA_SHA256",
@@ -4601,6 +5227,7 @@
       "type": "boolOrExpr"
    },
    "sfOnlyUpgrade": {
+      "default": 0,
       "type": "bool"
    },
    "sfRegisterTimeout": {
@@ -4633,6 +5260,10 @@
    "sfRetries": {
       "type": "intOrNull"
    },
+   "shortTokenTTL": {
+      "default": 30,
+      "type": "int"
+   },
    "showLanguages": {
       "default": 1,
       "type": "bool"
@@ -4660,6 +5291,13 @@
    "slaveAuthnLevel": {
       "default": 2,
       "type": "int"
+   },
+   "slaveCertificateField": {
+      "type": "text"
+   },
+   "slaveCertificateRegexp": {
+      "default": "",
+      "type": "pcre"
    },
    "slaveDisplayLogo": {
       "default": 0,
@@ -4709,6 +5347,10 @@
    "status": {
       "type": "bool"
    },
+   "statusQueueName": {
+      "default": "llng_status",
+      "type": "text"
+   },
    "stayConnected": {
       "default": 0,
       "type": "boolOrExpr"
@@ -4748,6 +5390,9 @@
    "syslogFacility": {
       "type": "text"
    },
+   "syslogSockOptions": {
+      "type": "keyTextContainer"
+   },
    "timeout": {
       "default": 72000,
       "type": "int"
@@ -4767,6 +5412,24 @@
    "totp2fActivation": {
       "default": 0,
       "type": "boolOrExpr"
+   },
+   "totp2fAlgorithm": {
+      "default": "sha1",
+      "select": [
+         {
+            "k": "sha1",
+            "v": "SHA-1"
+         },
+         {
+            "k": "sha256",
+            "v": "SHA-256"
+         },
+         {
+            "k": "sha512",
+            "v": "SHA-512"
+         }
+      ],
+      "type": "select"
    },
    "totp2fAuthnLevel": {
       "type": "intOrNull"
@@ -4810,6 +5473,10 @@
    "trustedBrowserRule": {
       "default": 0,
       "type": "boolOrExpr"
+   },
+   "trustedBrowserUseTotp": {
+      "default": 1,
+      "type": "bool"
    },
    "trustedDomains": {
       "type": "text"
@@ -4856,6 +5523,10 @@
       "type": "bool"
    },
    "upgradeSession": {
+      "default": 1,
+      "type": "bool"
+   },
+   "useRedirectAjaxOnUnauthorized": {
       "default": 1,
       "type": "bool"
    },
@@ -5026,11 +5697,14 @@
       "default": "samlIDPMetaDataNodes, samlSPMetaDataNodes",
       "type": "text"
    },
+   "virtualHostName": {
+      "default": ".example.com",
+      "type": "text"
+   },
    "virtualHosts": {
       "type": "virtualHostContainer"
    },
-   "virtualHostName": {
-      "default": ".example.com",
+   "webCronSecret": {
       "type": "text"
    },
    "webIDAuthnLevel": {
@@ -5084,17 +5758,12 @@
    "webauthn2fLogo": {
       "type": "text"
    },
-   "webauthn2fSelfRegistration": {
-      "default": 0,
-      "type": "boolOrExpr"
-   },
-   "webauthn2fUserCanRemoveKey": {
-      "default": 1,
-      "type": "bool"
-   },
-   "webauthn2fUserVerification": {
-      "default": "preferred",
+   "webauthn2fResidentKey": {
       "select": [
+         {
+            "k": "",
+            "v": ""
+         },
          {
             "k": "discouraged",
             "v": "Discouraged"
@@ -5109,6 +5778,43 @@
          }
       ],
       "type": "select"
+   },
+   "webauthn2fSelfRegistration": {
+      "default": 0,
+      "type": "boolOrExpr"
+   },
+   "webauthn2fUserCanRemoveKey": {
+      "default": 1,
+      "type": "bool"
+   },
+   "webauthn2fUserVerification": {
+      "default": "preferred",
+      "select": [
+         {
+            "k": "discouraged",
+            "v": "discouraged"
+         },
+         {
+            "k": "preferred",
+            "v": "preferred"
+         },
+         {
+            "k": "required",
+            "v": "required"
+         }
+      ],
+      "type": "select"
+   },
+   "webauthnAppId": {
+      "default": 1,
+      "type": "bool"
+   },
+   "webauthnAuthnLevel": {
+      "default": 3,
+      "type": "int"
+   },
+   "webauthnDefaultTransports": {
+      "type": "text"
    },
    "webauthnDisplayNameAttr": {
       "type": "text"

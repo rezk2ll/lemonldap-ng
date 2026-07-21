@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateConfigParams } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import IntForm from "../../forms/IntForm";
 
 export function ADSimpleView() {

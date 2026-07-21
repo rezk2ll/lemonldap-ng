@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateConfigParams } from "../../features/config/configSlice";
 import SamlAssertionForm from "../../forms/SamlAssertionForm";
 import SamlServiceForm from "../../forms/SamlServiceForm";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import { llngConfig } from "../../utils/types";
 import TextForm from "../../forms/TextForm";
 import IntForm from "../../forms/IntForm";

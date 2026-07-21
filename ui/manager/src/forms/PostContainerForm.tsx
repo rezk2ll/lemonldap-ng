@@ -9,7 +9,7 @@ import {
   newVhostPost,
   updateVhostPost,
 } from "../features/config/configSlice";
-import definitions from "../static/definitions.json";
+import { definitions } from "../metadata";
 
 export default function PostContainerForm({
   value,

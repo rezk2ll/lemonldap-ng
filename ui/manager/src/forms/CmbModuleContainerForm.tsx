@@ -22,7 +22,7 @@ import {
   updateCombOverParam,
   updateCombParam,
 } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 function updateComb(
   tableID: string,
   data: Record<string, Record<string, string | Record<string, string>>>,
@@ -135,7 +135,7 @@ export default function CmbModuleContainerForm({
                         )
                       }
                     >
-                      {attributes.combModules.select.map((e) => {
+                      {attributes.combModules.select.map((e: any) => {
                         return (
                           <MenuItem key={e.v} value={e.k}>
                             {t(e.v)}

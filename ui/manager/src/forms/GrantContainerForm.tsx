@@ -8,7 +8,7 @@ import {
   newModuleOpt,
   updateModuleOpt,
 } from "../features/config/configSlice";
-import definitions from "../static/definitions.json";
+import { definitions } from "../metadata";
 
 function updateGrant(tableID: string) {
   const headerList: Record<string, string> = {};

@@ -15,7 +15,7 @@ import {
   setError,
   updateAuthParams,
 } from "../features/config/configSlice";
-import attributes from "../static/attributes.json";
+import { attributes } from "../metadata";
 import "./AuthParams.css";
 export function AdvancedAuthParams() {
   const dispatch = useAppDispatch();
@@ -39,9 +39,9 @@ export function AdvancedAuthParams() {
         .concat(attributes.userDB.select)
         .concat(attributes.registerDB.select)
         .concat(attributes.passwordDB.select)
-        .map(({ k, v }) => JSON.stringify({ k, v }))
+        .map(({ k, v }: any) => JSON.stringify({ k, v }))
     )
-  ).map((str) => JSON.parse(str));
+  ).map((str: any) => JSON.parse(str));
   const choices = [authModule, registerDB, passwordDB, userDB];
   const selectedOptions = [
     authModule,
@@ -107,7 +107,7 @@ export function AdvancedAuthParams() {
                 )
               }
             >
-              {attributes.authentication.select.map((el) => {
+              {attributes.authentication.select.map((el: any) => {
                 return (
                   <MenuItem key={"auth" + el.v} value={el.k}>
                     {t(el.v)}
@@ -132,7 +132,7 @@ export function AdvancedAuthParams() {
                 )
               }
             >
-              {attributes.userDB.select.map((el) => {
+              {attributes.userDB.select.map((el: any) => {
                 return (
                   <MenuItem key={"user" + el.v} value={el.k}>
                     {t(el.v)}
@@ -157,7 +157,7 @@ export function AdvancedAuthParams() {
                 )
               }
             >
-              {attributes.passwordDB.select.map((el) => {
+              {attributes.passwordDB.select.map((el: any) => {
                 return (
                   <MenuItem key={"pass" + el.v} value={el.k}>
                     {t(el.v)}
@@ -182,7 +182,7 @@ export function AdvancedAuthParams() {
                 )
               }
             >
-              {attributes.registerDB.select.map((el) => (
+              {attributes.registerDB.select.map((el: any) => (
                 <MenuItem key={"reg" + el.v} value={el.k}>
                   {t(el.v)}
                 </MenuItem>

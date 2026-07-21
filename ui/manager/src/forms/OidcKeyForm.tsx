@@ -12,8 +12,8 @@ import { t } from "i18next";
 import Markdown from "markdown-to-jsx";
 import { ChangeEvent } from "react";
 import { VisuallyHiddenInput } from "../components/managerComponents/VisuallyHiddenInput";
-import attributes from "../static/attributes.json";
-import definitions from "../static/definitions.json";
+import { attributes } from "../metadata";
+import { definitions } from "../metadata";
 import { GenerateEcKeys, NewCertificate } from "../utils/generateKey";
 import { handleChangeFile } from "../utils/readFiles";
 export default function OidcKeyForm({

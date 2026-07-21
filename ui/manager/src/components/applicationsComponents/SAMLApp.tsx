@@ -11,7 +11,7 @@ import {
   updateSamlSPMetadata,
 } from "../../features/config/configSlice";
 import SamlAttributeContainerForm from "../../forms/SamlAttributeContainerForm";
-import definitions from "../../static/definitions.json";
+import { definitions } from "../../metadata";
 import "./AppPage.css";
 import { OptionSaml, SubObtionSelector } from "./OptionSaml";
 import { TableVars } from "./TableVars";

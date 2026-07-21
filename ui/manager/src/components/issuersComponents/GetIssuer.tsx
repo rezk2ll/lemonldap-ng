@@ -1,4 +1,4 @@
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 
 import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";

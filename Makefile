@@ -244,11 +244,15 @@ MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-ma
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/CTrees.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm \
+		ui/manager/src/static/attributes-ui.json
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/nstruct.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/reverseTree.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \
+		$(UIMANAGERDIR)/src/static/attributes.json \
+		$(UIMANAGERDIR)/src/static/definitions.json \
+		$(UIMANAGERDIR)/src/static/tree.json \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
@@ -562,6 +566,13 @@ $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	cp $(UIMANAGERDIR)/dist/static/new/*.js $(UIMANAGERDIR)/dist/static/new/*.css \
 		$(NEW_MGR_JS_DIR)/
 	cp $(UIMANAGERDIR)/dist/templates/new/*.tpl $(NEW_MGR_TPL_DIR)/
+	# Configuration metadata is fetched at runtime (see src/metadata.ts), not
+	# bundled: serve the JSON as static assets next to the bundles.
+	cp $(UIMANAGERDIR)/src/static/attributes.json \
+		$(UIMANAGERDIR)/src/static/definitions.json \
+		$(UIMANAGERDIR)/src/static/tree.json \
+		$(UIMANAGERDIR)/src/static/attributes-ui.json \
+		$(NEW_MGR_JS_DIR)/
 	@$(MAKE) new_manager_minify
 
 # rollup emits readable bundles; the templates load the *.min.js / *.min.css.

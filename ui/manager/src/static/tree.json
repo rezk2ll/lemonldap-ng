@@ -16,6 +16,7 @@
                            "portalDisplayLoginHistory",
                            "portalDisplayChangePassword",
                            "portalDisplayOidcConsents",
+                           "portalDisplayOfflineTokens",
                            "portalDisplayLogout",
                            "portalDisplayOrder"
                         ],
@@ -32,6 +33,7 @@
                      "portalFavicon",
                      "showLanguages",
                      "scrollTop",
+                     "floatingCategoryName",
                      "portalCustomCss",
                      "portalCustomJs",
                      "portalSkin",
@@ -48,6 +50,7 @@
                         ],
                         "title": "portalButtons"
                      },
+                     "portalCustomTplParams",
                      {
                         "form": "simpleInputContainer",
                         "help": "portalcustom.html#password-management",
@@ -66,6 +69,7 @@
                            "passwordPolicyActivation",
                            "portalDisplayPasswordPolicy",
                            "passwordPolicyMinSize",
+                           "passwordPolicyMaxSize",
                            "passwordPolicyMinLower",
                            "passwordPolicyMinUpper",
                            "passwordPolicyMinDigit",
@@ -84,7 +88,8 @@
                            "portalPingInterval",
                            "portalErrorOnExpiredSession",
                            "portalErrorOnMailNotFound",
-                           "portalDisplayRefreshMyRights"
+                           "portalDisplayRefreshMyRights",
+                           "cacheTagSalt"
                         ],
                         "title": "portalOther"
                      }
@@ -92,6 +97,7 @@
                   "title": "portalCustomization"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "captcha.html#configuration",
                   "nodes": [
                      "captcha_login_enabled",
@@ -132,12 +138,14 @@
                   "title": "adParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authchoice.html",
                   "nodes": [
                      "authChoiceParam",
                      "authChoiceModules",
                      "authChoiceAuthBasic",
-                     "authChoiceFindUser"
+                     "authChoiceFindUser",
+                     "authChoiceSelectOnly"
                   ],
                   "title": "choiceParams"
                },
@@ -163,26 +171,12 @@
                      "dbiAuthnLevel",
                      "dbiExportedVars",
                      {
+                        "form": "simpleInputContainer",
                         "help": "authdbi.html#connection",
                         "nodes": [
-                           {
-                              "form": "simpleInputContainer",
-                              "nodes": [
-                                 "dbiAuthChain",
-                                 "dbiAuthUser",
-                                 "dbiAuthPassword"
-                              ],
-                              "title": "dbiConnectionAuth"
-                           },
-                           {
-                              "form": "simpleInputContainer",
-                              "nodes": [
-                                 "dbiUserChain",
-                                 "dbiUserUser",
-                                 "dbiUserPassword"
-                              ],
-                              "title": "dbiConnectionUser"
-                           }
+                           "dbiAuthChain",
+                           "dbiAuthUser",
+                           "dbiAuthPassword"
                         ],
                         "title": "dbiConnection"
                      },
@@ -251,6 +245,14 @@
                   "title": "kerberosParams"
                },
                {
+                  "form": "simpleInputContainer",
+                  "help": "authwebauthn.html",
+                  "nodes": [
+                     "webauthnAuthnLevel"
+                  ],
+                  "title": "webauthnParams"
+               },
+               {
                   "help": "authldap.html",
                   "nodes": [
                      "ldapAuthnLevel",
@@ -265,6 +267,8 @@
                            "ldapBase",
                            "managerDn",
                            "managerPassword",
+                           "ldapClientCert",
+                           "ldapClientKey",
                            "ldapTimeout",
                            "ldapIOTimeout",
                            "ldapVersion",
@@ -314,6 +318,7 @@
                            "ldapPasswordResetAttributeValue",
                            "ldapAllowResetExpiredPassword",
                            "ldapGetUserBeforePasswordChange",
+                           "ldapForcePasswordChangeExpirationWarning",
                            "ldapITDS"
                         ],
                         "title": "ldapPassword"
@@ -427,6 +432,7 @@
                      "radiusSecret",
                      "radiusServer",
                      "radiusTimeout",
+                     "radiusMsgAuth",
                      "radiusExportedVars",
                      "radiusDictionaryFile",
                      "radiusRequestAttributes"
@@ -438,14 +444,32 @@
                   "help": "authrest.html",
                   "nodes": [
                      "restAuthnLevel",
-                     "restAuthUrl",
-                     "restUserDBUrl",
-                     "restPwdConfirmUrl",
-                     "restPwdModifyUrl"
+                     {
+                        "form": "simpleInputContainer",
+                        "help": "authrest.html",
+                        "nodes": [
+                           "restAuthUrl",
+                           "restUserDBUrl",
+                           "restPwdConfirmUrl",
+                           "restPwdModifyUrl"
+                        ],
+                        "title": "url"
+                     },
+                     {
+                        "help": "authrest.html#rest-args",
+                        "nodes": [
+                           "restAuthArgs",
+                           "restUserDBArgs",
+                           "restPwdConfirmArgs",
+                           "restPwdModifyArgs"
+                        ],
+                        "title": "args"
+                     }
                   ],
                   "title": "restParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authremote.html",
                   "nodes": [
                      "remotePortal",
@@ -456,27 +480,38 @@
                   "title": "remoteParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authslave.html",
                   "nodes": [
                      "slaveAuthnLevel",
                      "slaveUserHeader",
-                     "slaveMasterIP",
-                     "slaveHeaderName",
-                     "slaveHeaderContent",
                      "slaveDisplayLogo",
+                     {
+                        "form": "simpleInputContainer",
+                        "help": "authslave.html#security",
+                        "nodes": [
+                           "slaveMasterIP",
+                           "slaveCertificateField",
+                           "slaveCertificateRegexp",
+                           "slaveHeaderName",
+                           "slaveHeaderContent"
+                        ],
+                        "title": "security"
+                     },
                      "slaveExportedVars"
                   ],
                   "title": "slaveParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authssl.html",
                   "nodes": [
                      "SSLAuthnLevel",
                      "SSLVar",
                      "SSLIssuerVar",
-                     "SSLVarIf",
                      "sslByAjax",
-                     "sslHost"
+                     "sslHost",
+                     "SSLVarIf"
                   ],
                   "title": "sslParams"
                },
@@ -493,6 +528,7 @@
                   "title": "twitterParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authwebid.html",
                   "nodes": [
                      "webIDAuthnLevel",
@@ -502,6 +538,7 @@
                   "title": "webidParams"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "authcustom.html",
                   "nodes": [
                      "customAuth",
@@ -551,6 +588,7 @@
                   "title": "issuerDBOpenIDConnect"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "idpopenid.html",
                   "nodes": [
                      "issuerDBOpenIDActivation",
@@ -583,6 +621,7 @@
                   "title": "issuerDBOpenID"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "issuerdbget.html",
                   "nodes": [
                      "issuerDBGetActivation",
@@ -593,17 +632,20 @@
                   "title": "issuerDBGet"
                },
                {
+                  "form": "simpleInputContainer",
                   "help": "idpjitsimeettokens.html",
                   "nodes": [
                      "issuerDBJitsiMeetTokensActivation",
                      "issuerDBJitsiMeetTokensPath",
                      "issuerDBJitsiMeetTokensRule",
                      {
+                        "form": "simpleInputContainer",
                         "nodes": [
                            "jitsiDefaultServer",
                            "jitsiAppId",
                            "jitsiAppSecret",
                            "jitsiSigningAlg",
+                           "jitsiSigningKey",
                            "jitsiExpiration",
                            {
                               "form": "simpleInputContainer",
@@ -648,10 +690,10 @@
                "cookieName",
                "*domain",
                "cda",
-               "securedCookie",
                "httpOnly",
-               "cookieExpiration",
-               "sameSite"
+               "securedCookie",
+               "sameSite",
+               "cookieExpiration"
             ],
             "title": "cookieParams"
          },
@@ -664,6 +706,7 @@
                "timeout",
                "timeoutActivity",
                "timeoutActivityInterval",
+               "appAccessHistoryEnabled",
                "grantSessionRules",
                {
                   "help": "start.html#sessions-database",
@@ -698,15 +741,6 @@
             "title": "sessionParams"
          },
          {
-            "help": "configlocation.html#configuration-reload",
-            "nodes": [
-               "reloadTimeout",
-               "compactConf",
-               "reloadUrls"
-            ],
-            "title": "reloadParams"
-         },
-         {
             "help": "start.html#plugins",
             "nodes": [
                "upgradeSession",
@@ -720,6 +754,13 @@
                      "checkStateSecret"
                   ],
                   "title": "stateCheck"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "nodes": [
+                     "webCronSecret"
+                  ],
+                  "title": "webCron"
                },
                {
                   "help": "portalservers.html",
@@ -800,7 +841,7 @@
                         "title": "mailOther"
                      }
                   ],
-                  "title": "passwordManagement"
+                  "title": "passwordResetByMailManagement"
                },
                {
                   "help": "resetcertificate.html",
@@ -839,7 +880,8 @@
                      "stayConnectedBypassFG",
                      "stayConnectedTimeout",
                      "stayConnectedCookieName",
-                     "stayConnectedSingleSession"
+                     "stayConnectedSingleSession",
+                     "trustedBrowserUseTotp"
                   ],
                   "title": "stayConnect"
                },
@@ -851,7 +893,8 @@
                      "rememberCookieName",
                      "rememberCookieTimeout",
                      "rememberDefaultChecked",
-                     "rememberTimer"
+                     "rememberTimer",
+                     "rememberAuthChoiceForgetAtLogout"
                   ],
                   "title": "rememberAuthChoice"
                },
@@ -881,6 +924,7 @@
                   "help": "notifications.html",
                   "nodes": [
                      "notification",
+                     "publicNotifications",
                      "notificationsExplorer",
                      "notificationWildcard",
                      "oldNotifFormat",
@@ -977,6 +1021,7 @@
                      "findUserWildcard",
                      "findUserControl",
                      "restFindUserDBUrl",
+                     "restFindUserDBArgs",
                      "findUserSearchingAttributes",
                      "findUserExcludingAttributes"
                   ],
@@ -1011,13 +1056,22 @@
                   "title": "initializePasswordResetLabel"
                },
                {
-                  "help": "plugincustom.html",
+                  "nodes": [
+                     "adminLogoutServerSecret"
+                  ],
+                  "title": "adminLogoutServer"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "plugincustom.html#plugin-options",
                   "nodes": [
                      "customPlugins",
-                     "customPluginsParams"
+                     "customPluginsParams",
+                     "disabledPlugins"
                   ],
                   "title": "customPluginsNode"
-               }
+               },
+               "oidcOfflineTokens"
             ],
             "title": "plugins"
          },
@@ -1051,17 +1105,6 @@
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "utotp2f.html",
-                  "nodes": [
-                     "utotp2fActivation",
-                     "utotp2fAuthnLevel",
-                     "utotp2fLabel",
-                     "utotp2fLogo"
-                  ],
-                  "title": "utotp2f"
-               },
-               {
-                  "form": "simpleInputContainer",
                   "help": "totp2f.html",
                   "nodes": [
                      "totp2fActivation",
@@ -1069,8 +1112,9 @@
                      "totp2fUserCanRemoveKey",
                      "totp2fIssuer",
                      "totp2fInterval",
-                     "totp2fRange",
                      "totp2fDigits",
+                     "totp2fAlgorithm",
+                     "totp2fRange",
                      "totp2fEncryptSecret",
                      "totp2fAuthnLevel",
                      "totp2fLabel",
@@ -1081,31 +1125,20 @@
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "u2f.html",
-                  "nodes": [
-                     "u2fActivation",
-                     "u2fSelfRegistration",
-                     "u2fUserCanRemoveKey",
-                     "u2fAuthnLevel",
-                     "u2fLabel",
-                     "u2fLogo",
-                     "u2fTTL"
-                  ],
-                  "title": "u2f"
-               },
-               {
-                  "form": "simpleInputContainer",
                   "help": "webauthn2f.html",
                   "nodes": [
                      "webauthn2fActivation",
                      "webauthn2fSelfRegistration",
                      "webauthn2fUserCanRemoveKey",
                      "webauthn2fUserVerification",
+                     "webauthn2fResidentKey",
                      "webauthn2fAttestation",
                      "webauthn2fAttestationTrust",
                      "webauthnRpName",
                      "webauthnRpId",
+                     "webauthnAppId",
                      "webauthnDisplayNameAttr",
+                     "webauthnDefaultTransports",
                      "webauthn2fAuthnLevel",
                      "webauthn2fLabel",
                      "webauthn2fLogo"
@@ -1180,6 +1213,20 @@
                },
                {
                   "form": "simpleInputContainer",
+                  "help": "okta2f.html",
+                  "nodes": [
+                     "okta2fActivation",
+                     "okta2fAdminURL",
+                     "okta2fApiKey",
+                     "okta2fLoginAttribute",
+                     "okta2fAuthnLevel",
+                     "okta2fLabel",
+                     "okta2fLogo"
+                  ],
+                  "title": "okta2f"
+               },
+               {
+                  "form": "simpleInputContainer",
                   "help": "radius2f.html",
                   "nodes": [
                      "radius2fActivation",
@@ -1187,6 +1234,7 @@
                      "radius2fSecret",
                      "radius2fUsernameSessionKey",
                      "radius2fTimeout",
+                     "radius2fMsgAuth",
                      "radius2fDictionaryFile",
                      "radius2fRequestAttributes",
                      "radius2fSendInitialRequest",
@@ -1202,10 +1250,23 @@
                   "nodes": [
                      "rest2fActivation",
                      "rest2fCodeActivation",
-                     "rest2fInitUrl",
-                     "rest2fInitArgs",
-                     "rest2fVerifyUrl",
-                     "rest2fVerifyArgs",
+                     {
+                        "form": "simpleInputContainer",
+                        "help": "authrest.html",
+                        "nodes": [
+                           "rest2fInitUrl",
+                           "rest2fVerifyUrl"
+                        ],
+                        "title": "url"
+                     },
+                     {
+                        "help": "authrest.html#rest-args",
+                        "nodes": [
+                           "rest2fInitArgs",
+                           "rest2fVerifyArgs"
+                        ],
+                        "title": "args"
+                     },
                      "rest2fResendInterval",
                      "rest2fAuthnLevel",
                      "rest2fLabel",
@@ -1222,7 +1283,6 @@
             "nodes": [
                "customFunctions",
                "multiValuesSeparator",
-               "groupsBeforeMacros",
                {
                   "form": "SMTP",
                   "help": "smtp.html",
@@ -1252,6 +1312,7 @@
                      "userControl",
                      "browsersDontStorePassword",
                      "portalForceAuthn",
+                     "defaultAuthnLevel",
                      "portalForceAuthnInterval",
                      "key",
                      "trustedDomains",
@@ -1263,16 +1324,40 @@
                      "tokenUseGlobalStorage",
                      "strictTransportSecurityMax_Age",
                      "hashedSessionStore",
+                     "shortTokenTTL",
                      {
-                        "form": "simpleInputContainer",
                         "help": "crowdsec.html",
                         "nodes": [
-                           "crowdsec",
-                           "crowdsecAction",
-                           "crowdsecUrl",
-                           "crowdsecKey"
+                           {
+                              "form": "simpleInputContainer",
+                              "nodes": [
+                                 "crowdsec",
+                                 "crowdsecIgnoreFailures",
+                                 "crowdsecAction",
+                                 "crowdsecUrl",
+                                 "crowdsecKey",
+                                 "crowdsecMetricsEnabled",
+                                 "crowdsecMetricsInterval"
+                              ],
+                              "title": "CrowdSecBouncer"
+                           },
+                           {
+                              "form": "simpleInputContainer",
+                              "nodes": [
+                                 "crowdsecAgent",
+                                 "crowdsecMachineId",
+                                 "crowdsecPassword",
+                                 "crowdsecMaxFailures",
+                                 "crowdsecBlockDelay",
+                                 "crowdsecBanDuration",
+                                 "crowdsecFilters",
+                                 "crowdSecAgentResponseCode",
+                                 "crowdSecAgentResponseValue"
+                              ],
+                              "title": "CrowdSecAgent"
+                           }
                         ],
-                        "title": "CrowdSecPlugin"
+                        "title": "Crowdsec"
                      },
                      {
                         "form": "simpleInputContainer",
@@ -1362,6 +1447,7 @@
                   "nodes": [
                      "https",
                      "port",
+                     "useRedirectAjaxOnUnauthorized",
                      "useRedirectOnForbidden",
                      "useRedirectOnError",
                      "maintenance"
@@ -1373,6 +1459,7 @@
                   "help": "redirections.html#portal-redirections",
                   "nodes": [
                      "jsRedirect",
+                     "externalMenu",
                      "noAjaxHook",
                      "skipRenewConfirmation",
                      "skipUpgradeConfirmation"
@@ -1390,10 +1477,21 @@
                      "activeTimer"
                   ],
                   "title": "forms"
+               },
+               {
+                  "help": "eventsmanagement.html",
+                  "nodes": [
+                     "compactConf",
+                     "messageBroker",
+                     "eventQueueName",
+                     "messageBrokerOptions"
+                  ],
+                  "title": "eventsManagement"
                }
             ],
             "title": "advancedParams"
-         }
+         },
+         "keyNodes"
       ],
       "title": "generalParameters"
    },
@@ -1408,6 +1506,7 @@
    },
    "virtualHosts",
    {
+      "form": "displaySamlMetadata",
       "help": "samlservice.html",
       "nodes": [
          "samlEntityID",
@@ -1432,8 +1531,10 @@
                   ],
                   "title": "samlServiceSecurityEnc"
                },
+               "samlServiceSignatureMethod",
                "samlServiceUseCertificateInResponse",
-               "samlServiceSignatureMethod"
+               "samlServiceSignatureKey",
+               "samlServiceEncryptionKey"
             ],
             "title": "samlServiceSecurity"
          },
@@ -1455,7 +1556,8 @@
                "samlAuthnContextMapPassword",
                "samlAuthnContextMapPasswordProtectedTransport",
                "samlAuthnContextMapKerberos",
-               "samlAuthnContextMapTLSClient"
+               "samlAuthnContextMapTLSClient",
+               "samlAuthnContextMapExtra"
             ],
             "title": "samlAuthnContextMap"
          },
@@ -1542,12 +1644,9 @@
          {
             "help": "samlservice.html#advanced",
             "nodes": [
-               "samlMetadataForceUTF8",
                "samlRelayStateTimeout",
                "samlUseQueryStringSpecific",
                "samlOverrideIDPEntityID",
-               "samlStorage",
-               "samlStorageOptions",
                {
                   "form": "simpleInputContainer",
                   "nodes": [
@@ -1561,22 +1660,31 @@
                {
                   "form": "simpleInputContainer",
                   "nodes": [
-                     "samlFederationFiles"
-                  ],
-                  "title": "samlFederation"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "nodes": [
                      "samlDiscoveryProtocolActivation",
                      "samlDiscoveryProtocolURL",
                      "samlDiscoveryProtocolPolicy",
                      "samlDiscoveryProtocolIsPassive"
                   ],
                   "title": "samlDiscoveryProtocol"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "samlfederation.html",
+                  "nodes": [
+                     "samlFederationFiles"
+                  ],
+                  "title": "samlFederation"
                }
             ],
             "title": "samlAdvanced"
+         },
+         {
+            "help": "samlservice.html#sessions",
+            "nodes": [
+               "samlStorage",
+               "samlStorageOptions"
+            ],
+            "title": "samlServiceMetaDataSessions"
          }
       ],
       "title": "samlServiceMetaData"
@@ -1598,14 +1706,17 @@
                "oidcServiceMetaDataJWKSURI",
                "oidcServiceMetaDataRegistrationURI",
                "oidcServiceMetaDataIntrospectionURI",
+               "oidcServiceMetaDataRevokeURI",
                "oidcServiceMetaDataEndSessionURI",
                "oidcServiceMetaDataCheckSessionURI",
                "oidcServiceMetaDataFrontChannelURI",
-               "oidcServiceMetaDataBackChannelURI"
+               "oidcServiceMetaDataBackChannelURI",
+               "oidcServiceMetaDataRpLogoutReturnURI"
             ],
             "title": "oidcServiceMetaDataEndPoints"
          },
          "oidcServiceMetaDataAuthnContext",
+         "oidcServiceMetaDataAmrRules",
          {
             "help": "openidconnectservice.html#dynamic-registration",
             "nodes": [
@@ -1655,6 +1766,13 @@
                   ],
                   "title": "oidcServiceMetaDataKeys"
                },
+               {
+                  "nodes": [
+                     "oidcServiceSignatureKey",
+                     "oidcServiceEncryptionKey"
+                  ],
+                  "title": "oidcServiceMetaDataAdvancedKeys"
+               },
                "oidcServiceAllowAuthorizationCodeFlow",
                "oidcServiceAllowImplicitFlow",
                "oidcServiceAllowHybridFlow",
@@ -1663,7 +1781,8 @@
                "oidcDropCspHeaders",
                "oidcServiceEncAlgorithmAlg",
                "oidcServiceEncAlgorithmEnc",
-               "oidcServiceHideMetadata"
+               "oidcServiceHideMetadata",
+               "oidcServiceMetaDataDisallowNoneAlg"
             ],
             "title": "oidcServiceMetaDataSecurity"
          },
@@ -1674,7 +1793,8 @@
                "oidcServiceAuthorizationCodeExpiration",
                "oidcServiceIDTokenExpiration",
                "oidcServiceAccessTokenExpiration",
-               "oidcServiceOfflineSessionExpiration"
+               "oidcServiceOfflineSessionExpiration",
+               "oidcServiceMetadataTtl"
             ],
             "title": "oidcServiceMetaDataTimeouts"
          },
@@ -1699,9 +1819,15 @@
          "casStrictMatching",
          "casTicketExpiration",
          "casBackChannelSingleLogout",
-         "casStorage",
-         "casStorageOptions",
-         "casAttributes"
+         "casAttributes",
+         {
+            "help": "idpcas.html#sessions",
+            "nodes": [
+               "casStorage",
+               "casStorageOptions"
+            ],
+            "title": "casServiceMetaDataSessions"
+         }
       ],
       "title": "casServiceMetadata"
    },

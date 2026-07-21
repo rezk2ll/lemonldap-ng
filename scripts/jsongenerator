@@ -17,4 +17,8 @@ perl -Ilemonldap-ng-manager/lib -Ilemonldap-ng-common/lib -Ilemonldap-ng-handler
     --portal-constants-file=lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Main/Constants.pm \
     --handler-status-constants-file=lemonldap-ng-handler/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
     --doc-constants-file=doc/sources/admin/error_codes.rst \
+    --new-manager-attributes-file=ui/manager/src/static/attributes.json \
+    --new-manager-definitions-file=ui/manager/src/static/definitions.json \
+    --new-manager-tree-file=ui/manager/src/static/tree.json \
+    --new-manager-attributes-extra-file=ui/manager/src/static/attributes-ui.json \
     "$@"

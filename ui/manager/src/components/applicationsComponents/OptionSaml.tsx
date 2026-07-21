@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { useAppSelector } from "../../app/hooks";
 import { updateSamlMetaDataOptions } from "../../features/config/configSlice";
-import attributes from "../../static/attributes.json";
+import { attributes } from "../../metadata";
 import TextForm from "../../forms/TextForm";
 import SelectForm from "../../forms/SelectForm";
 import BoolForm from "../../forms/BoolForm";
