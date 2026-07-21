@@ -16,7 +16,7 @@
 %global lm_apachegroup apache
 
 # Apache version
-%global apache_version 2.4
+%global apache_version 2
 
 %global lm_dnsdomain example.com
 

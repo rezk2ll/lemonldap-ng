@@ -319,28 +319,24 @@ limitation.
        # DocumentRoot
        DocumentRoot /var/lib/lemonldap-ng/portal/
        <Directory /var/lib/lemonldap-ng/portal/>
-           Order Deny,Allow
-           Allow from all
+           Require all granted
            Options +ExecCGI +FollowSymLinks
            SSLVerifyClient none
        </Directory>
 
        <Location /index>
-           Order Deny,Allow
-           Allow from all
+           Require all granted
            SSLVerifyClient none
        </Location>
 
        <Location /testssl>
-           Order Deny,Allow
-           Allow from all
+           Require all granted
            SSLVerifyClient require
        </Location>
 
        Alias /sslok /var/lib/lemonldap-ng/portal
        <Location /sslok>
-           Order Deny,Allow
-           Allow from all
+           Require all granted
            SSLVerifyClient require
        </Location>
 

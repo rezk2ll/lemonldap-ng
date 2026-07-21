@@ -82,9 +82,10 @@ In this case, you can add in the Apache authentication module:
 
 .. code-block:: apache
 
-         Satisfy any
-         Order allow,deny
-         allow from APPLICATIONS_IP
+         <RequireAny>
+             Require valid-user
+             Require ip APPLICATIONS_IP
+         </RequireAny>
 
 This will bypass the authentication module for request from
 APPLICATIONS_IP.

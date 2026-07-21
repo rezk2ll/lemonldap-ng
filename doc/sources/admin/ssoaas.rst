@@ -173,9 +173,7 @@ Then, add this in your apache2.conf web applications or Reverse-Proxies.
        CustomLog /var/log/apache2/localsite_access.log combine
 
        <Location /rules.json>
-         Order deny,allow
-         Deny from all
-         Allow from 10.1.2.3
+         Require ip 10.1.2.3
        </Location>
        
        <LocationMatch "^/(?!rules.json)">

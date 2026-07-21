@@ -51,10 +51,10 @@ Kerberos,... Example
            AuthType Basic
            AuthName "Lemonldap::NG manager"
            AuthUserFile /usr/local/apache/passwd/passwords
-           Require user rbowen
-           Order allow,deny
-           Deny from all
-           Allow from 192.168.142.0/24
+           <RequireAll>
+               Require user rbowen
+               Require ip 192.168.142.0/24
+           </RequireAll>
            Options +ExecCGI
        </Location>
    </VirtualHost>
