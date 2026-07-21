@@ -2632,7 +2632,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsAuthEndpointExtraParams' => {
-            'type' => 'keyTextContainer'
+            'default' => {},
+            'type'    => 'keyTextContainer'
         },
         'oidcOPMetaDataOptionsAuthnEndpointAuthMethod' => {
             'select' => [ {
