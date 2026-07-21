@@ -6,6 +6,7 @@ import { updateConfigParams } from "../../features/config/configSlice";
 import { attributes } from "../../metadata";
 import TextForm from "../../forms/TextForm";
 import BoolForm from "../../forms/BoolForm";
+import { ExportedVars } from "./ExportedVars";
 
 export function LDAPSimpleView() {
   const config = useAppSelector((state) => state.config.data.config);
@@ -80,6 +81,7 @@ export function LDAPSimpleView() {
           </tr>
         </tbody>
       </table>
+      <ExportedVars param="ldapExportedVars" />
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           {t("ldapGroups")}

@@ -60214,6 +60214,18 @@
 	                                }, value: config.krbAllowedDomains || "" }) })] }) })] }));
 	}
 
+	// Manage a userDB "exported variables" hash (ldapExportedVars, dbiExportedVars,
+	// ...) as a collapsible section, consistent with the LDAP simple view's other
+	// accordions. Made reusable so the LDAP and AD+Kerberos simple views expose
+	// their exported variables the same way the Demo view already did.
+	function ExportedVars(_a) {
+	    var param = _a.param;
+	    var dispatch = useAppDispatch();
+	    var vars = useAppSelector(function (state) { return state.config.data.config[param]; });
+	    var id = String(param);
+	    return (jsxRuntimeExports.jsxs(Accordion$1, { children: [jsxRuntimeExports.jsx(AccordionSummary$1, { expandIcon: jsxRuntimeExports.jsx(ExpandMoreIcon, {}), children: t$2("exportedVars") }), jsxRuntimeExports.jsxs("table", { id: id, children: [jsxRuntimeExports.jsx("thead", { children: jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: t$2("keys") }), jsxRuntimeExports.jsx("th", { children: t$2("values") }), jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newModuleOpt(param)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) }) })] }) }), jsxRuntimeExports.jsx(TableVars, { appName: id, vars: vars || {}, tableID: id, dispatch: dispatch, delFunction: delModuleOpt, updateFunction: updateModuleOpt })] })] }));
+	}
+
 	function LDAPSimpleView() {
 	    var config = useAppSelector(function (state) { return state.config.data.config; });
 	    var dispatch = useAppDispatch();
@@ -60237,7 +60249,7 @@
 	                                        param: "LDAPFilter",
 	                                        value: e,
 	                                    }));
-	                                }, value: config.LDAPFilter || "" }) })] }) }), jsxRuntimeExports.jsxs(Accordion$1, { children: [jsxRuntimeExports.jsx(AccordionSummary$1, { expandIcon: jsxRuntimeExports.jsx(ExpandMoreIcon, {}), children: t$2("ldapGroups") }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "ldapGroupBase", updateFunc: function (e) {
+	                                }, value: config.LDAPFilter || "" }) })] }) }), jsxRuntimeExports.jsx(ExportedVars, { param: "ldapExportedVars" }), jsxRuntimeExports.jsxs(Accordion$1, { children: [jsxRuntimeExports.jsx(AccordionSummary$1, { expandIcon: jsxRuntimeExports.jsx(ExpandMoreIcon, {}), children: t$2("ldapGroups") }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "ldapGroupBase", updateFunc: function (e) {
 	                                            return dispatch(updateConfigParams({
 	                                                param: "ldapGroupBase",
 	                                                value: e,
