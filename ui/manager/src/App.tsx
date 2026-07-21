@@ -8,7 +8,6 @@ import { history } from "./app/store";
 import Navbar from "./components/Navbar";
 import { Configuration } from "./pages/Configuration";
 import { PartialConfiguration } from "./pages/PartialConfiguration";
-import useResizeObserver from "use-resize-observer";
 
 function App({ htmlName }: { htmlName: string }) {
   useTranslation();

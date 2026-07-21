@@ -13,9 +13,9 @@ import { SimpleAuthParams } from "../dashboards/SimpleAuthParams";
 import TreeRender from "../dashboards/Tree";
 import { getConfigAsync } from "../features/config/configSlice";
 import { getTree } from "../utils/getTree";
-import SaveButton from "./../components/SaveButton";
 import Manager from "./../dashboards/Manager";
 import HomeButton from "../components/HomeButton";
+import ConfigNav from "../components/ConfigNav";
 
 export function Configuration({
   location,
@@ -41,7 +41,8 @@ export function Configuration({
     fetchData();
   }, [config, dispatch, location.type]);
 
-  switch (location.type) {
+  const content = (() => {
+    switch (location.type) {
     case "app":
       return (
         <div className="main">
@@ -68,7 +69,6 @@ export function Configuration({
             name={location.info.name}
             type={location.info.type ? location.info.type : ""}
           />
-          <SaveButton />
         </div>
       );
     case "conf":
@@ -85,9 +85,6 @@ export function Configuration({
             </Link>
           </Breadcrumbs>
           <Manager />
-          <div>
-            <SaveButton />
-          </div>
         </div>
       );
     case "authParams":
@@ -115,9 +112,6 @@ export function Configuration({
           </div>
           {authSimple && <SimpleAuthParams />}
           {!authSimple && <AdvancedAuthParams />}
-          <div>
-            <SaveButton />
-          </div>
         </div>
       );
     case "issuer":
@@ -140,7 +134,6 @@ export function Configuration({
             </Link>
           </Breadcrumbs>
           <IssuerDashboard type={location.info.name} />
-          <SaveButton />
         </div>
       );
     case "tree":
@@ -160,7 +153,6 @@ export function Configuration({
             </Link>
           </Breadcrumbs>
           <TreeRender tree={tree ? tree : undefined} config={config} />
-          <SaveButton />
         </div>
       );
     case "catandapp":
@@ -180,7 +172,6 @@ export function Configuration({
             </Link>
           </Breadcrumbs>
           <CatAndAppList />
-          <SaveButton />
         </div>
       );
     default:
@@ -194,5 +185,12 @@ export function Configuration({
           <HomePage />
         </div>
       );
-  }
+    }
+  })();
+  return (
+    <div className="configLayout">
+      <ConfigNav />
+      <div className="configMain">{content}</div>
+    </div>
+  );
 }
