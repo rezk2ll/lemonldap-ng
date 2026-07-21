@@ -100,7 +100,7 @@ export function CatCard({
             const app = data[key] as Record<string, Record<string, string>>;
             return (
               <MenuAppCard
-                key={index}
+                key={key}
                 app={app}
                 cardIndex={cardIndex}
                 catId={catId}

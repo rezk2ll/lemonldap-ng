@@ -35,3 +35,6 @@ ui/manager/build
 ui/manager/dist
 ui/manager/coverage
 *.css.json
+# New manager: minified-bundle source maps are large (several MB) and rebuilt
+# on every `make new_manager`; the readable bundle is committed instead.
+lemonldap-ng-manager/site/htdocs/static/new/*.min.js.map

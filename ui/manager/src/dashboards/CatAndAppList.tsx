@@ -37,7 +37,7 @@ export function CatAndAppList() {
       <div className="catList">
         {catList.map((key, index) => (
           <CatCard
-            key={index}
+            key={key}
             catId={key}
             cardIndex={index}
             dataLength={catList.length}

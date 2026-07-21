@@ -263,12 +263,12 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 # Javascript and CSS to minify
 # NB: bootstrap.bundle*.js (vendored Bootstrap 5) ship their own minified
 # version, so they are excluded from the JS minifier.
-JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js' ! -name 'bootstrap.bundle*.js') \
+JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCMANAGERDIR)/site/htdocs/static/new $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js' ! -name 'bootstrap.bundle*.js' 2>/dev/null) \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
 # NB: the bootstrap skin CSS is built by `make scss` (styles.css/.min.css) and
 # its fontawesome/ assets are vendored, so the whole bootstrap skin dir is left
 # out of the generic CSS minifier.
-CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCMANAGERDIR)/site/htdocs/static/new $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css' 2>/dev/null)
 
 # JS source files
 MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
@@ -562,6 +562,14 @@ $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	cp $(UIMANAGERDIR)/dist/static/new/*.js $(UIMANAGERDIR)/dist/static/new/*.css \
 		$(NEW_MGR_JS_DIR)/
 	cp $(UIMANAGERDIR)/dist/templates/new/*.tpl $(NEW_MGR_TPL_DIR)/
+	@$(MAKE) new_manager_minify
+
+# rollup emits readable bundles; the templates load the *.min.js / *.min.css.
+# Produce them with the shared minify rules (falls back to a copy when no JS
+# minifier is installed). Run as a sub-make so the wildcards see the files just
+# copied above.
+new_manager_minify: $(patsubst %.js,%.min.js,$(wildcard $(NEW_MGR_JS_DIR)/*.js)) $(patsubst %.css,%.min.css,$(wildcard $(NEW_MGR_JS_DIR)/*.css))
+	@:
 
 $(NEW_MGR_TMP_DIST):
 	@$(MAKE) rollup_clean
