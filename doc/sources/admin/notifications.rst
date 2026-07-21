@@ -435,14 +435,7 @@ Example:
 
    # REST/SOAP functions for insert/delete/list notifications (disabled by default)
    <LocationMatch ^/(index\.fcgi/)?notifications>
-       <IfVersion >= 2.3>
-           Require ip 192.168.2.0/24
-       </IfVersion>
-       <IfVersion < 2.3>
-           Order Deny,Allow
-           Deny from all
-           Allow from 192.168.2.0/24
-       </IfVersion>
+       Require ip 192.168.2.0/24
    </LocationMatch>
 
 XML notifications through SOAP
