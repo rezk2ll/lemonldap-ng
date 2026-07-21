@@ -60546,6 +60546,30 @@
 	var EditExports = /*@__PURE__*/ requireEdit();
 	var EditIcon = /*@__PURE__*/getDefaultExportFromCjs(EditExports);
 
+	var FormatListBulleted = {};
+
+	var hasRequiredFormatListBulleted;
+
+	function requireFormatListBulleted () {
+		if (hasRequiredFormatListBulleted) return FormatListBulleted;
+		hasRequiredFormatListBulleted = 1;
+
+		var _interopRequireDefault = requireInteropRequireDefault();
+		Object.defineProperty(FormatListBulleted, "__esModule", {
+		  value: true
+		});
+		FormatListBulleted.default = void 0;
+		var _createSvgIcon = _interopRequireDefault(/*@__PURE__*/ requireCreateSvgIcon());
+		var _jsxRuntime = requireJsxRuntime();
+		FormatListBulleted.default = (0, _createSvgIcon.default)(/*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+		  d: "M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5m0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5m0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5M7 19h14v-2H7zm0-6h14v-2H7zm0-8v2h14V5z"
+		}), 'FormatListBulleted');
+		return FormatListBulleted;
+	}
+
+	var FormatListBulletedExports = /*@__PURE__*/ requireFormatListBulleted();
+	var FormatListBulletedIcon = /*@__PURE__*/getDefaultExportFromCjs(FormatListBulletedExports);
+
 	var HelpOutline = {};
 
 	var hasRequiredHelpOutline;
@@ -70529,14 +70553,34 @@ Use the data prop if you want to provide your own handlers.`);
 	        return (jsxRuntimeExports.jsx(Box$1, { sx: { display: "flex" }, children: jsxRuntimeExports.jsx(CircularProgress$1, {}) }));
 	    }
 	}
+	// Leaf node types that edit a collection of keys/values (a "hash" parameter,
+	// like macros) rather than a single value — they get a distinct icon. The tree
+	// already tells them apart through the type since it renders a different form
+	// for each, so no separate lookup is needed.
+	var MULTI_VALUE_TYPES = new Set([
+	    "keyTextContainer",
+	    "grantContainer",
+	    "ruleContainer",
+	    "postContainer",
+	    "blackWhiteList",
+	    "doubleHash",
+	    "samlAttributeContainer",
+	    "oidcAttributeContainer",
+	    "authChoiceContainer",
+	    "cmbModuleContainer",
+	    "sfExtraContainer",
+	]);
 	function Node(_a) {
 	    var node = _a.node, style = _a.style;
 	    var isLeaf = !node.isInternal;
+	    var isMultiValue = isLeaf && MULTI_VALUE_TYPES.has(node.data.type || "");
 	    var Icon = node.isInternal
 	        ? node.isOpen
 	            ? KeyboardArrowDownIcon
 	            : KeyboardArrowRightIcon
-	        : EditIcon;
+	        : isMultiValue
+	            ? FormatListBulletedIcon
+	            : EditIcon;
 	    return (
 	    // `style` carries react-arborist row positioning; React applies it through
 	    // the CSSOM, which the Content-Security-Policy allows (unlike a literal
@@ -70545,7 +70589,11 @@ Use the data prop if you want to provide your own handlers.`);
 	            if (node.data.type !== "simpleInputContainer") {
 	                node.toggle();
 	            }
-	        }, children: jsxRuntimeExports.jsxs("div", { className: "treeitemInner", style: { paddingLeft: node.level * 16 + 8 }, children: [jsxRuntimeExports.jsx(Icon, { fontSize: "small", className: isLeaf ? "treeLeafIcon" : "treeToggleIcon" }), jsxRuntimeExports.jsx("span", { className: "treeitemLabel", children: node === null || node === void 0 ? void 0 : node.data.name })] }) }));
+	        }, children: jsxRuntimeExports.jsxs("div", { className: "treeitemInner", style: { paddingLeft: node.level * 16 + 8 }, children: [jsxRuntimeExports.jsx(Icon, { fontSize: "small", className: isMultiValue
+	                        ? "treeMultiIcon"
+	                        : isLeaf
+	                            ? "treeLeafIcon"
+	                            : "treeToggleIcon" }), jsxRuntimeExports.jsx("span", { className: "treeitemLabel", children: node === null || node === void 0 ? void 0 : node.data.name })] }) }));
 	}
 
 	function getTree() {

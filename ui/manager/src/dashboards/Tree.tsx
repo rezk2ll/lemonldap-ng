@@ -1,4 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -158,13 +159,34 @@ export default function TreeRender({
   }
 }
 
+// Leaf node types that edit a collection of keys/values (a "hash" parameter,
+// like macros) rather than a single value — they get a distinct icon. The tree
+// already tells them apart through the type since it renders a different form
+// for each, so no separate lookup is needed.
+const MULTI_VALUE_TYPES = new Set([
+  "keyTextContainer",
+  "grantContainer",
+  "ruleContainer",
+  "postContainer",
+  "blackWhiteList",
+  "doubleHash",
+  "samlAttributeContainer",
+  "oidcAttributeContainer",
+  "authChoiceContainer",
+  "cmbModuleContainer",
+  "sfExtraContainer",
+]);
+
 function Node({ node, style }: NodeRendererProps<treeFormat>) {
   const isLeaf = !node.isInternal;
+  const isMultiValue = isLeaf && MULTI_VALUE_TYPES.has(node.data.type || "");
   const Icon = node.isInternal
     ? node.isOpen
       ? KeyboardArrowDownIcon
       : KeyboardArrowRightIcon
-    : EditIcon;
+    : isMultiValue
+      ? FormatListBulletedIcon
+      : EditIcon;
 
   return (
     // `style` carries react-arborist row positioning; React applies it through
@@ -182,7 +204,13 @@ function Node({ node, style }: NodeRendererProps<treeFormat>) {
       <div className="treeitemInner" style={{ paddingLeft: node.level * 16 + 8 }}>
         <Icon
           fontSize="small"
-          className={isLeaf ? "treeLeafIcon" : "treeToggleIcon"}
+          className={
+            isMultiValue
+              ? "treeMultiIcon"
+              : isLeaf
+                ? "treeLeafIcon"
+                : "treeToggleIcon"
+          }
         />
         <span className="treeitemLabel">{node?.data.name}</span>
       </div>

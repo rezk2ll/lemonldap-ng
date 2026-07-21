@@ -100,6 +100,11 @@
   color: #ff9800;
   flex: 0 0 auto;
 }
+/* Multi-valued (hash) leaves, e.g. macros: a distinct icon and colour */
+.treeMultiIcon {
+  color: #0d9488;
+  flex: 0 0 auto;
+}
 .treeitem.selected .treeToggleIcon {
   color: #b34700;
 }
