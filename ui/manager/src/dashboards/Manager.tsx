@@ -2,7 +2,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CachedIcon from "@mui/icons-material/Cached";
 import { Button, Divider, Menu, MenuItem, Pagination } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { push } from "redux-first-history";
@@ -57,6 +57,76 @@ export default function Manager() {
       }
     }
   }, [dispatch, configNum, config.data.metadata, location, configPresent]);
+
+  // Derive the application list from the config as plain data (memoized), so a
+  // large configuration is walked once per config/filter change instead of on
+  // every render, and only the visible page is turned into <AppCard> elements
+  // below (the rule* validators then run for those cards only).
+  type AppItem = {
+    key: string;
+    type: string;
+    config: Record<string, boolean | number | string>;
+    issuer?: boolean | number;
+  };
+  const items = useMemo<AppItem[]>(() => {
+    const cfg = config.data.config;
+    const list: AppItem[] = [];
+    const add = (
+      src: Record<string, unknown> | undefined,
+      type: string,
+      cfgFor: (key: string) => Record<string, boolean | number | string>,
+      issuer?: boolean | number
+    ) => {
+      if (!src) return;
+      for (const key of Object.keys(src)) {
+        list.push({ key, type, config: cfgFor(key), issuer });
+      }
+    };
+    add(
+      cfg.locationRules,
+      "native",
+      (key) => (cfg.vhostOptions ? cfg.vhostOptions[key] : {}) || {}
+    );
+    add(
+      cfg.samlSPMetaDataXML,
+      "SPsaml",
+      (key) => (cfg.samlSPMetaDataXML ? cfg.samlSPMetaDataXML[key] : {}) || {},
+      cfg.issuerDBSAMLActivation
+    );
+    add(
+      cfg.oidcRPMetaDataOptions,
+      "RPoidc",
+      (key) =>
+        (cfg.oidcRPMetaDataOptions ? cfg.oidcRPMetaDataOptions[key] : {}) || {},
+      cfg.issuerDBOpenIDConnectActivation
+    );
+    add(
+      cfg.casAppMetaDataOptions,
+      "AppCas",
+      (key) =>
+        (cfg.casAppMetaDataOptions ? cfg.casAppMetaDataOptions[key] : {}) || {},
+      cfg.issuerDBCASActivation
+    );
+    return list;
+  }, [config.data.config]);
+
+  const visibleApps = useMemo<AppItem[]>(() => {
+    let r = items.filter((it) => it.key.includes(filters.search));
+    if (filters.alpha) {
+      r = [...r].sort((a, b) => (a.key > b.key ? 1 : -1));
+    }
+    return r;
+  }, [items, filters.search, filters.alpha]);
+
+  const ruleFor = (it: AppItem): boolean =>
+    it.type === "SPsaml"
+      ? ruleSAML(it.config as Record<string, string>)
+      : it.type === "RPoidc"
+        ? ruleOIDC(it.config)
+        : it.type === "AppCas"
+          ? ruleCAS(it.config)
+          : true;
+
   try {
     if (config.loading) {
       return (
@@ -74,108 +144,11 @@ export default function Manager() {
         </div>
       );
     } else {
-      var renderedData: JSX.Element[] = [];
-      if (config.data.config.locationRules) {
-        renderedData.push(
-          ...Object.keys(config.data.config.locationRules).map((key) => (
-            <AppCard
-              key={key}
-              type="native"
-              info={{
-                name: key,
-                config: config.data.config.vhostOptions
-                  ? config.data.config.vhostOptions[key]
-                  : {},
-              }}
-              rule={true}
-            />
-          ))
-        );
-      }
-      if (config.data.config.samlSPMetaDataXML) {
-        renderedData.push(
-          ...Object.keys(config.data.config.samlSPMetaDataXML).map((key) => (
-            <AppCard
-              key={key}
-              type="SPsaml"
-              info={{
-                name: key,
-                config: config.data.config.samlSPMetaDataXML
-                  ? config.data.config.samlSPMetaDataXML[key]
-                  : {},
-              }}
-              issuer={config.data.config.issuerDBSAMLActivation}
-              rule={ruleSAML(
-                config.data.config.samlSPMetaDataXML
-                  ? config.data.config.samlSPMetaDataXML[key]
-                  : {}
-              )}
-            />
-          ))
-        );
-      }
-      if (config.data.config.oidcRPMetaDataOptions) {
-        renderedData.push(
-          ...Object.keys(config.data.config.oidcRPMetaDataOptions).map(
-            (key) => (
-              <AppCard
-                key={key}
-                type="RPoidc"
-                info={{
-                  name: key,
-                  config: config.data.config.oidcRPMetaDataOptions
-                    ? config.data.config.oidcRPMetaDataOptions[key]
-                    : {},
-                }}
-                issuer={config.data.config.issuerDBOpenIDConnectActivation}
-                rule={ruleOIDC(
-                  config.data.config.oidcRPMetaDataOptions
-                    ? config.data.config.oidcRPMetaDataOptions[key]
-                    : {}
-                )}
-              />
-            )
-          )
-        );
-      }
-      if (config.data.config.casAppMetaDataOptions) {
-        renderedData.push(
-          ...Object.keys(config.data.config.casAppMetaDataOptions).map(
-            (key) => (
-              <AppCard
-                key={key}
-                type="AppCas"
-                info={{
-                  name: key,
-                  config: config.data.config.casAppMetaDataOptions
-                    ? config.data.config.casAppMetaDataOptions[key]
-                    : {},
-                }}
-                issuer={config.data.config.issuerDBCASActivation}
-                rule={ruleCAS(
-                  config.data.config.casAppMetaDataOptions
-                    ? config.data.config.casAppMetaDataOptions[key]
-                    : {}
-                )}
-              />
-            )
-          )
-        );
-      }
-      renderedData = renderedData.filter((el) => {
-        return String(el.props.info.name).includes(filters.search);
-      });
-
-      if (filters.alpha) {
-        renderedData = renderedData.sort((el1, el2) =>
-          el1.props.info.name > el2.props.info.name ? 1 : -1
-        );
-      }
       const pageLimit = 6;
-      const pageNb = Math.ceil(renderedData.length / pageLimit);
-      const pages = Array.from(
-        { length: Math.ceil(renderedData.length / pageLimit) },
-        (v, i) => renderedData.slice(i * pageLimit, i * pageLimit + pageLimit)
+      const pageNb = Math.ceil(visibleApps.length / pageLimit);
+      const pageItems = visibleApps.slice(
+        (page - 1) * pageLimit,
+        page * pageLimit
       );
       const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -204,7 +177,17 @@ export default function Manager() {
           </div>
           <Issuers />
           <FilterToggle filters={filters} setFilters={setFilters} />
-          <div className="grid">{pages[page - 1]}</div>
+          <div className="grid">
+            {pageItems.map((it) => (
+              <AppCard
+                key={it.key}
+                type={it.type}
+                info={{ name: it.key, config: it.config }}
+                issuer={it.issuer}
+                rule={ruleFor(it)}
+              />
+            ))}
+          </div>
           <Pagination
             sx={{
               justifyContent: "center",
