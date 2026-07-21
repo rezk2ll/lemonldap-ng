@@ -111,9 +111,11 @@ it("should go to latest", async () => {
 
   renderWithProviders(<HomePage />);
   await screen.findAllByText("14");
-  fireEvent.click(screen.getAllByRole("button")[2]);
+  // Second "go" button is the one in the "current configuration" box that
+  // jumps to the latest config (push + reload => two dispatches).
+  fireEvent.click(screen.getAllByText("go")[1]);
   await waitFor(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
   });
 });
 

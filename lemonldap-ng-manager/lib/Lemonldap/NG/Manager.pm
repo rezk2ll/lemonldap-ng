@@ -114,14 +114,16 @@ sub init {
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
 
-    # The new interface stylesheets are extracted to real files, covered by
-    # 'self'. MUI/Emotion still inserts <style> elements, but they are created
-    # empty and filled through insertRule(), which CSP does not police: only
-    # the empty element has to be allowed, by the SHA-256 of the empty string
+    # The new interface stylesheets are extracted to real files (covered by
+    # 'self'), but MUI/Emotion also inserts <style> elements at runtime.
+    # 'unsafe-inline' on style-src allows them without a fragile hash that a
+    # future Emotion version could invalidate. Inline "style=" ATTRIBUTES stay
+    # forbidden through style-src-attr 'none', so the "no inline style" rule the
+    # code follows is still enforced. img-src also trusts the portal, which
+    # serves the application logos shown in the menu editor.
     $self->betaCsp( "default-src 'self' $portal;"
-          . "style-src 'self' "
-          . "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';"
-          . "img-src 'self' data:;font-src 'self' data:;"
+          . "style-src 'self' 'unsafe-inline';style-src-attr 'none';"
+          . "img-src 'self' data: $portal;font-src 'self' data:;"
           . "frame-ancestors 'none';form-action 'self';" );
 
     # Set asset tag from version and optional salt, like the portal does

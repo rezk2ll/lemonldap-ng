@@ -139,13 +139,17 @@ describe("Manager homepage", () => {
     fireEvent.click(screen.getByText(t("confirm")));
 
     fireEvent.click(screen.getAllByTestId("SaveIcon")[0]);
+    // Saving now asks for a summary (cfgLog) before actually sending.
+    const summary = screen.getByLabelText(t("cfgLog"));
+    fireEvent.change(summary, { target: { value: "test log" } });
+    fireEvent.click(screen.getByText(t("ok")));
     expect(screen.getByText(t("saveReport"))).toBeDefined();
     expect((fetch as jest.Mock).mock.calls[0][0]).toBe(
       "/manager.fcgi/confs/raw"
     );
     expect(
       JSON.parse((fetch as jest.Mock).mock.calls[0][1].body)
-    ).toStrictEqual(mockConfig);
+    ).toStrictEqual({ ...mockConfig, cfgLog: "test log" });
     fireEvent.click(screen.getByText(t("close")));
   });
   it("travel though configs", async () => {

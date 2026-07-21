@@ -1,5 +1,14 @@
 import SaveIcon from "@mui/icons-material/Save";
-import { Button, Fab } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Fab,
+  TextField,
+} from "@mui/material";
 import { t } from "i18next";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -19,11 +28,15 @@ export default function SaveButton({
 }) {
   const [openSavePopup, setOpenSavePopup] = useState(false);
   const [openErrorPopup, setOpenErrorPopup] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [logMessage, setLogMessage] = useState("");
   const dispatch = useAppDispatch();
   const config = useAppSelector((state) => state.config);
   const data = useAppSelector((state) => state.config.data.config);
 
-  const save = async function () {
+  // Rule validation first; a valid config opens the confirmation dialog that
+  // asks for a summary (cfgLog), like the legacy manager, before saving.
+  const attemptSave = function () {
     let stateOk = true;
     if (data.oidcRPMetaDataOptions) {
       Object.keys(data.oidcRPMetaDataOptions).forEach((app) => {
@@ -46,18 +59,23 @@ export default function SaveButton({
       });
     }
     if (stateOk) {
-      dispatch(
-        partial
-          ? savePartialConfigAsync(config.data.config)
-          : saveConfigAsync(config.data.config)
-      );
-      setOpenSavePopup(true);
+      setLogMessage("");
+      setOpenConfirm(true);
     } else {
       setOpenErrorPopup(true);
       setTimeout(() => {
         setOpenErrorPopup(false);
       }, 2000);
     }
+  };
+
+  const confirmSave = function () {
+    const payload = { ...config.data.config, cfgLog: logMessage };
+    dispatch(
+      partial ? savePartialConfigAsync(payload) : saveConfigAsync(payload)
+    );
+    setOpenConfirm(false);
+    setOpenSavePopup(true);
   };
 
   return (
@@ -69,15 +87,44 @@ export default function SaveButton({
           color="primary"
           fullWidth
           startIcon={<SaveIcon />}
-          onClick={save}
+          onClick={attemptSave}
         >
           {t("save")}
         </Button>
       ) : (
-        <Fab className="saveButton" color="primary" onClick={save}>
+        <Fab className="saveButton" color="primary" onClick={attemptSave}>
           <SaveIcon fontSize="large" />
         </Fab>
       )}
+      <Dialog
+        open={openConfirm}
+        onClose={() => setOpenConfirm(false)}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>{t("savingConfirmation")}</DialogTitle>
+        <Divider />
+        <DialogContent>
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            minRows={3}
+            label={t("cfgLog")}
+            value={logMessage}
+            onChange={(e) => setLogMessage(e.target.value)}
+          />
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={confirmSave}>
+            {t("ok")}
+          </Button>
+          <Button color="secondary" onClick={() => setOpenConfirm(false)}>
+            {t("cancel")}
+          </Button>
+        </DialogActions>
+      </Dialog>
       <SavePopup
         config={config}
         dispatch={dispatch}

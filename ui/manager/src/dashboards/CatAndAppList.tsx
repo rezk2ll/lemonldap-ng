@@ -2,7 +2,6 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Button } from "@mui/material";
 import { t } from "i18next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import HomeButton from "../components/HomeButton";
 import { CatCard } from "../components/catAndAppComponents/CatCard";
 import { newCategory } from "../features/config/configSlice";
 import attributes from "../static/attributes.json";
@@ -21,17 +20,21 @@ export function CatAndAppList() {
         Number((applicationList[key2] as Record<string, number>).order)
     );
   return (
-    <div>
-      <div className="top">
-        <HomeButton />
-        <strong className="title">
-          {t("applicationList")}
-          <Button onClick={() => dispatch(newCategory())}>
-            <AddOutlinedIcon fontSize="large" color="secondary" />
-          </Button>
-        </strong>
+    <div className="catAndApp">
+      <div className="catAndAppTop">
+        <strong className="title">{t("applicationList")}</strong>
+        <Button
+          className="addCatButton"
+          variant="contained"
+          disableElevation
+          size="small"
+          startIcon={<AddOutlinedIcon />}
+          onClick={() => dispatch(newCategory())}
+        >
+          {t("menuCategory")}
+        </Button>
       </div>
-      <div>
+      <div className="catList">
         {catList.map((key, index) => (
           <CatCard
             key={index}
@@ -44,8 +47,13 @@ export function CatAndAppList() {
           />
         ))}
 
-        <Button onClick={() => dispatch(newCategory())}>
-          <AddOutlinedIcon fontSize="large" color="secondary" />
+        <Button
+          className="addCatTile"
+          variant="outlined"
+          startIcon={<AddOutlinedIcon />}
+          onClick={() => dispatch(newCategory())}
+        >
+          {t("menuCategory")}
         </Button>
       </div>
     </div>

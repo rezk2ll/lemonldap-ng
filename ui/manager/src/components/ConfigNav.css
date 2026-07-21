@@ -11,6 +11,9 @@
   align-self: stretch;
   position: sticky;
   top: 56px;
+  /* border-box so the vertical padding stays inside the viewport-height box;
+     otherwise the pinned save button overflows below the fold and is clipped */
+  box-sizing: border-box;
   height: calc(100vh - 56px);
   display: flex;
   flex-direction: column;

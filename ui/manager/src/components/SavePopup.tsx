@@ -60,7 +60,9 @@ export function SavePopup({
         onClick={() => {
           if (!config.saveResponse?.details.__errors__) {
             dispatch(partial ? getPartialConfigAsync() : getConfigAsync());
-            dispatch(push("#conf/latest"));
+            // Back to the home page (configuration overview), not the
+            // applications dashboard. Partial config has no home page.
+            dispatch(push(partial ? "#conf/latest" : ""));
           }
           setOpenSavePopup(false);
         }}

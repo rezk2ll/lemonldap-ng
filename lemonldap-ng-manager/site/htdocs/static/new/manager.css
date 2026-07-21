@@ -349,17 +349,204 @@ textarea {
   visibility: hidden;
 }
 
-.catCard {
-  background-color: rgb(245, 245, 245);
-  border: 2px solid #acacac;
-  border-radius: 15px;
-  cursor: pointer;
+.catAndApp {
   text-align: left;
-  margin: 2%;
+  padding-bottom: 32px;
+}
+
+/* ---- Header ------------------------------------------------------------- */
+.catAndAppTop {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 2vw;
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+.catAndAppTop .title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #26262b;
+}
+.addCatButton {
+  margin-left: auto;
+}
+
+/* ---- Category list ------------------------------------------------------ */
+.catList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 2vw;
+}
+
+.catCard {
+  background-color: #ffffff !important;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px !important;
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.05),
+    0 8px 24px rgba(15, 23, 42, 0.04) !important;
+  overflow: hidden;
+  margin: 0 !important;
+  cursor: default;
 }
 
 .catHeader {
-  background-color: #86868681;
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #eceef1;
+}
+.catTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.catNameField {
+  min-width: 220px;
+}
+.catNameField input {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+.catActions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+/* ---- Applications grid inside a category -------------------------------- */
+.applications.MuiCardContent-root {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 16px;
+  gap: 16px;
+  padding: 18px;
+}
+
+.appMenuCard {
+  border: 1px solid #e8e8ec !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  transition:
+    box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.appMenuCard:hover {
+  border-color: rgba(255, 152, 0, 0.5) !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06) !important;
+}
+.appMenuHeader.MuiCardHeader-root {
+  align-items: flex-start;
+  padding: 12px;
+}
+.appMenuHeader .MuiCardHeader-content {
+  min-width: 0;
+}
+.appMenuHeader .MuiCardHeader-avatar {
+  margin-right: 10px;
+}
+.appMenuTitle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.appNameField {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.appNameField input {
+  font-weight: 600;
+  color: #1e293b;
+}
+.appActions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Logo picker (avatar): a clearly-sized, labelled preview */
+.logoPicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.logoSelect {
+  margin: 0 !important;
+}
+.logoSelect .MuiSelect-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 22px 4px 4px !important;
+  min-width: 44px;
+}
+.logoImg {
+  display: block;
+}
+.logoCaption {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8a8a92;
+}
+.logoOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Details accordion: flat, framed, no default divider line */
+.appMenuCard .MuiCardHeader-subheader {
+  margin-top: 10px;
+}
+.appMenuCard .MuiAccordion-root {
+  box-shadow: none !important;
+  border: 1px solid #eceef1;
+  border-radius: 8px !important;
+  background-color: #fafbfc;
+}
+.appMenuCard .MuiAccordion-root::before {
+  display: none;
+}
+.appMenuCard .MuiAccordionDetails-root .MuiFormControl-root {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.appMenuCard .MuiAccordionDetails-root .MuiFormControl-root:last-child {
+  margin-bottom: 0;
+}
+.appMenuCard .MuiFormLabel-root {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b6b73;
+  margin-bottom: 4px;
+}
+
+/* ---- "Add" tiles -------------------------------------------------------- */
+.addAppTile {
+  align-self: stretch;
+  min-height: 72px;
+  border-style: dashed !important;
+  border-width: 1.5px !important;
+  border-color: #cbd5e1 !important;
+  border-radius: 10px !important;
+  color: #64748b !important;
+}
+.addAppTile:hover {
+  border-color: #ff9800 !important;
+  background-color: rgba(255, 152, 0, 0.06) !important;
+}
+
+.addCatTile {
+  align-self: flex-start;
+  border-style: dashed !important;
+  border-width: 1.5px !important;
+  border-radius: 10px !important;
+  padding: 8px 20px !important;
 }
 
 .footer {
@@ -911,6 +1098,9 @@ textarea {
   align-self: stretch;
   position: sticky;
   top: 56px;
+  /* border-box so the vertical padding stays inside the viewport-height box;
+     otherwise the pinned save button overflows below the fold and is clipped */
+  box-sizing: border-box;
   height: calc(100vh - 56px);
   display: flex;
   flex-direction: column;

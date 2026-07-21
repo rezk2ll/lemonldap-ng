@@ -1,6 +1,6 @@
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import {
   Accordion,
   AccordionDetails,
@@ -25,7 +25,6 @@ import {
   moveApp,
 } from "../../features/config/configSlice";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { idText } from "typescript";
 
 const logoOptions = [
   "attach.png",
@@ -80,42 +79,61 @@ export function MenuAppCard({
     );
   }, [app.options]);
   return (
-    <Card key={`cat${cardIndex}app${appIndex}`}>
+    <Card className="appMenuCard" key={`cat${cardIndex}app${appIndex}`}>
       <CardHeader
+        className="appMenuHeader"
         avatar={
-          <FormControl>
-            <Select
-              value={
-                (app.options as Record<string, string>).logo || "network.png"
-              }
-              onChange={(e) =>
-                dispatch(
-                  changeApplicationField({
-                    catid: catId,
-                    id: appKey,
-                    field: "logo",
-                    value: e.target.value,
-                  })
-                )
-              }
-            >
-              {logoOptions.map((option) => (
-                <MenuItem value={option} key={option}>
+          <div className="logoPicker">
+            <FormControl size="small" variant="standard">
+              <Select
+                className="logoSelect"
+                variant="standard"
+                disableUnderline
+                value={
+                  (app.options as Record<string, string>).logo || "network.png"
+                }
+                onChange={(e) =>
+                  dispatch(
+                    changeApplicationField({
+                      catid: catId,
+                      id: appKey,
+                      field: "logo",
+                      value: e.target.value,
+                    })
+                  )
+                }
+                renderValue={(value) => (
                   <img
-                    src={`${portal}/static/common/apps/${option}`}
-                    height="30px"
-                    width="30px"
-                    alt={option}
+                    className="logoImg"
+                    src={`${portal}/static/common/apps/${value}`}
+                    height={40}
+                    width={40}
+                    alt=""
                   />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+                )}
+              >
+                {logoOptions.map((option) => (
+                  <MenuItem value={option} key={option} className="logoOption">
+                    <img
+                      src={`${portal}/static/common/apps/${option}`}
+                      height={28}
+                      width={28}
+                      alt=""
+                    />
+                    <span>{option.replace(/\.png$/, "")}</span>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <span className="logoCaption">{t("logo")}</span>
+          </div>
         }
         title={
-          <>
+          <div className="appMenuTitle">
             <TextField
+              className="appNameField"
               size="small"
+              variant="standard"
               value={app.options.name}
               onChange={(e) =>
                 dispatch(
@@ -128,42 +146,48 @@ export function MenuAppCard({
                 )
               }
             />
-            <IconButton
-              onClick={() =>
-                dispatch(
-                  moveApp({
-                    category: catId,
-                    appName: appKey,
-                    direction: "up",
-                  })
-                )
-              }
-              disabled={appIndex === 0}
-            >
-              <ArrowUpwardOutlinedIcon />
-            </IconButton>
-            <IconButton
-              onClick={() =>
-                dispatch(
-                  moveApp({
-                    category: catId,
-                    appName: appKey,
-                    direction: "down",
-                  })
-                )
-              }
-              disabled={appIndex === applications.length - 1}
-            >
-              <ArrowDownwardOutlinedIcon />
-            </IconButton>
-            <IconButton
-              onClick={() =>
-                dispatch(delApplication({ catid: catId, id: appKey }))
-              }
-            >
-              <RemoveOutlinedIcon />
-            </IconButton>
-          </>
+            <span className="appActions">
+              <IconButton
+                size="small"
+                onClick={() =>
+                  dispatch(
+                    moveApp({
+                      category: catId,
+                      appName: appKey,
+                      direction: "up",
+                    })
+                  )
+                }
+                disabled={appIndex === 0}
+              >
+                <ArrowUpwardOutlinedIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  dispatch(
+                    moveApp({
+                      category: catId,
+                      appName: appKey,
+                      direction: "down",
+                    })
+                  )
+                }
+                disabled={appIndex === applications.length - 1}
+              >
+                <ArrowDownwardOutlinedIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                size="small"
+                color="error"
+                onClick={() =>
+                  dispatch(delApplication({ catid: catId, id: appKey }))
+                }
+              >
+                <DeleteOutlineOutlinedIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </div>
         }
         subheader={
           <Accordion>

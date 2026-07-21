@@ -84,16 +84,6 @@ export function HomePage() {
                     />
                   </Button>
                 </div>
-                <div className="search">
-                  <Button variant="outlined" onClick={() => dispatch(push(`#authParams/latest`))}>
-                    {t("authParams")}
-                  </Button>
-                </div>
-                <div className="search">
-                  <Button variant="outlined" onClick={() => dispatch(push(`#tree/latest`))}>
-                    {t("tree")}
-                  </Button>
-                </div>
                 <div className="search search-browse">
                   <TextField
                     type="number"

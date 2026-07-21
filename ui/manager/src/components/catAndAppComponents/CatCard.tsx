@@ -1,7 +1,7 @@
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
-import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import {
   Button,
   Card,
@@ -10,6 +10,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
+import { t } from "i18next";
 import {
   delCategory,
   moveCat,
@@ -48,24 +49,28 @@ export function CatCard({
       <CardHeader
         className="catHeader"
         title={
-          <>
+          <div className="catTitle">
             <TextField
+              className="catNameField"
               size="small"
+              variant="standard"
               value={data.catname}
               onChange={(e) =>
                 dispatch(renameCategory({ id: catId, newname: e.target.value }))
               }
             />
-            <>
+            <span className="catActions">
               <IconButton
+                size="small"
                 onClick={() =>
                   dispatch(moveCat({ category: catId, direction: "up" }))
                 }
                 disabled={cardIndex === 0}
               >
-                <ArrowUpwardOutlinedIcon />
+                <ArrowUpwardOutlinedIcon fontSize="small" />
               </IconButton>
               <IconButton
+                size="small"
                 onClick={() =>
                   dispatch(
                     moveCat({
@@ -76,13 +81,17 @@ export function CatCard({
                 }
                 disabled={cardIndex === dataLength - 1}
               >
-                <ArrowDownwardOutlinedIcon />
+                <ArrowDownwardOutlinedIcon fontSize="small" />
               </IconButton>
-              <IconButton onClick={() => dispatch(delCategory(catId))}>
-                <RemoveOutlinedIcon />
+              <IconButton
+                size="small"
+                color="error"
+                onClick={() => dispatch(delCategory(catId))}
+              >
+                <DeleteOutlineOutlinedIcon fontSize="small" />
               </IconButton>
-            </>
-          </>
+            </span>
+          </div>
         }
       />
       <CardContent className="applications">
@@ -105,8 +114,14 @@ export function CatCard({
           }
           return null;
         })}
-        <Button onClick={() => dispatch(newApplication(catId))}>
-          <AddOutlinedIcon color="secondary" />
+        <Button
+          className="addAppTile"
+          variant="outlined"
+          color="secondary"
+          startIcon={<AddOutlinedIcon />}
+          onClick={() => dispatch(newApplication(catId))}
+        >
+          {t("application")}
         </Button>
       </CardContent>
     </Card>
