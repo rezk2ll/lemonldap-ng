@@ -64,6 +64,18 @@ and **replace** it by::
 2.23.1
 ------
 
+Regression on session purge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are using the ``Apache::Session::Browseable::Postgres`` or
+``Apache::Session::Browseable::MySQL`` session backends, you may be affected by
+a regression in the session cleanup script that prevents old sessions from
+being purged and slowly degrade performance over time.
+
+This issue affects LemonLDAP::NG versions 2.22.x and 2.23.0. Users of these
+versions are advised to upgrade to 2.23.1 as soon as possible, and double check
+that session purge correctly works after upgrading.
+
 SAML Common Domain Cookie now validates the return URL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
