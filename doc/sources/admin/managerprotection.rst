@@ -20,9 +20,7 @@ The configuration can be changed in ``etc/manager-apache2.conf`` or
 .. code-block:: apache
 
        <Directory /usr/local/lemonldap-ng/htdocs/manager/>
-           Order deny,allow
-           Deny from all
-           Allow from 127.0.0.0/8 192.168.100.0/32
+           Require ip 127.0.0.0/8 192.168.100.0/32
            Options +ExecCGI
        </Directory>
 
@@ -107,8 +105,7 @@ You also have to adapt your web server access control:
 .. code-block:: apache
 
        <Directory /usr/local/lemonldap-ng/htdocs/manager/>
-           Order deny,allow
-           Allow from all
+           Require all granted
            Options +ExecCGI
        </Directory>
 

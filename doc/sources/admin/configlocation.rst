@@ -374,8 +374,7 @@ By default, access to those URLs is denied:
 
        # REST/SOAP functions for sessions management (disabled by default)
        <Location /index.fcgi/adminSessions>
-           Order deny,allow
-           Deny from all
+           Require all denied
        </Location>
 
 Allowing configuration reload
