@@ -135,7 +135,7 @@ WITHRC=yes
 WITHSYSTEMD=yes
 
 # Apache version
-APACHEVERSION=2.X
+APACHEVERSION=2
 
 # Apache log dir
 APACHELOGDIR=/var/log/apache2
@@ -607,9 +607,9 @@ prepare_test_server:
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
 		e2e-tests/conf/test-nginx.conf
-	@perl -i -pe 's/#CustomLog.*$$/CustomLog conf\/apache2.log llng/' e2e-tests/conf/portal-apache2.X.conf e2e-tests/conf/manager-apache2.X.conf
+	@perl -i -pe 's/#CustomLog.*$$/CustomLog conf\/apache2.log llng/' e2e-tests/conf/portal-apache2.conf e2e-tests/conf/manager-apache2.conf
 	@if test "$(TESTUSESSL)" = "1"; then \
-		perl -i -pe 's#http://(test|mana|auth)#https://$$1#' e2e-tests/conf/lmConf-1.json e2e-tests/conf/handler-apache2.X.conf e2e-tests/conf/site/index.pl; \
+		perl -i -pe 's#http://(test|mana|auth)#https://$$1#' e2e-tests/conf/lmConf-1.json e2e-tests/conf/handler-apache2.conf e2e-tests/conf/site/index.pl; \
 		perl -i -pe 's#"https": 0#"https": 1#' e2e-tests/conf/lmConf-1.json; \
 	fi
 
@@ -1344,11 +1344,6 @@ debian-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|rpm\)") lemonldap-ng-$(VERSION)
 	@find $$dir -name '*.bak' -delete
-	@cp lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.conf
-	@cp lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.conf
-	@cp lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.conf
-	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
-	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)/dev
 	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
