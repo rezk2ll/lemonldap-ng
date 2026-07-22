@@ -833,32 +833,25 @@ sub _validate_generic {
                 "CAS proxy granting session $casProxyGrantingSessionID created"
             );
 
-            # Generate the proxy granting ticket IOU
-            my $tmpCasSession = $self->getCasSession();
+            $casProxyGrantingTicketIOU = "PGTIOU-" . $self->casGetRandomID(16);
+            $self->logger->debug( "Generate proxy granting ticket IOU "
+                  . $casProxyGrantingTicketIOU );
 
-            if ($tmpCasSession) {
-
-                $casProxyGrantingTicketIOU = "PGTIOU-" . $tmpCasSession->id;
-                $self->deleteCasSession($tmpCasSession);
-                $self->logger->debug( "Generate proxy granting ticket IOU"
-                      . $casProxyGrantingTicketIOU );
-
-                # Request pgtUrl
-                if (
-                    $self->callPgtUrl(
-                        $pgtUrl, $casProxyGrantingTicketIOU,
-                        $casProxyGrantingTicket
-                    )
-                  )
-                {
-                    $self->logger->debug(
-                        "Proxy granting URL $pgtUrl called with success");
-                }
-                else {
-                    $self->logger->error(
-                        "Error calling proxy granting URL $pgtUrl");
-                    $casProxyGrantingTicketIOU = undef;
-                }
+            # Request pgtUrl
+            if (
+                $self->callPgtUrl(
+                    $pgtUrl, $casProxyGrantingTicketIOU,
+                    $casProxyGrantingTicket
+                )
+              )
+            {
+                $self->logger->debug(
+                    "Proxy granting URL $pgtUrl called with success");
+            }
+            else {
+                $self->logger->error(
+                    "Error calling proxy granting URL $pgtUrl");
+                $casProxyGrantingTicketIOU = undef;
             }
 
         }
@@ -1206,9 +1199,9 @@ sub _failLoginRule {
         $req,
         code => "ISSUER_CAS_LOGIN_FAILED",
         ( $app ? ( app => $app ) : () ),
-        message  => ("User $user is not authorized to access $app"),
-        reason   => "User is not authorized by access rule",
-        user     => $user,
+        message => ("User $user is not authorized to access $app"),
+        reason  => "User is not authorized by access rule",
+        user    => $user,
     );
 
     if ( $casAccessControlPolicy =~ /^(error)$/i ) {

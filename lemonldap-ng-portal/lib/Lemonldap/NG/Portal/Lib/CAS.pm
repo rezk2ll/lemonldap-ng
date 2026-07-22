@@ -217,10 +217,10 @@ sub getSSOSessionIdByTicket {
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $cas_sessions =
-        $module->searchOn( $moduleOptions, "auth_cas_ticket", $ticket );
+      $module->searchOn( $moduleOptions, "auth_cas_ticket", $ticket );
 
-    my (undef, $cas_session) = %$cas_sessions;
-    return $cas_session && $cas_session->{_cas_id};   
+    my ( undef, $cas_session ) = %$cas_sessions;
+    return $cas_session && $cas_session->{_cas_id};
 }
 
 # Return an error for CAS VALIDATE request
@@ -734,8 +734,7 @@ sub buildSamlValidateRequest {
         "samlp:Request" );
     $request->setAttribute( "MajorVersion", 1 );
     $request->setAttribute( "MinorVersion", 1 );
-    $request->setAttribute( "RequestID",
-        "_" . unpack( "H*", Crypt::URandom::urandom(16) ) );
+    $request->setAttribute( "RequestID",    "_" . $self->casGetRandomID(16) );
     $request->setAttribute( "IssueInstant", $now );
     $body->appendChild($request);
 
@@ -994,8 +993,7 @@ sub returnSamlValidateSuccess {
     my $assertion =
       $document->createElementNS( "urn:oasis:names:tc:SAML:1.0:assertion",
         "Assertion" );
-    $assertion->setAttribute( "AssertionID",
-        "_" . unpack( "H*", Crypt::URandom::urandom(16) ) );
+    $assertion->setAttribute( "AssertionID",  "_" . $self->casGetRandomID(16) );
     $assertion->setAttribute( "IssueInstant", $issueInstant );
     $assertion->setAttribute( "MajorVersion", "1" );
     $assertion->setAttribute( "MinorVersion", "1" );
@@ -1118,6 +1116,11 @@ sub returnSamlValidateError {
 
     my $soap_response = $envelope->toString;
     return $self->sendSoapResponse( $req, $soap_response );
+}
+
+sub casGetRandomID {
+    my ( $self, $length ) = @_;
+    return unpack( "H*", Crypt::URandom::urandom($length) );
 }
 
 1;
