@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_FIRSTACCESS
 );
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.1';
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';
 
