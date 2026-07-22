@@ -95,7 +95,7 @@ $ make debian-packages
 Packages are in /tmp
 
 Sign packages:
-$ dpkg-sig -p --sign builder /tmp/*.deb
+$ debsigs --sign=origin -k 'LemonLDAP::NG debian packages' /tmp/*.deb
 
 Upload the distribution
 ---------------------
