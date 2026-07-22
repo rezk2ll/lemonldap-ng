@@ -1505,6 +1505,16 @@ ldapChangePasswordAsUser
     :Location: General Parameters » Authentication parameters » LDAP parameters » Password » Change as user
     :Used by portal: yes
 
+ldapClientCert
+    :Location: General Parameters » Authentication parameters » LDAP parameters » Connection » Client certificate
+    :Description: Location of the client certificate file for LDAP connections
+    :Used by portal: yes
+
+ldapClientKey
+    :Location: General Parameters » Authentication parameters » LDAP parameters » Connection » Client private key
+    :Description: Location of the client private key for LDAP connections
+    :Used by portal: yes
+
 ldapExportedVars
     :Location: General Parameters » Authentication parameters » LDAP parameters » Exported variables
     :Description: LDAP exported variables
