@@ -10,12 +10,18 @@ use strict;
 use Mouse;
 use Time::Local;
 use MIME::Base64 qw/encode_base64url/;
+use IO::Socket::Timeout;
 use Net::LDAP;
-use utf8;
 
 our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+
+has ldap => (
+    is      => 'ro',
+    lazy    => 1,
+    builder => 'newLdap'
+);
 
 has ldapServer => (
     is      => 'ro',
@@ -59,10 +65,8 @@ has ldapVerify => (
 
 has ldapConfBase => (
     is      => 'ro',
-    trigger => sub {
-        if ( my $table = $_[0]->{table} ) {
-            $_[0]->{ldapConfBase} =~ s/^\w+=\w+(,.*)$/ou=$table$1/;
-        }
+    default => sub {
+        $_[0]->{ldapConfBase};
     }
 );
 
@@ -82,19 +86,59 @@ has ldapBindPassword => (
     }
 );
 
+has ldapClientCert => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapClientCert};
+    }
+);
+
+has ldapClientKey => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapClientKey};
+    }
+);
+
+has ldapVersion => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapVersion} || '3';
+    }
+);
+
+has ldapTimeout => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapTimeout} || 0;
+    }
+);
+
+has ldapIOTimeout => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapIOTimeout} || 0;
+    }
+);
+
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
 sub get {
     my ( $self, $uid, $ref ) = @_;
-    return () unless ($uid);
+    return () unless $uid;
 
     my $filter =
         '(&(objectClass=applicationProcess)(!(description={done}*))'
       . "(description={uid}$uid)"
       . ( $ref ? '(description={ref}' . $ref . ')' : '' ) . ')';
-    my @entries = _search( $self, $filter );
-
+    my @entries = $self->_search($filter);
     my $result;
+
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -109,6 +153,7 @@ sub get {
         $self->logger->info("notification $identifier found");
 
     }
+
     return $result;
 }
 
@@ -116,14 +161,14 @@ sub get {
 # If $ref is set, returns only notification corresponding to this reference.
 sub getAccepted {
     my ( $self, $uid, $ref ) = @_;
-    return () unless ($uid);
+    return () unless $uid;
 
     my $filter =
         '(&(objectClass=applicationProcess)(description={done}*)'
       . "(description={uid}$uid)(description={ref}$ref))";
-    my @entries = _search( $self, $filter );
-
+    my @entries = $self->_search($filter);
     my $result;
+
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -138,6 +183,7 @@ sub getAccepted {
         $self->logger->info("notification $identifier found");
 
     }
+
     return $result;
 }
 
@@ -150,6 +196,7 @@ sub getAll {
     my @entries = $self->_search(
         '(&(objectClass=applicationProcess)(!(description={done}*)))');
     my $result = {};
+
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -164,6 +211,7 @@ sub getAll {
             condition => $f->{cond},
         };
     }
+
     return $result;
 }
 
@@ -175,6 +223,7 @@ sub getExisting {
     my $self    = shift;
     my @entries = $self->_search('objectClass=applicationProcess');
     my $result  = {};
+
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -189,6 +238,7 @@ sub getExisting {
             condition => $f->{cond},
         };
     }
+
     return $result;
 }
 
@@ -205,8 +255,7 @@ sub delete {
     my @ts = localtime();
     $ts[5] += 1900;
     $ts[4]++;
-    return _modify(
-        $self,
+    return $self->_modify(
         '(&(objectClass=applicationProcess)'
           . "(description={uid}$u)"
           . "(description={ref}$r)"
@@ -225,6 +274,7 @@ sub delete {
 sub purge {
     my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
+
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
         $self->logger->warn("Bad reference $myref");
         return 0;
@@ -263,20 +313,20 @@ sub newNotif {
     my $fields =
       $condition =~ /.+/
       ? {
-        "date" => "$date",
-        "uid"  => "$uid",
-        "ref"  => "$ref",
-        "content"  => "$content",
-        "cond" => "$condition",
+        "date"    => "$date",
+        "uid"     => "$uid",
+        "ref"     => "$ref",
+        "content" => "$content",
+        "cond"    => "$condition",
       }
       : {
-        "date" => "$date",
-        "uid"  => "$uid",
-        "ref"  => "$ref",
-        "content"  => "$content",
+        "date"    => "$date",
+        "uid"     => "$uid",
+        "ref"     => "$ref",
+        "content" => "$content",
       };
 
-    return _store( $self, $cn, $fields );
+    return $self->_store( $cn, $fields );
 }
 
 ## @method hashref getDone()
@@ -285,10 +335,10 @@ sub newNotif {
 # keys notified, uid and ref.
 sub getDone {
     my ($self) = @_;
-    my @entries = _search( $self,
-        '(&(objectClass=applicationProcess)(description={done}*))' );
-
+    my @entries = $self->_search(
+        '(&(objectClass=applicationProcess)(description={done}*))');
     my $result = {};
+
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -312,7 +362,6 @@ sub getDone {
         };
     }
 
-    # $ldap->unbind() && delete $self->{ldap};
     return $result;
 }
 
@@ -322,11 +371,8 @@ sub getDone {
 # @return list of entries returned by the LDAP search (set of Net::LDAP::Entry)
 sub _search {
     my ( $self, $filter ) = @_;
-
-    my $ldap = _ldap($self);
-
-    my $search = $ldap->search(
-        base   => $self->{ldapConfBase},
+    my $search = $self->ldap->search(
+        base   => $self->ldapConfBase,
         filter => "$filter",
         scope  => 'sub',
         attrs  => ['description'],
@@ -346,15 +392,14 @@ sub _search {
 # @return 1 if operation success, else 0
 sub _delete {
     my ( $self, $filter ) = @_;
-
-    my @entries = _search( $self, "$filter" );
+    my @entries = $self->_search($filter);
     my $mesg    = {};
+
     foreach my $entry (@entries) {
-        $mesg = $self->{ldap}->delete( $entry->dn() );
+        $mesg = $self->ldap->delete( $entry->dn() );
         $mesg->code && return 0;
     }
 
-    # $ldap->unbind() && delete $self->{ldap};
     return 1;
 }
 
@@ -366,18 +411,15 @@ sub _delete {
 # @return 1 if operation success, else 0
 sub _modify {
     my ( $self, $filter, $attr, $value ) = @_;
+    my @entries = $self->_search($filter);
+    my $mesg    = {};
 
-    my @entries = _search( $self, "$filter" );
-
-    my $mesg = {};
     foreach my $entry (@entries) {
         $mesg =
-          $self->{ldap}
-          ->modify( $entry->dn(), add => { "$attr" => "$value", }, );
+          $self->ldap->modify( $entry->dn(), add => { $attr => $value }, );
         $mesg->code && return 0;
     }
 
-    # $ldap->unbind() && delete $self->{ldap};
     return 1;
 }
 
@@ -389,10 +431,8 @@ sub _modify {
 # @return 1 if operation success, else 0
 sub _store {
     my ( $self, $cn, $fields ) = @_;
-    my $ldap = _ldap($self) or return 0;
-
-    my $notifName = "$cn";
-    my $notifDN   = "cn=$notifName," . $self->{ldapConfBase};
+    my $notifName = $cn;
+    my $notifDN   = "cn=$notifName," . $self->ldapConfBase;
 
     # Store values as {key}value
     my @notifValues;
@@ -401,7 +441,7 @@ sub _store {
         push @notifValues, "{$k}$v";
     }
 
-    my $add = $ldap->add(
+    my $add = $self->ldap->add(
         $notifDN,
         attrs => [
             objectClass => [ 'top', 'applicationProcess' ],
@@ -415,49 +455,63 @@ sub _store {
         return 0;
     }
 
-    #$ldap->unbind() && delete $self->{ldap};
     return 1;
 }
 
-## @method object private _ldap()
-# Return the ldap object (build it if needed).
-# @return ldap handle object
-sub _ldap {
+## @method string getIdentifier(string uid, string ref, string date)
+# Get notification identifier
+# @param $uid uid
+# @param $ref ref
+# @param $date date
+# @return the notification identifier
+sub getIdentifier {
+    my ( $self, $uid, $ref, $date ) = @_;
+    return $date . "#" . $uid . "#" . $ref;
+}
+
+sub newLdap {
     my $self = shift;
+    my ( @servers, %tlsParams, $useStartTls );
 
-    return $self->{ldap} if ( $self->{ldap} );
-
-    # Parse servers configuration
-    my $useTls = 0;
-    my $tlsParam;
-    my @servers = ();
     foreach my $server ( split /[\s,]+/, $self->ldapServer ) {
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-            $useTls   = 1;
-            $server   = $1;
-            $tlsParam = $2 || "";
+            $useStartTls = 1;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
+        }
+        elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+            $useStartTls = 0;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
         }
         else {
-            $useTls = 0;
+            $useStartTls = 0;
         }
         push @servers, $server;
     }
 
-    # Connect
+    $tlsParams{cafile}     ||= $self->ldapCAFile if $self->ldapCAFile;
+    $tlsParams{capath}     ||= $self->ldapCAPath if $self->ldapCAPath;
+    $tlsParams{verify}     ||= $self->ldapVerify if $self->ldapVerify;
+    $tlsParams{clientcert} ||= $self->ldapClientCert
+      if $self->{ldapClientCert};
+    $tlsParams{clientkey} ||= $self->ldapClientKey
+      if $self->ldapClientKey;
+    require Authen::SASL if $self->ldapClientCert;
+
     my $ldap = Net::LDAP->new(
         \@servers,
         onerror   => undef,
         keepalive => 1,
-        raw => qr/(?i:^jpegPhoto|;binary)/,
-        ( $self->ldapPort   ? ( port   => $self->ldapPort )   : () ),
-        ( $self->ldapVerify ? ( verify => $self->ldapVerify ) : () ),
-        ( $self->ldapCAFile ? ( cafile => $self->ldapCAFile ) : () ),
-        ( $self->ldapCAPath ? ( capath => $self->ldapCAPath ) : () ),
+        raw       => qr/(?i:^jpegPhoto|;binary)/,
+        %tlsParams,
+        ( $self->ldapPort    ? ( port    => $self->ldapPort )    : () ),
+        ( $self->ldapTimeout ? ( timeout => $self->ldapTimeout ) : () ),
+        ( $self->ldapVersion ? ( version => $self->ldapVersion ) : () ),
     );
 
     unless ($ldap) {
-        use Data::Dumper;
-        die 'connexion failed: ' . $@;
+        die 'Connection failed: ' . $@;
     }
     elsif ( $Net::LDAP::VERSION < '0.64' ) {
 
@@ -472,39 +526,45 @@ sub _ldap {
         }
     }
 
-    # Start TLS if needed
-    if ($useTls) {
-        my %h = split( /[&=]/, $tlsParam );
-        $h{cafile} ||= $self->ldapCAFile if ( $self->ldapCAFile );
-        $h{capath} ||= $self->ldapCAPath if ( $self->ldapCAPath );
-        $h{verify} ||= $self->ldapVerify if ( $self->ldapVerify );
-        my $start_tls = $ldap->start_tls(%h);
-        if ( $start_tls->code ) {
-            die 'tls failed: ' . $start_tls->error;
-        }
+    # Set socket timeouts
+    my $socket = $ldap->socket;
+    IO::Socket::Timeout->enable_timeouts_on($socket);
+    $socket->read_timeout( $self->ldapIOTimeout );
+    $socket->write_timeout( $self->ldapIOTimeout );
+
+    if ($useStartTls) {
+        my $mesg = $ldap->start_tls(%tlsParams);
+        die 'TLS failed: ' . $mesg->error if ( $mesg->code );
     }
 
-    # Bind with credentials
-    my $bind =
-      $ldap->bind( $self->ldapBindDN, password => $self->ldapBindPassword );
+    my $bind = $self->bind($ldap);
     if ( $bind->code ) {
-        die 'bind failed: ' . $bind->error;
+        die 'Bind failed: ' . $bind->error;
     }
 
-    $self->{ldap} = $ldap;
     return $ldap;
 }
 
-## @method string getIdentifier(string uid, string ref, string date)
-# Get notification identifier
-# @param $uid uid
-# @param $ref ref
-# @param $date date
-# @return the notification identifier
-sub getIdentifier {
-    my ( $self, $uid, $ref, $date ) = @_;
-    return $date . "#" . $uid . "#" . $ref;
+sub bind {
+    my ( $self, $ldap ) = @_;
+
+    if ( $self->ldapBindDN && $self->ldapBindPassword ) {
+        $self->logger->debug( 'Call bind for ' . $self->ldapBindDN );
+        return $ldap->bind( $self->ldapBindDN,
+            password => $self->ldapBindPassword );
+    }
+    elsif ( $self->ldapClientCert && $self->ldapClientKey ) {
+        my $sasl = Authen::SASL->new(
+            mechanism => 'EXTERNAL',
+            callback  => { user => '' }
+        );
+        $self->logger->debug('Call mTLS bind');
+        return $ldap->bind( undef, sasl => $sasl );
+    }
+    else {
+        $self->logger->debug('Call anonymous bind');
+        return $ldap->bind();
+    }
 }
 
 1;
-
