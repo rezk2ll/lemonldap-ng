@@ -150,7 +150,7 @@ sub get {
         my $identifier =
           $self->getIdentifier( $f->{uid}, $f->{ref}, $f->{date} );
         $result->{$identifier} = "$content";
-        $self->logger->info("notification $identifier found");
+        $self->logger->info("Notification $identifier found");
 
     }
 
@@ -180,7 +180,7 @@ sub getAccepted {
         my $identifier =
           $self->getIdentifier( $f->{uid}, $f->{ref}, $f->{date} );
         $result->{$identifier} = "$content";
-        $self->logger->info("notification $identifier found");
+        $self->logger->info("Notification $identifier found");
 
     }
 
