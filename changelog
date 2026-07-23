@@ -1,3 +1,24 @@
+lemonldap-ng (2.23.1) noble; urgency=medium
+
+  * Bugs:
+    * #3619: [Security:negligible, CVE-2026-12804] Unauthenticated Open Redirect in SAML Common Domain Cookie (CDC) Endpoint
+    * #3622: Cannot set perl expression for rest2fVerifyArgs in manager
+    * #3623: Option oidcServiceAllowNativeSso is not available in Manager
+    * #3624: TOTP QRcode uses wrong variant of Base32
+    * #3627: Invalid sub returned to RP when LL::NG act as OIDC gateway to another OP
+    * #3628: oidcOPMetaDataOptionsAuthEndpointExtraParams cannot be saved in Manager
+    * #3633: OIDC RP displayed as "Activation" instead of its name in the manager
+    * #3637: Auth::Choice module URLs are not validated
+    * #3638: Kerberos Choice auth fails in some conditions
+    * #3639: When using Kerberos+Choice, authentication failure leads to a request loop
+    * #3641: Auth::Choice: a choice left in pdata overrides the submitted one
+    * #3656: Session purge no longer works when _lastSeen is not indexed
+
+  * Improvements:
+    * #3286: Client certificate-based authentication for LDAP
+
+ -- Clément OUDOT <clement@worteks-ader.home>  Wed, 22 Jul 2026 16:26:20 +0200
+
 lemonldap-ng (2.23.0) noble; urgency=medium
 
   * Bugs:

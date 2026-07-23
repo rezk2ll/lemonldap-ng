@@ -12,7 +12,7 @@ use Regexp::Assemble;
 use Lemonldap::NG::Common::FormEncode;
 use URI;
 
-our $VERSION = '2.24.0';
+our $VERSION = '2.23.1';
 
 extends 'Lemonldap::NG::Common::PSGI';
 

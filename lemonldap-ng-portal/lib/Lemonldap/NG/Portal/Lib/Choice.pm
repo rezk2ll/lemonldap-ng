@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.1';
 
 has modules    => ( is => 'rw', default => sub { {} } );
 has rules      => ( is => 'rw', default => sub { {} } );
