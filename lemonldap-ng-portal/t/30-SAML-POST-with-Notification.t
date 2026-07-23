@@ -227,7 +227,6 @@ sub issuer {
                 notification               => 1,
                 notificationStorage        => 'File',
                 notificationStorageOptions => { dirName => "$main::tmpDir" },
-                oldNotifFormat             => 0,
                 samlSPMetaDataOptions      => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',

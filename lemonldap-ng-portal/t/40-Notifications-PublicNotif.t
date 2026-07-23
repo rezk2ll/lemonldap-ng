@@ -31,7 +31,6 @@ my $client = LLNG::Manager::Test->new( {
             publicNotifications        => 1,
             notificationStorage        => 'File',
             notificationStorageOptions => { dirName => $main::tmpDir },
-            oldNotifFormat             => 0,
             portalMainLogo             => 'common/logos/logo_llng_old.png',
         }
     }

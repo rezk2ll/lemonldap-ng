@@ -833,20 +833,6 @@ sub tests {
             return 1;
         },
 
-        # Warn if XML dependencies seem missing
-        xmlDependencies => sub {
-            return 1 unless ( $conf->{oldNotifFormat} );
-            eval "use XML::LibXML";
-            return ( 1,
-"XML::LibXML module is required to enable old format notifications"
-            ) if ($@);
-            eval "use XML::LibXSLT";
-            return ( 1,
-"XML::LibXSLT module is required to enable old format notifications"
-            ) if ($@);
-            return 1;
-        },
-
         # Warn if CertificateResetByMail dependencies seem missing
         certResetByMailDependencies => sub {
             return 1 unless ( $conf->{portalDisplayCertificateResetByMail} );

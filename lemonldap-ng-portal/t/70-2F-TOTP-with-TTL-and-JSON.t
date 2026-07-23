@@ -29,7 +29,6 @@ SKIP: {
                 notification           => 1,
                 notificationStorage    => 'File',
                 notificationStorageOptions => { dirName => $main::tmpDir },
-                oldNotifFormat             => 0,
             }
         }
     );

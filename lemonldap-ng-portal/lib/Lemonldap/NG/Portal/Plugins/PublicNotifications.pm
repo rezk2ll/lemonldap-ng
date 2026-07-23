@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -29,10 +29,7 @@ sub init {
         $self->logger->error("Notifications must be enabled");
         return 0;
     }
-    if ( $self->conf->{oldNotifFormat} ) {
-        $self->logger->error("Public notifications don't support XML format");
-        return 0;
-    }
+
     return 1;
 }
 

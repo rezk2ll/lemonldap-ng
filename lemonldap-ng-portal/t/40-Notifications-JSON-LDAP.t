@@ -116,7 +116,6 @@ SKIP: {
                 notification               => 1,
                 notificationStorage        => 'LDAP',
                 notificationStorageOptions => $notificationStorageOptions,
-                oldNotifFormat             => 0,
             }
         }
     );

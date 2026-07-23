@@ -145,7 +145,6 @@
   "notificationStorageOptions": {
     "dirName": "t/notifications"
   },
-  "oldNotifFormat": 0,
   "passwordDB": "Demo",
   "persistentStorage": "Apache::Session::File",
   "persistentStorageOptions": {

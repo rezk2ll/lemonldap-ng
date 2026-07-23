@@ -109,7 +109,6 @@ q{INSERT INTO notifications VALUES ('rtyler','testref2','2050-05-30 00:00:00',?,
                 notificationStorageOptions => {
                     dbiChain => "dbi:SQLite:dbname=$file",
                 },
-                oldNotifFormat        => 0,
                 notificationsExplorer => 1
             }
         }

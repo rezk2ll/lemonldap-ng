@@ -2387,12 +2387,6 @@
                         "type" : "bool"
                      },
                      {
-                        "default" : 0,
-                        "id" : "oldNotifFormat",
-                        "title" : "oldNotifFormat",
-                        "type" : "bool"
-                     },
-                     {
                         "default" : "File",
                         "id" : "notificationStorage",
                         "title" : "notificationStorage"

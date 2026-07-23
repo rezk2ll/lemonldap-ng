@@ -82,10 +82,7 @@ sub createNotification {
     return PE_ERROR unless $notifEngine;
 
     # Prepare notification
-    my $content =
-      $self->conf->{oldNotifFormat}
-      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="_ref_"><title>_title_</title><text>_msg_</text></notification></root>'
-      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"_ref_","text":"_msg_"}]';
+    my $content = '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"_ref_","text":"_msg_"}]';
     $content =~ s/_uid_/$uid/;
     $content =~ s/_date_/$date/;
     $content =~ s/_ref_/$ref/;
