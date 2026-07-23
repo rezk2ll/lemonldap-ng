@@ -13,6 +13,7 @@ lemonldap-ng (2.23.1) noble; urgency=medium
     * #3639: When using Kerberos+Choice, authentication failure leads to a request loop
     * #3641: Auth::Choice: a choice left in pdata overrides the submitted one
     * #3656: Session purge no longer works when _lastSeen is not indexed
+    * #3657: "lemonldap-ng-cli -cfgNum X info" no longer works
 
   * Improvements:
     * #3286: Client certificate-based authentication for LDAP
