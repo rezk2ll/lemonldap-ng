@@ -8,10 +8,11 @@ package Lemonldap::NG::Common::Conf::Backends::LDAP;
 use strict;
 use utf8;
 use Net::LDAP;
+use IO::Socket::Timeout;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::getLdapConnection = \&getLdapConnection;
@@ -19,12 +20,21 @@ BEGIN {
 
 sub prereq {
     my $self = shift;
-    foreach ( 'ldapServer', 'ldapConfBase', 'ldapBindDN', 'ldapBindPassword' ) {
+
+    foreach ( 'ldapServer', 'ldapConfBase' ) {
         unless ( $self->{$_} ) {
             $Lemonldap::NG::Common::Conf::msg .=
               "$_ is required in LDAP configuration type \n";
             return 0;
         }
+    }
+    unless ( $self->{ldapBindDN} && $self->{ldapBindPassword} ) {
+        unless ( $self->{ldapClientCert} && $self->{ldapClientKey} ) {
+            $Lemonldap::NG::Common::Conf::msg =
+"ldapBindDN/ldapBindPassword or ldapClientCert/ldapClientKey are required in LDAP configuration type \n";
+            return 0;
+        }
+
     }
     $self->{ldapObjectClass}      ||= "applicationProcess";
     $self->{ldapAttributeId}      ||= "cn";
@@ -34,7 +44,6 @@ sub prereq {
 
 sub available {
     my $self = shift;
-
     my $ldap = $self->getLdapConnection;
     unless ($ldap) {
         return 0;
@@ -71,33 +80,43 @@ sub lastCfg {
 
 sub getLdapConnection {
     my $self = shift;
+    my ( @servers, %tlsParams, $useStartTls );
 
-    # Parse servers configuration
-    my $useTls = 0;
-    my $tlsParam;
-    my @servers = ();
     foreach my $server ( split /[\s,]+/, $self->{ldapServer} ) {
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-            $useTls   = 1;
-            $server   = $1;
-            $tlsParam = $2 || "";
+            $useStartTls = 1;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
+        }
+        elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+            $useStartTls = 0;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
         }
         else {
-            $useTls = 0;
+            $useStartTls = 0;
         }
         push @servers, $server;
     }
 
-    # Connect
+    $tlsParams{cafile}     ||= $self->{ldapCAFile} if $self->{ldapCAFile};
+    $tlsParams{capath}     ||= $self->{ldapCAPath} if $self->{ldapCAPath};
+    $tlsParams{verify}     ||= $self->{ldapVerify} if $self->{ldapVerify};
+    $tlsParams{clientcert} ||= $self->{ldapClientCert}
+      if $self->{ldapClientCert};
+    $tlsParams{clientkey} ||= $self->{ldapClientKey}
+      if $self->{ldapClientKey};
+    require Authen::SASL if $self->{ldapClientCert};
+
     my $ldap = Net::LDAP->new(
         \@servers,
-        keepalive => 1,
         onerror   => undef,
-        verify    => ( $self->{ldapVerify} || "require" ),
-        ( $self->{ldapCAFile} ? ( cafile => $self->{ldapCAFile} ) : () ),
-        ( $self->{ldapCAPath} ? ( capath => $self->{ldapCAPath} ) : () ),
-        ( $self->{ldapPort}   ? ( port   => $self->{ldapPort} )   : () ),
-        raw => qr/(?i:^jpegPhoto|;binary)/
+        keepalive => 1,
+        raw       => qr/(?i:^jpegPhoto|;binary)/,
+        %tlsParams,
+        ( $self->{ldapPort}    ? ( port    => $self->{ldapPort} )    : () ),
+        ( $self->{ldapTimeout} ? ( timeout => $self->{ldapTimeout} ) : () ),
+        ( $self->{ldapVersion} ? ( version => $self->{ldapVersion} ) : () ),
     );
 
     unless ($ldap) {
@@ -119,28 +138,43 @@ sub getLdapConnection {
         }
     }
 
-    # Start TLS if needed
-    if ($useTls) {
-        my %h = split( /[&=]/, $tlsParam );
-        $h{verify} ||= $self->{ldapVerify} || "require";
-        $h{cafile} ||= $self->{ldapCAFile} if ( $self->{ldapCAFile} );
-        $h{capath} ||= $self->{ldapCAPath} if ( $self->{ldapCAPath} );
-        my $start_tls = $ldap->start_tls(%h);
-        if ( $start_tls->code ) {
-            $self->logError($start_tls);
+    # Set socket timeouts
+    my $socket = $ldap->socket;
+    IO::Socket::Timeout->enable_timeouts_on($socket);
+    $socket->read_timeout( $self->{ldapIOTimeout} );
+    $socket->write_timeout( $self->{ldapIOTimeout} );
+
+    if ($useStartTls) {
+        my $mesg = $ldap->start_tls(%tlsParams);
+        if ( $mesg->code ) {
+            $self->logError($mesg);
             return;
         }
     }
 
-    # Bind with credentials
-    my $bind =
-      $ldap->bind( $self->{ldapBindDN}, password => $self->{ldapBindPassword} );
+    my $bind = $self->_bind($ldap);
     if ( $bind->code ) {
         $self->logError($bind);
         return;
     }
 
     return $ldap;
+}
+
+sub Lemonldap::NG::Common::Conf::_bind {
+    my ( $self, $ldap ) = @_;
+
+    if ( $self->{ldapBindDN} && $self->{ldapBindPassword} ) {
+        return $ldap->bind( $self->{ldapBindDN},
+            password => $self->{ldapBindPassword} );
+    }
+    else {
+        my $sasl = Authen::SASL->new(
+            mechanism => 'EXTERNAL',
+            callback  => { user => '' }
+        );
+        return $ldap->bind( undef, sasl => $sasl );
+    }
 }
 
 sub lock {
@@ -265,7 +299,7 @@ sub delete {
       . $self->{ldapConfBase};
     my $delete = $ldap->delete($confDN);
     $ldap->unbind;
-    $self->logError($delete) if ( $delete->code );
+    $self->logError($delete) if $delete->code;
 }
 
 sub logError {
@@ -278,4 +312,3 @@ sub logError {
 }
 
 1;
-__END__
