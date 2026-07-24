@@ -52,7 +52,6 @@ lib/Lemonldap/NG/Portal/Captcha/CaptchEtat.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha3.pm
 lib/Lemonldap/NG/Portal/Captcha/SecurityImage.pm
-lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Custom.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Demo.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
@@ -688,8 +687,6 @@ t/30-Auth-Oidc-Reauth.t
 t/30-Auth-ResolutionRule.t
 t/30-Auth-Saml-Reauth.t
 t/30-Auth-SAML-with-choice.t
-t/30-CDC-open-redirect.t
-t/30-CDC.t
 t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
