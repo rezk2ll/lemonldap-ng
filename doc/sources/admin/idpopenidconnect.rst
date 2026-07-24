@@ -310,14 +310,14 @@ Options
       - ``client_secret_basic``: Client ID and secret sent in HTTP Basic header
       - ``client_secret_jwt``: JWT assertion signed with client secret (HMAC)
       - ``private_key_jwt``: JWT assertion signed with client's private key
-      - ``tls_client_auth``: mTLS client certificate authentication (RFC 8705) *(since 2.23.0)*
+      - ``tls_client_auth``: mTLS client certificate authentication (RFC 8705) *(since 3.0.0)*
 
    -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
    -  **Require "state" in authorization request**: Require
    -  **Require "nonce" in authorization request**: Require
    -  **userinfo endpoint authentication using header only**:
 
--  **mTLS (RFC 8705)** *(since 2.23.0)*
+-  **mTLS (RFC 8705)** *(since 3.0.0)*
 
    Configure expected client certificate attributes for mTLS authentication.
    See :ref:`oidc-mtls` for detailed configuration.
