@@ -49,7 +49,7 @@
     });
     var ordonned_notifications = [].concat(_toConsumableArray(public_errors), _toConsumableArray(public_warns), _toConsumableArray(public_infos));
     var carouselInner = $("<div class='carousel-inner rounded'></div>");
-    var carouselIndicators = $("<ol class=\"carousel-indicators\"></ol>");
+    var carouselIndicators = $("<div class=\"carousel-indicators\"></div>");
     ordonned_notifications.forEach(function (element, index) {
       var bslevel = "";
       var level = element.uid.split("-").pop();
@@ -67,10 +67,11 @@
           bslevel = "primary";
       }
       var notificationElement = $("<div class='carousel-item notif-container alert alert-".concat(bslevel, "'></div>"));
-      var notificationIndicator = $("<li data-target=\"#carousel\" data-slide-to=\"".concat(index, "\"></li>"));
+      var notificationIndicator = $("<button type=\"button\" data-bs-target=\"#carousel\" data-bs-slide-to=\"".concat(index, "\" aria-label=\"Slide ").concat(index + 1, "\"></button>"));
       if (index === 0) {
         notificationElement.addClass("active");
         notificationIndicator.addClass("active");
+        notificationIndicator.attr("aria-current", "true");
       }
       var notificationTitle = $("<h4 class='text-center'></h4>");
       notificationTitle.append(element === null || element === void 0 ? void 0 : element.title);
@@ -85,9 +86,16 @@
       carouselIndicators.append(notificationIndicator);
     });
     // Append the carousel inner to the carousel container
-    var previousButton = $("<a class=\"carousel-control-prev\" href=\"#carousel\" role=\"button\" data-slide=\"prev\" data-bs-slide=\"prev\">\n        <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n        <span class=\"sr-only visually-hidden\">Previous</span>\n      </a>");
-    var nextButton = $("<a class=\"carousel-control-next\" href=\"#carousel\" role=\"button\" data-slide=\"next\" data-bs-slide=\"next\">\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n    <span class=\"sr-only visually-hidden\">Next</span>\n  </a>");
+    var previousButton = $("<button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carousel\" data-bs-slide=\"prev\">\n        <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n        <span class=\"visually-hidden\">Previous</span>\n      </button>");
+    var nextButton = $("<button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carousel\" data-bs-slide=\"next\">\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n    <span class=\"visually-hidden\">Next</span>\n  </button>");
     $("div.carousel").append(carouselIndicators, carouselInner, previousButton, nextButton);
+
+    // Bootstrap 5 no longer auto-initializes carousels whose content is injected
+    // after page load, so instantiate it explicitly.
+    var carouselElement = document.getElementById("carousel");
+    if (carouselElement && window.bootstrap && window.bootstrap.Carousel) {
+      window.bootstrap.Carousel.getOrCreateInstance(carouselElement);
+    }
   });
 
 })();

@@ -22,7 +22,7 @@ $(window).on("load", function() {
 
 
   const carouselInner = $("<div class='carousel-inner rounded'></div>");
-  const carouselIndicators = $(`<ol class="carousel-indicators"></ol>`);
+  const carouselIndicators = $(`<div class="carousel-indicators"></div>`);
   ordonned_notifications.forEach((element, index) => {
     var bslevel = "";
     const level = element.uid.split("-").pop();
@@ -45,12 +45,13 @@ $(window).on("load", function() {
     );
 
     const notificationIndicator = $(
-      `<li data-target="#carousel" data-slide-to="${index}"></li>`
+      `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${index}" aria-label="Slide ${index + 1}"></button>`
     );
 
     if (index === 0) {
       notificationElement.addClass("active");
       notificationIndicator.addClass("active");
+      notificationIndicator.attr("aria-current", "true");
     }
 
     const notificationTitle = $("<h4 class='text-center'></h4>");
@@ -71,15 +72,15 @@ $(window).on("load", function() {
   });
   // Append the carousel inner to the carousel container
   const previousButton =
-    $(`<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev" data-bs-slide="prev">
+    $(`<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only visually-hidden">Previous</span>
-      </a>`);
+        <span class="visually-hidden">Previous</span>
+      </button>`);
   const nextButton =
-    $(`<a class="carousel-control-next" href="#carousel" role="button" data-slide="next" data-bs-slide="next">
+    $(`<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only visually-hidden">Next</span>
-  </a>`);
+    <span class="visually-hidden">Next</span>
+  </button>`);
 
   $("div.carousel").append(
     carouselIndicators,
@@ -87,4 +88,11 @@ $(window).on("load", function() {
     previousButton,
     nextButton
   );
+
+  // Bootstrap 5 no longer auto-initializes carousels whose content is injected
+  // after page load, so instantiate it explicitly.
+  const carouselElement = document.getElementById("carousel");
+  if (carouselElement && window.bootstrap && window.bootstrap.Carousel) {
+    window.bootstrap.Carousel.getOrCreateInstance(carouselElement);
+  }
 });
