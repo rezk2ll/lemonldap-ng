@@ -3070,6 +3070,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => 'private_key_jwt',
                     'v' => 'private_key_jwt'
+                },
+                {
+                    'k' => 'tls_client_auth',
+                    'v' => 'tls_client_auth'
                 }
             ],
             'type' => 'select'
@@ -3475,6 +3479,33 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsMtlsCertIdentifier' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsMtlsCertIdentifierType' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'SAN DNS'
+                },
+                {
+                    'k' => 'DN',
+                    'v' => 'Subject DN'
+                },
+                {
+                    'k' => 'Email',
+                    'v' => 'SAN Email'
+                },
+                {
+                    'k' => 'IP',
+                    'v' => 'SAN IP'
+                },
+                {
+                    'k' => 'URI',
+                    'v' => 'SAN URI'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsNoJwtHeader' => {
             'default' => 0,

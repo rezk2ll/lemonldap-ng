@@ -954,6 +954,10 @@ function templates(tpl,key) {
                      {
                         "k" : "private_key_jwt",
                         "v" : "private_key_jwt"
+                     },
+                     {
+                        "k" : "tls_client_auth",
+                        "v" : "tls_client_auth"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsAuthMethod",
@@ -986,6 +990,46 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "type" : "bool"
+               },
+               {
+                  "_nodes" : [
+                     {
+                        "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "select" : [
+                           {
+                              "k" : "",
+                              "v" : "SAN DNS"
+                           },
+                           {
+                              "k" : "DN",
+                              "v" : "Subject DN"
+                           },
+                           {
+                              "k" : "Email",
+                              "v" : "SAN Email"
+                           },
+                           {
+                              "k" : "IP",
+                              "v" : "SAN IP"
+                           },
+                           {
+                              "k" : "URI",
+                              "v" : "SAN URI"
+                           }
+                        ],
+                        "title" : "oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "type" : "select"
+                     },
+                     {
+                        "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
+                        "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
+                        "title" : "oidcRPMetaDataOptionsMtlsCertIdentifier"
+                     }
+                  ],
+                  "id" : "mtls",
+                  "title" : "mtls",
+                  "type" : "simpleInputContainer"
                }
             ],
             "id" : "security",

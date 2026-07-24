@@ -784,6 +784,7 @@ t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Logout-unauth.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-mTLS-Client-Auth.t
 t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
