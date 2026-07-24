@@ -990,50 +990,50 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "type" : "bool"
+               },
+               {
+                  "_nodes" : [
+                     {
+                        "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "select" : [
+                           {
+                              "k" : "",
+                              "v" : "SAN DNS"
+                           },
+                           {
+                              "k" : "DN",
+                              "v" : "Subject DN"
+                           },
+                           {
+                              "k" : "Email",
+                              "v" : "SAN Email"
+                           },
+                           {
+                              "k" : "IP",
+                              "v" : "SAN IP"
+                           },
+                           {
+                              "k" : "URI",
+                              "v" : "SAN URI"
+                           }
+                        ],
+                        "title" : "oidcRPMetaDataOptionsMtlsCertIdentifierType",
+                        "type" : "select"
+                     },
+                     {
+                        "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
+                        "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
+                        "title" : "oidcRPMetaDataOptionsMtlsCertIdentifier"
+                     }
+                  ],
+                  "id" : "mtls",
+                  "title" : "mtls",
+                  "type" : "simpleInputContainer"
                }
             ],
             "id" : "security",
             "title" : "security",
-            "type" : "simpleInputContainer"
-         },
-         {
-            "_nodes" : [
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifierType",
-                  "select" : [
-                     {
-                        "k" : "",
-                        "v" : "SAN DNS"
-                     },
-                     {
-                        "k" : "DN",
-                        "v" : "Subject DN"
-                     },
-                     {
-                        "k" : "Email",
-                        "v" : "SAN Email"
-                     },
-                     {
-                        "k" : "IP",
-                        "v" : "SAN IP"
-                     },
-                     {
-                        "k" : "URI",
-                        "v" : "SAN URI"
-                     }
-                  ],
-                  "title" : "oidcRPMetaDataOptionsMtlsCertIdentifierType",
-                  "type" : "select"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsMtlsCertIdentifier",
-                  "title" : "oidcRPMetaDataOptionsMtlsCertIdentifier"
-               }
-            ],
-            "id" : "mtls",
-            "title" : "mtls",
             "type" : "simpleInputContainer"
          },
          {

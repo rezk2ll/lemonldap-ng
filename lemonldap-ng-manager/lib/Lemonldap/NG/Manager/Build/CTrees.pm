@@ -284,14 +284,14 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAuthnRequireState',
                             'oidcRPMetaDataOptionsAuthnRequireNonce',
                             'oidcRPMetaDataOptionsUserinfoRequireHeaderToken',
-                        ]
-                    },
-                    {
-                        title => 'mtls',
-                        form  => 'simpleInputContainer',
-                        nodes => [
-                            'oidcRPMetaDataOptionsMtlsCertIdentifierType',
-                            'oidcRPMetaDataOptionsMtlsCertIdentifier',
+                            {
+                                title => 'mtls',
+                                form  => 'simpleInputContainer',
+                                nodes => [
+'oidcRPMetaDataOptionsMtlsCertIdentifierType',
+                                    'oidcRPMetaDataOptionsMtlsCertIdentifier',
+                                ]
+                            },
                         ]
                     },
                     {
