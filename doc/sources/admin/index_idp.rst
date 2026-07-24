@@ -6,7 +6,6 @@ Identity provider
 
    idpcas
    idpsaml
-   idpopenid
    idpopenidconnect
    issuerdbget
    idpjitsimeettokens

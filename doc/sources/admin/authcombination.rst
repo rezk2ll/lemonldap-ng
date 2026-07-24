@@ -183,7 +183,7 @@ lemonldap-ng.ini. Example:
 ::
 
    [portal]
-   combinationForms = standardform, openidform
+   combinationForms = standardform, sslform
 
 
 Password management
@@ -232,8 +232,8 @@ Known problems
 Federation protocols
 ~~~~~~~~~~~~~~~~~~~~
 
-:doc:`SAML<authsaml>`, :doc:`OpenID-Connect<authopenidconnect>`,
-:doc:`CAS<authcas>` or :doc:`old OpenID<authopenid>` can't be chained
+:doc:`SAML<authsaml>`, :doc:`OpenID-Connect<authopenidconnect>`
+or :doc:`CAS<authcas>` can't be chained
 with a "and" for authentication part. So "[SAML] and [LDAP]" isn't
 valid. This is because their authentication kinematic don't use the same
 steps.

@@ -3229,52 +3229,6 @@ sub attributes {
             help     => 'idpcas.html#configuring-cas-applications',
         },
 
-        # OpenID Issuer
-        issuerDBOpenIDActivation => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'OpenID server activation',
-        },
-        issuerDBOpenIDPath => {
-            type          => 'pcre',
-            default       => '^/openidserver/',
-            documentation => 'OpenID server request path',
-        },
-        issuerDBOpenIDRule => {
-            type          => 'boolOrExpr',
-            default       => 1,
-            documentation => 'OpenID server rule',
-        },
-
-        openIdIssuerSecret  => { type => 'text', },
-        openIdAttr          => { type => 'text', },
-        openIdSreg_fullname => {
-            type          => 'lmAttrOrMacro',
-            default       => 'cn',
-            documentation => 'OpenID SREG fullname session parameter',
-        },
-        openIdSreg_nickname => {
-            type          => 'lmAttrOrMacro',
-            default       => 'uid',
-            documentation => 'OpenID SREG nickname session parameter',
-        },
-        openIdSreg_language => { type => 'lmAttrOrMacro', },
-        openIdSreg_postcode => { type => 'lmAttrOrMacro', },
-        openIdSreg_timezone => {
-            type          => 'lmAttrOrMacro',
-            default       => '_timezone',
-            documentation => 'OpenID SREG timezone session parameter',
-        },
-        openIdSreg_country => { type => 'lmAttrOrMacro', },
-        openIdSreg_gender  => { type => 'lmAttrOrMacro', },
-        openIdSreg_email   => {
-            type          => 'lmAttrOrMacro',
-            default       => 'mail',
-            documentation => 'OpenID SREG email session parameter',
-        },
-        openIdSreg_dob => { type => 'lmAttrOrMacro', },
-        openIdSPList   => { type => 'blackWhiteList', default => '0;' },
-
         #########
         ## SAML #
         #########
@@ -3909,8 +3863,7 @@ sub attributes {
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
                 { k => 'Combination', v => 'combineMods' },
-                { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
-                { k => 'OpenID', v => 'OpenID 2.0 (deprecated)' },
+                { k => 'CAS', v => 'Central Authentication Service (CAS)' },
                 { k => 'OpenIDConnect', v => 'OpenID Connect' },
                 { k => 'SAML',          v => 'SAML v2' },
                 { k => 'Proxy',         v => 'Proxy' },
@@ -4529,24 +4482,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Proxy authentication level',
         },
 
-        # OpenID
-        openIdAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'OpenID authentication level',
-        },
-        openIdSecret       => { type => 'text', },
-        openIdExportedVars => {
-            type          => 'keyTextContainer',
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
-            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            msgFail       => '__badValue__',
-            default       => {},
-            documentation => 'OpenID exported variables',
-        },
-        'openIdIDPList' => { 'type' => 'blackWhiteList', default => '0;' },
-
         # Facebook
         facebookAuthnLevel => {
             type          => 'int',
@@ -4703,9 +4638,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 2,
             documentation => 'Slave authentication level',
         },
-        slaveUserHeader => { type => 'text', },
-        slaveCertificateField        => { type => 'text', },
-        slaveCertificateRegexp     => {
+        slaveUserHeader        => { type => 'text', },
+        slaveCertificateField  => { type => 'text', },
+        slaveCertificateRegexp => {
             type          => 'pcre',
             default       => '',
             documentation => 'Regular expression to test Slave var',
@@ -4773,7 +4708,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'LinkedIn',      v => 'LinkedIn' },
                     { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
-                    { k => 'OpenID',        v => 'OpenID 2.0 (deprecated)' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
                     { k => 'Proxy',         v => 'Proxy' },
                     { k => 'Radius',        v => 'Radius' },
@@ -4799,7 +4733,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'LDAP',          v => 'LDAP' },
                     { k => 'Null',          v => 'None' },
-                    { k => 'OpenID',        v => 'OpenID 2.0 (deprecated)' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
                     { k => 'Proxy',         v => 'Proxy' },
                     { k => 'REST',          v => 'REST' },
@@ -4852,8 +4785,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'WebID',    v => 'WebID (deprecated)' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
-                { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
-                { k => 'OpenID', v => 'OpenID 2.0 (deprecated)' },
+                { k => 'CAS', v => 'Central Authentication Service (CAS)' },
                 { k => 'OpenIDConnect', v => 'OpenID Connect' },
                 { k => 'SAML',          v => 'SAML v2' },
                 { k => 'Proxy',         v => 'Proxy' },

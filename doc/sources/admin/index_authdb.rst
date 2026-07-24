@@ -31,7 +31,6 @@ Authentication, users and password databases
    authchoice
    authcombination
    authmulti
-   authopenid
    authremote
    authwebauthn
    totp2f

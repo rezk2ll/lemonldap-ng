@@ -36,7 +36,6 @@ lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/LinkedIn.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
-lib/Lemonldap/NG/Portal/Auth/OpenID.pm
 lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/PAM.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
@@ -61,7 +60,6 @@ lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/JitsiMeetTokens.pm
-lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/2fDevices.pm
@@ -84,8 +82,6 @@ lib/Lemonldap/NG/Portal/Lib/OIDCPlugin.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
-lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
-lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
@@ -190,7 +186,6 @@ lib/Lemonldap/NG/Portal/UserDB/Demo.pm
 lib/Lemonldap/NG/Portal/UserDB/Facebook.pm
 lib/Lemonldap/NG/Portal/UserDB/LDAP.pm
 lib/Lemonldap/NG/Portal/UserDB/Null.pm
-lib/Lemonldap/NG/Portal/UserDB/OpenID.pm
 lib/Lemonldap/NG/Portal/UserDB/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
@@ -530,10 +525,6 @@ site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
 site/templates/bootstrap/oidcOfflineTokens.tpl
 site/templates/bootstrap/okta2fchoice.tpl
-site/templates/bootstrap/openid.tpl
-site/templates/bootstrap/openidform.tpl
-site/templates/bootstrap/openIdPol.tpl
-site/templates/bootstrap/openIdTrust.tpl
 site/templates/bootstrap/password.tpl
 site/templates/bootstrap/password2fcheck.tpl
 site/templates/bootstrap/password2fregister.tpl
@@ -822,7 +813,6 @@ t/32-OIDC-Token-Introspection-JWT.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/32-RemoveOIDCToken.t
-t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t

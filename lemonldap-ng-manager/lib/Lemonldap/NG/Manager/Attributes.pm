@@ -389,10 +389,6 @@ sub attributes {
                         'v' => 'None'
                     },
                     {
-                        'k' => 'OpenID',
-                        'v' => 'OpenID 2.0 (deprecated)'
-                    },
-                    {
                         'k' => 'OpenIDConnect',
                         'v' => 'OpenID Connect'
                     },
@@ -472,10 +468,6 @@ sub attributes {
                     {
                         'k' => 'Null',
                         'v' => 'None'
-                    },
-                    {
-                        'k' => 'OpenID',
-                        'v' => 'OpenID 2.0 (deprecated)'
                     },
                     {
                         'k' => 'OpenIDConnect',
@@ -642,10 +634,6 @@ sub attributes {
                 {
                     'k' => 'CAS',
                     'v' => 'Central Authentication Service (CAS)'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
@@ -1169,10 +1157,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'CAS',
                     'v' => 'Central Authentication Service (CAS)'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
@@ -1850,10 +1834,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
-        'issuerDBOpenIDActivation' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'issuerDBOpenIDConnectActivation' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1863,14 +1843,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'issuerDBOpenIDConnectRule' => {
-            'default' => 1,
-            'type'    => 'boolOrExpr'
-        },
-        'issuerDBOpenIDPath' => {
-            'default' => '^/openidserver/',
-            'type'    => 'pcre'
-        },
-        'issuerDBOpenIDRule' => {
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
@@ -4088,66 +4060,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'okta2fLogo' => {
             'type' => 'text'
-        },
-        'openIdAttr' => {
-            'type' => 'text'
-        },
-        'openIdAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'openIdExportedVars' => {
-            'default'    => {},
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
-        },
-        'openIdIDPList' => {
-            'default' => '0;',
-            'type'    => 'blackWhiteList'
-        },
-        'openIdIssuerSecret' => {
-            'type' => 'text'
-        },
-        'openIdSecret' => {
-            'type' => 'text'
-        },
-        'openIdSPList' => {
-            'default' => '0;',
-            'type'    => 'blackWhiteList'
-        },
-        'openIdSreg_country' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_dob' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_email' => {
-            'default' => 'mail',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_fullname' => {
-            'default' => 'cn',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_gender' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_language' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_nickname' => {
-            'default' => 'uid',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_postcode' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_timezone' => {
-            'default' => '_timezone',
-            'type'    => 'lmAttrOrMacro'
         },
         'pamAuthnLevel' => {
             'default' => 2,

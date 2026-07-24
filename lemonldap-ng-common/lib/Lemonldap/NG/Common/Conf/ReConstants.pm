@@ -23,7 +23,7 @@ our $specialNodeHash = {
 };
 
 our $doubleHashKeys = 'issuerDBGetParameters';
-our $simpleHashKeys = '(?:(?:r(?:e(?:st(?:Pwd(?:Confirm|Modify)|2f(?:Verify|Init)|(?:Find)?UserDB|Auth)Arg|moteGlobalStorageOption)|adius(?:(?:2f)?RequestAttribute|ExportedVar))|c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|p(?:ortal(?:CustomTplParam|SkinRule)|ersistentStorageOption)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|(?:(?:d(?:emo|bi)|webID)E|e)xportedVar|m(?:essageBrokerOption|acro))s|o(?:idc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataA(?:uthnContext|mrRules))|torageOptions)|OPMetaDataJ(?:SON|WKS))|penIdExportedVars)|s(?:aml(?:AuthnContextMapExtra|StorageOptions)|essionDataToRemember|laveExportedVars|fExtra)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
+our $simpleHashKeys = '(?:(?:r(?:e(?:st(?:Pwd(?:Confirm|Modify)|2f(?:Verify|Init)|(?:Find)?UserDB|Auth)Arg|moteGlobalStorageOption)|adius(?:(?:2f)?RequestAttribute|ExportedVar))|c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|p(?:ortal(?:CustomTplParam|SkinRule)|ersistentStorageOption)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|(?:(?:d(?:emo|bi)|webID)E|e)xportedVar|m(?:essageBrokerOption|acro))s|oidc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataA(?:uthnContext|mrRules))|torageOptions)|OPMetaDataJ(?:SON|WKS))|s(?:aml(?:AuthnContextMapExtra|StorageOptions)|essionDataToRemember|laveExportedVars|fExtra)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
 our $specialNodeKeys = '(?:(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|key)Node|virtualHost)s';
 our $casAppMetaDataNodeKeys = 'casAppMetaData(?:Options(?:(?:UserAttribut|DisplayNam|Servic|Rul)e|A(?:ctivation|llowProxy|uthnLevel)|(?:Commen|Logou)t)|(?:ExportedVar|Macro)s)';
 our $casSrvMetaDataNodeKeys = 'casSrvMetaData(?:Options(?:S(?:amlValidate|ortNumber)|Re(?:solutionRule|new)|ProxiedServices|DisplayName|Comment|Gateway|Tooltip|Icon|Url)|ExportedVars)';
@@ -51,7 +51,6 @@ our $authParameters = {
   linkedinParams => [qw(linkedInAuthnLevel linkedInClientID linkedInClientSecret linkedInFields linkedInUserField linkedInScope)],
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
-  openidParams => [qw(openIdAuthnLevel openIdExportedVars openIdSecret openIdIDPList)],
   pamParams => [qw(pamAuthnLevel pamService)],
   proxyParams => [qw(proxyAuthnLevel proxyUseSoap proxyAuthService proxySessionService proxyAuthServiceChoiceParam proxyAuthServiceChoiceValue proxyCookieName proxyAuthServiceImpersonation)],
   radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer radiusTimeout radiusMsgAuth radiusExportedVars radiusDictionaryFile radiusRequestAttributes)],
@@ -67,7 +66,6 @@ our $issuerParameters = {
   issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)],
   issuerDBGet => [qw(issuerDBGetActivation issuerDBGetPath issuerDBGetRule issuerDBGetParameters)],
   issuerDBJitsiMeetTokens => [qw(issuerDBJitsiMeetTokensActivation issuerDBJitsiMeetTokensPath issuerDBJitsiMeetTokensRule jitsiDefaultServer jitsiAppId jitsiAppSecret jitsiSigningAlg jitsiSigningKey jitsiExpiration jitsiIdAttribute jitsiNameAttribute jitsiMailAttribute)],
-  issuerDBOpenID => [qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule openIdIssuerSecret openIdAttr openIdSPList openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)],
   issuerDBOpenIDConnect => [qw(issuerDBOpenIDConnectActivation issuerDBOpenIDConnectPath issuerDBOpenIDConnectRule)],
   issuerDBSAML => [qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)],
   issuerOptions => [qw(issuersTimeout)],

@@ -196,7 +196,7 @@ sub tests {
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
             foreach
-              my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID))
+              my $type (qw(Facebook Google OpenIDConnect SAML WebID))
             {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
@@ -207,14 +207,11 @@ sub tests {
             return 1;
         },
 
-        # Check that OpenID macros exists
+        # Check that whatToTrace macro exists
         checkAttrAndMacros => sub {
             my @tmp;
             foreach my $k ( keys %$conf ) {
-                if ( $k =~
-/^(?:openIdSreg_(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)|whatToTrace)$/
-                  )
-                {
+                if ( $k eq 'whatToTrace' ) {
                     my $v = $conf->{$k};
                     $v =~ s/^$//;
                     next if ( $v =~ /^_/ );
@@ -1273,8 +1270,10 @@ sub tests {
                       unless $param;
                 }
             }
-            foreach ( my ( $k, $v ) =
-                sort keys %{ $conf->{authChoiceModules} } )
+            foreach (
+                my ( $k, $v ) =
+                sort keys %{ $conf->{authChoiceModules} }
+              )
             {
                 my ( $a, $u, $p, $url ) = split ';', $v;
                 return ( 0, "Choice $k has an invalid URL" )
