@@ -2097,14 +2097,14 @@ sub _validateMtlsClient {
     }
 
     # Get actual value from certificate based on identifier type
+    # RFC 8705 §2.1.2: each SAN identifier type must be matched against the
+    # corresponding SAN entry of the certificate.
     my $actual = {
-        DN  => $cert_subject_dn,
-        DNS => $req->env->{SSL_CLIENT_SAN_DNS_0}
-          || $req->env->{SSL_CLIENT_S_DN_CN},
-        Email => $req->env->{SSL_CLIENT_SAN_Email_0}
-          || $req->env->{SSL_CLIENT_S_DN_CN},
-        IP  => $req->env->{SSL_CLIENT_SAN_IP_0},
-        URI => $req->env->{SSL_CLIENT_SAN_URI_0},
+        DN    => $cert_subject_dn,
+        DNS   => $req->env->{SSL_CLIENT_SAN_DNS_0},
+        Email => $req->env->{SSL_CLIENT_SAN_Email_0},
+        IP    => $req->env->{SSL_CLIENT_SAN_IP_0},
+        URI   => $req->env->{SSL_CLIENT_SAN_URI_0},
     }->{$id_type};
     unless ($actual) {
         $self->logger->error("mTLS: '$id_type' value not found");

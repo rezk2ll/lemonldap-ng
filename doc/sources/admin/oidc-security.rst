@@ -182,7 +182,7 @@ The web server must export one of the following environment variables
    - **Nginx** only exposes the Subject DN (``$ssl_client_s_dn`` →
      ``SSL_CLIENT_S_DN``). SAN entries are not available natively, so with Nginx
      you should either use the *Subject DN* identifier type, or extract and
-     export the required SAN value yourself (see the Nginx example below).
+     export the required SAN value yourself.
    - **Apache** exposes ``SSL_CLIENT_S_DN``, ``SSL_CLIENT_SAN_DNS_n`` and
      ``SSL_CLIENT_SAN_Email_n``. SAN IP and SAN URI are not exported natively and
      would require a custom configuration to be used as identifiers.
@@ -204,8 +204,8 @@ With Apache:
    # Export SSL_CLIENT_S_DN, SSL_CLIENT_SAN_DNS_n, SSL_CLIENT_SAN_Email_n, ...
    SSLOptions +StdEnvVars +ExportCertData
 
-With Nginx, the certificate DN is available but SAN variables and the CN must be
-built explicitly and forwarded as FastCGI/uWSGI parameters:
+With Nginx, only the Subject DN is available natively; forward it so that the
+mTLS logic is triggered and *Subject DN* matching works:
 
 .. code-block:: nginx
 
@@ -213,21 +213,17 @@ built explicitly and forwarded as FastCGI/uWSGI parameters:
    ssl_verify_depth 10;
    ssl_client_certificate /etc/nginx/ssl/ca.pem;
 
-   # map directive must be set in the http context
-   map $ssl_client_s_dn $ssl_client_s_dn_cn {
-       default            "";
-       ~,CN=(?<CN>[^,]+)  $CN; # Nginx >= 1.11.6 (RFC 2253 format)
-   }
-
-   # Always forward the Subject DN: it triggers the mTLS logic
-   fastcgi_param SSL_CLIENT_S_DN    $ssl_client_s_dn;
-   fastcgi_param SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;
+   # Always forward the Subject DN: it triggers the mTLS logic and
+   # enables the "Subject DN" identifier type
+   fastcgi_param SSL_CLIENT_S_DN $ssl_client_s_dn;
 
 .. note::
 
-   With Nginx the ``SSL_CLIENT_S_DN_CN`` value is used as a fallback for the
-   *SAN DNS* and *SAN Email* identifier types when the corresponding SAN
-   variables are not provided.
+   Nginx does not expose the certificate SAN entries. To use a *SAN DNS*,
+   *SAN Email*, *SAN IP* or *SAN URI* identifier type with Nginx, you must
+   extract the value from the client certificate yourself (for example from
+   ``$ssl_client_escaped_cert``) and forward it as ``SSL_CLIENT_SAN_DNS_0``,
+   ``SSL_CLIENT_SAN_Email_0``, etc. Otherwise, use the *Subject DN* type.
 
 See :doc:`authssl` for more complete Apache and Nginx virtual host examples.
 
