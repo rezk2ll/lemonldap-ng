@@ -1742,7 +1742,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -2066,9 +2066,6 @@ sub checkEndPointAuthenticationCredentials {
     return ( $rp, $method );
 }
 
-# Sent warning about uncofigured RP only one time
-our %warningSent;
-
 # RFC 8705: Validate mTLS client certificate
 sub _validateMtlsClient {
     my ( $self, $req, $rp ) = @_;
@@ -2091,25 +2088,22 @@ sub _validateMtlsClient {
       $rpOpts->{oidcRPMetaDataOptionsMtlsCertIdentifierType} || 'DNS';
     my $expected = $rpOpts->{oidcRPMetaDataOptionsMtlsCertIdentifier};
 
-    # No specific validation configured - accept any valid certificate
-    # (PKI validation is done by the web server)
+    # RFC 8705 §2.1.2: exactly one certificate subject value MUST be configured
+    # for tls_client_auth.
     unless ($expected) {
-        return 1 if $warningSent{$rp};
-        $warningSent{$rp} = 1;
-        $self->logger->warn(
-                "mTLS: No specific certificate validation configured for $rp, "
-              . "accept any PKI-validated certificate" );
-        return 1;
+        $self->logger->error( "mTLS: no expected certificate identifier "
+              . "configured for $rp, refusing auth" );
+        return 0;
     }
 
     # Get actual value from certificate based on identifier type
     my $actual = {
-        DN => $cert_subject_dn,
+        DN  => $cert_subject_dn,
         DNS => $req->env->{SSL_CLIENT_SAN_DNS_0}
-            || $req->env->{SSL_CLIENT_S_DN_CN},
+          || $req->env->{SSL_CLIENT_S_DN_CN},
         Email => $req->env->{SSL_CLIENT_SAN_Email_0}
-            || $req->env->{SSL_CLIENT_S_DN_CN},
-        IP => $req->env->{SSL_CLIENT_SAN_IP_0},
+          || $req->env->{SSL_CLIENT_S_DN_CN},
+        IP  => $req->env->{SSL_CLIENT_SAN_IP_0},
         URI => $req->env->{SSL_CLIENT_SAN_URI_0},
     }->{$id_type};
     unless ($actual) {
@@ -2122,7 +2116,7 @@ sub _validateMtlsClient {
         $self->logger->error(
                 "mTLS: Certificate $id_type mismatch for $rp. "
               . "Expected: $expected, Got: "
-              . ( $actual ) );
+              . ($actual) );
         return 0;
     }
 
@@ -2241,7 +2235,7 @@ sub getEndPointAuthenticationCredentials {
         }
     }
     elsif ( $req->param('client_id') ) {
-        if ($req->body_parameters->{client_secret}) {
+        if ( $req->body_parameters->{client_secret} ) {
             $scheme = 'client_secret_post';
             $self->logger->debug("Method client_secret_post used");
             $client_id     = $req->param('client_id');

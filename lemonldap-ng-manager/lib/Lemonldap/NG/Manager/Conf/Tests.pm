@@ -881,6 +881,33 @@ sub tests {
             return ( 1, join( ', ', @msg ) );
         },
 
+        # RFC 8705: tls_client_auth requires an expected certificate identifier,
+        # otherwise any PKI-validated certificate would be accepted
+        oidcRPMtlsNeedsIdentifier => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @msg;
+            my $res = 1;
+            foreach my $oidcRpId ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                my $rpConf = $conf->{oidcRPMetaDataOptions}->{$oidcRpId};
+                next
+                  unless ( $rpConf->{oidcRPMetaDataOptionsAuthMethod} || '' ) eq
+                  'tls_client_auth';
+                unless (
+                    length(
+                        $rpConf->{oidcRPMetaDataOptionsMtlsCertIdentifier} // ''
+                    )
+                  )
+                {
+                    push @msg,
+"$oidcRpId: tls_client_auth requires an expected certificate identifier (RFC 8705)";
+                    $res = 0;
+                }
+            }
+            return ( $res, join( ', ', @msg ) );
+        },
+
         # Two ACR mapped on the same authentication level make the "acr"
         # claim returned in ID tokens unpredictable
         oidcAuthnContextUniqueness => sub {
