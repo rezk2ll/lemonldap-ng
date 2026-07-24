@@ -57,7 +57,6 @@ Depends: @, @builddeps@, pkg-perl-autopkgtest
  , libhttp-browserdetect-perl
  , libio-socket-timeout-perl
  , liblog-log4perl-perl
- , libweb-id-perl
  , libyaml-perl
 Restrictions: superficial
 Features: test-name=runtime-deps-and-recommends

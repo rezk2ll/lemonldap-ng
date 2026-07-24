@@ -345,10 +345,6 @@
                         "v" : "Twitter"
                      },
                      {
-                        "k" : "WebID",
-                        "v" : "WebID"
-                     },
-                     {
                         "k" : "Demo",
                         "v" : "Demonstration"
                      },
@@ -364,7 +360,6 @@
                         "k" : "CAS",
                         "v" : "Central Authentication Service (CAS)"
                      },
-                     
                      {
                         "k" : "OpenIDConnect",
                         "v" : "OpenID Connect"
@@ -587,7 +582,6 @@
                                  "k" : "Null",
                                  "v" : "None"
                               },
-                              
                               {
                                  "k" : "OpenIDConnect",
                                  "v" : "OpenID Connect"
@@ -625,10 +619,6 @@
                                  "v" : "Twitter"
                               },
                               {
-                                 "k" : "WebID",
-                                 "v" : "WebID"
-                              },
-                              {
                                  "k" : "Custom",
                                  "v" : "customModule"
                               }
@@ -662,7 +652,6 @@
                                  "k" : "Null",
                                  "v" : "None"
                               },
-                              
                               {
                                  "k" : "OpenIDConnect",
                                  "v" : "OpenID Connect"
@@ -686,10 +675,6 @@
                               {
                                  "k" : "Slave",
                                  "v" : "Slave"
-                              },
-                              {
-                                 "k" : "WebID",
-                                 "v" : "WebID"
                               },
                               {
                                  "k" : "Custom",
@@ -1345,10 +1330,6 @@
                               "v" : "Twitter"
                            },
                            {
-                              "k" : "WebID",
-                              "v" : "WebID"
-                           },
-                           {
                               "k" : "Demo",
                               "v" : "Demonstration"
                            },
@@ -1356,7 +1337,6 @@
                               "k" : "CAS",
                               "v" : "Central Authentication Service (CAS)"
                            },
-                           
                            {
                               "k" : "OpenIDConnect",
                               "v" : "OpenID Connect"
@@ -1410,7 +1390,6 @@
                   "title" : "nullParams",
                   "type" : "simpleInputContainer"
                },
-               
                {
                   "_nodes" : [
                      {
@@ -1713,31 +1692,6 @@
                {
                   "_nodes" : [
                      {
-                        "default" : 1,
-                        "id" : "webIDAuthnLevel",
-                        "title" : "webIDAuthnLevel",
-                        "type" : "int"
-                     },
-                     {
-                        "cnodes" : "webIDExportedVars",
-                        "default" : [],
-                        "id" : "webIDExportedVars",
-                        "title" : "webIDExportedVars",
-                        "type" : "keyTextContainer"
-                     },
-                     {
-                        "id" : "webIDWhitelist",
-                        "title" : "webIDWhitelist"
-                     }
-                  ],
-                  "help" : "authwebid.html",
-                  "id" : "webidParams",
-                  "show" : false,
-                  "title" : "webidParams"
-               },
-               {
-                  "_nodes" : [
-                     {
                         "id" : "customAuth",
                         "title" : "customAuth"
                      },
@@ -1821,7 +1775,6 @@
                   "title" : "issuerDBCAS",
                   "type" : "simpleInputContainer"
                },
-               
                {
                   "_nodes" : [
                      {

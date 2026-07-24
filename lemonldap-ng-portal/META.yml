@@ -32,7 +32,6 @@ build_requires:
   SOAP::Lite: '0'
   Text::Unidecode: '0'
   Time::Fake: '0'
-  Web::ID: '0'
   XML::LibXML: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
@@ -73,7 +72,6 @@ recommends:
   Net::OAuth: '0'
   SOAP::Lite: '0'
   Text::Unidecode: '0'
-  Web::ID: '0'
 requires:
   Clone: '0'
   Lemonldap::NG::Handler: v2.23.1

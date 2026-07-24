@@ -23,7 +23,7 @@ our $specialNodeHash = {
 };
 
 our $doubleHashKeys = 'issuerDBGetParameters';
-our $simpleHashKeys = '(?:(?:r(?:e(?:st(?:Pwd(?:Confirm|Modify)|2f(?:Verify|Init)|(?:Find)?UserDB|Auth)Arg|moteGlobalStorageOption)|adius(?:(?:2f)?RequestAttribute|ExportedVar))|c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|p(?:ortal(?:CustomTplParam|SkinRule)|ersistentStorageOption)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|(?:(?:d(?:emo|bi)|webID)E|e)xportedVar|m(?:essageBrokerOption|acro))s|oidc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataA(?:uthnContext|mrRules))|torageOptions)|OPMetaDataJ(?:SON|WKS))|s(?:aml(?:AuthnContextMapExtra|StorageOptions)|essionDataToRemember|laveExportedVars|fExtra)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
+our $simpleHashKeys = '(?:(?:r(?:e(?:st(?:Pwd(?:Confirm|Modify)|2f(?:Verify|Init)|(?:Find)?UserDB|Auth)Arg|moteGlobalStorageOption)|adius(?:(?:2f)?RequestAttribute|ExportedVar))|c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|p(?:ortal(?:CustomTplParam|SkinRule)|ersistentStorageOption)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|(?:d(?:emo|bi)E|e)xportedVar|m(?:essageBrokerOption|acro))s|oidc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataA(?:uthnContext|mrRules))|torageOptions)|OPMetaDataJ(?:SON|WKS))|s(?:aml(?:AuthnContextMapExtra|StorageOptions)|essionDataToRemember|laveExportedVars|fExtra)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
 our $specialNodeKeys = '(?:(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|key)Node|virtualHost)s';
 our $casAppMetaDataNodeKeys = 'casAppMetaData(?:Options(?:(?:UserAttribut|DisplayNam|Servic|Rul)e|A(?:ctivation|llowProxy|uthnLevel)|(?:Commen|Logou)t)|(?:ExportedVar|Macro)s)';
 our $casSrvMetaDataNodeKeys = 'casSrvMetaData(?:Options(?:S(?:amlValidate|ortNumber)|Re(?:solutionRule|new)|ProxiedServices|DisplayName|Comment|Gateway|Tooltip|Icon|Url)|ExportedVars)';
@@ -60,7 +60,6 @@ our $authParameters = {
   sslParams => [qw(SSLAuthnLevel SSLVar SSLIssuerVar sslByAjax sslHost SSLVarIf)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
   webauthnParams => [qw(webauthnAuthnLevel)],
-  webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
 };
 our $issuerParameters = {
   issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)],

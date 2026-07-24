@@ -4664,20 +4664,6 @@ webCronSecret
     :Description: Secret token for webcron plugin
     :Used by portal: yes
 
-webIDAuthnLevel
-    :Location: General Parameters » Authentication parameters » WebID parameters » Authentication level
-    :Description: WebID authentication level
-    :Used by portal: yes
-
-webIDExportedVars
-    :Location: General Parameters » Authentication parameters » WebID parameters » Exported variables
-    :Description: WebID exported variables
-    :Used by portal: yes
-
-webIDWhitelist
-    :Location: General Parameters » Authentication parameters » WebID parameters » WebID whitelist
-    :Used by portal: yes
-
 webauthn2fActivation
     :Location: General Parameters » Second factors » WebAuthn » Activation
     :Description: WebAuthn second factor activation

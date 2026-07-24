@@ -487,15 +487,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'webidParams',
-                            help  => 'authwebid.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'webIDAuthnLevel', 'webIDExportedVars',
-                                'webIDWhitelist'
-                            ]
-                        },
-                        {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             form  => 'simpleInputContainer',

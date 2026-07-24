@@ -3858,7 +3858,6 @@ sub attributes {
                 { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'mTLS' },
                 { k => 'Twitter',     v => 'Twitter' },
-                { k => 'WebID',       v => 'WebID (deprecated)' },
                 { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
@@ -4539,23 +4538,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         githubScope        => { type => 'text', default => 'user:email' },
         githubUserField    => { type => 'text', default => 'login' },
 
-        # WebID
-        webIDAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'WebID authentication level',
-        },
-        webIDWhitelist    => { type => 'text', },
-        webIDExportedVars => {
-            type          => 'keyTextContainer',
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
-            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            msgFail       => '__badValue__',
-            default       => {},
-            documentation => 'WebID exported variables',
-        },
-
         # DBI
         dbiAuthnLevel => {
             type          => 'int',
@@ -4717,7 +4699,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Slave',         v => 'Slave' },
                     { k => 'SSL',           v => 'mTLS' },
                     { k => 'Twitter',       v => 'Twitter' },
-                    { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
@@ -4739,7 +4720,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Remote',        v => 'Remote' },
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
-                    { k => 'WebID',         v => 'WebID (deprecated)' },
                     { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
@@ -4782,7 +4762,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'mTLS' },
                 { k => 'Twitter',  v => 'Twitter' },
-                { k => 'WebID',    v => 'WebID (deprecated)' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS', v => 'Central Authentication Service (CAS)' },

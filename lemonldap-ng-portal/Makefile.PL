@@ -48,7 +48,6 @@ WriteMakefile(
             'Net::OAuth'                  => 0,
             'SOAP::Lite'                  => 0,
             'Text::Unidecode'             => 0,
-            'Web::ID'                     => 0,
         },
         resources => {
             repository => {
@@ -93,7 +92,6 @@ WriteMakefile(
         'SOAP::Lite'                  => 0,
         'Text::Unidecode'             => 0,
         'Time::Fake'                  => 0,
-        'Web::ID'                     => 0,
         'XML::LibXML'                 => 0,
     },
     PREREQ_PM => {

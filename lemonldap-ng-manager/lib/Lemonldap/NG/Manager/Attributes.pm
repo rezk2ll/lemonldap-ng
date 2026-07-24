@@ -425,10 +425,6 @@ sub attributes {
                         'v' => 'Twitter'
                     },
                     {
-                        'k' => 'WebID',
-                        'v' => 'WebID (deprecated)'
-                    },
-                    {
                         'k' => 'WebAuthn',
                         'v' => 'WebAuthn'
                     },
@@ -492,10 +488,6 @@ sub attributes {
                     {
                         'k' => 'Slave',
                         'v' => 'Slave'
-                    },
-                    {
-                        'k' => 'WebID',
-                        'v' => 'WebID (deprecated)'
                     },
                     {
                         'k' => 'Combination',
@@ -610,10 +602,6 @@ sub attributes {
                 {
                     'k' => 'Twitter',
                     'v' => 'Twitter'
-                },
-                {
-                    'k' => 'WebID',
-                    'v' => 'WebID (deprecated)'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -1141,10 +1129,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Twitter',
                     'v' => 'Twitter'
-                },
-                {
-                    'k' => 'WebID',
-                    'v' => 'WebID (deprecated)'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -6151,21 +6135,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'text'
         },
         'webCronSecret' => {
-            'type' => 'text'
-        },
-        'webIDAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'webIDExportedVars' => {
-            'default'    => {},
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
-        },
-        'webIDWhitelist' => {
             'type' => 'text'
         },
         'whatToTrace' => {
