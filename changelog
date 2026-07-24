@@ -1,3 +1,10 @@
+lemonldap-ng (2.23.2) noble; urgency=medium
+
+  * Bugs:
+    * #3659: Cannot save configuration in manager: Choice XXX has an invalid URL
+
+ -- Clément OUDOT <clement@worteks-ader.home>  Fri, 24 Jul 2026 17:19:00 +0200
+
 lemonldap-ng (2.23.1) noble; urgency=medium
 
   * Bugs:

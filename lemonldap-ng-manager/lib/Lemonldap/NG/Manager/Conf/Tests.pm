@@ -892,8 +892,8 @@ sub tests {
             foreach my $oidcRpId ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
                 my $rpConf = $conf->{oidcRPMetaDataOptions}->{$oidcRpId};
                 next
-                  unless ( $rpConf->{oidcRPMetaDataOptionsAuthMethod} || '' ) eq
-                  'tls_client_auth';
+                  unless ( $rpConf->{oidcRPMetaDataOptionsAuthMethod} || '' )
+                  eq 'tls_client_auth';
                 unless (
                     length(
                         $rpConf->{oidcRPMetaDataOptionsMtlsCertIdentifier} // ''
@@ -1295,11 +1295,8 @@ sub tests {
                       unless $param;
                 }
             }
-            foreach (
-                my ( $k, $v ) =
-                sort keys %{ $conf->{authChoiceModules} }
-              )
-            {
+            foreach my $k ( sort keys %{ $conf->{authChoiceModules} } ) {
+                my $v = $conf->{authChoiceModules}->{$k};
                 my ( $a, $u, $p, $url ) = split ';', $v;
                 return ( 0, "Choice $k has an invalid URL" )
                   if $url and $url !~ m#^https?://#;
