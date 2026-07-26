@@ -195,9 +195,7 @@ sub tests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach
-              my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID))
-            {
+            foreach my $type (qw(Facebook Google OpenIDConnect SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
@@ -207,14 +205,11 @@ sub tests {
             return 1;
         },
 
-        # Check that OpenID macros exists
+        # Check that whatToTrace macro exists
         checkAttrAndMacros => sub {
             my @tmp;
             foreach my $k ( keys %$conf ) {
-                if ( $k =~
-/^(?:openIdSreg_(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)|whatToTrace)$/
-                  )
-                {
+                if ( $k eq 'whatToTrace' ) {
                     my $v = $conf->{$k};
                     $v =~ s/^$//;
                     next if ( $v =~ /^_/ );
@@ -886,6 +881,33 @@ sub tests {
             return ( 1, join( ', ', @msg ) );
         },
 
+        # RFC 8705: tls_client_auth requires an expected certificate identifier,
+        # otherwise any PKI-validated certificate would be accepted
+        oidcRPMtlsNeedsIdentifier => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @msg;
+            my $res = 1;
+            foreach my $oidcRpId ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                my $rpConf = $conf->{oidcRPMetaDataOptions}->{$oidcRpId};
+                next
+                  unless ( $rpConf->{oidcRPMetaDataOptionsAuthMethod} || '' )
+                  eq 'tls_client_auth';
+                unless (
+                    length(
+                        $rpConf->{oidcRPMetaDataOptionsMtlsCertIdentifier} // ''
+                    )
+                  )
+                {
+                    push @msg,
+"$oidcRpId: tls_client_auth requires an expected certificate identifier (RFC 8705)";
+                    $res = 0;
+                }
+            }
+            return ( $res, join( ', ', @msg ) );
+        },
+
         # Two ACR mapped on the same authentication level make the "acr"
         # claim returned in ID tokens unpredictable
         oidcAuthnContextUniqueness => sub {
@@ -1273,12 +1295,11 @@ sub tests {
                       unless $param;
                 }
             }
-            foreach ( my ( $k, $v ) =
-                sort keys %{ $conf->{authChoiceModules} } )
-            {
+            foreach my $k ( sort keys %{ $conf->{authChoiceModules} } ) {
+                my $v = $conf->{authChoiceModules}->{$k};
                 my ( $a, $u, $p, $url ) = split ';', $v;
                 return ( 0, "Choice $k has an invalid URL" )
-                  unless $url =~ m#^https?://#;
+                  if $url and $url !~ m#^https?://#;
             }
             return 1;
         },

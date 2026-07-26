@@ -144,7 +144,6 @@ Official Backends                                                    Authenticat
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
-:doc:`WebID<authwebid>`                                              ✔                                               ✔
 :doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔
@@ -161,7 +160,6 @@ Combo Backends                                                       Authenticat
 ==================================================================== =============================================== ======== ========
 Obsolete Backends                                                    Authentication                                  Users    Password
 ==================================================================== =============================================== ======== ========
-:doc:`OpenID<authopenid>`                                            ✔                                               ✔
 :doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
 ==================================================================== =============================================== ======== ========
 
@@ -214,7 +212,6 @@ Protocol                                                              Service Pr
 :doc:`CAS 1.0 / 2.0 / 3.0<idpcas>`                                    ✔                ✔
 :doc:`SAML 2.0 / Shibboleth<idpsaml>`                                 ✔                ✔
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
-:doc:`OpenID 2.0<idpopenid>` *(deprecated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
 :doc:`Jitsi Meet Tokens<idpjitsimeettokens>`                                           ✔
 ===================================================================== ================ =================

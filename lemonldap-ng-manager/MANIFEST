@@ -103,7 +103,6 @@ site/htdocs/static/forms/authChoiceContainer.html
 site/htdocs/static/forms/authParams.html
 site/htdocs/static/forms/authParamsText.html
 site/htdocs/static/forms/authParamsTextContainer.html
-site/htdocs/static/forms/blackWhiteList.html
 site/htdocs/static/forms/bool.html
 site/htdocs/static/forms/boolOrExpr.html
 site/htdocs/static/forms/casAppMetaDataNode.html

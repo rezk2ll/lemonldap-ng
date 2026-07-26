@@ -243,29 +243,6 @@ sub display {
         );
     }
 
-    # 1.4 OpenID menu page
-    elsif ($req->{error} == PE_OPENID_EMPTY
-        or $req->{error} == PE_OPENID_BADID )
-    {
-        $skinfile = 'openid';
-
-        my $openid_path =
-          $self->conf->{issuerDBOpenIDPath} =~ s/^.*?(\w+).*?$/$1/r;
-        my $id = $req->{sessionInfo}
-          ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
-        %templateParams = (
-            $self->getErrorTplParams($req),
-            PROVIDERURI => $self->buildUrl( $req->portal, $openid_path, "" ),
-            MSG         => $req->info(),
-            (
-                $req->data->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
-                : ()
-            ),
-        );
-        $templateParams{ID} = $req->data->{_openidPortal} . $id if ($id);
-    }
-
     # 2. Good authentication
 
     # 2.1 Redirection
@@ -519,7 +496,6 @@ sub display {
                 REQUIRE_OLDPASSWORD =>
                   1,    # Old password is required to check user credentials
                 DISPLAY_FORM          => 0,
-                DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
@@ -555,7 +531,6 @@ sub display {
                 %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
-                DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
                 MSG                   => $req->info(),
@@ -589,7 +564,6 @@ sub display {
                     CHOICE_PARAM         => $self->conf->{authChoiceParam},
                     CHOICE_VALUE         => $req->data->{_authChoice},
                     DISPLAY_FORM         => 0,
-                    DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
                     DISPLAY_FINDUSER     => scalar @$fields,
                     MANDATORY            => $mandatory,
@@ -618,8 +592,6 @@ sub display {
                 %templateParams = (
                     %templateParams,
                     DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1
-                    : 0,
-                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/ ? 1
                     : 0,
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1

@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.23.1
+Version:        2.23.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -123,7 +123,6 @@ BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Control::PasswordPolicy)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
-BuildRequires:  perl(Net::OpenID::Server)
 BuildRequires:  perl(Net::SSLeay)
 BuildRequires:  perl(parent)
 BuildRequires:  perl(Plack::Middleware)
@@ -152,7 +151,6 @@ BuildRequires:  perl(URI::QueryParam)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-BuildRequires:  perl(Web::ID)
 BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(YAML)
@@ -182,7 +180,6 @@ BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::MQTT::Simple)
 BuildRequires:  perl(Net::MQTT::Simple::SSL)
 BuildRequires:  perl(Net::OAuth)
-BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Perl::Tidy)
 BuildRequires:  perl(Plack::Handler::FCGI)
 BuildRequires:  perl(Pod::Usage)
@@ -343,7 +340,6 @@ Recommends:     perl(Lasso)
 Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
 Recommends:     perl(Net::OAuth)
-Recommends:     perl(Net::OpenID::Consumer)
 # LDAP mtls
 Recommends:     perl(Authen::SASL)
 Provides:       bundled(fontawesome-fonts) = 4.7.0
@@ -735,6 +731,9 @@ fi
 
 
 %changelog
+* Fri Jul 24 2026 Clement Oudot <clement.oudot@worteks.com> - 2.23.2-1
+- Update to 2.23.2
+
 * Wed Jul 22 2026 Clement Oudot <clement.oudot@worteks.com> - 2.23.1-1
 - Update to 2.23.1
 

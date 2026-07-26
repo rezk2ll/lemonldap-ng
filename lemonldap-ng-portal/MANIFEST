@@ -36,7 +36,6 @@ lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/LinkedIn.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
-lib/Lemonldap/NG/Portal/Auth/OpenID.pm
 lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/PAM.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
@@ -48,20 +47,17 @@ lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
-lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/CaptchEtat.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha3.pm
 lib/Lemonldap/NG/Portal/Captcha/SecurityImage.pm
-lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Custom.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/Demo.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/JitsiMeetTokens.pm
-lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/2fDevices.pm
@@ -84,8 +80,6 @@ lib/Lemonldap/NG/Portal/Lib/OIDCPlugin.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
-lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
-lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
@@ -190,14 +184,12 @@ lib/Lemonldap/NG/Portal/UserDB/Demo.pm
 lib/Lemonldap/NG/Portal/UserDB/Facebook.pm
 lib/Lemonldap/NG/Portal/UserDB/LDAP.pm
 lib/Lemonldap/NG/Portal/UserDB/Null.pm
-lib/Lemonldap/NG/Portal/UserDB/OpenID.pm
 lib/Lemonldap/NG/Portal/UserDB/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
 lib/Lemonldap/NG/Portal/UserDB/REST.pm
 lib/Lemonldap/NG/Portal/UserDB/SAML.pm
 lib/Lemonldap/NG/Portal/UserDB/Slave.pm
-lib/Lemonldap/NG/Portal/UserDB/WebID.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
@@ -426,7 +418,6 @@ site/htdocs/static/common/modules/Slave.png
 site/htdocs/static/common/modules/SSL.png
 site/htdocs/static/common/modules/Twitter.png
 site/htdocs/static/common/modules/webauthn.png
-site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png
 site/htdocs/static/common/pt.png
@@ -530,10 +521,6 @@ site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
 site/templates/bootstrap/oidcOfflineTokens.tpl
 site/templates/bootstrap/okta2fchoice.tpl
-site/templates/bootstrap/openid.tpl
-site/templates/bootstrap/openidform.tpl
-site/templates/bootstrap/openIdPol.tpl
-site/templates/bootstrap/openIdTrust.tpl
 site/templates/bootstrap/password.tpl
 site/templates/bootstrap/password2fcheck.tpl
 site/templates/bootstrap/password2fregister.tpl
@@ -700,8 +687,6 @@ t/30-Auth-Oidc-Reauth.t
 t/30-Auth-ResolutionRule.t
 t/30-Auth-Saml-Reauth.t
 t/30-Auth-SAML-with-choice.t
-t/30-CDC-open-redirect.t
-t/30-CDC.t
 t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
@@ -799,6 +784,7 @@ t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Logout-unauth.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-mTLS-Client-Auth.t
 t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
@@ -822,7 +808,6 @@ t/32-OIDC-Token-Introspection-JWT.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/32-RemoveOIDCToken.t
-t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t

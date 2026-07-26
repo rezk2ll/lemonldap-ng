@@ -25,13 +25,11 @@ Authentication, users and password databases
    authslave
    authssl
    authtwitter
-   authwebid
    authyubikey
    authcustom
    authchoice
    authcombination
    authmulti
-   authopenid
    authremote
    authwebauthn
    totp2f
