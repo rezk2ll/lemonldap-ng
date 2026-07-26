@@ -52,7 +52,7 @@ sub init {
                   applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
                   casSrvMetaDataNodes casAppMetaDataNodes
                   authChoiceModules grantSessionRules combModules sfExtra
-                  openIdIDPList keyNodes)
+                  keyNodes)
             ]
         },
         ['GET']

@@ -12,7 +12,7 @@ The Portal is the main component of LL::NG. It provides many features:
          :doc:`SSL<authssl>`, :doc:`Kerberos<authapache>`,
          :doc:`HTTP basic authentication<authapache>`, ...)
       -  using external identity provider (:doc:`SAML<authsaml>`,
-         :doc:`OpenID<authopenid>`, :doc:`CAS<authcas>`,
+         :doc:`CAS<authcas>`,
          :doc:`Twitter<authtwitter>`, other LL::NG system, ...)
       -  all together (based on user :doc:`choice<authchoice>`,
          :doc:`rules<authmulti>`, ...)

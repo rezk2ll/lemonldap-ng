@@ -115,6 +115,117 @@ Token Endpoint Authentication
   - ``client_secret_post`` - Secret in POST body
   - ``client_secret_jwt`` - HMAC-signed JWT
   - ``private_key_jwt`` - Asymmetric signed JWT (recommended)
+  - ``tls_client_auth`` - mTLS client certificate (RFC 8705, since 3.0.0)
+
+.. _oidc-mtls:
+
+mTLS Client Authentication (RFC 8705)
+"""""""""""""""""""""""""""""""""""""
+
+.. versionadded:: 3.0.0
+
+Mutual TLS (mTLS) authentication allows OAuth 2.0 clients to authenticate using
+TLS client certificates instead of a shared secret. This is described in
+:rfc:`8705`.
+
+**Web Server Configuration**
+
+The web server (Apache/Nginx) must be configured to request and validate client
+certificates on the following endpoints:
+
+- ``/oauth2/token`` - Token endpoint
+- ``/oauth2/introspect`` - Introspection endpoint
+- ``/oauth2/revoke`` - Revocation endpoint
+
+See :doc:`authssl` for Apache and Nginx configuration examples on how to
+request client certificates and pass them to LemonLDAP::NG via environment
+variables.
+
+**LemonLDAP::NG Configuration**
+
+Configuration is done per Relying Party in ``OpenID Connect Relying Parties`` > *RP name* > ``Options`` > ``mTLS``:
+
+- **Certificate identifier type**: Select the type of certificate attribute to match:
+
+  - *SAN DNS* (default): DNS name in the Subject Alternative Name extension
+  - *Subject DN*: Distinguished name of the certificate subject (e.g., ``CN=myclient,O=Example,C=FR``)
+  - *SAN Email*: Email address in the SAN extension
+  - *SAN IP*: IP address in the SAN extension
+  - *SAN URI*: URI in the SAN extension
+
+- **Expected certificate identifier**: The expected value for the selected
+  identifier type
+
+Both fields should be configured when using ``tls_client_auth`` method.
+The web server must export one of the following environment variables
+*(the ones chosen to identify clients)*:
+
+- ``SSL_CLIENT_S_DN``: Client certificate Subject DN
+- ``SSL_CLIENT_SAN_DNS_0``: First DNS SAN entry
+- ``SSL_CLIENT_SAN_Email_0``: First Email SAN entry
+- ``SSL_CLIENT_SAN_IP_0``: First IP SAN entry
+- ``SSL_CLIENT_SAN_URI_0``: First URI SAN entry
+
+.. important::
+
+   ``SSL_CLIENT_S_DN`` must **always** be exported by the web server, even when
+   another identifier type (SAN DNS, Email, IP or URI) is used for matching.
+   LemonLDAP::NG relies on the presence of this variable to detect that the
+   ``tls_client_auth`` method is being used and to trigger the mTLS logic. If it
+   is missing, the token endpoint request silently falls back to the ``none``
+   authentication method.
+
+.. note::
+
+   Web servers do not all expose the same certificate variables out of the box:
+
+   - **Nginx** only exposes the Subject DN (``$ssl_client_s_dn`` →
+     ``SSL_CLIENT_S_DN``). SAN entries are not available natively, so with Nginx
+     you should either use the *Subject DN* identifier type, or extract and
+     export the required SAN value yourself.
+   - **Apache** exposes ``SSL_CLIENT_S_DN``, ``SSL_CLIENT_SAN_DNS_n`` and
+     ``SSL_CLIENT_SAN_Email_n``. SAN IP and SAN URI are not exported natively and
+     would require a custom configuration to be used as identifiers.
+
+**Web Server Configuration Examples**
+
+The endpoints (``/oauth2/token``, ``/oauth2/introspect``, ``/oauth2/revoke``)
+must request a client certificate and pass its attributes to LemonLDAP::NG.
+Use ``optional`` verification so that clients authenticating with another method
+(``client_secret_basic``, ``private_key_jwt``, …) are still accepted.
+
+With Apache:
+
+.. code-block:: apache
+
+   SSLVerifyClient optional
+   SSLVerifyDepth 10
+   SSLCACertificateFile /etc/apache2/ssl/ca.crt
+   # Export SSL_CLIENT_S_DN, SSL_CLIENT_SAN_DNS_n, SSL_CLIENT_SAN_Email_n, ...
+   SSLOptions +StdEnvVars +ExportCertData
+
+With Nginx, only the Subject DN is available natively; forward it so that the
+mTLS logic is triggered and *Subject DN* matching works:
+
+.. code-block:: nginx
+
+   ssl_verify_client optional;
+   ssl_verify_depth 10;
+   ssl_client_certificate /etc/nginx/ssl/ca.pem;
+
+   # Always forward the Subject DN: it triggers the mTLS logic and
+   # enables the "Subject DN" identifier type
+   fastcgi_param SSL_CLIENT_S_DN $ssl_client_s_dn;
+
+.. note::
+
+   Nginx does not expose the certificate SAN entries. To use a *SAN DNS*,
+   *SAN Email*, *SAN IP* or *SAN URI* identifier type with Nginx, you must
+   extract the value from the client certificate yourself (for example from
+   ``$ssl_client_escaped_cert``) and forward it as ``SSL_CLIENT_SAN_DNS_0``,
+   ``SSL_CLIENT_SAN_Email_0``, etc. Otherwise, use the *Subject DN* type.
+
+See :doc:`authssl` for more complete Apache and Nginx virtual host examples.
 
 Hashed Token Storage
 """"""""""""""""""""

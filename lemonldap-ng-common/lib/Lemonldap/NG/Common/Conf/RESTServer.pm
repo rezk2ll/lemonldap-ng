@@ -98,7 +98,6 @@ sub getConfByNum {
 #  - other special nodes:
 #    * authChoiceModules()
 #    * grantSessionRules()
-#    * openIdIDPList() (old OpenID)
 #    * applicationList()
 #  - root:
 #    root query (/confs/latest for example) is redirected to metadata()
@@ -672,21 +671,6 @@ sub grantSessionRules {
           };
     }
     return $self->sendJSONresponse( $req, \@res );
-}
-
-# 323 - (old)OpenID IDP black/white list
-
-##method PSGI-JSON-response openIdIDPList($req)
-# Split openIdIDPList parameter into 2 elements
-sub openIdIDPList {
-    my ( $self, $req, $key ) = @_;
-    return $self->sendError( $req, 'Subkeys forbidden for openIdIDPList', 400 )
-      if ($key);
-    my $value = $self->getConfKey( $req, 'openIdIDPList' );
-    $value //= '0;';
-    my ( $type, $v ) = split /;/, $value;
-    $v //= '';
-    return $self->sendJSONresponse( $req, { value => [ $type, $v ] } );
 }
 
 # 324 - Application for menu

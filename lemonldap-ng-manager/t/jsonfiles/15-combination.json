@@ -279,10 +279,6 @@
         "v": "Twitter"
       },
       {
-        "k": "WebID",
-        "v": "WebID"
-      },
-      {
         "k": "Yubikey",
         "v": "Yubikey"
       },
@@ -301,10 +297,6 @@
       {
         "k": "CAS",
         "v": "Central Authentication Service (CAS)"
-      },
-      {
-        "k": "OpenID",
-        "v": "OpenID"
       },
       {
         "k": "OpenIDConnect",
@@ -457,10 +449,6 @@
             "v": "None"
           },
           {
-            "k": "OpenID",
-            "v": "OpenID"
-          },
-          {
             "k": "OpenIDConnect",
             "v": "OpenID Connect"
           },
@@ -491,10 +479,6 @@
           {
             "k": "Twitter",
             "v": "Twitter"
-          },
-          {
-            "k": "WebID",
-            "v": "WebID"
           },
           {
             "k": "Yubikey",
@@ -529,10 +513,6 @@
             "v": "None"
           },
           {
-            "k": "OpenID",
-            "v": "OpenID"
-          },
-          {
             "k": "OpenIDConnect",
             "v": "OpenID Connect"
           },
@@ -551,10 +531,6 @@
           {
             "k": "Slave",
             "v": "Slave"
-          },
-          {
-            "k": "WebID",
-            "v": "WebID"
           }],
           [{
             "k": "AD",
@@ -1063,10 +1039,6 @@
           "v": "Twitter"
         },
         {
-          "k": "WebID",
-          "v": "WebID"
-        },
-        {
           "k": "Yubikey",
           "v": "Yubikey"
         },
@@ -1077,10 +1049,6 @@
         {
           "k": "CAS",
           "v": "Central Authentication Service (CAS)"
-        },
-        {
-          "k": "OpenID",
-          "v": "OpenID"
         },
         {
           "k": "OpenIDConnect",
@@ -1142,35 +1110,6 @@
       "show": false,
       "title": "nullParams",
       "type": "simpleInputContainer"
-    },
-    {
-      "_nodes": [{
-        "default": 1,
-        "id": "openIdAuthnLevel",
-        "title": "openIdAuthnLevel",
-        "type": "int"
-      },
-      {
-        "cnodes": "openIdExportedVars",
-        "default": [],
-        "id": "openIdExportedVars",
-        "title": "openIdExportedVars",
-        "type": "keyTextContainer"
-      },
-      {
-        "id": "openIdSecret",
-        "title": "openIdSecret"
-      },
-      {
-        "default": "0;",
-        "id": "openIdIDPList",
-        "title": "openIdIDPList",
-        "type": "blackWhiteList"
-      }],
-      "help": "authopenid.html",
-      "id": "openidParams",
-      "show": false,
-      "title": "openidParams"
     },
     {
       "_nodes": [{
@@ -1363,29 +1302,6 @@
     },
     {
       "_nodes": [{
-        "default": 1,
-        "id": "webIDAuthnLevel",
-        "title": "webIDAuthnLevel",
-        "type": "int"
-      },
-      {
-        "cnodes": "webIDExportedVars",
-        "default": [],
-        "id": "webIDExportedVars",
-        "title": "webIDExportedVars",
-        "type": "keyTextContainer"
-      },
-      {
-        "id": "webIDWhitelist",
-        "title": "webIDWhitelist"
-      }],
-      "help": "authwebid.html",
-      "id": "webidParams",
-      "show": false,
-      "title": "webidParams"
-    },
-    {
-      "_nodes": [{
         "default": 3,
         "id": "yubikeyAuthnLevel",
         "title": "yubikeyAuthnLevel",
@@ -1499,91 +1415,6 @@
       "help": "idpcas.html",
       "id": "issuerDBCAS",
       "title": "issuerDBCAS"
-    },
-    {
-      "_nodes": [{
-        "default": 0,
-        "id": "issuerDBOpenIDActivation",
-        "title": "issuerDBOpenIDActivation",
-        "type": "bool"
-      },
-      {
-        "default": "^/openidserver/",
-        "id": "issuerDBOpenIDPath",
-        "title": "issuerDBOpenIDPath"
-      },
-      {
-        "default": 1,
-        "id": "issuerDBOpenIDRule",
-        "title": "issuerDBOpenIDRule",
-        "type": "boolOrExpr"
-      },
-      {
-        "_nodes": [{
-          "id": "openIdIssuerSecret",
-          "title": "openIdIssuerSecret"
-        },
-        {
-          "id": "openIdAttr",
-          "title": "openIdAttr"
-        },
-        {
-          "default": "0;",
-          "id": "openIdSPList",
-          "title": "openIdSPList",
-          "type": "blackWhiteList"
-        },
-        {
-          "_nodes": [{
-            "default": "cn",
-            "id": "openIdSreg_fullname",
-            "title": "openIdSreg_fullname"
-          },
-          {
-            "default": "uid",
-            "id": "openIdSreg_nickname",
-            "title": "openIdSreg_nickname"
-          },
-          {
-            "id": "openIdSreg_language",
-            "title": "openIdSreg_language"
-          },
-          {
-            "id": "openIdSreg_postcode",
-            "title": "openIdSreg_postcode"
-          },
-          {
-            "default": "_timezone",
-            "id": "openIdSreg_timezone",
-            "title": "openIdSreg_timezone"
-          },
-          {
-            "id": "openIdSreg_country",
-            "title": "openIdSreg_country"
-          },
-          {
-            "id": "openIdSreg_gender",
-            "title": "openIdSreg_gender"
-          },
-          {
-            "default": "mail",
-            "id": "openIdSreg_email",
-            "title": "openIdSreg_email"
-          },
-          {
-            "id": "openIdSreg_dob",
-            "title": "openIdSreg_dob"
-          }],
-          "id": "openIdSreg",
-          "title": "openIdSreg",
-          "type": "simpleInputContainer"
-        }],
-        "id": "issuerDBOpenIDOptions",
-        "title": "issuerDBOpenIDOptions"
-      }],
-      "help": "idpopenid.html",
-      "id": "issuerDBOpenID",
-      "title": "issuerDBOpenID"
     },
     {
       "_nodes": [{

@@ -389,10 +389,6 @@ sub attributes {
                         'v' => 'None'
                     },
                     {
-                        'k' => 'OpenID',
-                        'v' => 'OpenID 2.0 (deprecated)'
-                    },
-                    {
                         'k' => 'OpenIDConnect',
                         'v' => 'OpenID Connect'
                     },
@@ -427,10 +423,6 @@ sub attributes {
                     {
                         'k' => 'Twitter',
                         'v' => 'Twitter'
-                    },
-                    {
-                        'k' => 'WebID',
-                        'v' => 'WebID (deprecated)'
                     },
                     {
                         'k' => 'WebAuthn',
@@ -474,10 +466,6 @@ sub attributes {
                         'v' => 'None'
                     },
                     {
-                        'k' => 'OpenID',
-                        'v' => 'OpenID 2.0 (deprecated)'
-                    },
-                    {
                         'k' => 'OpenIDConnect',
                         'v' => 'OpenID Connect'
                     },
@@ -500,10 +488,6 @@ sub attributes {
                     {
                         'k' => 'Slave',
                         'v' => 'Slave'
-                    },
-                    {
-                        'k' => 'WebID',
-                        'v' => 'WebID (deprecated)'
                     },
                     {
                         'k' => 'Combination',
@@ -620,10 +604,6 @@ sub attributes {
                     'v' => 'Twitter'
                 },
                 {
-                    'k' => 'WebID',
-                    'v' => 'WebID (deprecated)'
-                },
-                {
                     'k' => 'WebAuthn',
                     'v' => 'WebAuthn'
                 },
@@ -642,10 +622,6 @@ sub attributes {
                 {
                     'k' => 'CAS',
                     'v' => 'Central Authentication Service (CAS)'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
@@ -1155,10 +1131,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                     'v' => 'Twitter'
                 },
                 {
-                    'k' => 'WebID',
-                    'v' => 'WebID (deprecated)'
-                },
-                {
                     'k' => 'WebAuthn',
                     'v' => 'WebAuthn'
                 },
@@ -1169,10 +1141,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'CAS',
                     'v' => 'Central Authentication Service (CAS)'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID 2.0 (deprecated)'
                 },
                 {
                     'k' => 'OpenIDConnect',
@@ -1850,10 +1818,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
-        'issuerDBOpenIDActivation' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'issuerDBOpenIDConnectActivation' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1863,14 +1827,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'issuerDBOpenIDConnectRule' => {
-            'default' => 1,
-            'type'    => 'boolOrExpr'
-        },
-        'issuerDBOpenIDPath' => {
-            'default' => '^/openidserver/',
-            'type'    => 'pcre'
-        },
-        'issuerDBOpenIDRule' => {
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
@@ -3114,6 +3070,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => 'private_key_jwt',
                     'v' => 'private_key_jwt'
+                },
+                {
+                    'k' => 'tls_client_auth',
+                    'v' => 'tls_client_auth'
                 }
             ],
             'type' => 'select'
@@ -3519,6 +3479,33 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsMtlsCertIdentifier' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsMtlsCertIdentifierType' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'SAN DNS'
+                },
+                {
+                    'k' => 'DN',
+                    'v' => 'Subject DN'
+                },
+                {
+                    'k' => 'Email',
+                    'v' => 'SAN Email'
+                },
+                {
+                    'k' => 'IP',
+                    'v' => 'SAN IP'
+                },
+                {
+                    'k' => 'URI',
+                    'v' => 'SAN URI'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsNoJwtHeader' => {
             'default' => 0,
@@ -4088,66 +4075,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'okta2fLogo' => {
             'type' => 'text'
-        },
-        'openIdAttr' => {
-            'type' => 'text'
-        },
-        'openIdAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'openIdExportedVars' => {
-            'default'    => {},
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
-        },
-        'openIdIDPList' => {
-            'default' => '0;',
-            'type'    => 'blackWhiteList'
-        },
-        'openIdIssuerSecret' => {
-            'type' => 'text'
-        },
-        'openIdSecret' => {
-            'type' => 'text'
-        },
-        'openIdSPList' => {
-            'default' => '0;',
-            'type'    => 'blackWhiteList'
-        },
-        'openIdSreg_country' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_dob' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_email' => {
-            'default' => 'mail',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_fullname' => {
-            'default' => 'cn',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_gender' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_language' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_nickname' => {
-            'default' => 'uid',
-            'type'    => 'lmAttrOrMacro'
-        },
-        'openIdSreg_postcode' => {
-            'type' => 'lmAttrOrMacro'
-        },
-        'openIdSreg_timezone' => {
-            'default' => '_timezone',
-            'type'    => 'lmAttrOrMacro'
         },
         'pamAuthnLevel' => {
             'default' => 2,
@@ -6239,21 +6166,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'text'
         },
         'webCronSecret' => {
-            'type' => 'text'
-        },
-        'webIDAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'webIDExportedVars' => {
-            'default'    => {},
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
-        },
-        'webIDWhitelist' => {
             'type' => 'text'
         },
         'whatToTrace' => {

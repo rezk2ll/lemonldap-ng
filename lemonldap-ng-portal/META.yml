@@ -28,13 +28,10 @@ build_requires:
   Net::Facebook::Oauth2: '0'
   Net::LDAP: '0.38'
   Net::OAuth: '0'
-  Net::OpenID::Consumer: '0'
-  Net::OpenID::Server: '0'
   Net::SSLeay: '0'
   SOAP::Lite: '0'
   Text::Unidecode: '0'
   Time::Fake: '0'
-  Web::ID: '0'
   XML::LibXML: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
@@ -73,14 +70,11 @@ recommends:
   Net::Facebook::Oauth2: '0'
   Net::LDAP: '0.38'
   Net::OAuth: '0'
-  Net::OpenID::Consumer: '0'
-  Net::OpenID::Server: '0'
   SOAP::Lite: '0'
   Text::Unidecode: '0'
-  Web::ID: '0'
 requires:
   Clone: '0'
-  Lemonldap::NG::Handler: v2.23.1
+  Lemonldap::NG::Handler: v2.23.2
   Regexp::Assemble: '0'
 resources:
   MailingList: mailto:lemonldap-ng-dev@ow2.org
@@ -88,5 +82,5 @@ resources:
   bugtracker: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
   homepage: https://lemonldap-ng.org/
   license: http://opensource.org/licenses/GPL-2.0
-version: v2.23.1
+version: v2.23.2
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'
