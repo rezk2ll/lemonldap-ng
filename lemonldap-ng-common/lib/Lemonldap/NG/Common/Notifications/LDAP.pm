@@ -13,7 +13,7 @@ use MIME::Base64 qw/encode_base64url/;
 use IO::Socket::Timeout;
 use Net::LDAP;
 
-our $VERSION = '3.0';
+our $VERSION = '3.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
