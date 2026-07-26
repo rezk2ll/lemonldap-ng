@@ -12,7 +12,7 @@ use IO::Socket::Timeout;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
-our $VERSION = '3.0';
+our $VERSION = '3.0.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::getLdapConnection = \&getLdapConnection;
@@ -99,9 +99,10 @@ sub getLdapConnection {
         push @servers, $server;
     }
 
-    $tlsParams{cafile}     ||= $self->{ldapCAFile} if $self->{ldapCAFile};
+    $tlsParams{verify} ||= $self->{ldapVerify} || 'require';
+    $tlsParams{cafile} ||= $self->{ldapCAFile}
+      if $self->{ldapCAFile};
     $tlsParams{capath}     ||= $self->{ldapCAPath} if $self->{ldapCAPath};
-    $tlsParams{verify}     ||= $self->{ldapVerify} if $self->{ldapVerify};
     $tlsParams{clientcert} ||= $self->{ldapClientCert}
       if $self->{ldapClientCert};
     $tlsParams{clientkey} ||= $self->{ldapClientKey}
