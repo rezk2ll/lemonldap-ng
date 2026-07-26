@@ -65,8 +65,10 @@ has ldapVerify => (
 
 has ldapConfBase => (
     is      => 'ro',
-    default => sub {
-        $_[0]->{ldapConfBase};
+    trigger => sub {
+        if ( my $table = $_[0]->{table} ) {
+            $_[0]->{ldapConfBase} =~ s/^\w+=\w+(,.*)$/ou=$table$1/;
+        }
     }
 );
 
@@ -494,7 +496,7 @@ sub newLdap {
     $tlsParams{capath}     ||= $self->ldapCAPath if $self->ldapCAPath;
     $tlsParams{verify}     ||= $self->ldapVerify if $self->ldapVerify;
     $tlsParams{clientcert} ||= $self->ldapClientCert
-      if $self->{ldapClientCert};
+      if $self->ldapClientCert;
     $tlsParams{clientkey} ||= $self->ldapClientKey
       if $self->ldapClientKey;
     require Authen::SASL if $self->ldapClientCert;
