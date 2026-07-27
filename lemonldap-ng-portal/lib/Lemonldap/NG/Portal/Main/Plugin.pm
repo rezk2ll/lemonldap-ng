@@ -53,6 +53,10 @@ sub _addRoute {
         else {
             return sub {
                 shift;
+                eval {
+                    $self->logger->debug(
+                        "Dispatching request to " . ref($self) . "::$sub" );
+                };
                 return $self->$sub(@_);
             }
         }
