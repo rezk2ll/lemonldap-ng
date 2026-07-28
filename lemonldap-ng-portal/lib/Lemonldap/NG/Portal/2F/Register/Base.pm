@@ -2,7 +2,7 @@
 package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
-use Lemonldap::NG::Portal::Main::Constants qw/PE_OK PE_ERROR/;
+use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
 
 our $VERSION = '2.23.0';

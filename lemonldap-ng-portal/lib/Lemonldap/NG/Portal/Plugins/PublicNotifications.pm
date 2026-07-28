@@ -3,10 +3,7 @@ package Lemonldap::NG::Portal::Plugins::PublicNotifications;
 use strict;
 use JSON;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '3.0';
 

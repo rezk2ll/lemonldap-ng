@@ -6,9 +6,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 

@@ -14,12 +14,7 @@ use POSIX qw(strftime);    # Convert SAML2 date into timestamp
 use Time::Local;           # Convert SAML2 date into timestamp
 use Encode;                # Encode attribute values
 use URI;                   # Get metadata URL path
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_REDIRECT
-  PE_LOGOUT_OK
-  PE_SLO_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 

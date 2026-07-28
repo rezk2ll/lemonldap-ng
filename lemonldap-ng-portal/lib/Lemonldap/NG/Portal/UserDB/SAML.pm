@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::UserDB::SAML;
 use strict;
 use Encode;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SAML_ATTR_ERROR
-  PE_SAML_LOAD_IDP_ERROR
-  PE_SAML_LOAD_SERVICE_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

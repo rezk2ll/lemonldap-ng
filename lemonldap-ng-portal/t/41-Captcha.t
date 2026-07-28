@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use IO::String;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants 'PE_CAPTCHAERROR';
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 

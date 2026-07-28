@@ -2,17 +2,7 @@ package Lemonldap::NG::Portal::Plugins::ContextSwitching;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_REDIRECT
-  PE_TOKENEXPIRED
-  PE_MALFORMEDUSER
-  PE_BADCREDENTIALS
-  PE_SESSIONEXPIRED
-  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.22.0';
 

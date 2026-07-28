@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Register::Demo;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_MALFORMEDUSER
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Register::Base';
 

@@ -2,12 +2,7 @@ package Lemonldap::NG::Portal::UserDB::DBI;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_USERNOTFOUND
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Main::UserDB

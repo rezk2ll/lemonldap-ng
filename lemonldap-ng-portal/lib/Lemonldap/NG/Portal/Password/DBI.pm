@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Password::DBI;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
-  PE_PASSWORD_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Lib::DBI

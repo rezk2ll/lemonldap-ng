@@ -3,11 +3,7 @@ package Lemonldap::NG::Portal::Auth::PAM;
 use strict;
 use Mouse;
 use Authen::PAM;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 

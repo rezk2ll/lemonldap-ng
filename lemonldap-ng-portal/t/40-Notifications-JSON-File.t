@@ -6,7 +6,7 @@ use IO::String;
 use JSON;
 
 require 't/test-lib.pm';
-use Lemonldap::NG::Portal::Main::Constants 'PE_NOTIFICATION';
+use Lemonldap::NG::Portal::Main::Constants;
 
 my $res;
 my $json;

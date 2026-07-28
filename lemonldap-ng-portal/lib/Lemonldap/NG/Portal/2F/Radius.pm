@@ -3,14 +3,7 @@ package Lemonldap::NG::Portal::2F::Radius;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::Radius;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_SENDRESPONSE
-  PE_MALFORMEDUSER
-  PE_RADIUSCONNECTFAILED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.21.0';
 

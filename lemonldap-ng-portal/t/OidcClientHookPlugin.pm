@@ -3,7 +3,7 @@ package t::OidcClientHookPlugin;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants;
 
 # Markers to track hook calls
 our $authzCallbackHookCalled = '';

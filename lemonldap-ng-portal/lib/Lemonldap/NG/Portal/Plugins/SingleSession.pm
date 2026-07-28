@@ -5,12 +5,7 @@ use Mouse;
 use MIME::Base64;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Session 'id2storage';
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

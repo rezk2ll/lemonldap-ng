@@ -12,16 +12,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Util qw/display2F/;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_ERROR
-  PE_BADOTP
-  PE_FORMEMPTY
-  PE_SENDRESPONSE
-  portalConsts
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 

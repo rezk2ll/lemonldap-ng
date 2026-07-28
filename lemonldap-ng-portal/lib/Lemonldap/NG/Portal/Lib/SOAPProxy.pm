@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::Lib::SOAPProxy;
 use strict;
 use Mouse;
 use SOAP::Lite;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  URIRE
-  PE_OK
-  PE_ERROR
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.0.14';
 

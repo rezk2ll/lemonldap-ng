@@ -3,9 +3,7 @@ package Lemonldap::NG::Portal::Plugins::AutoSignin;
 use strict;
 use Mouse;
 use Safe;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.8';
 

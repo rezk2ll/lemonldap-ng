@@ -4,12 +4,7 @@ use strict;
 use Mouse;
 
 # Add constants used by this module
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_FORBIDDENIP
-  PE_USERNOTFOUND
-  PE_MALFORMEDUSER
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

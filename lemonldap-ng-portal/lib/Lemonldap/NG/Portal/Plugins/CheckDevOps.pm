@@ -5,16 +5,7 @@ use Mouse;
 use JSON qw(from_json);
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  URIRE
-  PE_OK
-  PE_BADURL
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_FILENOTFOUND
-  PE_BAD_DEVOPS_FILE
-  PE_REGISTERFORMEMPTY
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 

@@ -7,13 +7,7 @@ package Lemonldap::NG::Portal::2F::TOTP;
 use strict;
 use Mouse;
 use JSON                                   qw(from_json to_json);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_FORMEMPTY
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 use Lemonldap::NG::Common::Util qw/display2F/;
 
 our $VERSION = '2.23.0';

@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::Choice;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.21.0';
 

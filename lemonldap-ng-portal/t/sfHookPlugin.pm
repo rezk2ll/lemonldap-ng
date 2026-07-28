@@ -3,7 +3,7 @@ package t::sfHookPlugin;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADOTP);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $hookResult = PE_OK;
 

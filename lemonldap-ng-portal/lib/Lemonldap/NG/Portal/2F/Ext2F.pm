@@ -2,15 +2,7 @@ package Lemonldap::NG::Portal::2F::Ext2F;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_NOTOKEN
-  PE_FORMEMPTY
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.16';
 

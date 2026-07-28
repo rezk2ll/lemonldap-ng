@@ -10,13 +10,7 @@ use JSON         qw(from_json to_json);
 use MIME::Base64 qw(encode_base64url decode_base64url);
 use Crypt::URandom;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_WEBAUTHNFAILED
-  PE_ERROR
-  PE_SENDRESPONSE
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

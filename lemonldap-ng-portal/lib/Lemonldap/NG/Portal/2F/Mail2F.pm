@@ -2,14 +2,7 @@ package Lemonldap::NG::Portal::2F::Mail2F;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_FORMEMPTY
-  PE_MUSTHAVEMAIL
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.16';
 

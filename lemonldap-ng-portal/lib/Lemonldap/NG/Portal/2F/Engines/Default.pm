@@ -14,17 +14,7 @@ use Mouse;
 use MIME::Base64                           qw(encode_base64);
 use JSON                                   qw(from_json to_json);
 use POSIX                                  qw(strftime);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_SENDRESPONSE
-  PE_BADCREDENTIALS
-  PE_TOKENEXPIRED
-  PE_NO_SECOND_FACTORS
-  PE_RETRY_2FA
-  portalConsts
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
 

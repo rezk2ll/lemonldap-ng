@@ -4,10 +4,7 @@ use strict;
 use IO::String;
 use JSON;
 use LWP::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_PP_PASSWORD_TOO_SHORT PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-  PE_PP_NOT_ALLOWED_CHARACTER PE_PP_NOT_ALLOWED_CHARACTERS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 

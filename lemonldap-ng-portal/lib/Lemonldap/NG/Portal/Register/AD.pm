@@ -3,10 +3,7 @@ package Lemonldap::NG::Portal::Register::AD;
 use strict;
 use Mouse;
 use Encode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_LDAPERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Register::LDAP';
 

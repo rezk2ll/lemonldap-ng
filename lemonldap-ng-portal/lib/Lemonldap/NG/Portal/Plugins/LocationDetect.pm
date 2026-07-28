@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::LocationDetect;
 use Mouse;
 use List::MoreUtils                        qw/uniq/;
 use Scalar::Util                           qw/blessed/;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants;
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
   Lemonldap::NG::Portal::Lib::SMTP
