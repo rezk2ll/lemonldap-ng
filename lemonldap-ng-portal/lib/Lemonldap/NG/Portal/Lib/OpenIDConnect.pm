@@ -1896,13 +1896,16 @@ sub createHash {
 # @return void
 
 sub returnRedirectError {
-    my ( $self, $req, $redirect_url, $error, $error_description,
-        $error_uri, $state, $fragment )
-      = @_;
+    my (
+        $self,  $req,               $redirect_url,
+        $error, $error_description, $error_uri,
+        $state, $fragment,          $rp
+    ) = @_;
 
     my $reason = $error_description ? ": $error_description" : "";
     $self->auditLog(
         $req,
+        rp      => $rp,
         code    => "ISSUER_OIDC_LOGIN_FAILED",
         message => ( "OIDC login failed" . $reason ),
         ( $error_description ? ( reason => $error_description ) : () ),
