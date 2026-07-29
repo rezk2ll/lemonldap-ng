@@ -6,22 +6,7 @@ use URI;
 use URI::QueryParam;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  portalConsts
-  PE_OK
-  PE_REDIRECT
-  PE_SESSIONEXPIRED
-  PE_SAML_ART_ERROR
-  PE_SAML_DESTINATION_ERROR
-  PE_SAML_SESSION_ERROR
-  PE_SAML_SIGNATURE_ERROR
-  PE_SLO_ERROR
-  PE_SAML_SSO_ERROR
-  PE_ISSUERMISSINGREQATTR
-  PE_UNKNOWNPARTNER
-  PE_SAML_SERVICE_NOT_ALLOWED
-  PE_UNAUTHORIZEDPARTNER
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 

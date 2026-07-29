@@ -4,12 +4,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use Lemonldap::NG::Common::Session;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  URIRE
-  PE_OK
-  PE_ERROR
-  PE_REDIRECT
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.19.0';
 

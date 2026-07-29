@@ -3,10 +3,7 @@ package Lemonldap::NG::Portal::Lib::Choice;
 use strict;
 use Mouse;
 use Safe;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  URIRE
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';

@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::UserDB::Proxy;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Main::UserDB';
 

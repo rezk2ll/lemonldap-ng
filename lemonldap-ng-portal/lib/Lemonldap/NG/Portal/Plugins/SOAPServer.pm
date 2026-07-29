@@ -13,11 +13,7 @@ package Lemonldap::NG::Portal::Plugins::SOAPServer;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_FORMEMPTY
-  URIRE
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 

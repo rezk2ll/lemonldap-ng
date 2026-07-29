@@ -35,7 +35,7 @@ my $client = LLNG::Manager::Test->new( {
         }
     }
 );
-use Lemonldap::NG::Portal::Main::Constants 'PE_NOTIFICATION';
+use Lemonldap::NG::Portal::Main::Constants;
 
 # Display login page with public notifications
 # -------------------

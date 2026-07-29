@@ -3,13 +3,7 @@ use Test::More;
 use strict;
 use IO::String;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_PP_PASSWORD_TOO_LONG
-  PE_PP_PASSWORD_TOO_SHORT
-  PE_PP_NOT_ALLOWED_CHARACTER
-  PE_PP_NOT_ALLOWED_CHARACTERS
-  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 

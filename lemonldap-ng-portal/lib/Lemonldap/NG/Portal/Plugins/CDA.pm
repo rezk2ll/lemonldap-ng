@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::Plugins::CDA;
 use strict;
 use Mouse;
 use URI;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_APACHESESSIONERROR
-  PE_ERROR
-  PE_OK
-  URIRE
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.0.14';
 

@@ -4,7 +4,7 @@ use strict;
 use IO::String;
 use Data::Dumper;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants 'PE_TOKENEXPIRED';
+use Lemonldap::NG::Portal::Main::Constants;
 
 BEGIN {
     require 't/test-lib.pm';

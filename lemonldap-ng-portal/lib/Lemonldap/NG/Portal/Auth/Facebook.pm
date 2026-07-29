@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants;
 use utf8;
 
 our $VERSION = '2.19.0';

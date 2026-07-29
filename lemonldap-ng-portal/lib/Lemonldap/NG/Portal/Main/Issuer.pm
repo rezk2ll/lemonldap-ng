@@ -323,7 +323,7 @@ Lemonldap::NG::Portal::Main::Issuer - Base class for identity providers.
   use strict;
   use Mouse;
   extends 'Lemonldap::NG::Portal::Main::Issuer';
-  use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+  use Lemonldap::NG::Portal::Main::Constants;
 
   # Required: URL root path
   use constant path => 'saml';

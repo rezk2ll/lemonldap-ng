@@ -3,10 +3,7 @@ package Lemonldap::NG::Portal::Plugins::OIDC::DynamicRegistration;
 use strict;
 use Mouse;
 use String::Random                         qw/random_string/;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

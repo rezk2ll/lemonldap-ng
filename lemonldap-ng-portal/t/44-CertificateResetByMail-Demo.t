@@ -6,10 +6,7 @@ use File::Copy;
 use HTTP::Request::Common;
 use utf8;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_RESETCERTIFICATE_INVALID PE_RESETCERTIFICATE_FORMEMPTY
-  PE_RESETCERTIFICATE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 BEGIN {
     eval {

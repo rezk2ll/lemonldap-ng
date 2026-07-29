@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 

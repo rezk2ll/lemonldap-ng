@@ -2,12 +2,7 @@ package Lemonldap::NG::Portal::Plugins::FindUser;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_NOTOKEN
-  PE_FIRSTACCESS
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.22.0';
 

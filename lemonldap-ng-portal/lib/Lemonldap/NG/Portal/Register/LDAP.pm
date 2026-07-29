@@ -2,12 +2,7 @@ package Lemonldap::NG::Portal::Register::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_LDAPERROR
-  PE_MALFORMEDUSER
-  PE_LDAPCONNECTFAILED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Lib::LDAP

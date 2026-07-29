@@ -5,24 +5,7 @@ use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  portalConsts
-  PE_OK
-  PE_DONE
-  PE_ERROR
-  PE_CONFIRM
-  PE_REDIRECT
-  PE_LOGOUT_OK
-  PE_PASSWORD_OK
-  PE_BADCREDENTIALS
-  PE_UNAUTHORIZEDURL
-  PE_UNAUTHORIZEDPARTNER
-  PE_UNKNOWNPARTNER
-  PE_OIDC_SERVICE_NOT_ALLOWED
-  PE_FIRSTACCESS
-  PE_SENDRESPONSE
-  PE_SLO_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.1';
 

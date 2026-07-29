@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::UserDB::OpenIDConnect;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::JWT 'getJWTPayload';
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OIDC_AUTH_ERROR
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

@@ -4,20 +4,7 @@ use strict;
 use Mouse;
 use URI;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  portalConsts
-  URIRE
-  PE_OK
-  PE_INFO
-  PE_ERROR
-  PE_LOGOUT_OK
-  PE_SENDRESPONSE
-  PE_UNKNOWNPARTNER
-  PE_UNAUTHORIZEDURL
-  PE_UNAUTHORIZEDPARTNER
-  PE_BADURL
-  PE_CAS_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 

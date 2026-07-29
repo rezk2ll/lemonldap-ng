@@ -3,11 +3,7 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_MALFORMEDUSER
-  PE_OK PE_BADCREDENTIALS
-  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

@@ -514,10 +514,9 @@ $portalConstsStr
 }
 
 # EXPORTER PARAMETERS
-our \@EXPORT_OK = ( 'portalConsts', 'HANDLER', 'URIRE', $exports );
-our %EXPORT_TAGS = ( 'all' => [ \@EXPORT_OK, 'import' ], );
-
-our \@EXPORT = qw(import PE_OK);
+our \@EXPORT_OK = ( 'portalConsts', 'HANDLER', 'URIRE' );
+our \@EXPORT = ('import', $exports);
+our %EXPORT_TAGS = ( 'all' => [ \@EXPORT, \@EXPORT_OK, 'import' ], );
 
 1;
 EOF

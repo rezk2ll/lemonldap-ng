@@ -32,7 +32,7 @@ my $client = LLNG::Manager::Test->new( {
         }
     }
 );
-use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
+use Lemonldap::NG::Portal::Main::Constants;
 
 ## Simple access
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );

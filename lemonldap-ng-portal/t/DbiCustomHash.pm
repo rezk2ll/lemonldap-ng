@@ -1,6 +1,6 @@
 package t::DbiCustomHash;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_DONE);
+use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

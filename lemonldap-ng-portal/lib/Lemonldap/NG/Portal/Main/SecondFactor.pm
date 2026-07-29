@@ -2,14 +2,7 @@ package Lemonldap::NG::Portal::Main::SecondFactor;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.20.0';
 

@@ -41,9 +41,7 @@ use strict;
 use utf8;
 use IO::String;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 

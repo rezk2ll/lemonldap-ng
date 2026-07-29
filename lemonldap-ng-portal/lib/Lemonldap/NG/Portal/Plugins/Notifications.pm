@@ -14,11 +14,7 @@ package Lemonldap::NG::Portal::Plugins::Notifications;
 use strict;
 use Mouse;
 use MIME::Base64;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTIFICATION
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '3.0';
 

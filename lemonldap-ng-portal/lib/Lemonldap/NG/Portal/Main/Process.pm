@@ -8,7 +8,7 @@ use strict;
 use MIME::Base64;
 use POSIX                                  qw(strftime);
 use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
-use Lemonldap::NG::Portal::Main::Constants qw(portalConsts);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 use URI;
 
 # Main method

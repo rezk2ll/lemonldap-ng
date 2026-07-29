@@ -6,24 +6,7 @@ use Mouse;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_CONFIRM
-  PE_IDPCHOICE
-  PE_LOGOUT_OK
-  PE_REDIRECT
-  PE_SAML_ART_ERROR
-  PE_SAML_CONDITIONS_ERROR
-  PE_SAML_DESTINATION_ERROR
-  PE_SAML_ERROR
-  PE_SAML_IDPSSOINITIATED_NOTALLOWED
-  PE_SAML_SESSION_ERROR
-  PE_SAML_SIGNATURE_ERROR
-  PE_SLO_ERROR
-  PE_SAML_SSO_ERROR
-  PE_SAML_UNKNOWN_ENTITY
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

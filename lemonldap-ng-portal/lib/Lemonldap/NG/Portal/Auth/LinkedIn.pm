@@ -6,7 +6,7 @@ use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_REDIRECT);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.19.0';
 

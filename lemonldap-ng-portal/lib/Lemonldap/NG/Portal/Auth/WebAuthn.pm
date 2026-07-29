@@ -3,14 +3,7 @@ package Lemonldap::NG::Portal::Auth::WebAuthn;
 use strict;
 use Mouse;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
-  PE_WEBAUTHNFAILED
-  PE_FIRSTACCESS
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.21.0';
 

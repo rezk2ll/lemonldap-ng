@@ -7,17 +7,7 @@ package Lemonldap::NG::Portal::Auth::_WebForm;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_NOTOKEN
-  PE_FORMEMPTY
-  PE_FIRSTACCESS
-  PE_CAPTCHAEMPTY
-  PE_CAPTCHAERROR
-  PE_TOKENEXPIRED
-  PE_MALFORMEDUSER
-  PE_PASSWORDFORMEMPTY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.21.0';
 
