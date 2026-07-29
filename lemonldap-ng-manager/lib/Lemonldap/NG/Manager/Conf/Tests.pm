@@ -205,7 +205,25 @@ sub tests {
             return 1;
         },
 
-        # Check that whatToTrace macro exists
+        checkSelfReferentialMacros => sub {
+            my @tmp;
+            foreach my $macro ( keys %{$conf->{macros}} ) {
+                my $code = $conf->{macros}->{$macro};
+                push @tmp, $macro if $code =~ /\$\Q$macro\E\b/;
+            }
+            return (
+                1,
+                (
+                    @tmp
+                    ? 'Macro definitions for "'
+                      . join( ', ', @tmp )
+                      . '" refer to themselves'
+                    : ''
+                )
+            );
+        },
+
+        # Check that OpenID macros exists
         checkAttrAndMacros => sub {
             my @tmp;
             foreach my $k ( keys %$conf ) {
