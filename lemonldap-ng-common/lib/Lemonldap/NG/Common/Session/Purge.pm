@@ -13,6 +13,8 @@ use Time::HiRes;
 use POSIX qw(strftime);
 use IO::Socket::Timeout;
 
+our $VERSION = '3.0.0';
+
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 has logLevel => ( is => 'rw' );
@@ -620,6 +622,7 @@ sub _cleanup_errors {
         );
 
         unless ($ldap) {
+            $self->logger->error("Unable to connect to LDAP server");
             print STDERR "Unable to connect to LDAP server\n";
             $internal_stats->{nb_error}->{$type}++;
             return;
@@ -633,6 +636,7 @@ sub _cleanup_errors {
             if (    $ldap->socket->isa('IO::Socket::SSL')
                 and $ldap->socket->errstr < 0 )
             {
+                $self->logger->error("Unable to connect to LDAP server");
                 print STDERR "Unable to connect to LDAP server\n";
                 $internal_stats->{nb_error}->{$type}++;
                 return;
@@ -640,15 +644,16 @@ sub _cleanup_errors {
         }
 
         # Set socket timeouts
-        my $socket = $ldap->socket;
+        my $socket  = $ldap->socket;
+        my $timeout = $options->{ldapIOTimeout} || 10;
         IO::Socket::Timeout->enable_timeouts_on($socket);
-        $socket->read_timeout( $options->{ldapIOTimeout} );
-        $socket->write_timeout( $options->{ldapIOTimeout} );
+        $socket->read_timeout($timeout);
+        $socket->write_timeout($timeout);
 
         if ($useStartTls) {
-
             my $start_tls = $ldap->start_tls(%tlsParams);
             if ( $start_tls->code ) {
+                $self->logger->error("STARTTLS error");
                 print STDERR "STARTTLS error: "
                   . $start_tls->code . ': '
                   . $start_tls->error;
@@ -662,15 +667,26 @@ sub _cleanup_errors {
             $bind = $ldap->bind( $options->{ldapBindDN},
                 password => $options->{ldapBindPassword} );
         }
-        else {
+        elsif ( $options->{ldapClientCert} && $options->{ldapClientKey} ) {
+            $self->logger->info("mTLS bind will be used");
             my $sasl = Authen::SASL->new(
                 mechanism => 'EXTERNAL',
                 callback  => { user => '' }
             );
             $bind = $ldap->bind( undef, sasl => $sasl );
         }
+        else {
+            $self->logger->warn("Anonymous bind will be used");
+            $bind = $ldap->bind();
+        }
+        if ( $bind->code ) {
+            $self->logger->error(
+                "Bind to LDAP server failed: " . $bind->error );
+            $internal_stats->{nb_error}->{$type}++;
+            return;
+        }
 
-        my $attrId = $options->{ldapAttributeId} | "cn";
+        my $attrId = $options->{ldapAttributeId} || "cn";
         foreach (@errors) {
             my $id = $_;
             my $sessionDn =
