@@ -11,7 +11,6 @@ designing websites such as intranets, professional websites, blogs, home pages.
 
 It can be configured to authenticate users with :doc:`OpenID Connect <../idpopenidconnect>`.
 
-.. versionadded:: 2.0.16
 
    Because Sharepoint requires support for the *OAuth 2.0 Form Post Response Mode*
    feature, it only works starting with LemonLDAP::NG 2.0.16 and above

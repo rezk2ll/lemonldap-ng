@@ -493,7 +493,6 @@ To update the master encryption key:
 Bulk configuration changes
 --------------------------
 
-.. versionadded:: 2.0.15
 
 The ``merge`` subcommand can be used to inject multiple configuration keys and
 variables at once. It reads a list of JSON or YAML formatted files and combines
@@ -566,7 +565,6 @@ Importing the changes:
 
 Sessions Management
 -------------------
-.. versionadded:: 2.0.9
 
 
 Get the content of a session ::
@@ -587,7 +585,6 @@ Modify session ::
       authenticationLevel 1
 
 
-.. versionadded:: 2.0.10
    Delete all sessions by username
 
 ::
@@ -598,7 +595,6 @@ Modify session ::
 Second Factors management
 -------------------------
 
-.. versionadded:: 2.0.9
 
 List second factors of a user ::
 
@@ -611,7 +607,6 @@ Deregister Yubico OTP for a user ::
 OIDC Consents management
 ------------------------
 
-.. versionadded:: 2.0.9
 
 List consents of a user ::
 

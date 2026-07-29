@@ -41,7 +41,6 @@ Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
 Testing your email setup
 ------------------------
 
-.. versionadded:: 2.0.10
 
 You can test your email setup in the ``General Parameters`` > ``Advanced
 Parameters`` > ``SMTP`` page by using the ``Send test email`` button in the
@@ -51,7 +50,6 @@ manager.
 
    You need to save your SMTP configuration before you can test it
 
-.. versionadded:: 2.0.10
 
 You can also test your email setup using the ``test-email`` command in the CLI ::
 

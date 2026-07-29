@@ -48,7 +48,6 @@ Alternatives
 Custom Captcha modules
 ----------------------
 
-.. versionadded:: 2.0.15
 
 If the default Captcha does not meet your requirements, you can replace it with
 a different implementation. See the ``Lemonldap::NG::Portal::Captcha`` manual

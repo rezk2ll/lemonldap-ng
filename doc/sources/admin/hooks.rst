@@ -16,7 +16,6 @@ Discovery endpoint (/.well-known/openid-configuration)
 oidcGenerateMetadata
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG is building the OpenID Connect
 discovery document (``/.well-known/openid-configuration``). It allows plugins
@@ -43,7 +42,6 @@ Authorization endpoint (/oauth2/authorize)
 oidcGotRequest
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG received an authorization request on the ``/oauth2/authorize`` endpoint.
 
@@ -65,7 +63,6 @@ Sample code::
 oidcGenerateCode
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is about to generate an Authorization Code for a Relying Party.
 
@@ -91,7 +88,6 @@ Sample code::
 oidcResolveScope
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is resolving scopes (on authorization and token endpoints).
 
@@ -115,7 +111,6 @@ Sample code::
 oidcValidateRedirectUri
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.22.0
 
 This hook lets you override the built-in URI validation logic
 
@@ -168,7 +163,6 @@ Sample code ::
 oidcGenerateAuthorizationResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG is about to send an authorization
 response to a Relying Party (after the ``/oauth2/authorize`` endpoint completes).
@@ -207,7 +201,6 @@ Token endpoint (/oauth2/token)
 oidcGotClientCredentialsGrant
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG successfully authorized a :ref:`Client Credentials Grant <client-credentials-grant>`.
 
@@ -235,7 +228,6 @@ Sample code::
 oidcGotOnlineRefresh
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
 online session (user session still exists).
@@ -266,7 +258,6 @@ Sample code::
 oidcGotOfflineRefresh
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
 offline session (user session no longer exists).
@@ -297,7 +288,6 @@ Sample code::
 oidcGotTokenExchange
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.16
 
 This hook is triggered when LemonLDAP::NG handles an OAuth 2.0 Token Exchange request.
 
@@ -333,7 +323,6 @@ Sample code::
 oidcGenerateTokenResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.19.0
 
 This hook is triggered when LemonLDAP::NG has generated id_token and access_token
 and is about to send the token response.
@@ -369,7 +358,6 @@ Sample code::
 oidcGotTokenRequest
 ~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when the token endpoint receives a request, before
 processing any grant type. It allows plugins to:
@@ -422,7 +410,6 @@ Token generation
 oidcGenerateAccessToken
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is generating a JWT-formatted Access Token.
 
@@ -431,7 +418,6 @@ The hook's parameters are:
 * A hash of the claims to be contained in the Access Token
 * the configuration key of the relying party which will receive the token
 
-.. versionadded:: 2.22.0
 
 * A hash of additional JWT headers
 
@@ -450,7 +436,6 @@ Sample code::
 oidcGenerateRefreshToken
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG is generating a Refresh Token.
 It allows plugins to add data to the refresh token session or reject the
@@ -481,7 +466,6 @@ Sample code::
 oidcGenerateIDToken
 ~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG is generating an ID Token.
 
@@ -490,7 +474,6 @@ The hook's parameters are:
 * A hash of the claims to be contained in the ID Token
 * the configuration key of the relying party which will receive the token
 
-.. versionadded:: 2.22.0
 
 * A hash of session information
 * A hash of additional JWT headers
@@ -514,7 +497,6 @@ UserInfo endpoint (/oauth2/userinfo)
 oidcGenerateUserInfoResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint, or to compute a list of claims to be added in an ID or Access Token.
 
@@ -543,7 +525,6 @@ Introspection endpoint (/oauth2/introspect)
 oidcGenerateIntrospectionResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG is building the token introspection response.
 It allows plugins to modify the introspection response.
@@ -575,7 +556,6 @@ Dynamic Registration (/oauth2/register)
 oidcGotRegistrationRequest
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG receives an OAuth2 dynamic client
 registration request. It is only called when
@@ -621,7 +601,6 @@ Sample code::
 oidcRegisterClient
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This hook is triggered just before saving the new RP configuration during
 OAuth2 dynamic client registration.
@@ -668,7 +647,6 @@ Dynamic RP configuration
 getOidcRpConfig
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This hook is triggered when processing a request for a Client ID that is not
 registered as an OIDC RP.
@@ -711,7 +689,6 @@ OpenID Connect Authentication Hooks
 oidcGenerateAuthenticationRequest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG is building the Authentication Request that will be sent to an OpenID Provider
 
@@ -745,7 +722,6 @@ request.
 oidcGenerateTokenRequest
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG is building the Token Request from that will be sent to an OpenID Provider
 
@@ -770,7 +746,6 @@ Sample code::
 oidcGotIDToken
 ^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered after LemonLDAP::NG successfully received and decoded the ID Token from an external OpenID Provider
 
@@ -796,7 +771,6 @@ Sample code::
 oidcGotUserInfo
 ^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered after LemonLDAP::NG successfully received the UserInfo response from an external OpenID Provider
 
@@ -822,7 +796,6 @@ Sample code::
 oidcGotAuthenticationResponse
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.23.0
 
 This hook is triggered when LemonLDAP::NG receives an authentication response
 (authorization callback) from an external OpenID Provider. It allows you to
@@ -899,7 +872,6 @@ SAML service hooks
 getSamlConfig
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.16
 
 This hook is triggered when an entityID that is not registered in SAML
 configuration (IDP or SP) is trying to communicate with LemonLDAP::NG
@@ -945,7 +917,6 @@ SAML Issuer hooks
 samlGotAuthnRequest
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG has received a SAML login request
 
@@ -966,7 +937,6 @@ Sample code::
 samlBuildAuthnResponse
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG is about to build a response to the SAML login request
 
@@ -987,7 +957,6 @@ Sample code::
 samlGotLogoutRequest
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG has received a SAML logout request
 
@@ -1008,7 +977,6 @@ Sample code::
 samlGotLogoutResponse
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG has received a SAML logout response
 
@@ -1029,7 +997,6 @@ Sample code::
 samlBuildLogoutResponse
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.10
 
 This hook is triggered when LemonLDAP::NG is about to generate a SAML logout response
 
@@ -1053,7 +1020,6 @@ SAML Authentication hooks
 samlGenerateAuthnRequest
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered when LemonLDAP::NG is building a SAML authentication request for an external IDP
 
@@ -1077,7 +1043,6 @@ Sample code::
 samlGotAuthnResponse
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.15
 
 This hook is triggered after LemonLDAP::NG successfully validated a SAML authentication response from an IDP
 
@@ -1105,7 +1070,6 @@ CAS Issuer hooks
 casGotRequest
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG received an CAS authentication request on the `/cas/login` endpoint.
 
@@ -1131,7 +1095,6 @@ Sample code::
 casGenerateServiceTicket
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is about to generate a Service Ticket for a CAS application
 
@@ -1157,7 +1120,6 @@ Sample code::
 casGenerateValidateResponse
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is about to send a CAS response to an application on the `/cas/serviceValidate` endpoint.
 
@@ -1185,7 +1147,6 @@ DBI Authentication hooks
 dbiVerifyPassword
 ^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.20.0
 
 This hook is triggered when LemonLDAP::NG is verifying a password hash
 :doc:`obtained from a database <authdbi>`.  It will only run if *Dynamic
@@ -1237,7 +1198,6 @@ Sample code::
 dbiHashPassword
 ^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.20.0
 
 This hook is triggered when LemonLDAP::NG is about to
 :doc:`set or change the user's password in a database <authdbi>`.
@@ -1292,7 +1252,6 @@ Choice Authentication hooks
 getAuthChoice
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.20.0
 
 This hook is triggered when LemonLDAP::NG selects an :doc:`authentication choice <authchoice>`.
 
@@ -1329,7 +1288,6 @@ Password change hooks
 passwordBeforeChange
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 This hook is triggered when LemonLDAP::NG is about to change or reset a user's password.
 Returning an error will cancel the password change operation.
@@ -1364,7 +1322,6 @@ Sample code::
 passwordAfterChange
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 This hook is triggered after LemonLDAP::NG has changed the user's password successfully in the underlying password database
 
@@ -1399,7 +1356,6 @@ Second factor hooks
 sfBeforeVerify
 ^^^^^^^^^^^^^^
 
-.. versionadded:: 2.18
 
 This hook is called immediately before LemonLDAP::NG calls the `verify` method
 of each second factor implementation in order to verify the code/response
@@ -1429,7 +1385,6 @@ Sample code::
 sfAfterVerify
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.20
 
 This hook is called after verifying a second factor, whether it was successful or not.
 You can use it to change the verification status depending on some condition.
@@ -1475,7 +1430,6 @@ Sample code::
 sfBeforeRetry
 ^^^^^^^^^^^^^
 
-.. versionadded:: 2.19
 
 If a second factor failed and should be retried, this hook is called just before retrying.
 You can use it to run additional checks before retrying, or reporting the
@@ -1508,7 +1462,6 @@ Sample code::
 sfRegisterDevice
 ^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.20
 
 This hook is called immediately before registering a new second factor device
 into the user's persistent session.
@@ -1551,7 +1504,6 @@ Sample code::
 sfDeleteDevice
 ^^^^^^^^^^^^^^
 
-.. versionadded:: 2.23
 
 This hook is called immediately before removing a second factor device
 into the user's persistent session.
@@ -1596,7 +1548,6 @@ Generic hooks
 sendHtml
 ^^^^^^^^
 
-.. versionadded:: 2.17
 
 This hook is called whenever the LemonLDAP::NG portal is about to generate a page using its template engine
 
@@ -1623,7 +1574,6 @@ Sample code::
 unauthLogout
 ^^^^^^^^^^^^
 
-.. versionadded:: 2.22.0
 
 This hook is called just before any logout. It receive only one parameter, the
 `̀`$req`` object.

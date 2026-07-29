@@ -199,7 +199,6 @@ by calling ``date(1)``
 dateToTime
 ~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 Used for converting a string date into epoch time.
 
@@ -272,7 +271,6 @@ Simple usage example:
 has2f
 ~~~~~
 
-.. versionadded:: 2.0.10
 
 This function tests if the current user has registered a second factor. The following types are supported out of the box:
 
@@ -303,7 +301,6 @@ Example::
 inDomain
 ~~~~~~~~
 
-.. versionadded:: 2.19.0
 
 This function tests if the request's hostname (HTTP ``Host`` header) belongs to a given DNS domain
 
@@ -318,7 +315,6 @@ The function returns 1 if the targeted Vhost is equal to the given domain or con
 inGroup
 ~~~~~~~
 
-.. versionadded:: 2.0.8
 
 This function lets you test if the user is in a given group. It is
 case-insensitive.
@@ -338,7 +334,6 @@ The function returns 1 if the user belongs to the given group, and 0 if they don
 inSubnet
 ~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you test if the request's IP address (``REMOTE_ADDR``
 environment variable) belongs to a certain subnet. You can give multiple subnets.
@@ -366,7 +361,6 @@ IP address is local*:
 ipInSubnet
 ~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you test if the provided IP address belongs to a certain
 subnet. You can give multiple subnets.
@@ -423,7 +417,6 @@ Simple usage example:
 listMatch
 ~~~~~~~~~
 
-.. versionadded:: 2.0.7
 
 This function lets you test if a particular value can be found with a
 multi-valued session attribute.
@@ -453,7 +446,6 @@ The function returns 1 if a value was found, and 0 if it was not found.
 subjectid
 ~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you generate an identifier suitable with the requirements of `urn:oasis:names:tc:SAML:profiles:subject-id <https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html>`__
 
@@ -499,7 +491,6 @@ This function generates token used for
 varIsInUri
 ~~~~~~~~~~
 
-.. versionadded:: 2.0.7
 
 Function to check if a variable is in requested URI
 

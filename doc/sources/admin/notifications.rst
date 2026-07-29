@@ -310,7 +310,6 @@ Notifications are JSON files containing:
 Variables
 ^^^^^^^^^
 
-.. versionadded:: 2.21.0
    You can use session variables in notifications's ``text`` field by using the ``$varname`` syntax.
    Note that complex Perl expressions are not allowed, only simple variable interpolation.
    This feature is only available when using JSON notifications.

@@ -71,7 +71,6 @@ To configure sessions, go in Manager, ``General Parameters`` »
 Command-line tools
 ==================
 
-.. versionadded:: 2.0.9
 
 You can use the ``lemonldap-ng-sessions`` tool to search, update or delete sessions. See a few examples in :ref:`the examples page <cli-sessions>`
 

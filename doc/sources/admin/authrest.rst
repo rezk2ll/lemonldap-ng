@@ -75,7 +75,6 @@ Password change URL       ``{"user":$user,"password":$password}`` ``{"result":tr
 Additional arguments
 --------------------
 
-.. versionadded:: 2.23.0
 
 You can define additional arguments that will be sent along ``user``, ``password``, etc. in the body of the REST request.
 

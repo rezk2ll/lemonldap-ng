@@ -7,7 +7,6 @@ Authentication Users Password
 ✔
 ============== ===== ========
 
-.. versionadded:: 2.20.0
 
 |beta|
 

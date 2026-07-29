@@ -88,7 +88,6 @@ authentication process, then use ``aroundSub``, for example:
 Hooks
 ~~~~~
 
-.. versionadded:: 2.0.10
 
 Your plugin can also register itself to be called at some points of interest
 within the main LemonLDAP::NG code.

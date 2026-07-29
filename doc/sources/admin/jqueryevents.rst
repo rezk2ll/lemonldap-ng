@@ -8,7 +8,6 @@ We offer a few custom events that let you react to certain high-level Javascript
 Preventing default behavior
 ---------------------------
 
-.. versionadded:: 2.17
 
 Event handlers can stop the default LemonLDAP::NG behavior from executing:
 
@@ -26,7 +25,6 @@ Second factor management
 mfaAdded
 ~~~~~~~~
 
-.. versionadded:: 2.0.15
 
 This event is triggered when a TOTP or WebAuthn device is registered
 
@@ -51,7 +49,6 @@ Sample code:
 mfaDeleted
 ~~~~~~~~~~~
 
-.. versionadded:: 2.0.15
 
 This event is triggered when a TOTP or WebAuthn device is removed
 
@@ -67,7 +64,6 @@ Sample code:
 mfaUpdated
 ~~~~~~~~~~~
 
-.. versionadded:: 2.23.0
 
 This event is triggered when a TOTP or WebAuthn device name is updated
 
@@ -85,7 +81,6 @@ UI
 
 portalLoaded
 ~~~~~~~~~~~~
-.. versionadded:: 2.0.16
 
 This even is triggered after the main portal javascript has run
 
@@ -109,7 +104,6 @@ Authentication
 kerberosAttempt
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered immediately before the user tries to authenticate using Kerberos
 
@@ -122,7 +116,6 @@ This even is triggered immediately before the user tries to authenticate using K
 kerberosFailure
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user failed to authenticate using Kerberos
 
@@ -135,7 +128,6 @@ This even is triggered when the user failed to authenticate using Kerberos
 kerberosSuccess
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when before the user successfully authenticated using Kerberos
 
@@ -148,7 +140,6 @@ This even is triggered when before the user successfully authenticated using Ker
 sslAttempt
 ~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered immediately before the user tries to authenticate using SSL
 
@@ -161,7 +152,6 @@ This even is triggered immediately before the user tries to authenticate using S
 sslFailure
 ~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user failed to authenticate using SSL
 
@@ -174,7 +164,6 @@ This even is triggered when the user failed to authenticate using SSL
 sslSuccess
 ~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when before the user successfully authenticated using SSL
 
@@ -188,7 +177,6 @@ This even is triggered when before the user successfully authenticated using SSL
 webauthnAttempt
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered immediately before the user tries to use a WebAuthn device
 
@@ -201,7 +189,6 @@ This even is triggered immediately before the user tries to use a WebAuthn devic
 webauthnFailure
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user failed to use a WebAuthn device
 
@@ -214,7 +201,6 @@ This even is triggered when the user failed to use a WebAuthn device
 webauthnSuccess
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user successfully used a WebAuthn device
 
@@ -227,7 +213,6 @@ This even is triggered when the user successfully used a WebAuthn device
 webauthnRegistrationAttempt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered immediately before the user tries to register a WebAuthn device
 
@@ -240,7 +225,6 @@ This even is triggered immediately before the user tries to register a WebAuthn 
 webauthnRegistrationFailure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user failed to register a WebAuthn device
 
@@ -253,7 +237,6 @@ This even is triggered when the user failed to register a WebAuthn device
 webauthnRegistrationSuccess
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This even is triggered when the user successfully registered a WebAuthn device
 
@@ -271,7 +254,6 @@ Password policy
 checkpassword
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.18
 
 This event is triggered on every keystroke while the user inputs a new
 password. You can use it to check if it fits certain criteria.

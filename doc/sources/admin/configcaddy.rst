@@ -5,7 +5,6 @@ Caddy is a modern web server written in Go with automatic HTTPS capabilities.
 It supports integration with authentication services via its ``forward_auth``
 directive, which works similarly to Traefik's ``forwardAuth``.
 
-.. versionadded:: 2.19.0
 
 Since Caddy's ``forward_auth`` behavior is identical to Traefik's ``forwardAuth``,
 LemonLDAP::NG uses the same handler for both servers: ``SOURCE_SERVER=traefik``.

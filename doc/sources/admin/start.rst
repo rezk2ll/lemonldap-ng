@@ -176,7 +176,6 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 :doc:`Password as second factor<password2f>` [4]_                    ✔              ✔
 ==================================================================== ============== =================
 
-.. versionadded:: 2.0.6
     See :doc:`Additional second factors<sfextra>` for configuring several multiple
     REST, external or e-mail based second factors with different parameters
 

@@ -137,7 +137,6 @@ Some javascript functions are exported by LemonLDAP:
 
 * ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
 
-.. versionadded:: 2.21.0
 
     * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
     * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
@@ -434,7 +433,6 @@ You can use the ``trspan`` HTML attribute to replace the content of a tag by an 
     <span trspan="myMessage">This will be replaced by the translation of myMessage</span>
 
 
-.. versionadded:: 2.0.16
 
     You can now also replace HTML attributes with translated messages
 

@@ -76,7 +76,6 @@ parameters you may overload. Here are the most useful ones:
 Registration
 ------------
 
-.. versionadded:: 2.0.16
 
 Enabling registration for an additional second factor allows the user to register their own E-Mail address, SMS number, etc.
 

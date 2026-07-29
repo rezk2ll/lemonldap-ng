@@ -1,7 +1,6 @@
 Connect to SAML Federations
 ===========================
 
-.. versionadded: 2.0.16
 
 .. warning::
 
@@ -113,7 +112,6 @@ exported variables accordingly, and use macros to fill the gaps if needed.
 Subject ID
 ----------
 
-.. versionadded:: 2.17
 
 Some SAML SPs can now use a ``subject-id`` attribute instead of a NameID or
 ``eduPersonTargetedID`` (not supported in LemonLDAP::NG).

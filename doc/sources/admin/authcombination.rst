@@ -189,7 +189,6 @@ lemonldap-ng.ini. Example:
 Password management
 -------------------
 
-.. versionadded:: 2.0.10
 
 Not all configurations of the Combination module allow password management. 
 

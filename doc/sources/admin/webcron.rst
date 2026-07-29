@@ -33,7 +33,6 @@ The plugin will respond to the HTTP request with:
 
     {"result":1,"err":0}
 
-.. versionadded:: 2.22.0
 
 Example
 ~~~~~~~

@@ -38,7 +38,6 @@ The plugin will respond to the HTTP request with:
 
     {"result":1,"version":"2.0.14"}
 
-.. versionadded:: 2.0.14
    The *version* key is returned
 
 

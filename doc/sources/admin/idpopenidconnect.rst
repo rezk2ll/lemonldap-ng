@@ -472,7 +472,6 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 Scope rules
 ^^^^^^^^^^^
 
-.. versionadded:: 2.0.12
 
 |beta| This feature may change in a future version in a way that breaks
 compatibility with existing configuration.

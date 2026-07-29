@@ -121,7 +121,6 @@ Nginx
 Apache
 ~~~~~~
 
-.. versionadded: 2.0.10
 
 ::
 
