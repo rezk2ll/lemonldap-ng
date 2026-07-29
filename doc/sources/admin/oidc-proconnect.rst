@@ -45,16 +45,16 @@ Add ProConnect as Relying Party, with these options:
 * Exported attributes:
 
   * email (mandatory)
-  * given_name (mandatory)
-  * name (mandatory)
+  * usual_name (mandatory): family name
+  * given_name (mandatory): first name
+  * siret (mandatory)
+  * uid (mandatory): must contain only ASCII characters, can be any unique and persistent attribute
+  * name
   * organizational_unit (must not contain some special characters, listed in this regex `/^[^.*?{}()|[\]\t\r\n\\]*$/`)
   * phone
   * preferred_username
-  * siret
-  * uid (mandatory, must contain only ASCII characters)
-  * usual_name (mandatory)
 
-* User attribute: be sure to choose a unique and persistent attribute
+* User attribute: same attribute as uid
 * ID Token signature algorithm: RS256
 * UserInfo response format: JWT/RS256
 * Scope / Scope value contents:
@@ -66,11 +66,32 @@ Add ProConnect as Relying Party, with these options:
   * uid: uid
   * usual_name: usual_name
 
-To match authencation levels required by ProConnect, you must adapt the corresponding levels in `OpenID Connect Service` > `Authentication context`. You need at least the `eidas1` level.
+To match authencation levels required by ProConnect, you must adapt the
+corresponding levels in `OpenID Connect Service` > `Authentication context`. Add one entry for each authentication level used in your LemonLDAP sessions. For example:
+
+* ``eidas1`` => ``2``
+* ``eidas1-mfa`` => ``3``
+* ``eidas2`` => ``5``
+
+You need to define at least the ``eidas1`` level.
 
 .. tip::
    For test platform, you need to use the URLs listed on `this page <https://partenaires.proconnect.gouv.fr/docs/ressources/valeur_ac_domain>`__.
 
+.. tip::
+
+   If you want to send the same SIRET number for all your users, but don't have a dedicated field for it in your user backend, you can use a macro:
+
+
+   OpenID Connect Relying Parties » rp-proconnect » Exported attributes
+
+   * Claim name: ``siret``
+   * Variable name: ``siret`` (doesn't have to exist in your session)
+
+   OpenID Connect Relying Parties » rp-proconnect » Macros
+
+   * Key: ``siret``
+   * Value: ``"12345678901234"`` (don't omit the quotes)
 
 Configuration with CLI
 ^^^^^^^^^^^^^^^^^^^^^^
