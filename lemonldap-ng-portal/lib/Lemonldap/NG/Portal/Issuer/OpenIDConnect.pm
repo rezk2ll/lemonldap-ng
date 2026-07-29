@@ -27,7 +27,7 @@ use constant hook => { updateSessionId => 'updateOidcSecondarySessions' };
 
 use constant sessionKind => 'OIDCI';
 
-has rule => ( is => 'rw' );
+has rule        => ( is => 'rw' );
 has ssoMatchUrl => ( is => 'rw' );
 
 has iss => (
@@ -311,50 +311,16 @@ sub _checkErrorsInAuthorizeEndpoint {
         }
     }
 
-    my $h = $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
-    return $self->_failAuthorize(
-        $req,
-        message => "oidcGotRequest hook failed",
-        res     => $h
-    ) if ( $h != PE_OK );
-
-    # Detect requested flow
-    my $response_type = $oidc_request->{'response_type'};
-
-    unless ($response_type) {
-        return $self->_failAuthorize( $req,
-            msg => "No response type provided" );
-    }
-
-    my $flow = $self->getFlowType($response_type);
-
-    unless ($flow) {
-        return $self->_failAuthorize( $req,
-            msg => "Unknown response type: $response_type" );
-    }
-    $self->logger->debug(
-        "OIDC $flow flow requested (response type: $response_type)");
-
-    # Check if response mode is allowed for flow
-    my $response_mode = $oidc_request->{'response_mode'};
-    if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
-        return $self->_failAuthorize( $req,
-            msg => "Reponse mode $response_mode is not allowed in $flow Flow" );
-    }
-
     # Client ID must be provided and cannot come from
     # request or request_uri
+    my $client_id = $oidc_request->{'client_id'};
     unless ( $oidc_request->{'client_id'} ) {
         return $self->_failAuthorize( $req, msg => "Client ID is required" );
     }
-
-    # Check client_id
-    my $client_id = $oidc_request->{'client_id'};
     $self->logger->debug("Request from client id $client_id");
 
     # Verify that client_id is registered in configuration
     my $rp = $self->getRP($client_id);
-
     unless ($rp) {
         return $self->_failAuthorize(
             $req,
@@ -365,13 +331,56 @@ sub _checkErrorsInAuthorizeEndpoint {
             res => PE_UNKNOWNPARTNER
         );
     }
-    else {
-        $self->logger->debug("Client id $client_id matches RP $rp");
+    $self->logger->debug("Client id $client_id matches RP $rp");
+
+    my $h = $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
+    return $self->_failAuthorize(
+        $req,
+        rp      => $rp,
+        message => "oidcGotRequest hook failed",
+        res     => $h
+    ) if ( $h != PE_OK );
+
+    # Detect requested flow
+    my $response_type = $oidc_request->{'response_type'};
+
+    unless ($response_type) {
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "No response type provided"
+        );
+    }
+
+    my $flow = $self->getFlowType($response_type);
+
+    unless ($flow) {
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Unknown response type: $response_type"
+        );
+    }
+    $self->logger->debug(
+        "OIDC $flow flow requested (response type: $response_type)");
+
+    # Check if response mode is allowed for flow
+    my $response_mode = $oidc_request->{'response_mode'};
+    if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Reponse mode $response_mode is not allowed in $flow Flow"
+        );
     }
 
     # Scope must be provided and cannot come from request or request_uri
     unless ( $oidc_request->{'scope'} ) {
-        return $self->_failAuthorize( $req, msg => "Scope is required" );
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Scope is required"
+        );
     }
 
     # Extract request_uri/request parameter
@@ -388,13 +397,19 @@ sub _checkErrorsInAuthorizeEndpoint {
                 $oidc_request->{'request'} = $request;
             }
             else {
-                return $self->_failAuthorize( $req,
-                    msg => "Error with Request URI resolution" );
+                return $self->_failAuthorize(
+                    $req,
+                    rp  => $rp,
+                    msg => "Error with Request URI resolution"
+                );
             }
         }
         else {
-            return $self->_failAuthorize( $req,
-                msg => "Request URI $request_uri is not allowed for $rp" );
+            return $self->_failAuthorize(
+                $req,
+                rp  => $rp,
+                msg => "Request URI $request_uri is not allowed for $rp"
+            );
         }
     }
 
@@ -419,6 +434,7 @@ sub _checkErrorsInAuthorizeEndpoint {
                     if ( $oidc_request->{$_} ne $request->{$_} ) {
                         return $self->_failAuthorize(
                             $req,
+                            rp  => $rp,
                             msg => (
                                     "$_ from request JWT ("
                                   . $oidc_request->{$_}
@@ -433,18 +449,28 @@ sub _checkErrorsInAuthorizeEndpoint {
             }
         }
         else {
-            return $self->_failAuthorize( $req,
-                msg => "JWT signature request can not be verified" );
+            return $self->_failAuthorize(
+                $req,
+                rp  => $rp,
+                msg => "JWT signature request can not be verified"
+            );
         }
     }
 
     # Check all required parameters
     unless ( $oidc_request->{'redirect_uri'} ) {
-        return $self->_failAuthorize( $req, msg => "Redirect URI is required" );
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Redirect URI is required"
+        );
     }
     if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
-        return $self->_failAuthorize( $req,
-            msg => "Nonce is required for implicit flow" );
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Nonce is required for implicit flow"
+        );
     }
 
     # Check if this RP is authorized
@@ -454,6 +480,7 @@ sub _checkErrorsInAuthorizeEndpoint {
         unless ( $rule->( $req, $ruleVariables ) ) {
             return $self->_failAuthorize(
                 $req,
+                rp  => $rp,
                 msg => (
                         'User '
                       . $req->sessionInfo->{ $self->conf->{whatToTrace} }
@@ -475,6 +502,7 @@ sub _checkErrorsInAuthorizeEndpoint {
     {
         return $self->_failAuthorize(
             $req,
+            rp         => $rp,
             msg        => "Redirect URI $redirect_uri not allowed",
             res        => PE_UNAUTHORIZEDURL,
             userLogger => 1,
@@ -488,7 +516,8 @@ sub _checkErrorsInAuthorizeEndpoint {
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Authorization code flow not allowed",
-            undef,          $oidc_request->{'state'}, 0
+            undef,          $oidc_request->{'state'},
+            0,              $rp,
         );
     }
     if ( $flow eq "implicit"
@@ -497,7 +526,8 @@ sub _checkErrorsInAuthorizeEndpoint {
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Implicit flow not allowed",
-            undef,          $oidc_request->{'state'}, 1
+            undef,          $oidc_request->{'state'},
+            1,              $rp,
         );
     }
     if ( $flow eq "hybrid"
@@ -506,7 +536,8 @@ sub _checkErrorsInAuthorizeEndpoint {
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Hybrid flow not allowed",
-            undef,          $oidc_request->{'state'}, 1
+            undef,          $oidc_request->{'state'},
+            1,              $rp,
         );
     }
 
@@ -520,7 +551,8 @@ sub _checkErrorsInAuthorizeEndpoint {
             return $self->returnRedirectError(
                 $req,           $oidc_request->{'redirect_uri'},
                 'server_error', 'JWS authentication required',
-                undef,          $oidc_request->{'state'}, 1
+                undef,          $oidc_request->{'state'},
+                1,              $rp,
             );
         }
         my $methodAllowed =
@@ -530,7 +562,7 @@ sub _checkErrorsInAuthorizeEndpoint {
                 $req,           $oidc_request->{'redirect_uri'},
                 'server_error', "Authentication must use $methodAllowed",
                 undef,          $oidc_request->{'state'},
-                1
+                1,              $rp,
             );
         }
     }
@@ -542,7 +574,7 @@ sub _checkErrorsInAuthorizeEndpoint {
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "State required",
-            undef,          undef, 1
+            undef,          undef, 1, $rp,
         );
     }
 
@@ -553,7 +585,7 @@ sub _checkErrorsInAuthorizeEndpoint {
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Nonce required",
-            undef,          undef, 1
+            undef,          undef, 1, $rp,
         );
     }
 
@@ -564,13 +596,20 @@ sub _checkErrorsInAuthorizeEndpoint {
     # Scope names are restricted to printable ASCII characters,
     # excluding double quote and backslash
     unless ( $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ ) {
-        return $self->_failAuthorize( $req,
-            msg => "Submitted scope is not valid" );
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "Submitted scope is not valid"
+        );
     }
 
     # Check openid scope
     unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
-        return $self->_failAuthorize( $req, msg => "No openid scope found" );
+        return $self->_failAuthorize(
+            $req,
+            rp  => $rp,
+            msg => "No openid scope found"
+        );
     }
     $req->data->{_oidc_request} = $oidc_request;
     $req->data->{_oidc_rp}      = $rp;
@@ -645,7 +684,8 @@ sub _authorizeEndpoint {
                 "Current user does not match id_token_hint sub",
                 undef,
                 $oidc_request->{'state'},
-                ( $flow ne "authorizationcode" )
+                ( $flow ne "authorizationcode" ),
+                $rp,
             );
         }
         else {
@@ -700,8 +740,11 @@ sub _authorizeEndpoint {
                     { allow_nonref => 1 } );
             };
             if ($@) {
-                return $self->_failAuthorize( $req,
-                    msg => "Corrupted session (_oidcConsents): $@" );
+                return $self->_failAuthorize(
+                    $req,
+                    rp  => $rp,
+                    msg => "Corrupted session (_oidcConsents): $@"
+                );
             }
         }
         else {
@@ -778,7 +821,8 @@ sub _authorizeEndpoint {
                     "consent not given",
                     undef,
                     $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
+                    ( $flow ne "authorizationcode" ),
+                    $rp,
                 );
             }
             else {
@@ -796,7 +840,8 @@ sub _authorizeEndpoint {
                         "consent required",
                         undef,
                         $oidc_request->{'state'},
-                        ( $flow ne "authorizationcode" )
+                        ( $flow ne "authorizationcode" ),
+                        $rp,
                     );
                 }
 
@@ -863,10 +908,10 @@ sub _authorizeEndpoint {
         and !$oidc_request->{'code_challenge'} )
     {
         return $self->returnRedirectError(
-            $req,              $oidc_request->{'redirect_uri'},
-            'invalid_request', "Code challenge is required",
-            undef,             $oidc_request->{'state'},
-            ( $flow ne "authorizationcode" )
+            $req,                             $oidc_request->{'redirect_uri'},
+            'invalid_request',                "Code challenge is required",
+            undef,                            $oidc_request->{'state'},
+            ( $flow ne "authorizationcode" ), $rp,
         );
     }
 
@@ -927,6 +972,7 @@ sub _authorizeEndpoint {
             $oidc_request, $rp, $code_payload );
         return $self->_failAuthorize(
             $req,
+            rp  => $rp,
             msg => "oidcGenerateCode hook failed",
             res => $h
         ) if ( $h != PE_OK );
@@ -1006,7 +1052,7 @@ sub _authorizeEndpoint {
                     $req,           $oidc_request->{'redirect_uri'},
                     "server_error", "Unable to create Access Token",
                     undef,          $oidc_request->{'state'},
-                    1
+                    1,              $rp,
                 );
             }
 
@@ -1026,8 +1072,11 @@ sub _authorizeEndpoint {
             { at_hash => $at_hash, nonce => $oidc_request->{nonce} } );
 
         unless ($id_token) {
-            return $self->_failAuthorize( $req,
-                msg => "Could not generate ID token" );
+            return $self->_failAuthorize(
+                $req,
+                rp  => $rp,
+                msg => "Could not generate ID token"
+            );
         }
 
         $self->logger->debug("Generated id token: $id_token");
@@ -1140,7 +1189,7 @@ sub _authorizeEndpoint {
                     $req,           $oidc_request->{'redirect_uri'},
                     "server_error", "Unable to create Access Token",
                     undef,          $oidc_request->{'state'},
-                    1
+                    1,              $rp,
                 );
             }
 
@@ -1165,8 +1214,11 @@ sub _authorizeEndpoint {
             );
 
             unless ($id_token) {
-                return $self->_failAuthorize( $req,
-                    msg => "Could not generate ID token" );
+                return $self->_failAuthorize(
+                    $req,
+                    rp  => $rp,
+                    msg => "Could not generate ID token"
+                );
             }
 
             $self->logger->debug("Generated id token: $id_token");
@@ -1235,6 +1287,7 @@ sub _failAuthorize {
 
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
     my $res    = $params{res} || PE_ERROR;
+    my $rp     = $params{rp};
 
     $self->auditLog(
         $req,
@@ -1243,6 +1296,7 @@ sub _failAuthorize {
         ( $reason ? ( reason => $reason ) : () ),
         portal_error => portalConsts->{$res},
         user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        ( $rp ? ( rp => $rp ) : () ),
     );
 
     return $res;
@@ -2114,6 +2168,7 @@ sub userInfo {
     {
         $self->auditLog(
             $req,
+            rp      => $rp,
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Missing required authentication header',
         );
@@ -2131,6 +2186,7 @@ sub userInfo {
     unless ($session) {
         $self->auditLog(
             $req,
+            rp      => $rp,
             code    => 'ISSUER_OIDC_USERINFO_FAILED',
             message => 'Unable to get session corresponding to access-token',
         );
@@ -2348,6 +2404,7 @@ sub authRevokeToken {
             unless ( $uid eq $_uid ) {
                 $self->auditLog(
                     $req,
+                    rp      => $rp,
                     code    => 'ISSUER_OIDC_UNAUTHORIZED_REVOKE_REQUEST',
                     user    => $uid,
                     message =>
