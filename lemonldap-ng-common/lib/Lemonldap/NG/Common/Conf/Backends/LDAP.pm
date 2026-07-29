@@ -140,10 +140,11 @@ sub getLdapConnection {
     }
 
     # Set socket timeouts
-    my $socket = $ldap->socket;
+    my $socket  = $ldap->socket;
+    my $timeout = $self->{ldapIOTimeout} || 10;
     IO::Socket::Timeout->enable_timeouts_on($socket);
-    $socket->read_timeout( $self->{ldapIOTimeout} );
-    $socket->write_timeout( $self->{ldapIOTimeout} );
+    $socket->read_timeout($timeout);
+    $socket->write_timeout($timeout);
 
     if ($useStartTls) {
         my $mesg = $ldap->start_tls(%tlsParams);
@@ -169,12 +170,15 @@ sub Lemonldap::NG::Common::Conf::_bind {
         return $ldap->bind( $self->{ldapBindDN},
             password => $self->{ldapBindPassword} );
     }
-    else {
+    elsif ( $self->{ldapClientCert} && $self->{ldapClientKey} ) {
         my $sasl = Authen::SASL->new(
             mechanism => 'EXTERNAL',
             callback  => { user => '' }
         );
         return $ldap->bind( undef, sasl => $sasl );
+    }
+    else {
+        return $ldap->bind();
     }
 }
 
