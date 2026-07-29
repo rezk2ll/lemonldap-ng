@@ -771,7 +771,7 @@ sub buildCookie {
         $req,
         message => (
                 "User $whatToTrace "
-              . " successfully authenticated at level $ref->{authenticationLevel}"
+              . "successfully authenticated at level $ref->{authenticationLevel}"
         ),
         code  => "AUTHENTICATED",
         user  => $whatToTrace,
