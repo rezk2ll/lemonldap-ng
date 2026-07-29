@@ -11,6 +11,7 @@ use JSON;
 use Mouse;
 use Time::HiRes;
 use POSIX qw(strftime);
+use IO::Socket::Timeout;
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
@@ -574,37 +575,79 @@ sub _cleanup_errors {
     if (    $options->{backend} =~ /^Apache::Session::(?:Browseable::)?LDAP$/i
         and $self->force )
     {
-        my $useTls = 0;
-        my $tlsParam;
-        my @servers = ();
+        my ( @servers, %tlsParams, $useStartTls );
         foreach my $server ( split /[\s,]+/, $options->{ldapServer} ) {
             if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-                $useTls   = 1;
-                $server   = $1;
-                $tlsParam = $2 || "";
+                $useStartTls = 1;
+                $server      = $1;
+                %tlsParams   = split( /[&=]/, $2 || "" );
+            }
+            elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+                $useStartTls = 0;
+                $server      = $1;
+                %tlsParams   = split( /[&=]/, $2 || "" );
             }
             else {
-                $useTls = 0;
+                $useStartTls = 0;
             }
             push @servers, $server;
         }
-        my $ldap =
-          Net::LDAP->new( \@servers, keepalive => 1, onerror => undef, );
+
+        $tlsParams{verify} ||= $options->{ldapVerify} || 'require';
+        $tlsParams{cafile} ||= $options->{ldapCAFile}
+          if $options->{ldapCAFile};
+        $tlsParams{capath} ||= $options->{ldapCAPath} if $options->{ldapCAPath};
+        $tlsParams{clientcert} ||= $options->{ldapClientCert}
+          if $options->{ldapClientCert};
+        $tlsParams{clientkey} ||= $options->{ldapClientKey}
+          if $options->{ldapClientKey};
+        require Authen::SASL if $options->{ldapClientCert};
+
+        my $ldap = Net::LDAP->new(
+            \@servers,
+            onerror   => undef,
+            keepalive => 1,
+            %tlsParams,
+            ( $options->{ldapPort} ? ( port => $options->{ldapPort} ) : () ),
+            (
+                $options->{ldapTimeout} ? ( timeout => $options->{ldapTimeout} )
+                : ()
+            ),
+            (
+                $options->{ldapVersion} ? ( version => $options->{ldapVersion} )
+                : ()
+            ),
+        );
+
         unless ($ldap) {
             print STDERR "Unable to connect to LDAP server\n";
             $internal_stats->{nb_error}->{$type}++;
             return;
         }
+        elsif ( $Net::LDAP::VERSION < '0.64' ) {
+            #
+            # CentOS7 has a bug in which IO::Socket::SSL will return a broken
+            # socket when certificate validation fails. Net::LDAP does not catch
+            # it, and the process ends up crashing.
+            # As a precaution, make sure the underlying socket is doing fine:
+            if (    $ldap->socket->isa('IO::Socket::SSL')
+                and $ldap->socket->errstr < 0 )
+            {
+                print STDERR "Unable to connect to LDAP server\n";
+                $internal_stats->{nb_error}->{$type}++;
+                return;
+            }
+        }
 
-        # Start TLS if needed
-        if ($useTls) {
-            my %h = split( /[&=]/, $tlsParam );
-            $h{verify} ||= $options->{ldapVerify} || "require";
-            $h{cafile} ||= $options->{ldapCAFile}
-              if ( $options->{ldapCAFile} );
-            $h{capath} ||= $options->{ldapCAPath}
-              if ( $options->{ldapCAPath} );
-            my $start_tls = $ldap->start_tls(%h);
+        # Set socket timeouts
+        my $socket = $ldap->socket;
+        IO::Socket::Timeout->enable_timeouts_on($socket);
+        $socket->read_timeout( $options->{ldapIOTimeout} );
+        $socket->write_timeout( $options->{ldapIOTimeout} );
+
+        if ($useStartTls) {
+
+            my $start_tls = $ldap->start_tls(%tlsParams);
             if ( $start_tls->code ) {
                 print STDERR "STARTTLS error: "
                   . $start_tls->code . ': '
@@ -614,8 +657,19 @@ sub _cleanup_errors {
             }
         }
 
-        my $bind = $ldap->bind( $options->{ldapBindDN},
-            password => $options->{ldapBindPassword} );
+        my $bind;
+        if ( $options->{ldapBindDN} && $options->{ldapBindPassword} ) {
+            $bind = $ldap->bind( $options->{ldapBindDN},
+                password => $options->{ldapBindPassword} );
+        }
+        else {
+            my $sasl = Authen::SASL->new(
+                mechanism => 'EXTERNAL',
+                callback  => { user => '' }
+            );
+            $bind = $ldap->bind( undef, sasl => $sasl );
+        }
+
         my $attrId = $options->{ldapAttributeId} | "cn";
         foreach (@errors) {
             my $id = $_;
