@@ -1308,6 +1308,7 @@ sub tplParams {
         LANGUAGE     => $self->getLanguage($req),
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
         CUSTOM_JS    => $self->conf->{portalCustomJs},
+        AUTH_USER    => $req->userData->{ $self->conf->{portalUserAttr} },
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )
