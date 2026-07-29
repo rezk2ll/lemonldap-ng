@@ -93,6 +93,13 @@ $(window).on("load", function() {
   // after page load, so instantiate it explicitly.
   const carouselElement = document.getElementById("carousel");
   if (carouselElement && window.bootstrap && window.bootstrap.Carousel) {
-    window.bootstrap.Carousel.getOrCreateInstance(carouselElement);
+    const carousel = window.bootstrap.Carousel.getOrCreateInstance(
+      carouselElement, {
+        ride: "carousel",
+        interval: 5000,
+        wrap: true,
+      }
+    );
+    carousel.cycle();
   }
 });

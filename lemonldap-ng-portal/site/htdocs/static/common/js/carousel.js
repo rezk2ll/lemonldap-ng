@@ -94,7 +94,12 @@
     // after page load, so instantiate it explicitly.
     var carouselElement = document.getElementById("carousel");
     if (carouselElement && window.bootstrap && window.bootstrap.Carousel) {
-      window.bootstrap.Carousel.getOrCreateInstance(carouselElement);
+      var carousel = window.bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+        ride: "carousel",
+        interval: 5000,
+        wrap: true
+      });
+      carousel.cycle();
     }
   });
 
