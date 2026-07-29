@@ -310,8 +310,28 @@ sub _checkErrorsInAuthorizeEndpoint {
                 '', 0 );
         }
     }
+
+    # Client ID must be provided and cannot come from
+    # request or request_uri
     my $client_id = $oidc_request->{'client_id'};
-    my $rp        = $req->data->{_oidc_rp} || $self->getRP($client_id);
+    unless ( $oidc_request->{'client_id'} ) {
+        return $self->_failAuthorize( $req, msg => "Client ID is required" );
+    }
+    $self->logger->debug("Request from client id $client_id");
+
+    # Verify that client_id is registered in configuration
+    my $rp = $self->getRP($client_id);
+    unless ($rp) {
+        return $self->_failAuthorize(
+            $req,
+            msg => (
+                    "No registered Relying Party found with"
+                  . " client_id $client_id"
+            ),
+            res => PE_UNKNOWNPARTNER
+        );
+    }
+    $self->logger->debug("Client id $client_id matches RP $rp");
 
     my $h = $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
     return $self->_failAuthorize(
@@ -352,35 +372,6 @@ sub _checkErrorsInAuthorizeEndpoint {
             rp  => $rp,
             msg => "Reponse mode $response_mode is not allowed in $flow Flow"
         );
-    }
-
-    # Client ID must be provided and cannot come from
-    # request or request_uri
-    unless ( $oidc_request->{'client_id'} ) {
-        return $self->_failAuthorize(
-            $req,
-            rp  => $rp,
-            msg => "Client ID is required"
-        );
-    }
-
-    # Check client_id
-    $self->logger->debug("Request from client id $client_id");
-
-    # Verify that client_id is registered in configuration
-    unless ($rp) {
-        return $self->_failAuthorize(
-            $req,
-            rp  => $rp,
-            msg => (
-                    "No registered Relying Party found with"
-                  . " client_id $client_id"
-            ),
-            res => PE_UNKNOWNPARTNER
-        );
-    }
-    else {
-        $self->logger->debug("Client id $client_id matches RP $rp");
     }
 
     # Scope must be provided and cannot come from request or request_uri
