@@ -121,11 +121,22 @@ library in your custom JS code, you need to add it back to
 New index on CAS session
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-This new version can now manage backchannel logoutRequest coming from a CAS server (LL::NG configred as CAS client).
+This new version can now manage backchannel logoutRequest coming from a CAS server (LL::NG configured as CAS client).
 
 You need to add an index on CAS sessions table on ``auth_cas_ticket`` if you use a DB backend, and you want to use this new feature without impacting performances.
 
 See ``sessions.my.sql`` and ``sessions.pg.sql`` to get SQL instructions.
+
+Possible regression on self-referencing macros
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting with this version, every time you use a second factor, macros will be
+reevaluated even if the authentication level does not change.
+
+If you have defined a :ref:`macro<macros_and_groups>` whose definition contain
+itself, this may cause a change of behavior. It is generally not recommended
+to do this, but if you still want to, make sure the macro's definition is
+idempotent, as it may be calculated several times.
 
 2.22.2
 ------

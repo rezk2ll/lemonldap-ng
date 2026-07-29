@@ -296,16 +296,16 @@ to do it automatically.
 
 .. tip::
 
-    To avoid storing the full group DNs in session data, you can
-    use a macro to rewrite ``memberOf``:
+    To avoid storing using the full group DNs in access rules, you can
+    use a macro based on ``memberOf``:
 
     -  In \*Exported variables*, export the ``memberOf`` LDAP attribute as a
-       ``ldapGroups`` session variable
+       session variable
 
-       -  key: ``ldapGroups``
+       -  key: ``memberOf``
        -  value: ``memberOf``
 
-    -  Next, add a ``ldapGroups`` macro that will overwrite the exported
+    -  Next, add a ``ldapGroups`` macro that will reformat the exported
        attribute
 
        -  key: ``ldapGroups``
@@ -313,7 +313,7 @@ to do it automatically.
 
     ::
 
-       join("; ",($ldapGroups =~ /cn=(.*?),/g))
+       join("; ",($memberOf =~ /cn=(.*?),/g))
 
     ``ldapGroups`` should now contain something like ``admin; su`` just like
     it would if you had used the regular, slower group resolution mechanism.
