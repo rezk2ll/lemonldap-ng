@@ -16,8 +16,7 @@ my ( $res, $user, $pwd, $host, $url, $query );
 my $mailSend = 0;
 
 SKIP: {
-    eval
-'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;use Text::Unidecode';
+    eval 'require Email::Sender::Simple;use GD;use Text::Unidecode';
     if ($@) {
         skip 'Missing dependencies', $maintests;
     }

@@ -21,8 +21,7 @@ my $maintests = 12;
 no warnings 'once';
 
 SKIP: {
-    eval
-'require Email::Sender::Simple; use GD::SecurityImage; use Image::Magick; use Net::SSLeay;
+    eval 'require Email::Sender::Simple; use GD; use Net::SSLeay;
 use DateTime::Format::RFC3339;';
     if ($@) {
         skip 'Missing dependencies ' . $@, $maintests;
