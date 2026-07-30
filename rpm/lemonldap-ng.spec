@@ -186,7 +186,6 @@ BuildRequires:  perl(Pod::Usage)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(threads::shared)
 BuildRequires:  perl(WWW::Form::UrlEncoded)
-BuildRequires:  perl(XML::Simple)
 # Tests
 BuildRequires:  perl(Apache::Session::File)
 BuildRequires:  perl(Cache::NullCache)
