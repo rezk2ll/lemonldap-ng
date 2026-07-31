@@ -232,7 +232,7 @@ sub sessions {
     my $whatToTrace = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
+    my @fields = ( $self->{ipField}, $whatToTrace );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
           or $groupBy =~ s/^net(?:4|6|)\(([\w:]+),\d+(?:,\d+)?\)$/$1/;
@@ -332,7 +332,6 @@ sub sessions {
         # 2.4.1 Store user IP addresses in %r
         foreach my $id ( keys %$res ) {
             my $entry = $res->{$id};
-            next if ( $entry->{_httpSessionType} );
             $r{ $entry->{$whatToTrace} }->{ $entry->{ $self->{ipField} } }++;
         }
 
