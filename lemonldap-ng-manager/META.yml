@@ -27,7 +27,6 @@ no_index:
 recommends:
   LWP::Protocol::https: '0'
 requires:
-  Convert::PEM: '0'
   Crypt::OpenSSL::RSA: '0'
   LWP::UserAgent: '0'
   Lemonldap::NG::Common: v2.23.2

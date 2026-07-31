@@ -103,8 +103,6 @@ sub getConfByNum {
 #    root query (/confs/latest for example) is redirected to metadata()
 #  - other requests:
 #    they are managed by getKey()
-#  - newRSAKey() returns a new RSA key pair if /confs/newRSAKey is called in a
-#    POST request
 #  - prx() load a request and return the content (for SAML/OIDC metadata)
 
 # 31 - Complex subnodes

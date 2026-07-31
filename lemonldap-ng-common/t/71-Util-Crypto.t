@@ -1,4 +1,4 @@
-use Test::More tests => 5;
+use Test::More tests => 4;
 
 BEGIN { use_ok('Lemonldap::NG::Common::Util::Crypto') }
 use Crypt::OpenSSL::RSA;
@@ -6,37 +6,6 @@ use Crypt::OpenSSL::X509;
 
 # Use small key size to avoid burning too much CPU
 our $key_size = 1024;
-
-subtest "Check genRsaKey" => sub {
-    my ( $result, $checkpriv, $checkpub );
-    $result    = Lemonldap::NG::Common::Util::Crypto::genRsaKey($key_size);
-    $checkpriv = Crypt::OpenSSL::RSA->new_private_key( $result->{private} );
-    $checkpub  = Crypt::OpenSSL::RSA->new_public_key( $result->{public} );
-    is( $checkpriv->size * 8, $key_size, "Correct key size" );
-    is(
-        $checkpriv->get_public_key_string(),
-        $checkpub->get_public_key_string(),
-        'Public key matches private key'
-    );
-    ok( $result->{hash}, "Hash is non empty" );
-
-    my $result =
-      Lemonldap::NG::Common::Util::Crypto::genRsaKey( $key_size, "mytestkey" );
-  SKIP: {
-        skip "Crypt::OpenSSL::RSA doesn't support loading key with passphrase"
-          if $Crypt::OpenSSL::RSA::VERSION < 0.33;
-        $checkpriv = Crypt::OpenSSL::RSA->new_private_key( $result->{private},
-            "mytestkey" );
-        $checkpub = Crypt::OpenSSL::RSA->new_public_key( $result->{public} );
-        is( $checkpriv->size * 8, $key_size, "Correct key size" );
-        is(
-            $checkpriv->get_public_key_string(),
-            $checkpub->get_public_key_string(),
-            'Public key matches private key'
-        );
-        ok( $result->{hash}, "Hash is non empty" );
-    }
-};
 
 subtest "Check genCertKey" => sub {
     my ( $result, $checkpriv, $checkpub, $checkcert );

@@ -100,7 +100,6 @@ WriteMakefile(
         'Apache::Session'        => 0,
         'Cache::Cache'           => 0,
         'Config::IniFiles'       => 0,
-        'Convert::PEM'           => 0,
         'Crypt::OpenSSL::Bignum' => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'Crypt::OpenSSL::X509'   => 0,
