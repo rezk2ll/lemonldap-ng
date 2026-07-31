@@ -82,20 +82,6 @@ sub run {
             $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
         );
 
-        if ( $self->conf->{securedCookie} == 2 ) {
-            $self->logger->debug("Looking for double sessions...");
-
-            # searchOn() returns sessions indexed by their storage ID, then
-            # it is required to use hashed ID
-            $linkedSessionId =
-              $sessions->{ $self->storageId( $req->id ) }->{_httpSession};
-            my $msg =
-              $linkedSessionId
-              ? "Linked session found -> $linkedSessionId / " . $req->id
-              : "NO linked session found!";
-            $self->logger->debug($msg);
-        }
-
         # searchOn() returns sessions indexed by their storage ID, then
         # it is required to use hashed ID
         my $storageId = $self->storageId( $req->id );
