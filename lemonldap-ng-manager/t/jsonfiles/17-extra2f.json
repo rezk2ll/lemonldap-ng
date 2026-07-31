@@ -1883,14 +1883,6 @@
                      {
                         "k" : "1",
                         "v" : "securedCookie"
-                     },
-                     {
-                        "k" : "2",
-                        "v" : "doubleCookie"
-                     },
-                     {
-                        "k" : "3",
-                        "v" : "doubleCookieForSingleSession"
                      }
                   ],
                   "title" : "securedCookie",

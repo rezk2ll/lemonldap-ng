@@ -1689,15 +1689,9 @@ sub attributes {
             flags         => 'hp',
         },
         securedCookie => {
-            type   => 'select',
-            select => [
-                { k => '0', v => 'unsecuredCookie' },
-                { k => '1', v => 'securedCookie' },
-                { k => '2', v => 'doubleCookie' },
-                { k => '3', v => 'doubleCookieForSingleSession' },
-            ],
+            type          => 'bool',
             default       => 0,
-            documentation => 'Cookie securisation method',
+            documentation => 'Cookie secure flag',
             flags         => 'hp',
         },
         hashedSessionStore => {
