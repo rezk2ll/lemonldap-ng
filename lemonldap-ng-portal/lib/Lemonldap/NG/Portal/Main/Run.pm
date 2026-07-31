@@ -405,8 +405,6 @@ sub do {
             my $res = { result => 1, error => $err };
             if ( $req->data->{newAuth} ) {
                 $res->{id}      = $req->id;
-                $res->{id_http} = $req->sessionInfo->{_httpSession}
-                  if $req->sessionInfo->{_httpSession};
             }
             return $self->sendJSONresponse( $req, $res );
         }
@@ -732,42 +730,13 @@ sub updateSession {
     }
 }
 
-# Delete an existing session. If "securedCookie" is set to 2, the http session
+# Delete an existing session
 # will also be removed.
 # @param h tied Apache::Session object
 # @param preserveCookie do not delete cookie
 # @return True if session has been deleted
 sub _deleteSession {
     my ( $self, $req, $session, $preserveCookie ) = @_;
-
-    # Invalidate http cookie and session, if set
-    if ( $self->conf->{securedCookie} >= 2 ) {
-
-        # Try to find a linked http session (securedCookie == 2)
-        if ( $self->conf->{securedCookie} == 2
-            and my $id2 = $session->data->{_httpSession} )
-        {
-            if ( my $session2 = $self->getApacheSession($id2) ) {
-                $session2->remove;
-                if ( $session2->error ) {
-                    $self->logger->debug(
-                        "Unable to remove linked session $id2");
-                    $self->logger->debug( $session2->error );
-                }
-            }
-        }
-
-        # Create an obsolete cookie to remove it
-        $req->addCookie(
-            $self->genDomainCookie(
-                $req,
-                name    => $self->conf->{cookieName} . 'http',
-                value   => 0,
-                secure  => 0,
-                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
-            )
-        ) unless ($preserveCookie);
-    }
 
     # Publishing an "unlog" event will automatically remove the corresponding
     # session from handler cache. See publishEvent into Handler::Main::Run
@@ -1012,16 +981,21 @@ sub _dump {
 }
 
 sub _dump_string {
-    my ($self, $str) = @_;
+    my ( $self, $str ) = @_;
     use charnames ':full';
-    $self->logger->debug( '$str = "'.
-    join("",
-        map { $_ > 255                    # if wide character...
-            ? sprintf("\\N{%s}", charnames::viacode($_))
-            : ($_ < 0x20 or $_ >= 0x7F )  # if non printable
-            ? sprintf("\\N{%s}", charnames::viacode($_))
-            : quotemeta(chr($_))          # else quoted or as themselves
-        } unpack("W*", $str)) .'"');      # unpack Unicode characters
+    $self->logger->debug(
+        '$str = "' . join(
+            "",
+            map {
+                $_ > 255                           # if wide character...
+                  ? sprintf( "\\N{%s}", charnames::viacode($_) )
+                  : ( $_ < 0x20 or $_ >= 0x7F )    # if non printable
+                  ? sprintf( "\\N{%s}", charnames::viacode($_) )
+                  : quotemeta( chr($_) )    # else quoted or as themselves
+            } unpack( "W*", $str )
+          )
+          . '"'
+    );    # unpack Unicode characters
 }
 
 sub getSkinTplDir {

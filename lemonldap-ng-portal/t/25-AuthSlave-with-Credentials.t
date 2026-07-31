@@ -14,7 +14,7 @@ my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel           => 'error',
             useSafeJail        => 1,
-            securedCookie      => 3,
+            securedCookie      => 1,
             authentication     => 'Slave',
             userDB             => 'Same',
             userControl        => '^\w{4}$',
@@ -147,14 +147,11 @@ count(1);
 expectOK($res);
 
 my $id      = expectCookie($res);
-my $id_http = expectCookie( $res, 'lemonldaphttp' );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{id} eq "$id", 'Session id found' )
   or explain( $json, "id => session_id" );
-ok( $json->{id_http} eq "$id_http", 'httpSession id found' )
-  or explain( $json, "id_http => http_session_id" );
-count(3);
+count(2);
 
 clean_sessions();
 

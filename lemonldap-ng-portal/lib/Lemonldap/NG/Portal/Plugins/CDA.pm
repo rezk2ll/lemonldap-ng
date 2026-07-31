@@ -62,24 +62,8 @@ sub changeUrldc {
 
         # Create CDA session
         my $cdaInfos = { '_utime' => time };
-        if ( $self->{conf}->{securedCookie} < 2 or $ssl ) {
-            $cdaInfos->{cookie_value} = $req->id;
-            $cdaInfos->{cookie_name}  = $self->{conf}->{cookieName};
-        }
-        else {
-            if ( $req->{sessionInfo}->{_httpSession} ) {
-                $cdaInfos->{cookie_value} =
-                  $req->{sessionInfo}->{_httpSession};
-                $cdaInfos->{cookie_name} = $self->{conf}->{cookieName} . "http";
-            }
-            else {
-                $self->logger->error(
-                        "Session does not contain _httpSession field. "
-                      . "Portal must be accessed over HTTPS when using CDA with double cookie"
-                );
-                return PE_ERROR;
-            }
-        }
+        $cdaInfos->{cookie_value} = $req->id;
+        $cdaInfos->{cookie_name}  = $self->{conf}->{cookieName};
 
         my $cdaSession =
           $self->p->getApacheSession( undef, kind => "CDA", info => $cdaInfos );

@@ -6,8 +6,8 @@ package Lemonldap::NG::Portal::Main;
 
 use strict;
 use MIME::Base64;
-use POSIX                                  qw(strftime);
-use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
+use POSIX                       qw(strftime);
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants ':all';
 use URI;
 
@@ -670,19 +670,6 @@ sub store {
     # Now, user is authenticated => inform handler
     $req->userData( $req->sessionInfo );
 
-    # Create second session for unsecure cookie
-    if ( $self->conf->{securedCookie} == 2 and !$req->refresh ) {
-        my %infos = %{ $req->{sessionInfo} };
-        $infos{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
-        $self->logger->debug("Set _updateTime with $infos{_updateTime}");
-        $infos{_httpSessionType} = 1;
-
-        my $session2 = $self->getApacheSession( undef, info => \%infos );
-        $self->logger->debug("Create second session for unsecured cookie");
-        $req->{sessionInfo}->{_httpSession} = $session2->id;
-        $self->logger->debug( " -> Cookie value: " . $session2->id );
-    }
-
     # Fill session
     my $infos = {};
     foreach my $k ( sort keys %{ $req->{sessionInfo} } ) {
@@ -712,13 +699,6 @@ sub store {
         $req->{sessionInfo}->{_session_kind} = $session->{kind};
     }
 
-    # Compute unsecured cookie value if needed
-    if ( $self->conf->{securedCookie} == 3 and !$req->refresh ) {
-        $req->{sessionInfo}->{_httpSession} =
-          $self->conf->{cipher}->encryptHex( $req->id, "http" );
-        $self->logger->debug( " -> Compute unsecured cookie value : "
-              . $req->{sessionInfo}->{_httpSession} );
-    }
     $req->refresh(0);
     return PE_OK;
 }
@@ -737,19 +717,6 @@ sub buildCookie {
                 : (),
             )
         );
-        if ( $self->conf->{securedCookie} >= 2 ) {
-            $req->addCookie(
-                $self->genDomainCookie(
-                    $req,
-                    name   => $self->conf->{cookieName} . "http",
-                    value  => $req->{sessionInfo}->{_httpSession},
-                    secure => 0,
-                    $self->conf->{cookieExpiration}
-                    ? ( max_age => $self->conf->{cookieExpiration} )
-                    : (),
-                )
-            );
-        }
     }
     my $ref = (
         %{ $req->{sessionInfo} }

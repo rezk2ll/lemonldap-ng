@@ -5483,24 +5483,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'securedCookie' => {
             'default' => 0,
-            'select'  => [ {
-                    'k' => '0',
-                    'v' => 'unsecuredCookie'
-                },
-                {
-                    'k' => '1',
-                    'v' => 'securedCookie'
-                },
-                {
-                    'k' => '2',
-                    'v' => 'doubleCookie'
-                },
-                {
-                    'k' => '3',
-                    'v' => 'doubleCookieForSingleSession'
-                }
-            ],
-            'type' => 'select'
+            'type'    => 'bool'
         },
         'secureTokenAllowOnError' => {
             'type' => 'text'
