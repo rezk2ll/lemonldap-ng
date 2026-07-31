@@ -66,6 +66,19 @@ If you are using another backend, you have several options:
   ``lemonldap-ng-cli`` to backup sessions and configuration, fix the encoding
   using ``iconv``, and reimport
 
+"Double Cookies" no longer supported
+------------------------------------
+
+Previous versions of LemonLDAP::NG could be configured to set an insecure
+SSO cookie in addition to the main SSO cookie.
+
+This is no longer supported, which means if you configure the main SSO cookie
+to have the *Secure* flag (highly recommended), you cannot use LemonLDAP::NG
+Handler to access insecure, unencrypted HTTP applications at all.
+
+You can find this setting in in *General Parameters* » *Cookies* » *Secured
+Cookie (SSL)*
+
 Plugins
 -------
 
