@@ -41,6 +41,12 @@
     </div>
   </TMPL_IF>
 
+  <TMPL_IF ERROR504>
+    <div class="message message-warning alert">
+      <span trspan="temporarilyUnresponsive">This application is currently not responding, please try to connect later</span>
+    </div>
+  </TMPL_IF>
+
   <div id="error">
     <TMPL_IF URL>
       <div class="message message-warning alert">

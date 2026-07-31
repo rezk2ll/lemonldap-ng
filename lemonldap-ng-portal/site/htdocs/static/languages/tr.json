@@ -325,6 +325,7 @@
 "stayConnected":"Gelecekteki oturum açma işlemlerinizde bu cihaza güvenin",
 "submit":"Gönder",
 "switchContext":"Bağlam değiştir",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"OTP Uygulaması",
 "totpMissingCode":"Lütfen TOTP uygulamanız tarafından sağlanan kodu girin",
 "totpOrTouch":"Bunu cep telefonunuzda görürseniz, TOTP uygulamanızı açmak için QR koduna dokunun",

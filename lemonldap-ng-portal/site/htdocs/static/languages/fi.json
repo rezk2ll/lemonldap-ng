@@ -325,6 +325,7 @@
 "stayConnected":"Luota tähän tunnistusvälineeseen tulevissa kirjautumisissa",
 "submit":"Lähetä",
 "switchContext":"Vaihda kontekstia",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"OTP-sovellus",
 "totpMissingCode":"Ole hyvä ja anna TOTP-sovelluksesi tarjoama koodi",
 "totpOrTouch":"Jos katsot tätä mobiililaitteessasi, kosketa QR-koodia avataksesi TOTP-sovelluksesi",

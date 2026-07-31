@@ -325,6 +325,7 @@
 "stayConnected":"Faire confiance à ce navigateur lors des prochaines connexions",
 "submit":"Envoyer",
 "switchContext":"Changer de contexte",
+"temporarilyUnresponsive":"Cette application ne répond actuellement pas, merci de réessayer plus tard",
 "totp2f":"Application OTP",
 "totpMissingCode":"Veuillez entrer le code fourni par votre application TOTP",
 "totpOrTouch":"Si vous êtes sur mobile, touchez le QR code pour ouvrir votre application TOTP",
