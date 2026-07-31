@@ -1254,7 +1254,7 @@ sub lmError {
 
     # Error code
     $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
-      foreach ( 403, 404, 500, 502, 503 );
+      foreach ( 403, 404, 500, 502, 503, 504 );
     return $self->sendHtml( $req, 'error', params => \%templateParams );
 }
 

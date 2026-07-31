@@ -325,6 +325,7 @@
 "stayConnected":"Dôverujte tomuto zariadeniu pre budúce prihlásenia",
 "submit":"Odoslať",
 "switchContext":"Zmeniť kontext",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"OTP aplikácia",
 "totpMissingCode":"Prosím, zadajte kód poskytnutý vašou TOTP aplikáciou",
 "totpOrTouch":"Ak to vidíte na svojom mobile, dotknite sa QR kódu, aby ste otvorili svoju TOTP aplikáciu",
