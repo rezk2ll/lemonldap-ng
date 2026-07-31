@@ -30,16 +30,8 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
 
 -  **Multiple domains**: enable :doc:`cross domain mechanism<cda>`
    (without this, you cannot extend SSO to other domains)
--  **Secured cookie**: 4 options:
-
-   -  **Non secured cookie**: the cookie can be sent over HTTP and HTTPS
-      connections
-   -  **Secured cookie**: the cookie can only be sent over HTTPS
-   -  **Double cookie**: two cookies are delivered, one for HTTP and
-      HTTPS connections, the other for HTTPS only
-   -  **Double cookie for single session**: same as double cookie but
-      only one session is created in session database
-
+-  **Secured cookie**: restricts the SSO cookie to secured HTTP (``https``)
+   only. This is highly recommended.
 -  **Javascript protection**: set httpOnly flag, to prevent cookie from
    being leaked by malicious javascript code
 -  **SSO cookie expiration time**: by default, SSO cookie is a session
