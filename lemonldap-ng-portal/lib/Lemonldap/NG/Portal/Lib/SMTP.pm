@@ -114,11 +114,15 @@ sub gen_password {
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
 
-    if ( $mail =~ /^\S+\@\S+$/ ) {
-        $mail = format_email( $mail, $mail );
+    if ( ref $mail eq 'ARRAY' ) {
+        @$mail = map { /^\S+\@\S+$/ ? format_email( $_, $_ ) : () } @$mail;
+    }
+    else {
+        $mail = format_email( $mail, $mail ) if ( $mail =~ /^\S+\@\S+$/ );
     }
 
-    $self->logger->info("send_mail called to send \"$subject\" to $mail");
+    $self->logger->info( "send_mail called to send \"$subject\" to "
+          . ( ref $mail eq 'ARRAY' ? join ', ', @$mail : $mail ) );
 
     # Encode the body with the given charset
     $body    = encode( $self->charset, $body );
@@ -126,9 +130,10 @@ sub send_mail {
 
     # Debug messages
     $self->logger->debug( "SMTP From " . $self->conf->{mailFrom} );
-    $self->logger->debug( "SMTP To " . $mail );
-    $self->logger->debug( "SMTP Subject " . $subject );
-    $self->logger->debug( "SMTP Body " . $body );
+    $self->logger->debug(
+        "SMTP To " . ( ref $mail eq 'ARRAY' ? join ', ', @$mail : $mail ) );
+    $self->logger->debug( "SMTP Subject $subject" );
+    $self->logger->debug( "SMTP Body $body" );
     $self->logger->debug( "SMTP HTML flag " . ( $html ? "on" : "off" ) );
     $self->logger->debug( "SMTP Reply-To " . $self->conf->{mailReplyTo} )
       if $self->conf->{mailReplyTo};
