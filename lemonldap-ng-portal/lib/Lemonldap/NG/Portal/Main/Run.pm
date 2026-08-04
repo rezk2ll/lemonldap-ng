@@ -1023,7 +1023,9 @@ sub getTrOver {
         foreach my $file (@langfiles) {
             my ($lang) = ( $file =~ /^(\w+)\.json/ );
             $self->logger->debug("Use $file to override messages");
-            if ( open my $json, "<", $templateDir . "/" . $file ) {
+            if ( open my $json,
+                "<:encoding(UTF-8)", $templateDir . "/" . $file )
+            {
                 my $trdata;
                 eval {
                     local $/ = undef;
