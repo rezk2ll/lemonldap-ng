@@ -115,7 +115,7 @@ sub addCustomToken {
 sub oidcGotClientCredentialsGrant {
     my ( $self, $req, $payload, $rp ) = @_;
     $payload->{"hooked_username"} = "hook";
-    $payload->{"_scope"} .= " cc_hooked";
+    $payload->{"_scope"} .= " cc_hooked" if $rp ne "scopelessrp";
     return PE_OK;
 }
 
