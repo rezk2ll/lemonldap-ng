@@ -41,6 +41,7 @@ llapp.controller('TreeCtrl', [
       pathEvent,
       readError,
       setHelp;
+    $scope.version = window.version;
     $scope.links = window.links;
     $scope.menu = $htmlParams.menu;
     $scope.menulinks = window.menulinks;

@@ -580,6 +580,7 @@
 "linkedInScope":"Scope",
 "linkedInUserField":"Champ contenant l'identifiant de l'utilisateur",
 "linkedinParams":"Paramètres LinkedIn",
+"llngVersion":"Version en cours d'execution",
 "load":"Charger",
 "loadFromUrl":"Charger depuis une URL",
 "loadedConfiguration":"Configuration chargée",

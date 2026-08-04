@@ -580,6 +580,7 @@
 "linkedInScope":"Scope",
 "linkedInUserField":"Field containing user identifier",
 "linkedinParams":"LinkedIn Parameters",
+"llngVersion":"Running version",
 "load":"Load",
 "loadFromUrl":"Load from URL",
 "loadedConfiguration":"Loaded configuration",
