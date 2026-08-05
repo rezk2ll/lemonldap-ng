@@ -96,9 +96,6 @@ my $op = LLNG::Manager::Test->new( {
                     "read"   => '$requested',
                     "always" => '1',
                 },
-                scopelessrp => {
-                    "denied" => '0',
-                },
             },
             oidcServicePrivateKeySig      => oidc_key_op_private_sig,
             oidcServicePublicKeySig       => oidc_cert_op_public_sig,
@@ -131,18 +128,10 @@ my $badquery2 = buildForm( {
     }
 );
 
-my $noscopequery = buildForm( {
-        client_id     => 'scopelessrp',
-        client_secret => 'rpsecret',
-        grant_type    => 'client_credentials',
-    }
-);
-
 my $badquery3 = buildForm( {
         client_id     => 'scopelessrp',
         client_secret => 'rpsecret',
         grant_type    => 'client_credentials',
-        scope         => 'denied',
     }
 );
 
@@ -172,7 +161,7 @@ $res = $op->_post(
 );
 expectBadRequest($res);
 
-## Test requested scopes that are all denied
+## Test empty scope
 $res = $op->_post(
     "/oauth2/token",
     IO::String->new($badquery3),
@@ -180,19 +169,6 @@ $res = $op->_post(
     length => length($badquery3),
 );
 expectReject( $res, 400, "invalid_scope" );
-
-## Test missing scope parameter, which is optional (RFC 6749 #4.4.2)
-$res = $op->_post(
-    "/oauth2/token",
-    IO::String->new($noscopequery),
-    accept => 'application/json',
-    length => length($noscopequery),
-);
-my $noscope_payload = expectJSON($res);
-ok( $noscope_payload->{access_token}, "Access Token found without scope" );
-ok( !exists( $noscope_payload->{scope} ),
-    "No scope returned in token response" );
-count(2);
 
 ## Test a confidential RP
 $res = $op->_post(

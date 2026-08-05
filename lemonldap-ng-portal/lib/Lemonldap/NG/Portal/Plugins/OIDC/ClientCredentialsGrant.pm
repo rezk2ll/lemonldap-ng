@@ -48,10 +48,7 @@ sub _run {
     my $req_scope = $req->param('scope') || '';
     my $scope     = $oidc->getScope( $req, $rp, $req_scope );
 
-    # The scope parameter is optional in the Client Credentials grant
-    # (RFC 6749 section 4.4.2). Only reject the request if the client did
-    # request scopes and none of them were granted
-    if ( !$scope and $req_scope ) {
+    unless ($scope) {
         $self->userLogger->warn( 'Client '
               . $client_id
               . " was not granted any requested scopes ($req_scope) for $rp" );
