@@ -33,6 +33,7 @@ All parameters are configured in "General Parameters » Portal Parameters
 -  **Re-send interval**: Set this to a non-empty value to allow the user to
    re-send the code in case a transmission error occured. The value sets how
    many seconds the user has to wait before each attempt
+-  **Timeout**: How long the executed commands should be allowed to run
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
