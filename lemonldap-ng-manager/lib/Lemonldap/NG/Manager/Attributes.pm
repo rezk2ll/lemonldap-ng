@@ -1543,6 +1543,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'ext2FSendCommand' => {
             'type' => 'text'
         },
+        'ext2fTimeout' => {
+            'type' => 'text'
+        },
         'ext2FValidateCommand' => {
             'type' => 'text'
         },

@@ -1083,8 +1083,9 @@ sub tree {
                             nodes => [
                                 'ext2fActivation',     'ext2fCodeActivation',
                                 'ext2FSendCommand',    'ext2FValidateCommand',
-                                'ext2fResendInterval', 'ext2fAuthnLevel',
-                                'ext2fLabel',          'ext2fLogo',
+                                'ext2fResendInterval', 'ext2fTimeout',
+                                'ext2fAuthnLevel',     'ext2fLabel',
+                                'ext2fLogo',
                             ]
                         },
                         {

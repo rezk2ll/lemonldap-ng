@@ -396,6 +396,7 @@
 "ext2fLabel":"תווית",
 "ext2fLogo":"לוגו",
 "ext2fResendInterval":"מרווח בין שליחות חוזרות",
+"ext2fTimeout":"Command timeout",
 "externalMenu":"External menu URL",
 "facebookAppId":"מזהה יישום פייסבוק",
 "facebookAppSecret":"סוג יישום פייסבוק",
