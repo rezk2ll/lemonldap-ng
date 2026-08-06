@@ -2515,6 +2515,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Validation command of External second factor',
         },
+        ext2fTimeout => {
+            type          => 'text',
+            documentation => 'Timeout of command execution',
+        },
         ext2fResendInterval => {
             type          => 'text',
             documentation => 'Delay before user is allowed to resend code',
@@ -5277,11 +5281,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsMtlsCertIdentifierType => {
             type   => 'select',
             select => [
-                { k => '',        v => 'SAN DNS' },
-                { k => 'DN',      v => 'Subject DN' },
-                { k => 'Email',   v => 'SAN Email' },
-                { k => 'IP',      v => 'SAN IP' },
-                { k => 'URI',     v => 'SAN URI' },
+                { k => '',      v => 'SAN DNS' },
+                { k => 'DN',    v => 'Subject DN' },
+                { k => 'Email', v => 'SAN Email' },
+                { k => 'IP',    v => 'SAN IP' },
+                { k => 'URI',   v => 'SAN URI' },
             ],
             documentation =>
               'Client certificate identifier type for mTLS (RFC 8705)',

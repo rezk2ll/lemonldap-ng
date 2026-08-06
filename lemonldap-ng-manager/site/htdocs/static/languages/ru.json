@@ -396,6 +396,7 @@
 "ext2fLabel":"Метка",
 "ext2fLogo":"Лого",
 "ext2fResendInterval":"Заново отправить интервал",
+"ext2fTimeout":"Command timeout",
 "externalMenu":"External menu URL",
 "facebookAppId":"Идентификатор приложения Facebook",
 "facebookAppSecret":"Секрет приложения Facebook",

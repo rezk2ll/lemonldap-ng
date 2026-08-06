@@ -396,6 +396,7 @@
 "ext2fLabel":"Etiqueta",
 "ext2fLogo":"Logo",
 "ext2fResendInterval":"Intervalo de reenvio",
+"ext2fTimeout":"Command timeout",
 "externalMenu":"External menu URL",
 "facebookAppId":"ID de aplicação Facebook",
 "facebookAppSecret":"segredo de aplicação Facebook",
