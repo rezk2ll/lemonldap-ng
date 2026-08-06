@@ -46,7 +46,7 @@ Bluemind
 ~~~~~~~~~
 
 Refer to the `Bluemind documentation
-<https://doc.bluemind.net/release/5.2/en/guide_de_l_administrateur/authentification/mise_en_place_du_sso_openid>`__ to configure your Bluemind server.
+<https://doc.bluemind.net/release/en/5.6/guide_de_l_administrateur/authentification/mise_en_place_du_sso_openid>`__ to configure your Bluemind server.
 
 
 - *third-party OpenID server URL*: ``https://auth.example.com/.well-known/openid-configuration``
