@@ -138,6 +138,13 @@ itself, this may cause a change of behavior. It is generally not recommended
 to do this, but if you still want to, make sure the macro's definition is
 idempotent, as it may be calculated several times.
 
+Stricter partner naming policy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Partner names (OIDC RPs, SAML SPs, Identity Providers, CAS Applications, and CAS Servers) are now subject to a stricter naming policy. Special characters, including spaces and dots, are no longer allowed. Allowed characters are now alphanumerics, hyphens (``-``) and underscores (``_``).
+
+If your existing configuration contains non-compliant names, you will be blocked from saving any new changes post-upgrade until these partners are renamed.
+
 2.22.2
 ------
 
