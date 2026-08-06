@@ -3,22 +3,7 @@ package Lemonldap::NG::Handler::Main::Jail;
 use strict;
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-
-# Workaround for another ModPerl/Mouse issue...
-BEGIN {
-    require Mouse;
-    no warnings;
-    my $v = $Mouse::VERSION
-      ? sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) )
-      : 0;
-    if ( $v < 2.005001 and $Lemonldap::NG::Handler::Apache2::Main::VERSION ) {
-        require Moose;
-        Moose->import();
-    }
-    else {
-        Mouse->import();
-    }
-}
+use Mouse;
 
 has customFunctions      => ( is => 'rw', isa => 'Maybe[Str]' );
 has useSafeJail          => ( is => 'rw', isa => 'Maybe[Int]' );
