@@ -12,6 +12,7 @@ extends 'Lemonldap::NG::Common::Notifications::JSON',
 has notifField => (
     is      => 'rw',
     builder => sub {
+    lazy => 1,
         my $uid =
              $_[0]->conf->{notificationField}
           || $_[0]->conf->{whatToTrace}
