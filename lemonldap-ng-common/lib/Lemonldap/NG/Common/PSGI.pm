@@ -427,6 +427,7 @@ sub sendHtml {
             cache                  => 0,
             global_vars            => 1,
             loop_context_vars      => 1,
+            utf8                   => 1,
         );
 
         # TODO: replace app

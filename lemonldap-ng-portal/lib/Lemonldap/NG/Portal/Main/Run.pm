@@ -1519,6 +1519,7 @@ sub loadTemplate {
         die_on_missing_include => 1,
         cache                  => ( defined $prm{cache} ? $prm{cache} : 1 ),
         global_vars            => 0,
+        utf8                   => 1,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
     if ( $self->can('tplParams') ) {
