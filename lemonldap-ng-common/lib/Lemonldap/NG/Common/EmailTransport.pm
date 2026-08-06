@@ -8,6 +8,37 @@ use Email::Date::Format   qw(email_date);
 
 our $VERSION = '2.23.0';
 
+# Build the SASL related arguments given to the transport constructor.
+# When SMTPAuthMech is set, an Authen::SASL object restricted to the wanted
+# mechanism(s) is used instead of sasl_username/sasl_password: else Net::SMTP
+# builds itself a SASL client using all the mechanisms advertised by the
+# server, and picks the "strongest" one, which may be broken server side
+# (DIGEST-MD5 on some providers for example).
+# NB: sasl_authenticator and sasl_username are mutually exclusive.
+sub _saslArgs {
+    my ( $transportClass, $conf ) = @_;
+    return () unless $conf->{SMTPAuthUser};
+    if ( $conf->{SMTPAuthMech} and $transportClass->can('sasl_authenticator') )
+    {
+        eval { require Authen::SASL; };
+        die "SMTPAuthMech is set but Authen::SASL is missing: $@" if $@;
+        return (
+            sasl_authenticator => Authen::SASL->new(
+                mechanism => $conf->{SMTPAuthMech},
+                callback  => {
+                    user     => $conf->{SMTPAuthUser},
+                    authname => $conf->{SMTPAuthUser},
+                    pass     => $conf->{SMTPAuthPass},
+                },
+            )
+        );
+    }
+    return (
+        sasl_username => $conf->{SMTPAuthUser},
+        sasl_password => $conf->{SMTPAuthPass},
+    );
+}
+
 sub new {
     my ( $class, $conf ) = @_;
     my $transport;
@@ -25,14 +56,7 @@ sub new {
             $transport = Email::Sender::Transport::SMTPS->new(
                 host => $conf->{SMTPServer},
                 ( $conf->{SMTPPort} ? ( port => $conf->{SMTPPort} ) : () ),
-                (
-                    $conf->{SMTPAuthUser}
-                    ? (
-                        sasl_username => $conf->{SMTPAuthUser},
-                        sasl_password => $conf->{SMTPAuthPass}
-                      )
-                    : ()
-                ),
+                _saslArgs( 'Email::Sender::Transport::SMTPS', $conf ),
                 ssl => $smtpTls,
             );
             return $transport;
@@ -49,14 +73,7 @@ sub new {
     $transport = Email::Sender::Transport::SMTP->new(
         host => $conf->{SMTPServer},
         ( $conf->{SMTPPort} ? ( port => $conf->{SMTPPort} ) : () ),
-        (
-            $conf->{SMTPAuthUser}
-            ? (
-                sasl_username => $conf->{SMTPAuthUser},
-                sasl_password => $conf->{SMTPAuthPass}
-              )
-            : ()
-        ),
+        _saslArgs( 'Email::Sender::Transport::SMTP', $conf ),
         ( $smtpTls ? ( ssl => $smtpTls ) : () ),
         (
             $conf->{SMTPTLSOpts} ? ( ssl_options => $conf->{SMTPTLSOpts} )
@@ -88,6 +105,22 @@ sub configTest {
                     ( $message ? "$message. " : "" )
                   . "StartTLS is not supported, "
                   . "install Email::Sender::Transport::SMTPS";
+            }
+        }
+    }
+    if ( $conf->{SMTPAuthMech} and $conf->{SMTPAuthUser} ) {
+        unless ( Email::Sender::Transport::SMTP->can('sasl_authenticator') ) {
+            $message =
+                ( $message ? "$message. " : "" )
+              . "Choosing the SASL mechanism is not supported on "
+              . "Email::Sender < 1.300032, SMTPAuthMech will be ignored";
+        }
+        else {
+            eval { require Authen::SASL; };
+            if ($@) {
+                $message =
+                  ( $message ? "$message. " : "" )
+                  . "SMTPAuthMech requires Authen::SASL, please install it";
             }
         }
     }

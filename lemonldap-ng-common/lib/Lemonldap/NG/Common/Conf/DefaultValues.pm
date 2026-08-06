@@ -394,6 +394,7 @@ sub defaultValues {
           'slaveAuthnLevel' => 2,
           'slaveCertificateRegexp' => '',
           'slaveExportedVars' => {},
+          'SMTPAuthMech' => '',
           'SMTPServer' => '',
           'SMTPTLS' => '',
           'soapProxyUrn' => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',

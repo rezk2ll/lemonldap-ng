@@ -5758,6 +5758,9 @@ sub attributes {
           'slaveUserHeader' => {
                                  'type' => 'text'
                                },
+          'SMTPAuthMech' => {
+                              'type' => 'text'
+                            },
           'SMTPAuthPass' => {
                               'type' => 'password'
                             },
