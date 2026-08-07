@@ -83,8 +83,6 @@ EOF
 sub _extractNotification {
     my ( $self, $notif ) = @_;
     $notif = from_json($notif);
-    use Data::Dumper;
-        $self->logger->debug("************* " . Dumper $notif);
     if ( my $content = $notif->{xml} ) {
         $self->logger->debug("Notification content: $content");
         $content = from_json($content);
