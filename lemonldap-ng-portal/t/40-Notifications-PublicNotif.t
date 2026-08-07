@@ -11,7 +11,7 @@ my $json;
 my $file = "$main::tmpDir/20160530_public-info_dGVzdHJlZg==.json";
 
 open F, "> $file" or die($!);
-print F '
+print F '[
 {
   "uid": "public-info",
   "date": "2016-05-30",
@@ -20,7 +20,7 @@ print F '
   "subtitle": "Test subtitle",
   "text": "This is a test text for $uid"
 }
-';
+]';
 close F;
 
 my $client = LLNG::Manager::Test->new( {
@@ -39,7 +39,7 @@ my $client = LLNG::Manager::Test->new( {
 use Lemonldap::NG::Portal::Main::Constants 'PE_NOTIFICATION';
 
 # Display login page with public notifications
-# -------------------
+# --------------------------------------------
 ok(
     $res = $client->_get(
         '/', accept => 'text/html',
@@ -51,7 +51,7 @@ ok( $res->[2]->[0] =~ qr%Test title%, 'Notification displayed' )
 count(2);
 
 # Display login page with public notifications after bad auth
-# -------------------
+# -----------------------------------------------------------
 ok(
     $res = $client->_post(
         '/',
@@ -68,7 +68,7 @@ count(2);
 clean_sessions();
 
 # Display login page without public notifications
-# -------------------
+# -----------------------------------------------
 unlink $file;
 
 ok(

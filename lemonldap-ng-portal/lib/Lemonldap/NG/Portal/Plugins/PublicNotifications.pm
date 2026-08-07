@@ -83,6 +83,7 @@ EOF
 sub _extractNotification {
     my ( $self, $notif ) = @_;
     $notif = from_json($notif);
+    $notif = $notif->[0] if ( ref($notif) eq 'ARRAY' );
     if ( my $content = $notif->{xml} ) {
         $self->logger->debug("Notification content: $content");
         $content = from_json($content);
