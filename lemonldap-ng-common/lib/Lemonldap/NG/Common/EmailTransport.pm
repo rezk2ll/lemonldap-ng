@@ -6,7 +6,7 @@ use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
 use Email::Date::Format   qw(email_date);
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.3';
 
 # Check that SMTPAuthMech can be honored: it requires Authen::SASL and an
 # Email::Sender version providing the sasl_authenticator attribute (>= 1.300032)
