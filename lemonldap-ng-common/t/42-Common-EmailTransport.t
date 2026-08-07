@@ -11,6 +11,11 @@ my %base = (
     SMTPAuthPass => 'dwho',
 );
 
+# Email::Sender provides sasl_authenticator since 1.300032 only, and
+# Authen::SASL is an optional dependency
+my $saslSupported = Email::Sender::Transport::SMTP->can('sasl_authenticator')
+  && eval { require Authen::SASL; 1 };
+
 # No SMTP server -> no transport (local sendmail is used)
 is( Lemonldap::NG::Common::EmailTransport->new( {} ),
     undef, 'No transport without SMTPServer' );
@@ -19,13 +24,18 @@ is( Lemonldap::NG::Common::EmailTransport->new( {} ),
 my $transport = Lemonldap::NG::Common::EmailTransport->new( {%base} );
 is( $transport->sasl_username, 'dwho', 'sasl_username is set' );
 is( $transport->sasl_password, 'dwho', 'sasl_password is set' );
-ok( !$transport->sasl_authenticator, 'No SASL authenticator by default' );
+
+# SMTPAuthMech is ignored when no user is set
+$transport = Lemonldap::NG::Common::EmailTransport->new(
+    { %base, SMTPAuthUser => '', SMTPAuthMech => 'PLAIN' } );
+ok( !$transport->sasl_username, 'No sasl_username without SMTPAuthUser' );
 
 SKIP: {
-    skip 'Email::Sender is too old to select the SASL mechanism', 4
-      unless Email::Sender::Transport::SMTP->can('sasl_authenticator');
-    eval { require Authen::SASL; };
-    skip 'Authen::SASL is not installed', 4 if $@;
+    skip 'Email::Sender or Authen::SASL is too old to select the mechanism', 7
+      unless $saslSupported;
+
+    $transport = Lemonldap::NG::Common::EmailTransport->new( {%base} );
+    ok( !$transport->sasl_authenticator, 'No SASL authenticator by default' );
 
     # SMTPAuthMech: an Authen::SASL object restricted to the wanted
     # mechanism(s) is used instead
@@ -42,12 +52,15 @@ SKIP: {
     my $client =
       $transport->sasl_authenticator->client_new( 'smtp', 'smtp.example.com' );
     is( $client->mechanism, 'PLAIN', 'Chosen mechanism' );
-}
 
-# SMTPAuthMech is ignored when no user is set
-$transport = Lemonldap::NG::Common::EmailTransport->new(
-    { %base, SMTPAuthUser => '', SMTPAuthMech => 'PLAIN' } );
-ok( !$transport->sasl_username,      'No sasl_username without SMTPAuthUser' );
-ok( !$transport->sasl_authenticator, 'No SASL object without SMTPAuthUser' );
+    $transport = Lemonldap::NG::Common::EmailTransport->new(
+        { %base, SMTPAuthUser => '', SMTPAuthMech => 'PLAIN' } );
+    ok( !$transport->sasl_authenticator,
+        'No SASL object without SMTPAuthUser' );
+
+    my ( $res, $msg ) = Lemonldap::NG::Common::EmailTransport->configTest(
+        { %base, SMTPAuthMech => 'PLAIN' } );
+    ok( !$msg, 'No warning in configTest' ) or diag($msg);
+}
 
 done_testing();

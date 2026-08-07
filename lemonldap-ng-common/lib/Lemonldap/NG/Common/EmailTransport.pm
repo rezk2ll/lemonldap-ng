@@ -8,6 +8,22 @@ use Email::Date::Format   qw(email_date);
 
 our $VERSION = '2.23.0';
 
+# Check that SMTPAuthMech can be honored: it requires Authen::SASL and an
+# Email::Sender version providing the sasl_authenticator attribute (>= 1.300032)
+# Returns an error message, or undef when the configuration is usable
+sub checkSasl {
+    my ( $class, $conf, $transportClass ) = @_;
+    return undef unless $conf->{SMTPAuthMech} and $conf->{SMTPAuthUser};
+    $transportClass ||= 'Email::Sender::Transport::SMTP';
+    return "Choosing the SASL mechanism (SMTPAuthMech) is not supported by "
+      . "$transportClass, Email::Sender 1.300032 or higher is required"
+      unless $transportClass->can('sasl_authenticator');
+    eval { require Authen::SASL; };
+    return "Choosing the SASL mechanism (SMTPAuthMech) requires Authen::SASL"
+      if $@;
+    return undef;
+}
+
 # Build the SASL related arguments given to the transport constructor.
 # When SMTPAuthMech is set, an Authen::SASL object restricted to the wanted
 # mechanism(s) is used instead of sasl_username/sasl_password: else Net::SMTP
@@ -18,10 +34,9 @@ our $VERSION = '2.23.0';
 sub _saslArgs {
     my ( $transportClass, $conf ) = @_;
     return () unless $conf->{SMTPAuthUser};
-    if ( $conf->{SMTPAuthMech} and $transportClass->can('sasl_authenticator') )
-    {
-        eval { require Authen::SASL; };
-        die "SMTPAuthMech is set but Authen::SASL is missing: $@" if $@;
+    if ( $conf->{SMTPAuthMech} ) {
+        my $error = __PACKAGE__->checkSasl( $conf, $transportClass );
+        die "$error\n" if $error;
         return (
             sasl_authenticator => Authen::SASL->new(
                 mechanism => $conf->{SMTPAuthMech},
@@ -76,7 +91,8 @@ sub new {
         _saslArgs( 'Email::Sender::Transport::SMTP', $conf ),
         ( $smtpTls ? ( ssl => $smtpTls ) : () ),
         (
-            $conf->{SMTPTLSOpts} ? ( ssl_options => $conf->{SMTPTLSOpts} )
+            $conf->{SMTPTLSOpts}
+            ? ( ssl_options => $conf->{SMTPTLSOpts} )
             : ()
         ),
     );
@@ -108,23 +124,10 @@ sub configTest {
             }
         }
     }
-    if ( $conf->{SMTPAuthMech} and $conf->{SMTPAuthUser} ) {
-        unless ( Email::Sender::Transport::SMTP->can('sasl_authenticator') ) {
-            $message =
-                ( $message ? "$message. " : "" )
-              . "Choosing the SASL mechanism is not supported on "
-              . "Email::Sender < 1.300032, SMTPAuthMech will be ignored";
-        }
-        else {
-            eval { require Authen::SASL; };
-            if ($@) {
-                $message =
-                  ( $message ? "$message. " : "" )
-                  . "SMTPAuthMech requires Authen::SASL, please install it";
-            }
-        }
+    if ( my $error = $class->checkSasl($conf) ) {
+        $message = ( $message ? "$message. " : "" ) . $error;
     }
-    return $res, $message;
+    return ( $res, $message );
 }
 
 sub sendTestMail {

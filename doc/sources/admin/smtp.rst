@@ -35,11 +35,13 @@ Only the listed mechanisms will then be tried, in the order chosen by
 Authen::SASL among those also advertised by the server. Leave the field empty
 to restore the default behavior.
 
-.. tip::
+.. warning::
 
    The `Authen::SASL <https://metacpan.org/pod/Authen::SASL>`__ module must be
    installed to use this parameter, and Email::Sender must be at least
-   1.300032.
+   1.300032. If this parameter is set while one of these requirements is not
+   met, the mail related plugins refuse to start, since mails would otherwise
+   be sent using another mechanism than the configured one.
 
 
 .. tip::
