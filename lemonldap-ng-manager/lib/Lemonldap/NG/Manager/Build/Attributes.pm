@@ -2171,6 +2171,12 @@ sub attributes {
             type          => 'password',
             documentation => 'Password to use to send mails',
         },
+        SMTPAuthMech => {
+            type          => 'text',
+            default       => '',
+            test          => qr/^[\w\s-]*$/,
+            documentation => 'SASL mechanism(s) to use to send mails',
+        },
 
         # Mails
         mailCharset => {

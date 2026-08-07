@@ -5649,6 +5649,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'slaveUserHeader' => {
             'type' => 'text'
         },
+        'SMTPAuthMech' => {
+            'default' => '',
+            'test'    => qr/^[\w\s-]*$/,
+            'type'    => 'text'
+        },
         'SMTPAuthPass' => {
             'type' => 'password'
         },

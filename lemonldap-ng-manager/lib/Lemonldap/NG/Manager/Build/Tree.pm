@@ -1164,6 +1164,7 @@ sub tree {
                                 'SMTPPort',
                                 'SMTPAuthUser',
                                 'SMTPAuthPass',
+                                'SMTPAuthMech',
                                 'SMTPTLS',
                                 'SMTPTLSOpts',
                                 {
