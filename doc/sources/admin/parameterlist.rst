@@ -24,6 +24,11 @@ LDAPFilter
     :Description: Default LDAP filter
     :Used by portal: yes
 
+SMTPAuthMech
+    :Location: General Parameters » Advanced parameters » SMTP » SASL mechanism
+    :Description: SASL mechanism(s) to use to send mails
+    :Used by portal: yes
+
 SMTPAuthPass
     :Location: General Parameters » Advanced parameters » SMTP » Password
     :Description: Password to use to send mails
