@@ -377,10 +377,6 @@ sub attributes {
                         'v' => 'LDAP'
                     },
                     {
-                        'k' => 'LinkedIn',
-                        'v' => 'LinkedIn'
-                    },
-                    {
                         'k' => 'PAM',
                         'v' => 'PAM'
                     },
@@ -574,10 +570,6 @@ sub attributes {
                 {
                     'k' => 'LDAP',
                     'v' => 'LDAP'
-                },
-                {
-                    'k' => 'LinkedIn',
-                    'v' => 'LinkedIn'
                 },
                 {
                     'k' => 'PAM',
@@ -1097,10 +1089,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'LDAP',
                     'v' => 'LDAP'
-                },
-                {
-                    'k' => 'LinkedIn',
-                    'v' => 'LinkedIn'
                 },
                 {
                     'k' => 'PAM',
@@ -2154,28 +2142,6 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'ldapVersion' => {
             'default' => 3,
             'type'    => 'int'
-        },
-        'linkedInAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'linkedInClientID' => {
-            'type' => 'text'
-        },
-        'linkedInClientSecret' => {
-            'type' => 'password'
-        },
-        'linkedInFields' => {
-            'default' => 'id,first-name,last-name,email-address',
-            'type'    => 'text'
-        },
-        'linkedInScope' => {
-            'default' => 'r_liteprofile r_emailaddress',
-            'type'    => 'text'
-        },
-        'linkedInUserField' => {
-            'default' => 'emailAddress',
-            'type'    => 'text'
         },
         'localSessionStorage' => {
             'default' => 'Cache::FileCache',

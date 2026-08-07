@@ -175,12 +175,8 @@ sub defaultValues {
         'ldapUsePasswordResetAttribute'   => 1,
         'ldapVerify'                      => 'require',
         'ldapVersion'                     => 3,
-        'linkedInAuthnLevel'              => 1,
-        'linkedInFields'             => 'id,first-name,last-name,email-address',
-        'linkedInScope'              => 'r_liteprofile r_emailaddress',
-        'linkedInUserField'          => 'emailAddress',
-        'localSessionStorage'        => 'Cache::FileCache',
-        'localSessionStorageOptions' => {
+        'localSessionStorage'             => 'Cache::FileCache',
+        'localSessionStorageOptions'      => {
             'cache_depth'        => 3,
             'cache_root'         => '/var/cache/lemonldap-ng',
             'default_expires_in' => 600,

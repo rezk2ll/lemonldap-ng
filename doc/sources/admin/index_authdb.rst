@@ -14,7 +14,6 @@ Authentication, users and password databases
    authgpg
    authkerberos
    authldap
-   authlinkedin
    authnull
    authopenidconnect
    authpam

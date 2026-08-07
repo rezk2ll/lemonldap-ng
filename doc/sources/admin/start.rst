@@ -133,7 +133,6 @@ Official Backends                                                    Authenticat
 :doc:`GPG<authgpg>` [2]_                                             ✔
 :doc:`Kerberos<authkerberos>`                                        ✔
 :doc:`LDAP<authldap>`                                                ✔                                               ✔        ✔
-:doc:`LinkedIn<authlinkedin>`                                        ✔
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
 :doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔
 :doc:`PAM<authpam>`                                                  ✔

@@ -15,7 +15,7 @@ Presentation
 applications to reuse its own authentication process (see
 https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/).
 
-You need to register a new application on LinkedIn to get an application
+You need to register a new application on GitHub to get an application
 ID and a secret: https://github.com/settings/apps/new.
 
 Configuration

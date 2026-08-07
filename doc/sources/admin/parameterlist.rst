@@ -1650,31 +1650,6 @@ ldapVersion
     :Description: LDAP protocol version
     :Used by portal: yes
 
-linkedInAuthnLevel
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Authentication level
-    :Description: LinkedIn authentication level
-    :Used by portal: yes
-
-linkedInClientID
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Client ID
-    :Used by portal: yes
-
-linkedInClientSecret
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Client secret
-    :Used by portal: yes
-
-linkedInFields
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Searched fields
-    :Used by portal: yes
-
-linkedInScope
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Scope
-    :Used by portal: yes
-
-linkedInUserField
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Field containing user identifier
-    :Used by portal: yes
-
 localSessionStorage
     :Location: General Parameters » Sessions » Sessions storage » Cache module
     :Description: Local sessions cache module

@@ -48,7 +48,6 @@ our $authParameters = {
   gpgParams => [qw(gpgAuthnLevel gpgDb)],
   kerberosParams => [qw(krbAuthnLevel krbKeytab krbByJs krbRemoveDomain krbAllowedDomains)],
   ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapVerify ldapBase managerDn managerPassword ldapClientCert ldapClientKey ldapTimeout ldapIOTimeout ldapVersion ldapRaw ldapCAFile ldapCAPath LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase groupLDAPFilter ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupDecodeSearchedValue ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue ldapAllowResetExpiredPassword ldapGetUserBeforePasswordChange ldapForcePasswordChangeExpirationWarning ldapITDS)],
-  linkedinParams => [qw(linkedInAuthnLevel linkedInClientID linkedInClientSecret linkedInFields linkedInUserField linkedInScope)],
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
   pamParams => [qw(pamAuthnLevel pamService)],
