@@ -3861,7 +3861,6 @@ sub attributes {
                 { k => 'Radius',      v => 'Radius' },
                 { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'mTLS' },
-                { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
@@ -4504,17 +4503,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         facebookUserField => { type => 'text', default => 'id' },
 
-        # Twitter
-        twitterAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'Twitter authentication level',
-        },
-        twitterKey       => { type => 'text', },
-        twitterSecret    => { type => 'text', },
-        twitterAppName   => { type => 'text', },
-        twitterUserField => { type => 'text', default => 'screen_name' },
-
         # LinkedIn
         linkedInAuthnLevel => {
             type          => 'int',
@@ -4702,7 +4690,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
                     { k => 'SSL',           v => 'mTLS' },
-                    { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
@@ -4765,7 +4752,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Radius',   v => 'Radius' },
                 { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'mTLS' },
-                { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS', v => 'Central Authentication Service (CAS)' },

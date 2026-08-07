@@ -45,7 +45,6 @@ lib/Lemonldap/NG/Portal/Auth/REST.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
-lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/CaptchEtat.pm
@@ -416,7 +415,6 @@ site/htdocs/static/common/modules/OpenIDConnect.png
 site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/Slave.png
 site/htdocs/static/common/modules/SSL.png
-site/htdocs/static/common/modules/Twitter.png
 site/htdocs/static/common/modules/webauthn.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png

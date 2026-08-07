@@ -477,16 +477,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'twitterParams',
-                            help  => 'authtwitter.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'twitterAuthnLevel', 'twitterKey',
-                                'twitterSecret',     'twitterAppName',
-                                'twitterUserField'
-                            ]
-                        },
-                        {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             form  => 'simpleInputContainer',

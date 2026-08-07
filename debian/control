@@ -341,7 +341,6 @@ Suggests: crowdsec,
           liblasso-perl,
           liblist-moreutils-perl,
           libnet-facebook-oauth2-perl,
-          libnet-oauth-perl,
           libsoap-lite-perl,
           slapd
 Pre-Depends: debconf
