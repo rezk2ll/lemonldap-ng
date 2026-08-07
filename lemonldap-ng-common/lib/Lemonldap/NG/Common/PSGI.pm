@@ -497,7 +497,7 @@ sub psgiAdapter {
 sub logAndRun {
     my ( $self, $req, $sub ) = @_;
 
-    # register the request object to the logging system
+    # Register the request object to the logging system
     if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
         $self->logger->setRequestObj($req);
     }
