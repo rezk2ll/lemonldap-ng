@@ -341,10 +341,6 @@
                         "v" : "SSL"
                      },
                      {
-                        "k" : "Twitter",
-                        "v" : "Twitter"
-                     },
-                     {
                         "k" : "Demo",
                         "v" : "Demonstration"
                      },
@@ -613,10 +609,6 @@
                               {
                                  "k" : "SSL",
                                  "v" : "SSL"
-                              },
-                              {
-                                 "k" : "Twitter",
-                                 "v" : "Twitter"
                               },
                               {
                                  "k" : "Custom",
@@ -1326,10 +1318,6 @@
                               "v" : "SSL"
                            },
                            {
-                              "k" : "Twitter",
-                              "v" : "Twitter"
-                           },
-                           {
                               "k" : "Demo",
                               "v" : "Demonstration"
                            },
@@ -1656,38 +1644,6 @@
                   "id" : "sslParams",
                   "show" : false,
                   "title" : "sslParams"
-               },
-               {
-                  "_nodes" : [
-                     {
-                        "default" : 1,
-                        "id" : "twitterAuthnLevel",
-                        "title" : "twitterAuthnLevel",
-                        "type" : "int"
-                     },
-                     {
-                        "id" : "twitterKey",
-                        "title" : "twitterKey"
-                     },
-                     {
-                        "id" : "twitterSecret",
-                        "title" : "twitterSecret"
-                     },
-                     {
-                        "id" : "twitterAppName",
-                        "title" : "twitterAppName"
-                     },
-                     {
-                        "default" : "screen_name",
-                        "id" : "twitterUserField",
-                        "title" : "twitterUserField"
-                     }
-                  ],
-                  "help" : "authtwitter.html",
-                  "id" : "twitterParams",
-                  "show" : false,
-                  "title" : "twitterParams",
-                  "type" : "simpleInputContainer"
                },
                {
                   "_nodes" : [

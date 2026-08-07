@@ -143,7 +143,6 @@ Official Backends                                                    Authenticat
 :doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
-:doc:`Twitter<authtwitter>`                                          ✔
 :doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔

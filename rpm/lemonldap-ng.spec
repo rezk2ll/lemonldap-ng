@@ -177,7 +177,6 @@ BuildRequires:  perl(LWP::Protocol::https)
 BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::MQTT::Simple)
 BuildRequires:  perl(Net::MQTT::Simple::SSL)
-BuildRequires:  perl(Net::OAuth)
 BuildRequires:  perl(Perl::Tidy)
 BuildRequires:  perl(Plack::Handler::FCGI)
 BuildRequires:  perl(Pod::Usage)
@@ -335,8 +334,6 @@ Recommends:     perl(Glib)
 Recommends:     perl(Lasso)
 # Facebook
 Recommends:     perl(Net::Facebook::Oauth2)
-# OpenID
-Recommends:     perl(Net::OAuth)
 # LDAP mtls
 Recommends:     perl(Authen::SASL)
 Provides:       bundled(fontawesome-fonts) = 4.7.0

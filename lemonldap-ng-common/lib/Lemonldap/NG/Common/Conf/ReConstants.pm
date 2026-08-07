@@ -58,7 +58,6 @@ our $authParameters = {
   restParams => [qw(restAuthnLevel restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl restAuthArgs restUserDBArgs restPwdConfirmArgs restPwdModifyArgs)],
   slaveParams => [qw(slaveAuthnLevel slaveUserHeader slaveDisplayLogo slaveMasterIP slaveCertificateField slaveCertificateRegexp slaveHeaderName slaveHeaderContent slaveExportedVars)],
   sslParams => [qw(SSLAuthnLevel SSLVar SSLIssuerVar sslByAjax sslHost SSLVarIf)],
-  twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
   webauthnParams => [qw(webauthnAuthnLevel)],
 };
 our $issuerParameters = {

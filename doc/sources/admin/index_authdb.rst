@@ -24,7 +24,6 @@ Authentication, users and password databases
    authsaml
    authslave
    authssl
-   authtwitter
    authyubikey
    authcustom
    authchoice

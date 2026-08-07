@@ -44,7 +44,6 @@
             "MIME::Entity" : "0",
             "Net::Facebook::Oauth2" : "0",
             "Net::LDAP" : "0.38",
-            "Net::OAuth" : "0",
             "Net::SSLeay" : "0",
             "SOAP::Lite" : "0",
             "Text::Unidecode" : "0",
@@ -79,7 +78,6 @@
             "MIME::Entity" : "0",
             "Net::Facebook::Oauth2" : "0",
             "Net::LDAP" : "0.38",
-            "Net::OAuth" : "0",
             "SOAP::Lite" : "0",
             "Text::Unidecode" : "0"
          },

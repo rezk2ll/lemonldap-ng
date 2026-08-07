@@ -421,10 +421,6 @@ sub attributes {
                         'v' => 'mTLS'
                     },
                     {
-                        'k' => 'Twitter',
-                        'v' => 'Twitter'
-                    },
-                    {
                         'k' => 'WebAuthn',
                         'v' => 'WebAuthn'
                     },
@@ -598,10 +594,6 @@ sub attributes {
                 {
                     'k' => 'SSL',
                     'v' => 'mTLS'
-                },
-                {
-                    'k' => 'Twitter',
-                    'v' => 'Twitter'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -1125,10 +1117,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'SSL',
                     'v' => 'mTLS'
-                },
-                {
-                    'k' => 'Twitter',
-                    'v' => 'Twitter'
                 },
                 {
                     'k' => 'WebAuthn',
@@ -5873,23 +5861,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'trustedDomains' => {
             'type' => 'text'
-        },
-        'twitterAppName' => {
-            'type' => 'text'
-        },
-        'twitterAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'twitterKey' => {
-            'type' => 'text'
-        },
-        'twitterSecret' => {
-            'type' => 'text'
-        },
-        'twitterUserField' => {
-            'default' => 'screen_name',
-            'type'    => 'text'
         },
         'upgradeSession' => {
             'default' => 1,

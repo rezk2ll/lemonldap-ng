@@ -4525,27 +4525,6 @@ trustedDomains
     :Description: Trusted domains
     :Used by portal: yes
 
-twitterAppName
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Application name
-    :Used by portal: yes
-
-twitterAuthnLevel
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Authentication level
-    :Description: Twitter authentication level
-    :Used by portal: yes
-
-twitterKey
-    :Location: General Parameters » Authentication parameters » Twitter parameters » API key
-    :Used by portal: yes
-
-twitterSecret
-    :Location: General Parameters » Authentication parameters » Twitter parameters » API secret
-    :Used by portal: yes
-
-twitterUserField
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Field containing user identifier
-    :Used by portal: yes
-
 upgradeSession
     :Location: General Parameters » Plugins » Upgrade session
     :Description: Upgrade session activation
