@@ -78,7 +78,7 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/modules/CAS.png
 Copyright: Jasig
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Google.png lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
 Copyright: https://www.deviantart.com/
 License: CC-3
 Comment: Downloaded from https://www.iconspedia.com/
