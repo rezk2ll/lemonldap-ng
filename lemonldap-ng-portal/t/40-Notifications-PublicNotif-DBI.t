@@ -5,7 +5,7 @@ use IO::String;
 use JSON;
 
 require 't/test-lib.pm';
-my $maintests = 4;
+my $maintests = 5;
 my ( $res, $json );
 my $file = tempdb();
 
@@ -31,6 +31,19 @@ q{INSERT INTO notifications VALUES ('public-error','testref','2016-05-30 00:00:0
   "subtitle": "Test subtitle",
   "text": "This is a test text",
   "check": "Accept test"
+}
+]'
+    );
+    $dbh->prepare(
+q{INSERT INTO notifications VALUES ('public-error','testref2','2016-05-30 00:00:00',?,null,null)}
+    )->execute(
+        '[
+{
+  "date": "2016-05-30",
+  "reference": "testref2",
+  "title": "Test2 title",
+  "subtitle": "Test2 subtitle",
+  "text": "This is a test text"
 }
 ]'
     );
@@ -71,6 +84,8 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
         'Access login page with public notifications'
     );
     ok( $res->[2]->[0] =~ m%public-error%, 'Notification error displayed' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ m%testref2%, 'Notification error 2 displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%public-info%, 'Notification info displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
