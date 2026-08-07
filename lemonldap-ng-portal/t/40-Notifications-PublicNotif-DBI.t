@@ -61,7 +61,6 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
             }
         }
     );
-    use Lemonldap::NG::Portal::Main::Constants 'PE_NOTIFICATION';
 
     # Display login page with public notifications
     # --------------------------------------------
@@ -77,8 +76,7 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<script type="text/javascript" src="/static/common/js/carousel\.min\.js\?v=.+?"></script>%, 'Carousel min JS found' )
       or print STDERR Dumper( $res->[2]->[0] );
-    count(4);
 }
 
-clean_sessions();
+count($maintests);
 done_testing( count() );
