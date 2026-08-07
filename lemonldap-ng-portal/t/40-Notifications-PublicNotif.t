@@ -11,7 +11,7 @@ my $json;
 my $file = "$main::tmpDir/20160530_public-info_dGVzdHJlZg==.json";
 
 open F, "> $file" or die($!);
-print F '[
+print F '
 {
   "uid": "public-info",
   "date": "2016-05-30",
@@ -20,7 +20,7 @@ print F '[
   "subtitle": "Test subtitle",
   "text": "This is a test text for $uid"
 }
-]';
+';
 close F;
 
 my $client = LLNG::Manager::Test->new( {
