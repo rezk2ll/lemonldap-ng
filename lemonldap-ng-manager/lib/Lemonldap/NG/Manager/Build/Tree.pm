@@ -317,16 +317,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'linkedinParams',
-                            help  => 'authlinkedin.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'linkedInAuthnLevel',   'linkedInClientID',
-                                'linkedInClientSecret', 'linkedInFields',
-                                'linkedInUserField',    'linkedInScope'
-                            ]
-                        },
-                        {
                             title => 'githubParams',
                             help  => 'authgithub.html',
                             form  => 'simpleInputContainer',
