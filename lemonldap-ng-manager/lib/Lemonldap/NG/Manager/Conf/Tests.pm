@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.3';
 
 use constant validPartnerName => qr/^[\w-]+$/;
 
