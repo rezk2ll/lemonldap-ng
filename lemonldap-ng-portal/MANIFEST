@@ -826,6 +826,8 @@ t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/32-RemoveOIDCToken.t
 t/33-Auth-and-issuer-OpenID2.t
+t/33-Auth-GitHub.t
+t/33-Auth-LinkedIn.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t
