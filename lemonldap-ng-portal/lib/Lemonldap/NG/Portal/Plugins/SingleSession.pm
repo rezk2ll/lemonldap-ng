@@ -89,7 +89,8 @@ sub run {
             next if $id eq $storageId;
             next
               if $linkedSessionId and $id eq $self->storageId($linkedSessionId);
-            my $session = $self->p->getApacheSession( $id, hashStore => 0 )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
             if (
                 $self->singleSessionRule->( $req, $req->sessionInfo )
@@ -128,7 +129,8 @@ sub run {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
             unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
                 $session->data->{ $self->conf->{whatToTrace} } )
@@ -174,8 +176,13 @@ sub removeOther {
 
                 # searchOn() returns sessions indexed by their storage ID, then
                 # it is required to set hashStore to 0
-                unless ( $as =
-                    $self->p->getApacheSession( $_, hashStore => 0, ) )
+                unless (
+                    $as = $self->p->getApacheSession(
+                        $_,
+                        hashStore => 0,
+                        kind      => 'SSO'
+                    )
+                  )
                 {
                     $self->userLogger->info(
                         "SingleSession: session $_ expired");

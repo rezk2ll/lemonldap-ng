@@ -1698,7 +1698,8 @@ sub _handleAuthorizationCodeGrant {
 
     # Get user identifier
     my $apacheSession =
-      $self->p->getApacheSession( $codeSession->data->{user_session_id} );
+      $self->p->getApacheSession( $codeSession->data->{user_session_id},
+        kind => 'SSO' );
 
     unless ($apacheSession) {
         $self->userLogger->warn("Unable to find user session");
@@ -2247,7 +2248,8 @@ sub _getSessionFromAccessTokenData {
     if ( $tokenData->{user_session_id} ) {
 
         # Get user identifier
-        $session = $self->p->getApacheSession( $tokenData->{user_session_id} );
+        $session = $self->p->getApacheSession( $tokenData->{user_session_id},
+            kind => 'SSO' );
         $self->logger->warn("Unable to find user session") unless ($session);
     }
     else {

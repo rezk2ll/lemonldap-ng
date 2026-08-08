@@ -81,7 +81,8 @@ sub _run {
     }
 
     # Create access token
-    my $session = $self->p->getApacheSession( undef, info => $infos );
+    my $session =
+      $self->p->getApacheSession( undef, info => $infos, kind => 'SSO' );
     unless ($session) {
         $self->logger->error("Unable to create session");
         return $oidc->sendOIDCError( $req, 'server_error', 500 );

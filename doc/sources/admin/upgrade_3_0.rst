@@ -110,3 +110,21 @@ Reload URLs do not exist anymore
 
 The ``reloadUrls`` and ``reloadTimeout`` parameters have been removed, check out
 the :doc:`eventsmanagement` section for more information about configuration reload.
+
+No default kind
+~~~~~~~~~~~~~~~
+
+``$self->p->getApacheSession()`` used to fall back to the ``SSO`` session kind
+when the ``kind`` argument was missing. This default has been removed: ``kind``
+is now mandatory.
+
+A plugin that omits it gets nothing back, and an error is logged::
+
+    getApacheSession() called without 'kind' at /path/to/MyPlugin.pm line 42
+
+Custom plugins must now declare the kind of session they expect::
+
+    # 3.0
+    my $session = $self->p->getApacheSession( $id, kind => 'SSO' );
+    my $token =
+      $self->p->getApacheSession( undef, kind => 'TOKEN', info => $infos );

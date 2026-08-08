@@ -2366,7 +2366,7 @@ sub getScope {
 # @return hashref UserInfo data
 sub buildUserInfoResponseFromId {
     my ( $self, $req, $scope, $rp, $user_session_id ) = @_;
-    my $session = $self->p->getApacheSession($user_session_id);
+    my $session = $self->p->getApacheSession( $user_session_id, kind => 'SSO' );
 
     return undef unless ($session);
     return buildUserInfoResponse( $self, $req, $scope, $rp, $session );

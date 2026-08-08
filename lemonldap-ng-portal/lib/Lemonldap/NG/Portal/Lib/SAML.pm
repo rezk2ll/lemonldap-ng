@@ -2160,7 +2160,7 @@ sub createArtifactResponse {
     if ($session_id) {
         $self->logger->debug("Find session_id $session_id in artifact session");
 
-        my $session = $self->p->getApacheSession($session_id);
+        my $session = $self->p->getApacheSession( $session_id, kind => 'SSO' );
         unless ($session) {
             $self->logger->error("Unable to open session $session_id");
             return;

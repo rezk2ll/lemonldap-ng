@@ -379,7 +379,8 @@ sub run {
 
         # Legacy code without logout propagation for CAS 2.0
         if ($logout_url) {
-            my $session = $self->p->getApacheSession($session_id);
+            my $session =
+              $self->p->getApacheSession( $session_id, kind => 'SSO' );
             return PE_LOGOUT_OK unless ($session);
 
            # This will call Issuer logout methods, incluing our own
@@ -850,7 +851,8 @@ sub _validate_generic {
 
     # Open local session
     my $localSession =
-      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id},
+        kind => 'SSO' );
 
     unless ($localSession) {
         $self->userLogger->warn( "Local session "
