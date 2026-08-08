@@ -5,7 +5,7 @@ use IO::String;
 use JSON;
 
 require 't/test-lib.pm';
-my $maintests = 5;
+my $maintests = 6;
 my ( $res, $json );
 my $file = tempdb();
 
@@ -83,6 +83,8 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
         ),
         'Access login page with public notifications'
     );
+    ok( $res->[2]->[0] =~ m%"public_errors":\[\{"%, 'Notification errors displayed' )
+      or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%public-error%, 'Notification error displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%testref2%, 'Notification error 2 displayed' )
