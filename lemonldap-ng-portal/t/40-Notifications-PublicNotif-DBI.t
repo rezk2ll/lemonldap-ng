@@ -62,7 +62,7 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => 'debug',
+                logLevel                   => 'error',
                 useSafeJail                => 1,
                 notification               => 1,
                 publicNotifications        => 1,
