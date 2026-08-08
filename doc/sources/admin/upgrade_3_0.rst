@@ -22,10 +22,13 @@ storing them.
 PostgreSQL
 ~~~~~~~~~~
 
-Run the following SQL command on your database ::
+You have to rename `xml` column into `content` first.
+
+And then run the following SQL command on your database ::
 
     # If you use notifications
-    alter table notifications alter column xml type text USING convert_from(convert_to(convert_from(xml, 'utf8'), 'iso8859-1'), 'utf-8');
+
+    alter table notifications alter column content type text USING convert_from(convert_to(convert_from(content, 'utf8'), 'iso8859-1'), 'utf-8');
 
     # Convert your session storage
     update sessions set a_session=convert_from(convert_to(a_session::text, 'iso8859-1'), 'utf-8');
@@ -39,9 +42,11 @@ Run the following SQL command on your database ::
 MySQL
 ~~~~~
 
-Run the following SQL command on your database ::
+You have to rename `xml` column into `content` first.
 
-    alter table notifications modify xml text NOT NULL;
+And then run the following SQL command on your database ::
+
+    alter table notifications modify content text NOT NULL;
 
 Then in a shell, reencode existing data and reimport it ::
 
@@ -97,6 +102,8 @@ XML format for notifications is not longer support. Notifications should be
 convert into JSON format.
 
 Refer to :doc:`notifications` section for more informations about notifications system.
+
+If you use database to store notifications, you have to rename `xml` column into `content`.
 
 Reload URLs do not exist anymore
 --------------------------------
