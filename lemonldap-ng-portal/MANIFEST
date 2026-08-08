@@ -804,6 +804,7 @@ t/32-OIDC-Token-Introspection-JWT.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/32-RemoveOIDCToken.t
+t/33-Auth-GitHub.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t
@@ -852,6 +853,8 @@ t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
 t/40-Notifications-JSON-LDAP.t
 t/40-Notifications-JSON-Server.t
+t/40-Notifications-PublicNotif-DBI.t
+t/40-Notifications-PublicNotif-LDAP.t
 t/40-Notifications-PublicNotif.t
 t/41-Captcha-old-api.t
 t/41-Captcha-with-LDAP.t
