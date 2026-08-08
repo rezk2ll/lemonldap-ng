@@ -45,7 +45,7 @@ SKIP: {
     );
     is( $result->code, 0, "Add branch" ) or diag $result->error;
 
-    my $xml = '
+    my $content = '
     {
     "uid": "public-warn",
     "date": "2016-05-30",
@@ -54,7 +54,7 @@ SKIP: {
     "subtitle": "Test subtitle",
     "text": "This is a test text"
     }';
-    $notif->newNotification($xml);
+    $notif->newNotification($content);
 
     my $client = LLNG::Manager::Test->new( {
             ini => {

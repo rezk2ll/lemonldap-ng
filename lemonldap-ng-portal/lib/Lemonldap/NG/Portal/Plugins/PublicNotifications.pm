@@ -78,10 +78,10 @@ sub _extractNotification {
     my ( $self, $notif ) = @_;
     $notif = from_json($notif);
     $notif = $notif->[0] if ( ref($notif) eq 'ARRAY' );
-    if ( my $content = $notif->{xml} ) {
+    if ( my $content = $notif->{content} ) {
         $self->logger->debug("Notification content: $content");
         $content = from_json($content);
-        delete $notif->{xml};
+        delete $notif->{content};
         return { %$notif, %$content };
     }
     else { return $notif; }

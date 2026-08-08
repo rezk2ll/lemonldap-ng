@@ -17,7 +17,7 @@ SKIP: {
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
     $dbh->do(
-'CREATE TABLE notifications (uid text,ref text,date datetime,xml text,cond text,done datetime)'
+'CREATE TABLE notifications (uid text,ref text,date datetime,content text,cond text,done datetime)'
     );
     $dbh->prepare(
 q{INSERT INTO notifications VALUES ('public-error','testref','2016-05-30 00:00:00',?,null,null)}
@@ -62,7 +62,7 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => 'error',
+                logLevel                   => 'debug',
                 useSafeJail                => 1,
                 notification               => 1,
                 publicNotifications        => 1,
