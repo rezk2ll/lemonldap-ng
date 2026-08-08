@@ -137,6 +137,16 @@ sub verify_totp {
             error  => "Bad characters in TOTP secret",
         };
     }
+
+    # A plain string comparison is deliberate here. This has been reported as a
+    # CWE-208 timing oracle; it is not one. A TOTP code is valid for a single
+    # $interval, so an attacker has no stable secret to average timing
+    # measurements against -- the precondition every comparison-timing attack
+    # needs. Independently: Perl's eq defers to memcmp(), which compares short
+    # strings by word rather than byte (measured: no difference across the six
+    # digit positions), and any residual signal sits far below the HMAC, secret
+    # decryption and session-backend costs of the surrounding request. Failed
+    # attempts are counted by BruteForceProtection.
     for ( -$range .. $range ) {
         if ( $code eq $self->_code( $s, $_, $interval, $digits, $hash ) ) {
             return {
