@@ -82,12 +82,11 @@ sub store {
     my ( $self, $fields ) = @_;
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE, '>', $self->_yamlFile( $fields->{cfgNum} ) ) {
+    unless ( open FILE, '>:encoding(UTF-8)', $self->_yamlFile( $fields->{cfgNum} ) ) {
         $Lemonldap::NG::Common::Conf::msg = "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;
     }
-    binmode(FILE);
     my $f = YAML::Dump($fields);
     print FILE $f;
     close FILE;
@@ -101,11 +100,10 @@ sub load {
     $filename = $self->_yamlFile($cfgNum);
     local $/ = '';
     my $ret;
-    unless ( open FILE, '<', $filename ) {
+    unless ( open FILE, '<:encoding(UTF-8)', $filename ) {
         $Lemonldap::NG::Common::Conf::msg .= "Read error: $!$@";
         return undef;
     }
-    binmode FILE;
     $f = join( '', <FILE> );
     eval { $ret = YAML::Load($f) };
     if ($@) {

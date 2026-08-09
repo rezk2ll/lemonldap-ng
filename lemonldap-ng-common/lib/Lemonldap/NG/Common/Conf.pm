@@ -357,7 +357,7 @@ sub getLocalConf {
         # If default configuration cannot be read
         # - Error if configuration section is requested
         # - Silent exit for other section requests
-        if ( open( my $fh, '<', $file ) ) {
+        if ( open( my $fh, '<:encoding(UTF-8)', $file ) ) {
 
             # Parse ini file
             $cfg = Config::IniFiles->new( -file => $fh, -allowcontinue => 1 );

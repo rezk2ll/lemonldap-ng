@@ -19,6 +19,7 @@
   */
   llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', '$htmlParams', '$timeout', function ($scope, $http, $location, $q, $uibModal, $translator, $cookies, $htmlParams, $timeout) {
     var _download, _stoggle, c, id, pathEvent, readError, setHelp;
+    $scope.version = window.version;
     $scope.links = window.links;
     $scope.menu = $htmlParams.menu;
     $scope.menulinks = window.menulinks;

@@ -75,10 +75,8 @@ has wsdl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my ($self) = @_;
-        my @cookies = ( $self->conf->{cookieName} );
-        push @cookies, $self->conf->{cookieName} . 'http'
-          if ( $self->conf->{securedCookie} >= 2 );
+        my ($self)     = @_;
+        my @cookies    = ( $self->conf->{cookieName} );
         my $cookieList = join "\n",
           map { "<element name='$_' type='xsd:string'></element>" } @cookies;
 

@@ -30,12 +30,3 @@ sub reDomainsToHost {
     $list = join( '|', split( /\s+/, $list ) );
     return qr/^(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:$list)$/;
 }
-
-sub GOOGLEAXATTR {
-    return qr/^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/;
-}
-
-sub OPENIDSREGATTR {
-    return
-qr/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/;
-}

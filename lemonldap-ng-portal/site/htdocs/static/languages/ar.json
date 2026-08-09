@@ -325,6 +325,7 @@
 "stayConnected":"ثق في هذا الجهاز لتسجيل الدخول في المستقبل",
 "submit":"قدم",
 "switchContext":"تغيير السياق",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"تطبيق OTP",
 "totpMissingCode":"يرجى إدخال الرمز المقدم من تطبيق TOTP الخاص بك",
 "totpOrTouch":"إذا كنت ترى هذا على هاتفك المحمول، انقر على رمز QR لفتح تطبيق TOTP الخاص بك",

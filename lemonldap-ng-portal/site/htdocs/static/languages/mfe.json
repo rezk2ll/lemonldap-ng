@@ -325,6 +325,7 @@
 "stayConnected":"Fer konfians sa lekipman-la pou bann login dan lavenir",
 "submit":"Soumet",
 "switchContext":"Sanz kontext",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"OTP App",
 "totpMissingCode":"Silvouple, rant kod ki ou aplikasion TOTP finn done",
 "totpOrTouch":"Si ou trouv sa lor ou portab, tous kod QR pou ouver ou aplikasion TOTP",

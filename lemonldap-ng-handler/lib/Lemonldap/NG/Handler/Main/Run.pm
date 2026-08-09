@@ -543,17 +543,10 @@ sub fetchId {
     my $vhost = $class->resolveAlias($req);
     $class->logger->debug("VH $vhost is HTTPS")
       if $class->_isHttps( $req, $vhost );
-    my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
-          and not $class->_isHttps( $req, $vhost ) );
     my $cn    = $class->tsv->{cookieName};
-    my $value = $lookForHttpCookie    # Avoid prefix and bad cookie name (#2417)
-      ? ( $t =~ /(?<![-.~])\b${cn}http=([^,; ]+)/ ? $1 : 0 )
-      : ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/       ? $1 : 0 );
+    my $value = ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/ ? $1 : 0 );
 
-    if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
-        $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
-    }
-    elsif ( $value =~ s/^c:// ) {
+    if ( $value =~ s/^c:// ) {
         $value = $class->tsv->{cipher}->decrypt($value);
         unless ( $value =~ s/^(.*)? (.*)$/$1/ and $2 eq $vhost ) {
             $class->auditLog(
@@ -899,7 +892,7 @@ my %alreadyBuilt;
 sub buildAndLoadType {
     my ( $class, $package ) = @_;
     unless ( $package =~ /^[\w:]+$/ ) {
-        $class->logger->error("Bad clas name: $package");
+        $class->logger->error("Bad class name: $package");
         return;
     }
     return if $alreadyBuilt{$package};

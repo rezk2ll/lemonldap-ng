@@ -103,4 +103,13 @@ sub verify {
     return PE_BADOTP;
 }
 
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %params = $self->SUPER::get2fTplParams( $req, $module );
+
+    $params{CODEDIGITS} = $self->conf->{totp2fDigits};
+
+    return %params;
+}
+
 1;

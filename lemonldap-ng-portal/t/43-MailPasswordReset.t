@@ -15,8 +15,7 @@ my ( $res, $user, $pwd );
 my $maintests = 17;
 
 SKIP: {
-    eval
-      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
+    eval 'require Email::Sender::Simple;use GD;';
     if ($@) {
         skip 'Missing dependencies', $maintests;
     }

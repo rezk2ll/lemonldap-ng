@@ -168,7 +168,7 @@ sub search2F {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $whatToTrace, '_2fDevices' );
+    my @fields = ( $whatToTrace, '_2fDevices' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o

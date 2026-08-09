@@ -1,6 +1,7 @@
 use warnings;
 use Time::Fake;
 use t::TestConfBackend;
+use utf8;
 
 # Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl Lemonldap-NG-Manager.t'
@@ -85,6 +86,21 @@ sub getConfTest {
     }
 
 }
+
+subtest "Configuration encoding" => sub {
+    Time::Fake->reset;
+    t::TestConfBackend::testReset();
+
+    $Lemonldap::NG::Common::Conf::msg = "";
+    ok(
+        my $c =
+          Lemonldap::NG::Common::Conf->new( confFile => 't/lemonldap-ng.ini' ),
+        "Valid configuration"
+    );
+
+    my $config = $c->getLocalConf('testsection');
+    is( $config->{accentkéy}, "accentvalüe", "Configuration data is decoded" );
+};
 
 subtest "Invalid backend configuration" => sub {
     $Lemonldap::NG::Common::Conf::msg = "";

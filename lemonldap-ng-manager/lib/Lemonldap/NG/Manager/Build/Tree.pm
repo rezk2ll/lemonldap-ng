@@ -317,16 +317,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'linkedinParams',
-                            help  => 'authlinkedin.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'linkedInAuthnLevel',   'linkedInClientID',
-                                'linkedInClientSecret', 'linkedInFields',
-                                'linkedInUserField',    'linkedInScope'
-                            ]
-                        },
-                        {
                             title => 'githubParams',
                             help  => 'authgithub.html',
                             form  => 'simpleInputContainer',
@@ -474,16 +464,6 @@ sub tree {
                                 'SSLAuthnLevel', 'SSLVar',
                                 'SSLIssuerVar',  'sslByAjax',
                                 'sslHost',       'SSLVarIf',
-                            ]
-                        },
-                        {
-                            title => 'twitterParams',
-                            help  => 'authtwitter.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'twitterAuthnLevel', 'twitterKey',
-                                'twitterSecret',     'twitterAppName',
-                                'twitterUserField'
                             ]
                         },
                         {
@@ -1083,8 +1063,9 @@ sub tree {
                             nodes => [
                                 'ext2fActivation',     'ext2fCodeActivation',
                                 'ext2FSendCommand',    'ext2FValidateCommand',
-                                'ext2fResendInterval', 'ext2fAuthnLevel',
-                                'ext2fLabel',          'ext2fLogo',
+                                'ext2fResendInterval', 'ext2fTimeout',
+                                'ext2fAuthnLevel',     'ext2fLabel',
+                                'ext2fLogo',
                             ]
                         },
                         {
@@ -1163,6 +1144,7 @@ sub tree {
                                 'SMTPPort',
                                 'SMTPAuthUser',
                                 'SMTPAuthPass',
+                                'SMTPAuthMech',
                                 'SMTPTLS',
                                 'SMTPTLSOpts',
                                 {

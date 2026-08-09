@@ -52,7 +52,7 @@ $refConf->{cfgLog} = '';
 my $tmp;
 if ($opt_json) {
     require JSON;
-    $tmp = JSON->new->pretty->canonical->encode($refConf);
+    $tmp = JSON->new->pretty->canonical->utf8->encode($refConf);
 }
 else {
     # Sort keys
@@ -86,7 +86,7 @@ if ( $rc == 0 and compare( $refFile->filename, $editFile->filename ) == 1 ) {
 
     my $newConf;
     if ($opt_json) {
-        $newConf = JSON::from_json($buf);
+        $newConf = JSON::decode_json($buf);
     }
     else {
         $newConf = Safe->new->reval($buf);

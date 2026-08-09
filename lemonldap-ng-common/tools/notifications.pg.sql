@@ -3,7 +3,7 @@ CREATE TABLE notifications (
   uid varchar(255) NOT NULL,
   ref varchar(255) NOT NULL,
   cond varchar(255) DEFAULT NULL,
-  xml bytea NOT NULL,
+  content bytea NOT NULL,
   done timestamp DEFAULT NULL,
   PRIMARY KEY (date, uid,ref)
 )
