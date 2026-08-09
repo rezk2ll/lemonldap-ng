@@ -599,11 +599,18 @@ sub _cleanup_errors {
         $tlsParams{cafile} ||= $options->{ldapCAFile}
           if $options->{ldapCAFile};
         $tlsParams{capath} ||= $options->{ldapCAPath} if $options->{ldapCAPath};
-        $tlsParams{clientcert} ||= $options->{ldapClientCert}
-          if $options->{ldapClientCert};
-        $tlsParams{clientkey} ||= $options->{ldapClientKey}
-          if $options->{ldapClientKey};
-        require Authen::SASL if $options->{ldapClientCert};
+        eval { require Authen::SASL if $options->{ldapClientCert}; };
+        if ($@) {
+            $self->logger->error(
+                "Authen::SASL is required to connect using mTLS ($@)");
+            undef $tlsParams{clientcert};
+        }
+        else {
+            $tlsParams{clientcert} ||= $options->{ldapClientCert}
+              if $options->{ldapClientCert};
+            $tlsParams{clientkey} ||= $options->{ldapClientKey}
+              if $options->{ldapClientKey};
+        }
 
         my $ldap = Net::LDAP->new(
             \@servers,
@@ -634,10 +641,12 @@ sub _cleanup_errors {
             # it, and the process ends up crashing.
             # As a precaution, make sure the underlying socket is doing fine:
             if (    $ldap->socket->isa('IO::Socket::SSL')
-                and $ldap->socket->errstr < 0 )
+                and $ldap->socket->errstr )
             {
-                $self->logger->error("Unable to connect to LDAP server");
-                print STDERR "Unable to connect to LDAP server\n";
+                $self->logger->error( 'Unable to connect to LDAP server: '
+                      . $ldap->socket->errstr );
+                print STDERR 'Unable to connect to LDAP server: '
+                  . $ldap->socket->errstr . "\n";
                 $internal_stats->{nb_error}->{$type}++;
                 return;
             }
@@ -667,7 +676,7 @@ sub _cleanup_errors {
             $bind = $ldap->bind( $options->{ldapBindDN},
                 password => $options->{ldapBindPassword} );
         }
-        elsif ( $options->{ldapClientCert} && $options->{ldapClientKey} ) {
+        elsif ( $tlsParams{clientcert} && $tlsParams{clientkey} ) {
             $self->logger->info("mTLS bind will be used");
             my $sasl = Authen::SASL->new(
                 mechanism => 'EXTERNAL',
