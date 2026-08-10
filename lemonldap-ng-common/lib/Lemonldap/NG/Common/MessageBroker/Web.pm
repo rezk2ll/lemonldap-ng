@@ -39,7 +39,6 @@ sub new {
         token    => $args->{token},
         ua       => $args->{ua} || Lemonldap::NG::Common::UserAgent->new($conf),
     }, $class;
-    $self->{ua}->env_proxy();
     return $self;
 }
 

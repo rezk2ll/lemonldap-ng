@@ -22,7 +22,6 @@ has ua => (
 
         # TODO : LWP options to use a proxy for example
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
