@@ -84,6 +84,27 @@ Handler to access insecure, unencrypted HTTP applications at all.
 You can find this setting in in *General Parameters* » *Cookies* » *Secured
 Cookie (SSL)*
 
+Changes in outgoing proxy configuration
+---------------------------------------
+
+If LemonLDAP::NG has to use an outgoing HTTP proxy (generally in entreprise
+deployments only), you must review the proxy configuration.
+
+Starting from LemonLDAP::NG 3.0, all outgoing HTTP requests will obey the proxy
+configuration set in the process' environment.
+
+On package-based installations, environment variables are set in
+``/etc/default/llng-fastcgi-server``.
+
+- set the ``http_proxy`` environment variable to the URL of your outgoing http proxy
+- set the ``https_proxy`` environment variable to the URL of your outgoing https proxy
+- set the ``no_proxy`` environment variable to a comma-separated list of destination domains
+  that must not use the proxy
+
+In most situations, you will want your internal domains to be added to the
+``no_proxy`` list so that requests performed internally by LemonLDAP::NG will
+not go through the proxy.
+
 Plugins
 -------
 
