@@ -528,9 +528,21 @@ sub autoRedirect {
 
 # Try to recover the session corresponding to id and return session data.
 # If $id is set to undef or if $args{force} is true, return a new session.
+#
+# $args{kind} is REQUIRED: it declares the kind of session ("SSO", "TOKEN",
+# "CDA",...) the caller expects, so that a session of another kind can neither
+# be read nor created by mistake. There is no default on purpose: an implicit
+# "SSO" would let a caller manipulating untrusted identifiers (state, token,
+# ...) read or -- with force -- create a real SSO session.
+# Use `kind => ''` to explicitly disable this check (SOAP server only).
 sub getApacheSession {
     my ( $self, $id, %args ) = @_;
-    $args{kind} //= "SSO";
+    unless ( defined $args{kind} ) {
+        my ( undef, $file, $line ) = caller;
+        $self->logger->error(
+            "getApacheSession() called without 'kind' at $file line $line");
+        return;
+    }
     if ($id) {
         $self->logger->debug("Try to get $args{kind} session $id");
     }
@@ -717,7 +729,7 @@ sub updateSession {
         # Update session in global storage with _updateTime
         $infos->{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
         if ( my $apacheSession =
-            $self->getApacheSession( $id, info => $infos ) )
+            $self->getApacheSession( $id, kind => 'SSO', info => $infos ) )
         {
             if ( $apacheSession->error ) {
                 $self->logger->error("Cannot update session $id");

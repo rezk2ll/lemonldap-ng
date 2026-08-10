@@ -77,7 +77,9 @@ sub display {
     my ( $self, $req ) = @_;
     my ( $realSession, $realSessionId );
     if ( $realSessionId = $req->userData->{ $self->prefixedSId } ) {
-        unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
+        unless ( $realSession =
+            $self->p->getApacheSession( $realSessionId, kind => 'SSO' ) )
+        {
             $self->userLogger->info(
                 "ContextSwitching: session $realSessionId expired");
             return $self->p->doPE( $req, PE_SESSIONEXPIRED );
@@ -255,7 +257,9 @@ sub _abortImpersonation {
     my $type          = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId = $req->{$type}->{ $self->prefixedSId };
     my $session;
-    unless ( $session = $self->p->getApacheSession($realSessionId) ) {
+    unless ( $session =
+        $self->p->getApacheSession( $realSessionId, kind => 'SSO' ) )
+    {
         $self->userLogger->info("Session $session expired");
         return $req->error(PE_SESSIONEXPIRED);
     }
@@ -263,7 +267,9 @@ sub _abortImpersonation {
     if ($abort) {
         $self->userLogger->notice(
             "Abort ContextSwitching: \"$spoofId\" by \"$realId\"");
-        if ( my $abortSession = $self->p->getApacheSession( $req->id ) ) {
+        if ( my $abortSession =
+            $self->p->getApacheSession( $req->id, kind => 'SSO' ) )
+        {
             $abortSession->remove;
         }
         else {
