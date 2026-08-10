@@ -14,6 +14,8 @@ use POSIX qw(strftime);
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
+our $VERSION = '3.0.0';
+
 has logLevel => ( is => 'rw' );
 has force    => ( is => 'rw' );
 has audit    => ( is => 'rw' );
@@ -241,6 +243,13 @@ my %PSESSION_FILTERS = (
             my ( $self, $entry, $value ) = @_;
             return ( defined( $entry->{_utime} )
                   and $entry->{_utime} < ( time - $value ) );
+        }
+    },
+    sessionuid => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            return ( defined( $entry->{_session_uid} )
+                  and $value and $entry->{_session_uid} =~ $value );
         }
     },
     update => {

@@ -17,7 +17,8 @@ my $result = GetOptions(
     'json|j',           'help|h',
     'audit|a',          'creation=i',
     'last-update=i',    'recent-login=i',
-    'no-login-success', 'no-registered-2fa'
+    'no-login-success', 'no-registered-2fa',
+    'session-uid=s'
 );
 pod2usage(0) if $cli_opts{help};
 
@@ -28,7 +29,9 @@ my $opts = {
 };
 
 my $filters = {
+    ( defined( $cli_opts{'no-registered-2fa'} ) ? ( sfdevice => 1 ) : () ),
     ( defined( $cli_opts{creation} ) ? ( age => $cli_opts{creation} ) : () ),
+    ( defined( $cli_opts{'session-uid'} ) ? ( sessionuid => $cli_opts{'session-uid'} ) : () ),
     (
         defined( $cli_opts{'last-update'} )
         ? ( update => $cli_opts{'last-update'} )
@@ -43,8 +46,6 @@ my $filters = {
         defined( $cli_opts{'no-login-success'} ) ? ( login => undef )
         : ()
     ),
-
-    ( defined( $cli_opts{'no-registered-2fa'} ) ? ( sfdevice => 1 ) : () ),
 };
 
 my $res =
@@ -90,7 +91,7 @@ Print additional diagnostics to STDERR
 
 Log execution stats as JSON instead of human-readable text
 
-=item B<--audit>, B<-j>
+=item B<--audit>, B<-a>
 
 Emit an audit log for each removed persistent session
 
@@ -108,12 +109,12 @@ in order for a persistent session to be deleted.
 
 =item B<--creation=I<SECONDS>>
 
-The persistent session will be deleted if it was created more than SECONDS ago
+The persistent session will be deleted if it was created more than SECONDS ago.
 
 =item B<--last-update=I<SECONDS>>
 
 The persistent session will be deleted if it was last updated more than SECONDS
-ago
+ago.
 
 =item B<--recent-login=I<SECONDS>>
 
@@ -135,6 +136,10 @@ non-existing username in the login form.
 
 The persistent session will be deleted if the user has not registered a second
 factor device.
+
+=item B<--session-uid=I<'REGEXP'>>
+
+The persistent session will be deleted if its _session_uid matches the REGEXP.
 
 =back
 
