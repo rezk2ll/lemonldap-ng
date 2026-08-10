@@ -918,8 +918,8 @@ t/62-SingleSession-with-Rules.t
 t/62-SingleSession.t
 t/62-UpgradeSession-disabled.t
 t/62-UpgradeSession.t
-t/63-History.t
 t/63-History-password-events-not-failed.t
+t/63-History.t
 t/64-StayConnected-single-connection.t
 t/64-StayConnected-singleSession.t
 t/64-StayConnected-with-History.t
