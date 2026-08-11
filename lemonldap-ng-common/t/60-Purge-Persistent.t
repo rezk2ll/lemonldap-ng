@@ -268,10 +268,10 @@ subtest "Purge psessions by uid" => sub {
     # Matches regexp
     _storePSession( "persistent", "mylogin", 10000, 20000 );
 
-    # Match regexp
+    # Matches regexp
     _storePSession( "persistent", "mylogin2", 10000, 20000 );
 
-    # Do not match regexp
+    # Does not match regexp
     _storePSession( "persistent", "myLogin", 10000, 20000 );
 
     _test_purge( undef, { sessionuid => '^myl' } );
@@ -279,19 +279,19 @@ subtest "Purge psessions by uid" => sub {
         ["myLogin"], "Expected remaining psession" );
 };
 
-subtest "Purge psessions by uid" => sub {
+subtest "Purge psessions by !uid" => sub {
     _cleanSessions;
 
     # Matches regexp
     _storePSession( "persistent", "mylogin", 10000, 20000 );
 
-    # Match regexp
+    # Does not match regexp
     _storePSession( "persistent", "mylogin2", 10000, 20000 );
 
-    # Do not match regexp
+    # Matches regexp
     _storePSession( "persistent", "myLogin", 10000, 20000 );
 
-    _test_purge( undef, { sessionuid => '\d$' } );
+    _test_purge( undef, { notsessionuid => 'ogin$' } );
     is_deeply(
         _getSessionsNames('persistent'),
         [ "myLogin", "mylogin" ],
@@ -314,15 +314,23 @@ subtest "Combining filters" => sub {
     _storePSession( "persistent", "msmith", 40000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
-    # Old + no recent login
+    # Old + no recent login with uid
     _storePSession( "persistent", "dalek", 10000, 10000,
         { _loginHistory => { successLogin => [ { _utime => "10000" } ] } } );
 
-    _test_purge( 50000, { login => "20000", age => "20000", sessionuid => '^dal\wk$' } );
+    # uid and regexp
+    _test_purge(
+        50000,
+        {
+            login         => "20000",
+            age           => "20000",
+            sessionuid    => '^dal\wk$',
+            notsessionuid => '^\w{5}$'
+        }
+    );
     is_deeply(
-        _getSessionsNames('persistent'), [ "dwho", "msmith", "rtyler" ],
-        "Expected remaining
-        psession"
+        _getSessionsNames('persistent'), ["dalek", "dwho", "msmith", "rtyler" ],
+        "Expected remaining psession"
     );
 };
 
@@ -334,8 +342,7 @@ subtest "API safety, do not remove all psessions when no filters" => sub {
     _test_purge(50000);
     is_deeply(
         _getSessionsNames('persistent'), ["dwho"],
-        "Expected remaining
-        psession"
+        "Expected remaining psession"
     );
 };
 

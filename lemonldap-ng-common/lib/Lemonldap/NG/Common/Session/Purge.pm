@@ -252,6 +252,13 @@ my %PSESSION_FILTERS = (
                   and $value and $entry->{_session_uid} =~ $value );
         }
     },
+    notsessionuid => {
+        filter => sub {
+            my ( $self, $entry, $value ) = @_;
+            return ( defined( $entry->{_session_uid} )
+                  and $value and $entry->{_session_uid} !~ $value );
+        }
+    },
     update => {
         filter => sub {
             my ( $self, $entry, $value ) = @_;

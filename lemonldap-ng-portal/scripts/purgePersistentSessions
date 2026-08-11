@@ -18,7 +18,7 @@ my $result = GetOptions(
     'audit|a',          'creation=i',
     'last-update=i',    'recent-login=i',
     'no-login-success', 'no-registered-2fa',
-    'session-uid=s'
+    'session-uid=s',    'session-uid-not=s'
 );
 pod2usage(0) if $cli_opts{help};
 
@@ -29,9 +29,18 @@ my $opts = {
 };
 
 my $filters = {
-    ( defined( $cli_opts{'no-registered-2fa'} ) ? ( sfdevice => 1 ) : () ),
+    ( defined( $cli_opts{'no-registered-2fa'} ) ? ( sfdevice => 1 )   : () ),
     ( defined( $cli_opts{creation} ) ? ( age => $cli_opts{creation} ) : () ),
-    ( defined( $cli_opts{'session-uid'} ) ? ( sessionuid => $cli_opts{'session-uid'} ) : () ),
+    (
+        defined( $cli_opts{'session-uid'} )
+        ? ( sessionuid => $cli_opts{'session-uid'} )
+        : ()
+    ),
+    (
+        defined( $cli_opts{'session-uid-not'} )
+        ? ( notsessionuid => $cli_opts{'session-uid-not'} )
+        : ()
+    ),
     (
         defined( $cli_opts{'last-update'} )
         ? ( update => $cli_opts{'last-update'} )
@@ -140,6 +149,10 @@ factor device.
 =item B<--session-uid=I<'REGEXP'>>
 
 The persistent session will be deleted if its _session_uid matches the REGEXP.
+
+=item B<--session-uid-not=I<'REGEXP'>>
+
+The persistent session will be deleted if its _session_uid does not match the REGEXP.
 
 =back
 
