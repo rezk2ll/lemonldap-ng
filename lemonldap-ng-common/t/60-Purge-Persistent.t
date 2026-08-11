@@ -314,22 +314,79 @@ subtest "Combining filters" => sub {
     _storePSession( "persistent", "msmith", 40000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
-    # Old + no recent login with uid
-    _storePSession( "persistent", "dalek", 10000, 10000,
-        { _loginHistory => { successLogin => [ { _utime => "10000" } ] } } );
+    # uid and regexp
+    _test_purge(
+        50000,
+        {
+            login => "20000",
+            age   => "20000",
+        }
+    );
+    is_deeply(
+        _getSessionsNames('persistent'),
+        [ "dwho", "msmith", "rtyler" ],
+        "Expected remaining psession"
+    );
+};
+
+subtest "Combining filters with uid=regexp" => sub {
+    _cleanSessions;
+
+    # Old creation date, but has a recent login
+    _storePSession( "persistent", "dwho", 10000, 40000,
+        { _loginHistory => {} } );
+
+    # No recent login, but recent
+    _storePSession( "persistent", "rtyler", 10000, 40000,
+        { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
+
+    # Recently created + recent login
+    _storePSession( "persistent", "msmith", 40000, 40000,
+        { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
     # uid and regexp
     _test_purge(
         50000,
         {
-            login         => "20000",
-            age           => "20000",
-            sessionuid    => '^dal\wk$',
-            notsessionuid => '^\w{5}$'
+            login      => "20000",
+            age        => "20000",
+            sessionuid => '^d',
         }
     );
     is_deeply(
-        _getSessionsNames('persistent'), ["dalek", "dwho", "msmith", "rtyler" ],
+        _getSessionsNames('persistent'),
+        [ "msmith", "rtyler" ],
+        "Expected remaining psession"
+    );
+};
+
+subtest "Combining filters with uid!=regexp" => sub {
+    _cleanSessions;
+
+    # Old creation date, but has a recent login
+    _storePSession( "persistent", "dwho", 10000, 40000,
+        { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
+
+    # No recent login, but recent
+    _storePSession( "persistent", "rtyler", 10000, 40000,
+        { _loginHistory => {} } );
+
+    # Recently created + recent login
+    _storePSession( "persistent", "msmith", 40000, 40000,
+        { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
+
+    # uid and regexp
+    _test_purge(
+        50000,
+        {
+            login      => "20000",
+            age        => "20000",
+            notsessionuid => '^\w{5}$',
+        }
+    );
+    is_deeply(
+        _getSessionsNames('persistent'),
+        [ "dwho", "msmith" ],
         "Expected remaining psession"
     );
 };
@@ -340,10 +397,8 @@ subtest "API safety, do not remove all psessions when no filters" => sub {
     _storePSession( "persistent", "dwho", 10000, 40000 );
 
     _test_purge(50000);
-    is_deeply(
-        _getSessionsNames('persistent'), ["dwho"],
-        "Expected remaining psession"
-    );
+    is_deeply( _getSessionsNames('persistent'),
+        ["dwho"], "Expected remaining psession" );
 };
 
 done_testing();
