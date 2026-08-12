@@ -11,6 +11,9 @@ use JSON;
 use Mouse;
 use Time::HiRes;
 use POSIX qw(strftime);
+use IO::Socket::Timeout;
+
+our $VERSION = '3.0.0';
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
@@ -591,38 +594,92 @@ sub _cleanup_errors {
     if (    $options->{backend} =~ /^Apache::Session::(?:Browseable::)?LDAP$/i
         and $self->force )
     {
-        my $useTls = 0;
-        my $tlsParam;
-        my @servers = ();
+        my ( @servers, %tlsParams, $useStartTls );
         foreach my $server ( split /[\s,]+/, $options->{ldapServer} ) {
             if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-                $useTls   = 1;
-                $server   = $1;
-                $tlsParam = $2 || "";
+                $useStartTls = 1;
+                $server      = $1;
+                %tlsParams   = split( /[&=]/, $2 || "" );
+            }
+            elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+                $useStartTls = 0;
+                $server      = $1;
+                %tlsParams   = split( /[&=]/, $2 || "" );
             }
             else {
-                $useTls = 0;
+                $useStartTls = 0;
             }
             push @servers, $server;
         }
-        my $ldap =
-          Net::LDAP->new( \@servers, keepalive => 1, onerror => undef, );
+
+        $tlsParams{verify} ||= $options->{ldapVerify} || 'require';
+        $tlsParams{cafile} ||= $options->{ldapCAFile}
+          if $options->{ldapCAFile};
+        $tlsParams{capath} ||= $options->{ldapCAPath} if $options->{ldapCAPath};
+        eval { require Authen::SASL if $options->{ldapClientCert}; };
+        if ($@) {
+            $self->logger->error(
+                "Authen::SASL is required to connect using mTLS ($@)");
+            undef $tlsParams{clientcert};
+        }
+        else {
+            $tlsParams{clientcert} ||= $options->{ldapClientCert}
+              if $options->{ldapClientCert};
+            $tlsParams{clientkey} ||= $options->{ldapClientKey}
+              if $options->{ldapClientKey};
+        }
+
+        my $ldap = Net::LDAP->new(
+            \@servers,
+            onerror   => undef,
+            keepalive => 1,
+            %tlsParams,
+            ( $options->{ldapPort} ? ( port => $options->{ldapPort} ) : () ),
+            (
+                $options->{ldapTimeout} ? ( timeout => $options->{ldapTimeout} )
+                : ()
+            ),
+            (
+                $options->{ldapVersion} ? ( version => $options->{ldapVersion} )
+                : ()
+            ),
+        );
+
         unless ($ldap) {
+            $self->logger->error("Unable to connect to LDAP server");
             print STDERR "Unable to connect to LDAP server\n";
             $internal_stats->{nb_error}->{$type}++;
             return;
         }
+        elsif ( $Net::LDAP::VERSION < '0.64' ) {
+            #
+            # CentOS7 has a bug in which IO::Socket::SSL will return a broken
+            # socket when certificate validation fails. Net::LDAP does not catch
+            # it, and the process ends up crashing.
+            # As a precaution, make sure the underlying socket is doing fine:
+            if (    $ldap->socket->isa('IO::Socket::SSL')
+                and $ldap->socket->errstr )
+            {
+                $self->logger->error( 'Unable to connect to LDAP server: '
+                      . $ldap->socket->errstr );
+                print STDERR 'Unable to connect to LDAP server: '
+                  . $ldap->socket->errstr . "\n";
+                $internal_stats->{nb_error}->{$type}++;
+                return;
+            }
+        }
 
-        # Start TLS if needed
-        if ($useTls) {
-            my %h = split( /[&=]/, $tlsParam );
-            $h{verify} ||= $options->{ldapVerify} || "require";
-            $h{cafile} ||= $options->{ldapCAFile}
-              if ( $options->{ldapCAFile} );
-            $h{capath} ||= $options->{ldapCAPath}
-              if ( $options->{ldapCAPath} );
-            my $start_tls = $ldap->start_tls(%h);
+        # Set socket timeouts
+        my $socket  = $ldap->socket;
+        my $timeout = $options->{ldapIOTimeout} || 10;
+        IO::Socket::Timeout->enable_timeouts_on($socket);
+        $socket->read_timeout($timeout);
+        $socket->write_timeout($timeout);
+
+        if ($useStartTls) {
+            my $start_tls = $ldap->start_tls(%tlsParams);
             if ( $start_tls->code ) {
+                $self->logger->error("STARTTLS error");
                 print STDERR "STARTTLS error: "
                   . $start_tls->code . ': '
                   . $start_tls->error;
@@ -631,9 +688,31 @@ sub _cleanup_errors {
             }
         }
 
-        my $bind = $ldap->bind( $options->{ldapBindDN},
-            password => $options->{ldapBindPassword} );
-        my $attrId = $options->{ldapAttributeId} | "cn";
+        my $bind;
+        if ( $options->{ldapBindDN} && $options->{ldapBindPassword} ) {
+            $bind = $ldap->bind( $options->{ldapBindDN},
+                password => $options->{ldapBindPassword} );
+        }
+        elsif ( $tlsParams{clientcert} && $tlsParams{clientkey} ) {
+            $self->logger->info("mTLS bind will be used");
+            my $sasl = Authen::SASL->new(
+                mechanism => 'EXTERNAL',
+                callback  => { user => '' }
+            );
+            $bind = $ldap->bind( undef, sasl => $sasl );
+        }
+        else {
+            $self->logger->warn("Anonymous bind will be used");
+            $bind = $ldap->bind();
+        }
+        if ( $bind->code ) {
+            $self->logger->error(
+                "Bind to LDAP server failed: " . $bind->error );
+            $internal_stats->{nb_error}->{$type}++;
+            return;
+        }
+
+        my $attrId = $options->{ldapAttributeId} || "cn";
         foreach (@errors) {
             my $id = $_;
             my $sessionDn =
