@@ -492,14 +492,21 @@ sub newLdap {
         push @servers, $server;
     }
 
-    $tlsParams{cafile}     ||= $self->ldapCAFile if $self->ldapCAFile;
-    $tlsParams{capath}     ||= $self->ldapCAPath if $self->ldapCAPath;
-    $tlsParams{verify}     ||= $self->ldapVerify if $self->ldapVerify;
-    $tlsParams{clientcert} ||= $self->ldapClientCert
-      if $self->ldapClientCert;
-    $tlsParams{clientkey} ||= $self->ldapClientKey
-      if $self->ldapClientKey;
-    require Authen::SASL if $self->ldapClientCert;
+    $tlsParams{cafile} ||= $self->ldapCAFile if $self->ldapCAFile;
+    $tlsParams{capath} ||= $self->ldapCAPath if $self->ldapCAPath;
+    $tlsParams{verify} ||= $self->ldapVerify if $self->ldapVerify;
+    eval { require Authen::SASL if $self->ldapClientCert; };
+    if ($@) {
+        $self->logger->error(
+            "Authen::SASL is required to connect using mTLS ($@)");
+        undef $tlsParams{clientcert};
+    }
+    else {
+        $tlsParams{clientcert} ||= $self->ldapClientCert
+          if $self->ldapClientCert;
+        $tlsParams{clientkey} ||= $self->ldapClientKey
+          if $self->ldapClientKey;
+    }
 
     my $ldap = Net::LDAP->new(
         \@servers,
@@ -522,7 +529,7 @@ sub newLdap {
         # it, and the process ends up crashing.
         # As a precaution, make sure the underlying socket is doing fine:
         if (    $ldap->socket->isa('IO::Socket::SSL')
-            and $ldap->socket->errstr < 0 )
+            and $ldap->socket->errstr )
         {
             die "SSL connection error: " . $ldap->socket->errstr;
         }
@@ -539,7 +546,7 @@ sub newLdap {
         die 'TLS failed: ' . $mesg->error if ( $mesg->code );
     }
 
-    my $bind = $self->bind($ldap);
+    my $bind = $self->_bind( $ldap, $tlsParams{clientcert} );
     if ( $bind->code ) {
         die 'Bind failed: ' . $bind->error;
     }
@@ -547,15 +554,15 @@ sub newLdap {
     return $ldap;
 }
 
-sub bind {
-    my ( $self, $ldap ) = @_;
+sub _bind {
+    my ( $self, $ldap, $sasl ) = @_;
 
     if ( $self->ldapBindDN && $self->ldapBindPassword ) {
         $self->logger->debug( 'Call bind for ' . $self->ldapBindDN );
         return $ldap->bind( $self->ldapBindDN,
             password => $self->ldapBindPassword );
     }
-    elsif ( $self->ldapClientCert && $self->ldapClientKey ) {
+    elsif ( $self->ldapClientCert && $self->ldapClientKey && $sasl ) {
         my $sasl = Authen::SASL->new(
             mechanism => 'EXTERNAL',
             callback  => { user => '' }
