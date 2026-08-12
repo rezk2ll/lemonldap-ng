@@ -302,15 +302,19 @@ subtest "Purge psessions by !uid" => sub {
 subtest "Combining filters" => sub {
     _cleanSessions;
 
-    # Old creation date, but has a recent login
+    # Old + no recent login => removed
+    _storePSession( "persistent", "dalek", 10000, 10000,
+        { _loginHistory => { successLogin => [ { _utime => "10000" } ] } } );
+
+    # Old creation date, but has a recent login => kept
     _storePSession( "persistent", "dwho", 10000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
-    # No recent login, but recent
+    # No recent login, but recent creation => kept
     _storePSession( "persistent", "rtyler", 40000, 40000,
         { _loginHistory => {} } );
 
-    # Recently created + recent login
+    # Recently created + recent login => kept
     _storePSession( "persistent", "msmith", 40000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
@@ -331,16 +335,16 @@ subtest "Combining filters" => sub {
 subtest "Combining filters with match" => sub {
     _cleanSessions;
 
-    # Old + no recent login with uid
+    # old timestamps, login matches => removed
     _storePSession( "persistent", "dalek", 10000, 29999,
         { _loginHistory => { successLogin => [ { _utime => "29999" } ] } } );
 
-    # Old creation date, but has a recent login
+    # recent timestamps,  login matches => kept
     _storePSession( "persistent", "dwho", 10000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
-    # No recent login, but recent
-    _storePSession( "persistent", "rtyler", 40000, 40000,
+    # old timestamps, login does not match => kept
+    _storePSession( "persistent", "rtyler", 10000, 10000,
         { _loginHistory => {} } );
 
     _test_purge(
@@ -361,20 +365,20 @@ subtest "Combining filters with match" => sub {
 subtest "Combining filters with do not match" => sub {
     _cleanSessions;
 
-    # Old + no recent login with uid
+    # old timestamps, login does not match => kept
     _storePSession( "persistent", "dalek", 10000, 10000,
         { _loginHistory => { successLogin => [ { _utime => "10000" } ] } } );
 
-    # Old + no recent login with uid
+    # Old timestamps, login matches => removed
     _storePSession( "persistent", "dwho", 10000, 10000,
         { _loginHistory => { successLogin => [ { _utime => "10000" } ] } } );
 
-    # No recent login, but recent
+    # recent timestamps, login matches => kept
     _storePSession( "persistent", "rtyler", 30000, 40000,
         { _loginHistory => {} } );
 
-    # Recently created + recent login
-    _storePSession( "persistent", "msmith", 40000, 40000,
+    # recent timestamps, login does not match => kept
+    _storePSession( "persistent", "smith", 40000, 40000,
         { _loginHistory => { successLogin => [ { _utime => "40000" } ] } } );
 
     _test_purge(
@@ -386,7 +390,8 @@ subtest "Combining filters with do not match" => sub {
         }
     );
     is_deeply(
-        _getSessionsNames('persistent'), ["dalek", "msmith", "rtyler" ],
+        _getSessionsNames('persistent'),
+        [ "dalek", "rtyler", "smith" ],
         "Expected remaining psession"
     );
 };
