@@ -619,7 +619,10 @@ sub frontLogout {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0, ) ) {
+            if ( my $as =
+                $self->p->getApacheSession( $_, hashStore => 0, kind => 'SSO' )
+              )
+            {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");
@@ -769,7 +772,10 @@ sub backLogout {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0 ) ) {
+            if ( my $as =
+                $self->p->getApacheSession( $_, hashStore => 0, kind => 'SSO' )
+              )
+            {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");

@@ -198,7 +198,7 @@ sub merge {
             eval {
                 local $/ = undef;
                 open my $fh, '<', $file or die $!;
-                $merging = from_json(<$fh>);
+                $merging = decode_json(<$fh>);
             };
             if ($@) {
                 $self->error->print(

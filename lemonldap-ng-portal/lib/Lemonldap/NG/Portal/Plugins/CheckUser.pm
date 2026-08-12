@@ -223,7 +223,8 @@ sub check {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
 
             if ( $session->{data}->{_utime} gt $age ) {

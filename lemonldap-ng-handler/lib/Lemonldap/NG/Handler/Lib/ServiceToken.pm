@@ -56,7 +56,7 @@ sub fetchId {
         return 0;
     }
 
-    # Is vhost listed in token ?
+    # Is vhost listed in token?
     if ( grep { $_ eq $vhost } @vhosts ) {
         $class->logger->debug( "$vhost found in VHosts list: " . join ', ',
             @vhosts );
@@ -79,7 +79,7 @@ sub fetchId {
         return 0;
     }
 
-    # Is token in good interval ?
+    # Is token in good interval?
     my $ttl =
       ( $class->tsv->{serviceTokenTTL}->{$vhost} > 0 )
       ? $class->tsv->{serviceTokenTTL}->{$vhost}
@@ -96,7 +96,7 @@ sub fetchId {
         return 0;
     }
 
-    # Send service headers to protected application if exist
+    # Send service headers to protected application if exists
     if (%serviceHeaders) {
         $class->logger->info("Append service header(s)...");
         $class->set_header_in( $req, %serviceHeaders );

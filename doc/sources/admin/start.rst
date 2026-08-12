@@ -133,7 +133,6 @@ Official Backends                                                    Authenticat
 :doc:`GPG<authgpg>` [2]_                                             ✔
 :doc:`Kerberos<authkerberos>`                                        ✔
 :doc:`LDAP<authldap>`                                                ✔                                               ✔        ✔
-:doc:`LinkedIn<authlinkedin>`                                        ✔
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
 :doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔
 :doc:`PAM<authpam>`                                                  ✔
@@ -143,7 +142,6 @@ Official Backends                                                    Authenticat
 :doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
-:doc:`Twitter<authtwitter>`                                          ✔
 :doc:`Passkeys<authwebauthn>` |beta|                                 ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔

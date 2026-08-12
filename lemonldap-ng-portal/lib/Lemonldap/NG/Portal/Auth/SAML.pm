@@ -653,7 +653,8 @@ sub extractFormInfo {
                         my $real_session = $sessionInfo->data->{_saml_id};
 
                         my $ssoSession =
-                          $self->p->getApacheSession($real_session);
+                          $self->p->getApacheSession( $real_session,
+                            kind => 'SSO' );
 
                         # Import SSO session in $req
                         $self->importRealSession( $req, $ssoSession );

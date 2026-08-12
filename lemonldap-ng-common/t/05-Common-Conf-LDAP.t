@@ -28,17 +28,20 @@ SKIP: {
     my $h;
     ok(
         $h = new Lemonldap::NG::Common::Conf( {
-                type             => 'LDAP',
-                ldapServer       => $main::slapd_url,
-                ldapConfBase     => 'ou=sessions,dc=example,dc=com',
-                ldapBindDN       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
+                type         => 'LDAP',
+                ldapServer   => $main::slapd_url,
+                ldapConfBase => 'ou=sessions,dc=example,dc=com',
+
+                #ldapBindDN       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
                 ldapBindPassword => 'lemonldapng',
+                ldapClientCert   => 'cert',
+                ldapClientKey    => 'key',
             }
         ),
         "New object"
     ) or print STDERR "Error reported: " . $Lemonldap::NG::Common::Conf::msg;
 
-    ok( ref($h) and $h->can('getLdapConnection') );
+    ok( ref($h) and $h->can('getLdapConnection'), 'Get LDAP' );
 
     my @test = (
 
@@ -80,7 +83,7 @@ SKIP: {
         is(
             $value,
             $test[$i]->{test},
-            "Value stored in sqlite is correctly encoded"
+            "Value stored in LDAP is correctly encoded"
         );
     }
 }

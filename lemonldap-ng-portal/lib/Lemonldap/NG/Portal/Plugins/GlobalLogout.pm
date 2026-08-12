@@ -147,7 +147,9 @@ sub globalLogout {
                             # storage ID, then it is required to set hashStore
                             # to 0
                             $as = $self->p->getApacheSession(
-                                $_->{id}, hashStore => 0,
+                                $_->{id},
+                                kind      => 'SSO',
+                                hashStore => 0,
                             )
                           )
                         {
@@ -288,7 +290,13 @@ sub removeOtherActiveSessions {
 
         # searchOn() returns sessions indexed by their storage ID, then
         # it is required to set hashStore to 0
-        unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 0, ) )
+        unless (
+            $as = $self->p->getApacheSession(
+                $_->{id},
+                hashStore => 0,
+                kind      => 'SSO'
+            )
+          )
         {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");
             next;

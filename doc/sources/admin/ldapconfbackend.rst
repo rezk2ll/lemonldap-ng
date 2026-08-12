@@ -51,8 +51,8 @@ LDAP server
 ~~~~~~~~~~~
 
 Configuration objects use standard object class: ``applicationProcess``.
-This objectClass allow attributes ``cn`` and ``description``. If your
-LDAP server do not manage this objectClass, configure other objectclass
+This objectClass allows attributes ``cn`` and ``description``. If your
+LDAP server does not manage this objectClass, configure other objectClass
 and attributes (see below).
 
 We advice to create a specific LDAP account with write access on
@@ -89,14 +89,16 @@ Parameters:
 -  **ldapAttributeId**: RDN attribute of configuration entry (optional)
 -  **ldapAttributeContent**: attribute used to store configuration
    values, must be multivalued (optional)
--  **ldapVerify**: When using a LDAPS or TLS server, whether or not to validate the server certificate. Possible values: ``require``, ``optional`` or ``none``.
+-  **ldapVerify**: When using a LDAPS or TLS server, whether or not to validate the server certificate.
+   Possible values: ``require``, ``optional`` or ``none``.
 -  **ldapCAFile**:  This allows you to override the default system-wide
    certificate authorities by giving a single file containing the CA used by the
    LDAP server.
 -  **ldapCAPath**: This allows you to override the default system-wide
    certificate authorities by giving the path of a directory containing your
    trusted certificates.
-
+-  **ldapClientCert**: This allows you to define the client certificate to authenticate with.
+-  **ldapClientKey**: This allows you to define the private key associated to the certtificat.
 
 .. |image0| image:: /documentation/configuration-ldap.png
    :class: align-center

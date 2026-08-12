@@ -19,8 +19,7 @@ my $mail2  = 0;
 my $userdb = tempdb();
 
 SKIP: {
-    eval
-      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
+    eval 'require Email::Sender::Simple;use GD;';
     if ($@) {
         skip 'Missing dependencies', $maintests;
     }

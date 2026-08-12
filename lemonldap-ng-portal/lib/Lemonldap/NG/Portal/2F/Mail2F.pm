@@ -129,4 +129,13 @@ sub verify_external {
     return PE_ERROR;
 }
 
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %params = $self->SUPER::get2fTplParams( $req, $module );
+
+    $params{CODEREGEX} = $self->code_activation;
+
+    return %params;
+}
+
 1;

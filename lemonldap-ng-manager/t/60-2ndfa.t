@@ -130,7 +130,7 @@ for ( my $i = 1 ; $i < 6 ; $i++ ) {
 count(5);
 
 ## Single Persistent sfa access
-$res = &client->jsonResponse("/sfa/persistent/$ids[3]");
+$res = &client->jsonResponse("/2ndfa/persistent/$ids[3]");
 ok( ( $res->{uid} and $res->{uid} eq 'dwho' ), 'UID found' )
   or print STDERR Dumper($res);
 ok( ( $res->{ipAddr} and $res->{ipAddr} eq '127.10.0.1' ), 'IP found' )
@@ -147,7 +147,7 @@ ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"UBK"/s ),
 count(5);
 
 ## "All" query
-$res = &client->jsonResponse( '/sfa/persistent', 'groupBy=substr(uid,1)' );
+$res = &client->jsonResponse( '/2ndfa/persistent', 'groupBy=substr(uid,1)' );
 ok( $res->{result} == 1,      'Search * - Result code = 1' );
 ok( $res->{count} == 3,       'Found 3 results' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 3, 'List 3 results' );
@@ -168,7 +168,7 @@ count(9);
 ## "Search by UID" query
 # uid=d*
 $res =
-  &client->jsonResponse( '/sfa/persistent', 'uid=d*&groupBy=substr(uid,1)' );
+  &client->jsonResponse( '/2ndfa/persistent', 'uid=d*&groupBy=substr(uid,1)' );
 ok( $res->{result} == 1,      'Search "uid"=d* - Result code = 1' );
 ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
@@ -180,7 +180,7 @@ count(5);
 
 # uid=dw*
 $res =
-  &client->jsonResponse( '/sfa/persistent', 'uid=dw*&groupBy=substr(uid,2)' );
+  &client->jsonResponse( '/2ndfa/persistent', 'uid=dw*&groupBy=substr(uid,2)' );
 ok( $res->{result} == 1,      'Search "uid"=dw* - Result code = 1' );
 ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
@@ -191,7 +191,7 @@ ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "dw"' );
 count(5);
 
 # uid=d* & UBK
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=d*&groupBy=substr(uid,1)&type=UBK' );
 ok( $res->{result} == 1,      'Search "uid"=d* & UBK - Result code = 1' );
 ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
@@ -206,7 +206,7 @@ ok(
 count(5);
 
 # uid=dw* & UBK
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=dw*&groupBy=substr(uid,2)&type=UBK' );
 ok( $res->{result} == 1,      'Search "uid"=dw* & UBK - Result code = 1' );
 ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
@@ -221,7 +221,7 @@ ok(
 count(5);
 
 # uid=da* & UBK
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=da*&groupBy=substr(uid,2)&type=UBK' );
 ok( $res->{result} == 1, 'Search "uid"=da* & UBK - Result code = 1' );
 ok( $res->{count} == 0,  'Found 0 session with "da" & UBK' )
@@ -230,7 +230,7 @@ ok( @{ $res->{values} } == 0, 'List 0 result' );
 count(3);
 
 ## "Filtered by U2F" query
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=*&groupBy=substr(uid,0)&type=U2F' );
 ok( $res->{result} == 1,      'Search "uid"=* & UBK - Result code = 1' );
 ok( $res->{count} == 3,       'Found 3 results' ) or print STDERR Dumper($res);
@@ -259,7 +259,7 @@ ok(
 count(9);
 
 ## "Filtered by U2F & TOTP" query
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=*&groupBy=substr(uid,0)&type=U2F&type=TOTP' );
 ok( $res->{result} == 1,      'Search "uid"=* & UBK & TOTP - Result code = 1' );
 ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
@@ -272,7 +272,7 @@ ok( $res->{values}->[0]->{count} == 2,
 count(5);
 
 ## "Filtered by U2F & TOTP & UBK" query
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=*&groupBy=substr(uid,0)&type=U2F&type=TOTP&type=UBK' );
 ok( $res->{result} == 1,
     'Search "uid"=* & UBK & TOTP & UBK - Result code = 1' );
@@ -286,7 +286,7 @@ ok( $res->{values}->[0]->{count} == 1,
 count(5);
 
 ## "Filtered by U2F & UBK" query
-$res = &client->jsonResponse( '/sfa/persistent',
+$res = &client->jsonResponse( '/2ndfa/persistent',
     'uid=*&groupBy=substr(uid,0)&type=U2F&type=UBK' );
 ok( $res->{result} == 1,      'Search "uid"=* & UBK & UBK - Result code = 1' );
 ok( $res->{count} == 2,       'Found 2 results' ) or print STDERR Dumper($res);
@@ -308,7 +308,7 @@ count(7);
 foreach ( 1 .. 5 ) {
     ok(
         $res =
-          &client->_del( "/sfa/persistent/$ids[$_]", "type=U2F&epoch=$epoch" ),
+          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=U2F&epoch=$epoch" ),
         "Delete U2F from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );
@@ -321,7 +321,7 @@ foreach ( 1 .. 5 ) {
 foreach ( 3 .. 4 ) {
     ok(
         $res =
-          &client->_del( "/sfa/persistent/$ids[$_]", "type=TOTP&epoch=$epoch" ),
+          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=TOTP&epoch=$epoch" ),
         "Delete TOTP from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );
@@ -334,7 +334,7 @@ foreach ( 3 .. 4 ) {
 foreach ( 2 .. 3 ) {
     ok(
         $res =
-          &client->_del( "/sfa/persistent/$ids[$_]", "type=UBK&epoch=$epoch" ),
+          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=UBK&epoch=$epoch" ),
         "Delete UBK from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );
@@ -344,7 +344,7 @@ foreach ( 2 .. 3 ) {
 }
 
 ## Check than all devices have been deleted with "All" query
-$res = &client->jsonResponse( '/sfa/persistent', 'groupBy=substr(uid,1)' );
+$res = &client->jsonResponse( '/2ndfa/persistent', 'groupBy=substr(uid,1)' );
 ok( $res->{result} == 1, 'Result code = 1' );
 ok( $res->{count} == 0,  'Found 0 session with 2F device' )
   or print STDERR Dumper($res);

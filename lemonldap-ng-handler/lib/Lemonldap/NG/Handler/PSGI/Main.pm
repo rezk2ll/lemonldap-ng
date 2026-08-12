@@ -18,6 +18,7 @@ use constant DONE              => 0;
 use constant SERVER_ERROR      => 500;
 use constant AUTH_REQUIRED     => 401;
 use constant MAINTENANCE       => 503;
+use constant UNRESPONSIVE      => 504;
 use constant defaultLogger     => 'Lemonldap::NG::Common::Logger::Std';
 
 ## @method void thread_share(string $variable)

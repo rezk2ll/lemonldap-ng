@@ -325,6 +325,7 @@
 "stayConnected":"Considera affidabile questo dispositivo per i futuri accessi",
 "submit":"Invia",
 "switchContext":"Cambio di contesto",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"App. OTP",
 "totpMissingCode":"Immettere il codice fornito dalla propria applicazione TOTP",
 "totpOrTouch":"Se vedete questo messaggio sul vostro cellulare, inquadrate il codice QR per aprire l'applicazione TOTP",

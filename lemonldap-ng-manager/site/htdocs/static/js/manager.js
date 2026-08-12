@@ -19,6 +19,7 @@
   */
   llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', '$htmlParams', '$timeout', function ($scope, $http, $location, $q, $uibModal, $translator, $cookies, $htmlParams, $timeout) {
     var _checkSaveResponse, _download, _getAll, _stoggle, c, idinc, pathEvent, readError, setDefault, setHelp;
+    $scope.version = window.version;
     $scope.links = window.links;
     $scope.menu = $htmlParams.menu;
     $scope.menulinks = window.menulinks;
@@ -1064,24 +1065,6 @@
         currentNode.data[3].data = 'RSA';
         return $scope.waiting = false;
       }, readError);
-    };
-    $scope.newRSAKey = function () {
-      return $scope.showModal('password.html').then(function () {
-        var currentNode, password;
-        $scope.waiting = true;
-        currentNode = $scope.currentNode;
-        password = $scope.result;
-        return $http.post(`${window.confPrefix}/newRSAKey`, {
-          "password": password
-        }).then(function (response) {
-          currentNode.data[0].data = response.data.private;
-          currentNode.data[1].data = password;
-          currentNode.data[2].data = response.data.public;
-          return $scope.waiting = false;
-        }, readError);
-      }, function () {
-        console.debug('New key cancelled');
-      });
     };
     // - return a promise with the data:
     // 	- from node when set

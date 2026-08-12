@@ -65,7 +65,6 @@ has ua => (
     lazy    => 1,
     builder => sub {
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
@@ -2366,7 +2365,7 @@ sub getScope {
 # @return hashref UserInfo data
 sub buildUserInfoResponseFromId {
     my ( $self, $req, $scope, $rp, $user_session_id ) = @_;
-    my $session = $self->p->getApacheSession($user_session_id);
+    my $session = $self->p->getApacheSession( $user_session_id, kind => 'SSO' );
 
     return undef unless ($session);
     return buildUserInfoResponse( $self, $req, $scope, $rp, $session );

@@ -112,7 +112,7 @@
         e.remove();
       }
       $scope.waiting = true;
-      $http['delete'](`${scriptname}sfa/${sessionType}/${$scope.currentSession.id}?type=${type}&epoch=${epoch}`).then(function (response) {
+      $http['delete'](`${scriptname}2ndfa/${sessionType}/${$scope.currentSession.id}?type=${type}&epoch=${epoch}`).then(function (response) {
         return $scope.waiting = false;
       }, function (resp) {
         return $scope.waiting = false;
@@ -231,7 +231,7 @@
       };
       $scope.currentScope = scope;
       sessionId = scope.$modelValue.session;
-      $http.get(`${scriptname}sfa/${sessionType}/${sessionId}`).then(function (response) {
+      $http.get(`${scriptname}2ndfa/${sessionType}/${sessionId}`).then(function (response) {
         $scope.currentSession = transformSession(response.data);
         return $scope.currentSession.id = sessionId;
       });
@@ -284,7 +284,7 @@
         over = 0;
       }
       // Launch HTTP query
-      return $http.get(`${scriptname}sfa/${sessionType}?${query}` + Object.entries($scope.sfatypes).map(function (x) {
+      return $http.get(`${scriptname}2ndfa/${sessionType}?${query}` + Object.entries($scope.sfatypes).map(function (x) {
         if (x[1]) {
           return "&type=" + x[0];
         } else {
@@ -342,7 +342,7 @@
         over = 0;
       }
       // Launch HTTP
-      return $http.get(`${scriptname}sfa/${sessionType}?_session_uid=${$scope.searchString}*&groupBy=substr(_session_uid,${$scope.searchString.length})` + Object.entries($scope.sfatypes).map(function (x) {
+      return $http.get(`${scriptname}2ndfa/${sessionType}?_session_uid=${$scope.searchString}*&groupBy=substr(_session_uid,${$scope.searchString.length})` + Object.entries($scope.sfatypes).map(function (x) {
         if (x[1]) {
           return "&type=" + x[0];
         } else {

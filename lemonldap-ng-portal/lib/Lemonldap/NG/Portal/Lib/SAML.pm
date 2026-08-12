@@ -50,7 +50,6 @@ has ua => (
 
         # TODO : LWP options to use a proxy for example
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
@@ -2160,7 +2159,7 @@ sub createArtifactResponse {
     if ($session_id) {
         $self->logger->debug("Find session_id $session_id in artifact session");
 
-        my $session = $self->p->getApacheSession($session_id);
+        my $session = $self->p->getApacheSession( $session_id, kind => 'SSO' );
         unless ($session) {
             $self->logger->error("Unable to open session $session_id");
             return;

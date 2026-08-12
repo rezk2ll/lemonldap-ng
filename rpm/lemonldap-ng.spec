@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.23.2
+Version:        2.23.3
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -69,7 +69,6 @@ BuildRequires:  perl(Clone)
 BuildRequires:  perl(Config::IniFiles)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(Convert::Base32)
-BuildRequires:  perl(Convert::PEM)
 BuildRequires:  perl(Crypt::JWT)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
@@ -175,18 +174,15 @@ BuildRequires:  perl(HTTP::Date)
 BuildRequires:  perl(IO::Pipe)
 BuildRequires:  perl(Lasso)
 BuildRequires:  perl(LWP::Protocol::https)
-BuildRequires:  perl(Moose)
 BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::MQTT::Simple)
 BuildRequires:  perl(Net::MQTT::Simple::SSL)
-BuildRequires:  perl(Net::OAuth)
 BuildRequires:  perl(Perl::Tidy)
 BuildRequires:  perl(Plack::Handler::FCGI)
 BuildRequires:  perl(Pod::Usage)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(threads::shared)
 BuildRequires:  perl(WWW::Form::UrlEncoded)
-BuildRequires:  perl(XML::Simple)
 # Tests
 BuildRequires:  perl(Apache::Session::File)
 BuildRequires:  perl(Cache::NullCache)
@@ -338,8 +334,6 @@ Recommends:     perl(Glib)
 Recommends:     perl(Lasso)
 # Facebook
 Recommends:     perl(Net::Facebook::Oauth2)
-# OpenID
-Recommends:     perl(Net::OAuth)
 # LDAP mtls
 Recommends:     perl(Authen::SASL)
 Provides:       bundled(fontawesome-fonts) = 4.7.0
@@ -731,6 +725,9 @@ fi
 
 
 %changelog
+* Mon Aug 10 2026 Xavier Guimard <yadd@debian.org> - 2.23.3-1
+- Update to 2.23.3
+
 * Fri Jul 24 2026 Clement Oudot <clement.oudot@worteks.com> - 2.23.2-1
 - Update to 2.23.2
 
