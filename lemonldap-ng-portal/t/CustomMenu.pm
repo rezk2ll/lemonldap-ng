@@ -2,9 +2,7 @@ package t::CustomMenu;
 
 use strict;
 use Test::More;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

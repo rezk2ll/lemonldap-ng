@@ -2,17 +2,7 @@ package Lemonldap::NG::Portal::Auth::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_DONE
-  PE_ERROR
-  PE_LDAPCONNECTFAILED
-  PE_BADOLDPASSWORD
-  PE_PP_ACCOUNT_LOCKED
-  PE_PP_PASSWORD_EXPIRED
-  PE_PP_CHANGE_AFTER_RESET
-  PE_PP_PASSWORD_EXPIRES_SOON
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.22.0';
 

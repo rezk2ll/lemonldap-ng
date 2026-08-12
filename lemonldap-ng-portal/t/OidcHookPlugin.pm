@@ -3,7 +3,7 @@ package t::OidcHookPlugin;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_SENDRESPONSE PE_DONE);
+use Lemonldap::NG::Portal::Main::Constants;
 use Data::Dumper;
 use Test::More;
 

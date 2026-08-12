@@ -427,6 +427,7 @@ sub sendHtml {
             cache                  => 0,
             global_vars            => 1,
             loop_context_vars      => 1,
+            utf8                   => 1,
         );
 
         # TODO: replace app
@@ -496,7 +497,7 @@ sub psgiAdapter {
 sub logAndRun {
     my ( $self, $req, $sub ) = @_;
 
-    # register the request object to the logging system
+    # Register the request object to the logging system
     if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
         $self->logger->setRequestObj($req);
     }

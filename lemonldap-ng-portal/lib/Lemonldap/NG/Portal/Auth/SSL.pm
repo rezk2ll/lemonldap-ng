@@ -3,13 +3,7 @@ package Lemonldap::NG::Portal::Auth::SSL;
 use strict;
 use Mouse;
 use Encode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_CERTIFICATEREQUIRED
-  PE_ERROR
-  PE_BADCERTIFICATE
-  PE_FIRSTACCESS
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

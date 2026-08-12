@@ -2,14 +2,7 @@ package Lemonldap::NG::Portal::2F::Mail2F;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_FORMEMPTY
-  PE_MUSTHAVEMAIL
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.16';
 
@@ -134,6 +127,15 @@ sub verify_external {
     $self->logger->error(
         $self->prefix . '2f: verify_external is not supposed to be invoked' );
     return PE_ERROR;
+}
+
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %params = $self->SUPER::get2fTplParams( $req, $module );
+
+    $params{CODEREGEX} = $self->code_activation;
+
+    return %params;
 }
 
 1;

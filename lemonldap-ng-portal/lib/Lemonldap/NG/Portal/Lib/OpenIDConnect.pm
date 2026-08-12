@@ -65,7 +65,6 @@ has ua => (
     lazy    => 1,
     builder => sub {
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
@@ -1896,13 +1895,16 @@ sub createHash {
 # @return void
 
 sub returnRedirectError {
-    my ( $self, $req, $redirect_url, $error, $error_description,
-        $error_uri, $state, $fragment )
-      = @_;
+    my (
+        $self,  $req,               $redirect_url,
+        $error, $error_description, $error_uri,
+        $state, $fragment,          $rp
+    ) = @_;
 
     my $reason = $error_description ? ": $error_description" : "";
     $self->auditLog(
         $req,
+        rp      => $rp,
         code    => "ISSUER_OIDC_LOGIN_FAILED",
         message => ( "OIDC login failed" . $reason ),
         ( $error_description ? ( reason => $error_description ) : () ),
@@ -2363,7 +2365,7 @@ sub getScope {
 # @return hashref UserInfo data
 sub buildUserInfoResponseFromId {
     my ( $self, $req, $scope, $rp, $user_session_id ) = @_;
-    my $session = $self->p->getApacheSession($user_session_id);
+    my $session = $self->p->getApacheSession( $user_session_id, kind => 'SSO' );
 
     return undef unless ($session);
     return buildUserInfoResponse( $self, $req, $scope, $rp, $session );

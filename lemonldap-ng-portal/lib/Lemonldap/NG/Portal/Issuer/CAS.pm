@@ -4,20 +4,7 @@ use strict;
 use Mouse;
 use URI;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  portalConsts
-  URIRE
-  PE_OK
-  PE_INFO
-  PE_ERROR
-  PE_LOGOUT_OK
-  PE_SENDRESPONSE
-  PE_UNKNOWNPARTNER
-  PE_UNAUTHORIZEDURL
-  PE_UNAUTHORIZEDPARTNER
-  PE_BADURL
-  PE_CAS_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 
@@ -392,7 +379,8 @@ sub run {
 
         # Legacy code without logout propagation for CAS 2.0
         if ($logout_url) {
-            my $session = $self->p->getApacheSession($session_id);
+            my $session =
+              $self->p->getApacheSession( $session_id, kind => 'SSO' );
             return PE_LOGOUT_OK unless ($session);
 
            # This will call Issuer logout methods, incluing our own
@@ -863,7 +851,8 @@ sub _validate_generic {
 
     # Open local session
     my $localSession =
-      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id},
+        kind => 'SSO' );
 
     unless ($localSession) {
         $self->userLogger->warn( "Local session "

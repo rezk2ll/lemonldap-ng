@@ -2,12 +2,8 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_MALFORMEDUSER
-  PE_OK PE_BADCREDENTIALS
-  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -208,13 +204,6 @@ sub run {
       $loginHistory;    # Restore login history
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
-    # Restore _httpSession for Double Cookies
-    if ( $self->conf->{securedCookie} >= 2 ) {
-        $self->p->updateSession( $req, $spoofSession,
-            $req->{sessionInfo}->{real__httpSession} );
-        $req->{sessionInfo}->{_httpSession} =
-          $req->{sessionInfo}->{real__httpSession};
-    }
     return $statut;
 }
 

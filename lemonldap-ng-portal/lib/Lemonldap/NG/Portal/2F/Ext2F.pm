@@ -2,15 +2,8 @@ package Lemonldap::NG::Portal::2F::Ext2F;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_NOTOKEN
-  PE_FORMEMPTY
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
+use IPC::Run;
 
 our $VERSION = '2.0.16';
 
@@ -24,6 +17,14 @@ has prefix => ( is => 'rw', default => 'ext' );
 # Used to lookup config
 has conf_type => ( is => 'ro', default => 'ext' );
 has legend    => ( is => 'rw', default => 'enterExt2fCode' );
+has timeout => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my ($self) = @_;
+        return ( $self->conf->{ $self->conf_type . '2fTimeout' } || 60 );
+    }
+);
 
 sub init {
     my ($self) = @_;
@@ -57,7 +58,7 @@ sub verify_external {
           . '2f: launching "Validate" command -> '
           . $self->conf->{ext2FValidateCommand} );
     $self->logger->debug(" code -> $code");
-    my $c =
+    my ( $c, $message ) =
       $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code );
     if ( $c == 0 ) {
         $self->logger->debug(
@@ -66,7 +67,7 @@ sub verify_external {
     }
     elsif ( $c == -1 ) {
         $self->logger->error(
-            $self->prefix . "2f: could not run validate command: $!" );
+            $self->prefix . "2f: could not run validate command: $message" );
     }
     else {
         $self->userLogger->warn( $self->prefix
@@ -86,7 +87,7 @@ sub sendCode {
     $self->logger->debug( $self->prefix
           . '2f: launching "Send" command -> '
           . $self->conf->{ext2FSendCommand} );
-    my $c =
+    my ( $c, $message ) =
       $self->launch( $sessionInfo, $self->conf->{ext2FSendCommand}, $code );
     if ( $c == 0 ) {
         $self->logger->debug( $self->prefix . "2f: send command successful" );
@@ -94,7 +95,7 @@ sub sendCode {
     }
     elsif ( $c == -1 ) {
         $self->logger->error(
-            $self->prefix . "2f: could not run send command: $!" );
+            $self->prefix . "2f: could not run send command: $message" );
     }
     else {
         my $rc = $c >> 8;
@@ -116,7 +117,27 @@ sub launch {
     }
     $self->logger->debug(
         $self->prefix . "2f: executing command: " . join( " ", @args ) );
-    return system @args;
+
+    my ($err);
+    my $c = eval {
+        IPC::Run::run( \@args, \undef, '>', '/dev/null', '2>', \$err,
+            IPC::Run::timeout( $self->timeout ) );
+    };
+    if ( defined($c) ) {
+        my $shifted_ret = $?;
+        if ($c) {
+            return 0;
+        }
+        else {
+            if ($err) {
+                $self->logger->debug( "returned stderr: \n" . $err );
+            }
+            return $shifted_ret;
+        }
+    }
+    else {
+        return ( -1, $@ );
+    }
 }
 
 1;

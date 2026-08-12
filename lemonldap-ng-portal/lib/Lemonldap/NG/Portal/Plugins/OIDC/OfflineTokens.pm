@@ -5,13 +5,7 @@ use Mouse;
 use Date::Parse;
 use JSON qw(from_json to_json);
 use Time::Local;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

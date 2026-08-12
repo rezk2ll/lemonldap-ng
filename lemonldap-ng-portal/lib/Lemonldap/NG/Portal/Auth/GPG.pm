@@ -4,13 +4,7 @@ use strict;
 use File::Temp 'tempdir';
 use IPC::Run;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_FORMEMPTY
-  PE_NOTOKEN
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.12';
 

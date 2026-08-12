@@ -8,10 +8,7 @@ package Lemonldap::NG::Portal::UserDB::Slave;
 use strict;
 use Mouse;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_FORBIDDENIP
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.19.0';
 

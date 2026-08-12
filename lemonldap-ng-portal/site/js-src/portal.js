@@ -720,6 +720,12 @@ $(window).on('load', function() {
       }
     );
   }
+  // trim spaces in TOTP/mail token input
+  $('.remove-spaces').on('input', function(){
+      $(this).val(function(_, v){
+          return v.replace(/\s+/g, '');
+      });
+  });
   $(document).trigger("portalLoaded");
   return true;
 });

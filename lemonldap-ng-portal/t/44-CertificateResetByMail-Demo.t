@@ -6,10 +6,7 @@ use File::Copy;
 use HTTP::Request::Common;
 use utf8;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_RESETCERTIFICATE_INVALID PE_RESETCERTIFICATE_FORMEMPTY
-  PE_RESETCERTIFICATE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 BEGIN {
     eval {
@@ -22,8 +19,7 @@ my ( $res, $user );
 my $maintests = 12;
 
 SKIP: {
-    eval
-'require Email::Sender::Simple; use GD::SecurityImage; use Image::Magick; use Net::SSLeay;
+    eval 'require Email::Sender::Simple; use GD; use Net::SSLeay;
 use DateTime::Format::RFC3339;';
     if ($@) {
         skip 'Missing dependencies ' . $@, $maintests;

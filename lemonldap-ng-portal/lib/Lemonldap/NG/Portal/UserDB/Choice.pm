@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::UserDB::Choice;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_FIRSTACCESS);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.11';
 

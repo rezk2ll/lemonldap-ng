@@ -1,10 +1,7 @@
 package Lemonldap::NG::Portal::Lib::OIDCTokenExchange;
 
 use strict;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_SENDRESPONSE
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';

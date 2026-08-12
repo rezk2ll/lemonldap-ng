@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use base qw(Exporter);
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.3';
 
 our %EXPORT_TAGS = ( 'all' => [qw($simpleHashKeys $doubleHashKeys $specialNodeKeys $casAppMetaDataNodeKeys $casSrvMetaDataNodeKeys $keyNodeKeys $oidcOPMetaDataNodeKeys $oidcRPMetaDataNodeKeys $samlIDPMetaDataNodeKeys $samlSPMetaDataNodeKeys $virtualHostKeys $specialNodeHash $authParameters $issuerParameters $samlServiceParameters $oidcServiceParameters $casServiceParameters)] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
@@ -48,7 +48,6 @@ our $authParameters = {
   gpgParams => [qw(gpgAuthnLevel gpgDb)],
   kerberosParams => [qw(krbAuthnLevel krbKeytab krbByJs krbRemoveDomain krbAllowedDomains)],
   ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapVerify ldapBase managerDn managerPassword ldapClientCert ldapClientKey ldapTimeout ldapIOTimeout ldapVersion ldapRaw ldapCAFile ldapCAPath LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase groupLDAPFilter ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupDecodeSearchedValue ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue ldapAllowResetExpiredPassword ldapGetUserBeforePasswordChange ldapForcePasswordChangeExpirationWarning ldapITDS)],
-  linkedinParams => [qw(linkedInAuthnLevel linkedInClientID linkedInClientSecret linkedInFields linkedInUserField linkedInScope)],
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
   pamParams => [qw(pamAuthnLevel pamService)],
@@ -58,7 +57,6 @@ our $authParameters = {
   restParams => [qw(restAuthnLevel restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl restAuthArgs restUserDBArgs restPwdConfirmArgs restPwdModifyArgs)],
   slaveParams => [qw(slaveAuthnLevel slaveUserHeader slaveDisplayLogo slaveMasterIP slaveCertificateField slaveCertificateRegexp slaveHeaderName slaveHeaderContent slaveExportedVars)],
   sslParams => [qw(SSLAuthnLevel SSLVar SSLIssuerVar sslByAjax sslHost SSLVarIf)],
-  twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
   webauthnParams => [qw(webauthnAuthnLevel)],
 };
 our $issuerParameters = {

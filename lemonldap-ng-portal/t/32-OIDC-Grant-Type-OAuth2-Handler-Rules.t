@@ -3,9 +3,7 @@ use Test::More;
 use strict;
 use IO::String;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 BEGIN {
     require 't/test-lib.pm';

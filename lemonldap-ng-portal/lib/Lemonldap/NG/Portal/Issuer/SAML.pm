@@ -6,22 +6,7 @@ use URI;
 use URI::QueryParam;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  portalConsts
-  PE_OK
-  PE_REDIRECT
-  PE_SESSIONEXPIRED
-  PE_SAML_ART_ERROR
-  PE_SAML_DESTINATION_ERROR
-  PE_SAML_SESSION_ERROR
-  PE_SAML_SIGNATURE_ERROR
-  PE_SLO_ERROR
-  PE_SAML_SSO_ERROR
-  PE_ISSUERMISSINGREQATTR
-  PE_UNKNOWNPARTNER
-  PE_SAML_SERVICE_NOT_ALLOWED
-  PE_UNAUTHORIZEDPARTNER
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 
@@ -1582,7 +1567,8 @@ sub soapSloServer {
               . " (from session index $session_index)" );
 
         # Open local session
-        my $local_session = $self->p->getApacheSession($local_session_id);
+        my $local_session =
+          $self->p->getApacheSession( $local_session_id, kind => 'SSO' );
 
         unless ($local_session) {
             return $self->p->sendError( $req, "No local session found", 400 );
@@ -2129,7 +2115,8 @@ sub sloServer {
         unless ($session) {
 
             # Open local session
-            my $local_session = $self->p->getApacheSession($local_session_id);
+            my $local_session =
+              $self->p->getApacheSession( $local_session_id, kind => 'SSO' );
 
             unless ($local_session) {
                 $self->logger->warn("No local session found");
@@ -2463,7 +2450,8 @@ sub attributeServer {
         $self->logger->debug(
             "Retrieve real session $real_session for user $user");
 
-        $sessionInfo = $self->p->getApacheSession($real_session);
+        $sessionInfo =
+          $self->p->getApacheSession( $real_session, kind => 'SSO' );
 
         unless ($sessionInfo) {
             return $self->p->sendError( $req,

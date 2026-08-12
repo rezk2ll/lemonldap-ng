@@ -9,7 +9,7 @@ require 't/test-lib.pm';
 my $res;
 my $maintests = 11;
 SKIP: {
-    eval 'use GD::SecurityImage; use Image::Magick; use Net::LDAP;';
+    eval 'use GD; use Net::LDAP;';
     if ($@) {
         skip "Prerequisites not found: $@", $maintests;
     }

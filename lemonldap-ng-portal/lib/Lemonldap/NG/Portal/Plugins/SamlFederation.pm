@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Plugins::SamlFederation;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw( PE_OK);
+use Lemonldap::NG::Portal::Main::Constants;
 use Carp                                   qw(croak);
 use XML::LibXML::Reader;
 

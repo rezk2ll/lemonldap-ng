@@ -5,7 +5,6 @@ CREATE TABLE sessions (
     _session_kind varchar(15),
     ipAddr varchar(64),
     _utime bigint,
-    _httpSessionType varchar(64),
     user varchar(64),
     mail varchar(64),
     _session_uid varchar(64),
@@ -16,7 +15,6 @@ CREATE INDEX i_s__whatToTrace ON sessions (_whatToTrace);
 CREATE INDEX i_s__session_kind ON sessions (_session_kind);
 CREATE INDEX i_s__utime ON sessions (_utime);
 CREATE INDEX i_s_ipAddr ON sessions (ipAddr);
-CREATE INDEX i_s__httpSessionType ON sessions (_httpSessionType);
 CREATE INDEX i_s_user ON sessions (user);
 CREATE INDEX i_s_mail ON sessions (mail);
 CREATE INDEX i_s__session_uid ON sessions (_session_uid);
@@ -27,14 +25,12 @@ CREATE TABLE psessions (
     id varchar(64) not null primary key,
     a_session text,
     _session_kind varchar(15),
-    _httpSessionType varchar(64),
     _whatToTrace varchar(64),
     ipAddr varchar(64),
     _webAuthnUserHandle varchar(128),
     _session_uid varchar(64)
 )  DEFAULT CHARSET utf8;
 CREATE INDEX i_p__session_kind ON psessions (_session_kind);
-CREATE INDEX i_p__httpSessionType ON psessions (_httpSessionType);
 CREATE INDEX i_p__session_uid ON psessions (_session_uid);
 CREATE INDEX i_p_ipAddr ON psessions (ipAddr);
 CREATE INDEX i_p__whatToTrace ON psessions (_whatToTrace);

@@ -2,11 +2,7 @@ package Lemonldap::NG::Portal::Plugins::OIDC::PasswordGrant;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SENDRESPONSE
-  PE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.1';
 

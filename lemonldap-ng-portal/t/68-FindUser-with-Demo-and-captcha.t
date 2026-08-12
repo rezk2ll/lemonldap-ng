@@ -12,9 +12,9 @@ my $ts;
 my $captcha;
 my $maintests = 15;
 SKIP: {
-    eval 'use GD::SecurityImage;use Image::Magick;';
+    eval 'use GD;';
     if ($@) {
-        skip 'Image::Magick not found', $maintests;
+        skip 'GD not found', $maintests;
     }
     my $client = LLNG::Manager::Test->new( {
             ini => {

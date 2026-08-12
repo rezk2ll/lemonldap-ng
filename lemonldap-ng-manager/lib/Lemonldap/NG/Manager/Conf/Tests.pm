@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.3';
 
 use constant validPartnerName => qr/^[\w-]+$/;
 
@@ -195,7 +195,7 @@ sub tests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(Facebook Google OpenIDConnect SAML)) {
+            foreach my $type (qw(Facebook OpenIDConnect SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
@@ -205,7 +205,25 @@ sub tests {
             return 1;
         },
 
-        # Check that whatToTrace macro exists
+        checkSelfReferentialMacros => sub {
+            my @tmp;
+            foreach my $macro ( keys %{$conf->{macros}} ) {
+                my $code = $conf->{macros}->{$macro};
+                push @tmp, $macro if $code =~ /\$\Q$macro\E\b/;
+            }
+            return (
+                1,
+                (
+                    @tmp
+                    ? 'Macro definitions for "'
+                      . join( ', ', @tmp )
+                      . '" refer to themselves'
+                    : ''
+                )
+            );
+        },
+
+        # Check that OpenID macros exists
         checkAttrAndMacros => sub {
             my @tmp;
             foreach my $k ( keys %$conf ) {
@@ -230,53 +248,6 @@ sub tests {
                     ? 'Values of parameter(s) "'
                       . join( ', ', @tmp )
                       . '" are not defined in exported attributes or macros'
-                    : ''
-                )
-            );
-        },
-
-        # Test that variables are exported if Google is used as UserDB
-        checkUserDBGoogleAXParams => sub {
-            my @tmp;
-            if ( $conf->{userDB} =~ /^Google$/ ) {
-                foreach my $k ( keys %{ $conf->{exportedVars} } ) {
-                    my $v = $conf->{exportedVars}->{$k};
-                    if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
-                        push @tmp, $v;
-                    }
-                }
-            }
-            return (
-                1,
-                (
-                    @tmp
-                    ? 'Values of parameter(s) "'
-                      . join( ', ', @tmp )
-                      . '" are not exported by Google'
-                    : ''
-                )
-            );
-        },
-
-        # Test that variables are exported if OpenID is used as UserDB
-        checkUserDBOpenIDParams => sub {
-            my @tmp;
-            if ( $conf->{userDB} =~ /^OpenID$/ ) {
-                foreach my $k ( keys %{ $conf->{exportedVars} } ) {
-                    my $v = $conf->{exportedVars}->{$k};
-                    if ( $v !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
-                    {
-                        push @tmp, $v;
-                    }
-                }
-            }
-            return (
-                1,
-                (
-                    @tmp
-                    ? 'Values of parameter(s) "'
-                      . join( ', ', @tmp )
-                      . '" are not exported by OpenID SREG'
                     : ''
                 )
             );

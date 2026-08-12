@@ -4,22 +4,7 @@ use strict;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_MAILOK
-  PE_NOTOKEN
-  PE_MAILERROR
-  PE_BADMAILTOKEN
-  PE_CAPTCHAEMPTY
-  PE_CAPTCHAERROR
-  PE_TOKENEXPIRED
-  PE_MAILCONFIRMOK
-  PE_MALFORMEDUSER
-  PE_REGISTERFORMEMPTY
-  PE_REGISTERFIRSTACCESS
-  PE_REGISTERALREADYEXISTS
-  PE_MAILCONFIRMATION_ALREADY_SENT
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.19.0';
 

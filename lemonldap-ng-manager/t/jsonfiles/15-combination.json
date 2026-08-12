@@ -275,10 +275,6 @@
         "v": "SSL"
       },
       {
-        "k": "Twitter",
-        "v": "Twitter"
-      },
-      {
         "k": "Yubikey",
         "v": "Yubikey"
       },
@@ -475,10 +471,6 @@
           {
             "k": "SSL",
             "v": "SSL"
-          },
-          {
-            "k": "Twitter",
-            "v": "Twitter"
           },
           {
             "k": "Yubikey",
@@ -1035,10 +1027,6 @@
           "v": "SSL"
         },
         {
-          "k": "Twitter",
-          "v": "Twitter"
-        },
-        {
           "k": "Yubikey",
           "v": "Yubikey"
         },
@@ -1277,31 +1265,6 @@
     },
     {
       "_nodes": [{
-        "default": 1,
-        "id": "twitterAuthnLevel",
-        "title": "twitterAuthnLevel",
-        "type": "int"
-      },
-      {
-        "id": "twitterKey",
-        "title": "twitterKey"
-      },
-      {
-        "id": "twitterSecret",
-        "title": "twitterSecret"
-      },
-      {
-        "id": "twitterAppName",
-        "title": "twitterAppName"
-      }],
-      "help": "authtwitter.html",
-      "id": "twitterParams",
-      "show": false,
-      "title": "twitterParams",
-      "type": "simpleInputContainer"
-    },
-    {
-      "_nodes": [{
         "default": 3,
         "id": "yubikeyAuthnLevel",
         "title": "yubikeyAuthnLevel",
@@ -1512,14 +1475,6 @@
       {
         "k": "1",
         "v": "securedCookie"
-      },
-      {
-        "k": "2",
-        "v": "doubleCookie"
-      },
-      {
-        "k": "3",
-        "v": "doubleCookieForSingleSession"
       }],
       "title": "securedCookie",
       "type": "select"

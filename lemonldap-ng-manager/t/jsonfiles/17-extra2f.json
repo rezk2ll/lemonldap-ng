@@ -321,10 +321,6 @@
                         "v" : "LDAP"
                      },
                      {
-                        "k" : "LinkedIn",
-                        "v" : "LinkedIn"
-                     },
-                     {
                         "k" : "PAM",
                         "v" : "PAM"
                      },
@@ -339,10 +335,6 @@
                      {
                         "k" : "SSL",
                         "v" : "SSL"
-                     },
-                     {
-                        "k" : "Twitter",
-                        "v" : "Twitter"
                      },
                      {
                         "k" : "Demo",
@@ -571,10 +563,6 @@
                                  "v" : "LDAP"
                               },
                               {
-                                 "k" : "LinkedIn",
-                                 "v" : "LinkedIn"
-                              },
-                              {
                                  "k" : "PAM",
                                  "v" : "PAM"
                               },
@@ -613,10 +601,6 @@
                               {
                                  "k" : "SSL",
                                  "v" : "SSL"
-                              },
-                              {
-                                 "k" : "Twitter",
-                                 "v" : "Twitter"
                               },
                               {
                                  "k" : "Custom",
@@ -1231,45 +1215,6 @@
                {
                   "_nodes" : [
                      {
-                        "default" : 1,
-                        "id" : "linkedInAuthnLevel",
-                        "title" : "linkedInAuthnLevel",
-                        "type" : "int"
-                     },
-                     {
-                        "id" : "linkedInClientID",
-                        "title" : "linkedInClientID"
-                     },
-                     {
-                        "id" : "linkedInClientSecret",
-                        "title" : "linkedInClientSecret",
-                        "type" : "password"
-                     },
-                     {
-                        "default" : "id,first-name,last-name,email-address",
-                        "id" : "linkedInFields",
-                        "title" : "linkedInFields"
-                     },
-                     {
-                        "default" : "emailAddress",
-                        "id" : "linkedInUserField",
-                        "title" : "linkedInUserField"
-                     },
-                     {
-                        "default" : "r_basicprofile r_emailaddress",
-                        "id" : "linkedInScope",
-                        "title" : "linkedInScope"
-                     }
-                  ],
-                  "help" : "authlinkedin.html",
-                  "id" : "linkedinParams",
-                  "show" : false,
-                  "title" : "linkedinParams",
-                  "type" : "simpleInputContainer"
-               },
-               {
-                  "_nodes" : [
-                     {
                         "id" : "combination",
                         "title" : "combination"
                      },
@@ -1306,10 +1251,6 @@
                               "v" : "LDAP"
                            },
                            {
-                              "k" : "LinkedIn",
-                              "v" : "LinkedIn"
-                           },
-                           {
                               "k" : "PAM",
                               "v" : "PAM"
                            },
@@ -1324,10 +1265,6 @@
                            {
                               "k" : "SSL",
                               "v" : "SSL"
-                           },
-                           {
-                              "k" : "Twitter",
-                              "v" : "Twitter"
                            },
                            {
                               "k" : "Demo",
@@ -1660,38 +1597,6 @@
                {
                   "_nodes" : [
                      {
-                        "default" : 1,
-                        "id" : "twitterAuthnLevel",
-                        "title" : "twitterAuthnLevel",
-                        "type" : "int"
-                     },
-                     {
-                        "id" : "twitterKey",
-                        "title" : "twitterKey"
-                     },
-                     {
-                        "id" : "twitterSecret",
-                        "title" : "twitterSecret"
-                     },
-                     {
-                        "id" : "twitterAppName",
-                        "title" : "twitterAppName"
-                     },
-                     {
-                        "default" : "screen_name",
-                        "id" : "twitterUserField",
-                        "title" : "twitterUserField"
-                     }
-                  ],
-                  "help" : "authtwitter.html",
-                  "id" : "twitterParams",
-                  "show" : false,
-                  "title" : "twitterParams",
-                  "type" : "simpleInputContainer"
-               },
-               {
-                  "_nodes" : [
-                     {
                         "id" : "customAuth",
                         "title" : "customAuth"
                      },
@@ -1883,14 +1788,6 @@
                      {
                         "k" : "1",
                         "v" : "securedCookie"
-                     },
-                     {
-                        "k" : "2",
-                        "v" : "doubleCookie"
-                     },
-                     {
-                        "k" : "3",
-                        "v" : "doubleCookieForSingleSession"
                      }
                   ],
                   "title" : "securedCookie",

@@ -38,7 +38,7 @@ sub launch {
     my $class = "Lemonldap::NG::Handler::ApacheMP2::$type";
     Lemonldap::NG::Handler::Main->buildAndLoadType($class);
 
-    # register the request object to the logging system
+    # Register the request object to the logging system
     if ( ref( $class->logger ) and $class->logger->can('setRequestObj') ) {
         $class->logger->setRequestObj($req);
     }

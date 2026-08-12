@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Plugins::InitializePasswordReset;
 
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_USERNOTFOUND
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
   Lemonldap::NG::Portal::Lib::SMTP

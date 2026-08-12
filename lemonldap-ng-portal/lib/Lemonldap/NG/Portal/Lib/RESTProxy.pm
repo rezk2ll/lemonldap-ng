@@ -4,12 +4,7 @@ use strict;
 use JSON;
 use Mouse;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  URIRE
-  PE_OK
-  PE_ERROR
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 use Lemonldap::NG::Common::FormEncode;
 
 our $VERSION = '2.19.0';

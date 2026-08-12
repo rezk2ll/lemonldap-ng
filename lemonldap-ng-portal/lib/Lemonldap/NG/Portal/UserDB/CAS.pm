@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::UserDB::CAS;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.19.0';
 

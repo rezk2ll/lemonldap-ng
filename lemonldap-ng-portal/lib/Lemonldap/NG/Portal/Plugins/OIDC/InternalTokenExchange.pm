@@ -60,7 +60,7 @@ sub getUid {
     }
 
     my $id      = $accessTokenSession->data->{user_session_id};
-    my $session = $self->p->getApacheSession($id);
+    my $session = $self->p->getApacheSession( $id, kind => 'SSO' );
     return $session->data->{ $self->conf->{whatToTrace} };
 }
 

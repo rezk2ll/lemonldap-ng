@@ -10,7 +10,6 @@ has ua => (
     lazy    => 1,
     builder => sub {
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         $ua->default_headers->header( 'Accept'       => 'application/json' );
         $ua->default_headers->header( 'Content-Type' => 'application/json' );
         $ua->default_headers->header(

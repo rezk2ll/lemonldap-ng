@@ -14,7 +14,7 @@ my ( $res, $user, $pwd, $client );
 
 SKIP: {
     eval
-'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick; require DBI; require DBD::SQLite;';
+      'require Email::Sender::Simple;use GD; require DBI; require DBD::SQLite;';
     if ($@) {
         skip 'Missing dependencies', 0;
     }

@@ -5,15 +5,7 @@ use JSON;
 use Mouse;
 use URI;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_BADCREDENTIALS
-  PE_BADOTP
-  PE_ERROR
-  PE_NOTOKEN
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

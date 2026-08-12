@@ -78,7 +78,7 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/modules/CAS.png
 Copyright: Jasig
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Google.png lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
 Copyright: https://www.deviantart.com/
 License: CC-3
 Comment: Downloaded from https://www.iconspedia.com/
@@ -92,19 +92,6 @@ Comment: Downloaded from https://commons.wikimedia.org/wiki/File:Openid.svg and 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Slave.png
 Copyright: Antoine Rosier <antoine.rosier@mon-refuge.fr>
 License: CC-3
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Twitter.png
-Copyright: Paul Schulerr, https://schulerr.deviantart.com
-License: CC-3
-Comment: Downloaded from https://www.iconspedia.com/
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/modules/LinkedIn.png
-Copyright: Public Domain
-License: Simple-Geo
-Comment: downloaded from
- https://commons.wikimedia.org/wiki/File:LinkedIn_logo_initials.png
- .
- Author is unknown and license may be W3C or public-domain
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/GitHub.png
 Copyright: GitHub
@@ -2011,11 +1998,6 @@ License: SIL-OFL
  DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
  OTHER DEALINGS IN THE FONT SOFTWARE.
-
-License: Simple-Geo
- These images only consist of simple geometric shapes or text. It does not meet
- the threshold of originality needed for copyright protection, and is therefore
- in the public domain.
 
 License: W3C
  Copyright © 1994-2001 World Wide Web Consortium, (Massachusetts Institute of

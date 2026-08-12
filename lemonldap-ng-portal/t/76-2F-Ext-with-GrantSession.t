@@ -42,11 +42,7 @@ count(1);
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/ext2fcheck?skin=bootstrap', 'token', 'code' );
 
-ok(
-    $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
-    'Found EXTCODE input'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $query =~ s/code=/code=123456/;

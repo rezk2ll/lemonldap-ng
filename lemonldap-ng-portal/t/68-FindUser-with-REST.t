@@ -93,7 +93,7 @@ my $client = LLNG::Manager::Test->new( {
         }
     }
 );
-use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
+use Lemonldap::NG::Portal::Main::Constants;
 
 $request = 'uid=dwho';
 ok(

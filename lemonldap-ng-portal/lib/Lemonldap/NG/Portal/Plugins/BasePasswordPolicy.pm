@@ -3,15 +3,7 @@ package Lemonldap::NG::Portal::Plugins::BasePasswordPolicy;
 use strict;
 use warnings;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_PP_PASSWORD_TOO_LONG
-  PE_PP_PASSWORD_TOO_SHORT
-  PE_PP_NOT_ALLOWED_CHARACTER
-  PE_PP_NOT_ALLOWED_CHARACTERS
-  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.20.0';
 

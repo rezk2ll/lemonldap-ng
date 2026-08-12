@@ -7,11 +7,7 @@ use JSON        qw(from_json to_json);
 use Mouse::Role;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_SESSIONNOTGRANTED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

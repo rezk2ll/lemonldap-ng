@@ -158,7 +158,7 @@ done_testing();
 BEGIN {
 
     package t::HookMock;
-    use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+    use Lemonldap::NG::Portal::Main::Constants;
     use Mouse;
 
     has count       => ( is => 'rw', default => '0' );

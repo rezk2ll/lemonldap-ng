@@ -34,7 +34,6 @@ lib/Lemonldap/NG/Portal/Auth/GitHub.pm
 lib/Lemonldap/NG/Portal/Auth/GPG.pm
 lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
-lib/Lemonldap/NG/Portal/Auth/LinkedIn.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
 lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/PAM.pm
@@ -45,7 +44,6 @@ lib/Lemonldap/NG/Portal/Auth/REST.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
-lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/CaptchEtat.pm
@@ -75,7 +73,6 @@ lib/Lemonldap/NG/Portal/Lib/LazyLoadedConfiguration.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
-lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCPlugin.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
@@ -409,14 +406,11 @@ site/htdocs/static/common/modules/CAS.png
 site/htdocs/static/common/modules/CustomAuth.png
 site/htdocs/static/common/modules/Facebook.png
 site/htdocs/static/common/modules/GitHub.png
-site/htdocs/static/common/modules/Google.png
 site/htdocs/static/common/modules/Kerberos.png
-site/htdocs/static/common/modules/LinkedIn.png
 site/htdocs/static/common/modules/OpenIDConnect.png
 site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/Slave.png
 site/htdocs/static/common/modules/SSL.png
-site/htdocs/static/common/modules/Twitter.png
 site/htdocs/static/common/modules/webauthn.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png
@@ -617,6 +611,7 @@ t/02-Password-Demo-Mail.t
 t/02-Password-Demo.t
 t/02-Password-Encrypted-Demo.t
 t/02-SendHtml-Plugin.t
+t/02-trOver.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
 t/03-XSS-protection.t
@@ -648,6 +643,7 @@ t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
+t/25-AuthSlave.t
 t/26-AuthRadius-Attributes.t
 t/26-AuthRadius.t
 t/26-AuthRemote.t
@@ -808,6 +804,7 @@ t/32-OIDC-Token-Introspection-JWT.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/32-RemoveOIDCToken.t
+t/33-Auth-GitHub.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t
@@ -851,16 +848,14 @@ t/37-SAML-SP-to-OIDC-OP.t
 t/38-No-persistent-session.t
 t/39-Failing-RP-Logout.t
 t/40-Notifications-Explorer-JSON-File.t
-t/40-Notifications-Explorer-XML-File.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
 t/40-Notifications-JSON-LDAP.t
 t/40-Notifications-JSON-Server.t
+t/40-Notifications-PublicNotif-DBI.t
+t/40-Notifications-PublicNotif-LDAP.t
 t/40-Notifications-PublicNotif.t
-t/40-Notifications-XML-DBI.t
-t/40-Notifications-XML-File.t
-t/40-Notifications-XML-Server.t
 t/41-Captcha-old-api.t
 t/41-Captcha-with-LDAP.t
 t/41-Captcha-with-rule.t
@@ -893,8 +888,6 @@ t/51-OIDC-Internal-Token-Exchange.t
 t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Confirmation.t
-t/57-GlobalLogout-with-Double-cookies-Single-session.t
-t/57-GlobalLogout-with-Double-cookies.t
 t/57-GlobalLogout-with-OIDC-BCL.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
@@ -902,9 +895,6 @@ t/57-LogoutForward.t
 t/57-LogoutForward2153.t
 t/58-DecryptValue-with-custom-function.t
 t/58-DecryptValue-with-internal-function.t
-t/59-Double-cookies-for-a-Single-session.t
-t/59-Double-cookies-for-Double-sessions.t
-t/59-Double-cookies-Refresh-and-Logout.t
 t/59-Secured-cookie-Refresh-and-Logout.t
 t/61-AdaptativeAuthenticationLevel.t
 t/61-BruteForceProtection-with-Incremental-lockTimes-and-TOTP.t
@@ -928,6 +918,7 @@ t/62-SingleSession-with-Rules.t
 t/62-SingleSession.t
 t/62-UpgradeSession-disabled.t
 t/62-UpgradeSession.t
+t/63-History-password-events-not-failed.t
 t/63-History.t
 t/64-StayConnected-single-connection.t
 t/64-StayConnected-singleSession.t
@@ -941,7 +932,6 @@ t/65-CheckState.t
 t/66-CDA-already-auth.t
 t/66-CDA-PSGI-Try.t
 t/66-CDA-wildcard.t
-t/66-CDA-with-doubleCookies.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
@@ -976,7 +966,6 @@ t/68-FindUser-without-attribute.t
 t/68-FindUser-without-Impersonation.t
 t/68-Impersonation-with-2F.t
 t/68-Impersonation-with-Custom-Plugin.t
-t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-filtered-merge.t
 t/68-Impersonation-with-History.t
 t/68-Impersonation-with-merge.t
@@ -996,7 +985,6 @@ t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-LDAP.t
 t/70-2F-TOTP-with-Range.t
 t/70-2F-TOTP-with-TTL-and-JSON.t
-t/70-2F-TOTP-with-TTL-and-XML.t
 t/70-2F-TOTP-with-TTL.t
 t/72-2F-REST-CodeActivation-Resend.t
 t/72-2F-REST-with-History.t
@@ -1107,6 +1095,8 @@ t/templates/bootstrap/test_mail.tpl
 t/templates/mailtplskin/all.json
 t/templates/mailtplskin/fr.json
 t/templates/mailtplskin/mail_header.tpl
+t/templates/troverride/all.json
+t/templates/troverride/fr.json
 t/test-ldap.pm
 t/test-lib.pm
 t/test-psgi.pm

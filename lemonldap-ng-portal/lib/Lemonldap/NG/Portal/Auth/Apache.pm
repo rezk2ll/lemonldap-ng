@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::Apache;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_ERROR PE_OK);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.12';
 

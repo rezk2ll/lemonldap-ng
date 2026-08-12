@@ -7,7 +7,7 @@ use Time::Fake;
 use Plack::Request;
 use Plack::Response;
 use LWP::Protocol::PSGI;
-use Lemonldap::NG::Portal::Main::Constants 'PE_CAPTCHAERROR';
+use Lemonldap::NG::Portal::Main::Constants;
 use Plack::Builder;
 
 require 't/test-lib.pm';

@@ -17,7 +17,7 @@ use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.23.2';
+our $VERSION = '2.23.3';
 
 extends qw(
   Lemonldap::NG::Handler::PSGI::Router
@@ -181,6 +181,7 @@ sub javascript {
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
       . "var allowDiff=$res;"
       . "var sessionTTL=$ttl;"
+      . "var version='$VERSION';"
       . "var impPrefix='$impPrefix';"
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (

@@ -51,7 +51,6 @@ WriteMakefile(
         },
     },
     PREREQ_PM => {
-        'Convert::PEM'           => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'Lemonldap::NG::Common'  => '2.23.2',
         'Lemonldap::NG::Handler' => '2.23.2',

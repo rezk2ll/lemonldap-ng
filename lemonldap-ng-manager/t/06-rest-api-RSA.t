@@ -21,24 +21,6 @@ sub checkResult {
 }
 
 my $res;
-ok(
-    $res = &client->_post(
-        '/confs/newRSAKey', '', IO::String->new(''), 'application/json', 0,
-    ),
-    "Request succeed"
-);
-count(1);
-checkResult( $res, 1 );
-
-ok(
-    $res = &client->_post(
-        '/confs/newRSAKey', '', IO::String->new('{"password":"hello"}'),
-        'application/json', 20,
-    ),
-    "Request succeed"
-);
-count(1);
-checkResult( $res, 1 );
 
 ok(
     $res = &client->_post(

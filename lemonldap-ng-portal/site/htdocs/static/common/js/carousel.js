@@ -28,28 +28,32 @@
   }
 
   $(window).on("load", function () {
-    // Adapt some class to fit Bootstrap theme
-    $("div.carousel").addClass("slide");
     var today = new Date().toISOString().split("T")[0];
     var publicNotifications = window.datas["publicNotifications"] ? window.datas["publicNotifications"] : {};
-    var public_errors = publicNotifications["public_errors"].filter(function (notif) {
-      return notif.date <= today;
-    }).sort(function (a, b) {
-      return a.date < b.date;
-    });
-    var public_warns = publicNotifications["public_warns"].filter(function (notif) {
-      return notif.date <= today;
-    }).sort(function (a, b) {
-      return a.date < b.date;
-    });
-    var public_infos = publicNotifications["public_infos"].filter(function (notif) {
-      return notif.date <= today;
-    }).sort(function (a, b) {
-      return a.date < b.date;
-    });
-    var ordonned_notifications = [].concat(_toConsumableArray(public_errors), _toConsumableArray(public_warns), _toConsumableArray(public_infos));
+
+    // Most recent notifications first
+    var byDateDesc = function byDateDesc(a, b) {
+      if (a.date === b.date) return 0;
+      return a.date < b.date ? 1 : -1;
+    };
+    var pendingNotifications = function pendingNotifications(type) {
+      var notifications = publicNotifications[type] ? publicNotifications[type] : [];
+      return notifications.filter(function (notif) {
+        return notif.date <= today;
+      }).sort(byDateDesc);
+    };
+    var ordonned_notifications = [].concat(_toConsumableArray(pendingNotifications("public_errors")), _toConsumableArray(pendingNotifications("public_warns")), _toConsumableArray(pendingNotifications("public_infos")));
+
+    // Notifications may all be scheduled in the future: nothing to display,
+    // don't build an empty carousel
+    if (!ordonned_notifications.length) {
+      return;
+    }
+
+    // Adapt some class to fit Bootstrap theme
+    $("div.carousel").addClass("slide");
     var carouselInner = $("<div class='carousel-inner rounded'></div>");
-    var carouselIndicators = $("<ol class=\"carousel-indicators\"></ol>");
+    var carouselIndicators = $("<div class=\"carousel-indicators\"></div>");
     ordonned_notifications.forEach(function (element, index) {
       var bslevel = "";
       var level = element.uid.split("-").pop();
@@ -67,10 +71,11 @@
           bslevel = "primary";
       }
       var notificationElement = $("<div class='carousel-item notif-container alert alert-".concat(bslevel, "'></div>"));
-      var notificationIndicator = $("<li data-target=\"#carousel\" data-slide-to=\"".concat(index, "\"></li>"));
+      var notificationIndicator = $("<button type=\"button\" data-bs-target=\"#carousel\" data-bs-slide-to=\"".concat(index, "\" aria-label=\"Slide ").concat(index + 1, "\"></button>"));
       if (index === 0) {
         notificationElement.addClass("active");
         notificationIndicator.addClass("active");
+        notificationIndicator.attr("aria-current", "true");
       }
       var notificationTitle = $("<h4 class='text-center'></h4>");
       notificationTitle.append(element === null || element === void 0 ? void 0 : element.title);
@@ -85,9 +90,29 @@
       carouselIndicators.append(notificationIndicator);
     });
     // Append the carousel inner to the carousel container
-    var previousButton = $("<a class=\"carousel-control-prev\" href=\"#carousel\" role=\"button\" data-slide=\"prev\" data-bs-slide=\"prev\">\n        <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n        <span class=\"sr-only visually-hidden\">Previous</span>\n      </a>");
-    var nextButton = $("<a class=\"carousel-control-next\" href=\"#carousel\" role=\"button\" data-slide=\"next\" data-bs-slide=\"next\">\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n    <span class=\"sr-only visually-hidden\">Next</span>\n  </a>");
-    $("div.carousel").append(carouselIndicators, carouselInner, previousButton, nextButton);
+    var previousButton = $("<button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carousel\" data-bs-slide=\"prev\">\n        <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n        <span class=\"visually-hidden\">Previous</span>\n      </button>");
+    var nextButton = $("<button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carousel\" data-bs-slide=\"next\">\n    <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n    <span class=\"visually-hidden\">Next</span>\n  </button>");
+
+    // Indicators, controls and automatic scroll are useless with a single
+    // notification
+    var multiple = ordonned_notifications.length > 1;
+    if (multiple) {
+      $("div.carousel").append(carouselIndicators, carouselInner, previousButton, nextButton);
+    } else {
+      $("div.carousel").append(carouselInner);
+    }
+
+    // Bootstrap 5 no longer auto-initializes carousels whose content is injected
+    // after page load, so instantiate it explicitly.
+    var carouselElement = document.getElementById("carousel");
+    if (multiple && carouselElement && window.bootstrap && window.bootstrap.Carousel) {
+      var carousel = window.bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+        ride: "carousel",
+        interval: 5000,
+        wrap: true
+      });
+      carousel.cycle();
+    }
   });
 
 })();

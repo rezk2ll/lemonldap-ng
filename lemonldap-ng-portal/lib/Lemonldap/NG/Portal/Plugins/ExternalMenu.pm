@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::ExternalMenu;
 use strict;
 use Mouse;
 use URI::Escape;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

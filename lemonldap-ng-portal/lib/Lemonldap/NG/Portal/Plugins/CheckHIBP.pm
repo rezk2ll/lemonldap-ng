@@ -6,11 +6,7 @@ use Mouse;
 use Digest::SHA qw( sha1_hex );
 use Lemonldap::NG::Common::UserAgent;
 use MIME::Base64;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.21.0';
 
@@ -21,7 +17,6 @@ has ua => (
     lazy    => 1,
     builder => sub {
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
