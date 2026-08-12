@@ -248,15 +248,17 @@ my %PSESSION_FILTERS = (
     sessionuid => {
         filter => sub {
             my ( $self, $entry, $value ) = @_;
-            return ( defined( $entry->{_session_uid} )
-                  and $value and $entry->{_session_uid} =~ $value );
+            return (  defined( $entry->{_session_uid} )
+                  and $value
+                  and $entry->{_session_uid} =~ $value );
         }
     },
     notsessionuid => {
         filter => sub {
             my ( $self, $entry, $value ) = @_;
-            return ( defined( $entry->{_session_uid} )
-                  and $value and $entry->{_session_uid} !~ $value );
+            return (  defined( $entry->{_session_uid} )
+                  and $value
+                  and $entry->{_session_uid} !~ $value );
         }
     },
     update => {
@@ -264,7 +266,7 @@ my %PSESSION_FILTERS = (
             my ( $self, $entry, $value ) = @_;
             my $min_updateTime =
               strftime( "%Y%m%d%H%M%S", localtime( time - $value ) );
-            my $filter_result = ( defined( $entry->{_updateTime} )
+            return ( defined( $entry->{_updateTime} )
                   and $entry->{_updateTime} < $min_updateTime );
         }
     },
@@ -273,8 +275,7 @@ my %PSESSION_FILTERS = (
             my ( $self, $entry, $value ) = @_;
             my $lastLogin =
               $entry->{_loginHistory}->{successLogin}->[0]->{_utime};
-
-            my $filter_result = (
+            return (
                 not defined($lastLogin)
                   or ( defined($value) and ( $lastLogin < ( time - $value ) ) )
             );
