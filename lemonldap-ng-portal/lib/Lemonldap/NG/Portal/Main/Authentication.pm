@@ -26,6 +26,12 @@ has select_only => (
     }
 );
 
+# Configuration details for the auth system
+has authChoiceModuleConf => (
+    is      => 'rw',
+    builder => sub { {} },
+);
+
 # INITIALIZATION
 
 # init() must be called by module::init() with a number:
@@ -35,38 +41,79 @@ has select_only => (
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{authChoiceModules}
-        and %{ $self->conf->{authChoiceModules} } )
+    my $choice_configuration;
+
+    if ( $self->conf->{authChoiceModules}
+        and keys %{ $self->conf->{authChoiceModules} } )
     {
-        $self->conf->{authChoiceModules}->{Default} = join( ';',
-            $self->conf->{authentication},
-            $self->conf->{userDB},
-            $self->conf->{passwordDB},
-        );
+
+        # Parse the authChoiceModules configuration structure.
+        # If legacy options (authentication/userDB/passwordDB) are not set to
+        # Choice, override the configuration form authChoiceModules accodingly
+        my $forced_auth = (
+            not defined $self->conf->{authentication}
+              or $self->conf->{authentication} eq "Choice"
+        ) ? undef : $self->conf->{authentication};
+        my $forced_user = (
+                 not defined( $self->conf->{userDB} )
+              or $self->conf->{userDB} eq "Choice"
+              or (  $self->conf->{userDB} eq "Same"
+                and $self->conf->{authentication} eq "Choice" )
+        ) ? undef : $self->conf->{userDB};
+        my $forced_pass = (
+            not defined( $self->conf->{passwordDB} )
+              or $self->conf->{passwordDB} eq "Choice"
+        ) ? undef : $self->conf->{passwordDB};
+
+        foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
+            my @mods =
+              split( /;\s*/, $self->conf->{authChoiceModules}->{$name} );
+
+            $choice_configuration->{$name}->{auth} = $forced_auth || $mods[0];
+            $choice_configuration->{$name}->{user} = $forced_user || $mods[1];
+            $choice_configuration->{$name}->{pass} = $forced_pass || $mods[2];
+            $choice_configuration->{$name}->{url}  = $mods[3];
+            $choice_configuration->{$name}->{cond} = $mods[4];
+            $choice_configuration->{$name}->{over} = $mods[5];
+        }
+    }
+    else {
+        $choice_configuration->{Default} = {
+            "auth" => $self->conf->{authentication},
+            "user" => $self->conf->{userDB},
+            "pass" => $self->conf->{passwordDB},
+        };
         $self->select_only(1);
-        $self->logger->debug( "FIXME: default choice config "
-              . $self->conf->{authChoiceModules}->{Default} );
+        $self->logger->debug(
+            "Building a default Choice config from legacy parameters");
     }
 
-    foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
-        my @mods =
-          split( /;\s*/, $self->conf->{authChoiceModules}->{$name} );
+    $self->authChoiceModuleConf($choice_configuration);
 
-        my $over;
-        if ( $mods[5] ) {
-            eval { $over = JSON::from_json( $mods[5] ) };
+    if ( not keys %{ $self->authChoiceModuleConf } ) {
+        $self->logger->error("No authentication choices configured");
+        return 0;
+    }
+
+    for my $name ( sort keys %{ $self->authChoiceModuleConf } ) {
+        my $details = $self->authChoiceModuleConf->{$name};
+
+        my ( $auth, $user, $pass, $cond, $over ) =
+          @$details{qw/auth user pass cond over/};
+
+        if ($over) {
+            eval { $over = JSON::from_json($over) };
             if ($@) {
                 $self->logger->error("Bad over value ($@), skipped");
             }
         }
 
-        $mods[1] = $mods[0] if ( $mods[1] eq "Same" );
+        $user = $user eq "Same" ? $auth : $user;
 
-        $self->_load_module( $name, $mods[0], $over, "Auth",
-            $self->auth_modules );
-        $self->_load_module( $name, $mods[1], $over, "UserDB",
+        $self->_load_module( $name, $auth, $over, "Auth", $self->auth_modules );
+        $self->_load_module( $name, $user, $over, "UserDB",
             $self->userdb_modules );
-        $self->_load_module( $name, $mods[2], $over, "Password",
+        $self->_load_module( $name, $pass, $over, "Password",
             $self->password_modules );
 
         # Test if auth module wants to catch some path
@@ -77,7 +124,6 @@ sub init {
         }
 
         # Display conditions
-        my $cond = $mods[4];
         if ( defined $cond and $cond ne "" ) {    # 0 is a valid rule!
             my $rule =
               $self->p->buildRule( $cond, "Choice condition for $name" );
@@ -90,11 +136,6 @@ sub init {
         }
     }
 
-    # FIXME
-    # unless ( keys %{ $self->modules } ) {
-    #     $self->error('Choice: no available module found, aborting');
-    #     return 0;
-    # }
     return 1;
 }
 
@@ -173,7 +214,7 @@ sub _getChoiceFromReq {
 
     if ( $self->select_only ) {
         my @allowed_choices = grep { $self->_evaluateRule( $req, $_ ) }
-          keys %{ $self->conf->{authChoiceModules} };
+          keys %{ $self->authChoiceModuleConf };
         if ( @allowed_choices == 1 ) {
             return ( $allowed_choices[0], "only available" );
         }
@@ -191,7 +232,7 @@ sub _getChoiceFromReq {
 }
 
 sub _load_module {
-    my ( $self, $choice_name, $module_name, $over, $kind, $register_hash) = @_;
+    my ( $self, $choice_name, $module_name, $over, $kind, $register_hash ) = @_;
 
     my $module = "::${kind}::${module_name}";
     if ( $module = $self->loadModule( $module, $over ) ) {
@@ -199,7 +240,7 @@ sub _load_module {
         $register_hash->{$choice_name} = $module;
         return 1;
     }
-    $self->logger->error( "Choice: unable to load $module_name ($kind)" );
+    $self->logger->error("Choice: unable to load $module_name ($kind)");
     return 0;
 }
 
@@ -340,14 +381,15 @@ sub _buildAuthLoop {
     my @authLoop;
 
     # Test authentication choices
-    unless ( ref $self->conf->{authChoiceModules} eq 'HASH' ) {
+    unless ( keys %{ $self->authChoiceModuleConf } ) {
         $self->logger->warn("No authentication choices defined");
         return [];
     }
 
-    foreach ( sort keys %{ $self->conf->{authChoiceModules} } ) {
+    for my $key ( sort keys %{ $self->authChoiceModuleConf } ) {
+        my $details = $self->authChoiceModuleConf->{$key};
 
-        my $name = $_;
+        my $name = $key;
 
         # Name can have a digit as first character
         # for sorting purpose
@@ -359,22 +401,22 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /;\s*/, $self->conf->{authChoiceModules}->{$_} );
+          @$details{qw(auth user pass url cond)};
 
-        unless ( $self->_evaluateRule( $req, $_ ) ) {
+        unless ( $self->_evaluateRule( $req, $key ) ) {
             $self->logger->debug(
-                    "Condition returns false, authentication choice $_"
+                    "Condition returns false, authentication choice $key"
                   . " will not be displayed" );
         }
         else {
             if (    $auth
-                and $self->auth_modules->{$_}
+                and $self->auth_modules->{$key}
                 and $userDB
-                and $self->userdb_modules->{$_}
+                and $self->userdb_modules->{$key}
                 and $passwordDB
-                and $self->password_modules->{$_} )
+                and $self->password_modules->{$key} )
             {
-                $self->logger->debug("Displaying authentication choice $_");
+                $self->logger->debug("Displaying authentication choice $key");
 
                 # Default URL
                 if ( defined $url and $url =~ URIRE ) {
@@ -386,11 +428,11 @@ sub _buildAuthLoop {
                 $self->logger->debug("Use URL $url");
 
                 eval {
-                    my $mod = $self->auth_modules->{$_};
+                    my $mod = $self->auth_modules->{$key};
                     $mod->initDisplay($req) if $mod->can('initDisplay');
                 };
                 $self->logger->info(
-                    "Unable to initialize choice $_ display: $@")
+                    "Unable to initialize choice $key display: $@")
                   if $@;
 
                 my $name_without_space = $name =~ s/^\s*//r;
@@ -398,24 +440,24 @@ sub _buildAuthLoop {
                 # Options to store in the loop
                 my $optionsLoop = {
                     name                       => $name,
-                    key                        => $_,
+                    key                        => $key,
                     module                     => $auth,
                     url                        => $url,
                     "name_$name_without_space" => 1,
                     "module_$auth"             => 1,
-                    "key_$_"                   => 1,
+                    "key_$key"                 => 1,
                 };
 
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType =
-                  eval { $self->auth_modules->{$_}->getDisplayType($req); }
+                  eval { $self->auth_modules->{$key}->getDisplayType($req); }
                   || 'logo';
 
                 $self->logger->debug(
                     "Display type $displayType for module $auth");
                 $optionsLoop->{$displayType} = 1;
-                my $logo = $_;
+                my $logo = $key;
 
                 my $foundLogo = 0;
 
@@ -454,7 +496,7 @@ sub _buildAuthLoop {
                 # activate the corresponding form
                 if ( $req->data->{_authChoice} ) {
                     $optionsLoop->{ACTIVE_FORM} =
-                      ( $req->data->{_authChoice} eq $_ );
+                      ( $req->data->{_authChoice} eq $key );
 
                 }
 
@@ -472,9 +514,9 @@ sub _buildAuthLoop {
             }
             else {
                 $self->logger->debug(
-"Authentication choice $_ is invalid and will not be displayed"
+"Authentication choice $key is invalid and will not be displayed"
                 );
-                $req->error("Authentication choice $_ is invalid");
+                $req->error("Authentication choice $key is invalid");
                 next;
             }
         }
@@ -495,7 +537,7 @@ sub _evaluateRule {
         $self->logger->error("$choice has no rule");
         $self->choiceRules->{$choice} = sub { 1 };
     }
-    return $self->choiceRules->{$_}->( $req, $extraData );
+    return $self->choiceRules->{$choice}->( $req, $extraData );
 }
 
 sub name {
