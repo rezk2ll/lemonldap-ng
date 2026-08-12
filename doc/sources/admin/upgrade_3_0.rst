@@ -149,3 +149,16 @@ Custom plugins must now declare the kind of session they expect::
     my $session = $self->p->getApacheSession( $id, kind => 'SSO' );
     my $token =
       $self->p->getApacheSession( undef, kind => 'TOKEN', info => $infos );
+
+
+Second factor routes
+~~~~~~~~~~~~~~~~~~~~
+
+All second factor routes are now relative to ``2ndfa`` to be more
+consistent when writting access rules ::
+
+    /sfa/persistent/
+    becomes
+    /2ndfa/persistent/
+    like 2ndfa.html
+

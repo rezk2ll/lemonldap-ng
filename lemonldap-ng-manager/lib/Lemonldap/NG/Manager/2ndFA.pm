@@ -15,7 +15,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.18.0';
+our $VERSION = '3.0.0';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -29,16 +29,16 @@ sub init {
 
     # Remote Procedure are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
-    $self->addRoute( '2ndfa.html', 'sfaView', ['GET'] )
+    $self->addRoute( '2ndfa.html', 'view2F', ['GET'] )
 
       ->addRoute(
-        sfa => { ':sessionType' => 'sfa' },
+        '2ndfa' => { ':sessionType' => 'display2F' },
         ['GET']
       )
 
       # DELETE 2FA DEVICE
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'del2F' } },
+        '2ndfa' => { ':sessionType' => { ':sessionId' => 'remove2F' } },
         ['DELETE']
       );
 
@@ -61,7 +61,7 @@ sub init {
 # II. 2FA METHODS #
 ###################
 
-sub del2F {
+sub remove2F {
 
     my ( $self, $req, $session, $skey ) = @_;
 
@@ -83,7 +83,7 @@ sub del2F {
 # III. DISPLAY METHODS #
 ########################
 
-sub sfa {
+sub display2F {
     my ( $self, $req, $session, $skey ) = @_;
 
     my $mod = $self->getMod($req)
@@ -93,7 +93,7 @@ sub sfa {
     return $self->get2F( $req, $session, $skey );
 }
 
-sub sfaView {
+sub view2F {
     my ( $self, $req ) = @_;
     return $self->p->sendHtml(
         $req, "2ndfa",
