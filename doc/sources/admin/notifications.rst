@@ -135,8 +135,7 @@ configuration:
    in the same database as configuration and in a table named
    "notifications".
 -  if you use "LDAP" system, the notifications will be stored in the
-   same directory as configuration and in a branch named
-   "notifications".
+   same directory as configuration and in a branch named "notifications".
 
 You can change default parameters using the "notificationStorage" and
 "notificationStorageOptions" parameters with the same syntax as
@@ -210,6 +209,18 @@ LDAP
 Parameters for LDAP backend are the same as
 :doc:`LDAP configuration backend<ldapconfbackend>`.
 
+.. note::
+
+   -  More than one server can be set here separated by spaces or
+      commas. They will be tested in the specified order.
+   -  To use StartTLS, set ``ldap+tls://server`` and to use LDAPS, set
+      ``ldaps://server`` instead of server name.
+   -  If you use StartTLS or LDAPS, you can set any of the
+      `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
+      start_tls() options in the URL, such as ``ldap+tls://server/verify=none``
+      or ``ldaps://server/cafile=/etc/ssl/ca.pem&sslversion=tlsv1_2``. You can
+      also use cafile and capath parameters.
+
 
 .. attention::
 
@@ -217,10 +228,13 @@ Parameters for LDAP backend are the same as
 
 To summary available options:
 
--  **ldapServer**: LDAP URL.
--  **ldapBindDN**: LDAP user.
--  **ldapBindPassword**: LDAP password.
--  **ldapConfBase**: Notifications branch DN.
+-  **ldapServer**: LDAP URL
+-  **ldapBindDN**: LDAP user
+-  **ldapBindPassword**: LDAP password
+-  **ldapClientCert**: Client certificate
+-  **ldapClientKey**: Client private key
+-  **ldapConfBase**: Notifications branch DN
+
 
 .. note::
 
@@ -234,6 +248,8 @@ To summary available options:
            'ldapBindDN'       => 'cn=manager,dc=example,dc=com', \
            'ldapBindPassword' => 'secret', \
            'ldapConfBase'     => 'ou=notifications,ou=applications,dc=example,dc=com', \
+           'ldapClientCert'   => '/path/to/certicate.pem',
+           'ldapClientKey'    => '/path/to/private.key'
        }
 
 
@@ -253,14 +269,6 @@ notification for all users.
 
 Using notification system
 -------------------------
-
-
-.. attention::
-
-    Since version 2.0, notifications are now stored in JSON
-    format. If you want to keep old format, select "use old format" in the
-    Manager. Note that notification server depends on chosen format: REST
-    for JSON and SOAP for XML.
 
 Notification format
 ~~~~~~~~~~~~~~~~~~~

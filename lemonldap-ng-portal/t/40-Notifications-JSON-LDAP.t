@@ -24,6 +24,8 @@ my $notificationStorageOptions = {
     ldapBindDN       => $ldapBindDN,
     ldapBindPassword => $ldapBindPassword,
     ldapConfBase     => $ldapConfBase,
+    ldapClientCert   => 'cert',
+    ldapClientKey    => 'key',
 };
 
 SKIP: {
@@ -149,7 +151,8 @@ SKIP: {
 '//input[@value="testref2"]/following-sibling::p[@class="notifText"][1]/text()'
     )->pop->data;
     is( $notifTextFromPage,
-        "This is a second test text with spécial characters" );
+        "This is a second test text with spécial characters",
+        'Encodage OK' );
 
     # Verify that cookie is ciphered (session invalid)
     ok(
