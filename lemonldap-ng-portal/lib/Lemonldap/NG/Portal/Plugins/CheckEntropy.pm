@@ -5,11 +5,7 @@ use warnings;
 use Mouse;
 use Lemonldap::NG::Common::UserAgent;
 use MIME::Base64;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

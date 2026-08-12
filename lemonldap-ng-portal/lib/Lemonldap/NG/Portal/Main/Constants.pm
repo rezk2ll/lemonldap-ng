@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.3';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant URIRE =>
@@ -235,10 +235,9 @@ sub portalConsts {
 }
 
 # EXPORTER PARAMETERS
-our @EXPORT_OK = (
-    'portalConsts',
-    'HANDLER',
-    'URIRE',
+our @EXPORT_OK = ( 'portalConsts', 'HANDLER', 'URIRE' );
+our @EXPORT    = (
+    'import',
     'PE_2FWAIT',
     'PE_IDPCHOICE',
     'PE_SENDRESPONSE',
@@ -348,8 +347,6 @@ our @EXPORT_OK = (
     'PE_PP_PASSWORD_EXPIRES_SOON',
     'PE_ISSUERTIMEOUT'
 );
-our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
-
-our @EXPORT = qw(import PE_OK);
+our %EXPORT_TAGS = ( 'all' => [ @EXPORT, @EXPORT_OK, 'import' ], );
 
 1;

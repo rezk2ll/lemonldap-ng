@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.3';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -405,8 +405,6 @@ sub do {
             my $res = { result => 1, error => $err };
             if ( $req->data->{newAuth} ) {
                 $res->{id}      = $req->id;
-                $res->{id_http} = $req->sessionInfo->{_httpSession}
-                  if $req->sessionInfo->{_httpSession};
             }
             return $self->sendJSONresponse( $req, $res );
         }
@@ -530,9 +528,21 @@ sub autoRedirect {
 
 # Try to recover the session corresponding to id and return session data.
 # If $id is set to undef or if $args{force} is true, return a new session.
+#
+# $args{kind} is REQUIRED: it declares the kind of session ("SSO", "TOKEN",
+# "CDA",...) the caller expects, so that a session of another kind can neither
+# be read nor created by mistake. There is no default on purpose: an implicit
+# "SSO" would let a caller manipulating untrusted identifiers (state, token,
+# ...) read or -- with force -- create a real SSO session.
+# Use `kind => ''` to explicitly disable this check (SOAP server only).
 sub getApacheSession {
     my ( $self, $id, %args ) = @_;
-    $args{kind} //= "SSO";
+    unless ( defined $args{kind} ) {
+        my ( undef, $file, $line ) = caller;
+        $self->logger->error(
+            "getApacheSession() called without 'kind' at $file line $line");
+        return;
+    }
     if ($id) {
         $self->logger->debug("Try to get $args{kind} session $id");
     }
@@ -719,7 +729,7 @@ sub updateSession {
         # Update session in global storage with _updateTime
         $infos->{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
         if ( my $apacheSession =
-            $self->getApacheSession( $id, info => $infos ) )
+            $self->getApacheSession( $id, kind => 'SSO', info => $infos ) )
         {
             if ( $apacheSession->error ) {
                 $self->logger->error("Cannot update session $id");
@@ -732,42 +742,13 @@ sub updateSession {
     }
 }
 
-# Delete an existing session. If "securedCookie" is set to 2, the http session
+# Delete an existing session
 # will also be removed.
 # @param h tied Apache::Session object
 # @param preserveCookie do not delete cookie
 # @return True if session has been deleted
 sub _deleteSession {
     my ( $self, $req, $session, $preserveCookie ) = @_;
-
-    # Invalidate http cookie and session, if set
-    if ( $self->conf->{securedCookie} >= 2 ) {
-
-        # Try to find a linked http session (securedCookie == 2)
-        if ( $self->conf->{securedCookie} == 2
-            and my $id2 = $session->data->{_httpSession} )
-        {
-            if ( my $session2 = $self->getApacheSession($id2) ) {
-                $session2->remove;
-                if ( $session2->error ) {
-                    $self->logger->debug(
-                        "Unable to remove linked session $id2");
-                    $self->logger->debug( $session2->error );
-                }
-            }
-        }
-
-        # Create an obsolete cookie to remove it
-        $req->addCookie(
-            $self->genDomainCookie(
-                $req,
-                name    => $self->conf->{cookieName} . 'http',
-                value   => 0,
-                secure  => 0,
-                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
-            )
-        ) unless ($preserveCookie);
-    }
 
     # Publishing an "unlog" event will automatically remove the corresponding
     # session from handler cache. See publishEvent into Handler::Main::Run
@@ -1012,16 +993,21 @@ sub _dump {
 }
 
 sub _dump_string {
-    my ($self, $str) = @_;
+    my ( $self, $str ) = @_;
     use charnames ':full';
-    $self->logger->debug( '$str = "'.
-    join("",
-        map { $_ > 255                    # if wide character...
-            ? sprintf("\\N{%s}", charnames::viacode($_))
-            : ($_ < 0x20 or $_ >= 0x7F )  # if non printable
-            ? sprintf("\\N{%s}", charnames::viacode($_))
-            : quotemeta(chr($_))          # else quoted or as themselves
-        } unpack("W*", $str)) .'"');      # unpack Unicode characters
+    $self->logger->debug(
+        '$str = "' . join(
+            "",
+            map {
+                $_ > 255                           # if wide character...
+                  ? sprintf( "\\N{%s}", charnames::viacode($_) )
+                  : ( $_ < 0x20 or $_ >= 0x7F )    # if non printable
+                  ? sprintf( "\\N{%s}", charnames::viacode($_) )
+                  : quotemeta( chr($_) )    # else quoted or as themselves
+            } unpack( "W*", $str )
+          )
+          . '"'
+    );    # unpack Unicode characters
 }
 
 sub getSkinTplDir {
@@ -1049,7 +1035,9 @@ sub getTrOver {
         foreach my $file (@langfiles) {
             my ($lang) = ( $file =~ /^(\w+)\.json/ );
             $self->logger->debug("Use $file to override messages");
-            if ( open my $json, "<", $templateDir . "/" . $file ) {
+            if ( open my $json,
+                "<:encoding(UTF-8)", $templateDir . "/" . $file )
+            {
                 my $trdata;
                 eval {
                     local $/ = undef;
@@ -1254,7 +1242,7 @@ sub lmError {
 
     # Error code
     $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
-      foreach ( 403, 404, 500, 502, 503 );
+      foreach ( 403, 404, 500, 502, 503, 504 );
     return $self->sendHtml( $req, 'error', params => \%templateParams );
 }
 
@@ -1308,6 +1296,7 @@ sub tplParams {
         LANGUAGE     => $self->getLanguage($req),
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
         CUSTOM_JS    => $self->conf->{portalCustomJs},
+        AUTH_USER    => $req->userData->{ $self->conf->{portalUserAttr} },
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )
@@ -1370,7 +1359,16 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+
+    # Only negative results are real login failures. Positive/warning results
+    # such as PE_PP_CHANGE_AFTER_RESET or PE_PASSWORD_OK must not be stored as
+    # failed logins, else they wrongly feed BruteForceProtection (#3634).
+    my $type = (
+        ( $req->authResult > 0
+              && $req->error_type( $req->authResult ) eq 'negative' )
+        ? 'failed'
+        : 'success'
+    ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
@@ -1542,6 +1540,7 @@ sub loadTemplate {
         die_on_missing_include => 1,
         cache                  => ( defined $prm{cache} ? $prm{cache} : 1 ),
         global_vars            => 0,
+        utf8                   => 1,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
     if ( $self->can('tplParams') ) {

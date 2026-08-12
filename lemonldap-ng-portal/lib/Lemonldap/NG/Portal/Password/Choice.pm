@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Password::Choice;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants 'PE_ERROR';
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Lib::Choice

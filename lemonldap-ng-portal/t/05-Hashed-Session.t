@@ -25,8 +25,11 @@ foreach my $hashedSessionStore ( 0 .. 1 ) {
             my ( $as, $id, $req );
 
             ok( (
-                    $as =
-                      $portal->getApacheSession( undef, info => { aa => 1 } )
+                    $as = $portal->getApacheSession(
+                        undef,
+                        kind => 'SSO',
+                        info => { aa => 1 }
+                      )
                       and $id = $as->id
                 ),
                 'Get a new session'
@@ -38,9 +41,22 @@ foreach my $hashedSessionStore ( 0 .. 1 ) {
                 'Session name is hashed'
             );
 
-            ok( $as = $portal->getApacheSession($id), 'Recover session' );
+            ok( $as = $portal->getApacheSession( $id, kind => 'SSO' ),
+                'Recover session' );
 
             ok( $as->data->{aa} == 1, 'Data is stored' );
+
+            # "kind" is required, there is no implicit "SSO" (defense in depth)
+            ok(
+                !$portal->getApacheSession($id),
+                'No session returned without "kind"'
+            );
+            ok( !$portal->getApacheSession( undef, info => { aa => 1 } ),
+                'No session created without "kind"' );
+            ok(
+                !$portal->getApacheSession( $id, kind => 'TOKEN' ),
+                'SSO session not readable as a TOKEN session'
+            );
 
             $req = Lemonldap::NG::Portal::Main::Request->new( {
                     'HTTP_ACCEPT'     => 'text/html',
@@ -70,7 +86,8 @@ foreach my $hashedSessionStore ( 0 .. 1 ) {
 
             $as = undef;
 
-            ok( $as = $portal->getApacheSession($id), 'Recover session' );
+            ok( $as = $portal->getApacheSession( $id, kind => 'SSO' ),
+                'Recover session' );
 
             ok( ( $as->data->{aa} == 1 && $as->data->{bb} == 2 ),
                 'Data is updated' );
@@ -80,7 +97,8 @@ foreach my $hashedSessionStore ( 0 .. 1 ) {
 
             $as = undef;
 
-            ok( $as = $portal->getApacheSession($id), 'Recover session' );
+            ok( $as = $portal->getApacheSession( $id, kind => 'SSO' ),
+                'Recover session' );
 
             ok( ( $as->data->{aa} == 1 && $as->data->{bb} == 2 ),
                 'Data is updated' );

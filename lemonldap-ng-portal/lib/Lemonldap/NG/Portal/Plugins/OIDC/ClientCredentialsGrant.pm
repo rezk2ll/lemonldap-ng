@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Plugins::OIDC::ClientCredentialsGrant;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -84,7 +81,8 @@ sub _run {
     }
 
     # Create access token
-    my $session = $self->p->getApacheSession( undef, info => $infos );
+    my $session =
+      $self->p->getApacheSession( undef, info => $infos, kind => 'SSO' );
     unless ($session) {
         $self->logger->error("Unable to create session");
         return $oidc->sendOIDCError( $req, 'server_error', 500 );

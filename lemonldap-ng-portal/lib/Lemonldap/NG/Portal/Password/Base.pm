@@ -3,17 +3,7 @@ package Lemonldap::NG::Portal::Password::Base;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_PASSWORD_OK
-  PE_BADOLDPASSWORD
-  PE_PASSWORD_MISMATCH
-  PE_PP_PASSWORD_TOO_SHORT
-  PE_PP_NOT_ALLOWED_CHARACTER
-  PE_PP_NOT_ALLOWED_CHARACTERS
-  PE_PP_MUST_SUPPLY_OLD_PASSWORD
-  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends
   qw/Lemonldap::NG::Portal::Main::Plugin Lemonldap::NG::Portal::Lib::SMTP/;

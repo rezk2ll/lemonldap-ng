@@ -38,6 +38,7 @@ Handler use the default Apache error code for the following cases:
 -  User has no access authorization: FORBIDDEN (403)
 -  An error occurs on server side: SERVER_ERROR (500)
 -  The application is in maintenance: HTTP_SERVICE_UNAVAILABLE (503)
+-  The application is unresponsive: HTTP_GATEWAY_TIMEOUT (504)
 
 These errors can be catch through Apache ``ErrorDocument`` directive or
 Nginx ``error_page`` directive, to redirect user on a specific page:
@@ -48,6 +49,7 @@ Nginx ``error_page`` directive, to redirect user on a specific page:
    ErrorDocument 403 http://auth.example.com/lmerror/403
    ErrorDocument 500 http://auth.example.com/lmerror/500
    ErrorDocument 503 http://auth.example.com/lmerror/503
+   ErrorDocument 504 http://auth.example.com/lmerror/504
 
 
 With Nginx, you must add these directives in the `location / {` section:
@@ -58,9 +60,10 @@ With Nginx, you must add these directives in the `location / {` section:
    error_page 403 http://auth.example.com/lmerror/403;
    error_page 500 http://auth.example.com/lmerror/500;
    error_page 503 http://auth.example.com/lmerror/503;
+   error_page 504 http://auth.example.com/lmerror/504;
 
 It is also possible to redirect the user without using
-``ErrorDocument``: the Handler will not return 403, 500, 503 code, but
+``ErrorDocument``: the Handler will not return 403, 500, 503, 504 code, but
 code 302 (REDIRECT).
 
 The user will be redirected on portal URL with error in the ``lmerror`` route.
@@ -70,7 +73,7 @@ These parameters can be configured in Manager, in ``General Parameters``
 
 -  **Redirect AJAX requests on unauthorized**: use 302 instead of 401 when AJAX requests are not authenticated (available only with AJAX requests accepting JSON format)
 -  **Redirect on forbidden**: use 302 instead 403
--  **Redirect on error**: use 302 instead 500 or 503
+-  **Redirect on error**: use 302 instead 500, 503 or 504
 
 Portal Redirections
 -------------------

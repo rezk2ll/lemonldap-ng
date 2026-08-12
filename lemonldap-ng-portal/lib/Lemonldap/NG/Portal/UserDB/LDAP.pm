@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::UserDB::LDAP;
 use strict;
 use Mouse;
 use utf8;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Main::UserDB

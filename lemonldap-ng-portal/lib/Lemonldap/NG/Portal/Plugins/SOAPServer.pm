@@ -13,11 +13,7 @@ package Lemonldap::NG::Portal::Plugins::SOAPServer;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_FORMEMPTY
-  URIRE
-);
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.23.0';
 
@@ -79,10 +75,8 @@ has wsdl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my ($self) = @_;
-        my @cookies = ( $self->conf->{cookieName} );
-        push @cookies, $self->conf->{cookieName} . 'http'
-          if ( $self->conf->{securedCookie} >= 2 );
+        my ($self)     = @_;
+        my @cookies    = ( $self->conf->{cookieName} );
         my $cookieList = join "\n",
           map { "<element name='$_' type='xsd:string'></element>" } @cookies;
 
@@ -333,8 +327,12 @@ sub setAttributes {
     my $infos = {};
     %$infos = %$args;
 
-    my $session =
-      $self->p->getApacheSession( $id, info => $infos, hashStore => 0 );
+    my $session = $self->p->getApacheSession(
+        $id,
+        info      => $infos,
+        hashStore => 0,
+        kind      => 'SSO'
+    );
 
     unless ($session) {
         $self->logger->warn("Session $id does not exists ($@)");
@@ -376,7 +374,8 @@ sub newSession {
     %$infos = %$args;
     $infos->{_utime} = time();
 
-    my $session = $self->p->getApacheSession( undef, info => $infos );
+    my $session =
+      $self->p->getApacheSession( undef, info => $infos, kind => 'SSO' );
 
     unless ($session) {
         $self->logger->error("Unable to create session");
@@ -467,7 +466,7 @@ sub isAuthorizedURI {
     }
 
     # Get user session.
-    my $session = $self->p->getApacheSession($id);
+    my $session = $self->p->getApacheSession( $id, kind => 'SSO' );
 
     unless ($session) {
         $self->logger->warn("Session $id does not exists");

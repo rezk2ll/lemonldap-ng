@@ -4,12 +4,7 @@ use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
 use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_OK
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 use String::Random qw/random_string/;
 
 our $VERSION = '2.23.0';

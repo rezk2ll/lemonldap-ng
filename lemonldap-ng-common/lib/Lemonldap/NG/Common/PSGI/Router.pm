@@ -94,7 +94,14 @@ sub genRoute {
             }
         }
         elsif ( $self->can($dest) ) {
-            $routes->{$word} = sub { shift; $self->$dest(@_) };
+            $routes->{$word} = sub {
+                shift;
+                eval {
+                    $self->logger->debug(
+                        "Dispatching request to " . ref($self) . "::$dest" );
+                };
+                $self->$dest(@_);
+            };
         }
         else {
             die "$dest() isn't a method";

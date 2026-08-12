@@ -5,14 +5,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use Time::Local;
 use Lemonldap::NG::Common::Session 'id2storage';
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_SENDRESPONSE
-  PE_SLO_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -154,7 +147,9 @@ sub globalLogout {
                             # storage ID, then it is required to set hashStore
                             # to 0
                             $as = $self->p->getApacheSession(
-                                $_->{id}, hashStore => 0,
+                                $_->{id},
+                                kind      => 'SSO',
+                                hashStore => 0,
                             )
                           )
                         {
@@ -295,7 +290,13 @@ sub removeOtherActiveSessions {
 
         # searchOn() returns sessions indexed by their storage ID, then
         # it is required to set hashStore to 0
-        unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 0, ) )
+        unless (
+            $as = $self->p->getApacheSession(
+                $_->{id},
+                hashStore => 0,
+                kind      => 'SSO'
+            )
+          )
         {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");
             next;

@@ -1,28 +1,38 @@
 $(window).on("load", function() {
-  // Adapt some class to fit Bootstrap theme
-  $("div.carousel").addClass("slide");
   const today = new Date().toISOString().split("T")[0];
 
   const publicNotifications = window.datas["publicNotifications"] ?
     window.datas["publicNotifications"] : {};
-  const public_errors = publicNotifications["public_errors"]
-    .filter((notif) => notif.date <= today)
-    .sort((a, b) => a.date < b.date);
-  const public_warns = publicNotifications["public_warns"]
-    .filter((notif) => notif.date <= today)
-    .sort((a, b) => a.date < b.date);
-  const public_infos = publicNotifications["public_infos"]
-    .filter((notif) => notif.date <= today)
-    .sort((a, b) => a.date < b.date);
+
+  // Most recent notifications first
+  const byDateDesc = function(a, b) {
+    if (a.date === b.date) return 0;
+    return a.date < b.date ? 1 : -1;
+  };
+  const pendingNotifications = function(type) {
+    const notifications = publicNotifications[type] ?
+      publicNotifications[type] : [];
+    return notifications
+      .filter((notif) => notif.date <= today)
+      .sort(byDateDesc);
+  };
   const ordonned_notifications = [
-    ...public_errors,
-    ...public_warns,
-    ...public_infos,
+    ...pendingNotifications("public_errors"),
+    ...pendingNotifications("public_warns"),
+    ...pendingNotifications("public_infos"),
   ];
 
+  // Notifications may all be scheduled in the future: nothing to display,
+  // don't build an empty carousel
+  if (!ordonned_notifications.length) {
+    return;
+  }
+
+  // Adapt some class to fit Bootstrap theme
+  $("div.carousel").addClass("slide");
 
   const carouselInner = $("<div class='carousel-inner rounded'></div>");
-  const carouselIndicators = $(`<ol class="carousel-indicators"></ol>`);
+  const carouselIndicators = $(`<div class="carousel-indicators"></div>`);
   ordonned_notifications.forEach((element, index) => {
     var bslevel = "";
     const level = element.uid.split("-").pop();
@@ -45,12 +55,13 @@ $(window).on("load", function() {
     );
 
     const notificationIndicator = $(
-      `<li data-target="#carousel" data-slide-to="${index}"></li>`
+      `<button type="button" data-bs-target="#carousel" data-bs-slide-to="${index}" aria-label="Slide ${index + 1}"></button>`
     );
 
     if (index === 0) {
       notificationElement.addClass("active");
       notificationIndicator.addClass("active");
+      notificationIndicator.attr("aria-current", "true");
     }
 
     const notificationTitle = $("<h4 class='text-center'></h4>");
@@ -71,20 +82,41 @@ $(window).on("load", function() {
   });
   // Append the carousel inner to the carousel container
   const previousButton =
-    $(`<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev" data-bs-slide="prev">
+    $(`<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only visually-hidden">Previous</span>
-      </a>`);
+        <span class="visually-hidden">Previous</span>
+      </button>`);
   const nextButton =
-    $(`<a class="carousel-control-next" href="#carousel" role="button" data-slide="next" data-bs-slide="next">
+    $(`<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only visually-hidden">Next</span>
-  </a>`);
+    <span class="visually-hidden">Next</span>
+  </button>`);
 
-  $("div.carousel").append(
-    carouselIndicators,
-    carouselInner,
-    previousButton,
-    nextButton
-  );
+  // Indicators, controls and automatic scroll are useless with a single
+  // notification
+  const multiple = ordonned_notifications.length > 1;
+  if (multiple) {
+    $("div.carousel").append(
+      carouselIndicators,
+      carouselInner,
+      previousButton,
+      nextButton
+    );
+  } else {
+    $("div.carousel").append(carouselInner);
+  }
+
+  // Bootstrap 5 no longer auto-initializes carousels whose content is injected
+  // after page load, so instantiate it explicitly.
+  const carouselElement = document.getElementById("carousel");
+  if (multiple && carouselElement && window.bootstrap && window.bootstrap.Carousel) {
+    const carousel = window.bootstrap.Carousel.getOrCreateInstance(
+      carouselElement, {
+        ride: "carousel",
+        interval: 5000,
+        wrap: true,
+      }
+    );
+    carousel.cycle();
+  }
 });

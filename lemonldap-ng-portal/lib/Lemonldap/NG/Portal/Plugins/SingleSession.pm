@@ -5,12 +5,7 @@ use Mouse;
 use MIME::Base64;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Session 'id2storage';
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -87,20 +82,6 @@ sub run {
             $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
         );
 
-        if ( $self->conf->{securedCookie} == 2 ) {
-            $self->logger->debug("Looking for double sessions...");
-
-            # searchOn() returns sessions indexed by their storage ID, then
-            # it is required to use hashed ID
-            $linkedSessionId =
-              $sessions->{ $self->storageId( $req->id ) }->{_httpSession};
-            my $msg =
-              $linkedSessionId
-              ? "Linked session found -> $linkedSessionId / " . $req->id
-              : "NO linked session found!";
-            $self->logger->debug($msg);
-        }
-
         # searchOn() returns sessions indexed by their storage ID, then
         # it is required to use hashed ID
         my $storageId = $self->storageId( $req->id );
@@ -108,7 +89,8 @@ sub run {
             next if $id eq $storageId;
             next
               if $linkedSessionId and $id eq $self->storageId($linkedSessionId);
-            my $session = $self->p->getApacheSession( $id, hashStore => 0 )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
             if (
                 $self->singleSessionRule->( $req, $req->sessionInfo )
@@ -147,7 +129,8 @@ sub run {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
             unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
                 $session->data->{ $self->conf->{whatToTrace} } )
@@ -193,8 +176,13 @@ sub removeOther {
 
                 # searchOn() returns sessions indexed by their storage ID, then
                 # it is required to set hashStore to 0
-                unless ( $as =
-                    $self->p->getApacheSession( $_, hashStore => 0, ) )
+                unless (
+                    $as = $self->p->getApacheSession(
+                        $_,
+                        hashStore => 0,
+                        kind      => 'SSO'
+                    )
+                  )
                 {
                     $self->userLogger->info(
                         "SingleSession: session $_ expired");

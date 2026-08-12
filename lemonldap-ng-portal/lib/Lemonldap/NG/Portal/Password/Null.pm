@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Password::Null;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants 'PE_NO_PASSWORD_BE';
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Password::Base';
 

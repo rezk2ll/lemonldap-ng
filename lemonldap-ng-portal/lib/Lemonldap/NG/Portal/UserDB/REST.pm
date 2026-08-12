@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::UserDB::REST;
 use strict;
 use Mouse;
 use JSON                                   qw(from_json to_json);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_USERNOTFOUND
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(
   Lemonldap::NG::Portal::Main::UserDB

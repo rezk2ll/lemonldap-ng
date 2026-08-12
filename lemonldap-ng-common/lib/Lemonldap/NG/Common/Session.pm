@@ -12,6 +12,7 @@ use Digest::SHA;
 use JSON;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
+use Mouse;
 
 our $VERSION = '2.20.0';
 
@@ -23,23 +24,6 @@ use constant hashedKinds => ( 'SSO', 'OIDC', 'CDA' );
 sub reHashedKinds {
     my $s = '^(' . join( '|', hashedKinds() ) . ')$';
     return qr/$s/;
-}
-
-# Workaround for another ModPerl/Mouse issue...
-BEGIN {
-    require Mouse;
-    no warnings;
-    my $v =
-      $Mouse::VERSION
-      ? sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) )
-      : 0;
-    if ( $v < 2.005001 and $Lemonldap::NG::Handler::Apache2::Main::VERSION ) {
-        require Moose;
-        Moose->import();
-    }
-    else {
-        Mouse->import();
-    }
 }
 
 # Convert a session ID into store entry

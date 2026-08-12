@@ -418,6 +418,7 @@ handler, you need to add these directives:
    ErrorDocument 500 http://auth.example.com/lmerror/500
    ErrorDocument 502 http://auth.example.com/lmerror/502
    ErrorDocument 503 http://auth.example.com/lmerror/503
+   ErrorDocument 504 http://auth.example.com/lmerror/504
 
 Then, to protect a standard virtual host, the only configuration line to
 add is:
@@ -512,6 +513,7 @@ Nginx handler is provided by the
    error_page 500 http://auth.example.com/lmerror/500;
    error_page 502 http://auth.example.com/lmerror/502;
    error_page 503 http://auth.example.com/lmerror/503;
+   error_page 504 http://auth.example.com/lmerror/504;
 
 To protect a standard virtual host, you must insert this (or create an
 included file):

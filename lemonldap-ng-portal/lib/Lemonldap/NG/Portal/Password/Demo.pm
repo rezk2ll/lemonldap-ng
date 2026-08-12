@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Password::Demo;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
-  PE_PASSWORD_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Password::Base';
 

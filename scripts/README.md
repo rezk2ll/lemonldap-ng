@@ -17,7 +17,6 @@ LLNG team scripts
 * `run-ldap`: Launch an LDAP server (port 19389) and stop it when a key is pressed. It uses Portal test LDAP server.
 
 ## Old unmaintained scripts
-* `copyright-updater.pl`: old script used to replace CHANGELOG POD entry
 * `findAttr.pl`: may find some undocumented parameters
 * `minifierskin`
 * `unaccent.pl`

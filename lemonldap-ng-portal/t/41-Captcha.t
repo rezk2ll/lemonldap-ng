@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use IO::String;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants 'PE_CAPTCHAERROR';
+use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
 
@@ -12,9 +12,9 @@ my $res;
 
 my $maintests = 28;
 SKIP: {
-    eval 'use GD::SecurityImage; use Image::Magick;';
+    eval 'use GD;';
     if ($@) {
-        skip 'Image::Magick not found', $maintests;
+        skip 'GD not found', $maintests;
     }
 
     my $client = LLNG::Manager::Test->new( {

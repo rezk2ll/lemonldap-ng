@@ -22,10 +22,13 @@ storing them.
 PostgreSQL
 ~~~~~~~~~~
 
-Run the following SQL command on your database ::
+You have to rename `xml` column into `content` first.
+
+And then run the following SQL command on your database ::
 
     # If you use notifications
-    alter table notifications alter column xml type text USING convert_from(convert_to(convert_from(xml, 'utf8'), 'iso8859-1'), 'utf-8');
+
+    alter table notifications alter column content type text USING convert_from(convert_to(convert_from(content, 'utf8'), 'iso8859-1'), 'utf-8');
 
     # Convert your session storage
     update sessions set a_session=convert_from(convert_to(a_session::text, 'iso8859-1'), 'utf-8');
@@ -39,9 +42,11 @@ Run the following SQL command on your database ::
 MySQL
 ~~~~~
 
-Run the following SQL command on your database ::
+You have to rename `xml` column into `content` first.
 
-    alter table notifications modify xml text NOT NULL;
+And then run the following SQL command on your database ::
+
+    alter table notifications modify content text NOT NULL;
 
 Then in a shell, reencode existing data and reimport it ::
 
@@ -66,6 +71,40 @@ If you are using another backend, you have several options:
   ``lemonldap-ng-cli`` to backup sessions and configuration, fix the encoding
   using ``iconv``, and reimport
 
+"Double Cookies" no longer supported
+------------------------------------
+
+Previous versions of LemonLDAP::NG could be configured to set an insecure
+SSO cookie in addition to the main SSO cookie.
+
+This is no longer supported, which means if you configure the main SSO cookie
+to have the *Secure* flag (highly recommended), you cannot use LemonLDAP::NG
+Handler to access insecure, unencrypted HTTP applications at all.
+
+You can find this setting in in *General Parameters* » *Cookies* » *Secured
+Cookie (SSL)*
+
+Changes in outgoing proxy configuration
+---------------------------------------
+
+If LemonLDAP::NG has to use an outgoing HTTP proxy (generally in entreprise
+deployments only), you must review the proxy configuration.
+
+Starting from LemonLDAP::NG 3.0, all outgoing HTTP requests will obey the proxy
+configuration set in the process' environment.
+
+On package-based installations, environment variables are set in
+``/etc/default/llng-fastcgi-server``.
+
+- set the ``http_proxy`` environment variable to the URL of your outgoing http proxy
+- set the ``https_proxy`` environment variable to the URL of your outgoing https proxy
+- set the ``no_proxy`` environment variable to a comma-separated list of destination domains
+  that must not use the proxy
+
+In most situations, you will want your internal domains to be added to the
+``no_proxy`` list so that requests performed internally by LemonLDAP::NG will
+not go through the proxy.
+
 Plugins
 -------
 
@@ -85,8 +124,28 @@ convert into JSON format.
 
 Refer to :doc:`notifications` section for more informations about notifications system.
 
+If you use database to store notifications, you have to rename `xml` column into `content`.
+
 Reload URLs do not exist anymore
 --------------------------------
 
 The ``reloadUrls`` and ``reloadTimeout`` parameters have been removed, check out
 the :doc:`eventsmanagement` section for more information about configuration reload.
+
+No default kind
+~~~~~~~~~~~~~~~
+
+``$self->p->getApacheSession()`` used to fall back to the ``SSO`` session kind
+when the ``kind`` argument was missing. This default has been removed: ``kind``
+is now mandatory.
+
+A plugin that omits it gets nothing back, and an error is logged::
+
+    getApacheSession() called without 'kind' at /path/to/MyPlugin.pm line 42
+
+Custom plugins must now declare the kind of session they expect::
+
+    # 3.0
+    my $session = $self->p->getApacheSession( $id, kind => 'SSO' );
+    my $token =
+      $self->p->getApacheSession( undef, kind => 'TOKEN', info => $infos );

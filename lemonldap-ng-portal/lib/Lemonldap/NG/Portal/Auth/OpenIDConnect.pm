@@ -5,13 +5,7 @@ use Mouse;
 use MIME::Base64                           qw/encode_base64 decode_base64/;
 use Scalar::Util                           qw/looks_like_number/;
 use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_IDPCHOICE
-  PE_OIDC_AUTH_ERROR
-  PE_SENDRESPONSE
-  PE_REDIRECT
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -625,7 +619,10 @@ sub frontLogout {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0, ) ) {
+            if ( my $as =
+                $self->p->getApacheSession( $_, hashStore => 0, kind => 'SSO' )
+              )
+            {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");
@@ -775,7 +772,10 @@ sub backLogout {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0 ) ) {
+            if ( my $as =
+                $self->p->getApacheSession( $_, hashStore => 0, kind => 'SSO' )
+              )
+            {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");

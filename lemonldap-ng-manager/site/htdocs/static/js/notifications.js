@@ -323,7 +323,7 @@
       });
     };
     $scope.save = function () {
-      if ($scope.form.uid && $scope.form.reference && $scope.form.xml) {
+      if ($scope.form.uid && $scope.form.reference && $scope.form.content) {
         $scope.waiting = true;
         $scope.formPost.uid = $scope.form.uid;
         if ($scope.form.date) {
@@ -331,7 +331,7 @@
         }
         $scope.formPost.reference = $scope.form.reference;
         $scope.formPost.condition = $scope.form.condition;
-        $scope.formPost.xml = $scope.form.xml;
+        $scope.formPost.content = $scope.form.content;
         $http.post('notifications/actives', $scope.formPost).then(function (response) {
           var data;
           data = response.data;

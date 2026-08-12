@@ -81,7 +81,6 @@ Example
    {
        "result" : 1,
        "error" : 0,
-       "id_http" : "5237ce20290d6110915a05d62f52618955b5f71b6dd3424481372ad419a5b122",
        "id" : "16fec9bd7a0523328568ca919ee0a6d6e329832f6c302bf36b106db92b5ec23d"
    }
 

@@ -28,9 +28,9 @@ List of fields to index by session type
    * - Session Type
      - Fields to index
    * - Sessions (global)
-     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user [#]_ mail [#]_ \_session_uid [#]_ \_oidc_sub [#]_ \_oidc_sid [#]_
+     - \_whatToTrace \_session_kind \_utime ipAddr user [#]_ mail [#]_ \_session_uid [#]_ \_oidc_sub [#]_ \_oidc_sid [#]_
    * - Persistent sessions
-     - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace \_webAuthnUserHandle [#]_
+     - \_session\_kind \_session\_uid ipAddr \_whatToTrace \_webAuthnUserHandle [#]_
    * - CAS sessions
      - \_session_kind \_utime \_cas\_id pgtIou auth_cas_ticket
    * - SAML sessions

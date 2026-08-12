@@ -61,11 +61,7 @@ count(1);
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/work2fcheck?skin=bootstrap', 'token', 'code' );
 
-ok(
-    $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
-    'Found EXTCODE input'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 ok( mail() =~ m%<b>(\d{8})</b>%, 'Found 2F code in mail' )
@@ -145,11 +141,7 @@ count(1);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/home2fcheck?skin=bootstrap', 'token', 'code' );
 
-ok(
-    $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code"%,
-    'Found EXTCODE input'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 ok( mail() =~ m%<b>(\w{4})</b>%, 'Found 2F code in mail' )

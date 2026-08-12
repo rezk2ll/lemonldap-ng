@@ -2,11 +2,7 @@ package Lemonldap::NG::Portal::Plugins::GrantSession;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_BADCREDENTIALS
-  PE_SESSIONNOTGRANTED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

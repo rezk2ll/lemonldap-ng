@@ -2,10 +2,7 @@ package Lemonldap::NG::Portal::Plugins::History;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_INFO
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.14';
 

@@ -2,11 +2,7 @@ package Lemonldap::NG::Portal::Plugins::DecryptValue;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.22.0';
 

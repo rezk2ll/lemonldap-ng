@@ -2,13 +2,7 @@ package Lemonldap::NG::Portal::2F::REST;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADOTP
-  PE_ERROR
-  PE_FORMEMPTY
-  PE_OK
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

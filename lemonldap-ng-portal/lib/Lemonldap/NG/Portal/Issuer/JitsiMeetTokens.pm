@@ -10,12 +10,7 @@ use Digest::SHA  qw(sha256_hex);
 use Crypt::OpenSSL::X509;
 use Crypt::OpenSSL::RSA;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_REDIRECT
-  PE_UNAUTHORIZEDPARTNER
-  PE_ERROR
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

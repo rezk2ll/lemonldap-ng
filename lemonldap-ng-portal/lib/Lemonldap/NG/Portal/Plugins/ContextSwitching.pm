@@ -2,17 +2,7 @@ package Lemonldap::NG::Portal::Plugins::ContextSwitching;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_NOTOKEN
-  PE_REDIRECT
-  PE_TOKENEXPIRED
-  PE_MALFORMEDUSER
-  PE_BADCREDENTIALS
-  PE_SESSIONEXPIRED
-  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.22.0';
 
@@ -87,7 +77,9 @@ sub display {
     my ( $self, $req ) = @_;
     my ( $realSession, $realSessionId );
     if ( $realSessionId = $req->userData->{ $self->prefixedSId } ) {
-        unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
+        unless ( $realSession =
+            $self->p->getApacheSession( $realSessionId, kind => 'SSO' ) )
+        {
             $self->userLogger->info(
                 "ContextSwitching: session $realSessionId expired");
             return $self->p->doPE( $req, PE_SESSIONEXPIRED );
@@ -265,7 +257,9 @@ sub _abortImpersonation {
     my $type          = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId = $req->{$type}->{ $self->prefixedSId };
     my $session;
-    unless ( $session = $self->p->getApacheSession($realSessionId) ) {
+    unless ( $session =
+        $self->p->getApacheSession( $realSessionId, kind => 'SSO' ) )
+    {
         $self->userLogger->info("Session $session expired");
         return $req->error(PE_SESSIONEXPIRED);
     }
@@ -273,7 +267,9 @@ sub _abortImpersonation {
     if ($abort) {
         $self->userLogger->notice(
             "Abort ContextSwitching: \"$spoofId\" by \"$realId\"");
-        if ( my $abortSession = $self->p->getApacheSession( $req->id ) ) {
+        if ( my $abortSession =
+            $self->p->getApacheSession( $req->id, kind => 'SSO' ) )
+        {
             $abortSession->remove;
         }
         else {

@@ -325,6 +325,7 @@
 "stayConnected":"לסמוך על ההתקן הזה בכניסות עתידיות",
 "submit":"הגשה",
 "switchContext":"החלפת הקשר",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"יישומון סיסמה חד־פעמית",
 "totpMissingCode":"יש למלא את הקוד שסופק על ידי יישומון ה־TOTP שלך",
 "totpOrTouch":"אם זה מופיע במכשיר הנייד שלך, יש לגעת בקוד ה־QR כדי לפתוח את יישומון הסיסמאות החד־פעמיות שלך (TOTP)",

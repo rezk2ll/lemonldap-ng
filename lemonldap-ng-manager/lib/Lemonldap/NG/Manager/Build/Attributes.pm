@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.3';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -1689,15 +1689,9 @@ sub attributes {
             flags         => 'hp',
         },
         securedCookie => {
-            type   => 'select',
-            select => [
-                { k => '0', v => 'unsecuredCookie' },
-                { k => '1', v => 'securedCookie' },
-                { k => '2', v => 'doubleCookie' },
-                { k => '3', v => 'doubleCookieForSingleSession' },
-            ],
+            type          => 'bool',
             default       => 0,
-            documentation => 'Cookie securisation method',
+            documentation => 'Cookie secure flag',
             flags         => 'hp',
         },
         hashedSessionStore => {
@@ -2177,6 +2171,12 @@ sub attributes {
             type          => 'password',
             documentation => 'Password to use to send mails',
         },
+        SMTPAuthMech => {
+            type          => 'text',
+            default       => '',
+            test          => qr/^[\w\s-]*$/,
+            documentation => 'SASL mechanism(s) to use to send mails',
+        },
 
         # Mails
         mailCharset => {
@@ -2520,6 +2520,10 @@ sub attributes {
         ext2FValidateCommand => {
             type          => 'text',
             documentation => 'Validation command of External second factor',
+        },
+        ext2fTimeout => {
+            type          => 'text',
+            documentation => 'Timeout of command execution',
         },
         ext2fResendInterval => {
             type          => 'text',
@@ -3852,12 +3856,10 @@ sub attributes {
                 { k => 'GPG',         v => 'GPG' },
                 { k => 'Kerberos',    v => 'Kerberos' },
                 { k => 'LDAP',        v => 'LDAP' },
-                { k => 'LinkedIn',    v => 'LinkedIn' },
                 { k => 'PAM',         v => 'PAM' },
                 { k => 'Radius',      v => 'Radius' },
                 { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'mTLS' },
-                { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
@@ -4500,33 +4502,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         facebookUserField => { type => 'text', default => 'id' },
 
-        # Twitter
-        twitterAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'Twitter authentication level',
-        },
-        twitterKey       => { type => 'text', },
-        twitterSecret    => { type => 'text', },
-        twitterAppName   => { type => 'text', },
-        twitterUserField => { type => 'text', default => 'screen_name' },
-
-        # LinkedIn
-        linkedInAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'LinkedIn authentication level',
-        },
-        linkedInClientID     => { type => 'text', },
-        linkedInClientSecret => { type => 'password', },
-        linkedInFields       => {
-            type    => 'text',
-            default => 'id,first-name,last-name,email-address'
-        },
-        linkedInUserField => { type => 'text', default => 'emailAddress' },
-        linkedInScope     =>
-          { type => 'text', default => 'r_liteprofile r_emailaddress' },
-
         # GitHub
         githubAuthnLevel => {
             type          => 'int',
@@ -4687,7 +4662,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'GPG',           v => 'GPG' },
                     { k => 'Kerberos',      v => 'Kerberos' },
                     { k => 'LDAP',          v => 'LDAP' },
-                    { k => 'LinkedIn',      v => 'LinkedIn' },
                     { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
@@ -4698,7 +4672,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
                     { k => 'SSL',           v => 'mTLS' },
-                    { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Combination',   v => 'combineMods' },
                     { k => 'Custom',        v => 'customModule' },
@@ -4756,12 +4729,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'GPG',      v => 'GPG' },
                 { k => 'Kerberos', v => 'Kerberos' },
                 { k => 'LDAP',     v => 'LDAP' },
-                { k => 'LinkedIn', v => 'LinkedIn' },
                 { k => 'PAM',      v => 'PAM' },
                 { k => 'Radius',   v => 'Radius' },
                 { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'mTLS' },
-                { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS', v => 'Central Authentication Service (CAS)' },
@@ -5283,11 +5254,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsMtlsCertIdentifierType => {
             type   => 'select',
             select => [
-                { k => '',        v => 'SAN DNS' },
-                { k => 'DN',      v => 'Subject DN' },
-                { k => 'Email',   v => 'SAN Email' },
-                { k => 'IP',      v => 'SAN IP' },
-                { k => 'URI',     v => 'SAN URI' },
+                { k => '',      v => 'SAN DNS' },
+                { k => 'DN',    v => 'Subject DN' },
+                { k => 'Email', v => 'SAN Email' },
+                { k => 'IP',    v => 'SAN IP' },
+                { k => 'URI',   v => 'SAN URI' },
             ],
             documentation =>
               'Client certificate identifier type for mTLS (RFC 8705)',

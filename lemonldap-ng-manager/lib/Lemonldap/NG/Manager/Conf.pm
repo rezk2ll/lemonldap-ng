@@ -64,7 +64,6 @@ sub init {
       # New key and conf save
       ->addRoute(
         confs => {
-            newRSAKey        => 'newRSAKey',
             newCertificate   => 'newCertificate',
             newEcCertificate => 'newEcCertificate',
             newEcKeys        => 'newEcKeys',
@@ -87,7 +86,7 @@ sub init {
 # 35 - New Certificate on demand
 #      --------------------------
 
-##@method public PSGI-JSON-response newRSAKey($req)
+##@method public PSGI-JSON-response newCertificate($req)
 # Return a hashref containing private and public keys
 # The posted data must contain a JSON object containing
 # {"password":"newpassword"}
@@ -113,31 +112,6 @@ sub newEcCertificate {
     my $query = $req->jsonBodyToObj;
 
     my $keys = $self->_generateX509( $query->{password}, "EC" );
-    return $self->sendJSONresponse( $req, $keys );
-}
-
-# 35 - New RSA key pair on demand
-#      --------------------------
-
-##@method public PSGI-JSON-response newRSAKey($req)
-# Return a hashref containing private and public keys
-# The posted data must contain a JSON object containing
-# {"password":"newpassword"}
-#
-#@param $req Lemonldap::NG::Common::PSGI::Request object
-#@return PSGI JSON response
-sub newRSAKey {
-    my ( $self, $req, @others ) = @_;
-    return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
-      if (@others);
-
-    my $key_size = $self->defaultNewKeySize;
-    my $query    = $req->jsonBodyToObj;
-    my $password = $query->{password};
-
-    my $keys =
-      Lemonldap::NG::Common::Util::Crypto::genRsaKey( $key_size, $password );
-
     return $self->sendJSONresponse( $req, $keys );
 }
 

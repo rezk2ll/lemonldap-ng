@@ -7,10 +7,7 @@ package Lemonldap::NG::Portal::Auth::_Ajax;
 
 use strict;
 use Mouse::Role;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

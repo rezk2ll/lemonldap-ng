@@ -325,6 +325,7 @@
 "stayConnected":"Trust this device for future logins",
 "submit":"Gửi",
 "switchContext":"Chuyển ngữ cảnh",
+"temporarilyUnresponsive":"This application is currently not responding, please try to connect later",
 "totp2f":"Ứng dụng OTP",
 "totpMissingCode":"Vui lòng nhập mã được cung cấp bởi ứng dụng TOTP của bạn",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",

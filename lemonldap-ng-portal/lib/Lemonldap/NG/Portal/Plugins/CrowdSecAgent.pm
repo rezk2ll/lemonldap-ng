@@ -2,18 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CrowdSecAgent;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCERTIFICATE
-  PE_BADCREDENTIALS
-  PE_BADOTP
-  PE_CAPTCHAERROR
-  PE_MALFORMEDUSER
-  PE_OK
-  PE_SAML_SIGNATURE_ERROR
-  PE_SENDRESPONSE
-  PE_USERNOTFOUND
-  PE_WAIT
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

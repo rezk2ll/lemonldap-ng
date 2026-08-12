@@ -69,7 +69,6 @@ lib/Lemonldap/NG/Common/Notifications/DBI.pm
 lib/Lemonldap/NG/Common/Notifications/File.pm
 lib/Lemonldap/NG/Common/Notifications/JSON.pm
 lib/Lemonldap/NG/Common/Notifications/LDAP.pm
-lib/Lemonldap/NG/Common/Notifications/XML.pm
 lib/Lemonldap/NG/Common/OpenIDConnect/Constants.pm
 lib/Lemonldap/NG/Common/OpenIDConnect/Metadata.pm
 lib/Lemonldap/NG/Common/PSGI.pm
@@ -128,6 +127,7 @@ t/37-Common-TOTP.t
 t/38-SAML-Metadata.t
 t/40-Common-Session.t
 t/41-Common-EmailAddress.t
+t/42-Common-EmailTransport.t
 t/45-importMetadata-config.t
 t/45-importMetadata.t
 t/50-Combination-Parser.t
@@ -153,10 +153,13 @@ t/saml-schemas/xenc-schema.xsd
 t/saml-schemas/xml.xsd
 t/saml-schemas/xmldsig-core-schema.xsd
 t/Secrets.pm
+t/test-ldap.pm
 t/TestAuditLogger.pm
 t/TestConfBackend.pm
 t/TestLogger.pm
 t/TestPsgi.pm
+t/testslapd/slapd.ldif
+t/testslapd/users.ldif
 tools/config.my.sql
 tools/config.pg.sql
 tools/notifications.my.sql

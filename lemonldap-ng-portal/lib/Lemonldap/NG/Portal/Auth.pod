@@ -13,7 +13,7 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
   use strict;
   use Mouse;
   # Add constants used by this module
-  use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+  use Lemonldap::NG::Portal::Main::Constants;
   
   our $VERSION = '0.1';
   

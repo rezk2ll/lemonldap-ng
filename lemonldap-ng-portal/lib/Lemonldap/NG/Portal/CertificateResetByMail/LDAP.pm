@@ -2,12 +2,7 @@ package Lemonldap::NG::Portal::CertificateResetByMail::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_LDAPCONNECTFAILED
-  PE_LDAPERROR
-  PE_OK
-  PE_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 

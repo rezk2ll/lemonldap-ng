@@ -14,12 +14,7 @@ use POSIX qw(strftime);    # Convert SAML2 date into timestamp
 use Time::Local;           # Convert SAML2 date into timestamp
 use Encode;                # Encode attribute values
 use URI;                   # Get metadata URL path
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_REDIRECT
-  PE_LOGOUT_OK
-  PE_SLO_ERROR
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 
@@ -55,7 +50,6 @@ has ua => (
 
         # TODO : LWP options to use a proxy for example
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );
@@ -2165,7 +2159,7 @@ sub createArtifactResponse {
     if ($session_id) {
         $self->logger->debug("Find session_id $session_id in artifact session");
 
-        my $session = $self->p->getApacheSession($session_id);
+        my $session = $self->p->getApacheSession( $session_id, kind => 'SSO' );
         unless ($session) {
             $self->logger->error("Unable to open session $session_id");
             return;

@@ -7,13 +7,7 @@ package Lemonldap::NG::Portal::2F::TOTP;
 use strict;
 use Mouse;
 use JSON                                   qw(from_json to_json);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_BADOTP
-  PE_FORMEMPTY
-  PE_SENDRESPONSE
-);
+use Lemonldap::NG::Portal::Main::Constants;
 use Lemonldap::NG::Common::Util qw/display2F/;
 
 our $VERSION = '2.23.0';
@@ -107,6 +101,15 @@ sub verify {
           . '2f: code did not match any of the registered TOTP for '
           . $uid );
     return PE_BADOTP;
+}
+
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %params = $self->SUPER::get2fTplParams( $req, $module );
+
+    $params{CODEDIGITS} = $self->conf->{totp2fDigits};
+
+    return %params;
 }
 
 1;

@@ -24,6 +24,11 @@ LDAPFilter
     :Description: Default LDAP filter
     :Used by portal: yes
 
+SMTPAuthMech
+    :Location: General Parameters » Advanced parameters » SMTP » SASL mechanism
+    :Description: SASL mechanism(s) to use to send mails
+    :Used by portal: yes
+
 SMTPAuthPass
     :Location: General Parameters » Advanced parameters » SMTP » Password
     :Description: Password to use to send mails
@@ -1034,6 +1039,11 @@ ext2fResendInterval
     :Description: Delay before user is allowed to resend code
     :Used by portal: yes
 
+ext2fTimeout
+    :Location: General Parameters » Second factors » External second factor » Command timeout
+    :Description: Timeout of command execution
+    :Used by portal: yes
+
 externalMenu
     :Location: General Parameters » Advanced parameters » Portal redirections » External menu URL
     :Description: URL to redirect authenticated users to instead of showing menu. Supports session variables like $uid, $mail, etc.
@@ -1322,11 +1332,6 @@ issuerDBJitsiMeetTokensRule
     :Description: Jitsi issuer rule
     :Used by portal: yes
 
-issuerDBOpenIDActivation
-    :Location: General Parameters » Issuer modules » OpenID » Activation
-    :Description: OpenID server activation
-    :Used by portal: yes
-
 issuerDBOpenIDConnectActivation
     :Location: General Parameters » Issuer modules » OpenID Connect » Activation
     :Description: OpenID Connect server activation
@@ -1340,16 +1345,6 @@ issuerDBOpenIDConnectPath
 issuerDBOpenIDConnectRule
     :Location: General Parameters » Issuer modules » OpenID Connect » Use rule
     :Description: OpenID Connect server rule
-    :Used by portal: yes
-
-issuerDBOpenIDPath
-    :Location: General Parameters » Issuer modules » OpenID » Path
-    :Description: OpenID server request path
-    :Used by portal: yes
-
-issuerDBOpenIDRule
-    :Location: General Parameters » Issuer modules » OpenID » Use rule
-    :Description: OpenID server rule
     :Used by portal: yes
 
 issuerDBSAMLActivation
@@ -1643,31 +1638,6 @@ ldapVerify
 ldapVersion
     :Location: General Parameters » Authentication parameters » LDAP parameters » Connection » Version
     :Description: LDAP protocol version
-    :Used by portal: yes
-
-linkedInAuthnLevel
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Authentication level
-    :Description: LinkedIn authentication level
-    :Used by portal: yes
-
-linkedInClientID
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Client ID
-    :Used by portal: yes
-
-linkedInClientSecret
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Client secret
-    :Used by portal: yes
-
-linkedInFields
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Searched fields
-    :Used by portal: yes
-
-linkedInScope
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Scope
-    :Used by portal: yes
-
-linkedInUserField
-    :Location: General Parameters » Authentication parameters » LinkedIn Parameters » Field containing user identifier
     :Used by portal: yes
 
 localSessionStorage
@@ -2087,11 +2057,6 @@ notificationWildcard
     :Description: Notification string to match all users
     :Used by portal: yes
 
-notificationXSLTfile
-    :Location: General Parameters » Plugins » Notifications » Custom XSLT file
-    :Description: Custom XSLT document for notifications
-    :Used by portal: yes
-
 notificationsExplorer
     :Location: General Parameters » Plugins » Notifications » Explorer
     :Description: Notifications explorer activation
@@ -2487,6 +2452,16 @@ oidcRPMetaDataOptionsLogoutUrl
     :Description: Logout URL
     :Used by portal: yes
 
+oidcRPMetaDataOptionsMtlsCertIdentifier
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Security » Mutual TLS » Expected certificate identifier
+    :Description: Expected client certificate identifier value (RFC 8705)
+    :Used by portal: yes
+
+oidcRPMetaDataOptionsMtlsCertIdentifierType
+    :Location: OpenID Connect Relying Parties » *configuration key* » Options » Security » Mutual TLS » Certificate identifier type
+    :Description: Client certificate identifier type for mTLS (RFC 8705)
+    :Used by portal: yes
+
 oidcRPMetaDataOptionsNoJwtHeader
     :Location: OpenID Connect Relying Parties » *configuration key* » Options » Advanced » Do not add JWT typ header
     :Description: Don't insert typ header
@@ -2876,81 +2851,6 @@ okta2fLoginAttribute
 okta2fLogo
     :Location: General Parameters » Second factors » Okta » Logo
     :Description: Custom logo for Okta 2F
-    :Used by portal: yes
-
-oldNotifFormat
-    :Location: General Parameters » Plugins » Notifications » Use old XML format
-    :Description: Use old XML format for notifications
-    :Used by portal: yes
-
-openIdAttr
-    :Location: General Parameters » Issuer modules » OpenID » Options » OpenID login
-    :Used by portal: yes
-
-openIdAuthnLevel
-    :Location: General Parameters » Authentication parameters » OpenID parameters » Authentication level
-    :Description: OpenID authentication level
-    :Used by portal: yes
-
-openIdExportedVars
-    :Location: General Parameters » Authentication parameters » OpenID parameters » Exported variables
-    :Description: OpenID exported variables
-    :Used by portal: yes
-
-openIdIDPList
-    :Location: General Parameters » Authentication parameters » OpenID parameters » Authorized domains
-    :Used by portal: yes
-
-openIdIssuerSecret
-    :Location: General Parameters » Issuer modules » OpenID » Options » Secret token
-    :Used by portal: yes
-
-openIdSPList
-    :Location: General Parameters » Issuer modules » OpenID » Options » Authorized domains
-    :Used by portal: yes
-
-openIdSecret
-    :Location: General Parameters » Authentication parameters » OpenID parameters » Secret token
-    :Used by portal: yes
-
-openIdSreg_country
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Country
-    :Used by portal: yes
-
-openIdSreg_dob
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Date of birth
-    :Used by portal: yes
-
-openIdSreg_email
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Email
-    :Description: OpenID SREG email session parameter
-    :Used by portal: yes
-
-openIdSreg_fullname
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Full name
-    :Description: OpenID SREG fullname session parameter
-    :Used by portal: yes
-
-openIdSreg_gender
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Gender
-    :Used by portal: yes
-
-openIdSreg_language
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Language
-    :Used by portal: yes
-
-openIdSreg_nickname
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Nick name
-    :Description: OpenID SREG nickname session parameter
-    :Used by portal: yes
-
-openIdSreg_postcode
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Postal code
-    :Used by portal: yes
-
-openIdSreg_timezone
-    :Location: General Parameters » Issuer modules » OpenID » Options » SREG mapping » Timezone
-    :Description: OpenID SREG timezone session parameter
     :Used by portal: yes
 
 pamAuthnLevel
@@ -4170,7 +4070,7 @@ secureTokenUrls
 
 securedCookie
     :Location: General Parameters » Cookies » Secured Cookie (SSL)
-    :Description: Cookie securisation method
+    :Description: Cookie secure flag
     :Used by portal: yes
     :Used by handler: yes
 
@@ -4518,27 +4418,6 @@ trustedBrowserUseTotp
 trustedDomains
     :Location: General Parameters » Advanced parameters » Security » Trusted domains
     :Description: Trusted domains
-    :Used by portal: yes
-
-twitterAppName
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Application name
-    :Used by portal: yes
-
-twitterAuthnLevel
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Authentication level
-    :Description: Twitter authentication level
-    :Used by portal: yes
-
-twitterKey
-    :Location: General Parameters » Authentication parameters » Twitter parameters » API key
-    :Used by portal: yes
-
-twitterSecret
-    :Location: General Parameters » Authentication parameters » Twitter parameters » API secret
-    :Used by portal: yes
-
-twitterUserField
-    :Location: General Parameters » Authentication parameters » Twitter parameters » Field containing user identifier
     :Used by portal: yes
 
 upgradeSession

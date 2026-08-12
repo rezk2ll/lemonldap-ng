@@ -2,11 +2,7 @@ package Lemonldap::NG::Portal::Password::Combination;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_ERROR
-  PE_FIRSTACCESS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Password::Base';
 with 'Lemonldap::NG::Portal::Lib::OverConf';

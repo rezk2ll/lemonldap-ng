@@ -6,48 +6,9 @@ require Exporter;
 
 our $VERSION   = '2.23.0';
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(genRsaKey);
 
-use Crypt::OpenSSL::RSA;
 use Digest::MD5 qw(md5_base64);
-use Convert::PEM;
 use Net::SSLeay;
-
-sub genRsaKey {
-    my ( $key_size, $password ) = @_;
-
-    my $rsa = Crypt::OpenSSL::RSA->generate_key($key_size);
-
-    my $keys = {
-        'private' => $rsa->get_private_key_string(),
-        'public'  => $rsa->get_public_key_x509_string(),
-        'hash'    => md5_base64( $rsa->get_public_key_string() ),
-    };
-    if ($password) {
-        my $pem = Convert::PEM->new(
-            Name => 'RSA PRIVATE KEY',
-            ASN  => q(
-                RSAPrivateKey SEQUENCE {
-                    version INTEGER,
-                    n INTEGER,
-                    e INTEGER,
-                    d INTEGER,
-                    p INTEGER,
-                    q INTEGER,
-                    dp INTEGER,
-                    dq INTEGER,
-                    iqmp INTEGER
-    }
-               )
-        );
-        $keys->{private} = $pem->encode(
-            Content  => $pem->decode( Content => $keys->{private} ),
-            Password => $password,
-        );
-    }
-
-    return $keys;
-}
 
 sub _genSelfSignedCertificate {
     my ( $password, $cn, $assign_key_func ) = @_;
@@ -207,20 +168,6 @@ This method generates an ECDSA key pair and returns a hashref of
 =item public: public key in PEM format
 
 =item private: private key in PEM format
-
-=item hash: unique identifier for the key
-
-=back
-
-=head3 genRsaKey($key_len, $password)
-
-This method generates a RSA key pair and returns a hashref of
-
-=over
-
-=item public: public key in PEM format
-
-=item private: private key in PEM format, optionnaly encrypted with supplied password
 
 =item hash: unique identifier for the key
 

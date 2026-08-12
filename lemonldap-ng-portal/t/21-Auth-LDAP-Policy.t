@@ -16,16 +16,7 @@ SKIP: {
     skip('LLNGTESTLDAP is not set') unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
 
-    use Lemonldap::NG::Portal::Main::Constants qw(
-      PE_PP_GRACE
-      PE_PASSWORD_OK
-      PE_BADOLDPASSWORD
-      PE_PP_ACCOUNT_LOCKED
-      PE_PP_PASSWORD_EXPIRED
-      PE_PP_PASSWORD_EXPIRES_SOON
-      PE_PP_CHANGE_AFTER_RESET
-      PE_PP_PASSWORD_TOO_SHORT
-    );
+    use Lemonldap::NG::Portal::Main::Constants;
 
     my %ini = (
         portal      => 'http://auth.example.com/',

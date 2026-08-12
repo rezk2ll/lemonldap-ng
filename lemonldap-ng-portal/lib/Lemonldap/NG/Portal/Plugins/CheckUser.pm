@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_NOTOKEN
-  PE_TOKENEXPIRED
-  PE_MALFORMEDUSER
-  PE_BADCREDENTIALS
-);
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
@@ -228,7 +223,8 @@ sub check {
 
             # searchOn() returns sessions indexed by their storage ID, then
             # it is required to set hashStore to 0
-            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+            my $session =
+              $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
 
             if ( $session->{data}->{_utime} gt $age ) {
