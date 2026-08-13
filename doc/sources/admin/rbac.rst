@@ -4,7 +4,7 @@ RBAC model
 Presentation
 ------------
 
-`RBAC <http://en.wikipedia.org/wiki/Role-based_access_control>`__ stands
+`RBAC <https://en.wikipedia.org/wiki/Role-based_access_control>`__ stands
 for Role Based Access Control. It means that you manage authorizations
 to access applications by checking the role(s) of the user, and provide
 this role to the application.

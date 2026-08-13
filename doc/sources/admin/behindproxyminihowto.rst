@@ -45,7 +45,7 @@ uncomment the relevant parts of the configuration file.
 .. tip::
 
     Make sure Nginx was compiled with the `http_real_ip
-    module <http://nginx.org/en/docs/http/ngx_http_realip_module.html>`__\
+    module <https://nginx.org/en/docs/http/ngx_http_realip_module.html>`__\
 
 -  For Apache:
 

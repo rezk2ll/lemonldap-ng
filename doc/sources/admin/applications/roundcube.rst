@@ -4,7 +4,7 @@ RoundCube
 Presentation
 ------------
 
-`RoundCube <http://www.roundcube.net>`__ webmail is a browser-based
+`RoundCube <https://www.roundcube.net>`__ webmail is a browser-based
 multilingual IMAP client with an application-like user interface. It
 provides full functionality you expect from an email client, including
 MIME support, address book, folder manipulation, message searching and

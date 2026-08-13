@@ -9,7 +9,7 @@ Setup
 
 Install and launch a `Cassandra <https://cassandra.apache.org/>`__ server.
 Install
-`Apache::Session::Browseable <http://search.cpan.org/perldoc?Apache::Session::Browseable>`__
+`Apache::Session::Browseable <https://metacpan.org/pod/Apache::Session::Browseable>`__
 Perl module (version ⩾ 1.3.12 required).
 
 Prepare the database
@@ -44,7 +44,7 @@ Manager
 ~~~~~~~
 
 In the manager: set
-`Apache::Session::Browseable::Cassandra <http://search.cpan.org/perldoc?Apache::Session::Browseable::Cassandra>`__
+`Apache::Session::Browseable::Cassandra <https://metacpan.org/pod/Apache::Session::Browseable::Cassandra>`__
 in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 ``Apache::Session module`` and add the following parameters (case
 sensitive):

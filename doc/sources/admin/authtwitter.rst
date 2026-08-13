@@ -11,13 +11,13 @@ Presentation
 ------------
 
 `Twitter <https://twitter.com>`__ is a famous microblogging server.
-Twitter use `OAuth <http://en.wikipedia.org/wiki/OAuth>`__ protocol to
+Twitter use `OAuth <https://en.wikipedia.org/wiki/OAuth>`__ protocol to
 allow applications to reuse its own authentication process (it means, if
 your are connected to Twitter, other applications can trust Twitter and
 let you in).
 
 You need to register a new application on Twitter to get API key and API
-secret. See `Twitter FAQ <http://dev.twitter.com/pages/api_faq>`__ on
+secret. See `Twitter FAQ <https://developer.x.com/en/docs>`__ on
 how to do that:.
 
 Configuration

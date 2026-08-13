@@ -35,7 +35,7 @@ variables** :
 -  use any key name you want. If you want to refuse access when a data
    is missing, just add a "!" before the key name
 -  in the value field, set the field name. Take a look at
-   http://xmlns.com/foaf/spec/#sec-crossref. Example
+   https://xmlns.com/foaf/spec/#sec-crossref. Example
    :``name => foaf:name``
 
 See also :doc:`exported variables configuration<exportedvars>`.

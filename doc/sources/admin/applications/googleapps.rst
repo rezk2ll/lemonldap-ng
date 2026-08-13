@@ -6,14 +6,14 @@ Google Apps
 Presentation
 ------------
 
-`Google Apps <http://www.google.com/apps/>`__ can use SAML to
+`Google Apps <https://workspace.google.com/>`__ can use SAML to
 authenticate users, behaving as an SAML service provider, as explained
-`here <http://code.google.com/googleapps/domain/sso/saml_reference_implementation.html>`__.
+`here <https://code.google.com/googleapps/domain/sso/saml_reference_implementation.html>`__.
 
 To work with LL::NG it requires:
 
 -  An `enterprise Google Apps
-   account <http://www.google.com/apps/intl/en/business/index.html>`__
+   account <https://workspace.google.com/>`__
 -  LL::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
 -  Registered users on Google Apps with the same email than those used
    by LL::NG (email will be the NameID exchanged between Google Apps and
@@ -29,7 +29,7 @@ Google Apps control panel
 .. attention::
 
     This part is based on `SimpleSAMLPHP
-    documentation <http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps>`__.
+    documentation <https://simplesamlphp.org/docs/stable/simplesamlphp-googleapps.html>`__.
 
 As administrator, go in Google Apps control panel and click on Advanced
 tools:
@@ -129,7 +129,7 @@ You need to adapt some parameters:
 
 -  **Address**: set one of Google Apps URL (all Google Apps product a
    distinct URL), for example
-   http://www.google.com/calendar/hosted/mydomain.org/render
+   https://www.google.com/calendar/hosted/mydomain.org/render
 -  **Display**: As Google Apps is not a protected application, set to
    ``On`` to always display it
 
@@ -152,7 +152,7 @@ To manage the other way (LL::NG → Google Apps), you can add a dedicated
 
 ::
 
-   GoogleApps => http://www.google.com/calendar/hosted/mydomain.org/logout
+   GoogleApps => https://www.google.com/calendar/hosted/mydomain.org/logout
 
 
 .. attention::

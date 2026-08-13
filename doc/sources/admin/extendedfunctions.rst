@@ -21,7 +21,7 @@ Inside this jail, you can access to:
 * All session values and CGI environment variables (through `$ENV{<HTTP_NAME>}`)
 * Core Perl subroutines (split, pop, map, etc.)
 * :doc:`Custom functions<customfunctions>`
-* The `encode_base64 <http://perldoc.perl.org/MIME/Base64.html>`__ subroutine
+* The `encode_base64 <https://perldoc.perl.org/MIME/Base64.html>`__ subroutine
 * Information about current request
 * Extended functions except basic, iso2unicode and unicode2iso:
 
@@ -55,7 +55,7 @@ Inside this jail, you can access to:
 .. tip::
 
     To know more about the jail, check `Safe module
-    documentation <http://perldoc.perl.org/Safe.html>`__.
+    documentation <https://perldoc.perl.org/Safe.html>`__.
 
 Extended Functions List
 -----------------------

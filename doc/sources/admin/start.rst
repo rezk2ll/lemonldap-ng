@@ -316,7 +316,7 @@ Handlers are software control agents to be installed on your web servers
 *(Nginx, Traefik, Caddy, Apache, PSGI like Plack based servers or Node.js)*.
 
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
-Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
+Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <https://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)   :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 Main *(default handler)*                                             ✔          ✔                                                                            ✔                                           :doc:`Partial<nodehandler>` ** [16]_ **                                            ✔
 :doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
@@ -384,9 +384,9 @@ Sessions database
 |image50|
 
 Sessions are stored using
-`Apache::Session <http://search.cpan.org/perldoc?Apache::Session>`__
+`Apache::Session <https://metacpan.org/pod/Apache::Session>`__
 modules family. All
-`Apache::Session <http://search.cpan.org/perldoc?Apache::Session>`__
+`Apache::Session <https://metacpan.org/pod/Apache::Session>`__
 style modules are usable except for some features.
 
 
@@ -486,7 +486,6 @@ Advanced features
 -  :doc:`Ignore some manager tests<managertests>`
 -  :doc:`See full parameters list<parameterlist>`
 -  :doc:`Installation from the tarball<installtarball>`
--  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
 -  :doc:`Deploy Traefik configuration<configtraefik>`
 -  :doc:`Deploy Caddy configuration<configcaddy>`
 -  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`

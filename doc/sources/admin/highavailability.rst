@@ -10,8 +10,8 @@ load-balancer:
    serve the same virtual hosts
 
 You can for example set up a fail-over cluster with
-`Heartbeat <http://www.linux-ha.org/wiki/Heartbeat>`__ and
-`HAproxy <http://haproxy.1wt.eu/>`__, like this:
+`Heartbeat <https://en.wikipedia.org/wiki/Heartbeat_(program)>`__ and
+`HAproxy <https://www.haproxy.org/>`__, like this:
 
 |image0|
 

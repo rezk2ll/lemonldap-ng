@@ -6,25 +6,25 @@ MediaWiki
 Presentation
 ------------
 
-`MediaWiki <http://www.mediawiki.org>`__ is a wiki software, used by the
-well known `Wikipedia <http://www.wikipedia.org>`__.
+`MediaWiki <https://www.mediawiki.org>`__ is a wiki software, used by the
+well known `Wikipedia <https://www.wikipedia.org>`__.
 
 Several extensions allows one to configure SSO on MediaWiki:
 
 -  `Automatic
-   REMOTE_USER <http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER>`__
+   REMOTE_USER <https://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER>`__
 -  `Siteminder
-   Authentication <http://www.mediawiki.org/wiki/Extension:Siteminder_Authentication>`__
+   Authentication <https://www.mediawiki.org/wiki/Extension:Siteminder_Authentication>`__
 
 We will explain how to use `Automatic
-REMOTE_USER <http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER>`__
+REMOTE_USER <https://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER>`__
 extension.
 
 Installation
 ------------
 
 The extension is presented here:
-http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER
+https://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER
 
 You can download the code here:
 https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser
@@ -65,9 +65,9 @@ Add then extension configuration, for example:
    /* User's mail domain to append to the user name to make their email address */
    //$wgAuthRemoteuserMailDomain = "example.com";
 
-   // see http://www.mediawiki.org/wiki/Manual:Hooks/SpecialPage_initList
-   // and http://www.mediawiki.org/w/Manual:Special_pages
-   // and http://lists.wikimedia.org/pipermail/mediawiki-l/2009-June/031231.html
+   // see https://www.mediawiki.org/wiki/Manual:Hooks/SpecialPage_initList
+   // and https://www.mediawiki.org/wiki/Manual:Special_pages
+   // and https://lists.wikimedia.org/pipermail/mediawiki-l/2009-June/031231.html
    // disable login and logout functions for all users
    function LessSpecialPages(&$list) {
        unset( $list['Userlogout'] );
@@ -76,7 +76,7 @@ Add then extension configuration, for example:
    }
    $wgHooks['SpecialPage_initList'][]='LessSpecialPages';
 
-   // http://www.mediawiki.org/wiki/Extension:Windows_NTLM_LDAP_Auto_Auth
+   // https://www.mediawiki.org/wiki/Extension:Windows_NTLM_LDAP_Auto_Auth
    // remove login and logout buttons for all users
    function StripLogin(&$personal_urls, &$wgTitle) {
        unset( $personal_urls["login"] );

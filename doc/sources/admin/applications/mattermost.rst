@@ -12,7 +12,7 @@ See `the official Mattermost website <https://mattermost.com/>`__ for a
 complete presentation.
 
 Mattermost follows an Open Core development model. The freely available
-`Team edition <https://docs.mattermost.com/developer/manifesto.html>`__
+`Team edition <https://docs.mattermost.com/about/editions-and-offerings.html>`__
 contains all the basic chat features, but lack the integration
 capabilities found in the `Enterprise
 edition <https://mattermost.com/pricing/>`__.

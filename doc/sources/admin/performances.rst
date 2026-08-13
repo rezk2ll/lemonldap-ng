@@ -284,7 +284,7 @@ can avoid this by setting "memberOf" fields in your LDAP scheme:
 So instead of using LDAP groups retrieval, you just have to store
 "memberOf" field in your exported variables. With OpenLDAP, you can use
 the `memberof
-overlay <http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance>`__
+overlay <https://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance>`__
 to do it automatically.
 
 

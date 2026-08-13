@@ -52,7 +52,7 @@ Rules
 -----
 
 A rule associates a `regular
-expression <http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions>`__
+expression <https://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions>`__
 to a Perl boolean expression or a keyword.
 
 |image0|

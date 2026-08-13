@@ -6,7 +6,7 @@ Liferay
 Presentation
 ------------
 
-`Liferay <http://www.liferay.com/>`__ is an enterprise portal.
+`Liferay <https://www.liferay.com/>`__ is an enterprise portal.
 
 Liferay can use LL::NG as an SSO provider but you have to manage how
 users are created:

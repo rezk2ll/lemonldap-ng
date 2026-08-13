@@ -6,7 +6,7 @@ LimeSurvey
 Presentation
 ------------
 
-`LimeSurvey <http://www.limesurvey.org>`__ is a web survey software
+`LimeSurvey <https://www.limesurvey.org>`__ is a web survey software
 written in PHP.
 
 HTTP Headers

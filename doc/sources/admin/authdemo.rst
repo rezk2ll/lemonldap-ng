@@ -34,7 +34,7 @@ dwho   dwho     dwho@badwolf.org   administrator
 
     As you may have guessed, these accounts are famous characters from
     the TV show `Doctor
-    Who <http://en.wikipedia.org/wiki/Doctor_Who>`__.
+    Who <https://en.wikipedia.org/wiki/Doctor_Who>`__.
 
 The AuthDemo and UserDBDemo will allow you to log in and get the
 standard attributes (uid, cn and mail). The PasswordDBDemo will allow

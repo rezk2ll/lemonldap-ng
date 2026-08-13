@@ -18,7 +18,7 @@ Presentation
 
 LL::NG can delegate authentication to an OpenID server. This requires
 `Perl OpenID consumer
-module <http://search.cpan.org/~mart/Net-OpenID-Consumer/>`__ with at
+module <https://search.cpan.org/~mart/Net-OpenID-Consumer/>`__ with at
 least version 1.0.
 
 
