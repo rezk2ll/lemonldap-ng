@@ -4,8 +4,8 @@ use warnings;
 
 require Exporter;
 
-our $VERSION   = '2.23.0';
-our @ISA       = qw(Exporter);
+our $VERSION = '2.23.0';
+our @ISA     = qw(Exporter);
 
 use Digest::MD5 qw(md5_base64);
 use Net::SSLeay;

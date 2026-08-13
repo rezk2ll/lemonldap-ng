@@ -56,14 +56,14 @@ subtest "Confidential only mode (value=1)" => sub {
         $res = post_register(
             $op,
             {
-                application_type         => "web",
-                redirect_uris            => [
+                application_type => "web",
+                redirect_uris    => [
                     "https://client.example.org/callback",
                     "https://client.example.org/callback2"
                 ],
-                client_name                => "My Example",
-                logo_uri                   => "https://client.example.org/logo.png",
-                subject_type               => "pairwise",
+                client_name  => "My Example",
+                logo_uri     => "https://client.example.org/logo.png",
+                subject_type => "pairwise",
                 token_endpoint_auth_method => "client_secret_basic",
             }
         );
@@ -71,22 +71,27 @@ subtest "Confidential only mode (value=1)" => sub {
         my $answer = JSON::from_json( $res->[2]->[0] );
 
         ok( defined $answer->{client_id},     "client_id in response" );
-        ok( defined $answer->{client_secret},  "client_secret in response" );
-        is( $answer->{token_endpoint_auth_method}, 'client_secret_basic',
-            "token_endpoint_auth_method in response" );
+        ok( defined $answer->{client_secret}, "client_secret in response" );
+        is( $answer->{token_endpoint_auth_method},
+            'client_secret_basic', "token_endpoint_auth_method in response" );
 
         my ( $conf, $rpId, $confFile ) = get_registered_rp_conf(2);
-        is( $conf->{oidcRPMetaDataOptions}->{$rpId}
+        is(
+            $conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsClientID},
-            $answer->{client_id}, "Client ID saved in configuration" );
-        is( $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rpId}
-              ->{"extra_claim"},
-            "extra_var", "Extra claim defined" );
+            $answer->{client_id}, "Client ID saved in configuration"
+        );
+        is(
+            $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rpId}->{"extra_claim"},
+            "extra_var", "Extra claim defined"
+        );
         is( $conf->{oidcRPMetaDataExportedVars}->{$rpId}->{"extra_var"},
             "mail", "Extra variable defined" );
-        is( $conf->{oidcRPMetaDataOptions}->{$rpId}
+        is(
+            $conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsRequirePKCE},
-            2, "RequirePKCE set to 2 (pkceOrSecret)" );
+            2, "RequirePKCE set to 2 (pkceOrSecret)"
+        );
         unlink $confFile;
     };
 
@@ -94,8 +99,8 @@ subtest "Confidential only mode (value=1)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "Public Client",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "Public Client",
                 token_endpoint_auth_method => "none",
             }
         );
@@ -106,8 +111,8 @@ subtest "Confidential only mode (value=1)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "PKJ Client",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "PKJ Client",
                 token_endpoint_auth_method => "private_key_jwt",
                 jwks_uri                   => "https://client.example.org/jwks",
             }
@@ -119,8 +124,8 @@ subtest "Confidential only mode (value=1)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "Bad Method",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "Bad Method",
                 token_endpoint_auth_method => "tls_client_auth",
             }
         );
@@ -138,8 +143,8 @@ subtest "All clients mode (value=2)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "Public Client",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "Public Client",
                 token_endpoint_auth_method => "none",
             }
         );
@@ -147,16 +152,20 @@ subtest "All clients mode (value=2)" => sub {
         my $answer = JSON::from_json( $res->[2]->[0] );
 
         ok( !defined $answer->{client_secret}, "No client_secret" );
-        is( $answer->{token_endpoint_auth_method}, 'none',
-            "token_endpoint_auth_method=none" );
+        is( $answer->{token_endpoint_auth_method},
+            'none', "token_endpoint_auth_method=none" );
 
         my ( $conf, $rpId, $confFile ) = get_registered_rp_conf(2);
-        is( $conf->{oidcRPMetaDataOptions}->{$rpId}
+        is(
+            $conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsPublic},
-            1, "Public flag set" );
-        is( $conf->{oidcRPMetaDataOptions}->{$rpId}
+            1, "Public flag set"
+        );
+        is(
+            $conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsRequirePKCE},
-            2, "RequirePKCE set to 2" );
+            2, "RequirePKCE set to 2"
+        );
         unlink $confFile;
     };
 
@@ -164,8 +173,8 @@ subtest "All clients mode (value=2)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "PKJ No JWKS",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "PKJ No JWKS",
                 token_endpoint_auth_method => "private_key_jwt",
             }
         );
@@ -176,8 +185,8 @@ subtest "All clients mode (value=2)" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "PKJ Client",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "PKJ Client",
                 token_endpoint_auth_method => "private_key_jwt",
                 jwks_uri                   => "https://client.example.org/jwks",
             }
@@ -186,24 +195,28 @@ subtest "All clients mode (value=2)" => sub {
         my $answer = JSON::from_json( $res->[2]->[0] );
 
         ok( !defined $answer->{client_secret}, "No client_secret" );
-        is( $answer->{token_endpoint_auth_method}, 'private_key_jwt',
-            "token_endpoint_auth_method=private_key_jwt" );
+        is( $answer->{token_endpoint_auth_method},
+            'private_key_jwt', "token_endpoint_auth_method=private_key_jwt" );
 
         my ( $conf, $rpId, $confFile ) = get_registered_rp_conf(3);
-        is( $conf->{oidcRPMetaDataOptions}->{$rpId}
+        is(
+            $conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsJwksUri},
-            'https://client.example.org/jwks', "jwks_uri saved" );
-        ok( !$conf->{oidcRPMetaDataOptions}->{$rpId}
+            'https://client.example.org/jwks', "jwks_uri saved"
+        );
+        ok(
+            !$conf->{oidcRPMetaDataOptions}->{$rpId}
               ->{oidcRPMetaDataOptionsPublic},
-            "Not marked as public" );
+            "Not marked as public"
+        );
     };
 
     subtest "client_secret_jwt generates a secret" => sub {
         $res = post_register(
             $op,
             {
-                redirect_uris            => ["https://client.example.org/callback"],
-                client_name                => "CS JWT Client",
+                redirect_uris => ["https://client.example.org/callback"],
+                client_name   => "CS JWT Client",
                 token_endpoint_auth_method => "client_secret_jwt",
             }
         );
@@ -211,7 +224,8 @@ subtest "All clients mode (value=2)" => sub {
         my $answer = JSON::from_json( $res->[2]->[0] );
 
         ok( defined $answer->{client_secret}, "client_secret present" );
-        is( $answer->{token_endpoint_auth_method}, 'client_secret_jwt',
+        is( $answer->{token_endpoint_auth_method},
+            'client_secret_jwt',
             "token_endpoint_auth_method=client_secret_jwt" );
     };
 };

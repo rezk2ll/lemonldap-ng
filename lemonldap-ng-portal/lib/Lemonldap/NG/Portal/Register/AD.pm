@@ -19,7 +19,7 @@ sub createUser {
     my $sn       = uc $req->data->{registerInfo}->{lastname};
     my $gn       = ucfirst $req->data->{registerInfo}->{firstname};
     my $password = $req->data->{registerInfo}->{password};
-    my $mesg = $self->ldap->add(
+    my $mesg     = $self->ldap->add(
         "cn=$name," . $self->conf->{ldapBase},
         attrs => [
             objectClass    => [qw/top person organizationalPerson user/],

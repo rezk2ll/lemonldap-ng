@@ -141,26 +141,24 @@ count(1);
 
 # Simulate CAS Back channel Logout
 
-my $logoutRequest = qq(<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="..." Version="2.0" IssueInstant="2025-02-06T18:56:40Z">
+my $logoutRequest =
+qq(<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="..." Version="2.0" IssueInstant="2025-02-06T18:56:40Z">
     <saml:NameID xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">\@NOT_USED\@</saml:NameID>
     <samlp:SessionIndex>$ticket</samlp:SessionIndex>
 </samlp:LogoutRequest>);
-ok(
-    $res = $sp->_post(
-        "/",
-        { logoutRequest => $logoutRequest },
-    ), 'Backchannel CAS Logout'
-);
+ok( $res = $sp->_post( "/", { logoutRequest => $logoutRequest }, ),
+    'Backchannel CAS Logout' );
 count(1);
 expectOK($res);
 
 # Verify that user has been disconnected
 ok(
-    $res = $sp->_get( '/', accept => 'text/html', cookie => "lemonldap=$spId" ), 
+    $res = $sp->_get( '/', accept => 'text/html', cookie => "lemonldap=$spId" ),
     'Test no more connected'
 );
 count(1);
-expectRedirection( $res, 'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
+expectRedirection( $res,
+    'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
 clean_sessions();
 done_testing( count() );

@@ -119,10 +119,12 @@ sub metadataDoc {
         grant_types_supported    => $grant_types,
         acr_values_supported     => \@acr,
         subject_types_supported  => ["public"],
-        token_endpoint_auth_methods_supported =>
-          [qw/client_secret_post client_secret_basic client_secret_jwt private_key_jwt tls_client_auth/],
-        introspection_endpoint_auth_methods_supported =>
-          [qw/client_secret_post client_secret_basic client_secret_jwt private_key_jwt tls_client_auth/],
+        token_endpoint_auth_methods_supported => [
+            qw/client_secret_post client_secret_basic client_secret_jwt private_key_jwt tls_client_auth/
+        ],
+        introspection_endpoint_auth_methods_supported => [
+            qw/client_secret_post client_secret_basic client_secret_jwt private_key_jwt tls_client_auth/
+        ],
         tls_client_certificate_bound_access_tokens => JSON::false,
         claims_supported                 => [qw/sub iss auth_time acr sid/],
         request_parameter_supported      => JSON::true,

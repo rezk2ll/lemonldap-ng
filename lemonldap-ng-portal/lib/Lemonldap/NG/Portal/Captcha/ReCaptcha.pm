@@ -34,7 +34,7 @@ sub init_captcha {
     my ( $self, $req ) = @_;
 
     $req->data->{customScript} .=
-        '<script src="https://www.google.com/recaptcha/enterprise.js?onload=__llng_recaptchaLoad" async defer></script>'
+'<script src="https://www.google.com/recaptcha/enterprise.js?onload=__llng_recaptchaLoad" async defer></script>'
       . '<script src="/static/common/js/recaptchav2.js"></script>';
 
     # Read option from the manager configuration

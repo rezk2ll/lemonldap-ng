@@ -125,7 +125,8 @@ sub _render {
         my $dh = int( $h * 0.6 ) + ( $scramble ? int( rand $h * 0.2 ) : 0 );
         my $dw = int( $cw * 0.85 );
         $tile->copyResampled(
-            $glyph, int( ( $cw - $dw ) / 2 ),
+            $glyph,
+            int( ( $cw - $dw ) / 2 ),
             int( ( $h - $dh ) / 2 ),
             0, 0, $dw, $dh, $fw, $fh
         );
@@ -144,8 +145,11 @@ sub _render {
           rand() < 0.5
           ? map { $_ - 20 + int rand 40 } @fg
           : map { $_ - 20 + int rand 40 } @bg;
-        $image->setPixel( int( rand $w ), int( rand $h ),
-            $image->colorAllocate(@c) );
+        $image->setPixel(
+            int( rand $w ),
+            int( rand $h ),
+            $image->colorAllocate(@c)
+        );
     }
 
     # Noise lines, mixing darker and lighter tones, over the glyphs
@@ -156,8 +160,10 @@ sub _render {
           : map { $_ + int rand 40 } @bg;
         $image->setThickness(1);
         $image->line(
-            int( rand $w ), int( rand $h ),
-            int( rand $w ), int( rand $h ),
+            int( rand $w ),
+            int( rand $h ),
+            int( rand $w ),
+            int( rand $h ),
             $image->colorAllocate(@c)
         );
     }

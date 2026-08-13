@@ -569,15 +569,14 @@ my $savedConf = from_json(
 );
 my ($newRpKey) =
   grep {
-    ( $savedConf->{oidcRPMetaDataOptions}->{$_}
-          ->{oidcRPMetaDataOptionsClientID} || '' ) eq $json->{client_id}
+    ( $savedConf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsClientID}
+          || '' ) eq $json->{client_id}
   } keys %{ $savedConf->{oidcRPMetaDataOptions} };
 ok( $newRpKey, "Newly registered RP found in saved configuration" );
 is(
     $savedConf->{oidcRPMetaDataOptions}->{$newRpKey}
       ->{oidcRPMetaDataOptionsBypassConsent},
-    1,
-    "oidcRegisterClient hook set BypassConsent on the new RP"
+    1, "oidcRegisterClient hook set BypassConsent on the new RP"
 );
 
 clean_sessions();

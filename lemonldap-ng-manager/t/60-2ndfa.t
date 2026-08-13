@@ -307,8 +307,9 @@ count(7);
 # Delete U2F devices
 foreach ( 1 .. 5 ) {
     ok(
-        $res =
-          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=U2F&epoch=$epoch" ),
+        $res = &client->_del(
+            "/2ndfa/persistent/$ids[$_]", "type=U2F&epoch=$epoch"
+        ),
         "Delete U2F from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );
@@ -320,8 +321,9 @@ foreach ( 1 .. 5 ) {
 # Delete TOTP devices
 foreach ( 3 .. 4 ) {
     ok(
-        $res =
-          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=TOTP&epoch=$epoch" ),
+        $res = &client->_del(
+            "/2ndfa/persistent/$ids[$_]", "type=TOTP&epoch=$epoch"
+        ),
         "Delete TOTP from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );
@@ -333,8 +335,9 @@ foreach ( 3 .. 4 ) {
 # Delete UBK devices
 foreach ( 2 .. 3 ) {
     ok(
-        $res =
-          &client->_del( "/2ndfa/persistent/$ids[$_]", "type=UBK&epoch=$epoch" ),
+        $res = &client->_del(
+            "/2ndfa/persistent/$ids[$_]", "type=UBK&epoch=$epoch"
+        ),
         "Delete UBK from $_"
     );
     ok( $res->[0] == 200, 'Result code is 200' );

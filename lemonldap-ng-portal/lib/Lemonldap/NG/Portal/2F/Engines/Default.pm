@@ -11,9 +11,9 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 
 use strict;
 use Mouse;
-use MIME::Base64                           qw(encode_base64);
-use JSON                                   qw(from_json to_json);
-use POSIX                                  qw(strftime);
+use MIME::Base64 qw(encode_base64);
+use JSON         qw(from_json to_json);
+use POSIX        qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants ':all';
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;

@@ -80,8 +80,11 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ m%public-warn%, 'Notification warn displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ m%<script type="text/javascript" src="/static/common/js/carousel\.min\.js\?v=.+?"></script>%, 'Carousel min JS found' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+m%<script type="text/javascript" src="/static/common/js/carousel\.min\.js\?v=.+?"></script>%,
+        'Carousel min JS found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     eval { unlink $file };
 }
 

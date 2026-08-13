@@ -153,7 +153,8 @@ subtest "Post auth request with invalid Captcha" => sub {
 
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
 
-    expectXpath( $res, '//script[contains(@src,"common/js/captchetat-js.min.js")]',
+    expectXpath( $res,
+        '//script[contains(@src,"common/js/captchetat-js.min.js")]',
         "Found JS" );
     expectXpath( $res, '//div[@id="captchetat"]', "Found CaptchEtat div" );
     expectXpath(
@@ -176,7 +177,8 @@ subtest "Post auth request with invalid Captcha" => sub {
         'Auth query'
     );
     expectPortalError( $res, PE_CAPTCHAERROR );
-    expectXpath( $res, '//script[contains(@src,"common/js/captchetat-js.min.js")]',
+    expectXpath( $res,
+        '//script[contains(@src,"common/js/captchetat-js.min.js")]',
         "Found JS" );
     expectXpath( $res, '//div[@id="captchetat"]', "Found CaptchEtat div" );
     expectXpath(
@@ -195,7 +197,8 @@ subtest "Post auth request with valid Captcha" => sub {
 
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
 
-    expectXpath( $res, '//script[contains(@src,"common/js/captchetat-js.min.js")]',
+    expectXpath( $res,
+        '//script[contains(@src,"common/js/captchetat-js.min.js")]',
         "Found JS" );
     expectXpath( $res, '//div[@id="captchetat"]', "Found CaptchEtat div" );
     expectXpath(

@@ -207,7 +207,7 @@ sub tests {
 
         checkSelfReferentialMacros => sub {
             my @tmp;
-            foreach my $macro ( keys %{$conf->{macros}} ) {
+            foreach my $macro ( keys %{ $conf->{macros} } ) {
                 my $code = $conf->{macros}->{$macro};
                 push @tmp, $macro if $code =~ /\$\Q$macro\E\b/;
             }

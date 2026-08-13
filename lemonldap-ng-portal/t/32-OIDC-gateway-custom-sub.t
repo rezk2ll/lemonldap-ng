@@ -30,7 +30,8 @@ my ( $op, $gw, $res );
 LWP::Protocol::PSGI->register(
     sub {
         my $req = Plack::Request->new(@_);
-        ok( $req->uri =~ m#http://auth.((?:o|g)p?w?).com(.*)#, ' REST request' );
+        ok( $req->uri =~ m#http://auth.((?:o|g)p?w?).com(.*)#,
+            ' REST request' );
         my $host = $1;
         my $url  = $2;
         my ( $r, $client );
@@ -82,10 +83,7 @@ ok( $res = $op->_get('/oauth2/jwks'), 'Get OP JWKS' );
 expectOK($res);
 my $jwks = $res->[2]->[0];
 
-ok(
-    $res = $op->_get('/.well-known/openid-configuration'),
-    'Get OP metadata'
-);
+ok( $res = $op->_get('/.well-known/openid-configuration'), 'Get OP metadata' );
 expectOK($res);
 my $metadata = $res->[2]->[0];
 count(3);
@@ -126,14 +124,11 @@ ok(
 );
 count(1);
 my $opId = expectCookie($res);
-($query) =
-  expectRedirection( $res, qr#^http://auth.gw.com/?\?(.*)$# );
+($query) = expectRedirection( $res, qr#^http://auth.gw.com/?\?(.*)$# );
 
 # OP redirects back to the gateway's callback
-ok(
-    $res = $gw->_get( '/', query => $query, accept => 'text/html' ),
-    'Call openidconnectcallback on gateway'
-);
+ok( $res = $gw->_get( '/', query => $query, accept => 'text/html' ),
+    'Call openidconnectcallback on gateway' );
 count(1);
 my $gwId = expectCookie($res);
 
@@ -154,8 +149,7 @@ ok( $code, 'Got authorization code from gateway' );
 count(1);
 
 # The app exchanges the code against tokens on the gateway
-$res =
-  codeGrant( $gw, 'appid', $code, 'http://app.com/callback' );
+$res = codeGrant( $gw, 'appid', $code, 'http://app.com/callback' );
 my $json = expectJSON($res);
 ok( $json->{id_token}, 'Gateway returned an id_token' );
 
@@ -189,12 +183,12 @@ sub op {
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
                     gw => {
-                        oidcRPMetaDataOptionsDisplayName   => "GW",
-                        oidcRPMetaDataOptionsClientID      => "gwid",
-                        oidcRPMetaDataOptionsClientSecret  => "gwsecret",
+                        oidcRPMetaDataOptionsDisplayName    => "GW",
+                        oidcRPMetaDataOptionsClientID       => "gwid",
+                        oidcRPMetaDataOptionsClientSecret   => "gwsecret",
                         oidcRPMetaDataOptionsIDTokenSignAlg => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent => 1,
-                        oidcRPMetaDataOptionsRedirectUris  =>
+                        oidcRPMetaDataOptionsBypassConsent  => 1,
+                        oidcRPMetaDataOptionsRedirectUris   =>
                           'http://auth.gw.com/?openidconnectcallback=1',
                     }
                 },
@@ -227,12 +221,12 @@ sub gw {
                         oidcOPMetaDataOptionsCheckJWTSignature => 1,
                         oidcOPMetaDataOptionsJWKSTimeout       => 0,
                         oidcOPMetaDataOptionsClientSecret      => "gwsecret",
-                        oidcOPMetaDataOptionsScope     => "openid profile email",
-                        oidcOPMetaDataOptionsStoreIDToken  => 0,
-                        oidcOPMetaDataOptionsUserAttribute => "sub",
+                        oidcOPMetaDataOptionsScope => "openid profile email",
+                        oidcOPMetaDataOptionsStoreIDToken     => 0,
+                        oidcOPMetaDataOptionsUserAttribute    => "sub",
                         oidcOPMetaDataOptionsClientID         => "gwid",
                         oidcOPMetaDataOptionsConfigurationURI =>
-                          "https://auth.op.com/.well-known/openid-configuration",
+"https://auth.op.com/.well-known/openid-configuration",
                     }
                 },
                 oidcOPMetaDataJWKS => { op => $jwks, },
@@ -255,8 +249,8 @@ sub gw {
                         oidcRPMetaDataOptionsBypassConsent  => 1,
 
                         # Custom UserIDAttr: the sub must be the user mail
-                        oidcRPMetaDataOptionsUserIDAttr     => "mail",
-                        oidcRPMetaDataOptionsRedirectUris   =>
+                        oidcRPMetaDataOptionsUserIDAttr   => "mail",
+                        oidcRPMetaDataOptionsRedirectUris =>
                           'http://app.com/callback',
                     }
                 },

@@ -48,9 +48,9 @@ SKIP: {
         $res = $client->_post(
             '/register',
             {
-                firstname=> 'Fôo',
-                lastname=> 'Bà Bar',
-                mail => 'foobar@badwolf.org',
+                firstname => 'Fôo',
+                lastname  => 'Bà Bar',
+                mail      => 'foobar@badwolf.org',
             },
             accept => 'text/html'
         ),

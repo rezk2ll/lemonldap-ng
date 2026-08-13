@@ -72,7 +72,9 @@ sub runTestWithCode {
       expectForm( $res, undef, '/radius2fcheck?skin=bootstrap',
         'token', 'code' );
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     $query =~ s/code=/code=$code/;
     ok(

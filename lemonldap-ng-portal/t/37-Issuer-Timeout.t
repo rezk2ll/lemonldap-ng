@@ -89,7 +89,9 @@ subtest "Request RP1, wait for timeout, request RP2" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/ext2fcheck?skin=bootstrap', 'token', 'code' );
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     $query =~ s/code=/code=A1b2C0/;
     ok(
@@ -168,7 +170,9 @@ subtest "Request RP1, wait for timeout, complete login" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/ext2fcheck?skin=bootstrap', 'token', 'code' );
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     $query =~ s/code=/code=A1b2C0/;
 
@@ -274,7 +278,9 @@ subtest "Within timeout, abandonned access to rp1 does not interfere" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/ext2fcheck?skin=bootstrap', 'token', 'code' );
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     $query =~ s/code=/code=A1b2C0/;
     ok(

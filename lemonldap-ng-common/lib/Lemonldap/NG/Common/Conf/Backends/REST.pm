@@ -54,7 +54,8 @@ sub getJson {
     if ( $resp->is_success ) {
         my $res;
         eval {
-            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+            $res =
+              from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
         };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Request failed: $@\n";
@@ -116,7 +117,8 @@ sub store {
     if ( $resp->is_success ) {
         my $res;
         eval {
-            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+            $res =
+              from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
         };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Unknown error: $@";

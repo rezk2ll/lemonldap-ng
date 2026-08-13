@@ -64,6 +64,7 @@ sub new {
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
         ( $conf->{ldapRaw}     ? ( raw     => qr/$conf->{ldapRaw}/ ) : () ),
     );
+
     unless ($self) {
         $portal->logger->error( "LDAP initialization error: " . $@ );
         return 0;
@@ -166,7 +167,7 @@ sub bind {
         $self->{portal}->logger->debug('Call mTLS bind');
         my $sasl = Authen::SASL->new(
             mechanism => 'EXTERNAL',
-            callback => { user => '' }
+            callback  => { user => '' }
         );
         $mesg = $self->SUPER::bind( undef, sasl => $sasl );
     }

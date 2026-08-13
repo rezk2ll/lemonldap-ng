@@ -18,7 +18,7 @@ sub init {
     my ($self) = @_;
 
     my $module = $self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'};
-    if ($module and $module->lassoServer ) {
+    if ( $module and $module->lassoServer ) {
         $self->lassoServer( $module->lassoServer );
         return 1;
     }

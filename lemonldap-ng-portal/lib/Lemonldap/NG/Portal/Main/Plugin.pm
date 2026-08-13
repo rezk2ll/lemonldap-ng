@@ -82,7 +82,8 @@ sub createNotification {
     return PE_ERROR unless $notifEngine;
 
     # Prepare notification
-    my $content = '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"_ref_","text":"_msg_"}]';
+    my $content =
+'[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"_ref_","text":"_msg_"}]';
     $content =~ s/_uid_/$uid/;
     $content =~ s/_date_/$date/;
     $content =~ s/_ref_/$ref/;

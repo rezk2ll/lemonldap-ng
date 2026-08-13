@@ -51,7 +51,14 @@
     }
 
     // Adapt some class to fit Bootstrap theme
-    $("div.carousel").addClass("slide");
+    var carousel = $("div.carousel");
+
+    // This script may be loaded more than once: build the carousel only once
+    if (carousel.hasClass("initialized")) {
+      return;
+    }
+    console.debug('Append carousel');
+    carousel.addClass("initialized slide");
     var carouselInner = $("<div class='carousel-inner rounded'></div>");
     var carouselIndicators = $("<div class=\"carousel-indicators\"></div>");
     ordonned_notifications.forEach(function (element, index) {
@@ -97,21 +104,21 @@
     // notification
     var multiple = ordonned_notifications.length > 1;
     if (multiple) {
-      $("div.carousel").append(carouselIndicators, carouselInner, previousButton, nextButton);
+      carousel.append(carouselIndicators, carouselInner, previousButton, nextButton);
     } else {
-      $("div.carousel").append(carouselInner);
+      carousel.append(carouselInner);
     }
 
     // Bootstrap 5 no longer auto-initializes carousels whose content is injected
     // after page load, so instantiate it explicitly.
     var carouselElement = document.getElementById("carousel");
     if (multiple && carouselElement && window.bootstrap && window.bootstrap.Carousel) {
-      var carousel = window.bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+      var carouselInstance = window.bootstrap.Carousel.getOrCreateInstance(carouselElement, {
         ride: "carousel",
         interval: 5000,
         wrap: true
       });
-      carousel.cycle();
+      carouselInstance.cycle();
     }
   });
 

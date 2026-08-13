@@ -176,6 +176,7 @@ sub parseFilters {
             next unless /\w/;
             s/[\r\n]//g;
             s/^\s+//;
+
             # For regex files, preserve trailing escaped spaces (e.g. '\ ')
             if ( $type eq 're' ) {
                 s/(?<!\\)\s+$//;

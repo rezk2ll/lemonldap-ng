@@ -118,7 +118,8 @@ $pdata = expectCookie( $res, 'lemonldappdata' );
   expectForm( $res, undef, '/ext2fcheck?skin=bootstrap', 'token', 'code',
     'checkLogins' );
 
-ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+ok( getHtmlElement( $res, '//input[@id="extcode"]' ), 'Found EXTCODE input' )
+  or print STDERR Dumper( $res->[2]->[0] );
 
 $query =~ s/code=/code=123456/;
 

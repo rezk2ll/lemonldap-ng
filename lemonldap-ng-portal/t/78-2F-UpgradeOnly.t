@@ -129,7 +129,9 @@ subtest "upgrade with available 2fa" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/mail2fcheck?skin=bootstrap', 'token', 'code' );
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     ok( mail() =~ m%<b>(\d{4})</b>%, 'Found 2F code in mail' )
       or print STDERR Dumper( mail() );

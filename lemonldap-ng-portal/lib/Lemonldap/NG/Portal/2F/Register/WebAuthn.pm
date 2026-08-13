@@ -136,12 +136,12 @@ sub _registrationchallenge {
             id          => $self->getRegistrationUserHandle($req),
             displayName => $displayName,
         },
-        challenge              => $challenge_base64,
-        attestation            => $attestation,
-        pubKeyCredParams       => [
-            { type => 'public-key', alg => -7   },    # ES256
+        challenge        => $challenge_base64,
+        attestation      => $attestation,
+        pubKeyCredParams => [
+            { type => 'public-key', alg => -7 },      # ES256
             { type => 'public-key', alg => -257 },    # RS256
-            { type => 'public-key', alg => -37  },    # PS256
+            { type => 'public-key', alg => -37 },     # PS256
         ],
         authenticatorSelection => { (
                 $userVerification ? ( userVerification => $userVerification )

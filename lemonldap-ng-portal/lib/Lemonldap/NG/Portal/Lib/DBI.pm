@@ -10,9 +10,9 @@ use MIME::Base64;
 use strict;
 use Mouse;
 use Crypt::URandom;
-use MIME::Base64                           qw/encode_base64url/;
+use MIME::Base64 qw/encode_base64url/;
 use Lemonldap::NG::Portal::Main::Constants;
-use Lemonldap::NG::Common::Lib::DBI        qw(check_dbh);
+use Lemonldap::NG::Common::Lib::DBI qw(check_dbh);
 
 extends 'Lemonldap::NG::Common::Module';
 

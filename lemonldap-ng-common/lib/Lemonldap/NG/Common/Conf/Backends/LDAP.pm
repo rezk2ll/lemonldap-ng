@@ -160,7 +160,7 @@ sub getLdapConnection {
         }
     }
 
-    my $bind = $self->_bind($ldap, $tlsParams{clientcert});
+    my $bind = $self->_bind( $ldap, $tlsParams{clientcert} );
     if ( $bind->code ) {
         $self->logError($bind);
         return;

@@ -8,7 +8,8 @@ our $VERSION = '2.19.0';
 sub serialize {
     my $session = shift;
 
-    $session->{serialized} = to_json( $session->{data}, { allow_nonref => 1, utf8 => 1 } );
+    $session->{serialized} =
+      to_json( $session->{data}, { allow_nonref => 1, utf8 => 1 } );
 }
 
 sub unserialize {

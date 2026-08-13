@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::SamlFederation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants;
-use Carp                                   qw(croak);
+use Carp qw(croak);
 use XML::LibXML::Reader;
 
 our $VERSION = '2.23.0';

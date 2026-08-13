@@ -27,8 +27,7 @@ LWP::Protocol::PSGI->register(
             fail( ' Bad REST call ' . $req->path_info );
         }
         return [
-            200,
-            [ 'Content-Type' => 'application/json', ],
+            200, [ 'Content-Type' => 'application/json', ],
             ['{"result":1}']
         ];
     }

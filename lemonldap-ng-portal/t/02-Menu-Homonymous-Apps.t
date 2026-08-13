@@ -15,8 +15,8 @@ require 't/test-lib.pm';
 
 my $applicationList = {
     "0001-team-a" => {
-        catname => "Team A",
-        type    => "category",
+        catname  => "Team A",
+        type     => "category",
         intranet => {
             type    => "application",
             options => {
@@ -28,8 +28,8 @@ my $applicationList = {
         },
     },
     "0002-team-b" => {
-        catname => "Team B",
-        type    => "category",
+        catname  => "Team B",
+        type     => "category",
         intranet => {
             type    => "application",
             options => {
@@ -63,7 +63,8 @@ sub menuFor {
         accept => 'text/html',
     );
     my $id = expectCookie($res);
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/',
             cookie => "lemonldap=$id",
             accept => 'text/html',

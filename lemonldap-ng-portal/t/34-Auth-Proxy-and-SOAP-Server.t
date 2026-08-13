@@ -98,9 +98,11 @@ SKIP: {
         'Try get_key_from_all_sessions'
     );
     ok(
-        defined $res->{ $ENV{LLNG_HASHED_SESSION_STORE}
+        defined $res->{
+            $ENV{LLNG_HASHED_SESSION_STORE}
             ? id2storage($spId)
-            : $spId },
+            : $spId
+        },
         ' Found session'
     );
     count(3);

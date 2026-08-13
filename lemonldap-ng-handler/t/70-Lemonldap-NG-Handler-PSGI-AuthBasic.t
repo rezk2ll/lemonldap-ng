@@ -12,14 +12,15 @@ BEGIN {
 # Mock LWP to intercept portal REST calls from AuthBasic handler
 LWP::Protocol::PSGI->register(
     sub {
-        my ($env) = @_;
+        my ($env)  = @_;
         my $method = $env->{REQUEST_METHOD};
         my $path   = $env->{PATH_INFO};
         my $query  = $env->{QUERY_STRING} // '';
 
         # Only handle POST /sessions/global/<id>?auth
         return [ 404, [], [] ] unless $method eq 'POST';
-        return [ 404, [], [] ] unless $path =~ m{^/sessions/global/([0-9a-f]+)$};
+        return [ 404, [], [] ]
+          unless $path =~ m{^/sessions/global/([0-9a-f]+)$};
         my $id = $1;
 
         # Read body
@@ -45,26 +46,26 @@ LWP::Protocol::PSGI->register(
         }
 
         # Build session data matching Demo backend output
-        my $now = time;
-        my $ts = strftime( "%Y%m%d%H%M%S", localtime($now) );
+        my $now         = time;
+        my $ts          = strftime( "%Y%m%d%H%M%S", localtime($now) );
         my $sessionData = {
-            '_timezone'       => '1',
-            'groups'          => 'users; timelords',
-            'uid'             => $user,
-            'cn'              => 'Doctor Who',
-            '_lastAuthnUTime' => $now,
-            '_whatToTrace'    => $user,
-            '_issuerDB'       => 'Null',
-            '_startTime'      => "$ts",
-            '_user'           => $user,
-            '_updateTime'     => "$ts",
-            '_userDB'         => 'Demo',
-            'ipAddr'          => '127.0.0.1',
-            'mail'            => "$user\@badwolf.org",
+            '_timezone'           => '1',
+            'groups'              => 'users; timelords',
+            'uid'                 => $user,
+            'cn'                  => 'Doctor Who',
+            '_lastAuthnUTime'     => $now,
+            '_whatToTrace'        => $user,
+            '_issuerDB'           => 'Null',
+            '_startTime'          => "$ts",
+            '_user'               => $user,
+            '_updateTime'         => "$ts",
+            '_userDB'             => 'Demo',
+            'ipAddr'              => '127.0.0.1',
+            'mail'                => "$user\@badwolf.org",
             'authenticationLevel' => 2,
-            '_utime'          => $now,
-            '_passwordDB'     => 'Demo',
-            '_auth'           => 'Demo',
+            '_utime'              => $now,
+            '_passwordDB'         => 'Demo',
+            '_auth'               => 'Demo',
         };
 
         my $session = Lemonldap::NG::Common::Session->new( {
@@ -86,9 +87,9 @@ my $maintests = 5;
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        authentication    => 'Demo',
-        userDB            => 'Same',
-        vhostOptions => {
+        authentication => 'Demo',
+        userDB         => 'Same',
+        vhostOptions   => {
             'test1.example.com' => {
                 vhostHttps           => 0,
                 vhostPort            => 80,
