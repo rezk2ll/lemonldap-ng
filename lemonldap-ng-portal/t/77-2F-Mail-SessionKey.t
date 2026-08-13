@@ -41,7 +41,8 @@ count(1);
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/mail2fcheck?skin=bootstrap', 'token', 'code' );
 
-ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+ok( getHtmlElement( $res, '//input[@id="extcode"]' ), 'Found EXTCODE input' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 ok( envelope()->{to}->[0] eq 'test@example.com', 'Use 2F mail sessionkey' )

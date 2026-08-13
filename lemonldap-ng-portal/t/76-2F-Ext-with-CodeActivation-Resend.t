@@ -87,7 +87,9 @@ sub expectTooSoon {
 sub expectSentCode {
     my ($res) = @_;
 
-    ok( getHtmlElement( $res, '//input[@id="extcode"]'), 'Found EXTCODE input') or print STDERR Dumper( $res->[2]->[0] );
+    ok( getHtmlElement( $res, '//input[@id="extcode"]' ),
+        'Found EXTCODE input' )
+      or print STDERR Dumper( $res->[2]->[0] );
     count(1);
 
     like( $res->[2]->[0],

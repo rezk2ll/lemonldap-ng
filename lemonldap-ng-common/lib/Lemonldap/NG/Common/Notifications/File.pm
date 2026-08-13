@@ -14,8 +14,8 @@ our $VERSION = '3.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
-has fileNameSeparator => ( is => 'rw', default => '_' );
-has dirName => ( is => 'ro', required => 1 );
+has fileNameSeparator => ( is => 'rw', default  => '_' );
+has dirName           => ( is => 'ro', required => 1 );
 has table => (
     is      => 'rw',
     trigger => sub {

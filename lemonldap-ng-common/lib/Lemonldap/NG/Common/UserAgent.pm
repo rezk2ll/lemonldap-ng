@@ -11,7 +11,7 @@ sub new {
     my $opts  = $conf->{lwpOpts} || {};
     my $agent = "LemonLDAP-NG/" . $Lemonldap::NG::Common::VERSION . " ";
     $opts->{agent} ||= $agent;
-    $opts->{ssl_opts}  = $conf->{lwpSslOpts} if ( $conf->{lwpSslOpts} );
+    $opts->{ssl_opts} = $conf->{lwpSslOpts} if ( $conf->{lwpSslOpts} );
     $opts->{env_proxy} //= 1;
     my $ua = LWP::UserAgent->new(%$opts);
     push @{ $ua->requests_redirectable }, 'POST';

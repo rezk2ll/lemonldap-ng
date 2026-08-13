@@ -55,9 +55,11 @@ sub store {
         my $data = delete $fields->{$file};
         if ( $self->{overlayWrite} ) {
             if ( open my $f, '>', "$self->{overlayDirectory}/$file" ) {
-                print $f ( $file =~ $hashParameters
+                print $f (
+                    $file =~ $hashParameters
                     ? JSON::encode_json($data)
-                    : $data );
+                    : $data
+                );
                 close $f;
             }
 

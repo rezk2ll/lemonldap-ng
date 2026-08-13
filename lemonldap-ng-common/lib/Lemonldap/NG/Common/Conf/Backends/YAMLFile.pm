@@ -82,7 +82,9 @@ sub store {
     my ( $self, $fields ) = @_;
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE, '>:encoding(UTF-8)', $self->_yamlFile( $fields->{cfgNum} ) ) {
+    unless ( open FILE, '>:encoding(UTF-8)',
+        $self->_yamlFile( $fields->{cfgNum} ) )
+    {
         $Lemonldap::NG::Common::Conf::msg = "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;

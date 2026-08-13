@@ -142,7 +142,7 @@ sub _run {
                 user_session_id            => $req->id,
                 grant_type                 => "password",
                 $self->conf->{whatToTrace} => $user,
-                _oidc_logout_sub =>
+                _oidc_logout_sub           =>
                   $oidc->getUserIDForRP( $req, $rp, $req->userData ),
             },
             0,

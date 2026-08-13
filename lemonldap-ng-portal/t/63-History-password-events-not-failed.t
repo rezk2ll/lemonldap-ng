@@ -37,7 +37,8 @@ sub classify {
 
 # A real authentication failure IS a failed login
 my $h = classify(PE_BADCREDENTIALS);
-is( scalar @{ $h->{failedLogin}  || [] }, 1, 'PE_BADCREDENTIALS -> failedLogin' );
+is( scalar @{ $h->{failedLogin} || [] }, 1,
+    'PE_BADCREDENTIALS -> failedLogin' );
 is( scalar @{ $h->{successLogin} || [] }, 0, ' -> not in successLogin' );
 
 # A successful authentication is a success login

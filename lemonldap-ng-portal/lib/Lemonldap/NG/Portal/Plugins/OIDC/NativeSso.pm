@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::OIDC::NativeSso;
 use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
-use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants;
 use String::Random qw/random_string/;
 

@@ -404,7 +404,7 @@ sub do {
         else {
             my $res = { result => 1, error => $err };
             if ( $req->data->{newAuth} ) {
-                $res->{id}      = $req->id;
+                $res->{id} = $req->id;
             }
             return $self->sendJSONresponse( $req, $res );
         }
@@ -1363,9 +1363,10 @@ sub registerLogin {
     # Only negative results are real login failures. Positive/warning results
     # such as PE_PP_CHANGE_AFTER_RESET or PE_PASSWORD_OK must not be stored as
     # failed logins, else they wrongly feed BruteForceProtection (#3634).
-    my $type = (
-        ( $req->authResult > 0
-              && $req->error_type( $req->authResult ) eq 'negative' )
+    my $type = ( (
+                 $req->authResult > 0
+              && $req->error_type( $req->authResult ) eq 'negative'
+        )
         ? 'failed'
         : 'success'
     ) . 'Login';

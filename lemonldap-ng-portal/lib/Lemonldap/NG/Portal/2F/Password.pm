@@ -8,7 +8,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
-use Lemonldap::NG::Common::Util            qw/display2F/;
+use Lemonldap::NG::Common::Util qw/display2F/;
 use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';

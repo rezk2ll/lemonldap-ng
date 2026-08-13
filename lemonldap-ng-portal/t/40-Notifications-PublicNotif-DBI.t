@@ -47,10 +47,10 @@ q{INSERT INTO notifications VALUES ('public-error','testref2','2016-05-30 00:00:
 }
 ]'
     );
-        $dbh->prepare(
+    $dbh->prepare(
 q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00',?,null,null)}
-    )->execute(
-        '
+      )
+      ->execute( '
 {
   "uid": "public-info",
   "title": "Test title",
@@ -58,7 +58,7 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
   "text": "This is a test text"
 }
 '
-    );
+      );
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
@@ -83,7 +83,8 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
         ),
         'Access login page with public notifications'
     );
-    ok( $res->[2]->[0] =~ m%"public_errors":\[\{"%, 'Notification errors displayed' )
+    ok( $res->[2]->[0] =~ m%"public_errors":\[\{"%,
+        'Notification errors displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%public-error%, 'Notification error displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
@@ -91,8 +92,11 @@ q{INSERT INTO notifications VALUES ('public-info','testref','2016-05-30 00:00:00
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%public-info%, 'Notification info displayed' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ m%<script type="text/javascript" src="/static/common/js/carousel\.min\.js\?v=.+?"></script>%, 'Carousel min JS found' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+m%<script type="text/javascript" src="/static/common/js/carousel\.min\.js\?v=.+?"></script>%,
+        'Carousel min JS found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 }
 
 count($maintests);

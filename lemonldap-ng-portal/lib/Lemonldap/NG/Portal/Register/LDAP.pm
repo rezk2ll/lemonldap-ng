@@ -43,9 +43,9 @@ sub createUser {
     my ( $self, $req ) = @_;
 
     # LDAP connection has been verified by computeLogin
-    my $sn = uc $req->data->{registerInfo}->{lastname};
-    my $gn = ucfirst $req->data->{registerInfo}->{firstname};
-    my $cn = "$gn $sn";
+    my $sn   = uc $req->data->{registerInfo}->{lastname};
+    my $gn   = ucfirst $req->data->{registerInfo}->{firstname};
+    my $cn   = "$gn $sn";
     my $mesg = $self->ldap->add(
         "uid="
           . $req->data->{registerInfo}->{login} . ","

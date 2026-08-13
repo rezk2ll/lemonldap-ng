@@ -112,7 +112,8 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    my $j = eval { from_json( $self->content, { allow_nonref => 1, utf8 => 1 } ) };
+    my $j =
+      eval { from_json( $self->content, { allow_nonref => 1, utf8 => 1 } ) };
     if ($@) {
         $self->error("$@$!");
         return undef;

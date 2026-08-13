@@ -32,7 +32,7 @@ my $client = LLNG::Manager::Test->new( {
             notificationStorageOptions => {
                 dirName => $main::tmpDir
             },
-            requireToken   => 1,
+            requireToken => 1,
         }
     }
 );

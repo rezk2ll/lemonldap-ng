@@ -146,7 +146,7 @@ ok(
 count(1);
 expectOK($res);
 
-my $id      = expectCookie($res);
+my $id = expectCookie($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{id} eq "$id", 'Session id found' )

@@ -93,11 +93,13 @@ sub bouncer {
         # CrowdSec may return more than one decision
         foreach my $decision (@$json_hash) {
             if ( $decision->{type} and $decision->{type} eq 'ban' ) {
-                return ( 0,
-                        "$ip banned by CrowdSec ('"
+                return (
+                    0,
+                    "$ip banned by CrowdSec ('"
                       . $decision->{scenario}
                       . "' for $decision->{duration})",
-                    $decision );
+                    $decision
+                );
             }
         }
         $self->userLogger->info("$ip not banned by CrowdSec");
@@ -452,8 +454,7 @@ sub _recordRequest {
     $self->_metricsCounters->{processed}++;
     if ($banDecision) {
         my $origin  = $banDecision->{origin} || 'unknown';
-        my $ip_type =
-          ( $ip && index( $ip, ':' ) >= 0 ) ? 'ipv6' : 'ipv4';
+        my $ip_type = ( $ip && index( $ip, ':' ) >= 0 ) ? 'ipv6' : 'ipv4';
         $self->_droppedByOrigin->{"$origin|$ip_type"}++;
     }
     my $interval = $self->conf->{crowdsecMetricsInterval} || 60;
@@ -472,37 +473,41 @@ sub _flushMetrics {
 
     my $window = ( $now - $self->_metricsCounters->{last_flush} ) || 1;
     my @items  = ( {
-        name   => 'processed',
-        value  => $proc,
-        labels => {},
-        unit   => 'request',
-    } );
+            name   => 'processed',
+            value  => $proc,
+            labels => {},
+            unit   => 'request',
+        }
+    );
     for my $key ( keys %drops ) {
         my ( $origin, $ip_type ) = split /\|/, $key, 2;
-        push @items, {
+        push @items,
+          {
             name   => 'dropped',
             value  => $drops{$key},
             labels => { origin => $origin, ip_type => $ip_type },
             unit   => 'request',
-        };
+          };
     }
 
     my $payload = {
         remediation_components => [ {
-            name    => 'llng',
-            type    => 'LLNG-CrowdsecAgent',
-            version => $VERSION,
-            feature_flags         => [],
-            utc_startup_timestamp => $self->_startupTime,
-            os                    => { name => $^O, version => '' },
-            metrics => [ {
-                meta => {
-                    utc_now_timestamp   => $now,
-                    window_size_seconds => $window,
-                },
-                items => \@items,
-            } ],
-        } ],
+                name                  => 'llng',
+                type                  => 'LLNG-CrowdsecAgent',
+                version               => $VERSION,
+                feature_flags         => [],
+                utc_startup_timestamp => $self->_startupTime,
+                os                    => { name => $^O, version => '' },
+                metrics               => [ {
+                        meta => {
+                            utc_now_timestamp   => $now,
+                            window_size_seconds => $window,
+                        },
+                        items => \@items,
+                    }
+                ],
+            }
+        ],
     };
 
     my $resp = $self->ua->post(

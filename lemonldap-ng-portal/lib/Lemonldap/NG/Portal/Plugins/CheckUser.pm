@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';

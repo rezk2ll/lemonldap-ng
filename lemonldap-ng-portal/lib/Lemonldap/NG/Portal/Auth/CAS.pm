@@ -113,15 +113,20 @@ sub extractFormInfo {
         return PE_SENDRESPONSE;
     }
 
-    if ($req->param('logoutRequest')) {
-        my $xml = eval { $self->parser->parse_string( $req->param('logoutRequest') ) };
+    if ( $req->param('logoutRequest') ) {
+        my $xml =
+          eval { $self->parser->parse_string( $req->param('logoutRequest') ) };
         if ($@) {
             $self->logger->error("Could not process logoutRequest: $@");
-        } else {
+        }
+        else {
             my $xpc = XML::LibXML::XPathContext->new($xml);
             $xpc->registerNs( 'samlp', 'urn:oasis:names:tc:SAML:2.0:protocol' );
-            if (my $ticket = $xpc->findnodes('/samlp:LogoutRequest/samlp:SessionIndex')->string_value) {
-                $self->_handleBackChannelLogout($req, $ticket);
+            if ( my $ticket =
+                $xpc->findnodes('/samlp:LogoutRequest/samlp:SessionIndex')
+                ->string_value )
+            {
+                $self->_handleBackChannelLogout( $req, $ticket );
             }
         }
         $req->response( [ 200, [ 'Content-Length' => 0 ], [] ] );
@@ -275,17 +280,19 @@ sub extractFormInfo {
 }
 
 sub _handleBackChannelLogout {
-    my ($self, $req, $ticket) = @_;
+    my ( $self, $req, $ticket ) = @_;
 
-    $self->logger->debug("CAS: Received BackChannel logoutRequest for ticket $ticket");
+    $self->logger->debug(
+        "CAS: Received BackChannel logoutRequest for ticket $ticket");
 
-    if (my $id = $self->getSSOSessionIdByTicket($ticket)) {
+    if ( my $id = $self->getSSOSessionIdByTicket($ticket) ) {
         my $sessionData = $self->p->HANDLER->retrieveSession( $req, $id );
         if ($sessionData) {
-          $self->logger->debug("Doing backchannel logout on session $id");
-          $req->userData( $req->sessionInfo($sessionData) );
-          $self->p->do( $req,
-            [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ] );
+            $self->logger->debug("Doing backchannel logout on session $id");
+            $req->userData( $req->sessionInfo($sessionData) );
+            $self->p->do( $req,
+                [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
+            );
         }
     }
 }
@@ -304,15 +311,13 @@ sub authFinish {
     my $id    = $req->{id};
     my $utime = $req->{sessionInfo}->{_utime};
 
-    $self->logger->debug( "Store ticket "
-          . $ticket
-          . " for session $id" );
+    $self->logger->debug( "Store ticket " . $ticket . " for session $id" );
 
     my $infos;
-    $infos->{type}            = 'casTicket';  # Session type
-    $infos->{_utime}          = $utime;       # Creation time
-    $infos->{_cas_id}         = $id;          # SSO session id
-    $infos->{auth_cas_ticket} = $ticket;      # CAS ticket
+    $infos->{type}            = 'casTicket';    # Session type
+    $infos->{_utime}          = $utime;         # Creation time
+    $infos->{_cas_id}         = $id;            # SSO session id
+    $infos->{auth_cas_ticket} = $ticket;        # CAS ticket
 
     # Save CAS session
     my $CASSessionInfo = $self->getCasSession( undef, $infos );

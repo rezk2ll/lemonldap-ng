@@ -41,10 +41,10 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
-                    oidcRPMetaDataOptionsRedirectUris       => 'http://rp.com/',
-                    oidcRPMetaDataOptionsAuthMethod         => 'tls_client_auth',
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp.com/',
+                    oidcRPMetaDataOptionsAuthMethod   => 'tls_client_auth',
                     oidcRPMetaDataOptionsMtlsCertIdentifierType => 'DN',
-                    oidcRPMetaDataOptionsMtlsCertIdentifier =>
+                    oidcRPMetaDataOptionsMtlsCertIdentifier     =>
                       'CN=mtls_client,O=Example,C=FR',
                 },
                 rp_san => {
@@ -55,21 +55,22 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr        => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
-                    oidcRPMetaDataOptionsRedirectUris          => 'http://rp.com/',
-                    oidcRPMetaDataOptionsAuthMethod            => 'tls_client_auth',
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp.com/',
+                    oidcRPMetaDataOptionsAuthMethod   => 'tls_client_auth',
                     oidcRPMetaDataOptionsMtlsCertIdentifierType => 'DNS',
-                    oidcRPMetaDataOptionsMtlsCertIdentifier => 'client.example.com',
+                    oidcRPMetaDataOptionsMtlsCertIdentifier     =>
+                      'client.example.com',
                 },
                 rp_noid => {
                     oidcRPMetaDataOptionsDisplayName       => "mTLS RP no id",
                     oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                    oidcRPMetaDataOptionsClientID          => "mtls_client_noid",
-                    oidcRPMetaDataOptionsIDTokenSignAlg    => "RS256",
-                    oidcRPMetaDataOptionsUserIDAttr        => "",
+                    oidcRPMetaDataOptionsClientID       => "mtls_client_noid",
+                    oidcRPMetaDataOptionsIDTokenSignAlg => "RS256",
+                    oidcRPMetaDataOptionsUserIDAttr     => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
-                    oidcRPMetaDataOptionsRedirectUris          => 'http://rp.com/',
-                    oidcRPMetaDataOptionsAuthMethod            => 'tls_client_auth',
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp.com/',
+                    oidcRPMetaDataOptionsAuthMethod   => 'tls_client_auth',
 
                     # No oidcRPMetaDataOptionsMtlsCertIdentifier: RFC 8705
                     # forbids accepting any PKI-validated certificate

@@ -20,8 +20,10 @@ LWP::Protocol::PSGI->register(
         if ( $path =~ m{/v1/usage-metrics} ) {
             $captured_metrics_body = $req->raw_body;
             $metrics_hits++;
-            return [ 200, [ 'Content-Type' => 'application/json' ],
-                ['{"message":"OK"}'] ];
+            return [
+                200, [ 'Content-Type' => 'application/json' ],
+                ['{"message":"OK"}']
+            ];
         }
         if ( $path =~ m{/v1/decisions} ) {
             my $res = '[{"duration":"1h2m10.462947715s",
@@ -85,7 +87,7 @@ ok(
 );
 expectReject($res);
 
-ok( $metrics_hits >= 1, 'usage-metrics endpoint was called' );
+ok( $metrics_hits >= 1,     'usage-metrics endpoint was called' );
 ok( $captured_metrics_body, 'metrics body captured' );
 
 my $payload = eval { from_json($captured_metrics_body) };
@@ -101,9 +103,8 @@ ok( ref( $rc->{os} ) eq 'HASH' && defined $rc->{os}->{name},
     'os.name present' );
 
 my $meta = $rc->{metrics}->[0]->{meta};
-ok( $meta && $meta->{utc_now_timestamp} > 0, 'utc_now_timestamp present' );
-ok( $meta && $meta->{window_size_seconds} >= 1,
-    'window_size_seconds >= 1' );
+ok( $meta && $meta->{utc_now_timestamp} > 0,    'utc_now_timestamp present' );
+ok( $meta && $meta->{window_size_seconds} >= 1, 'window_size_seconds >= 1' );
 
 my $items = $rc->{metrics}->[0]->{items};
 ok( ref($items) eq 'ARRAY' && @$items, 'items array is present and non-empty' );
@@ -111,7 +112,7 @@ ok( ( !grep { ( $_->{unit} || '' ) ne 'request' } @$items ),
     'all items have unit=request' );
 
 my ($processed) = grep { $_->{name} eq 'processed' } @$items;
-ok( $processed, 'processed item present' );
+ok( $processed,                             'processed item present' );
 ok( $processed && $processed->{value} >= 1, 'processed value >= 1' );
 
 my @drops = grep { $_->{name} eq 'dropped' } @$items;

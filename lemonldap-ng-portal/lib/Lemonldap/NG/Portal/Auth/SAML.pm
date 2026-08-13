@@ -323,7 +323,7 @@ sub extractFormInfo {
                     # Try to get value
                     my $value =
                       $self->getAttributeValue( $userAttribute, undef, undef,
-                        \@attributes);
+                        \@attributes );
 
                     # Store value as user
                     if ( defined $value ) {
@@ -1165,7 +1165,7 @@ sub setAuthSessionInfo {
             # Try to get value
             my $value =
               $self->getAttributeValue( $name, $format, $friendly_name,
-                \@attributes);
+                \@attributes );
 
             # Store value in sessionInfo
             $req->{sessionInfo}->{$_} = $value if defined $value;

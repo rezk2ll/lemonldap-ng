@@ -128,7 +128,8 @@ sub getJson {
     if ( $resp->is_success ) {
         my $res;
         eval {
-            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+            $res =
+              from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
         };
         if ($@) {
             print STDERR "Unable to decode session: $@\n";
@@ -217,7 +218,8 @@ sub save {
     if ( $resp->is_success ) {
         my $res;
         eval {
-            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+            $res =
+              from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
         };
         if ($@) {
             die "Bad REST response: $@";
@@ -299,7 +301,8 @@ sub _getAll {
     if ( $resp->is_success ) {
         my $res;
         eval {
-            $res = from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
+            $res =
+              from_json( $resp->content, { allow_nonref => 1, utf8 => 1 } );
         };
         if ($@) {
             die "Bad REST response: $@";

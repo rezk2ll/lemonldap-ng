@@ -142,8 +142,8 @@ sub send_mail {
     $self->logger->debug( "SMTP From " . $self->conf->{mailFrom} );
     $self->logger->debug(
         "SMTP To " . ( ref $mail eq 'ARRAY' ? join ', ', @$mail : $mail ) );
-    $self->logger->debug( "SMTP Subject $subject" );
-    $self->logger->debug( "SMTP Body $body" );
+    $self->logger->debug("SMTP Subject $subject");
+    $self->logger->debug("SMTP Body $body");
     $self->logger->debug( "SMTP HTML flag " . ( $html ? "on" : "off" ) );
     $self->logger->debug( "SMTP Reply-To " . $self->conf->{mailReplyTo} )
       if $self->conf->{mailReplyTo};
