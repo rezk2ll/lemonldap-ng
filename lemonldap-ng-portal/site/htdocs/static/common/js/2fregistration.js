@@ -68,18 +68,6 @@
 
   // Delete function (launched by "delete" button)
   delete2F = function delete2F(device, epoch, prefix) {
-    if (!prefix) {
-      if (device === 'UBK') {
-        prefix = 'yubikey';
-      } else if (device === 'TOTP') {
-        prefix = 'totp';
-      } else if (device === 'WebAuthn') {
-        prefix = 'webauthn';
-      } else {
-        // Falling back is not likely to be very successful...
-        prefix = device.toLowerCase();
-      }
-    }
     return $.ajax(_defineProperty({
       type: "POST",
       url: "".concat(scriptname, "2fregisters/").concat(prefix, "/delete"),

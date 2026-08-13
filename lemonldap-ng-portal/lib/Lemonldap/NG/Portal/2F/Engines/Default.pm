@@ -18,7 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants ':all';
 
 use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -76,7 +76,8 @@ sub init {
             }
           )
         {
-            return 0 unless $self->_load_2f_module_by_prefix( $_, $i );
+            return 0 unless $self->_load_2f_module_by_prefix
+( $_, $i );
         }
     }
 
@@ -169,26 +170,22 @@ sub init {
         }
     }
 
-    unless (
+    return 0
+      unless (
         $self->sfReq(
             $self->p->buildRule( $self->conf->{sfRequired}, 'sfRequired' )
         )
-      )
-    {
-        return 0;
-    }
+      );
 
-    unless (
+    return 0
+      unless (
         $self->sfMsgRule(
             $self->p->buildRule(
                 $self->conf->{sfRemovedMsgRule},
                 'sfRemovedMsg'
             )
         )
-      )
-    {
-        return 0;
-    }
+      );
 
     $self->addAuthRoute( '2fchoice' => '_choice',   ['POST'] );
     $self->addAuthRoute( '2fchoice' => '_redirect', ['GET'] );
@@ -222,7 +219,7 @@ sub init {
 
 sub _load_2f_module_by_prefix {
     my ( $self, $name, $isRegister ) = @_;
-    {
+    # {
         my $prefix = lc($name);
         $prefix =~ s/2f$//i;
 
@@ -249,7 +246,7 @@ sub _load_2f_module_by_prefix {
         else {
             $self->logger->debug(' -> not enabled');
         }
-    }
+    # }
     return 1;
 }
 
@@ -260,14 +257,12 @@ sub _enable_2f_register_module {
 
 sub _enable_2f_module {
     my ( $self, $m ) = @_;
-
     $self->_registerRoutes($m);
     return $self->_enable_module( $m, $self->sfModules );
 }
 
 sub _enable_module {
     my ( $self, $m, $array ) = @_;
-
     my $rule = $self->p->buildRule( $m->rule );
     return 0 unless $rule;
 
@@ -327,14 +322,17 @@ sub run {
     my $_2fDevices = $self->get2fDevices( $req, $session );
     if ( scalar @$_2fDevices ) {
         my ( $removed, $name, $now, @expired2fDevices );
-
         $self->logger->debug("Looking for expired 2F device(s)...");
         $now = time();
         foreach my $device (@$_2fDevices) {
-            my $type = lc( $device->{type} );
-            $type =~ s/2f$//i;
-            $type = 'yubikey' if $type eq 'ubk';
-            my $ttl = $self->conf->{ $type . '2fTTL' };
+            my ( $prefix, $ttl );
+            foreach ( @{ $self->{'sfModules'} } ) {
+                if ( $_->{m}->{type} eq $device->{type} ) {
+                    $prefix = $_->{m}->{prefix};
+                    last;
+                }
+            }
+            $ttl = $self->conf->{"${prefix}2fTTL"};
             if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
