@@ -47,7 +47,7 @@ ok( $resBody->{details}->{__changes__}->[22]->{confCompacted} == 1,
 
 my @removedKeys = split /; /,
   $resBody->{details}->{__changes__}->[22]->{removedKeys};
-ok( @removedKeys == 49, 'All removed keys found' )
+is( scalar(@removedKeys), 48, 'All removed keys found' )
   or print STDERR Dumper( \@removedKeys, scalar(@removedKeys) );
 
 #print STDERR Dumper($resBody);

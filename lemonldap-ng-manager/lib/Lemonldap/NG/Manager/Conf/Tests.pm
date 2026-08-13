@@ -1286,6 +1286,41 @@ sub tests {
             return 1;
         },
 
+        # Refuse to save authChoices in legacy configuration
+        legacyChoiceConfig => sub {
+            if (
+                # Authentication modules are defined
+                (
+                    $conf->{authChoiceModules}
+                    and %{ $conf->{authChoiceModules} }
+                )
+                and
+
+                # Legacy authentication module are not all set to choice
+                ( (
+                        $conf->{authentication}
+                        and not( $conf->{authentication} eq "Choice" )
+                    )
+                    or (
+                        $conf->{userDB}
+                        and not( $conf->{userDB} eq "Choice"
+                            or $conf->{userDB} eq "Same" )
+                    )
+                    or ( $conf->{passwordDB}
+                        and not( $conf->{passwordDB} eq "Choice" ) )
+                )
+              )
+            {
+                return ( 0,
+                        "Authentication modules cannot be used when forcing "
+                      . "authentication, userDB or passwordDB module. "
+                      . "Set module forcing to 'do not force' in "
+                      . "authentication advanced parameters "
+                      . "before saving your configuration" );
+            }
+            return 1;
+        },
+
         # FindUser authChoice parameter must be defined
         findUserChoiceParam => sub {
             return ( -1, 'FindUser choice parameter must be defined' )

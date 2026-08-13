@@ -141,27 +141,27 @@ sub tree {
                 },
                 {
                     title => 'authParams',
-                    help  =>
-                      'start.html#authentication-users-and-password-databases',
-                    form  => 'authParams',
+                    help  => 'authchoice.html',
                     nodes => [
-                        'authentication', 'userDB', 'passwordDB', 'registerDB'
+                        'authChoiceModules',
+                        'registerDB',
+                        {
+                            title => 'choiceAdvParams',
+                            help  => 'authchoice.html#choiceadvparam',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'authChoiceParam',    'authChoiceAuthBasic',
+                                'authChoiceFindUser', 'authChoiceSelectOnly',
+                                'authentication',     'userDB',
+                                'passwordDB',
+                            ],
+                        },
                     ],
                     nodes_cond => [ {
                             title => 'adParams',
                             help  => 'authad.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 'ADPwdMaxAge', 'ADPwdExpireWarning' ]
-                        },
-                        {
-                            title => 'choiceParams',
-                            help  => 'authchoice.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'authChoiceParam',     'authChoiceModules',
-                                'authChoiceAuthBasic', 'authChoiceFindUser',
-                                'authChoiceSelectOnly',
-                            ]
                         },
                         {
                             title => 'apacheParams',

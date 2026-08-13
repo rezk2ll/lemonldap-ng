@@ -273,7 +273,7 @@
       return scope.toggle();
     };
     _stoggle = function (node) {
-      var a, l, len, len1, len2, m, n, o, ref, ref1, ref2;
+      var a, l, len, len1, m, n, ref, ref1;
       ref = ['nodes', 'nodes_cond'];
       for (l = 0, len = ref.length; l < len; l++) {
         n = ref[l];
@@ -289,13 +289,33 @@
       }
       // Call execFilter for authParams
       if (node._nodes_filter) {
-        if (node.nodes) {
-          ref2 = node.nodes;
-          for (o = 0, len2 = ref2.length; o < len2; o++) {
-            n = ref2[o];
-            n.onChange = $scope.execFilters;
+        var recurseOnChange = function (node) {
+          if (node._nodes) {
+            var ref2 = node._nodes;
+            var r, len2;
+            for (r = 0, len2 = ref2.length; r < len2; r++) {
+              var n = ref2[r];
+              if (n.nodes || n._nodes) {
+                recurseOnChange(n);
+              } else {
+                n.onChange = $scope.execFilters;
+              }
+            }
           }
-        }
+          if (node.nodes) {
+            var ref2 = node.nodes;
+            var r, len2;
+            for (r = 0, len2 = ref2.length; r < len2; r++) {
+              var n = ref2[r];
+              if (n.nodes || n._nodes) {
+                recurseOnChange(n);
+              } else {
+                n.onChange = $scope.execFilters;
+              }
+            }
+          }
+        };
+        recurseOnChange(node);
         $scope.filters[node._nodes_filter] = node;
         return $scope.execFilters();
       }

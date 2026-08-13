@@ -16,7 +16,7 @@ sub defaultValues {
             }
         },
         'authChoiceParam' => 'lmAuth',
-        'authentication'  => 'Demo',
+        'authentication'  => 'Choice',
         'available2F'     =>
           'TOTP,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
         'available2FSelfRegistration'     => 'Password,TOTP,WebAuthn,Yubikey',
@@ -274,7 +274,7 @@ sub defaultValues {
         'password2fActivation'        => 0,
         'password2fSelfRegistration'  => 0,
         'password2fUserCanRemoveKey'  => 1,
-        'passwordDB'                  => 'Demo',
+        'passwordDB'                  => 'Choice',
         'passwordPolicyActivation'    => 1,
         'passwordPolicyMaxSize'       => 0,
         'passwordPolicyMinDigit'      => 0,
@@ -429,7 +429,7 @@ sub defaultValues {
         'trustedBrowserUseTotp'   => 1,
         'upgradeSession'          => 1,
         'userControl'             => '^[\\w\\.\\-@]+$',
-        'userDB'                  => 'Same',
+        'userDB'                  => 'Choice',
         'useRedirectAjaxOnUnauthorized' => 1,
         'useRedirectOnError'            => 1,
         'useSafeJail'                   => 1,

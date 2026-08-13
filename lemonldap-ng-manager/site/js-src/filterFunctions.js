@@ -6,17 +6,50 @@ filterFunctions = {
   // be set to true or false depending on what has to be displayed
 
   authParams: function(scope, $q, node) {
-    var i, len, n, ref, wait;
+    var i, len, found, n, wait, searchFor;
     // 1. be sure to have all datas in main nodes
     wait = [];
-    ref = node.nodes;
-    for (i = 0, len = ref.length; i < len; i++) {
-      n = ref[i];
-      wait.push(scope.getKey(n));
-    }
+    searchFor = function (node, id) {
+        var i, len;
+        if (node.id == id) {
+            return node;
+        }
+        if (node._nodes) {
+            for (i = 0, len = node._nodes.length; i < len; i++) {
+                found = searchFor(node._nodes[i], id)
+                if(found) {
+                    return found;
+                }
+            }
+        }
+        if (node.nodes) {
+            for (i = 0, len = node.nodes.length; i < len; i++) {
+                found = searchFor(node.nodes[i], id)
+                if(found) {
+                    return found;
+                }
+            }
+        }
+        if (node.nodes_cond) {
+            for (i = 0, len = node.nodes_cond.length; i < len; i++) {
+                found = searchFor(node.nodes_cond[i], id)
+                if(found) {
+                    return found;
+                }
+            }
+        }
+        return;
+    };
+
+    ['authentication', 'userDB', 'registerDB', 'passwordDB'].forEach( function (id) { 
+        var found = searchFor(node, id);
+        if (found) {
+            wait.push(scope.getKey(found))
+        }
+    } ); 
     // 2. then do the job
     return $q.all(wait).then(function() {
-      var all, j, k, l, len1, len2, len3, len4, len5, len6, m, nToShow, nd, o, p, q, r, ref1, ref2, ref3, ref4, restart, s;
+      var all, j, k, l, len1, len2, len3, len4, len5, len6, m, nToShow, nd, o, p, q, r, ref1, ref2, ref3, ref4, restart, s, nodeToDownload;
       // Flag to see all nodes
       all = false;
       // Nodes to show
@@ -33,61 +66,68 @@ filterFunctions = {
           return nToShow.push('ldapParams');
         }
       };
-      ref1 = node.nodes;
-      // Show all normal nodes
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        n = ref1[j];
-        p(n.data);
-      }
-      ref2 = node.nodes_cond;
-      // Select conditional nodes to show
-      for (k = 0, len2 = ref2.length; k < len2; k++) {
-        n = ref2[k];
-        // Flag to reload this after downloading datas
-        restart = 0;
-        // Select unopened/opened node
-        nd = n._nodes ? n._nodes : n.nodes;
-        // Case "Choice"
-        if (node.nodes[0].data === 'Choice' && n.id === 'choiceParams') {
-          console.debug('Choice is selected');
-          if (nd[1].cnodes) {
-            restart++;
-          } else {
-            nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
-            for (l = 0, len3 = nd.length; l < len3; l++) {
-              m = nd[l];
-              ref3 = m.data;
-              for (o = 0, len4 = ref3.length; o < len4; o++) {
-                s = ref3[o];
-                if (typeof s === 'string') {
-                  p(s);
+
+      // Show nodes configured as main auth methods
+      ['authentication', 'userDB', 'registerDB', 'passwordDB'].forEach( function (id) { 
+          var found = searchFor(node, id);
+          if (found) {
+              p(found.data);
+          }
+      } ); 
+
+      restart = 0;
+
+      // From choice
+      var choiceModules = searchFor(node, "authChoiceModules");
+      if (choiceModules) {
+          if (choiceModules.cnodes) {
+              nodeToDownload = choiceModules;
+              restart++;
+          } else if (choiceModules.nodes) {
+            var i;
+            for (i = 0; i < choiceModules.nodes.length; i++) {
+                var choice = choiceModules.nodes[i];
+                var j;
+                for (j = 0; j < choice.data.length; j++) {
+                    var s = choice.data[j];
+                    if (typeof s === 'string') {
+                        p(s);
+                    }
                 }
-              }
             }
           }
-          // Case "Combination"
-        } else if (node.nodes[0].data === 'Combination' && n.id === 'combinationParams') {
-          console.debug('Combination is selected');
-          if (nd[1].cnodes) {
-            restart++;
-          } else {
-            nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
-            for (q = 0, len5 = nd.length; q < len5; q++) {
-              m = nd[q];
-              p(m.data.type);
-            }
-          }
-        }
-        if (restart) {
-          scope.waiting = true;
-          scope.download({
-            '$modelValue': nd[1]
-          }).then(function() {
-            return filterFunctions.authParams(scope, $q, node);
-          });
-          return;
-        }
       }
+
+      // From combination
+      var combModules = searchFor(node, "combModules");
+      if (combModules) {
+          if (combModules.cnodes) {
+              nodeToDownload = combModules;
+              restart++;
+          } else if (combModules.nodes) {
+            var i;
+            for (i = 0; i < combModules.nodes.length; i++) {
+                var comb = combModules.nodes[i];
+                if (comb.data) {
+                    var s = comb.data.type;
+                    if (typeof s === 'string') {
+                        p(s);
+                    }
+                }
+            }
+          }
+      }
+
+      if (restart) {
+        scope.waiting = true;
+        scope.download({
+          '$modelValue': nodeToDownload
+        }).then(function() {
+          return filterFunctions.authParams(scope, $q, node);
+        });
+        return;
+      }
+
       ref4 = node.nodes_cond;
       for (r = 0, len6 = ref4.length; r < len6; r++) {
         n = ref4[r];
