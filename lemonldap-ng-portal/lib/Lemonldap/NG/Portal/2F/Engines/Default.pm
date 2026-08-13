@@ -76,8 +76,7 @@ sub init {
             }
           )
         {
-            return 0 unless $self->_load_2f_module_by_prefix
-( $_, $i );
+            return 0 unless $self->_load_2f_module_by_prefix( $_, $i );
         }
     }
 
@@ -219,34 +218,31 @@ sub init {
 
 sub _load_2f_module_by_prefix {
     my ( $self, $name, $isRegister ) = @_;
-    # {
-        my $prefix = lc($name);
-        $prefix =~ s/2f$//i;
+    my $prefix = lc($name);
+    $prefix =~ s/2f$//i;
 
-        # Activation parameter
-        my $ap =
-          $prefix . ( $isRegister ? '2fSelfRegistration' : '2fActivation' );
-        $self->logger->debug("Checking $ap");
+    # Activation parameter
+    my $ap = $prefix . ( $isRegister ? '2fSelfRegistration' : '2fActivation' );
+    $self->logger->debug("Checking $ap");
 
-        # Unless $rule, skip loading
-        if ( $self->conf->{$ap} ) {
-            $self->logger->debug("Trying to load $name 2F");
-            my $m =
-              $self->p->loadModule(
-                $isRegister ? "::2F::Register::$name" : "::2F::$name" )
-              or return 0;
+    # Unless $rule, skip loading
+    if ( $self->conf->{$ap} ) {
+        $self->logger->debug("Trying to load $name 2F");
+        my $m =
+          $self->p->loadModule(
+            $isRegister ? "::2F::Register::$name" : "::2F::$name" )
+          or return 0;
 
-            if ($isRegister) {
-                $self->_enable_2f_register_module($m) or return 0;
-            }
-            else {
-                $self->_enable_2f_module($m) or return 0;
-            }
+        if ($isRegister) {
+            $self->_enable_2f_register_module($m) or return 0;
         }
         else {
-            $self->logger->debug(' -> not enabled');
+            $self->_enable_2f_module($m) or return 0;
         }
-    # }
+    }
+    else {
+        $self->logger->debug(' -> not enabled');
+    }
     return 1;
 }
 
