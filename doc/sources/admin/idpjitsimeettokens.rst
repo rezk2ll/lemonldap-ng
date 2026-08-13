@@ -20,8 +20,6 @@ technical details can be found  `in the documentation repo
 
 LemonLDAP::NG can act as a JWT issuer for Jitsi Meet.
 
-As of 2.19.0, only a single Jitsi server per LemonLDAP::NG installation is supported.
-
 Configuring LemonLDAP::NG
 -------------------------
 

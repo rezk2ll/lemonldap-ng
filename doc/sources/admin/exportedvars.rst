@@ -116,13 +116,13 @@ Using groups in a rule
 
 .. code-block:: perl
 
-   ^/admin -> $groups =~ /\badmin\b/
+   ^/admin -> inGroup('admin')
 
    # Or with hGroups
    ^/admin -> defined $hGroups->{'admin'}
 
-   # Since 2.0.8
-   ^/admin -> inGroup('admin')
+   # Legacy syntax
+   ^/admin -> $groups =~ /\badmin\b/
 
 
 .. note::

@@ -1,4 +1,4 @@
-Documentation for LemonLDAP::NG 2.0
+Documentation for LemonLDAP::NG 3.0
 ===================================
 
 .. image:: logos/logo_llng_600px.png
@@ -402,7 +402,6 @@ Backend                                                          Shareable Sessi
 :doc:`Cassandra<cassandrasessionbackend>`                        ✔         ✔                                                ✔                                                    ✔                  Another supported NoSQL DB
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for session explorer and single session features.
 :doc:`REST<restsessionbackend>`                                  ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
-:doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 
 .. tip::

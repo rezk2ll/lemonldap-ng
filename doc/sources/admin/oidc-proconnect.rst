@@ -135,8 +135,7 @@ given module reaches the expected eIDAS level.
    recomputes it from the authentication level reached by the user. When
    several contexts share the same level, the one sent back in the ``acr``
    claim of the ID token is picked arbitrarily, so ProConnect may receive
-   ``loa-1`` where it expects ``eidas1``. Since ``2.24.0``, the Manager
-   raises a warning when this happens.
+   ``loa-1`` where it expects ``eidas1``.
 
    For the same reason, every level a user can actually reach should be
    mapped to an ACR value. When it is not, LL::NG falls back to

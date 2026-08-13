@@ -11,9 +11,9 @@ Main settings:
    (optional)
 -  **Hidden attributes**: session attributes never displayed or sent.
 
-.. versionchanged:: 2.17.0
+.. tip::
 
-   Since version 2.17.0 hidden attributes parameter supports regular expressions.
+   Hidden attributes parameter supports regular expressions.
    You can hide attributes by listing them or by providing one or more regexps.
    By example: ``_password, _session_id, /^notification_/ /^real\d+$/  _oidcConsents``
 
@@ -319,7 +319,7 @@ LLNG proposes 2 options:
 
 When option ``lokiDeferDir`` is set, the Loki logger no more send directly logs
 to Loki API but write them into this transitional directory. You can use the
-`lokiSender <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/blob/v2.0/lemonldap-ng-common/eg/lokiSender>`_
+`lokiSender <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/blob/v3.0/lemonldap-ng-common/eg/lokiSender>`_
 program to pick logs from the transitional directory and push then to Loki
 API. It can be used as daemon or as cron task.
 

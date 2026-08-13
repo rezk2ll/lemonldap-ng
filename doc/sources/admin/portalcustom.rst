@@ -230,10 +230,6 @@ Password management
 Password Policy
 ~~~~~~~~~~~~~~~
 
-.. tip::
-
-    Available since version 2.0.6
-
 -  **Activation**: enable/disable password policy. You can set a rule
    to enable policy for specific users only
 -  **Display policy in password form**: enable this option to display an

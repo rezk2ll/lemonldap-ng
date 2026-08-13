@@ -12,10 +12,6 @@ designing websites such as intranets, professional websites, blogs, home pages.
 It can be configured to authenticate users with :doc:`OpenID Connect <../idpopenidconnect>`.
 
 
-   Because Sharepoint requires support for the *OAuth 2.0 Form Post Response Mode*
-   feature, it only works starting with LemonLDAP::NG 2.0.16 and above
-
-
 .. warning::
    Configuring Sharepoint for OpenID Connect is a complex operation which
    requires some familiarity with Microsoft products, and a good knowledge of
@@ -72,15 +68,11 @@ for instructions.
 
 You do not need an Azure AD or Azure ADFS, so you can skip the steps regarding
 Azure AD/ADFS. You should not need to configure the identity provider manually.
-If you use LemonLDAP 2.0.16 and above, with a certificate as your OIDC signing
-key, the OpenID Connect JWKS document should contain the `x5c` field expected
-by sharepoint.
 
 First you need to create a Web application through the Sharepoint Manager A web
-application could contain several site ( called "collection")
+application could contain several site ( called "collection").
 
-The authentication method is applied to a web application and collection
-behind
+The authentication method is applied to a web application and collection behind.
 
 All URL of each site must be declared as an allowed redirection address in LemonLDAP::NG
 
