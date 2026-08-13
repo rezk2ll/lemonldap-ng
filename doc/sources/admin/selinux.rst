@@ -17,18 +17,8 @@ install the ``lemonldap-ng-selinux`` package to configure SELinux context correc
 
 This package will not configure SELinux booleans, please read the next sections to see which booleans you need to enable manually
 
-Disk cache (sessions an configuration)
+Disk cache (sessions and configuration)
 --------------------------------------
-
-You need to set the correct context on the cache directory
-
-.. deprecated:: 2.0.10
-   this is now done by the ``lemonldap-ng-selinux`` package
-
-::
-
-   semanage fcontext --add -t httpd_cache_t -f a '/var/cache/lemonldap-ng(/.*)?'
-   restorecon -R /var/cache/lemonldap-ng/
 
 LDAP
 ----

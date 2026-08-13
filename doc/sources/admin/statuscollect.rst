@@ -1,9 +1,8 @@
 Use message broker to collect LLNG status
 =========================================
 
-Starting from version 2.20.0, LLNG includes a system to use a message broker
-to dispatch its events between nodes. It can also be used to collect LLNG
-status.
+LLNG includes a system to use a message broker to dispatch its events between nodes.
+It can also be used to collect LLNG status.
 
 Note that LLNG only push statuses, you have to use another software to collect
 and exploit them.

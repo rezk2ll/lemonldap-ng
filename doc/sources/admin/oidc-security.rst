@@ -35,11 +35,11 @@ Quick Reference
    :widths: 25, 15, 30, 30
 
    "PKCE", "RFC 7636", "Require PKCE (per RP)", "PKCE required (per OP)"
-   "Issuer verification (Since 2.23.0)", "RFC 9207", "Always enabled (auto)", "Issuer required"
-   "State parameter", "RFC 6749", "Require state (2.19.0)", "Always sent (auto)"
-   "Nonce parameter", "OIDC Core", "Require nonce (2.19.0)", "Use nonce"
+   "Issuer verification", "RFC 9207", "Always enabled (auto)", "Issuer required"
+   "State parameter", "RFC 6749", "Require state", "Always sent (auto)"
+   "Nonce parameter", "OIDC Core", "Require nonce", "Use nonce"
    "JWS signatures", "RFC 7515", "ID Token signature alg", "Check JWT signature"
-   "JWE encryption (2.19.0 FC+)", "RFC 7516", "Encryption algorithms", "N/A"
+   "JWE encryption", "RFC 7516", "Encryption algorithms", "N/A"
    "Hashed tokens", "ANSSI R21/R25", "Hashed session storage", "N/A"
    "Token endpoint auth", "RFC 6749", "Token endpoint auth method", "Token endpoint auth method"
    "Request objects", "OIDC Core", "Require JWS for auth requests", "Auth method for code request"

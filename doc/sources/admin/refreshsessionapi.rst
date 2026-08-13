@@ -5,8 +5,6 @@ This plugin appends an endpoint to refresh sessions by user. It provides
 ``https://portal/refreshsessions`` endpoint. Protect it by webserver
 configuration.
 
-This plugin is available with LLNG ≥ 2.0.7.
-
 Usage
 -----
 

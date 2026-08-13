@@ -209,7 +209,7 @@ The hook's parameters are:
 * A hash of the current session info
 * the configuration key of the relying party which is being identified
 
-.. versionchanged:: 2.21.0
+.. note:: 
    You can use ``$info->{_scope}`` to update granted scopes in this hook
 
 Sample code::
@@ -238,7 +238,7 @@ The hook's parameters are:
 * A hash of session data for the (internal) Refresh Token session
 * A hash of the user's session data
 
-.. versionchanged:: 2.23.0
+.. note::
 
    The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
 
@@ -268,7 +268,7 @@ The hook's parameters are:
 * A hash of session data for the (internal) Refresh Token session, which also
   contains user attributes
 
-.. versionchanged:: 2.23.0
+.. note::
 
    The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
 
@@ -327,7 +327,7 @@ oidcGenerateTokenResponse
 This hook is triggered when LemonLDAP::NG has generated id_token and access_token
 and is about to send the token response.
 
-.. versionchanged:: 2.23.0
+.. note::
 
    This hook is now also called during refresh token grants.
    A sixth parameter ``$grant_type`` (``'authorization_code'`` or ``'refresh_token'``)
@@ -502,7 +502,7 @@ This hook is triggered when LemonLDAP::NG is about to send a UserInfo response t
 
 The hook's parameter is a hash containing all the claims that are about to be released.
 
-.. versionchanged:: 2.0.15
+.. note::
    Added the hash of current session data
 
 Sample code::
@@ -710,7 +710,7 @@ Sample code::
        return PE_OK;
    }
 
-.. versionchanged:: 2.23.0
+.. note::
 
 Parameters specified in *Extra parameters for authorization code request* will
 be exposed to this hook as well. If they start with a ``[`` or a ``{``, they

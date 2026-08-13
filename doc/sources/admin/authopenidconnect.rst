@@ -233,7 +233,7 @@ Configuration
 """""""""""""
 -  **PKCE required**: A code challenge is required at Tokens endpoint (see :rfc:`7636`)
 -  **Issuer required (RFC 9207)**: Require iss parameter in authorization response
-   to prevent mix-up attacks (see :rfc:`9207`). *Since 2.23.0*
+   to prevent mix-up attacks (see :rfc:`9207`).
 -  **Store ID token**: Allows one to store the ID Token (JWT) inside user session.
    Do not enable it unless you need to replay this token on an application,
    or if you need the id_token_hint parameter when using logout.
@@ -272,7 +272,7 @@ Protocol
    algorithm compatible with the authentication method: ``client_secret_jwt``
    requires a ``HS*`` algorithm, ``private_key_jwt`` requires either ``RS*`` or
    ``ES*`` depending on the type of your private key.
--  **Signing key name**: Since ``2.22.0``, lets you use a
+-  **Signing key name**: you can use a
    :doc:`different key <keys>` for signing requests.
 -  **Check JWT signature**: Set to 0 to disable JWT signature
    checking

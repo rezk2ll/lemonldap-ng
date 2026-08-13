@@ -34,7 +34,6 @@ Plugins
    restauthuserpwdbackend
    restservices
    soapservices
-   status
    trustedbrowser
    viewer
    webcron

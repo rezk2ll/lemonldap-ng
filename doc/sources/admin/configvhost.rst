@@ -471,8 +471,8 @@ Wildcards in hostnames
 A wildcard can be used in virtualhost name (not in aliases !):
 ``*.example.com`` matches all hostnames that belong to ``example.com`` domain.
 
-.. versionchanged:: 2.0.9
-   You can now use wildcards of the form ``test-*.example.com`` or
+.. tip::
+   You can use wildcards of the form ``test-*.example.com`` or
    ``test-%.example.com``. The ``%`` wilcard doesn't match subdomains.
 
 Even if a wildcard exists, if a VirtualHost is explicitly declared, this

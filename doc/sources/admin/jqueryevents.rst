@@ -40,7 +40,7 @@ Sample code:
                 // event.preventDefault();
     });
 
-.. versionchanged:: 2.0.16
+.. note::
 
     LemonLDAP::NG redirects to the 2FA Register page after your
     device has been added. You can cancel this redirection by calling

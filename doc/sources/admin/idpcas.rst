@@ -57,15 +57,15 @@ Then go in ``CAS Service`` to define:
       and the user is redirected to CAS service. Then CAS service has to
       show a correct error when service ticket validation will fail.
 
--  **Use strict URL matching**: (since *2.0.12*) enforces a stricter URL
+-  **Use strict URL matching**: Enforces a stricter URL
    matching. By default, LemonLDAP::NG will try to find a declared CAS
    Application matching the hostname of the requested application if it cannot
    find a match using the full path. See :ref:`idpcas-url-matching` for details
--  **Temporary ticket lifetime**: (since *2.0.14*): restricts how long Service
-   and Proxy tickets are valid after being generated. For compatibility, the
+-  **Temporary ticket lifetime**: Restricts how long Service and Proxy tickets
+   are valid after being generated. For compatibility, the
    default value of ``0`` means they are valid for the entire session duration.
    But the CAS spefications recommends ``300`` (5 minutes).
--  **Back-channel logout**: (since *2.0.16*) enable CAS back-channel logout,
+-  **Back-channel logout**: Enable CAS back-channel logout,
    which will send SLO requests to CAS applications.
 -  **CAS attributes**: list of attributes that will be transmitted by
    default in the validate response. Keys are the name of attribute in
@@ -123,10 +123,10 @@ Options
    See :ref:`idpcas-url-matching`.
 -  **User attribute**: session field that will be used as main
    identifier.
--  **Allow proxy** (since *2.21.0*): allow CAS proxying features on this application
+-  **Allow proxy**: Allow CAS proxying features on this application
 -  **Logout**: enable back-channel logout to this CAS application
 -  **Required authentication Level**: required authentication level to access this
-   application. Since *2.21.0* this can be a Perl expression.
+   application. This can be a Perl expression.
 -  **Access rule**: access rule to enforce on this application. If
    left blank, access will be allowed for everyone.
 -  **Comment**: set a comment
@@ -149,22 +149,20 @@ and not registered in the session of the user.
 URL Matching
 ^^^^^^^^^^^^
 
-.. versionchanged:: 2.0.10
+.. notice::
 
-Before version 2.0.10, only the hostname was taken into account, which made it impossible to have two different CAS services behind the same hostname.
+    Entire service URL is compared to the Service URL defined in LemonLDAP::NG. The longest prefix wins.
 
-Since version 2.0.10, the entire service URL is compared to the Service URL defined in LemonLDAP::NG. The longest prefix wins.
+    For example, if you declared two applications in LemonLDAP::NG with the following service URLs:
 
-For example, if you declared two applications in LemonLDAP::NG with the following service URLs:
+    * https://cas.example.com/applications/zone1
+    * https://cas.example.com/applications/
 
-* https://cas.example.com/applications/zone1
-* https://cas.example.com/applications/
+    An application located at https://cas.example.com/applications/zone1/myapp will match the first CAS service definition
 
-An application located at https://cas.example.com/applications/zone1/myapp will match the first CAS service definition
+    An application located at https://cas.example.com/undeclared/ will also be accepted in order to preserve the previous behavior of matching on hostnames only.
 
-An application located at https://cas.example.com/undeclared/ will also be accepted in order to preserve the previous behavior of matching on hostnames only.
-
-.. versionchanged:: 2.0.12
+.. tip::
 
    The *Strict URL matching* option now lets you decide if LemonLDAP::NG should
    fall back to legacy host-based matching if it cannot find a declared service

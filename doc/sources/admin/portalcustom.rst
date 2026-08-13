@@ -193,11 +193,10 @@ For example ``templates/bootstrap/en.json``:
      "myMessage": "My custom message, in english"
    }
 
-You can also create a file called ``all.json`` to override messages in
-all languages.
+You can also create a file called ``all.json`` to override messages in all languages.
 
-.. versionchanged:: 2.0.15
-   Translations in lemonldap-ng.ini now take priority over translations from skin files
+.. note::
+   Translations in lemonldap-ng.ini overload translations from skin files.
 
 Buttons on login page
 ~~~~~~~~~~~~~~~~~~~~~
@@ -211,9 +210,8 @@ This node allows one to enable/disable buttons on the login page:
 -  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
    password based authentication backends)
 -  **Reset password**: display a link to
-   :doc:`reset your password page<resetpassword>` (for password based
-   authentication backends). Number of allowed retries can be set (3
-   times by default)
+   :doc:`reset your password page<resetpassword>` (for password based authentication backends).
+   Number of allowed retries can be set (3 times by default).
 
 Password management
 ~~~~~~~~~~~~~~~~~~~

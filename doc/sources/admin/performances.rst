@@ -102,8 +102,8 @@ Portal performances
 General performances
 ~~~~~~~~~~~~~~~~~~~~
 
-The portal is the biggest component of Lemonldap::NG. Since version 2.0,
-portal runs under FastCGI and has been rewritten using plugins, so
+The portal is the biggest component of Lemonldap::NG.
+Portal runs under FastCGI and has been rewritten using plugins, so
 performance is increased in comparison to earlier versions. You just
 have to disable unused plugins:
 
@@ -248,9 +248,7 @@ Apache::Session::\ **Browseable::Redis**                                        
 *The source of this test is available in sources: e2e-tests/sbperf.pl*
 
 .. [3] "purge" test is done with Apache::Session::Browseable-1.2.5
-   and LLG-2.0. Earlier results are not so good.
 .. [4] "purge" test is done with Apache::Session::Browseable-1.2.6
-   and LLG-2.0.
 
 Analysis:
 

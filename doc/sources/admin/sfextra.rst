@@ -1,9 +1,8 @@
 Additional Second Factors
 =========================
 
-Starting with version 2.0.6, LemonLDAP::NG lets you configure multiple
-instances of second factor authentication modules, in a manner similar
-to the :doc:`Combination module<authcombination>`.
+LemonLDAP::NG lets you configure multiple instances of second factor authentication modules,
+in a manner similar to the :doc:`Combination module<authcombination>`.
 
 Only the following Second Factor modules are compatible with this
 feature:

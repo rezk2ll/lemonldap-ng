@@ -59,12 +59,6 @@ The JSON response fields are:
     ``Cookie`` returned by the portal.
 
 
-.. attention::
-
-    Before version 2.0.4, the response to a success
-    authentication had no ``id`` field, and ``error`` field was named
-    ``code``.
-
 Example
 ^^^^^^^
 

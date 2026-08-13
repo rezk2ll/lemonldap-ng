@@ -169,14 +169,14 @@ fetch data from password vaults or other sources.
 Manager API
 -----------
 
-Since 2.0.8, a Manager API is available for:
+Manager API is available for:
 
 -  Second factors management for users
 -  OpenID Connect RP management
 -  SAML SP management
 
 See `Manager API
-documentation <https://lemonldap-ng.org/manager-api/2.0/>`__.
+documentation <https://lemonldap-ng.org/manager-api/3.0/>`__.
 
 
 .. attention::

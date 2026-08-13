@@ -4,7 +4,7 @@ Combination of authentication schemes
 ============== ===== ==================
 Authentication Users Password
 ============== ===== ==================
-✔              ✔     ✔ (since *2.0.10*)
+✔              ✔     ✔
 ============== ===== ==================
 
 Presentation

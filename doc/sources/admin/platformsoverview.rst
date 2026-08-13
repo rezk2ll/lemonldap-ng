@@ -12,7 +12,7 @@ is a resume of all possibilities. We recommend:
 Portal/Manager installation
 ---------------------------
 
-Since 2.0, both portal and manager are native FastCGI / PSGI Plack based
+Both portal and manager are native FastCGI / PSGI Plack based
 applications. They can be powered by any FastCGI / PSGI compatible web
 servers. Some examples:
 

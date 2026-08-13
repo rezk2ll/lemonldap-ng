@@ -18,13 +18,13 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
    sent on other domains)
 
 
-        * Setting the domain to an empty string will generate cookies that are only
-          valid for the SSO portal itself. Which requires using CDA for all
-          handler-protected Virtual hosts, including the manager.
-        * Setting the domain to the special ``#PORTAL#`` string will generate cookies
-          that are valid for the SSO portal's domain, and all subdomains
-        * Setting the domain to the special ``#PORTALDOMAIN#`` string will generate
-          cookies that are valid for the SSO portal's parent domain
+     * Setting the domain to an empty string will generate cookies that are only
+       valid for the SSO portal itself. Which requires using CDA for all
+       handler-protected Virtual hosts, including the manager.
+     * Setting the domain to the special ``#PORTAL#`` string will generate cookies
+       that are valid for the SSO portal's domain, and all subdomains
+     * Setting the domain to the special ``#PORTALDOMAIN#`` string will generate
+       cookies that are valid for the SSO portal's parent domain
 
 
 -  **Multiple domains**: enable :doc:`cross domain mechanism<cda>`

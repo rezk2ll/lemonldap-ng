@@ -21,7 +21,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
 -  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
--  Authentication Method References (AMR) (Since ``2.21.0``)
+-  Authentication Method References (AMR)
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
@@ -29,17 +29,16 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
 -  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
-   (Since ``2.17.0``)
 -  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
--  PKCE (Since ``2.0.4``) - See :rfc:`7636`
--  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
--  JWT Introspection response (Since ``2.23.0``) - See :rfc:`9701`
--  Offline access (Since ``2.0.7``)
--  Refresh Tokens (Since ``2.0.7``)
--  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
--  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__ (Since ``2.0.16``)
--  Encrypted JWT (Since ``2.18.0``) - See :rfc:`7516`
+-  PKCE - See :rfc:`7636`
+-  Introspection endpoint - See :rfc:`7662`
+-  JWT Introspection response - See :rfc:`9701`
+-  Offline access
+-  Refresh Tokens
+-  Optional JWT Access Tokens - See :rfc:`9068`
+-  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__
+-  Encrypted JWT - See :rfc:`7516`
 
 Configuration
 -------------
@@ -174,7 +173,7 @@ Basic options
 
 -  **Activation** The user can activate and deactivate a RP. By default, RPs are
    active upon creation.
--  **Public client** (since version ``2.0.4``): Set this RP as public
+-  **Public client**: Set this RP as public
    client, so authentication is not needed on tokens endpoint. Set this for
    mobile apps or native Javascript apps.
 -  **Client ID**: Client ID for this RP
@@ -186,7 +185,7 @@ Basic options
 Exported attributes (claims)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: 2.0.16
+.. tip::
 
    All exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
 
@@ -218,25 +217,25 @@ Options
       standard.
    -  **Force claims to be returned in ID Token**: This options will
       make user attributes from the requested scope appear as ID Token claims
-   -  **Use JWT format for Access Token** (since version ``2.0.12``): When
+   -  **Use JWT format for Access Token**: When
       using this option, Access Tokens will use the JWT format, which means they
       can be verified by external OAuth2.0 resource servers without using the
       Introspection or UserInfo endpoint.
-   -  **Release claims in Access Token** (since version ``2.0.12``): If Access
+   -  **Release claims in Access Token** : If Access
       Tokens are in JWT format, this option lets you release the claims defined
       in the *Extra Claims* section inside the Access Token itself
-   -  **Use refresh tokens** (since version ``2.0.7``): If this option
+   -  **Use refresh tokens**: If this option
       is enabled, LL::NG will issue an *online* Refresh Token that can
       be used to obtain new access tokens as long as the user session
       is still valid. This token is tied to the SSO session: it becomes
       invalid when the user logs out or the session expires
    -  **User attribute**: Session field that will be used as main
       identifier (``sub``). Default value is ``whatToTrace``.
-   -  **Additional audiences** (since version ``2.0.8``): You can
+   -  **Additional audiences**: You can
       specify a space-separated list of audiences that will be added to the
       ID Token audiences, and possibly the access token audiences if the
       access token format is JWT
-   -  **Other RP allowed to exchange access_token** (since version ``2.20.0``):
+   -  **Other RP allowed to exchange access_token**:
       You can specify a space-separated list of Relying-Party allowed to ask
       for a token exchange. See :doc:`OpenID-Connect Token Exchange<oidctokenexchange>`
    -  **Don't insert typ header**: don't add the type header in JWT
@@ -248,8 +247,7 @@ Options
 
 -  **Security**
 
-   -  **Require PKCE** (since version ``2.0.4``): Controls PKCE validation
-      at the Authorization and Token endpoints (see :rfc:`7636`). Available modes:
+   -  **Require PKCE**: Controls PKCE validation at the Authorization and Token endpoints (see :rfc:`7636`). Available modes:
 
       - **Disabled**: PKCE is optional. If provided, it will be validated.
         For confidential clients, ``client_secret`` is required.
@@ -257,15 +255,15 @@ Options
       - **Required**: PKCE is mandatory. Requests without ``code_challenge``
         are rejected at the Authorization endpoint. For confidential clients,
         both PKCE and ``client_secret`` are required.
-      - **PKCE or Secret** (since version ``2.20.0``): For **public clients**,
+      - **PKCE or Secret**: For **public clients**,
         either PKCE or ``client_secret`` is required (at least one). This allows
         the same ``client_id`` to be used by mobile apps (with PKCE) and backend
         services (with secret). For confidential clients, this mode behaves
         like **Disabled** (secret always required, PKCE optional).
-   -  **Invalidate refresh tokens after use** (since version ``2.20.0``): Use
+   -  **Invalidate refresh tokens after use** : Use
       this option to prevent Refresh Tokens from being re-used. A new refresh
       token will be generated every time.
-   -  **Allow offline access** (since version ``2.0.7``): After enabling
+   -  **Allow offline access**: After enabling
       this feature, an application may request the **offline_access**
       scope, and will obtain an *offline* Refresh Token that persists
       even after the user has logged off. Unlike online refresh tokens,
@@ -287,21 +285,19 @@ Options
       tokens**), applications will only receive a refresh token when
       they explicitly request the ``offline_access`` scope. Without
       that scope, no refresh token is issued.
-   -  **Allow Native SSO for Mobile Apps** (since version ``2.21.0``): Allow
+   -  **Allow Native SSO for Mobile Apps**: Allow
       relying party to request a **device_secret**. See
       https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
-   -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
+   -  **Allow OAuth2.0 Password Grant**: Allow the use of
       the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
       This feature only works if you have configured a form-based authentication module.
-   -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
+   -  **Allow OAuth2.0 Client Credentials Grant**: Allow the use of the
       :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
-   -  **Allowed URLs for fetching Request Object**: (since version ``2.17.1``):
-      which URLs may be called by the portal to fetch the request object (see
-      `request_uri
-      <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
+   -  **Allowed URLs for fetching Request Object**: which URLs may be called by the portal to fetch the request object (see
+      `request_uri <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
    -  **Required authentication level**: Required authentication level to
-      access this application. Since ``2.21.0`` this can be a Perl expression.
+      access this application. This can be a Perl expression.
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
    -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint.
       Available methods are:
@@ -310,14 +306,15 @@ Options
       - ``client_secret_basic``: Client ID and secret sent in HTTP Basic header
       - ``client_secret_jwt``: JWT assertion signed with client secret (HMAC)
       - ``private_key_jwt``: JWT assertion signed with client's private key
-      - ``tls_client_auth``: mTLS client certificate authentication (RFC 8705) *(since 3.0.0)*
+      - ``tls_client_auth``: mTLS client certificate authentication (RFC 8705)
 
-   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
+   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests.
+      If **Token endpoint authentication method** is set, it will require the same algorithm
    -  **Require "state" in authorization request**: Require
    -  **Require "nonce" in authorization request**: Require
    -  **userinfo endpoint authentication using header only**:
 
-   -  **mTLS (RFC 8705)** *(since 3.0.0)*
+   -  **mTLS (RFC 8705)**
 
       Configure expected client certificate attributes for mTLS authentication.
       See :ref:`oidc-mtls` for detailed configuration.
@@ -329,7 +326,7 @@ Options
 
 -  **Algorithms**
 
-   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
+   -  **Access Token signature algorithm**: Select
       one of the available public key signature algorithms
    -  **Access Token Encryption key management algorithm**: If Relying-Party require access_token encryption, set here the key management algorithm
    -  **Access Token Encryption content encryption algorithm**: If Relying-Party require access_token encryption, set here the content encryption algorithm
@@ -337,12 +334,11 @@ Options
       (RSXXX) or HMAC (HSXXX) based signature algorithms
    -  **ID Token Encryption key management algorithm**: If Relying-Party require id_token encryption, set here the key management algorithm
    -  **ID Token Encryption content encryption algorithm**: If Relying-Party require id_token encryption, set here the content encryption algorithm
-   -  **UserInfo response format** (since version ``2.0.12``): By default,
-      UserInfo is returned as a simple JSON object. You can also choose to
+   -  **UserInfo response format**: By default, UserInfo is returned as a simple JSON object. You can also choose to
       return it as a JWT, using one of the available signature algorithms.
    -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
-   -  **Introspection response format** (since version ``2.23.0``): By default,
+   -  **Introspection response format**: By default,
       Introspection is returned as a simple JSON object (RFC 7662). You can also choose to
       return it as a JWT, using one of the available signature algorithms (RFC 9701).
    -  **Introspection Encryption key management algorithm**: If Relying-Party require introspection response encryption, set here the key management algorithm (RFC 9701)
@@ -354,8 +350,7 @@ Options
 
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
-   -  **Signing key name**: Since ``2.22.0``, lets you use a
-      :doc:`different key <keys>` for signing tokens. If you specify multiple
+   -  **Signing key name**: Lets you use a :doc:`different key <keys>` for signing tokens. If you specify multiple
       values separated by a comma, the first key will be used for signing, and the
       others will be published in metadata if you use the
       ``/oauth2/jwks?client_id=<clientid>`` endpoint
@@ -376,14 +371,6 @@ Options
       This parameter only applies if offline sessions are enabled.
    -  **refresh_token activity timeout** *(default: none)*: Expiration time
       of inactives refresh tokens. if no value is set, activity isn't tracked.
-
-.. important::
-
-    When enabling **refresh_token activity timeout**, a refresh_token created
-    with a version of LLNG previous to 2.22.0 and never used after update
-    is considered as active *(because it has no activity field)*.
-    Such totally inactive refresh_token will be purged normally at their
-    normal end-of-life. Any use of a refresh_token updates the activity field.
 
 -  **Logout**
 
@@ -507,7 +494,7 @@ Access rule extra variables
 
 When writing your access rules, you can additionally use the following variables:
 
-* ``$_oidc_grant_type`` (since version ``2.0.14``): the grant type being used to
+* ``$_oidc_grant_type``: the grant type being used to
   access this service. Possible values: ``authorizationcode``,
   ``implicit``, ``hybrid``, ``clientcredentials``, ``password``
 
@@ -535,7 +522,7 @@ Resource Owner Password Credentials Grant
 
 The Resource Owner Password Credentials Grant allows you to exchange a user's login and password for an access token. This must be considered a legacy form of authentication, since the Authorization Code web-based flow is prefered for all applications that support it. It can however be useful in some scenarios involving technical accounts that cannot implement a web-based authentication flow.
 
-.. versionchanged:: 2.0.12
+.. note::
 
    When using the :doc:`Choice <authchoice>` authentication module, the *Choice used for password authentication* setting can be used for selecting which authentication choice is used by the Resource Owner Password Credentials Grant. Naturally, the selected choice must be a password-based authentication method (LDAP, DBI, REST, etc.).
 

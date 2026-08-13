@@ -129,8 +129,8 @@ Official Backends                                                    Authenticat
 :doc:`SQL Databases<authdbi>`                                        ✔                                               ✔        ✔
 :doc:`Demonstration<authdemo>`                                       ✔                                               ✔        ✔
 :doc:`Facebook<authfacebook>`                                        ✔                                               ✔
-:doc:`GitHub<authgithub>` [1]_                                       ✔
-:doc:`GPG<authgpg>` [2]_                                             ✔
+:doc:`GitHub<authgithub>`                                            ✔
+:doc:`GPG<authgpg>`                                                  ✔
 :doc:`Kerberos<authkerberos>`                                        ✔
 :doc:`LDAP<authldap>`                                                ✔                                               ✔        ✔
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
@@ -142,7 +142,7 @@ Official Backends                                                    Authenticat
 :doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
 :doc:`Slave<authslave>`                                              ✔                                               ✔
 :doc:`SSL<authssl>`                                                  ✔
-:doc:`Passkeys<authwebauthn>` |beta|                                 ✔
+:doc:`Passkeys<authwebauthn>`                                        ✔
 :doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>`                                    ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
@@ -164,18 +164,19 @@ Obsolete Backends                                                    Authenticat
 ==================================================================== ============== =================
 Second factor (:doc:`documentation<secondfactor>`)                   Authentication Self-registration
 ==================================================================== ============== =================
-:doc:`TOTP<totp2f>` *(Google Authenticator,...)*                     ✔              ✔
+:doc:`TOTP<totp2f>` *(FreeOTP+, Google Authenticator,...)*           ✔              ✔
 :doc:`WebAuthn<webauthn2f>`                                          ✔              ✔
-:doc:`E-mail Second Factor<mail2f>`                                  ✔              [18]_
+:doc:`E-mail Second Factor<mail2f>`                                  ✔              [2]_
 :doc:`Yubico OTP<yubikey2f>`                                         ✔              ✔
-:doc:`External Second Factor<external2f>` *(OTP, SMS,...)*           ✔              [18]_
-:doc:`REST Second Factor<rest2f>`                                    ✔              [18]_
-:doc:`Radius Second Factor<radius2f>`        [3]_                    ✔
-:doc:`Password as second factor<password2f>` [4]_                    ✔              ✔
+:doc:`External Second Factor<external2f>` *(OTP, SMS,...)*           ✔              [2]_
+:doc:`REST Second Factor<rest2f>`                                    ✔              [2]_
+:doc:`Radius Second Factor<radius2f>`                                ✔
+:doc:`Password as second factor<password2f>`                         ✔              ✔
 ==================================================================== ============== =================
 
-    See :doc:`Additional second factors<sfextra>` for configuring several multiple
-    REST, external or e-mail based second factors with different parameters
+
+See :doc:`Additional second factors<sfextra>` for configuring several multiple
+REST, external or e-mail based second factors with different parameters
 
 
 ==================================================================== ==============
@@ -192,7 +193,6 @@ Identity provider
 
 
 .. tip::
-
 
 
     -  All identity provider protocols can be used simultaneously
@@ -269,35 +269,34 @@ Name                                                                 Description
 :doc:`Auto Signin<autosignin>`                                       Sign-in automatically
 :doc:`Brute Force protection<bruteforceprotection>`                  User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
-:doc:`Check DevOps<checkdevops>` [5]_                                Check DevOps handler file
-:doc:`Check HIBP<checkhibp>` [19]_                                   Check Have I Been Pwned
-:doc:`Check entropy<checkentropy>` [21]_                             Check entropy of password
-:doc:`InitializePasswordReset<initializePasswordReset>` [22]_        Initialize Password Reset by mail
+:doc:`Check DevOps<checkdevops>`                                     Check DevOps handler file
+:doc:`Check HIBP<checkhibp>`                                         Check Have I Been Pwned
+:doc:`Check entropy<checkentropy>`                                   Check entropy of password
+:doc:`InitializePasswordReset<initializePasswordReset>`              Initialize Password Reset by mail
 :doc:`Check state<checkstate>`                                       Check state plugin (test page)
-:doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
+:doc:`Check user<checkuser>`                                         Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
-:doc:`Context switching<contextswitching>`  [7]_\                    Switch context other users
-:doc:`CrowdSec<crowdsec>`  [8]_\                                     CrowdSec agent and bouncer
+:doc:`Context switching<contextswitching>`                           Switch context other users
+:doc:`CrowdSec<crowdsec>`                                            CrowdSec agent and bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
-:doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
+:doc:`Decrypt value<decryptvalue>`                                   Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
-:doc:`Find user<finduser>`  [12]_\                                   Search for user account
+:doc:`Find user<finduser>`                                           Search for user account
 :doc:`Force authentication<forcereauthn>`                            Force authentication to access to Portal
-:doc:`Global logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
+:doc:`Global logout<globallogout>`                                   Suggest to close all opened sessions at logout
 :doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
-:doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
-:doc:`NewLocationWarning<newlocationwarning>`  [13]_\                Send an email when user sign in from a new location
+:doc:`Impersonation<impersonation>`                                  Allow users to use another identity
+:doc:`NewLocationWarning<newlocationwarning>`                        Send an email when user sign in from a new location
 :doc:`Notifications system<notifications>`                           Display a message during log in process
 :doc:`Public pages<public_pages>`                                    Enable public pages system
-:doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
-:doc:`Reset certificate by mail<resetcertificate>`  [15]_\           Allow users to reset their certificate
+:doc:`Refresh session API<refreshsessionapi>`                        Plugin that provides an API to refresh a user session
+:doc:`Reset certificate by mail<resetcertificate>`                   Allow users to reset their certificate
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Remember auth choice<rememberauthchoice>` [20]_\               Remember user last authentication choice
+:doc:`Remember auth choice<rememberauthchoice>`                      Remember user last authentication choice
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
-:doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
-:doc:`Web Cron<webcron>` |new|                                       Add API to trigger scheduled tasks
-:doc:`Admin logout server<adminlogout>` |new|                        Add API to permit Session-Explorer to call portal when using "Global logout" *(to call back-channel-logout)*
+:doc:`Web Cron<webcron>`                                             Add API to trigger scheduled tasks
+:doc:`Admin logout server<adminlogout>`                              Add API to permit Session-Explorer to call portal when using "Global logout" *(to call back-channel-logout)*
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
@@ -312,13 +311,13 @@ Handlers are software control agents to be installed on your web servers
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
-Main *(default handler)*                                             ✔          ✔                                                                            ✔                                           :doc:`Partial<nodehandler>` ** [16]_ **                                            ✔
+Main *(default handler)*                                             ✔          ✔                                                                            ✔                                           :doc:`Partial<nodehandler>`  ** [1]_ **                                            ✔
 :doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
 :doc:`CDA<cda>`                                                      ✔          ✔                                                                            ✔                                                                                                                              ✔                                               For Cross Domain Authentication
 :doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)                ✔          ✔                                                                            ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
 :doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)            ✔          ✔                                                                            ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
 :doc:`DevOpsCDA<devopscdahandler>`  (:doc:`SSOaaS<ssoaas>`)          ✔          ✔                                                                            ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`CDA<cda>`
-:doc:`OAuth2<oauth2handler>`  [17]_\                                 ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
+:doc:`OAuth2<oauth2handler>`                                         ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
 :doc:`Secure Token<securetoken>`                                     ✔          ✔                                                                            ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
 :doc:`Service Token<servertoserver>` *(Server-to-Server)*            ✔          ✔                                                                            ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
 :doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                                            ✔
@@ -574,85 +573,12 @@ by your language code):
    ``lemonldap-ng-portal/site/templates/common/mail/XX.json``
 
 .. [1]
-   :doc:`GitHub authentication<authgithub>` is available with LLNG ≥
-   2.0.8
-
-.. [2]
-   :doc:`GPG authentication<authgpg>` is available with LLNG ≥ 2.0.2
-
-.. [3]
-   :doc:`Radius second factor<radius2f>` is available with LLNG ≥ 2.0.6
-
-.. [4]
-   :doc:`Password second factor<password2f>` is available with LLNG ≥ 2.0.16
-
-.. [5]
-   :doc:`Check DevOps file plugin<checkdevops>` is available with LLNG ≥
-   2.0.12
-
-.. [6]
-   :doc:`Check user plugin<checkuser>` is available with LLNG ≥ 2.0.3
-
-.. [7]
-   :doc:`Context switching plugin<contextswitching>` is available with
-   LLNG ≥ 2.0.6
-
-.. [8]
-   :doc:`CrowdSec bouncer <crowdsec>` is available with LLNG ≥ 2.0.12
-
-.. [9]
-   :doc:`Decrypt value plugin<decryptvalue>` is available with LLNG ≥
-   2.0.7
-
-.. [10]
-   :doc:`Global Logout plugin<globallogout>` is available with LLNG ≥
-   2.0.7
-
-.. [11]
-   :doc:`Impersonation plugin<impersonation>` is available with LLNG ≥
-   2.0.3
-
-.. [12]
-   :doc:`Find user plugin<finduser>` is available with LLNG ≥
-   2.0.11
-
-.. [13]
-   :doc:`NewLocationWarning<newlocationwarning>` is available
-   with LLNG ≥ 2.0.14
-
-.. [14]
-   :doc:`Refresh session API plugin<refreshsessionapi>` is available
-   with LLNG ≥ 2.0.7
-
-.. [15]
-   :doc:`Reset certificate by mail plugin<resetcertificate>` is
-   available with LLNG ≥ 2.0.7
-
-.. [16]
    :doc:`Node.js handler<nodehandler>` has not yet reached the same
    level of functionalities
 
-.. [17]
-   :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
-
-.. [18]
+.. [2]
    When configured as an additional second factor, see :ref:`sfextraregister`
 
-.. [19]
-   :doc:`Check HIBP plugin<checkhibp>` is available with LLNG ≥
-   2.0.16
-
-.. [20]
-   :doc:`Remember AuthChoice plugin<rememberauthchoice>` is available with LLNG ≥
-   2.0.15
-
-.. [21]
-   :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
-   2.18.0
-
-.. [22]
-   :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
-   2.18.0
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
@@ -670,17 +596,6 @@ by your language code):
 .. |image54| image:: /icons/neotux.png
 .. |image57| image:: /icons/jabber_protocol.png
 .. |image59| image:: /icons/xeyes.png
-
-.. |beta| image:: /documentation/beta.png
-   :width: 35px
-   :alt: beta
-
-.. |new| image:: /documentation/new.png
-   :alt: new
-
-.. |deprecated| image:: /documentation/deprecated.png
-   :alt: deprecated
-
 
 .. |adfs| image:: applications/microsoft-adfs.png
    :target: applications/adfs.html
@@ -714,3 +629,6 @@ by your language code):
    :target: applications/xwiki.html
 .. |zimbra| image:: applications/zimbra_logo.png
    :target: applications/zimbra.html
+
+.. |deprecated| image:: /documentation/deprecated.png
+   :alt: deprecated

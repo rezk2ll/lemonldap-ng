@@ -29,28 +29,25 @@ Inside this jail, you can access to:
   * checkDate_
   * checkLogonHours_
   * date_
-  * dateToTime_ (|new| in version 2.0.12)
-  * decrypt_ (|new| in version 2.18)
+  * dateToTime_
+  * decrypt_
   * encrypt_
   * groupMatch_
-  * has2f_ (|new| in version 2.0.10)
-  * inDomain_ (|new| in version 2.19.0)
-  * inGroup_ (|new| in version 2.0.8)
-  * inSubnet_ (|new| in version 2.17)
-  * ipInSubnet_ (|new| in version 2.17)
+  * has2f_
+  * inDomain_
+  * inGroup_
+  * inSubnet_
+  * ipInSubnet_
   * isInNet6_
   * iso2unicode_
-  * iso2unicodeSafe_ (|new| in version 2.0.15)
-  * listMatch_ (|new| in version 2.0.7)
-  * subjectid_ (|new| in version 2.17)
+  * iso2unicodeSafe_
+  * listMatch_
+  * subjectid_
   * token_
   * unicode2iso_
-  * unicode2isoSafe_ (|new| in version 2.0.15)
-  * varIsInUri_ (|new| in version 2.0.7)
+  * unicode2isoSafe_
+  * varIsInUri_
 
-
-.. |new| image:: /documentation/new.png
-   :width: 35px
 
 .. tip::
 
@@ -97,7 +94,7 @@ The date format corresponds to LDAP date syntax, for example for the 1st of Marc
 
    20090301000000Z
 
-|new| Since version 2.0.12, the date may end with a differential timezone, 
+The date may end with a differential timezone, 
 for example for the 1st of March 2009 (+0100):
 
 ::
@@ -107,12 +104,9 @@ for example for the 1st of March 2009 (+0100):
 
 Functions parameters:
 
--  **start**: Start date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **end**: End date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **default_access** (optional): Which result to return if **start** and
-   **end** dates are empty
+-  **start**: Start date (GMT unless, a differential timezone is included)
+-  **end**: End date (GMT unless, a differential timezone is included)
+-  **default_access** (optional): Which result to return if **start** and **end** dates are empty
 
 Simple usage example:
 
@@ -236,8 +230,7 @@ encrypt
 
 .. tip::
 
-    Since version 2.0, this function is now compliant with
-    :doc:`Safe jail<safejail>`.
+    This function is now compliant with :doc:`Safe jail<safejail>`.
 
 This function uses the secret key of LL::NG configuration to crypt a data.
 This can be used for anonymizing identifier given to the protected
@@ -291,12 +284,6 @@ Example::
    This test only checks if the user has registered a second factor. Regardless of their **current**
    authentication level. It can be used to simplify second factor activation rules.
 
-
-.. note::
-
-   Before version 2.0.10, you need to use the following syntax ::
-
-      $_2fDevices =~ /"type":\s*"TOTP"/s
 
 inDomain
 ~~~~~~~~

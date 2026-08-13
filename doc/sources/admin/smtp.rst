@@ -19,8 +19,6 @@ Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
 Choosing the SASL mechanism
 ---------------------------
 
-.. versionadded:: 2.23.3
-
 By default, LemonLDAP::NG lets Net::SMTP choose the authentication mechanism
 among all the mechanisms advertised by the server, and the "strongest" one is
 selected. Some servers advertise mechanisms that do not work (``DIGEST-MD5``

@@ -15,8 +15,6 @@ This page shows some examples of LL::NG Command Line Interface. See
 Save/restore configuration
 --------------------------
 
-This part requires LLNG 2.0.5 at least.
-
 Save:
 
 .. code-block:: sh
@@ -31,7 +29,7 @@ Restore:
    # Or
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli restore - <config.json
 
-Rollback (restore previous configuration, *since 2.0.8*):
+Rollback:
 
 .. code-block:: shell
 
@@ -310,14 +308,6 @@ these commands;
 
    openssl req -new -newkey rsa:4096 -keyout saml.key -nodes  -out saml.pem -x509 -days 3650
 
-Fix the certificate key format (you can skip this step if you are
-running >= 2.0.6)
-
-::
-
-   sed -e "s/END PRIVATE/END RSA PRIVATE/" \
-       -e "s/BEGIN PRIVATE/BEGIN RSA PRIVATE/" \
-       -i saml.key
 
 Import them in configuration and activate the SAML issuer
 

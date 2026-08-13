@@ -30,8 +30,7 @@ Let's go
 
 .. note::
 
-   Since LemonLDAP 2.0.9, you don't need the ``--current`` and ``--new`` options
-   when migrating from the default file-based backend. Simply run
+   When migrating from the default file-based backend, just run
    `convertConfig` to migrate from the default configuration backend to the
    currently configured backend.
 

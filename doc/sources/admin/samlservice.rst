@@ -125,10 +125,8 @@ To define keys, you can:
 -  import your own private and public keys (``Replace by file`` input)
 -  generate new public and private keys (``New certificate`` button)
 
-.. versionchanged:: 2.0.10
-
-   A X.509 certificate is now generated instead of a plain public key. It has
-   20 years of validity, and is self signed with the 2048 bit RSA key.
+A X.509 certificate is now generated instead of a plain public key. It has
+20 years of validity, and is self signed with the 2048 bit RSA key.
 
 .. tip::
 
@@ -136,13 +134,10 @@ To define keys, you can:
     password. It will be prompted if you generate keys, else you can set it
     in the ``Private key password``.
 
-.. tip::
-
     You can change default key size by inserting ``defaultNewKeySize = 3072``
     into lemonldap-ng.ini file.
 
 |image1|
-
 
 
 -  **Signature method**: set the signature algorithm
@@ -159,16 +154,9 @@ To define keys, you can:
    only the first declared key will be used for encryption, but all listed keys
    will be published in SAML metadata.
 
-.. versionchanged:: 2.0.10
 
-   The signature method can now be overridden for a SP or IDP. This will only work
-   if you are using a certificate for signature instead of a public key.
-
-
-.. attention::
-
-   If you are running a version under 2.0.10, the choice of a signature
-   algorithm will affect all SP and IDP.
+The signature method can be overridden for a SP or IDP. This will only work
+if you are using a certificate for signature instead of a public key.
 
 
 .. _samlservice-convert-certificate:

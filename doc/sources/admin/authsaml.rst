@@ -132,7 +132,7 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: Signature method for requests sent to this provider
--  **Signing key name**: Since ``2.22.0``. If you want to use a specific
+-  **Signing key name**: If you want to use a specific
    signing key only for requests sent to this IDP, indicate the name of a key
    from the :doc:`key management section <keys>`. If you specify multiple
    values separated by a comma, the first key will be used for signing

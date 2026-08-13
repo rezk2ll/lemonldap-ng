@@ -1,7 +1,7 @@
 Node.js handler
 ===============
 
-Since version 2.0, a beta Node.js handler is available on
+A beta Node.js handler is available on
 `GitHub <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler>`__
 and `NPMJS <https://www.npmjs.com/package/lemonldap-ng-handler>`__.
 

@@ -145,7 +145,7 @@ Security
 
 .. _x5c:
 
-.. versionchanged:: 2.0.16
+.. note::
 
     In order to increase compatibility with some applications, LemonLDAP::NG
     encapsulates the OIDC signing key in a certificate.

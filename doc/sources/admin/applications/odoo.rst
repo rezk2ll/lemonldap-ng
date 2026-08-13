@@ -20,9 +20,6 @@ Make sure you have :doc:`set up LemonLDAP::NG a SAML IDP <../samlservice>`
    format, if this is not the case, you need to :ref:`convert your SAML key to
    a certificate<samlservice-convert-certificate>`)
 
-.. warning::
-   Odoo requires LL::NG 2.0.14 in order to handle RelayState correctly
-
 Configuring Odoo
 ----------------
 

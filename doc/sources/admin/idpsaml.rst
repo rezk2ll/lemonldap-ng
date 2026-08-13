@@ -170,7 +170,7 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: the algorithm used to sign messages sent to this service
--  **Signing key name**: Since ``2.22.0``. If you want to use a specific
+-  **Signing key name**: If you want to use a specific
    signing key only for responses sent to this RP, indicate the name of a key
    from the :doc:`key management section <keys>`. If you specify multiple
    values separated by a comma, the first key will be used for signing
@@ -189,7 +189,7 @@ Security
 -  **Encryption mode**: set the encryption mode for this SP (None, NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP Initiated URL on this SP.
 -  **Required authentication level**: required authentication level to access
-   this SP. Since ``2.21.0`` this can be a Perl expression.
+   this SP. This can be a Perl expression.
 -  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 Federation
