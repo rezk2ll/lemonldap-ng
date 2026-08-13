@@ -11,7 +11,7 @@ Presentation
 ------------
 
 LL::NG can delegate authentication to a CAS server. This requires `Perl
-CAS module <http://sourcesup.cru.fr/projects/perlcas/>`__.
+CAS module <https://metacpan.org/pod/AuthCAS>`__.
 
 
 .. tip::

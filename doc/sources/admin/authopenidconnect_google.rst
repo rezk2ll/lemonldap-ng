@@ -6,7 +6,7 @@ Google
 Presentation
 ------------
 
-Do you we have to present `Google <http://www.google.com>`__? The good
+Do you we have to present `Google <https://www.google.com>`__? The good
 news is that Google is a standard OpenID Provider, and so you can easily
 delegate the authentication of LL::NG to Google:
 https://developers.google.com/identity/protocols/OpenIDConnect

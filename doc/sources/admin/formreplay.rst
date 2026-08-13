@@ -60,7 +60,7 @@ For example:
 -  Target URI: /process.php (if you let this parameter empty, target URI
    is supposed to be the same as form page URI)
 -  jQuery URL:
-   http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if
+   https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if
    you let this parameter empty, jQuery is supposed to be already
    loaded; you can also set ``default`` to point to jQuery URL of LL::NG
    portal)
@@ -86,7 +86,7 @@ Fill values here:
 -  **Form URL**: /login.php
 -  **Target URL**: /process.php
 -  **jQuery URL**:
-   http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js
+   https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js
 -  **jQuery form selector**: #loginForm
 -  **jQuery button selector**: button.validate
 

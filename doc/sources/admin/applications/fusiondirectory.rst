@@ -23,7 +23,7 @@ Go in Configuration and in Login and Session panel. Set:
 -  **Header name**: Auth-User
 
 See also
-https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_configuration#login-and-session
+https://fusiondirectory-user-manual.readthedocs.io/en/latest/fusiondirectory/configuration/configuration.html
 
 LL::NG
 ~~~~~~

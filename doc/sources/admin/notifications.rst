@@ -216,7 +216,7 @@ Parameters for LDAP backend are the same as
    -  To use StartTLS, set ``ldap+tls://server`` and to use LDAPS, set
       ``ldaps://server`` instead of server name.
    -  If you use StartTLS or LDAPS, you can set any of the
-      `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
+      `Net::LDAP <https://metacpan.org/pod/Net::LDAP>`__
       start_tls() options in the URL, such as ``ldap+tls://server/verify=none``
       or ``ldaps://server/cafile=/etc/ssl/ca.pem&sslversion=tlsv1_2``. You can
       also use cafile and capath parameters.

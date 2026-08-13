@@ -12,7 +12,7 @@ Presentation
 
 LL::NG can delegate authentication to Apache, so it is possible to use
 any `Apache authentication
-module <http://httpd.apache.org/docs/current/howto/auth.html>`__, for
+module <https://httpd.apache.org/docs/current/howto/auth.html>`__, for
 example Kerberos, Radius, OTP, etc.
 
 
@@ -62,9 +62,9 @@ Apache
 The Apache configuration depends on the module you choose, you need to
 look at the module documentation, for example:
 
--  `Kerberos <http://modauthkerb.sourceforge.net/>`__
--  `NTLM <http://search.cpan.org/~speeves/Apache2-AuthenNTLM-0.02/AuthenNTLM.pm>`__
--  `Radius <http://freeradius.org/mod_auth_radius/>`__
+-  `Kerberos <https://modauthkerb.sourceforge.net/>`__
+-  `NTLM <https://metacpan.org/pod/Apache2::AuthenNTLM>`__
+-  `Radius <https://freeradius.org/mod_auth_radius/>`__
 -  ...
 
 Tips

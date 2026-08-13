@@ -6,7 +6,7 @@ OBM
 Presentation
 ------------
 
-`OBM <http://obm.org>`__ is enterprise-class messaging and collaboration
+`OBM <https://obm.org>`__ is enterprise-class messaging and collaboration
 platform for workgroup or enterprises with many thousands users. OBM
 includes Groupware, messaging server, CRM, LDAP, Windows Domain,
 smartphone and PDA synchronization…

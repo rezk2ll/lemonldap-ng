@@ -10,8 +10,8 @@ Authentication Users Password
 Presentation
 ------------
 
-`Facebook <http://facebook.com>`__ is a famous social network service.
-Facebook uses `OAuth2 <http://en.wikipedia.org/wiki/OAuth2>`__ protocol
+`Facebook <https://facebook.com>`__ is a famous social network service.
+Facebook uses `OAuth2 <https://en.wikipedia.org/wiki/OAuth2>`__ protocol
 to allow applications to reuse its own authentication process (it means,
 if your are connected to Facebook, other applications can trust Facebook
 and let you in).

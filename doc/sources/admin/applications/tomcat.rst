@@ -12,7 +12,7 @@ Apache Tomcat
 Presentation
 ------------
 
-`Apache Tomcat <http://tomcat.apache.org/>`__ is an open source software
+`Apache Tomcat <https://tomcat.apache.org/>`__ is an open source software
 implementation of the Java Servlet and JavaServer Pages technologies.
 
 As J2EE servlet container, Tomcat provides standard security feature,
@@ -119,5 +119,5 @@ Configure attributes:
 
     For debugging, this valve can print some helpful information
     in debug level. See `how configure logging in
-    Tomcat <http://tomcat.apache.org/tomcat-5.5-doc/logging.html>`__ .
+    Tomcat <https://tomcat.apache.org/tomcat-5.5-doc/logging.html>`__ .
 

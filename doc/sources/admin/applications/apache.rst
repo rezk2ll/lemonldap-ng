@@ -7,7 +7,7 @@ Apache HTTP Server
 Presentation
 ------------
 
-The `Apache HTTP Server <http://httpd.apache.org/>`__ is a free and open-source
+The `Apache HTTP Server <https://httpd.apache.org/>`__ is a free and open-source
 cross-platform web server software, released under the terms of Apache License
 2.0.
 

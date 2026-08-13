@@ -7,7 +7,7 @@ HTTP header
 -----------
 
 Read the following documentation:
-http://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm
+https://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm
 
 SAML
 ----

@@ -118,7 +118,7 @@ Edit the portal virtual host or your secondary vhost to enable SSL double authen
    SSLUserName SSL_CLIENT_S_DN_CN
 
 All SSL options are documented in `Apache mod_ssl
-page <http://httpd.apache.org/docs/current/mod/mod_ssl.html>`__.
+page <https://httpd.apache.org/docs/current/mod/mod_ssl.html>`__.
 
 Here are the main options used by LL::NG:
 
@@ -355,7 +355,7 @@ limitation.
    <!--<script src="./jquery-ui-1.8-rass.js"   type="text/javascript">  </script>-->
 
 
-   <a href="http://www.google.fr" class="enteteBouton" id="continuerButton"><img src=authent.png></a>
+   <a href="https://www.google.fr" class="enteteBouton" id="continuerButton"><img src=authent.png></a>
    <script>
    $('.enteteBouton').click( function (e) {
      var b=navigator.userAgent.toLowerCase();

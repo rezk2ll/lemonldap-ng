@@ -9,7 +9,7 @@ an LDAP directory.
 
     This module is not part of LL::NG distribution, and can
     be found on CPAN:
-    `Apache::Session::LDAP <http://search.cpan.org/dist/Apache-Session-LDAP/>`__.
+    `Apache::Session::LDAP <https://metacpan.org/dist/Apache-Session-LDAP>`__.
 
 
 .. tip::
@@ -30,7 +30,7 @@ Setup
 -----
 
 Go in the Manager and set the LDAP session module
-(`Apache::Session::LDAP <http://search.cpan.org/dist/Apache-Session-LDAP/>`__)
+(`Apache::Session::LDAP <https://metacpan.org/dist/Apache-Session-LDAP>`__)
 in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 ``Apache::Session module`` and add the following parameters (case
 sensitive):

@@ -88,10 +88,9 @@ For example, you can enter the following command on your local computer:
 Using nip.io (or other DNS wildcard services)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you cannot edit /etc/hosts or your DNS zone, don't give up yet, you can use services such as `nip.io`_, `xip.io`_, `sslip.io`_ or others.
+If you cannot edit /etc/hosts or your DNS zone, don't give up yet, you can use services such as `nip.io`_, `sslip.io`_ or others.
 
-.. _nip.io: http://nip.io/
-.. _xip.io: http://xip.io/
+.. _nip.io: https://nip.io/
 .. _sslip.io: https://sslip.io
 
 For example, if your server IP is 192.168.12.13, you can use 192-168-12-13.nip.io as your SSO domain:
@@ -106,7 +105,7 @@ For example, if your server IP is 192.168.12.13, you can use 192-168-12-13.nip.i
 
 .. warning::
 
-   nip.io, xip.io or any DNS wildcard services mentionned in this section are not affiliated with the LemonLDAP::NG project in any way. These services will receive DNS requests that will allow them to know your test server's IP address. If this is an issue for you, do not use these services.
+   nip.io, sslip.io or any DNS wildcard services mentionned in this section are not affiliated with the LemonLDAP::NG project in any way. These services will receive DNS requests that will allow them to know your test server's IP address. If this is an issue for you, do not use these services.
 
 Run
 ---

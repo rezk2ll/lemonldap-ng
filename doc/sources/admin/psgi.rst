@@ -1,7 +1,7 @@
 Advanced PSGI usage
 ===================
 
-LL::NG is built on `Plack <http://plackperl.org/>`__, so it can be used
+LL::NG is built on `Plack <https://plackperl.org/>`__, so it can be used
 with any compatible server:
 
 -  `Starman <https://metacpan.org/pod/starman>`__
@@ -9,7 +9,7 @@ with any compatible server:
 -  `Twiggy::Prefork <https://metacpan.org/pod/Twiggy::Prefork>`__
 -  `Feersum <https://metacpan.org/pod/feersum>`__
 -  uWSGI using `uWSGI PSGI
-   plugin <http://uwsgi-docs.readthedocs.io/en/latest/Perl.html>`__
+   plugin <https://uwsgi-docs.readthedocs.io/en/latest/Perl.html>`__
 -  **Alternative**: :doc:`Node.js handler<nodehandler>` can be used as
    FastCGI server, only for application protection
 

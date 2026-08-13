@@ -21,7 +21,7 @@ This works with every LDAP v2 or v3 server, including
 :doc:`Active Directory<authad>`.
 
 LL::NG is compatible with `LDAP password
-policy <https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt>`__:
+policy <https://datatracker.ietf.org/doc/html/draft-behera-ldap-password-policy>`__:
 
 -  LDAP server can check password strength, and LL::NG portal will
    display correct errors (password too short, password in history,
@@ -77,7 +77,7 @@ Connection
    -  To use StartTLS, set ``ldap+tls://server`` and to use LDAPS, set
       ``ldaps://server`` instead of server name.
    -  If you use StartTLS or LDAPS, you can set any of the
-      `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
+      `Net::LDAP <https://metacpan.org/pod/Net::LDAP>`__
       start_tls() options in the URL, such as ``ldap+tls://server/verify=none``
       or ``ldaps://server/cafile=/etc/ssl/ca.pem&sslversion=tlsv1_2``. You can
       also use cafile and capath parameters.
@@ -100,7 +100,7 @@ Connection
 -  **Version**: LDAP protocol version.
 -  **Binary attributes**: Regular expression matching binary attributes
    (see
-   `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
+   `Net::LDAP <https://metacpan.org/pod/Net::LDAP>`__
    documentation).
 -  **CA file path**: This allows you to override the default system-wide
    certificate authorities by giving a single file containing the CA used by the
