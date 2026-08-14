@@ -38,18 +38,6 @@ displayError = function(j, status, err) {
 
 // Delete function (launched by "delete" button)
 delete2F = function(device, epoch, prefix) {
-  if (!prefix) {
-    if (device === 'UBK') {
-      prefix = 'yubikey';
-    } else if (device === 'TOTP') {
-      prefix = 'totp';
-    } else if (device === 'WebAuthn') {
-      prefix = 'webauthn';
-    } else {
-      // Falling back is not likely to be very successful...
-      prefix = device.toLowerCase();
-    }
-  }
   return $.ajax({
     type: "POST",
     url: `${scriptname}2fregisters/${prefix}/delete`,
