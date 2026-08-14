@@ -10,7 +10,7 @@ by the Handler on the physical server hosting the Handler, and not on
 other servers where the Handler is not installed.
 
 Apache `SetEnvIf
-module <http://httpd.apache.org/docs/current/mod/mod_setenvif.html>`__
+module <https://httpd.apache.org/docs/current/mod/mod_setenvif.html>`__
 will let you transform the Auth-User HTTP header in ``REMOTE_USER``
 environment variable:
 

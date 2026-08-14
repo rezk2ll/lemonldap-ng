@@ -35,7 +35,7 @@ saml in AWX, you can do it with your pki or with openssl on your machine
    openssl req -x509 -newkey rsa:4096 -keyout saml-awx.key -out saml-awx.crt -days 3650 -nodes
 
 LemonLDAP::NG SAML Certificate
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 AWX need a certificate for the IDP signature, a public key won't work.
 You can either just generate a certificate from the private key and put

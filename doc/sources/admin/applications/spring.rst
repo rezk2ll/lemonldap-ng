@@ -7,7 +7,7 @@ Presentation
 ------------
 
 `Spring
-Security <http://static.springsource.org/spring-security/site/>`__ is
+Security <https://static.springsource.org/spring-security/site/>`__ is
 the new ACEGI name. This is a well known security framework for J2EE
 applications.
 
@@ -18,7 +18,7 @@ Configuration
 -------------
 
 You can find all suitable information here:
-http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html
+https://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html
 
 To summarize, to get the user connected through the ``Auth-User`` HTTP
 Header, use this Sping Security configuration:

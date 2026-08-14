@@ -30,6 +30,5 @@ Advanced features
    configtraefik
    configcaddy
    installtarball
-   installsles
    nodehandler
    configplack

@@ -6,15 +6,15 @@ Drupal
 Presentation
 ------------
 
-`Drupal <http://drupal.org>`__ is a CMS written in PHP. It can works
+`Drupal <https://drupal.org>`__ is a CMS written in PHP. It can works
 with external modules to extends its functionalities. One of this module
 can be used to delegate authentication server to the web server:
-`Webserver Auth <http://drupal.org/project/Webserver_auth>`__.
+`Webserver Auth <https://drupal.org/project/Webserver_auth>`__.
 
 Installation
 ------------
 
-Install `Webserver Auth <http://drupal.org/project/Webserver_auth>`__
+Install `Webserver Auth <https://drupal.org/project/Webserver_auth>`__
 module, by downloading it, and unarchive it in the drupal modules/
 directory.
 
@@ -118,7 +118,7 @@ anonymous access will be allowed.
     unprotect rule only works on URL patterns.
 
 You can create a special virtual host and use `Apache rewrite
-module <http://httpd.apache.org/docs/current/mod/mod_rewrite.html>`__ to
+module <https://httpd.apache.org/docs/current/mod/mod_rewrite.html>`__ to
 switch between open and protected hosts:
 
 .. code-block:: apache

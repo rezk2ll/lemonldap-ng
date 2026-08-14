@@ -186,7 +186,7 @@ Apache2 logger
 The log level can be set with Apache ``LogLevel`` parameter. It can be
 configured globally, or inside a virtual host.
 
-See http://httpd.apache.org/docs/current/mod/core.html#loglevel for more
+See https://httpd.apache.org/docs/current/mod/core.html#loglevel for more
 information.
 
 Syslog

@@ -6,7 +6,7 @@ Bugzilla
 Presentation
 ------------
 
-`Bugzilla <http://www.bugzilla.org>`__ is server software designed to
+`Bugzilla <https://www.bugzilla.org>`__ is server software designed to
 help you manage software development.
 
 Bugzilla can authenticate a user with HTTP headers, and auto-create its

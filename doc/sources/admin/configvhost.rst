@@ -86,7 +86,7 @@ Same with remote server configured with the same host name:
     The ``ProxyPreserveHost`` directive will forward the Host header
     to the protected application. To learn more about using Apache as
     reverse-proxy, see `Apache
-    documentation <http://httpd.apache.org/docs/current/mod/mod_proxy.html>`__.
+    documentation <https://httpd.apache.org/docs/current/mod/mod_proxy.html>`__.
 
 
 

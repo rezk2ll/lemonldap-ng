@@ -6,7 +6,7 @@ Sympa
 Presentation
 ------------
 
-`Sympa <http://www.sympa.org>`__ is a mailing list manager.
+`Sympa <https://www.sympa.community/>`__ is a mailing list manager.
 
 To configure SSO with Sympa, you have the choice between:
   * CAS

@@ -3,24 +3,22 @@ Handler libraries architecture
 
 Handlers are build on rows of modules:
 
--  Applications or launchers that get the request and choose the right
-   type *(Main, AuthBasic, ZimbraPreAuth,...)* and launch it *(may not
-   inherits from other Handler::\* modules)*
--  buildAndLoadType function wrappes "type" library and platform "Main" (may all
-   inherits from Platform::Main)
+-  Applications or launchers that get the request and choose the right type *(Main, AuthBasic, ZimbraPreAuth,...)*
+   and launch it *(may not inherits from other Handler::\* modules)*
+-  buildAndLoadType function wrappes "type" library and platform "Main" (may all inherits from Platform::Main)
 -  Library types if needed *(may inherit from Main)*
 -  Main: the main handler library
 
 Overview of Handler packages
 ----------------------------
 
-=============================================================================== ============  =========== ====
-Usage                                                                           Platform      Types       Main
-=============================================================================== ============  =========== ====
-Apache2 protection                                                              ApacheMP2     Lib::<type> Main
-Plack servers protection or Nginx/Traefik/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server Server       
-:doc:`Self protected applications<selfmadeapplication>`                         PSGI          
-=============================================================================== ============  =========== ====
+=============================================================================== =============  =========== ====
+Usage                                                                           Platform       Types       Main
+=============================================================================== =============  =========== ====
+Apache2 protection                                                              ApacheMP2      Lib::<type> Main
+Plack servers protection or Nginx/Traefik/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server Server
+:doc:`Self protected applications<selfmadeapplication>`                         PSGI
+=============================================================================== =============  =========== ====
 
 Types are:
 

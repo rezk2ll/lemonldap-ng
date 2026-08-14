@@ -53,7 +53,7 @@ Configuration
 -------------
 
 Main LemonLDAP::NG structure
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in Manager, and:
 
@@ -63,7 +63,7 @@ Go in Manager, and:
    ``Advanced Parameters`` » ``Security`` » ``Trusted domains``
 
 Secondary LemonLDAP::NG structure
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure the portal to use the remote LemonLDAP::NG structure.
 

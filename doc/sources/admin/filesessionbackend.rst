@@ -11,7 +11,7 @@ Setup
 -----
 
 In the manager: set
-"`Apache::Session::File <http://search.cpan.org/perldoc?Apache::Session::File>`__"
+"`Apache::Session::File <https://metacpan.org/pod/Apache::Session::File>`__"
 in "General parameters » Sessions » Session storage » Apache::Session
 module" and add the following parameters (case sensitive):
 

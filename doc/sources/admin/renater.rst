@@ -58,7 +58,7 @@ With configuration CLI:
 Add your SP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to `Renater registration portal <https://federation.renater.fr/registry>`__ and register your SP on the Renater federation.
+Go to `Renater registration portal <https://registry.federation.renater.fr/>`__ and register your SP on the Renater federation.
 
 .. attention::
 
@@ -136,7 +136,7 @@ With configuration CLI:
 Add your IDP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Go to `Renater registration portal <https://federation.renater.fr/registry>`__ and register your IDP on the Renater federation.
+Go to `Renater registration portal <https://registry.federation.renater.fr/>`__ and register your IDP on the Renater federation.
 
 Create the SP template
 ~~~~~~~~~~~~~~~~~~~~~~

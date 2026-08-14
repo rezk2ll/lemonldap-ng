@@ -78,7 +78,7 @@ To apply changes:
    gitlab-ctl reconfigure
 
 LemonLDAP::NG configuration
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We suppose LemonLDAP::NG is configured as SAML IDP, and that you converted the
 public key into a certificate for SAML signature. You must enable the
@@ -165,7 +165,7 @@ In ``/etc/gitlab/gitlab.rb``
 .. _llng-configuration-1:
 
 LemonLDAP::NG configuration
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add an OpenID Connect RP to LemonLDAP::NG
 

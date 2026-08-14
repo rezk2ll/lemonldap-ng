@@ -6,7 +6,7 @@ Cornerstone On Demand
 Presentation
 ------------
 
-`CornerStone On Demand (CSOD) <http://www.cornerstoneondemand.com/>`__
+`CornerStone On Demand (CSOD) <https://www.cornerstoneondemand.com/>`__
 allows one to use SAML to authenticate users. It works by default with
 IDP intiated mechanism, but can works with the standard SP initiated
 cinematic.

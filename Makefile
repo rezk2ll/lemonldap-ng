@@ -469,7 +469,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
 			$(MINIFIER) `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
 		else \
 			cd `dirname $*`; \
-			$(MINIFIER) `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
+			$(MINIFIER) `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map url="'"`basename $*`".min.js.map'" -o `basename $*`.min.js; \
 		fi; \
 	else \
 		echo "Copying $*.js (no JS minifier available)"; \

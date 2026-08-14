@@ -10,8 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LemonLDAP::NG can delegate authentication to a CAS server. This requires `Perl
-CAS module <http://sourcesup.cru.fr/projects/perlcas/>`__.
+LemonLDAP::NG can delegate authentication to a CAS server.
 
 
 .. tip::

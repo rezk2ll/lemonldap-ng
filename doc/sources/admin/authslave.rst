@@ -53,12 +53,12 @@ Exported Variables
 
 You have then to declare HTTP headers exported by the main SSO. Example :
 
-================= ========================
+======================== ========================
 Key (LemonLDAP::NG name) Value (HTTP header name)
-================= ========================
-uid               Auth-User
-mail              User-Email
-================= ========================
+======================== ========================
+uid                      Auth-User
+mail                     User-Email
+======================== ========================
 
 Example
 ~~~~~~~

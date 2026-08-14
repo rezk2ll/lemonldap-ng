@@ -91,7 +91,7 @@ available:
 .. tip::
 
     Packages from `Debian
-    repository <http://packages.debian.org/search?keywords=lemonldap-ng>`__
+    repository <https://packages.debian.org/search?keywords=lemonldap-ng>`__
     may not be up to date but are **security-maintained** by `Debian
     Security Team <https://security-team.debian.org/>`__ for "stable"
     release and `LTS team <https://www.debian.org/lts/>`__ for "oldstable"

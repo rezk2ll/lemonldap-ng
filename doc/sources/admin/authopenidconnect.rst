@@ -120,7 +120,7 @@ Then in ``General Parameters`` > ``Authentication modules`` >
    response) in seconds (default: 600)
 
 Register LemonLDAP::NG to an OpenID Connect Provider
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To register LemonLDAP::NG, you will need to give some information like
 application name or logo.
@@ -156,7 +156,7 @@ After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LemonLDAP::NG.
 
 Declare the OpenID Connect Provider in LemonLDAP::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, select node ``OpenID Connect Providers`` and click on
 ``Add OpenID Connect Provider``. Set a technical name (without space or

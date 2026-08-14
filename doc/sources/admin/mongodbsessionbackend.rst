@@ -18,10 +18,10 @@ Setup
 
 Install and launch a `MongoDB server <https://www.mongodb.org/>`__.
 Install
-`Apache::Session::MongoDB <http://search.cpan.org/perldoc?Apache::Session::MongoDB>`__
+`Apache::Session::MongoDB <https://metacpan.org/pod/Apache::Session::MongoDB>`__
 Perl module (version ⩾ 0.15 required). You also need a recent version of
 `Perl MongoDB
-client <http://search.cpan.org/~mongodb/MongoDB-v1.2.2/>`__ (version ⩾
+client <https://metacpan.org/pod/MongoDB>`__ (version ⩾
 1.00 required).
 
 For Debian, you can install mongodb module and Apache::Session module with:
@@ -40,7 +40,7 @@ For CentOS:
 
 
 In the manager: set
-`Apache::Session::MongoDB <http://search.cpan.org/perldoc?Apache::Session::MongoDB>`__
+`Apache::Session::MongoDB <https://metacpan.org/pod/Apache::Session::MongoDB>`__
 in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 ``Apache::Session module`` and add the following parameters (case
 sensitive):

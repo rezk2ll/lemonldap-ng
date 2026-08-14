@@ -6,7 +6,7 @@ Pro Santé Connect
 Presentation
 ------------
 
-`Pro Santé Connect <https://tech.esante.gouv.fr/outils-services/pro-sante-connect-e-cps/presentation-generale>`__ is
+`Pro Santé Connect <https://esante.gouv.fr/produits-services/pro-sante-connect>`__ is
 a French identity provider for healthcare professionals. It relies on OpenID Connect protocol.
 
 Register on Pro Santé Connect
@@ -196,7 +196,7 @@ directly in configuration to avoid requests to reload them.
 
 Go in ``Exported attributes`` to choose which attributes you want to collect.
 Read the technical documentation to know available attributes:
-https://tech.esante.gouv.fr/outils-services/pro-sante-connect-e-cps/documentation-technique
+https://esante.gouv.fr/ens/offre/pro-sante-connect/documentation-technique
 
 Now go in ``Options``:
 

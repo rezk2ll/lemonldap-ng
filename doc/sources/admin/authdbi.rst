@@ -22,7 +22,7 @@ backend:
 -  ...
 
 Indeed, any `Perl DBD
-driver <http://search.cpan.org/search?query=DBD%3A%3A&mode=module>`__
+driver <https://metacpan.org/search?q=DBD>`__
 can be used.
 
 Schema

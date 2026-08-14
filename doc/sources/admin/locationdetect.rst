@@ -36,7 +36,7 @@ Create an account on `<https://www.maxmind.com/en/home>`__ and put credentials i
 .. code-block:: shell
 
     # Enter your account ID and license key below. These are available from
-    # https://www.maxmind.com/en/my_license_key. If you are only using free
+    # https://www.maxmind.com/en/accounts/current/license-key. If you are only using free
     # GeoLite databases, do not uncomment these lines.
     AccountID 111111
     LicenseKey xxxxxx

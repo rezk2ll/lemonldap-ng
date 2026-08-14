@@ -6,7 +6,7 @@ Dokuwiki
 Presentation
 ------------
 
-`DokuWiki <http://www.dokuwiki.org/>`__ is a standards compliant, simple
+`DokuWiki <https://www.dokuwiki.org/>`__ is a standards compliant, simple
 to use Wiki, mainly aimed at creating documentation of any kind. It is
 targeted at developer teams, workgroups and small companies. It has a
 simple but powerful syntax which makes sure the data files remain

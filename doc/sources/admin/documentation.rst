@@ -112,13 +112,13 @@ The LemonLDAP::NG development team provides packages for the latest version of
 LemonLDAP::NG directly in `EPEL <https://docs.fedoraproject.org/en-US/epel/>`__
 repositories.
 
-===========  ================== ========= ============ ==============
-N°           LemonLDAP::NG version     Secured   Maintenance  End of life
-===========  ================== ========= ============ ==============
-*8*          *latest*           |clean|   LemonLDAP::NG Team  *June 2029*
-*9*          *latest*           |clean|   LemonLDAP::NG Team  *June 2032*
-*10*         *latest*           |clean|   LemonLDAP::NG Team  *June 2035*
-===========  ================== ========= ============ ==============
+===========  ===================== ========= ============= =================
+N°           LemonLDAP::NG version Secured   Maintenance   End of life
+===========  ===================== ========= ============= =================
+*8*          *latest*              |clean|   LemonLDAP::NG Team  *June 2029*
+*9*          *latest*              |clean|   LemonLDAP::NG Team  *June 2032*
+*10*         *latest*              |clean|   LemonLDAP::NG Team  *June 2035*
+===========  ===================== ========= ============= =================
 
 
 Bug report
@@ -134,8 +134,6 @@ Development
 -  `Bugtracker <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>`__
 -  `Source
    code <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tree/master>`__
--  `Nightly trunk builds <http://lemonldap-ng.ow2.io/lemonldap-ng/>`__
-   *(for Debian or Ubuntu,* **really unstable** *)*
 -  Git access:
 
 ::
@@ -145,13 +143,13 @@ Development
 -  CPAN test reports:
 
    -  `LemonLDAP::NG
-      Common <http://www.cpantesters.org/distro/L/Lemonldap-NG-Common.html>`__
+      Common <https://matrix.cpantesters.org/?dist=Lemonldap-NG-Common>`__
    -  `LemonLDAP::NG
-      Handler <http://www.cpantesters.org/distro/L/Lemonldap-NG-Handler.html>`__
+      Handler <https://matrix.cpantesters.org/?dist=Lemonldap-NG-Handler>`__
    -  `LemonLDAP::NG
-      Portal <http://www.cpantesters.org/distro/L/Lemonldap-NG-Portal.html>`__
+      Portal <https://matrix.cpantesters.org/?dist=Lemonldap-NG-Portal>`__
    -  `LemonLDAP::NG
-      Manager <http://www.cpantesters.org/distro/L/Lemonldap-NG-Manager.html>`__
+      Manager <https://matrix.cpantesters.org/?dist=Lemonldap-NG-Manager>`__
 
 Other
 -----

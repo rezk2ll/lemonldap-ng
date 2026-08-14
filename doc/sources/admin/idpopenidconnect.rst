@@ -74,7 +74,7 @@ and configure:
 
 
 Configuration of LemonLDAP::NG in Relying Party
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each Relying Party has its own configuration way. LemonLDAP::NG exposes
 its OpenID Connect metadata to help clients configuration.

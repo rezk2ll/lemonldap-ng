@@ -31,7 +31,7 @@ https://auth.domain.com/?openidconnectcallback=1.
 You will then get a ``client_id`` and a ``client_secret``.
 
 Declare France Connect in your LemonLDAP::NG server
---------------------------------------------
+~~~~~~~--------------------------------------------
 
 Go in Manager and create a new OpenID Connect provider. You can call it
 ``france-connect`` for example.

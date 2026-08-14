@@ -9,7 +9,7 @@ LemonLDAP::NG can be used as a CAS server. It can allow one to federate LemonLDA
 -  Another :doc:`CAS authentication<authcas>` LemonLDAP::NG provider
 -  Any CAS consumer
 
-LemonLDAP::NG is compatible with the `CAS protocol <https://apereo.github.io/cas/6.5.x/index.html>`__
+LemonLDAP::NG is compatible with the `CAS protocol <https://apereo.github.io/cas/development/protocol/CAS-Protocol.html>`__
 versions 1.0, 2.0 and part of 3.0 (attributes exchange).
 
 Configuration
