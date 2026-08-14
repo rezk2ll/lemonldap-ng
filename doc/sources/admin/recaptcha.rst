@@ -12,7 +12,7 @@ for more.
 Configuration
 -------------
 
-Configure captcha like :doc:`LLNG internal captcha<captcha>` but use a
+Configure captcha like :doc:`LemonLDAP::NG internal captcha<captcha>` but use a
 "custom captcha module", set:
 
 - **Captcha module** to "``::Captcha::ReCaptcha``" or "``::Captcha::ReCaptcha3``" for version 3

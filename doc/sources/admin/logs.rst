@@ -61,7 +61,7 @@ choose between:
 You can also modify these values in each lemonldap-ng.ini section to
 have different values for portal, manager and handlers.
 
-Therefore, LLNG provides a username that can be used by web servers in
+Therefore, LemonLDAP::NG provides a username that can be used by web servers in
 their access logs. To configure the user identifier to write into access
 logs, go to Manager, ``General Parameters`` > ``Logging`` >
 ``REMOTE_USER``.
@@ -142,10 +142,10 @@ Default loggers
 ---------------
 
 -  Apache handlers use by default Apache2 logger. This logger can not be
-   used for other LLNG components
--  Except when launched by LLNG FastCGI server *(used by Nginx)*, Portal
+   used for other LemonLDAP::NG components
+-  Except when launched by LemonLDAP::NG FastCGI server *(used by Nginx)*, Portal
    and Manager use Std logger by default
--  All components launched by LLNG FastCGI server use Syslog by default
+-  All components launched by LemonLDAP::NG FastCGI server use Syslog by default
 
 Log levels
 ----------
@@ -155,7 +155,7 @@ Technical log levels
 
 -  **error** is used for problems that must be reported to administrator
    and needs an action. In this case, some features may not work
--  **warn** is used for problems that do not block LLNG features but
+-  **warn** is used for problems that do not block LemonLDAP::NG features but
    should be solved
 -  **notice** is used for actions that must be logged
 -  **info** displays some technical information
@@ -228,18 +228,18 @@ Default values:
 .. code-block:: ini
 
    log4perlConfFile   = /etc/log4perl.conf
-   log4perlLogger     = LLNG
-   log4perlUserLogger = LLNGuser
+   log4perlLogger     = LemonLDAP::NG
+   log4perlUserLogger = LemonLDAP::NGuser
 
 
 Sample ``log4perl.conf`` file
 
 .. code::
 
-    log4perl.logger.LLNG = DEBUG, Syslog
-    log4perl.logger.LLNGuser = INFO, Syslog
+    log4perl.logger.LemonLDAP::NG = DEBUG, Syslog
+    log4perl.logger.LemonLDAP::NGuser = INFO, Syslog
     log4perl.appender.Syslog = Log::Dispatch::Syslog
-    log4perl.appender.Syslog.ident = LLNG
+    log4perl.appender.Syslog.ident = LemonLDAP::NG
     log4perl.appender.Syslog.layout = PatternLayout
     log4perl.appender.Syslog.layout.ConversionPattern = [%p] %m
 
@@ -306,7 +306,7 @@ Async options
     heavily loaded systems. To avoid this, you can use an asynchronous
     mechanism.
 
-LLNG proposes 2 options:
+LemonLDAP::NG proposes 2 options:
 
 * use a :ref:`transitional directory to store logs formated for Loki<lokideferdir>`.
 

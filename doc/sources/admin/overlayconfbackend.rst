@@ -2,7 +2,7 @@ Overlay configuration backend
 =============================
 
 This configuration backend permits one to store part of the configuration in
-local files. For example you can use this to store secrets outside LLNG
+local files. For example you can use this to store secrets outside LemonLDAP::NG
 configuration.
 
 lemonldap-ng.ini example:

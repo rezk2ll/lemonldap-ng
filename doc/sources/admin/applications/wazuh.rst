@@ -58,9 +58,9 @@ This configuration must be present in ``/usr/share/wazuh-indexer/opensearch-secu
             challenge: true
             config:
             idp:
-                # LLNG SAML metadata
+                # LemonLDAP::NG SAML metadata
                 metadata_file: '/usr/share/wazuh-indexer/opensearch-security/idp.wazuh.xml'
-                # URL of LLNG metadata
+                # URL of LemonLDAP::NG metadata
                 entity_id: "https://LLNG_DOMAIN/saml/metadata"
             sp:
                 entity_id: wazuh-saml

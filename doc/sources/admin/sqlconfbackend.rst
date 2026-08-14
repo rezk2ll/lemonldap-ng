@@ -152,7 +152,7 @@ Patroni support
 
 If you use a PostgreSQL cluster based on Patroni, you can add the list of
 Patroni API urls to get a native high-availability without needing any
-load-balancer. In case of error, LLNG will try to get the Patroni leader
+load-balancer. In case of error, LemonLDAP::NG will try to get the Patroni leader
 and update its "dbiChain":
 
 .. code-block:: ini
@@ -172,13 +172,13 @@ and update its "dbiChain":
 Optional Patroni parameters:
 
 - **patroniTimeout**: Timeout in seconds for Patroni API requests (default: 3)
-- **patroniCacheTTL**: Time-to-live in seconds for the cached leader information. If all Patroni APIs are temporarily unavailable, LLNG will use the last known leader if the cache is still valid (default: 60)
-- **patroniCircuitBreakerDelay**: Circuit breaker delay in seconds. When Patroni API requests fail, LLNG will wait this amount of time before retrying, using the cached leader in the meantime (default: 30)
+- **patroniCacheTTL**: Time-to-live in seconds for the cached leader information. If all Patroni APIs are temporarily unavailable, LemonLDAP::NG will use the last known leader if the cache is still valid (default: 60)
+- **patroniCircuitBreakerDelay**: Circuit breaker delay in seconds. When Patroni API requests fail, LemonLDAP::NG will wait this amount of time before retrying, using the cached leader in the meantime (default: 30)
 
 Alternative: DBD::Patroni *(use with caution)*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As an alternative to LLNG's native Patroni support, you can use the
+As an alternative to LemonLDAP::NG's native Patroni support, you can use the
 `DBD::Patroni <https://metacpan.org/dist/DBD-Patroni>`_ Perl driver. This
 driver wraps DBD::Pg and handles Patroni leader discovery transparently at
 the DBI level.
@@ -193,7 +193,7 @@ the DBI level.
 
 - Automatic query routing: SELECT queries go to replicas, write queries to the leader
 - Load balancing modes: round_robin, random, or leader_only
-- Works with the standard CDBI backend (no LLNG-specific code needed)
+- Works with the standard CDBI backend (no LemonLDAP::NG-specific code needed)
 
 Installation:
 

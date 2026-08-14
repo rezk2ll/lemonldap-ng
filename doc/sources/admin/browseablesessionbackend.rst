@@ -41,8 +41,8 @@ List of fields to index by session type
 .. [#] ``user`` is used by :doc:`resetpassword`.
 .. [#] ``mail`` is used by :doc:`register`.
 .. [#] ``_session_uid`` is used by :doc:`trustedbrowser`.
-.. [#] ``_oidc_sub`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
-.. [#] ``_oidc_sid`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
+.. [#] ``_oidc_sub`` is used by OpenID Connect single logout when LemonLDAP::NG is an OIDC client, see :doc:`authopenidconnect`.
+.. [#] ``_oidc_sid`` is used by OpenID Connect single logout when LemonLDAP::NG is an OIDC client, see :doc:`authopenidconnect`.
 .. [#] ``_webAuthnUserHandle`` is used by :doc:`authwebauthn`.
 
 .. note::

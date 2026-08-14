@@ -171,7 +171,7 @@ authentication:
 
 ::
 
-   # Remove all headers that LLNG might set
+   # Remove all headers that LemonLDAP::NG might set
    request_header -Auth-*
    request_header -Lm-Remote-User
    request_header -Lm-Remote-Custom

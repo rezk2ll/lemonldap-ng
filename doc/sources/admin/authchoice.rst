@@ -98,7 +98,7 @@ choice.
 Parameter override
 ~~~~~~~~~~~~~~~~~~
 
-You can also override some LLNG parameters for each chain. See
+You can also override some LemonLDAP::NG parameters for each chain. See
 :doc:`Parameters list<parameterlist>` to have the key names to use
 
 Custom logo

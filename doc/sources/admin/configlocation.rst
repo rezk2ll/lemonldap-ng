@@ -150,7 +150,7 @@ Configuration placeholders
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to use environment variable placeholders anywhere in
-configuration. Those placeholders will be replaced by each LLNG component
+configuration. Those placeholders will be replaced by each LemonLDAP::NG component
 using environment variables set locally.
 The format is: ``%SERVERENV:VariableName%``.
 To enable this feature, you must edit ``lemonldap-ng.ini`` to set
@@ -561,7 +561,7 @@ included file):
        # OR
        #fastcgi_param HTTP_AUTH_USER $authuser;
 
-       # Then (if LUA not supported), change cookie header to hide LLNG cookie
+       # Then (if LUA not supported), change cookie header to hide LemonLDAP::NG cookie
        #auth_request_set $lmcookie $upstream_http_cookie;
        #proxy_set_header Cookie: $lmcookie;
        # OR

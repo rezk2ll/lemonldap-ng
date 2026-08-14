@@ -64,8 +64,8 @@ Then to protect an app with Lemonldap::NG:
      "traefik.http.routers.whoami.middlewares=lemonldap@file"
    ]
 
-Install LLNG FastCGI server
----------------------------
+Install LemonLDAP::NG FastCGI server
+------------------------------------
 
 Debian/Ubuntu
 ~~~~~~~~~~~~~

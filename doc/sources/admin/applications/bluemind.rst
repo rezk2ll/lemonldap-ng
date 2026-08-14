@@ -40,7 +40,7 @@ Then, add a Relying Party with the following configuration:
 
 Define exported attributes:
 
-- ``email``: The name of the LLNG variable containing the e-mail address, usually ``mail``.
+- ``email``: The name of the LemonLDAP::NG variable containing the e-mail address, usually ``mail``.
 
 Bluemind
 ~~~~~~~~~

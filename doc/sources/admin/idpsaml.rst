@@ -243,7 +243,7 @@ The URL specified in ``spDest`` *must* be present in the Service Provider metada
 Known issues
 ------------
 
-Using both Issuer::SAML and Auth::SAML on the same LLNG may have some
+Using both Issuer::SAML and Auth::SAML on the same LemonLDAP::NG may have some
 side-effects on single-logout.
 
 .. |image0| image:: /documentation/manager-saml-metadata.png

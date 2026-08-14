@@ -14,18 +14,18 @@ Tested schemes:
 
 -  SAML / OpenID-Connect:
 
-   -  SAML-SP **<=>** LLNG as
+   -  SAML-SP **<=>** LemonLDAP::NG as
       :doc:`SAML<idpsaml>`/:doc:`OpenID-Connect<authopenidconnect>`
       proxy **<=>** OIDC Provider
-   -  OIDC-RP **<=>** LLNG as
+   -  OIDC-RP **<=>** LemonLDAP::NG as
       :doc:`OpenID-Connect<idpopenidconnect>`/:doc:`SAML<authsaml>`
       proxy **<=>** SAML Identity Provider
 
 -  SAML / CAS
 
-   -  SAML-SP **<=>** LLNG as :doc:`SAML<idpsaml>`/:doc:`CAS<authcas>`
+   -  SAML-SP **<=>** LemonLDAP::NG as :doc:`SAML<idpsaml>`/:doc:`CAS<authcas>`
       proxy **<=>** CAS Server
-   -  CAS Application **<=>** LLNG as
+   -  CAS Application **<=>** LemonLDAP::NG as
       :doc:`CAS<idpcas>`/:doc:`SAML<authsaml>` proxy **<=>** SAML
       Identity Provider
 

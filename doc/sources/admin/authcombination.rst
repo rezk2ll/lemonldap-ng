@@ -36,7 +36,7 @@ must set:
    -  authentication only
    -  user DB only
 
--  overloaded parameters: you can redefine any LLNG string parameters.
+-  overloaded parameters: you can redefine any LemonLDAP::NG string parameters.
    For example, if you use 2 different LDAP, the first can use normal
    configuration and for the second, overwritten parameter can redefine
    ldapServer or any existing parameter.
@@ -74,7 +74,7 @@ expect string values:
 
 .. attention::
 
-    If your JSON is corrupted, LLNG will use it as string
+    If your JSON is corrupted, LemonLDAP::NG will use it as string
     and just report a warning in logs.
 
 Rule chain

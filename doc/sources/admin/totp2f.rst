@@ -8,7 +8,7 @@ secret key and the current time. This is currently use by `Google
 Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__ or
 `FreeOTP <https://freeotp.github.io/>`__.
 
-LLNG can propose users to register this kind of software to increase
+LemonLDAP::NG can propose users to register this kind of software to increase
 authentication level.
 
 

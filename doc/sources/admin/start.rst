@@ -243,7 +243,7 @@ Attacks and Protection
 |image27|
 
 ====================================================== =============== ============================
-Attack                                                 LLNG protection System Integrator protection
+Attack                                                 LemonLDAP::NG protection System Integrator protection
 ====================================================== =============== ============================
 :doc:`Brute Force<bruteforceprotection>`               ✔               ✔
 :ref:`Page Content<security-portal>`                   ✔
@@ -309,7 +309,7 @@ Handlers are software control agents to be installed on your web servers
 *(Nginx, Traefik, Caddy, Apache, PSGI like Plack based servers or Node.js)*.
 
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
-Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
+Handler type                                                         Apache     LemonLDAP::NG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 Main *(default handler)*                                             ✔          ✔                                                                            ✔                                           :doc:`Partial<nodehandler>`  ** [1]_ **                                            ✔
 :doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
@@ -318,12 +318,12 @@ Main *(default handler)*                                             ✔        
 :doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)            ✔          ✔                                                                            ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
 :doc:`DevOpsCDA<devopscdahandler>`  (:doc:`SSOaaS<ssoaas>`)          ✔          ✔                                                                            ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`CDA<cda>`
 :doc:`OAuth2<oauth2handler>`                                         ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
-:doc:`Secure Token<securetoken>`                                     ✔          ✔                                                                            ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
+:doc:`Secure Token<securetoken>`                                     ✔          ✔                                                                            ✔                                                                                                                                                                              Designed to secure exchanges between a LemonLDAP::NG reverse-proxy and a remote app
 :doc:`Service Token<servertoserver>` *(Server-to-Server)*            ✔          ✔                                                                            ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
 :doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                                            ✔
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 
-LLNG databases
+LemonLDAP::NG databases
 ~~~~~~~~~~~~~~
 
 .. _start-configuration-database:
@@ -385,7 +385,7 @@ style modules are usable except for some features.
 
 .. attention::
 
-    If you plan to use LLNG in a large-scale system, take a
+    If you plan to use LemonLDAP::NG in a large-scale system, take a
     look at :ref:`Performance Test<performance-test>` to choose the right
     backend. A :doc:`Browseable SQL backend<browseablesessionbackend>` is
     generally a good choice.

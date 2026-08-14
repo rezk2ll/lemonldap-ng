@@ -154,7 +154,7 @@ Then you can take any virtual host and modify it:
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
 
-       # Keep original request (LLNG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI $original_uri;
      }
 
@@ -193,7 +193,7 @@ Then you can take any virtual host and modify it:
        # OR
        #fastcgi_param HTTP_AUTH_USER $authuser;
 
-       # Then (if LUA not supported), change cookie header to hide LLNG cookie
+       # Then (if LUA not supported), change cookie header to hide LemonLDAP::NG cookie
        #auth_request_set $lmcookie $upstream_http_cookie;
        #proxy_set_header Cookie: $lmcookie;
        # OR in the corresponding block
@@ -228,7 +228,7 @@ Example of a protected virtual host for a local application:
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LLNG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI $original_uri;
      }
 
@@ -289,7 +289,7 @@ Reverse-Proxy
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LLNG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

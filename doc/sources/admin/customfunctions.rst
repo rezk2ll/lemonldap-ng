@@ -6,7 +6,7 @@ Custom functions allow one to extend LL::NG, they can be used in
 :ref:`rules` or
 :doc:`form replay data<formreplay>`. Two actions are needed:
 
--  declare them in LLNG configuration
+-  declare them in LemonLDAP::NG configuration
 -  load the relevant code
 
 Implementation

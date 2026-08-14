@@ -84,7 +84,7 @@ To protect the manager by LL::NG, you just have to set this in
 Portal
 ------
 
-LLNG portal now embeds the following features:
+LemonLDAP::NG portal now embeds the following features:
 
 -  `CSRF <https://en.wikipedia.org/wiki/Cross-site_request_forgery>`__
    protection *(Cross-Site Request Forgery)*: a token is built for each

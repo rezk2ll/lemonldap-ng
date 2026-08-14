@@ -13,7 +13,7 @@ LL::NG Portal provides REST end points for sessions management:
 -  PUT /sessions/<type>/<session-id> : update some keys
 -  DELETE /sessions/<type>/<session-id> : delete a session
 
-Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
+Sessions for connected users (used by :doc:`LemonLDAP::NG Proxy<authproxy>`):
 
 -  GET /session/my/<type> : get session data
 -  GET /session/my/<type>/key : get session key

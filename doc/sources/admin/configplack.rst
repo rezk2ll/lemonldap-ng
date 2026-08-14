@@ -2,10 +2,10 @@ Deploy LemonLDAP::NG on a Plack server
 ======================================
 
 `Plack <https://metacpan.org/release/Plack>`__ is a powerful engine that
-powers many very fast `servers <http://plackperl.org/#servers>`__. LLNG
+powers many very fast `servers <http://plackperl.org/#servers>`__. LemonLDAP::NG
 uses some Plack libraries to run as FastCGI server. So, It can be easily
 run on these servers. See also :doc:`Advanced PSGI usage<psgi>` if you
-want to replace LLNG FastCGI server.
+want to replace LemonLDAP::NG FastCGI server.
 
 Complete example
 ----------------
@@ -23,7 +23,7 @@ Complete example
        return [
            200,
            [ 'Content-Type' => 'text/plain' ],
-           [ "Hello LLNG world\n\n" . Dumper($env) ],
+           [ "Hello LemonLDAP::NG world\n\n" . Dumper($env) ],
        ];
    };
 

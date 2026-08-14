@@ -69,7 +69,7 @@ You can configure:
 
 .. note::
 
-   Each LLNG worker pushes its own counters independently, so
+   Each LemonLDAP::NG worker pushes its own counters independently, so
    ``cscli metrics show bouncers`` aggregates values across all workers.
 
 Example output once metrics are pushed:

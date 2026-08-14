@@ -145,13 +145,13 @@ and reach them through ``customPluginsParams``
     sub my_function {
         my ($self, $req) = @_;
 
-        # Get a standard LLNG option
+        # Get a standard LemonLDAP::NG option
         my $llng_logo = $self->conf->{portalMainLogo};
 
-        # Get your custom LLNG option
+        # Get your custom LemonLDAP::NG option
         my $myvar = $self->conf->{customPluginsParams}->{myvar};
 
-        # Get your custom LLNG option from your parameters hash
+        # Get your custom LemonLDAP::NG option from your parameters hash
         my $title = $self->myPluginParams->{title};
     }
 

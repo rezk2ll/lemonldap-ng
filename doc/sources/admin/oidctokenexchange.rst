@@ -21,7 +21,7 @@ Available Token Exchange systems
 Internal Token Exchange
 -----------------------
 
-LLNG provide an internal OIDC token exchange system that allows an OIDC relying
+LemonLDAP::NG provide an internal OIDC token exchange system that allows an OIDC relying
 party to ask for an access_token available for another.
 
 Configuration
@@ -29,7 +29,7 @@ Configuration
 
 The only thing to configure is to add a list of Relying Party authorized to ask
 for an access_token into the destination Relying Party. This list contains a
-space separated of Relying Party names *(use the internal LLNG name, not the
+space separated of Relying Party names *(use the internal LemonLDAP::NG name, not the
 client ID)*: "OpenID Connect Relying Party » dest » Options » Advanced » Other RP allowed to exchange access_token".
 
 How to use it
@@ -51,7 +51,7 @@ Request parameters:
 
 * **Target**:
 
-  * ``audience``: the client identifier of the target *(not the internal LLNG name)*
+  * ``audience``: the client identifier of the target *(not the internal LemonLDAP::NG name)*
 
 Exemple:
 

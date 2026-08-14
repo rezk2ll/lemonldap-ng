@@ -108,8 +108,8 @@ Security
    You have to choose the key type: ``RSA`` or ``EC``. The list of
    supported algorithms in OIDC metadata will be automatically updated.
 
-   - Set signing key if LLNG is an OpenID-Connect server
-   - Set Encryption key if LLNG is an OpenID-Connect Relying-Party and if you
+   - Set signing key if LemonLDAP::NG is an OpenID-Connect server
+   - Set Encryption key if LemonLDAP::NG is an OpenID-Connect Relying-Party and if you
      want that the OpenID-Connect server encrypt the JWT tokens
 -  **Advanced key configuration**
 

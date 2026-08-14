@@ -71,7 +71,7 @@ Nginx
 
 Nginx doesn't launch directly PHP pages (or other languages): it dials
 with FastCGI servers (like php-fpm). As you can see in examples, it's
-easy to map a LLNG header to a fastcgi param. Example:
+easy to map a LemonLDAP::NG header to a fastcgi param. Example:
 
 .. code-block:: nginx
 

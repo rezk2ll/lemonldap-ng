@@ -104,7 +104,7 @@ available:
 
 .. danger::
 
-    LLNG Ubuntu packages are not in the "universe" but in the
+    LemonLDAP::NG Ubuntu packages are not in the "universe" but in the
     "multiverse". This means they are not security-maintained. If you use
     them, you should follow our security advisories on
     lemonldap-ng-users@ow2.org.

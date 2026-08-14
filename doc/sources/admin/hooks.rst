@@ -855,7 +855,7 @@ Sample code::
            # ... verification code ...
 
            # Set callback params from JWT claims
-           # Keep state as scalar - LLNG will skip extractState since we already called it
+           # Keep state as scalar - LemonLDAP::NG will skip extractState since we already called it
            # Alternatively, pass extracted state as hashref to skip extractState
            $callback_params->{state} = {
                _oidcOPCurrent => $req->data->{_oidcOPCurrent},

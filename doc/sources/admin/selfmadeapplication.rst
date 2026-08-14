@@ -94,7 +94,7 @@ They create a FCGI script like this:
 
    Plack::Handler::FCGI->new->run( My::PSGI->run() );
 
-See our LLNG Nginx/Apache configurations to see how to launch it or read
+See our LemonLDAP::NG Nginx/Apache configurations to see how to launch it or read
 `PSGI/Plack documentation <https://plackperl.org/>`__.
 
 The protection parameter must be set when calling the init() method:
