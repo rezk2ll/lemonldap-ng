@@ -89,6 +89,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
 =head1 SYNOPSIS
 
   package Lemonldap::NG::Portal::2F::MySecondFactor;
+  use strict;
   use Mouse;
   # Import used constants
   use Lemonldap::NG::Portal::Main::Constants qw(
@@ -115,9 +116,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       # replace the rule to detect if user has registered a device key.
       # The rule must be like this :
       # By example :
-      $self->conf->{totp2fActivation} = '$_2fDevices =~ /"type":\s*"TOTP"/s'
-      # Optionally, the rule can be : '$_2fDevices and $_2fDevices =~ /"type":\s*"TOTP"/s'
-      # to avoid warning due to undef variable
+      $self->conf->{totp2fActivation} = 'has2f("TOTP")';
       #
       # Required call:
       return $self->SUPER::init();
