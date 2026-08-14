@@ -45,11 +45,6 @@ attribute you see there can be used in a rule!
 
    defined $hGroups->{'administrators'}
 
-   # Legacy syntax
-   $groups =~ /\b(?:admins|su)\b/ # admins OR su
-   $groups =~ /\badmin_[1-3a]\b/ # admin_1 OR admin_2 OR admin_3 OR admin_a
-
-
 -  Combining multiple expressions
 
 ::
@@ -89,9 +84,6 @@ attribute you see there can be used in a rule!
    has2f('TOTP')
    has2f('TOTP') or has2f('UBK')
 
-   # Legacy syntax
-   $_2fDevices =~ /"type":\s*"TOTP"/s
-
 .. tip::
 
     In Perl, ``ne`` means *Not Equal* and must be used on
@@ -107,9 +99,6 @@ Using environment variables
 ::
 
    inSubnet('10.0.0.0/8')
-
-   # Legacy syntax
-   $env->{REMOTE_ADDR} =~ /^10\./
 
 -  Comparing requested URI
 

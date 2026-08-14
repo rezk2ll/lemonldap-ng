@@ -121,10 +121,6 @@ Using groups in a rule
    # Or with hGroups
    ^/admin -> defined $hGroups->{'admin'}
 
-   # Legacy syntax
-   ^/admin -> $groups =~ /\badmin\b/
-
-
 .. note::
 
     Groups are computed after macros, so a group rule may involve a

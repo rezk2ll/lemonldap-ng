@@ -218,8 +218,6 @@ The following environment variables are available in SAML access rules and macro
 
 * ``$env->{llng_saml_sp}`` : entityID of the SAML service
 * ``$env->{llng_saml_spconfkey}`` : configuration key of the SAML service
-
-
 * ``$env->{llng_saml_acs}`` : AssertionConsumerServiceURL, if specified in the AuthnRequest
 
 IDP Initiated mode

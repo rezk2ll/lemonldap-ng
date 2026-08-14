@@ -575,9 +575,7 @@ Modify session ::
       authenticationLevel 1
 
 
-   Delete all sessions by username
-
-::
+Delete all sessions by username ::
 
    lemonldap-ng-sessions delete --where uid=dwho
 

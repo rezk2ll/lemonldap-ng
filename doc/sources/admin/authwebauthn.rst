@@ -7,11 +7,6 @@ Authentication Users Password
 ✔
 ============== ===== ========
 
-
-|beta|
-
-.. |beta| image:: /documentation/beta.png
-
 Presentation
 ------------
 

@@ -9,7 +9,7 @@ LemonLDAP::NG has two kinds of events to propagate between its nodes:
 By default, events aren't really propagated but a timer permits to refresh
 such data.
 
-LLNG adds an **optional** :ref:`PUB/SUB system<PubSub>`
+If you want immediate propagation, LLNG includes an **optional** :ref:`PUB/SUB system<PubSub>`
 *(not enabled by default)* to replace this timers. This isn't useful in classic
 deployments but may help big ones.
 

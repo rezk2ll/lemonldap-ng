@@ -17,7 +17,6 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
 -  **Domain**: validity domain for the cookie (the cookie will not be
    sent on other domains)
 
-
      * Setting the domain to an empty string will generate cookies that are only
        valid for the SSO portal itself. Which requires using CDA for all
        handler-protected Virtual hosts, including the manager.

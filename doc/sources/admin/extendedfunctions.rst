@@ -228,10 +228,6 @@ This function uses the secret key of LL::NG configuration to decrypt a value.
 encrypt
 ~~~~~~~
 
-.. tip::
-
-    This function is now compliant with :doc:`Safe jail<safejail>`.
-
 This function uses the secret key of LL::NG configuration to crypt a data.
 This can be used for anonymizing identifier given to the protected
 application.

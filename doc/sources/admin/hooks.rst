@@ -240,7 +240,7 @@ The hook's parameters are:
 
 .. note::
 
-   The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
+   The hook supports ``PE_SENDRESPONSE`` to return a custom response.
 
 Sample code::
 
@@ -270,7 +270,11 @@ The hook's parameters are:
 
 .. note::
 
-   The hook now supports ``PE_SENDRESPONSE`` to return a custom response.
+    The hook should return:
+
+    * `PE_OK` to continue normal processing (use this when modifying parameters or logging)
+    * `PE_SENDRESPONSE` to take over the response (plugin must set `$req->response`)
+
 
 Sample code::
 
@@ -472,9 +476,7 @@ This hook is triggered when LemonLDAP::NG is generating an ID Token.
 The hook's parameters are:
 
 * A hash of the claims to be contained in the ID Token
-* the configuration key of the relying party which will receive the token
-
-
+* The configuration key of the relying party which will receive the token
 * A hash of session information
 * A hash of additional JWT headers
 
@@ -497,13 +499,13 @@ UserInfo endpoint (/oauth2/userinfo)
 oidcGenerateUserInfoResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint, or to compute a list of claims to be added in an ID or Access Token.
 
-The hook's parameter is a hash containing all the claims that are about to be released.
+The hook's parameters are:
 
-.. note::
-   Added the hash of current session data
+* The claims that are about to be released
+* The current RP name
+* The hash of current session data
 
 Sample code::
 
@@ -532,7 +534,7 @@ It allows plugins to modify the introspection response.
 The hook's parameters are:
 
 * A hash of the introspection response (which you can modify)
-* the configuration key of the relying party making the introspection request
+* The configuration key of the relying party making the introspection request
 * A hash of the access token session data
 
 Sample code::
