@@ -134,8 +134,6 @@ Development
 -  `Bugtracker <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>`__
 -  `Source
    code <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tree/master>`__
--  `Nightly trunk builds <https://lemonldap-ng.ow2.io/lemonldap-ng/>`__
-   *(for Debian or Ubuntu,* **really unstable** *)*
 -  Git access:
 
 ::
