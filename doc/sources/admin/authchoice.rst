@@ -1,64 +1,21 @@
-Backend choice by users
-=======================
+Configuring authentication methods
+==================================
 
-============== ===== ========
-Authentication Users Password
-============== ===== ========
-✔              ✔     ✔
-============== ===== ========
+LemonLDAP::NG allows you to configure multiple authentication methods.
 
-Presentation
-------------
+On a new installation, a single authentication method is configured, and uses the "Demo" backend for:
 
-By default, only the configured authentication backend is available for
-users.
+* User authentication (making sure the user is who they claim)
+* User information (knowing whether a user exists or not, and what are their attributes)
+* Password modification
 
-Contrary to :doc:`multiple backend stacking<authmulti>`, backend choice
-will present all available authentication methods to users, who will
-choose the one they want.
+In most configurations, you only need to change the Demo backend to your actual
+users backend: usually a LDAP or Active Directory server, or an external SAML
+or OIDC provider.
 
-The choice will concern three backends:
-
--  Authentication
--  Users
--  Password
-
-The chosen backends will be registered in session:
-
--  ``$_auth``
--  ``$_userDB``
--  ``$_passwordDB``
-
-Authentication choice will also be registered in session:
-
--  ``$_authChoice``
-
-Configuration
--------------
-
-In Manager, go in ``General Parameters`` > ``Authentication modules``
-and choose Choice for authentication.
-
-
-.. attention::
-
-    When ``Choice`` is selected for authentication, values
-    for Users and Password modules are also forced to ``Choice``.
-
-Then, go in ``Choice Parameters``:
-
--  **URL parameter**: parameter name used to set choice value (default:
-   ``lmAuth``)
--  **Allowed modules**: click on ``New chain`` to add a choice.
--  **Choice used for password authentication**: authentication module used by
-   :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
--  **FindUser plugin parameter**: authentication module called by
-   Find user plugin (:doc:`Find user plugin<finduser>`)
--  **Auto-select only method**: if only one authentication method is available, automatically select it
+However, you can also configure multiple methods with the "New chain" button.
 
 |image0|
-
-Define here:
 
 -  **Name**: Text displayed on choice tab.
 -  **Authentication module**
@@ -69,21 +26,23 @@ Define here:
    to use an Apache authentication module, which is run by Apache before
    showing the LemonLDAP::NG portal page.
 -  **Condition**: optional, can be used to evaluate an expression to
-   display the tab. For example, to display a tab only if redirected by
-   Handler from application ``test1.example.com``, you can set this
-   condition:
+   display the tab.
+
+
+Condition rule syntax
+~~~~~~~~~~~~~~~~~~~~~
+
+You can use the same syntax as :doc:`regular rules <rules_examples>`. In
+addition to the following special variables
+
+* ``$targetAuthnLevel``: authentication level requested by the current application
+
+For example, to display a tab only if redirected by Handler from application
+``test1.example.com``, you can set this condition:
 
 .. code-block:: perl
 
    $env->{urldc} =~ /test1\.example\.com/
-
-.. note::
-
-    You can use the same syntax as :doc:`regular
-    rules <rules_examples>`. In addition to the following special variables
-
-    * ``$targetAuthnLevel``: authentication level requested by the current application
-
 
 Ordering of choices on the main login page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,6 +53,25 @@ replaced by spaces.
 
 For example, use ``2_France_Connect`` to use *France Connect* as the second
 choice.
+
+.. _choiceAdvParam:
+
+Advanced parameters
+~~~~~~~~~~~~~~~~~~~
+
+-  **URL parameter**: parameter name used to set choice value (default:
+   ``lmAuth``)
+-  **Choice used for password authentication**: authentication module used by
+   :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
+-  **Choice used for searching user account**: authentication module called by
+   Find user plugin (:doc:`Find user plugin<finduser>`)
+-  **Auto-select only method**: if only one authentication method is available,
+   automatically select it. This is useful if you are using an external IDP and
+   don't want the user to have to explicitely select it
+-  **Force authentication module**, **Force user module**, **Force password
+   module**: this option should generally not be used, it overrides the module
+   used by your authentication choices. It only exists to help migrating from
+   LemonLDAP::NG 2.0
 
 Parameter override
 ~~~~~~~~~~~~~~~~~~
