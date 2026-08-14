@@ -22,7 +22,6 @@ Advanced features
    authbasichandler
    safejail
    loginhistory
-   fastcgi
    fastcgiserver
    psgi
    managertests

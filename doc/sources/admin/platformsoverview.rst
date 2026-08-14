@@ -1,7 +1,7 @@
 Platforms overview
 ==================
 
-LLNG is able to use different web servers to provide its services. Here
+LemonLDAP::NG is able to use different web servers to provide its services. Here
 is a resume of all possibilities. We recommend:
 
 -  For installations subject to small/medium load: Nginx with our
@@ -12,15 +12,15 @@ is a resume of all possibilities. We recommend:
 Portal/Manager installation
 ---------------------------
 
-Since 2.0, both portal and manager are native FastCGI / PSGI Plack based
+Both portal and manager are native FastCGI / PSGI Plack based
 applications. They can be powered by any FastCGI / PSGI compatible web
 servers. Some examples:
 
 =============================== =================================================== ============================= ============================= =====================================================================================
 \                               Apache                                                                            Nginx                         Plack servers family
 =============================== =================================================== ============================= ============================= =====================================================================================
-**Engines**                     `mod_fcgid <https://httpd.apache.org/mod_fcgid/>`__                               FastCGI/uWSGI server          Any `Plack HTTP server <https://plackperl.org>`__ (*see* :doc:`our doc<configplack>` )
-**Link with webserver process** External processes managed by webserver *(default)* External LLNG serve           External LLNG server          :doc:`Inside<configplack>`
+**Engines**                     `mod_fcgid <https://httpd.apache.org/mod_fcgid/>`__                               FastCGI/uWSGI server          Any `Plack HTTP server <https://plackperl.org>`__ (*see* :doc:`our doc<configplack>`)
+**Link with webserver process** External processes managed by webserver *(default)* External LLNG serve           External LemonLDAP::NG server :doc:`Inside<configplack>`
 =============================== =================================================== ============================= ============================= =====================================================================================
 
 Application protection overview
@@ -28,16 +28,16 @@ Application protection overview
 
 Applications can be protected:
 
--  by a LLNG handler
+-  by a LemonLDAP::NG handler
 -  by themselves if they can dial with a supported protocol (SAML,
    OpenID-Connect,...)
 
-To protect applications with handler, LLNG can be used in two mode:
+To protect applications with handler, LemonLDAP::NG can be used in two mode:
 
--  Direct Application Mode : LLNG handler is an embedded application.
+-  Direct Application Mode : LemonLDAP::NG handler is an embedded application.
    Handler must be installed on application Web Server
 -  ReverseProxy Mode : applications are hidden behind a ReverseProxy
-   which provides the required LLNG handler
+   which provides the required LemonLDAP::NG handler
 
 Handler integration
 ~~~~~~~~~~~~~~~~~~~
@@ -45,23 +45,23 @@ Handler integration
 Direct Application Mode
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-LLNG handlers can be installed on the following web servers:
+LemonLDAP::NG handlers can be installed on the following web servers:
 
-================================= ========================== =============================================================================== ==================== =================================================================================
-\                                 Apache                     Nginx                                                                           Plack servers family Node.js
-================================= ========================== =============================================================================== ==================== =================================================================================
-**Addon needed**                  ModPerl                                                                                                                         Express
-**LLNG integration in webserver** :doc:`Inside<configvhost>` Separate process: External LLNG FastCGI/uWSGI servers *(auth_request)*          :doc:`Inside<psgi>`  `Inside <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app>`__
-================================= ========================== =============================================================================== ==================== =================================================================================
+========================================== ========================== =============================================================================== ==================== =================================================================================
+\                                          Apache                     Nginx                                                                           Plack servers family Node.js
+========================================== ========================== =============================================================================== ==================== =================================================================================
+**Addon needed**                           ModPerl                                                                                                    Express
+**LemonLDAP::NG integration in webserver** :doc:`Inside<configvhost>` Separate process: External LemonLDAP::NG FastCGI/uWSGI servers *(auth_request)* :doc:`Inside<psgi>`  `Inside <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app>`__
+========================================== ========================== =============================================================================== ==================== =================================================================================
 
 ReverseProxy Mode
 ^^^^^^^^^^^^^^^^^
 
-============================================== ========================== ==============================================================
-\                                              Apache                     Nginx
-============================================== ========================== ==============================================================
-**LLNG integration in ReverseProxy webserver** :doc:`Inside<configvhost>` Separate process: External LLNG FastCGI/uWSGI servers
-============================================== ========================== ==============================================================
+======================================================= ========================== ==============================================================
+\                                                       Apache                     Nginx
+======================================================= ========================== ==============================================================
+**LemonLDAP::NG integration in ReverseProxy webserver** :doc:`Inside<configvhost>` Separate process: External LemonLDAP::NG FastCGI/uWSGI servers
+======================================================= ========================== ==============================================================
 
 .. _platformsoverview-external-servers-for-nginx:
 
@@ -70,7 +70,7 @@ External servers for Nginx
 
 Nginx supports natively FastCGI and uWSGI protocols.
 
-Therefore, LLNG services can be provided by compatible external servers.
+Therefore, LemonLDAP::NG services can be provided by compatible external servers.
 
 
 .. tip::
@@ -83,8 +83,8 @@ Therefore, LLNG services can be provided by compatible external servers.
 FastCGI
 ^^^^^^^
 
-By default, LLNG provides a Plack based FastCGI server able to afford
-all LLNG services using
+By default, LemonLDAP::NG provides a Plack based FastCGI server able to afford
+all LemonLDAP::NG services using
 `FCGI <https://metacpan.org/pod/Plack::Handler::FCGI>`__ engine.
 
 However, you can use some other FastCGI server engines:
@@ -94,13 +94,13 @@ However, you can use some other FastCGI server engines:
 -  `FCGI::Engine <https://metacpan.org/pod/Plack::Handler::FCGI::Engine>`__
 -  `FCGI::Engine::ProcManager <https://metacpan.org/pod/Plack::Handler::FCGI::Engine::ProcManager>`__
 -  `FCGI::Async <https://metacpan.org/pod/Plack::Handler::FCGI::Async>`__
--  `LLNG FastCGI server for
+-  `LemonLDAP::NG FastCGI server for
    Node.js <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#nginx-authorization-server>`__\ (*)
 
 
 .. danger::
 
-    (*) LLNG Node.js handler can only be used as Nginx
+    (*) LemonLDAP::NG Node.js handler can only be used as Nginx
     \`auth_request\` server, not to serve Portal or Manager
 
 uWSGI

@@ -1,7 +1,7 @@
 Custom handlers
 ===============
 
-LLNG provides Perl libraries that can be easily used by inheritance. So
+LemonLDAP::NG provides Perl libraries that can be easily used by inheritance. So
 you can write your own handlers but you need first to understand
 :doc:`Handler architecture<handlerarch>`
 
@@ -40,7 +40,7 @@ You can enable it either:
 -  by adding it to the menu: add its name in ``vhostType`` "select"
    declaration (file
    ``lemonldap-ng-manager/lib/Lemonldap/NG/Build/Attributes``) and
-   rebuild LLNG
+   rebuild LemonLDAP::NG
 
 Note that configuration parameter can be set only in lemonldap-ng.ini
 configuration file *(section Handler)*.
@@ -48,7 +48,7 @@ configuration file *(section Handler)*.
 Add a new platform
 ------------------
 
-LLNG provides 3 platforms:
+LemonLDAP::NG provides 3 platforms:
 
 -  ApacheMP2
 -  FastCGI server *(Nginx is built from there)*

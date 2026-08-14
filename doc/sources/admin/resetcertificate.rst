@@ -10,7 +10,7 @@ This plugin allows users to reset their certificate informations.
 
 -  User click reset certificate button.
 -  He enters his mail.
--  LL::NG looks for the user in users database with given information.
+-  LemonLDAP::NG looks for the user in users database with given information.
 -  An email with a link is sent if user exists.
 -  User clicks on the link and he is redirected to the portal.
 -  The portal asks him to upload his certificate file (base64, pem

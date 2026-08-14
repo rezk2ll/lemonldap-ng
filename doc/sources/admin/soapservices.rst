@@ -1,7 +1,7 @@
 SOAP services (deprecated)
 ==========================
 
-LL::NG portal provides a SOAP server that can be enable to give
+LemonLDAP::NG portal provides a SOAP server that can be enable to give
 configuration and/or session. These features can be enabled using the
 manager.
 

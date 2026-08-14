@@ -123,11 +123,6 @@ in ``(*GitLabUser).IsValid(...)`` , it probably means that you are not
 exporting the correct attributes, but it can also mean that ``id`` is
 exported as a JSON string.
 
-.. note::
-   An issue in version 2.0.9 prevented the ``id`` field from being sent correctly.
-   Upgrade your LemonLDAP-NG installation to at least 2.0.10 and :ref:`set the claim
-   type <oidcexportedattr>` to *Integer*
-
 .. |image0| image:: /applications/mattermost_logo.png
    :class: align-center
 

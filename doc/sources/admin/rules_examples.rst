@@ -41,15 +41,9 @@ attribute you see there can be used in a rule!
 
 ::
 
-   # 2.0.8 and higher only
    inGroup('administrators')
 
-   # older versions
-   $groups =~ /\b(?:admins|su)\b/ # admins OR su
-   $groups =~ /\badmin_[1-3a]\b/ # admin_1 OR admin_2 OR admin_3 OR admin_a
-
    defined $hGroups->{'administrators'}
-
 
 -  Combining multiple expressions
 
@@ -74,7 +68,6 @@ attribute you see there can be used in a rule!
 
 ::
 
-   # since 2.17
    inSubnet('192.168.0.0/16')
 
 -  Filtering on Authentication method
@@ -87,13 +80,9 @@ attribute you see there can be used in a rule!
 
 ::
 
-   # Since 2.0.10
    has2f()
    has2f('TOTP')
    has2f('TOTP') or has2f('UBK')
-
-   # Before 2.0.10
-   $_2fDevices =~ /"type":\s*"TOTP"/s
 
 .. tip::
 
@@ -109,10 +98,6 @@ Using environment variables
 
 ::
 
-   # Before 2.17
-   $env->{REMOTE_ADDR} =~ /^10\./
-
-   # Since 2.17
    inSubnet('10.0.0.0/8')
 
 -  Comparing requested URI

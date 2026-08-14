@@ -10,14 +10,14 @@ Presentation
 authenticate users, behaving as an SAML service provider, as explained
 `here <https://code.google.com/googleapps/domain/sso/saml_reference_implementation.html>`__.
 
-To work with LL::NG it requires:
+To work with LemonLDAP::NG it requires:
 
 -  An `enterprise Google Apps
    account <https://workspace.google.com/>`__
--  LL::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
+-  LemonLDAP::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
 -  Registered users on Google Apps with the same email than those used
-   by LL::NG (email will be the NameID exchanged between Google Apps and
-   LL::NG)
+   by LemonLDAP::NG (email will be the NameID exchanged between Google Apps and
+   LemonLDAP::NG)
 
 Configuration
 -------------
@@ -87,7 +87,7 @@ You can now the upload the certificate (``cert.pem``) on Google Apps.
 New Service Provider
 ~~~~~~~~~~~~~~~~~~~~
 
-You should have configured LL::NG as an
+You should have configured LemonLDAP::NG as an
 :doc:`SAML Identity Provider<../idpsaml>`,
 
 Now we will add Google Apps as a new SAML Service Provider:
@@ -147,7 +147,7 @@ Google Apps does not support Single Logout (SLO).
 Google Apps has a configuration parameter to redirect user on a specific
 URL after Google Apps logout (see :doc:`Google Apps control panel<>`).
 
-To manage the other way (LL::NG → Google Apps), you can add a dedicated
+To manage the other way (LemonLDAP::NG → Google Apps), you can add a dedicated
 :doc:`logout forward rule<../logoutforward>`:
 
 ::

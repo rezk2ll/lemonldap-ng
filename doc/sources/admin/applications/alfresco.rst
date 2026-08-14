@@ -11,10 +11,10 @@ Presentation
 Since 4.0 release, it offers an easy way to configure SSO thanks to
 authentication subsystems.
 
-Authentication against LL::NG can be done through:
+Authentication against LemonLDAP::NG can be done through:
 
--  HTTP headers (LL::NG Handler)
--  SAML 2 (LL::NG as SAML2 IDP)
+-  HTTP headers (LemonLDAP::NG Handler)
+-  SAML 2 (LemonLDAP::NG as SAML2 IDP)
 
 
 .. tip::
@@ -105,10 +105,10 @@ You need to restart Tomcat to apply changes.
 .. danger::
 
     Now you can log in with a simple HTTP header. You need to
-    restrict access to Alfresco to LL::NG.
+    restrict access to Alfresco to LemonLDAP::NG.
 
-LL::NG
-~~~~~~
+LemonLDAP::NG
+~~~~~~~~~~~~~
 
 Headers
 ^^^^^^^
@@ -431,14 +431,14 @@ authentication (SSO)” box.
 
 .. _llng-1:
 
-LL::NG
-~~~~~~
+LemonLDAP::NG
+~~~~~~~~~~~~~
 
 Configure SAML service and set a certificate as signature public key in
 metadata.
 
 Export Alfresco SAML Metadata from admin console and import them in
-LL::NG.
+LemonLDAP::NG.
 
 In the authentication response option, set:
 

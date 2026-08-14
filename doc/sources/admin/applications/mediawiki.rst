@@ -123,7 +123,7 @@ Configure MediaWiki virtual host like other
 
 .. attention::
 
-    If you are protecting MediaWiki with LL::NG as reverse
+    If you are protecting MediaWiki with LemonLDAP::NG as reverse
     proxy,
     :doc:`convert header into REMOTE_USER environment variable<../header_remote_user_conversion>`.
 
@@ -158,7 +158,7 @@ Configure MediaWiki virtual host like other
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LL::NG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 
@@ -201,7 +201,7 @@ extension configuration):
    Auth-Cn => $cn
    Auth-Mail => $mail
 
-If using LL::NG as reverse proxy, configure also the ``Auth-User``
+If using LemonLDAP::NG as reverse proxy, configure also the ``Auth-User``
 :ref:`header<headers>`,
 
 .. |image0| image:: /applications/mediawiki_logo.png

@@ -4,7 +4,7 @@ New Location Warning Plugin
 Presentation
 ------------
 
-This plugin allows LL::NG to send a warning message to the user's email
+This plugin allows LemonLDAP::NG to send a warning message to the user's email
 address when their account connects from a new location.
 
 By default, the location is the IP address. Meaning that any connection from a

@@ -10,7 +10,7 @@ Authentication Users Password
 
 .. danger::
 
-    This module is a LL::NG specific identity federation
+    This module is a LemonLDAP::NG specific identity federation
     protocol. You may rather use standards protocols like
     :doc:`SAML<idpsaml>`, :doc:`OpenID Connect<idpopenidconnect>` or
     :doc:`CAS<idpcas>`.
@@ -19,20 +19,20 @@ Presentation
 ------------
 
 -  The main portal is configured to use CDA. The secondary portal is
-   declared in the Manager of the main LL::NG structure (else user will
+   declared in the Manager of the main LemonLDAP::NG structure (else user will
    be rejected).
--  The portal of the secondary LL::NG structure is configured to
+-  The portal of the secondary LemonLDAP::NG structure is configured to
    delegate authentication to a remote portal. A request to the main
    session database is done (through
    :doc:`SOAP session backend<soapsessionbackend>`) to be sure that the
    session exists.
 -  If ``exportedAttr`` is set, only those attributes are copied in the
-   session database of the secondary LL::NG structure. Else, all data
+   session database of the secondary LemonLDAP::NG structure. Else, all data
    are copied in the session database.
 
 |image0|
 
-#. User tries to access to an application in the secondary LL::NG
+#. User tries to access to an application in the secondary LemonLDAP::NG
    structure without having a session in this area
 #. Redirection to the portal of the secondary area (transparent)
 #. Redirection to the portal of the main area and normal authentication
@@ -52,8 +52,8 @@ Presentation
 Configuration
 -------------
 
-Main LL::NG structure
-~~~~~~~~~~~~~~~~~~~~~
+Main LemonLDAP::NG structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in Manager, and:
 
@@ -62,10 +62,10 @@ Go in Manager, and:
 -  declare secondary portal in ``General Parameters`` »
    ``Advanced Parameters`` » ``Security`` » ``Trusted domains``
 
-Secondary LL::NG structure
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Secondary LemonLDAP::NG structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure the portal to use the remote LL::NG structure.
+Configure the portal to use the remote LemonLDAP::NG structure.
 
 In Manager, go in ``General Parameters`` » ``Authentication modules``
 and choose Remote for authentication and users.
@@ -87,7 +87,7 @@ Example: interoperability between 2 organizations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using this, we can do a very simple interoperability system between 2
-organizations using two LL::NG structures:
+organizations using two LemonLDAP::NG structures:
 
 -  each area has 2 portals:
 

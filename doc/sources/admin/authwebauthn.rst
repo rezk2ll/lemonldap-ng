@@ -7,12 +7,6 @@ Authentication Users Password
 ✔
 ============== ===== ========
 
-.. versionadded:: 2.20.0
-
-|beta|
-
-.. |beta| image:: /documentation/beta.png
-
 Presentation
 ------------
 
@@ -21,7 +15,7 @@ This mode allow you to authenticate to LemonLDAP::NG using nothing but your FIDO
 Requirements
 ------------
 
-As of version 2.20.0, authenticating with Passkeys requires enabling :doc:`webauthn2f`
+Authenticating with Passkeys requires enabling :doc:`webauthn2f`
 
 .. important::
 

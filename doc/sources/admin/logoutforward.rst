@@ -9,7 +9,7 @@ Even if LL:NG can catch logout URL through
 need to forward a logout to other applications, to close their local
 sessions.
 
-LL::NG has a logout forward mechanism, that will add a step in logout
+LemonLDAP::NG has a logout forward mechanism, that will add a step in logout
 process, to send logout requests (indeed, GET requests on application
 logout URL) inside hidden iframes.
 
@@ -33,4 +33,4 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 
     The request on logout URL will be sent after user is
     disconnected, so you should unprotect this URL if it is protected by an
-    LL::NG Handler.
+    LemonLDAP::NG Handler.

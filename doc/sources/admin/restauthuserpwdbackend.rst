@@ -1,7 +1,7 @@
 REST auth/user/password backend
 ===============================
 
-LL::NG Portal provides REST end points for auth/user/password:
+LemonLDAP::NG Portal provides REST end points for auth/user/password:
 
 -  POST /proxy/pwdConfirm: check password
 -  POST /proxy/getUser: get user data

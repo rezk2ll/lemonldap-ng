@@ -31,7 +31,7 @@ backend is Demo). To protect the manager, you have to choose one or both
 of :
 
 -  protect the manager by Apache configuration
--  protect the manager by LL::NG
+-  protect the manager by LemonLDAP::NG
 
 Protect the Manager by the web server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,10 +59,10 @@ Kerberos,... Example
        </Location>
    </VirtualHost>
 
-Protect the Manager by LL::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Protect the Manager by LemonLDAP::NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To protect the manager by LL::NG, you just have to set this in
+To protect the manager by LemonLDAP::NG, you just have to set this in
 ``lemonldap-ng.ini`` configuration file (section [manager]):
 
 .. code-block:: ini
@@ -84,7 +84,7 @@ To protect the manager by LL::NG, you just have to set this in
 Portal
 ------
 
-LLNG portal now embeds the following features:
+LemonLDAP::NG portal now embeds the following features:
 
 -  `CSRF <https://en.wikipedia.org/wiki/Cross-site_request_forgery>`__
    protection *(Cross-Site Request Forgery)*: a token is built for each
@@ -230,7 +230,7 @@ Encoded characters
 ~~~~~~~~~~~~~~~~~~
 
 Some characters are encoded in URLs by the browser (such as space,...).
-To avoid problems, LL::NG decode them using
+To avoid problems, LemonLDAP::NG decode them using
 https://metacpan.org/pod/Apache2::URI#unescape_url. So write your rules
 using normal characters.
 
@@ -252,7 +252,7 @@ IP in rules
 Secure reverse-proxies
 ----------------------
 
-LL::NG can protect any Apache hosted application including Apache
+LemonLDAP::NG can protect any Apache hosted application including Apache
 reverse-proxy mechanism. Example:
 
 .. code-block:: apache
@@ -277,14 +277,14 @@ documentation for more about configuring Apache reverse-proxies.
 Such configuration can have some security problems:
 
 -  if a user can access directly to the hidden application, it can
-   bypass LL::NG protection
+   bypass LemonLDAP::NG protection
 -  if many hidden applications are on the same private network, if one
    is corrupted (by SQL injection, or another attack), the hacker will
    be able to access to other applications without using reverse-proxies
-   so it can bypass LL::NG protection
+   so it can bypass LemonLDAP::NG protection
 
 It is recommended to secure the channel between reverse-proxies and
-application to be sure that only request coming from the LL::NG
+application to be sure that only request coming from the LemonLDAP::NG
 protected reverse-proxies are allowed. You can use one or a combination
 of:
 

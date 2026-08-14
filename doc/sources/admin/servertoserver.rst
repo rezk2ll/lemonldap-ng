@@ -13,9 +13,8 @@ ways to do this:
 -  the Good (Service Token Handler): See below! (Thanks Sergio...)
 
 The "Bad" method consists to give the token (cookie value) to WebApp1
-which uses it as cookie header in its request. Since 2.0 version, LL::NG
-gives a better way (the Good!) to do this by using limited scope
-tokens.
+which uses it as cookie header in its request. LemonLDAP::NG gives a better
+way (the Good!) to do this by using limited scope tokens.
 
 Tokens are time limited (30 seconds by default) and URL restricted.
 

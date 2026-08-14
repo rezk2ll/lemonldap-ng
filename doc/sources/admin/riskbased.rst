@@ -49,7 +49,6 @@ Detection
 New location warning
 ^^^^^^^^^^^^^^^^^^^^
 
-.. versionadded:: 2.0.14
 
 The :doc:`New Location warning <newlocationwarning>` plugin will increase the risk level by 1 when triggered, and will store the **Session attribute to display** in ``$_riskDetail->{newLocation}``.
 

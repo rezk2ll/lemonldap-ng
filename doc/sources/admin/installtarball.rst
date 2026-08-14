@@ -114,7 +114,7 @@ Available parameters are:
 -  **PROD**: use minified JS and CSS files
 -  **USEDEBIANLIBS**: use Debian packaged JS and CSS files (**Note
    that this options isn't yet usable**  since Debian provides a too
-   old AngularJS for now: LLNG manager needs at least version 1.4.0)
+   old AngularJS for now: LemonLDAP::NG manager needs at least version 1.4.0)
 -  **USEEXTERNALLIBS**: use files from public CDN
 -  **STORAGECONFFILE**: *make configure* target only. Location of default
    storage configuration file (default:
@@ -143,7 +143,7 @@ Available parameters are:
 Install cron jobs
 -----------------
 
-LL::NG use cron jobs (or systemd timers) to:
+LemonLDAP::NG use cron jobs (or systemd timers) to:
 
 -  purge old sessions
 -  clean Handler cache

@@ -2,7 +2,7 @@ Test OpenID Connect with command line tools
 ===========================================
 
 We present here how to test the OpenID Connect protocol (authorization code flow) with commande line tools, like `curl`.
-We use in this example a public OIDC provider based on LL::NG: `<https://oidctest.wsweet.org>`_
+We use in this example a public OIDC provider based on LemonLDAP::NG: `<https://oidctest.wsweet.org>`_
 
 Authentication
 --------------

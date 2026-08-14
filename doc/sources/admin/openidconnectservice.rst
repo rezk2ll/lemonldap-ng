@@ -108,8 +108,8 @@ Security
    You have to choose the key type: ``RSA`` or ``EC``. The list of
    supported algorithms in OIDC metadata will be automatically updated.
 
-   - Set signing key if LLNG is an OpenID-Connect server
-   - Set Encryption key if LLNG is an OpenID-Connect Relying-Party and if you
+   - Set signing key if LemonLDAP::NG is an OpenID-Connect server
+   - Set Encryption key if LemonLDAP::NG is an OpenID-Connect Relying-Party and if you
      want that the OpenID-Connect server encrypt the JWT tokens
 -  **Advanced key configuration**
 
@@ -126,26 +126,26 @@ Security
 -  **Authorization Code Flow**: Set to 'On' to allow Authorization Code flow
 -  **Implicit Flow**: Set to 'On' to allow Implicit flow
 -  **Hybrid Flow**: Set to 'On' to allow Hybrid flow
--  **Always send exported attributes**: By default, LL::NG will release all
+-  **Always send exported attributes**: By default, LemonLDAP::NG will release all
    exported attributes to RPs. When this option is disabled, only attributes
    allowed by a scope can be transmitted
--  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
-   When this option is enabled, LL::NG will only grant:
+-  **Only allow declared scopes**: By default, LemonLDAP::NG will grant all requested scopes.
+   When this option is enabled, LemonLDAP::NG will only grant:
 
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
 -  **Drop CSP headers from OIDC responses**: Set to 'On' to drop all Content Security Policy headers (:ref:`CSP<security-configure-security-settings>`) from OIDC responses
--  **Default "alg" algorithm for JWE encryption**: when LL::NG is an OpenID-Connect
+-  **Default "alg" algorithm for JWE encryption**: when LemonLDAP::NG is an OpenID-Connect
    Server, you can set here the default "alg" algorithm to use for JWE encryption
--  **Default "enc" algorithm for JWE encryption**: when LL::NG is an OpenID-Connect
+-  **Default "enc" algorithm for JWE encryption**: when LemonLDAP::NG is an OpenID-Connect
    Server, you can set here the default "enc" algorithm to use for JWE encryption
 -  **Do not display metadata**: Set to 'On' to hide OIDC metadata
 
 
 .. _x5c:
 
-.. versionchanged:: 2.0.16
+.. note::
 
     In order to increase compatibility with some applications, LemonLDAP::NG
     encapsulates the OIDC signing key in a certificate.
@@ -192,7 +192,7 @@ Keys rotation script
 --------------------
 
 OpenID Connect specifications allow to rotate keys to improve security.
-LL::NG provides a script to do this, that should be used in a cronjob.
+LemonLDAP::NG provides a script to do this, that should be used in a cronjob.
 
 The script is ``/usr/share/lemonldap-ng/bin/rotateOidcKeys``. It can be
 run for example each week:
@@ -201,7 +201,7 @@ run for example each week:
 
    5 5 * * 6 www-data /usr/share/lemonldap-ng/bin/rotateOidcKeys
 
-Both a systemd timer and a cronjob are provided in LL::NG tarball and packages.
+Both a systemd timer and a cronjob are provided in LemonLDAP::NG tarball and packages.
 
 This is _not_ enabled by default, one needs to enable it:
 
@@ -211,19 +211,19 @@ This is _not_ enabled by default, one needs to enable it:
 .. tip::
 
     Set the correct WebServer user, else generated configuration will
-    not be readable by LL::NG.
+    not be readable by LemonLDAP::NG.
 
 Session management
 ------------------
 
-LL::NG implements the `OpenID Connect Change Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
+LemonLDAP::NG implements the `OpenID Connect Change Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
 
-A ``changed`` state will be sent if the user is disconnected from LL::NG
+A ``changed`` state will be sent if the user is disconnected from LemonLDAP::NG
 portal (or has removed its SSO cookie). Else the ``unchanged`` state
 will be returned.
 
 
 .. tip::
 
-    This feature requires that the LL::NG cookie is exposed to
+    This feature requires that the LemonLDAP::NG cookie is exposed to
     javascript (``httpOnly`` option must be set to ``0``).

@@ -4,7 +4,7 @@ Combination of authentication schemes
 ============== ===== ==================
 Authentication Users Password
 ============== ===== ==================
-✔              ✔     ✔ (since *2.0.10*)
+✔              ✔     ✔
 ============== ===== ==================
 
 Presentation
@@ -36,7 +36,7 @@ must set:
    -  authentication only
    -  user DB only
 
--  overloaded parameters: you can redefine any LLNG string parameters.
+-  overloaded parameters: you can redefine any LemonLDAP::NG string parameters.
    For example, if you use 2 different LDAP, the first can use normal
    configuration and for the second, overwritten parameter can redefine
    ldapServer or any existing parameter.
@@ -74,7 +74,7 @@ expect string values:
 
 .. attention::
 
-    If your JSON is corrupted, LLNG will use it as string
+    If your JSON is corrupted, LemonLDAP::NG will use it as string
     and just report a warning in logs.
 
 Rule chain
@@ -189,7 +189,6 @@ lemonldap-ng.ini. Example:
 Password management
 -------------------
 
-.. versionadded:: 2.0.10
 
 Not all configurations of the Combination module allow password management. 
 
@@ -248,7 +247,7 @@ Bad expression                    Solution                            Explanatio
 Auth::Apache authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using this module, LL::NG portal will be called only if Apache does
+When using this module, LemonLDAP::NG portal will be called only if Apache does
 not return "401 Authentication required", but this is not the Apache
 behaviour: if the auth module fails, Apache returns 401. So it can be
 used only with a "and" boolean expression.

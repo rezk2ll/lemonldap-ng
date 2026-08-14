@@ -29,28 +29,25 @@ Inside this jail, you can access to:
   * checkDate_
   * checkLogonHours_
   * date_
-  * dateToTime_ (|new| in version 2.0.12)
-  * decrypt_ (|new| in version 2.18)
+  * dateToTime_
+  * decrypt_
   * encrypt_
   * groupMatch_
-  * has2f_ (|new| in version 2.0.10)
-  * inDomain_ (|new| in version 2.19.0)
-  * inGroup_ (|new| in version 2.0.8)
-  * inSubnet_ (|new| in version 2.17)
-  * ipInSubnet_ (|new| in version 2.17)
+  * has2f_
+  * inDomain_
+  * inGroup_
+  * inSubnet_
+  * ipInSubnet_
   * isInNet6_
   * iso2unicode_
-  * iso2unicodeSafe_ (|new| in version 2.0.15)
-  * listMatch_ (|new| in version 2.0.7)
-  * subjectid_ (|new| in version 2.17)
+  * iso2unicodeSafe_
+  * listMatch_
+  * subjectid_
   * token_
   * unicode2iso_
-  * unicode2isoSafe_ (|new| in version 2.0.15)
-  * varIsInUri_ (|new| in version 2.0.7)
+  * unicode2isoSafe_
+  * varIsInUri_
 
-
-.. |new| image:: /documentation/new.png
-   :width: 35px
 
 .. tip::
 
@@ -97,7 +94,7 @@ The date format corresponds to LDAP date syntax, for example for the 1st of Marc
 
    20090301000000Z
 
-|new| Since version 2.0.12, the date may end with a differential timezone, 
+The date may end with a differential timezone, 
 for example for the 1st of March 2009 (+0100):
 
 ::
@@ -107,12 +104,9 @@ for example for the 1st of March 2009 (+0100):
 
 Functions parameters:
 
--  **start**: Start date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **end**: End date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **default_access** (optional): Which result to return if **start** and
-   **end** dates are empty
+-  **start**: Start date (GMT unless, a differential timezone is included)
+-  **end**: End date (GMT unless, a differential timezone is included)
+-  **default_access** (optional): Which result to return if **start** and **end** dates are empty
 
 Simple usage example:
 
@@ -199,7 +193,6 @@ by calling ``date(1)``
 dateToTime
 ~~~~~~~~~~
 
-.. versionadded:: 2.0.12
 
 Used for converting a string date into epoch time.
 
@@ -226,7 +219,7 @@ Simple usage example:
 decrypt
 ~~~~~~~
 
-This function uses the secret key of LL::NG configuration to decrypt a value.
+This function uses the secret key of LemonLDAP::NG configuration to decrypt a value.
 
 ::
 
@@ -235,12 +228,7 @@ This function uses the secret key of LL::NG configuration to decrypt a value.
 encrypt
 ~~~~~~~
 
-.. tip::
-
-    Since version 2.0, this function is now compliant with
-    :doc:`Safe jail<safejail>`.
-
-This function uses the secret key of LL::NG configuration to crypt a data.
+This function uses the secret key of LemonLDAP::NG configuration to crypt a data.
 This can be used for anonymizing identifier given to the protected
 application.
 
@@ -272,7 +260,6 @@ Simple usage example:
 has2f
 ~~~~~
 
-.. versionadded:: 2.0.10
 
 This function tests if the current user has registered a second factor. The following types are supported out of the box:
 
@@ -294,16 +281,9 @@ Example::
    authentication level. It can be used to simplify second factor activation rules.
 
 
-.. note::
-
-   Before version 2.0.10, you need to use the following syntax ::
-
-      $_2fDevices =~ /"type":\s*"TOTP"/s
-
 inDomain
 ~~~~~~~~
 
-.. versionadded:: 2.19.0
 
 This function tests if the request's hostname (HTTP ``Host`` header) belongs to a given DNS domain
 
@@ -318,7 +298,6 @@ The function returns 1 if the targeted Vhost is equal to the given domain or con
 inGroup
 ~~~~~~~
 
-.. versionadded:: 2.0.8
 
 This function lets you test if the user is in a given group. It is
 case-insensitive.
@@ -338,7 +317,6 @@ The function returns 1 if the user belongs to the given group, and 0 if they don
 inSubnet
 ~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you test if the request's IP address (``REMOTE_ADDR``
 environment variable) belongs to a certain subnet. You can give multiple subnets.
@@ -366,7 +344,6 @@ IP address is local*:
 ipInSubnet
 ~~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you test if the provided IP address belongs to a certain
 subnet. You can give multiple subnets.
@@ -423,7 +400,6 @@ Simple usage example:
 listMatch
 ~~~~~~~~~
 
-.. versionadded:: 2.0.7
 
 This function lets you test if a particular value can be found with a
 multi-valued session attribute.
@@ -453,7 +429,6 @@ The function returns 1 if a value was found, and 0 if it was not found.
 subjectid
 ~~~~~~~~~
 
-.. versionadded:: 2.17
 
 This function lets you generate an identifier suitable with the requirements of `urn:oasis:names:tc:SAML:profiles:subject-id <https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html>`__
 
@@ -499,7 +474,6 @@ This function generates token used for
 varIsInUri
 ~~~~~~~~~~
 
-.. versionadded:: 2.0.7
 
 Function to check if a variable is in requested URI
 

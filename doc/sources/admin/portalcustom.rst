@@ -136,12 +136,9 @@ Check out the :doc:`jqueryevents` page for available integrations
 Some javascript functions are exported by LemonLDAP:
 
 * ``translate(msg)``: lookup the value of the translation label ``msg`` in the current language
-
-.. versionadded:: 2.21.0
-
-    * ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
-    * ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
-    * ``ssl_start``: start SSL authentication. This only works the login page
+* ``translatePage(lang)``: translate the page into ``lang``, if ommitted, retranslate the whole page into the current language
+* ``webauthn_start``: start WebAuthn authentication flow. This only works on login page and 2FA pages
+* ``ssl_start``: start SSL authentication. This only works the login page
 
 .. _portalcustom-skin-customization:
 
@@ -194,11 +191,10 @@ For example ``templates/bootstrap/en.json``:
      "myMessage": "My custom message, in english"
    }
 
-You can also create a file called ``all.json`` to override messages in
-all languages.
+You can also create a file called ``all.json`` to override messages in all languages.
 
-.. versionchanged:: 2.0.15
-   Translations in lemonldap-ng.ini now take priority over translations from skin files
+.. note::
+   Translations in lemonldap-ng.ini overload translations from skin files.
 
 Buttons on login page
 ~~~~~~~~~~~~~~~~~~~~~
@@ -212,9 +208,8 @@ This node allows one to enable/disable buttons on the login page:
 -  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
    password based authentication backends)
 -  **Reset password**: display a link to
-   :doc:`reset your password page<resetpassword>` (for password based
-   authentication backends). Number of allowed retries can be set (3
-   times by default)
+   :doc:`reset your password page<resetpassword>` (for password based authentication backends).
+   Number of allowed retries can be set (3 times by default).
 
 Password management
 ~~~~~~~~~~~~~~~~~~~
@@ -232,10 +227,6 @@ Password management
 
 Password Policy
 ~~~~~~~~~~~~~~~
-
-.. tip::
-
-    Available since version 2.0.6
 
 -  **Activation**: enable/disable password policy. You can set a rule
    to enable policy for specific users only
@@ -434,7 +425,6 @@ You can use the ``trspan`` HTML attribute to replace the content of a tag by an 
     <span trspan="myMessage">This will be replaced by the translation of myMessage</span>
 
 
-.. versionadded:: 2.0.16
 
     You can now also replace HTML attributes with translated messages
 

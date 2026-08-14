@@ -78,7 +78,7 @@ content created previously.
 LL:NG, SAML 2.0 Service Provider configuration
 ----------------------------------------------
 
-You should have configured LL::NG as an :doc:`SAML Identity Provider<../idpsaml>`.
+You should have configured LemonLDAP::NG as an :doc:`SAML Identity Provider<../idpsaml>`.
 
 We now have to define a service provider (e.g our rocketchat) in LL:NG.
 

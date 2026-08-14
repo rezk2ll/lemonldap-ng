@@ -4,7 +4,7 @@ REST/SOAP servers
 Presentation
 ------------
 
-LL::NG portal can be configured as REST or *(deprecated)* SOAP server,
+LemonLDAP::NG portal can be configured as REST or *(deprecated)* SOAP server,
 for several usage:
 
 -  Configuration access

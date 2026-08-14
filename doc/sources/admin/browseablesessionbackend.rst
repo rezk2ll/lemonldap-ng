@@ -11,7 +11,7 @@ index that increase the speed of some operations. It is recommended in productio
 
 .. note::
 
-    Without index, LL::NG will have to retrieve all sessions stored in
+    Without index, LemonLDAP::NG will have to retrieve all sessions stored in
     backend and deserialize then filter each of them.
 
 The following table list fields to index for each session type:
@@ -41,8 +41,8 @@ List of fields to index by session type
 .. [#] ``user`` is used by :doc:`resetpassword`.
 .. [#] ``mail`` is used by :doc:`register`.
 .. [#] ``_session_uid`` is used by :doc:`trustedbrowser`.
-.. [#] ``_oidc_sub`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
-.. [#] ``_oidc_sid`` is used by OpenID Connect single logout when LLNG is an OIDC client, see :doc:`authopenidconnect`.
+.. [#] ``_oidc_sub`` is used by OpenID Connect single logout when LemonLDAP::NG is an OIDC client, see :doc:`authopenidconnect`.
+.. [#] ``_oidc_sid`` is used by OpenID Connect single logout when LemonLDAP::NG is an OIDC client, see :doc:`authopenidconnect`.
 .. [#] ``_webAuthnUserHandle`` is used by :doc:`authwebauthn`.
 
 .. note::

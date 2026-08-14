@@ -22,7 +22,7 @@ Requirements
 Your LemonLDAP::NG server must be configured as OpenID Connect provider.
 
 Your NextCloud server must be able to join directly the LemonLDAP::NG server.
-It using SSL, be sure that certificate of LL::NG portal is trusted on NextCloud server.
+It using SSL, be sure that certificate of LemonLDAP::NG portal is trusted on NextCloud server.
 
 LemonLDAP::NG
 ~~~~~~~~~~~~~

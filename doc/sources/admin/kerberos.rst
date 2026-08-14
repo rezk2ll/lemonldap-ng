@@ -18,8 +18,8 @@ We will use the following values in our examples
 
 -  **EXAMPLE.COM**: First AD domain
 -  **ACME.COM**: Second AD domain (optional, in case of a cross-domain trust)
--  **auth.example.com**: DNS of the LL::NG portal
--  **KERB_AUTH**: AD account to generate the keytab for LL::NG server
+-  **auth.example.com**: DNS of the LemonLDAP::NG portal
+-  **KERB_AUTH**: AD account to generate the keytab for LemonLDAP::NG server
 
 Service Account
 ~~~~~~~~~~~~~~~
@@ -36,7 +36,7 @@ The second option is required if you are using recent Linux versions, where RC4 
 Server time
 ~~~~~~~~~~~
 
-It is mandatory that LL::NG servers and AD servers have the same time.
+It is mandatory that LemonLDAP::NG servers and AD servers have the same time.
 It is recommended to use NTP to do this.
 
 DNS
@@ -166,7 +166,7 @@ keytab file:
 Testing your setup
 ------------------
 
-This is only needed if your Kerberos configuration is not working and you don't understand why. It explains how request a Kerbeors ticket from a GNU/Linux station (which could be the LL::NG server if you don't have other one).
+This is only needed if your Kerberos configuration is not working and you don't understand why. It explains how request a Kerbeors ticket from a GNU/Linux station (which could be the LemonLDAP::NG server if you don't have other one).
 
 Of course it requires a valid user account on AD to be able to otbain the Kerberos ticket.
 
@@ -242,7 +242,7 @@ Checking the keytab
 ~~~~~~~~~~~~~~~~~~~
 
 Now you can compare the above result with the same request done through
-the keytab file on LL::NG server:
+the keytab file on LemonLDAP::NG server:
 
 ::
 

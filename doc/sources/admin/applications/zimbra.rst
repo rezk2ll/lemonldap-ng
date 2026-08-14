@@ -20,7 +20,7 @@ recommended way, but this requires Zimbra Network Edition.
 
 Zimbra can also use a specific `preauthentication
 protocol <https://wiki.zimbra.com/index.php?title=Preauth>`__ to provide
-SSO on its application. This protocol is implemented in an LL::NG
+SSO on its application. This protocol is implemented in an LemonLDAP::NG
 specific Handler and is available in Zimbra Open Source Edition.
 
 SAML
@@ -93,7 +93,7 @@ Zimbra PreAuth Handler
 
     This method is no more recommended.
 
-The integration with LL::NG is the following:
+The integration with LemonLDAP::NG is the following:
 
 -  A special URL is declared in application menu (like
    http://zimbra.example.com/zimbrasso)

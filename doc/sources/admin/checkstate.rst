@@ -34,13 +34,11 @@ The plugin will respond to the HTTP request with:
 * HTTP code 500 if something went wrong
 * HTTP code 200 and the following JSON content if something went right
 
+The *version* key is returned
+
 .. code:: json
 
-    {"result":1,"version":"2.0.14"}
-
-.. versionadded:: 2.0.14
-   The *version* key is returned
-
+    {"result":1,"version":"3.0.0"}
 
 
 Example

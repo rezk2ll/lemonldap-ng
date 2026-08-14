@@ -4,7 +4,7 @@ Convert HTTP header into environment variable
 Apache
 ------
 
-Using LL::NG in reverse proxy mode, you will not have the
+Using LemonLDAP::NG in reverse proxy mode, you will not have the
 ``REMOTE_USER`` environment variable set. Indeed, this variable is set
 by the Handler on the physical server hosting the Handler, and not on
 other servers where the Handler is not installed.
@@ -22,7 +22,7 @@ This can be used to protect applications relying on ``REMOTE_USER``
 environment variable in reverse proxy mode. In this case you will have
 two Apache configuration files:
 
--  Apache configuration file on LL::NG reverse proxy (hosting LL::NG
+-  Apache configuration file on LemonLDAP::NG reverse proxy (hosting LemonLDAP::NG
    Handler):
 
 .. code-block:: apache
@@ -71,7 +71,7 @@ Nginx
 
 Nginx doesn't launch directly PHP pages (or other languages): it dials
 with FastCGI servers (like php-fpm). As you can see in examples, it's
-easy to map a LLNG header to a fastcgi param. Example:
+easy to map a LemonLDAP::NG header to a fastcgi param. Example:
 
 .. code-block:: nginx
 

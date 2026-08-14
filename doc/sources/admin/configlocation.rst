@@ -26,7 +26,7 @@ modules to access it.
 
 .. attention::
 
-    Note that all LL::NG components must have access:
+    Note that all LemonLDAP::NG components must have access:
 
     -  to the configuration backend
     -  to the sessions storage backend
@@ -97,7 +97,7 @@ editing ``lemonldap-ng.ini`` and changing the ``protection`` parameter:
 .. tip::
 
     See :doc:`Manager protection documentation<managerprotection>`
-    to know how to use Apache modules or LL::NG to manage access to
+    to know how to use Apache modules or LemonLDAP::NG to manage access to
     Manager.
 
 The Manager displays main branches:
@@ -150,7 +150,7 @@ Configuration placeholders
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to use environment variable placeholders anywhere in
-configuration. Those placeholders will be replaced by each LLNG component
+configuration. Those placeholders will be replaced by each LemonLDAP::NG component
 using environment variables set locally.
 The format is: ``%SERVERENV:VariableName%``.
 To enable this feature, you must edit ``lemonldap-ng.ini`` to set
@@ -169,14 +169,14 @@ fetch data from password vaults or other sources.
 Manager API
 -----------
 
-Since 2.0.8, a Manager API is available for:
+Manager API is available for:
 
 -  Second factors management for users
 -  OpenID Connect RP management
 -  SAML SP management
 
 See `Manager API
-documentation <https://lemonldap-ng.org/manager-api/2.0/>`__.
+documentation <https://lemonldap-ng.org/manager-api/3.0/>`__.
 
 
 .. attention::
@@ -450,7 +450,7 @@ See :doc:`how to deploy them<confignginx>`.
 
 .. danger::
 
-    \ :doc:`LL::NG FastCGI<fastcgiserver>` server must be
+    \ :doc:`LemonLDAP::NG FastCGI<fastcgiserver>` server must be
     enabled and started separately.
 
 .. _portal-1:
@@ -561,7 +561,7 @@ included file):
        # OR
        #fastcgi_param HTTP_AUTH_USER $authuser;
 
-       # Then (if LUA not supported), change cookie header to hide LLNG cookie
+       # Then (if LUA not supported), change cookie header to hide LemonLDAP::NG cookie
        #auth_request_set $lmcookie $upstream_http_cookie;
        #proxy_set_header Cookie: $lmcookie;
        # OR

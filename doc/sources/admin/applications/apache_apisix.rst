@@ -21,7 +21,7 @@ Make sure you have already
 server.
 
 APISIX acts as OpenID-COnnect Ressource Server, then it only validates given
-access_token. So LLNG configuration is related to the real Relying Party.
+access_token. So LemonLDAP::NG configuration is related to the real Relying Party.
 
 Then, add a Relying Party with the following configuration:
 

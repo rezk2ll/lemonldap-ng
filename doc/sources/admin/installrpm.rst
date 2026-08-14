@@ -77,7 +77,7 @@ You can add this YUM repository to get recent packages:
 
 .. tip::
 
-    Replace ``stable`` by ``2.0`` to avoid upgrade to next major
+    Replace ``stable`` by ``3.0`` to avoid upgrade to next major
     version
 
 Install the `GPG Security key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc>`__ on your LemonLDAP::NG server:

@@ -77,9 +77,9 @@ Define here:
 
    $env->{urldc} =~ /test1\.example\.com/
 
-.. versionchanged:: 2.20.0
+.. note::
 
-    Starting with version *2.20.0*, you can use the same syntax as :doc:`regular
+    You can use the same syntax as :doc:`regular
     rules <rules_examples>`. In addition to the following special variables
 
     * ``$targetAuthnLevel``: authentication level requested by the current application
@@ -98,7 +98,7 @@ choice.
 Parameter override
 ~~~~~~~~~~~~~~~~~~
 
-You can also override some LLNG parameters for each chain. See
+You can also override some LemonLDAP::NG parameters for each chain. See
 :doc:`Parameters list<parameterlist>` to have the key names to use
 
 Custom logo

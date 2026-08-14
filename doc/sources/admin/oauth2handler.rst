@@ -10,7 +10,7 @@ This Handler is able to check an OAuth2 access token to retrieve the
 user real session and protect a virtual host like a standard Handler
 (access control and HTTP headers transmission).
 
-This requires to get an OAuth2 access token through LL::NG Portal (OpenID
+This requires to get an OAuth2 access token through LemonLDAP::NG Portal (OpenID
 Connect server). This access token can then be used in the
 ``Authorization`` header to authenticate to the Web Service / API
 protected by the OAuth2 Handler.
@@ -48,13 +48,13 @@ The OAuth2 handler defines a few extra variables that you can use in
 * ``$_clientId``: client ID of the application which requested the Access Token
 * ``$_clientConfKey``: configuration key of the application which requested the
   Access Token
-* ``$_oidc_grant_type`` (since *2.0.14*): the grant type used to generate the Access Token. If
+* ``$_oidc_grant_type``: the grant type used to generate the Access Token. If
   Refresh Tokens are used, this is the grant type of the first emitted Access
   Token. Possible values: ``authorizationcode``, ``implicit``, ``hybrid``,
   ``clientcredentials``, ``password``
 * ``$_scope``: list of space-separated scopes granted by the Access Token
 * ``$_accessToken``: value of the access token, in case your application needs it as well
-* ``$_audiences`` (since *2.23.0*): list of audiences allowed for this token. You can use :ref:`listMatch($_audiences, "my.audience.com")<listMatch>` to check for the expected value. Audiences can be added to a token using the **Additional audiences** :doc:`OIDC relying party configuration parameter <idpopenidconnect>`.
+* ``$_audiences``: list of audiences allowed for this token. You can use :ref:`listMatch($_audiences, "my.audience.com")<listMatch>` to check for the expected value. Audiences can be added to a token using the **Additional audiences** :doc:`OIDC relying party configuration parameter <idpopenidconnect>`.
 
 For example, to grant access to access tokens containing the ``write`` scope,
 use ::

@@ -1,7 +1,7 @@
 Advanced PSGI usage
 ===================
 
-LL::NG is built on `Plack <https://plackperl.org/>`__, so it can be used
+LemonLDAP::NG is built on `Plack <https://plackperl.org/>`__, so it can be used
 with any compatible server:
 
 -  `Starman <https://metacpan.org/pod/starman>`__
@@ -54,8 +54,8 @@ part you want to use.
 
 There are also some other PSGI files in examples directory.
 
-LL::NG FastCGI Server
-~~~~~~~~~~~~~~~~~~~~~
+LemonLDAP::NG FastCGI Server
+i~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``llng-fastcgi-server`` can be started with the following options:
 
@@ -104,8 +104,8 @@ llng-server.psgi *(simple example)*:
 
    /usr/bin/uwsgi --plugins psgi --socket :5000 --uid www-data --gid www-data --psgi /usr/share/lemonldap-ng/llng-server/llng-server.psgi
 
-You will find in LL::NG Nginx configuration files some comments that
-explain how to configure Nginx to use uWSGI instead of LL::NG FastCGI server.
+You will find in LemonLDAP::NG Nginx configuration files some comments that
+explain how to configure Nginx to use uWSGI instead of LemonLDAP::NG FastCGI server.
 
 Using Debian lemonldap-ng-uwsgi-app package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -172,8 +172,8 @@ and/or Nginx init files several options. Example:
 Protect a PSGI application
 --------------------------
 
-LL::NG provides ``Plack::Middleware::Auth::LemonldapNG`` that can be used
-to protect any PSGI application: it works exactly like a LL::NG handler.
+LemonLDAP::NG provides ``Plack::Middleware::Auth::LemonldapNG`` that can be used
+to protect any PSGI application: it works exactly like a LemonLDAP::NG handler.
 Simple example:
 
 .. code-block:: perl

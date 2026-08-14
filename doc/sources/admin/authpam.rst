@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG can use `Pluggable authentication
+LemonLDAP::NG can use `Pluggable authentication
 module <https://en.wikipedia.org/wiki/Pluggable_authentication_module>`__
 as a simple authentication backend.
 

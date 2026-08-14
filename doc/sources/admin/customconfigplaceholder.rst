@@ -1,7 +1,6 @@
 Custom configuration placeholder
 ================================
 
-.. versionadded:: 2.23.0
 
 LemonLDAP::NG optionally supports the ``%SERVERENV:VariableName%`` syntax to read configuration values from the environment.
 

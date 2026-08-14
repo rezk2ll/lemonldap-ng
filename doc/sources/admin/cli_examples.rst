@@ -1,7 +1,7 @@
 Command Line Interface (lemonldap-ng-cli) examples
 ==================================================
 
-This page shows some examples of LL::NG Command Line Interface. See
+This page shows some examples of LemonLDAP::NG Command Line Interface. See
 :ref:`how to use the command<configlocation-command-line-interface-cli>`.
 
 
@@ -14,8 +14,6 @@ This page shows some examples of LL::NG Command Line Interface. See
 
 Save/restore configuration
 --------------------------
-
-This part requires LLNG 2.0.5 at least.
 
 Save:
 
@@ -31,7 +29,7 @@ Restore:
    # Or
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli restore - <config.json
 
-Rollback (restore previous configuration, *since 2.0.8*):
+Rollback:
 
 .. code-block:: shell
 
@@ -41,7 +39,7 @@ Configure HTTPS
 ---------------
 
 When setting HTTPS, you first need to modify Apache/Nginx configuration,
-then you must configure LL::NG to change portal URL, Handler
+then you must configure LemonLDAP::NG to change portal URL, Handler
 redirections, cookie settings, ...
 
 ::
@@ -164,7 +162,7 @@ Configure virtual host
 ----------------------
 
 A virtual host must be defined in Apache/Nginx and access rules and
-exported headers must be configured in LL::NG.
+exported headers must be configured in LemonLDAP::NG.
 
 In this example we have:
 
@@ -310,14 +308,6 @@ these commands;
 
    openssl req -new -newkey rsa:4096 -keyout saml.key -nodes  -out saml.pem -x509 -days 3650
 
-Fix the certificate key format (you can skip this step if you are
-running >= 2.0.6)
-
-::
-
-   sed -e "s/END PRIVATE/END RSA PRIVATE/" \
-       -e "s/BEGIN PRIVATE/BEGIN RSA PRIVATE/" \
-       -i saml.key
 
 Import them in configuration and activate the SAML issuer
 
@@ -493,7 +483,6 @@ To update the master encryption key:
 Bulk configuration changes
 --------------------------
 
-.. versionadded:: 2.0.15
 
 The ``merge`` subcommand can be used to inject multiple configuration keys and
 variables at once. It reads a list of JSON or YAML formatted files and combines
@@ -566,7 +555,6 @@ Importing the changes:
 
 Sessions Management
 -------------------
-.. versionadded:: 2.0.9
 
 
 Get the content of a session ::
@@ -587,10 +575,7 @@ Modify session ::
       authenticationLevel 1
 
 
-.. versionadded:: 2.0.10
-   Delete all sessions by username
-
-::
+Delete all sessions by username ::
 
    lemonldap-ng-sessions delete --where uid=dwho
 
@@ -598,7 +583,6 @@ Modify session ::
 Second Factors management
 -------------------------
 
-.. versionadded:: 2.0.9
 
 List second factors of a user ::
 
@@ -611,7 +595,6 @@ Deregister Yubico OTP for a user ::
 OIDC Consents management
 ------------------------
 
-.. versionadded:: 2.0.9
 
 List consents of a user ::
 

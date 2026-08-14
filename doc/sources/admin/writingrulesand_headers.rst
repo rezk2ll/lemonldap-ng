@@ -117,14 +117,14 @@ or to the specified URL if exists.
 
     Only current application is concerned by logout_app\*
     targets. Be careful with some applications which does not check
-    headers sent by LL::NG after having created their own application cookies.
+    headers sent by LemonLDAP::NG after having created their own application cookies.
     If so, you can redirect users to a HTML page that explain that it is better
     to close browser after logout.
 
 Rules based on authentication level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LL::NG set an "authentication level" during authentication process. This
+LemonLDAP::NG set an "authentication level" during authentication process. This
 level depends on authentication backend used by this user. Default
 values are:
 
@@ -140,12 +140,11 @@ There are three ways to impose users a higher authentication level:
 
 -  writing a rule based on authentication level:
    ``$authenticationLevel > 3``
--  since 2.0, set a minimum level in virtual host options (default value
+-  set a minimum level in virtual host options (default value
    for ALL access rules)
--  since 2.0.7, a minimum authentication level can be set for each URI
-   access rule. Useful if URI are protected by different types of
-   handler (AuthBasic -> level 2, Main -> level set by authentication
-   backend).
+-  a minimum authentication level can be set for each URI access rule.
+   Useful if URI are protected by different types of handler
+   (AuthBasic -> level 2, Main -> level set by authentication backend).
 
 
 .. tip::
@@ -211,17 +210,17 @@ Available functions
 In addition to macros and name, you can use some functions in rules and
 headers:
 
--  :doc:`LL::NG extended functions<extendedfunctions>`
+-  :doc:`LemonLDAP::NG extended functions<extendedfunctions>`
 -  :doc:`Your custom functions<customfunctions>`
 
 Wildcards in hostnames
 ----------------------
 
-|image1| Since 2.0, a wildcard can be used in virtualhost name (not in
-aliases !): ``*.example.com`` matches all hostnames that belong to
-``example.com`` domain. Version 2.0.9 improves this and allows better
-wildcards such as ``test-*.example.com`` or ``test-%.example.com``. The
-``%`` wilcard doesn't match subdomains.
+A wildcard can be used in virtualhost name (not in aliases !):
+``*.example.com`` matches all hostnames that belong to
+``example.com`` domain.
+
+The ``%`` wilcard does not match subdomains.
 
 Even if a wildcard exists, if a VirtualHost is explicitly declared, this
 rule will be applied. Example with precedence order for test.sub.example.com:
@@ -231,10 +230,7 @@ rule will be applied. Example with precedence order for test.sub.example.com:
 #. test*.sub.example.com
 #. %.sub.example.com
 #. \*.sub.example.com
-#. \*.example.com (``%.example.com`` does not match
-   test.sub.example.com)
+#. \*.example.com (``%.example.com`` does not match test.sub.example.com)
 
 .. |image0| image:: /documentation/manager-rule.png
    :class: align-center
-.. |image1| image:: /documentation/new.png
-   :width: 35px

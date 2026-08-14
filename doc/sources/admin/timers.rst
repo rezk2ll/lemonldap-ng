@@ -2,7 +2,7 @@
 Timers
 ------
 
-LL::NG use timers (or cron jobs) to:
+LemonLDAP::NG use timers (or cron jobs) to:
 
 - purge old sessions
 - clean Handler cache

@@ -8,14 +8,14 @@ Presentation
 
 `Liferay <https://www.liferay.com/>`__ is an enterprise portal.
 
-Liferay can use LL::NG as an SSO provider but you have to manage how
+Liferay can use LemonLDAP::NG as an SSO provider but you have to manage how
 users are created:
 
 -  By hand in Liferay administration screens
 -  Imported from an LDAP directory
 
 Of course, integration will be full if you use the LDAP directory as
-users backend for LL::NG and Liferay.
+users backend for LemonLDAP::NG and Liferay.
 
 
 .. attention::
@@ -62,7 +62,7 @@ In ``General``, fill at least the following information:
 .. tip::
 
     We advice to deactivate other options, cause users will use
-    LL::NG portal to modify or reset their password.
+    LemonLDAP::NG portal to modify or reset their password.
 
 |image6|
 
@@ -129,7 +129,7 @@ Configure Liferay virtual host like other
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LL::NG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

@@ -16,11 +16,11 @@ anything to the user.
     etc.
 
     Please always try to find another solution to protect your application
-    with LL::NG. At least, check if it is not a
+    with LemonLDAP::NG. At least, check if it is not a
     :doc:`known application<applications>`, or
     :doc:`try to adapt its source code<selfmadeapplication>`.
 
-If you configure form replay with LL::NG, the Handler will detect forms
+If you configure form replay with LemonLDAP::NG, the Handler will detect forms
 to fill, add a javascript in the html page to fill form fields with
 dummy data and submit it, then intercept the POST request and add POST
 data in the request body.
@@ -62,7 +62,7 @@ For example:
 -  jQuery URL:
    https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if
    you let this parameter empty, jQuery is supposed to be already
-   loaded; you can also set ``default`` to point to jQuery URL of LL::NG
+   loaded; you can also set ``default`` to point to jQuery URL of LemonLDAP::NG
    portal)
 -  jQuery form selector: #loginForm (if you let this parameter empty,
    browser will fill and submit any html form)

@@ -12,10 +12,10 @@ Presentation
 Workshops
 ---------
 
--  LDAPCon 2019: `Connect LL::NG to OpenLDAP and use 2FA, configure SSO
+-  LDAPCon 2019: `Connect LemonLDAP::NG to OpenLDAP and use 2FA, configure SSO
    on Fusion Directory and
    Dokuwiki <https://github.com/Worteks/ldapcon2019-llng-workshop>`__
--  Pass the SALT 2019: `Connect LL::NG to OpenLDAP and use 2FA,
+-  Pass the SALT 2019: `Connect LemonLDAP::NG to OpenLDAP and use 2FA,
    configure SSO on Fusion
    Directory <https://github.com/LemonLDAPNG/pts2019-llng-workshop>`__
 
@@ -41,7 +41,7 @@ contributing sponsors <https://lemonldap-ng.org/sponsors.html>`_.
 Long Term Support
 ~~~~~~~~~~~~~~~~~
 
-LL::NG Team maintains these versions following a "Long Term Support" policy:
+LemonLDAP::NG Team maintains these versions following a "Long Term Support" policy:
 these versions are maintained without software updates by transposing only
 security fixes.
 
@@ -62,11 +62,11 @@ Debian
 
 .. tip::
 
-   Following Debian Policy, LL::NG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some minor ones)*.
+   Following Debian Policy, LemonLDAP::NG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some minor ones)*.
    See `Security tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
 
 =========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
-N°          Debian name                LL::NG version                           Secured                                                                                               Maintenance                                                  LTS Limit                           `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
+N°          Debian name                LemonLDAP::NG version                           Secured                                                                                               Maintenance                                                  LTS Limit                           `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
 =========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
 *6*         *Squeeze*                  *0.9.4.1*                                |maybe| *minor issues*                                                                                *None*                                                       *February 2016*
 *7*         *Wheezy*                   *1.1.2*                                  |maybe| *minor issues*                                                                                *None*                                                       *May 2018*
@@ -76,7 +76,7 @@ N°          Debian name                LL::NG version                          
 **11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                                                               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       August 2026                         Possibly 2032
 **12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|                                                                                               `Debian LTS Team <https://wiki.debian.org/LTS/Team>`__       June 2028                           Possibly 2034
 **13**      Trixie                     `2.21.2 </documentation/2.0/>`_          |clean|                                                                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2030                           Possibly 2036
-**Next**    Testing/Unstable           Latest  [3]_                             |clean|                                                                                               LL::NG Team
+**Next**    Testing/Unstable           Latest  [3]_                             |clean|                                                                                               LemonLDAP::NG Team
 =========== ========================== ======================================== ===================================================================================================== ============================================================ =================================== =============================================================
 
 See `Debian Security
@@ -92,7 +92,7 @@ Ubuntu
    Ubuntu version are included in "universe" branch [4]_, so not really security maintained. Prefer to use our repositories or Debian ones
 
 =========== ============= ================================ ==================================================================================================================================== ===========
-Ubuntu dist               LL::NG version                     Secured                                                                                                                            Maintenance
+Ubuntu dist               LemonLDAP::NG version                     Secured                                                                                                                            Maintenance
 =========== ============= ================================ ==================================================================================================================================== ===========
 *12.04*     *Precise*     *1.1.2*                          |maybe| minor issues                                                                                                                 None
 *14.04*     *Trusty*      *1.2.5*                          |maybe| minor issues                                                                                                                 None
@@ -112,13 +112,13 @@ The LemonLDAP::NG development team provides packages for the latest version of
 LemonLDAP::NG directly in `EPEL <https://docs.fedoraproject.org/en-US/epel/>`__
 repositories.
 
-===========  ================== ========= ============ ==============
-N°           LL::NG version     Secured   Maintenance  End of life
-===========  ================== ========= ============ ==============
-*8*          *latest*           |clean|   LL::NG Team  *June 2029*
-*9*          *latest*           |clean|   LL::NG Team  *June 2032*
-*10*         *latest*           |clean|   LL::NG Team  *June 2035*
-===========  ================== ========= ============ ==============
+===========  ===================== ========= ============= =================
+N°           LemonLDAP::NG version Secured   Maintenance   End of life
+===========  ===================== ========= ============= =================
+*8*          *latest*              |clean|   LemonLDAP::NG Team  *June 2029*
+*9*          *latest*              |clean|   LemonLDAP::NG Team  *June 2032*
+*10*         *latest*              |clean|   LemonLDAP::NG Team  *June 2035*
+===========  ===================== ========= ============= =================
 
 
 Bug report
@@ -164,7 +164,7 @@ Other
    Possible `Extended LTS <https://wiki.debian.org/LTS/Extended>`__
 
 .. [2]
-   updated by `LL::NG Team </team>`__ until dependencies are compatible.
+   updated by `LemonLDAP::NG Team </team>`__ until dependencies are compatible.
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
 
@@ -173,7 +173,7 @@ Other
 
 .. [4]
    Ubuntu universe/multiverse branches are community maintained *(so not
-   maintained by Canonical)*, but in fact nobody considers LL::NG security
+   maintained by Canonical)*, but in fact nobody considers LemonLDAP::NG security
    issues. See `this
    issue <https://bugs.launchpad.net/ubuntu/+source/lemonldap-ng/+bug/1829016>`__
    for example

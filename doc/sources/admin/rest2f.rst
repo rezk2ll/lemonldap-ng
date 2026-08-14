@@ -36,7 +36,7 @@ Arguments
 Arguments are a list of key/value. Key is the name of JSON entry, value
 is attribute or macro name.
 
-.. versionchanged:: 2.23.0
+.. note::
    The value can also be a :doc:`Perl expression <writingrulesand_headers>`
 
 REST Dialog 

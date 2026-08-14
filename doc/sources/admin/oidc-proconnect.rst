@@ -24,8 +24,8 @@ LemonLDAP::NG can be used as Relying Party or OpenID Provider for ProConnect.
 
 Official documentation is available on `partner website <https://partenaires.proconnect.gouv.fr/docs>`__.
 
-LL::NG as OpenID Provider
--------------------------
+LemonLDAP::NG as OpenID Provider
+--------------------------------
 
 Registration on ProConnect
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -34,7 +34,7 @@ You need to `fill a form <https://www.demarches-simplifiees.fr/commencer/demande
 
 You will provide one or more mail domains that will be associated with your Identity Provider.
 
-Once the configuration is done on LL::NG, you will send them the client ID, client secret and OIDC metadata URL.
+Once the configuration is done on LemonLDAP::NG, you will send them the client ID, client secret and OIDC metadata URL.
 
 Configuration on LemonLDAP::NG
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -93,13 +93,13 @@ Authentication levels
 ProConnect requires an eIDAS authentication level, which it requests through
 the ``acr_values`` parameter. To match these levels, you must declare them in
 `OpenID Connect Service` > `Authentication context`, which maps each
-Authentication Context Class Reference (ACR) to an internal LL::NG
+Authentication Context Class Reference (ACR) to an internal LemonLDAP::NG
 authentication level. You need at least the ``eidas1`` level.
 
 ProConnect defines three levels, described on the `partner website
 <https://partenaires.proconnect.gouv.fr/docs/fournisseur-service/niveaux-eidas>`__.
 The table below suggests a mapping consistent with the authentication levels
-LL::NG gives to its modules by default:
+LemonLDAP::NG gives to its modules by default:
 
 +------------+---------------+----------------------------------------+---------+
 | ACR        | eIDAS level   | Expected authentication                | LL::NG  |
@@ -122,7 +122,7 @@ given module reaches the expected eIDAS level.
 
    The eIDAS levels also carry requirements on **how the identity itself was
    established** and on the proof of the user's link with their organization,
-   which LL::NG cannot enforce. Mapping authentication levels is necessary but
+   which LemonLDAP::NG cannot enforce. Mapping authentication levels is necessary but
    not sufficient to claim a given level: see the ANSSI reference mentioned by
    ProConnect.
 
@@ -131,15 +131,14 @@ given module reaches the expected eIDAS level.
    Give each authentication context a **distinct** level, and remove the
    default ``loa-*`` entries you do not use.
 
-   LL::NG does not echo back the ACR requested by the Relying Party: it
+   LemonLDAP::NG does not echo back the ACR requested by the Relying Party: it
    recomputes it from the authentication level reached by the user. When
    several contexts share the same level, the one sent back in the ``acr``
    claim of the ID token is picked arbitrarily, so ProConnect may receive
-   ``loa-1`` where it expects ``eidas1``. Since ``2.24.0``, the Manager
-   raises a warning when this happens.
+   ``loa-1`` where it expects ``eidas1``.
 
    For the same reason, every level a user can actually reach should be
-   mapped to an ACR value. When it is not, LL::NG falls back to
+   mapped to an ACR value. When it is not, LemonLDAP::NG falls back to
    ``loa-<level>``, which ProConnect does not know either.
 
 Configuration with CLI
@@ -180,7 +179,7 @@ If you want to configure it through CLI, you can adapt the following commands.
             oidcRPMetaDataExportedVars/rp-proconnect uid uid \
             oidcRPMetaDataExportedVars/rp-proconnect usual_name sn
 
-* Extra scopes (only needed if you did not configure LL::NG to automatically send all exported attributes by default)
+* Extra scopes (only needed if you did not configure LemonLDAP::NG to automatically send all exported attributes by default)
 
 ::
 
@@ -194,8 +193,8 @@ If you want to configure it through CLI, you can adapt the following commands.
             oidcRPMetaDataOptionsExtraClaims/rp-proconnect usual_name usual_name
 
 
-LL::NG as Relying Party
------------------------
+LemonLDAP::NG as Relying Party
+------------------------------
 
 Registration on ProConnect
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -210,7 +209,7 @@ Fill these informations:
 * Logout URL: your portal URL with logout parameter, for example: ``https://auth.example.com/?logout=1``
 * Signature algorithm: use recommended values, for example RS256
 
-Copy client ID and client secret, they are required to configure ProConnect OpenID Provider on LL::NG.
+Copy client ID and client secret, they are required to configure ProConnect OpenID Provider on LemonLDAP::NG.
 
 Configuration on LemonLDAP::NG
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

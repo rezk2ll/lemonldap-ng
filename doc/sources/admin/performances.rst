@@ -12,7 +12,7 @@ Built-in
 Cache system
 ~~~~~~~~~~~~
 
-LLNG uses different cache systems to avoid querying to many the
+LemonLDAP::NG uses different cache systems to avoid querying to many the
 databases:
 
 ============= ======================== ========== ============================== ==================== ==
@@ -52,7 +52,7 @@ To bypass this, you can:
 Cron optimization (or systemd timers)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LLNG installs its cron files without knowing how many servers are
+LemonLDAP::NG installs its cron files without knowing how many servers are
 installed. You should optimize this to launch:
 
 -  purgeCentralCache: only 1 time every 10 minutes for the whole system
@@ -102,8 +102,8 @@ Portal performances
 General performances
 ~~~~~~~~~~~~~~~~~~~~
 
-The portal is the biggest component of Lemonldap::NG. Since version 2.0,
-portal runs under FastCGI and has been rewritten using plugins, so
+The portal is the biggest component of Lemonldap::NG.
+Portal runs under FastCGI and has been rewritten using plugins, so
 performance is increased in comparison to earlier versions. You just
 have to disable unused plugins:
 
@@ -148,7 +148,7 @@ it can be a bottleneck for the portal:
 
 .. tip::
 
-    Since 1.9.6, LLNG portal and handler check if session is valid
+    Since 1.9.6, LemonLDAP::NG portal and handler check if session is valid
     at each access, so purgeCentralCache cron no longer needs to be launched
     every 10 minutes: one or two times per day is enough.
 
@@ -224,7 +224,7 @@ Performance test
     has been created, it is the fastest (except for session explorer,
     defeated by Apache::Session::Browseable:: `DBI <https://metacpan.org/module/Apache::Session::Browseable>`__ / `LDAP <https://metacpan.org/module/Apache::Session::Browseable::LDAP>`__)
 
-This test isn't an "only-backend" test but embedded some LLNG methods,
+This test isn't an "only-backend" test but embedded some LemonLDAP::NG methods,
 so real differences between engines are mitigate here.
 
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
@@ -248,9 +248,7 @@ Apache::Session::\ **Browseable::Redis**                                        
 *The source of this test is available in sources: e2e-tests/sbperf.pl*
 
 .. [3] "purge" test is done with Apache::Session::Browseable-1.2.5
-   and LLG-2.0. Earlier results are not so good.
 .. [4] "purge" test is done with Apache::Session::Browseable-1.2.6
-   and LLG-2.0.
 
 Analysis:
 

@@ -120,16 +120,16 @@ Edit the portal virtual host or your secondary vhost to enable SSL double authen
 All SSL options are documented in `Apache mod_ssl
 page <https://httpd.apache.org/docs/current/mod/mod_ssl.html>`__.
 
-Here are the main options used by LL::NG:
+Here are the main options used by LemonLDAP::NG:
 
 -  **SSLVerifyClient**: set to ``optional`` to allow user with a bad
-   certificate to access to LL::NG portal page. To switch to another
+   certificate to access to LemonLDAP::NG portal page. To switch to another
    authentication backend, use the :doc:`Multi<authmulti>` module, for
    example: ``Multi SSL;LDAP``
 -  **SSLOptions**: set to ``+StdEnvVars`` to get certificate fields in
    environment variables
 -  **SSLUserName** (optional): certificate field that will be used to
-   identify user in LL::NG portal virtual host
+   identify user in LemonLDAP::NG portal virtual host
 
 With Nginx
 ~~~~~~~~~~

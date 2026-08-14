@@ -1,7 +1,7 @@
 Node.js handler
 ===============
 
-Since version 2.0, a beta Node.js handler is available on
+A beta Node.js handler is available on
 `GitHub <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler>`__
 and `NPMJS <https://www.npmjs.com/package/lemonldap-ng-handler>`__.
 
@@ -70,7 +70,7 @@ Nginx configuration
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
 
-       # Keep original request (LLNG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

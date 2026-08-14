@@ -1,7 +1,7 @@
 REST services
 =============
 
-LL::NG portal is a REST server that gives access to configuration,
+LemonLDAP::NG portal is a REST server that gives access to configuration,
 session and also authentication.
 
 Portal REST services
@@ -58,12 +58,6 @@ The JSON response fields are:
     You can also get the cookie by reading the response header
     ``Cookie`` returned by the portal.
 
-
-.. attention::
-
-    Before version 2.0.4, the response to a success
-    authentication had no ``id`` field, and ``error`` field was named
-    ``code``.
 
 Example
 ^^^^^^^

@@ -4,7 +4,7 @@ Public pages
 Presentation
 ------------
 
-Public pages are an easy way to build pages based on LL::NG portal skin.
+Public pages are an easy way to build pages based on LemonLDAP::NG portal skin.
 You can for example create a page for a legal notice or usage instructions.
 
 A public page is just a template created in the ``public/`` subdirectory of the skin, for example ``test.tpl``.

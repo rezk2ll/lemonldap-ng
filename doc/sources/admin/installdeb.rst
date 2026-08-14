@@ -10,7 +10,7 @@ LemonLDAP::NG provides these packages:
    packages
 -  lemonldap-ng-doc: contains HTML documentation and project docs
    (README, etc.)
--  lemonldap-ng-fastcgi-server: LL::NG FastCGI server (for Nginx)
+-  lemonldap-ng-fastcgi-server: LemonLDAP::NG FastCGI server (for Nginx)
 -  lemonldap-ng-handler: Handler files
 -  liblemonldap-ng-common-perl: configuration and common files
 -  liblemonldap-ng-handler-perl: Handler common libraries
@@ -23,8 +23,8 @@ Get the packages
 
 .. _installdeb-llng-repository:
 
-LL::NG repository
-~~~~~~~~~~~~~~~~~
+LemonLDAP::NG repository
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 You can add this repository to have recent packages.
@@ -45,7 +45,7 @@ You will need to trust the `DEB signing key <https://lemonldap-ng.org/lemonldap-
 
    curl https://lemonldap-ng.org/lemonldap-debian-packages-pub.gpg | gpg --dearmor > /usr/share/keyrings/lemonldap-debian-packages-pub.gpg
 
-Then, add the official LL::NG repository
+Then, add the official LemonLDAP::NG repository
 
 ::
 
@@ -104,7 +104,7 @@ available:
 
 .. danger::
 
-    LLNG Ubuntu packages are not in the "universe" but in the
+    LemonLDAP::NG Ubuntu packages are not in the "universe" but in the
     "multiverse". This means they are not security-maintained. If you use
     them, you should follow our security advisories on
     lemonldap-ng-users@ow2.org.
@@ -160,7 +160,7 @@ a sed command. For example, we change it to ``ow2.org``:
 Upgrade
 ~~~~~~~
 
-If you upgraded LL::NG, check all :doc:`upgrade notes<upgrade>`.
+If you upgraded LemonLDAP::NG, check all :doc:`upgrade notes<upgrade>`.
 
 DNS
 ~~~

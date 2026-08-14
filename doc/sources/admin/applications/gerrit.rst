@@ -41,8 +41,8 @@ In ``/var/gerrit/etc/secret.config``
    [plugin "gerrit-oauth-provider-lemonldap-oauth"]
      client-secret = <GERRIT_CLIENT_SECRET>
 
-LL::NG
-------
+LemonLDAP::NG
+-------------
 
 Add an Open ID Connect Relying Party for Gerrit
 

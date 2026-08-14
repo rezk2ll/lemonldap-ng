@@ -5,12 +5,12 @@ Presentation
 ------------
 
 For application not managing other provider protocols (CAS, OpenID
-Connect, SAML,...) it is possible to configure LL::NG as a provider of
+Connect, SAML,...) it is possible to configure LemonLDAP::NG as a provider of
 GET parameters:
 
--  An application can call LL::NG portal with a redirection url, such as
+-  An application can call LemonLDAP::NG portal with a redirection url, such as
    ``http://auth.example.com/get/login?url=base64(application_url)``
--  When computing redirection, LL::NG portal will transmit any GET
+-  When computing redirection, LemonLDAP::NG portal will transmit any GET
    parameter you have configured for this application. (session id for
    example)
 

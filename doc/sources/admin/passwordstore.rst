@@ -8,7 +8,7 @@ Password is not a common attribute. Indeed, in most of the cases, it is
 not stored in clear text in the backend (LDAP or database).
 
 So to keep user password in session, you cannot just export the
-password variable in session. To bypass this, LL::NG can remember what
+password variable in session. To bypass this, LemonLDAP::NG can remember what
 password was given by user during authentication.
 
 .. attention::

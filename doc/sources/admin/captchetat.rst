@@ -14,7 +14,7 @@ CaptchEtat is a CAPTCHA system provided by the French government
 Configuration
 -------------
 
-Configure captcha like :doc:`LLNG internal captcha<captcha>` but use a
+Configure captcha like :doc:`LemonLDAP::NG internal captcha<captcha>` but use a
 "custom captcha module", set:
 
 - **Captcha module** to ``::Captcha::CaptchEtat``

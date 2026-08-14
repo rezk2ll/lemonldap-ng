@@ -8,14 +8,14 @@ Presentation
 
 Do you we have to present `Google <https://www.google.com>`__? The good
 news is that Google is a standard OpenID Provider, and so you can easily
-delegate the authentication of LL::NG to Google:
+delegate the authentication of LemonLDAP::NG to Google:
 https://developers.google.com/identity/protocols/OpenIDConnect
 
 
 .. attention::
 
     Google does not support logout through OpenID Connect. If
-    you close your session on LL::NG side, your Google session will still be
+    you close your session on LemonLDAP::NG side, your Google session will still be
     open.
 
 Register on Google
@@ -30,8 +30,8 @@ and ``client_secret``).
 You need to provide the callback URLs, for example
 https://auth.domain.com/?openidconnectcallback=1.
 
-Declare Google in your LL::NG server
-------------------------------------
+Declare Google in your LemonLDAP::NG server
+-------------------------------------------
 
 Go in Manager and create a new OpenID Connect provider. You can call it
 ``google`` for example.

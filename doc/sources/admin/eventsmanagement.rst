@@ -9,7 +9,7 @@ LemonLDAP::NG has two kinds of events to propagate between its nodes:
 By default, events aren't really propagated but a timer permits to refresh
 such data.
 
-Starting from version 2.20.0, LLNG adds an **optional** :ref:`PUB/SUB system<PubSub>`
+If you want immediate propagation, LemonLDAP::NG includes an **optional** :ref:`PUB/SUB system<PubSub>`
 *(not enabled by default)* to replace this timers. This isn't useful in classic
 deployments but may help big ones.
 
@@ -19,7 +19,7 @@ Default events system
 Session reload
 ~~~~~~~~~~~~~~
 
-The default LLNG cache system keeps in memory sessions during 10mn, sessions
+The default LemonLDAP::NG cache system keeps in memory sessions during 10mn, sessions
 are automatically refreshed after this delay.
 
 Configuration reload
@@ -40,7 +40,7 @@ Using a Pub/Sub system
 The message broker system replaces the previous system using an external
 **Pub/Sub** system.
 
-When enabled, all LLNG process subscribe to ``llng_events`` channel which
+When enabled, all LemonLDAP::NG process subscribe to ``llng_events`` channel which
 propagate "events":
 
 * configution update (``newConf``)
@@ -131,8 +131,8 @@ If ``ssl`` is set then these environment variables can be used also:
 Web
 ~~~
 
-LLNG provide a light pub/sub server, named **llng-pubsub-server**, designed to be
-used to manage LLNG events.
+LemonLDAP::NG provide a light pub/sub server, named **llng-pubsub-server**, designed to be
+used to manage LemonLDAP::NG events.
 
 To use it, configure the message broker:
 

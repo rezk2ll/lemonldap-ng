@@ -27,7 +27,7 @@ In *General parameters* » *Plugins* » *Custom plugins*
 
 - **Modules list**: The list of custom modules to load. Modules will be loaded after the built-in ones
 - **Additional parameters**: Configuration for your custom plugins
-- **Disabled plugins**: (*since 2.21.0*): List of built-in modules you do not
+- **Disabled plugins**: List of built-in modules you do not
   want LemonLDAP::NG to load. This is useful if you want to overload a built-in
   module with one of your own.
 
@@ -88,7 +88,6 @@ authentication process, then use ``aroundSub``, for example:
 Hooks
 ~~~~~
 
-.. versionadded:: 2.0.10
 
 Your plugin can also register itself to be called at some points of interest
 within the main LemonLDAP::NG code.
@@ -146,13 +145,13 @@ and reach them through ``customPluginsParams``
     sub my_function {
         my ($self, $req) = @_;
 
-        # Get a standard LLNG option
+        # Get a standard LemonLDAP::NG option
         my $llng_logo = $self->conf->{portalMainLogo};
 
-        # Get your custom LLNG option
+        # Get your custom LemonLDAP::NG option
         my $myvar = $self->conf->{customPluginsParams}->{myvar};
 
-        # Get your custom LLNG option from your parameters hash
+        # Get your custom LemonLDAP::NG option from your parameters hash
         my $title = $self->myPluginParams->{title};
     }
 
@@ -388,9 +387,8 @@ First, create a file to contain the plugin code ::
        return PE_OK;
    }
 
-   # You can define your custom initialization in the
-   # init method.
-   # Before LemonLDAP::NG 2.0.14, this function was mandatory
+   # You can define your custom initialization in the init method.
+   # This function is optionnal and return 1 by default.
    sub init {
              my ($self) = @_;
 
@@ -439,5 +437,4 @@ Declare the plugin in lemonldap-ng.ini:
    customPlugins = Lemonldap::NG::Portal::Plugins::MyPlugin
    ;customPlugins = Lemonldap::NG::Portal::Plugins::MyPlugin1, Lemonldap::NG::Portal::Plugins::MyPlugin2, ...
 
-Since 2.0.7, it can also be configured in Manager, in General Parameters
-> Plugins > Custom Plugins.
+It can also be configured in Manager, in General Parameters > Plugins > Custom Plugins.

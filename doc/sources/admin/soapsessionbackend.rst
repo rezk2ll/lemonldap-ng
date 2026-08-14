@@ -1,7 +1,7 @@
 SOAP session backend
 ====================
 
-LL::NG portal provides SOAP end points for sessions management:
+LemonLDAP::NG portal provides SOAP end points for sessions management:
 
 -  **sessions/**: read only access to sessions (enough for distant
    Handlers)

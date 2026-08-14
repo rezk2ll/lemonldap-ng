@@ -12,10 +12,10 @@ Access management provides 3 services:
 -  Accounting: SSO logs (access) + application logs *(transactions and
    results)*
 
-LL::NG affords all these services (except application logs of course,
+LemonLDAP::NG affords all these services (except application logs of course,
 but headers are provided to allow this).
 
-Headers setting is an another LL::NG service. LL::NG can provide any
+Headers setting is an another LemonLDAP::NG service. LemonLDAP::NG can provide any
 user attributes to an application
 (see :doc:`Rules and headers<writingrulesand_headers>`)
 
@@ -25,11 +25,11 @@ the ability for an application to manage authorizations and choose user
 attributes to receive. Authentication can not be really ``*aaS``: application
 can just use it but not manage it.
 
-LL::NG affords some features that can be used for providing SSO as a
+LemonLDAP::NG affords some features that can be used for providing SSO as a
 service. So a web application can manage its rules and headers.
-Docker or VM images (Nginx only) includes LL::NG Nginx configuration that
+Docker or VM images (Nginx only) includes LemonLDAP::NG Nginx configuration that
 aims to a 
-:ref:`Central LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
+:ref:`Central LemonLDAP::NG authorization server<platformsoverview-external-servers-for-nginx>`.
 By default, all authenticated users can access and just one header is set:
 ``Auth-User``. If application defines a ``RULES_URL`` parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
@@ -96,7 +96,7 @@ requesting a Central uWSGI server (Nginx only):
        fastcgi_pass_request_body off;
        fastcgi_param CONTENT_LENGTH "";
 
-       # Keep original request (LL::NG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
        # Prevent attacks on older Nginx versions (<1.29.5)
@@ -282,10 +282,10 @@ Using front Reverse-Proxies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a simple Nginx configuration file. It looks like a standard
-LL::NG Nginx configuration file except for:
+LemonLDAP::NG Nginx configuration file except for:
 
 -  VHOSTTYPE parameter forced to use DevOps handler
--  /rules.json do not have to be protected by LL::NG
+-  /rules.json do not have to be protected by LemonLDAP::NG
    but by the web server itself.
 
 This configuration handles ``*.dev.sso.my.domain`` URL and forwards
@@ -313,7 +313,7 @@ directory.
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
 
-       # Keep original request (LL::NG server will received /lmauth)
+       # Keep original request (LemonLDAP::NG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
        # Set redirection params

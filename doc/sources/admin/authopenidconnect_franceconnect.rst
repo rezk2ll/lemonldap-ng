@@ -13,7 +13,7 @@ authentication platform made by French government.
 .. attention::
 
     It is for the moment only in BETA stage. This
-    documentation will explain how to configure LL::NG with the developer
+    documentation will explain how to configure LemonLDAP::NG with the developer
     reserved space.
 
 Register on France Connect
@@ -30,8 +30,8 @@ https://auth.domain.com/?openidconnectcallback=1.
 
 You will then get a ``client_id`` and a ``client_secret``.
 
-Declare France Connect in your LL::NG server
---------------------------------------------
+Declare France Connect in your LemonLDAP::NG server
+~~~~~~~--------------------------------------------
 
 Go in Manager and create a new OpenID Connect provider. You can call it
 ``france-connect`` for example.

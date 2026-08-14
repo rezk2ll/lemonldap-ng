@@ -1,7 +1,6 @@
 Connect to SAML Federations
 ===========================
 
-.. versionadded: 2.0.16
 
 .. warning::
 
@@ -22,7 +21,7 @@ This caused several issues:
 * The memory consumption is very high
 * The manager interface becomes crowded with service definitions that are very rarely use
 
-Now LL::NG works with a separated federation metadata file, and provide the possibility to override some settings in its configuration.
+Now LemonLDAP::NG works with a separated federation metadata file, and provide the possibility to override some settings in its configuration.
 
 Configuration
 -------------
@@ -113,7 +112,6 @@ exported variables accordingly, and use macros to fill the gaps if needed.
 Subject ID
 ----------
 
-.. versionadded:: 2.17
 
 Some SAML SPs can now use a ``subject-id`` attribute instead of a NameID or
 ``eduPersonTargetedID`` (not supported in LemonLDAP::NG).

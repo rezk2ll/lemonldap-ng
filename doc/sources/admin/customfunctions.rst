@@ -1,12 +1,12 @@
 Custom functions
 ================
 
-Custom functions allow one to extend LL::NG, they can be used in
+Custom functions allow one to extend LemonLDAP::NG, they can be used in
 :ref:`headers`,
 :ref:`rules` or
 :doc:`form replay data<formreplay>`. Two actions are needed:
 
--  declare them in LLNG configuration
+-  declare them in LemonLDAP::NG configuration
 -  load the relevant code
 
 Implementation

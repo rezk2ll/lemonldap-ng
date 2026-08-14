@@ -4,13 +4,13 @@ SAML service configuration
 
 .. note::
 
-    SAML service configuration is a common step to configure LL::NG as
+    SAML service configuration is a common step to configure LemonLDAP::NG as
     :doc:`SAML SP<authsaml>` or :doc:`SAML IDP<idpsaml>`.
 
 Presentation
 ------------
 
-This documentation explains how configure SAML service in LL::NG, in
+This documentation explains how configure SAML service in LemonLDAP::NG, in
 particular:
 
 -  Install prerequisites
@@ -20,7 +20,7 @@ particular:
 
 .. attention::
 
-    Service configuration will be used to generate LL::NG
+    Service configuration will be used to generate LemonLDAP::NG
     SAML metadata, that will be shared with other providers. It means that
     if you modify some settings here, you will have to share again the
     metadata with other providers. In other words, take the time to
@@ -59,7 +59,7 @@ You will only need to install liblasso-perl package:
 RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
 
-RPMs are available in LL::NG RPM "extras" repository (see
+RPMs are available in LemonLDAP::NG RPM "extras" repository (see
 :ref:`installrpm-yum-repository`)
 
 Then install lasso and lasso-perl packages:
@@ -125,10 +125,8 @@ To define keys, you can:
 -  import your own private and public keys (``Replace by file`` input)
 -  generate new public and private keys (``New certificate`` button)
 
-.. versionchanged:: 2.0.10
-
-   A X.509 certificate is now generated instead of a plain public key. It has
-   20 years of validity, and is self signed with the 2048 bit RSA key.
+A X.509 certificate is now generated instead of a plain public key. It has
+20 years of validity, and is self signed with the 2048 bit RSA key.
 
 .. tip::
 
@@ -136,13 +134,10 @@ To define keys, you can:
     password. It will be prompted if you generate keys, else you can set it
     in the ``Private key password``.
 
-.. tip::
-
     You can change default key size by inserting ``defaultNewKeySize = 3072``
     into lemonldap-ng.ini file.
 
 |image1|
-
 
 
 -  **Signature method**: set the signature algorithm
@@ -159,16 +154,9 @@ To define keys, you can:
    only the first declared key will be used for encryption, but all listed keys
    will be published in SAML metadata.
 
-.. versionchanged:: 2.0.10
 
-   The signature method can now be overridden for a SP or IDP. This will only work
-   if you are using a certificate for signature instead of a public key.
-
-
-.. attention::
-
-   If you are running a version under 2.0.10, the choice of a signature
-   algorithm will affect all SP and IDP.
+The signature method can be overridden for a SP or IDP. This will only work
+if you are using a certificate for signature instead of a public key.
 
 
 .. _samlservice-convert-certificate:
@@ -191,7 +179,7 @@ NameID formats
 
 SAML can use different NameID formats. The NameID is the main user
 identifier, carried in SAML messages. You can configure here which field
-of LL::NG session will be associated to a NameID format.
+of LemonLDAP::NG session will be associated to a NameID format.
 
 
 .. note::
@@ -224,7 +212,7 @@ Other NameID formats are automatically managed:
 Authentication contexts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Each LL::NG authentication module has an authentication level, which can
+Each LemonLDAP::NG authentication module has an authentication level, which can
 be associated to an `SAML authentication
 context <https://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
 
@@ -494,14 +482,14 @@ Discovery Protocol
     information can be found in the specification:
     `sstc-saml-idp-discovery-cs-01.pdf <https://www.oasis-open.org/committees/download.php/28049/sstc-saml-idp-discovery-cs-01.pdf>`__.
 
-When Discovery Protocol is enabled, the LL::NG IDP list is no more used.
+When Discovery Protocol is enabled, the LemonLDAP::NG IDP list is no more used.
 Instead user is redirected on the discovery service and is redirected
-back to LL::NG with the chosen IDP.
+back to LemonLDAP::NG with the chosen IDP.
 
 
 .. attention::
 
-    If the chosen IDP is not registered in LL::NG, user will
+    If the chosen IDP is not registered in LemonLDAP::NG, user will
     be redirected to discovery service again.
 
 Configuration parameters are:

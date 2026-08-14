@@ -8,7 +8,7 @@ Presentation
 automation tool leveraging local IP behavior detection and a
 community-powered IP reputation system.
 
-LL::NG provides two **Crowdsec** plugins:
+LemonLDAP::NG provides two **Crowdsec** plugins:
 
 * a :ref:`Bouncer` that can reject CrowdSec banned IP requests or just provide
   an environment variable that can be used inanother plugin rule. For example,
@@ -69,7 +69,7 @@ You can configure:
 
 .. note::
 
-   Each LLNG worker pushes its own counters independently, so
+   Each LemonLDAP::NG worker pushes its own counters independently, so
    ``cscli metrics show bouncers`` aggregates values across all workers.
 
 Example output once metrics are pushed:

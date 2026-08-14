@@ -10,15 +10,15 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG can delegate authentication to a CAS server.
+LemonLDAP::NG can delegate authentication to a CAS server.
 
 
 .. tip::
 
-    LL::NG can also act as :doc:`CAS server<idpcas>`, that allows
-    one to interconnect two LL::NG systems.
+    LemonLDAP::NG can also act as :doc:`CAS server<idpcas>`, that allows
+    one to interconnect two LemonLDAP::NG systems.
 
-LL::NG can also request proxy tickets for its protected services. Proxy
+LemonLDAP::NG can also request proxy tickets for its protected services. Proxy
 tickets will be collected at authentication phase and stored in user
 session under the form:
 
@@ -31,7 +31,7 @@ They can then be forwarded to applications through
 
     CAS authentication will automatically add a
     :doc:`logout forward rule<logoutforward>` on CAS server logout URL in
-    order to close CAS session on LL::NG logout.
+    order to close CAS session on LemonLDAP::NG logout.
 
 Configuration
 -------------

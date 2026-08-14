@@ -14,7 +14,7 @@ annotations and tagging, and advanced permissions management.
 Configuration
 -------------
 
-The integration with LL::NG is the following:
+The integration with LemonLDAP::NG is the following:
 
 -  LemonLDAP::NG is configured as a reverse-proxy for xwiki
 -  Xwiki is configured to accept HTTP Headers

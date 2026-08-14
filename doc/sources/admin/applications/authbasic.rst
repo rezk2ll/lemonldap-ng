@@ -29,7 +29,7 @@ user name and password, and many popular security tools will decode the
 strings "on the fly".
 
 So HTTP Basic Authentication is managed through an HTTP header
-(``Authorization``), that can be forged by LL::NG, with this
+(``Authorization``), that can be forged by LemonLDAP::NG, with this
 precautions:
 
 -  Data should not contains accents or special characters, as HTTP
@@ -53,7 +53,7 @@ For example, to forward login (``$uid``) and password (``$_password`` if
 
    Authorization => "Basic ".encode_base64("$uid:$_password", "")
 
-LL::NG provides a special function named
+LemonLDAP::NG provides a special function named
 :doc:`basic<../extendedfunctions>` to build this header.
 
 So the above example can also be written like this:

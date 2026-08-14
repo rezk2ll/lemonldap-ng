@@ -14,7 +14,7 @@ SAML 2.0.
 .. attention::
 
     This documentation does not explains how to setup ADFS,
-    but give only tricks to make it works with LL::NG
+    but give only tricks to make it works with LemonLDAP::NG
 
 ADFS as Identity Provider
 -------------------------
@@ -22,8 +22,8 @@ ADFS as Identity Provider
 When ADFS is declared as an Identity Provider in LemonLDAP::NG, you need
 to take care of the following items:
 
--  HTTPS is mandatory on LL::NG portal
--  You need to use a certificate in LL::NG SAML metadata instead of a
+-  HTTPS is mandatory on LemonLDAP::NG portal
+-  You need to use a certificate in LemonLDAP::NG SAML metadata instead of a
    raw public key
 -  Activate option ``Use specific query_string method`` in SAML Service
 -  Force SAML response to be sent by POST and not Artifact (signature

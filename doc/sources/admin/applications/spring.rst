@@ -12,7 +12,7 @@ the new ACEGI name. This is a well known security framework for J2EE
 applications.
 
 Spring Security provides a default ``pre-authentication`` mechanism that
-can be used to connect your J2EE application to LL::NG.
+can be used to connect your J2EE application to LemonLDAP::NG.
 
 Configuration
 -------------

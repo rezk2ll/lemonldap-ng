@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG can use an LDAP directory to:
+LemonLDAP::NG can use an LDAP directory to:
 
 -  authenticate user
 -  get user attributes
@@ -20,15 +20,15 @@ LL::NG can use an LDAP directory to:
 This works with every LDAP v2 or v3 server, including
 :doc:`Active Directory<authad>`.
 
-LL::NG is compatible with `LDAP password
+LemonLDAP::NG is compatible with `LDAP password
 policy <https://datatracker.ietf.org/doc/html/draft-behera-ldap-password-policy>`__:
 
--  LDAP server can check password strength, and LL::NG portal will
+-  LDAP server can check password strength, and LemonLDAP::NG portal will
    display correct errors (password too short, password in history,
    etc.)
--  LDAP sever can block brute-force attacks, and LL::NG will display
+-  LDAP sever can block brute-force attacks, and LemonLDAP::NG will display
    that account is locked
--  LDAP server can force password change on first connection, and LL::NG
+-  LDAP server can force password change on first connection, and LemonLDAP::NG
    portal will display a password change form before opening SSO session
 
 Configuration
@@ -112,7 +112,7 @@ Connection
 
 .. attention::
 
-    LL::NG needs anonymous access to LDAP Directory RootDSE in order to check LDAP connection.
+    LemonLDAP::NG needs anonymous access to LDAP Directory RootDSE in order to check LDAP connection.
 
 
 Filters
@@ -222,7 +222,7 @@ Password
 -  **Delay to force password change before expiration**: if this value is set,
    users will be forced to change their password if it expires in less than
    the given number of seconds.
--  **IBM Tivoli DS support**: enable this option if you use ITDS. LL::NG
+-  **IBM Tivoli DS support**: enable this option if you use ITDS. LemonLDAP::NG
    will then scan error message to return a more precise error to the
    user.
 

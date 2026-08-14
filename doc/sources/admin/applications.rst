@@ -69,7 +69,7 @@ Applications
 How to integrate
 ----------------
 
-To integrate a Web application in LL::NG, you have the following
+To integrate a Web application in LemonLDAP::NG, you have the following
 possibilities:
 
 -  Protect the application with the Handler, and push user identity
@@ -80,12 +80,12 @@ possibilities:
    can use the Handler.
 -  Specific Handler: some applications can require a specific Handler,
    to manage preauthentication process for example.
--  CAS: your application is a CAS client, you can configure LL::NG as a
+-  CAS: your application is a CAS client, you can configure LemonLDAP::NG as a
    :doc:`CAS server<idpcas>`.
 -  SAML: your application is a SAML Service Provider, you can configure
-   LL::NG as a :doc:`SAML Identity Provider<idpsaml>`.
+   LemonLDAP::NG as a :doc:`SAML Identity Provider<idpsaml>`.
 -  OpenID Connect: your application is a OpenID Connect Relying Party,
-   you can configure LL::NG as a
+   you can configure LemonLDAP::NG as a
    :doc:`OpenID Connect Provider<idpopenidconnect>`.
 
 If none of above methods is available, you can try:

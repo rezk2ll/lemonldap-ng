@@ -11,7 +11,7 @@ combination of two different factors between:
 #. something they have *(Webauthn Key, smartphone, …)*
 #. something they are *(biometrics like fingerprints, ...)*
 
-Since 2.0, LL::NG provides some second factor plugins that can be used for
+LemonLDAP::NG provides some second factor plugins that can be used for
 completing authentication module with 2FA:
 
 Second factors that can be registered by the user:
@@ -29,12 +29,8 @@ Second factors that rely on external systems:
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*
 
-.. |deprecated| image:: /documentation/deprecated.png
-   :alt: deprecated
-
-The E-Mail, External and REST 2F modules
-:doc:`may be declared multiple times<sfextra>` with different sets of
-parameters.
+The E-Mail, External and REST 2F modules :doc:`may be declared multiple times<sfextra>`
+with different sets of parameters.
 
 
 Self-care on Portal
@@ -54,7 +50,7 @@ If you want to force a 2F registration on first login, you can use the *Force
 You can use a :doc:`rule <writingrulesand_headers>` to enable this behavior only for
 some users.
 
-.. versionadded:: 2.23.0
+.. note::
 
    Using an expression such as ``$targetAuthnLevel <= 10`` forces a user to
    register a second factor if the application targetAuthnLevel is equal to the
@@ -62,8 +58,6 @@ some users.
 
 Session upgrade through 2FA
 ---------------------------
-
-|beta| 
 
 If you enable the *Use 2FA for session upgrade* option, second factor will only
 be asked on login if the target application requires an authentication level
@@ -80,7 +74,6 @@ of doing a complete reauthentication.
 
     Go in Manager, ``General Parameters`` » ``Advanced parameters`` » ``Portal redirections``.
 
-.. |beta| image:: /documentation/beta.png
 
 Special Rule Activation
 -----------------------

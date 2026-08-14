@@ -318,10 +318,9 @@ Notifications are JSON files containing:
 Variables
 ^^^^^^^^^
 
-.. versionadded:: 2.21.0
-   You can use session variables in notifications's ``text`` field by using the ``$varname`` syntax.
-   Note that complex Perl expressions are not allowed, only simple variable interpolation.
-   This feature is only available when using JSON notifications.
+You can use session variables in notifications's ``text`` field by using the ``$varname`` syntax.
+Note that complex Perl expressions are not allowed, only simple variable interpolation.
+This feature is only available when using JSON notifications.
 
 
 Examples
@@ -476,4 +475,4 @@ If a notification is pending, JSON response fields are:
 -  ``error``: ``36``
 -  ``ciphered_id``: a ciphered session id is returned in this field.
    This id can be used to forward and continue the notification process if you call the REST ``/notifback`` endpoint
-   with a LL::NG cookie built with this id.
+   with a LemonLDAP::NG cookie built with this id.

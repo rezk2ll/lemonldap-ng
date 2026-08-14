@@ -19,8 +19,6 @@ Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
 Choosing the SASL mechanism
 ---------------------------
 
-.. versionadded:: 2.23.3
-
 By default, LemonLDAP::NG lets Net::SMTP choose the authentication mechanism
 among all the mechanisms advertised by the server, and the "strongest" one is
 selected. Some servers advertise mechanisms that do not work (``DIGEST-MD5``
@@ -70,7 +68,6 @@ to restore the default behavior.
 Testing your email setup
 ------------------------
 
-.. versionadded:: 2.0.10
 
 You can test your email setup in the ``General Parameters`` > ``Advanced
 Parameters`` > ``SMTP`` page by using the ``Send test email`` button in the
@@ -80,7 +77,6 @@ manager.
 
    You need to save your SMTP configuration before you can test it
 
-.. versionadded:: 2.0.10
 
 You can also test your email setup using the ``test-email`` command in the CLI ::
 

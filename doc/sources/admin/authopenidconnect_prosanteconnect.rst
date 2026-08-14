@@ -25,8 +25,8 @@ https://auth.domain.com/?logout=1.
 
 You will then get a ``client_id`` and a ``client_secret``.
 
-Declare Pro Santé Connect in your LL::NG server
------------------------------------------------
+Declare Pro Santé Connect in your LemonLDAP::NG server
+------------------------------------------------------
 
 Go in Manager and create a new OpenID Connect provider. You can call it
 ``psc-connect`` for example.

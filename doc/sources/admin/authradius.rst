@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG uses `Perl
+LemonLDAP::NG uses `Perl
 Authen::Radius <https://metacpan.org/pod/Authen::Radius>`__
 as a simple authentication backend.
 
@@ -37,8 +37,8 @@ In Debian/Ubuntu, install the library through APT
 
    apt install libauthen-radius-perl
 
-Configuration of LL::NG
-~~~~~~~~~~~~~~~~~~~~~~~
+Configuration of LemonLDAP::NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Radius for authentication.
@@ -55,7 +55,7 @@ Then, go in ``Radius parameters``:
 -  **Shared secret**: this is the passphrase to use to connect to the
    Radius server
 -  **Server hostname**: this is the hostname or IP address of the Radius
-   server. Since 2.18.0 you can specify multiple servers, separated by spaces, for failover.
+   server. You can specify multiple servers, separated by spaces, for failover.
 -  **Authentication timeout** (Optional): Allowed time to perform authentication
 -  **Authenticate Radius requests**: Use the Message-Authenticator attribute to
    protect requests.

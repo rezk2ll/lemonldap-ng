@@ -78,7 +78,7 @@ for example:
    roleOccupant: uid=coudot,ou=users,dc=example,dc=com
 
 A user is attached to a role if its DN is in ``roleOccupant`` attribute.
-We add the attribute ``ou`` to allow LL::NG to know which application is
+We add the attribute ``ou`` to allow LemonLDAP::NG to know which application is
 concerned by this role.
 
 So imagine the user coudot is "user" on application "BBB" and "admin" on
@@ -98,7 +98,7 @@ as groups in the user session:
 Restrict access to application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We configure LL::NG to authorize people on an application only if they
+We configure LemonLDAP::NG to authorize people on an application only if they
 have a role on it. For this, we use the ``$hGroups`` variable.
 
 -  For application AAA:

@@ -4,10 +4,10 @@ SAML Identity Provider
 Presentation
 ------------
 
-LL::NG can act as an SAML 2.0 Identity Provider, that can allow one to
-federate LL::NG with:
+LemonLDAP::NG can act as an SAML 2.0 Identity Provider, that can allow one to
+federate LemonLDAP::NG with:
 
--  Another LL::NG system configured with
+-  Another LemonLDAP::NG system configured with
    :doc:`SAML authentication<authsaml>`
 -  Any SAML Service Provider
 
@@ -170,7 +170,7 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: the algorithm used to sign messages sent to this service
--  **Signing key name**: Since ``2.22.0``. If you want to use a specific
+-  **Signing key name**: If you want to use a specific
    signing key only for responses sent to this RP, indicate the name of a key
    from the :doc:`key management section <keys>`. If you specify multiple
    values separated by a comma, the first key will be used for signing
@@ -189,7 +189,7 @@ Security
 -  **Encryption mode**: set the encryption mode for this SP (None, NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP Initiated URL on this SP.
 -  **Required authentication level**: required authentication level to access
-   this SP. Since ``2.21.0`` this can be a Perl expression.
+   this SP. This can be a Perl expression.
 -  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 Federation
@@ -218,9 +218,6 @@ The following environment variables are available in SAML access rules and macro
 
 * ``$env->{llng_saml_sp}`` : entityID of the SAML service
 * ``$env->{llng_saml_spconfkey}`` : configuration key of the SAML service
-
-.. versionadded:: 2.0.10
-
 * ``$env->{llng_saml_acs}`` : AssertionConsumerServiceURL, if specified in the AuthnRequest
 
 IDP Initiated mode
@@ -246,7 +243,7 @@ The URL specified in ``spDest`` *must* be present in the Service Provider metada
 Known issues
 ------------
 
-Using both Issuer::SAML and Auth::SAML on the same LLNG may have some
+Using both Issuer::SAML and Auth::SAML on the same LemonLDAP::NG may have some
 side-effects on single-logout.
 
 .. |image0| image:: /documentation/manager-saml-metadata.png

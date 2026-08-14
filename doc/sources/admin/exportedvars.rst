@@ -9,7 +9,7 @@ Exported variables are the variables available to
 extracted from the users database by the
 :ref:`users module<start-authentication-users-and-password-databases>`.
 
-To create a variable, you've just to map a user attributes in LL::NG
+To create a variable, you've just to map a user attributes in LemonLDAP::NG
 using ``Variables`` » ``Exported variables``. For each variable, the
 first field is the name which will be used in rules, macros or headers
 and the second field is the name of the user database field.
@@ -116,14 +116,10 @@ Using groups in a rule
 
 .. code-block:: perl
 
-   ^/admin -> $groups =~ /\badmin\b/
+   ^/admin -> inGroup('admin')
 
    # Or with hGroups
    ^/admin -> defined $hGroups->{'admin'}
-
-   # Since 2.0.8
-   ^/admin -> inGroup('admin')
-
 
 .. note::
 

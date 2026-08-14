@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LLNG can use GPG to authenticate users. It is not useful for day-to-day
+LemonLDAP::NG can use GPG to authenticate users. It is not useful for day-to-day
 authentication but can be used for example if user has lost his
 password. The login form will ask user to sign a challenge and post
 result.

@@ -45,7 +45,7 @@ PHP
 Perl auto-protected CGI
 -----------------------
 
-LL::NG now uses FastCGI instead of CGI, but you still can write your own
+LemonLDAP::NG now uses FastCGI instead of CGI, but you still can write your own
 protected CGI.
 
 First create a PSGI module based on Lemonldap::NG::Handler:
@@ -94,7 +94,7 @@ They create a FCGI script like this:
 
    Plack::Handler::FCGI->new->run( My::PSGI->run() );
 
-See our LLNG Nginx/Apache configurations to see how to launch it or read
+See our LemonLDAP::NG Nginx/Apache configurations to see how to launch it or read
 `PSGI/Plack documentation <https://plackperl.org/>`__.
 
 The protection parameter must be set when calling the init() method:
