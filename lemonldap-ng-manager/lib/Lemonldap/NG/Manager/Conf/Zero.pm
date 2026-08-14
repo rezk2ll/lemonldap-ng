@@ -16,8 +16,10 @@ sub zeroConf {
     return {
         'timeout'             => 72000,
         'loginHistoryEnabled' => 1,
-        'userDB'              => 'Same',
-        'applicationList'     => {
+        'authChoiceModules'   => {
+            'Default' => 'Demo;Demo;Null;;;{}',
+        },
+        'applicationList' => {
             '2administration' => {
                 'manager' => {
                     'options' => {
@@ -129,7 +131,6 @@ sub zeroConf {
         'notificationStorageOptions' => {
             'dirName' => $notificationDir
         },
-        'authentication'   => 'Demo',
         'demoExportedVars' => {
             'mail' => 'mail',
             'cn'   => 'cn',
@@ -137,7 +138,6 @@ sub zeroConf {
         },
         'domain'                   => $domain,
         'globalStorage'            => 'Apache::Session::File',
-        'passwordDB'               => 'Demo',
         'persistentStorage'        => 'Apache::Session::File',
         'persistentStorageOptions' => {
             'Directory'     => $persistentSessionDir,

@@ -94,7 +94,9 @@
       "type": "category"
     }
   },
-  "authentication": "Demo",
+  "authChoiceModules" : {
+      "Default" : "Demo;Demo;Null;;;{}"
+  },
   "cfgAuthor": "The LemonLDAP::NG team",
   "cfgAuthorIP": "127.0.0.1",
   "cfgDate": 1428138808,
@@ -185,7 +187,6 @@
   "notificationStorageOptions": {
     "dirName": "__pwd__/e2e-tests/conf"
   },
-  "passwordDB": "Demo",
   "persistentStorage": "Apache::Session::File",
   "persistentStorageOptions": {
     "Directory": "__pwd__/e2e-tests/conf/persistents",
@@ -214,7 +215,6 @@
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,
-  "userDB": "Same",
   "whatToTrace": "_whatToTrace",
   "customToTrace": "mail"
 }
