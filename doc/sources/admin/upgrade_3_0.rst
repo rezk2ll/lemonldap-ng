@@ -7,6 +7,25 @@ Upgrade from 2.X to 3.0
     3.0 is a major release, lot of things have been changed.
     You must read this document before upgrade.
 
+Authentication configuration
+----------------------------
+
+The old "Choice" authentication backend has been integrated as a core feature,
+meaning that LemonLDAP::NG will now always behave as if multiple authentication
+choices were available. For most users, the chance is transparent, however if
+you notice some issues, be sure to check the
+
+General Parameters » Authentication parameters » Authentication methods
+
+section in the manager to update your configuration.
+
+Using a *Choice* inside a *Combination* is no longer possible. Most of its use
+cases (trying WebAuthn or Kerberos automatically) can now be implemented simply
+by adding Kerberos or WebAuthn as a Choice: authentication will be tried
+automatically in this situation, and the other choices will only be used as
+fallback.
+
+
 Encoding changes
 ----------------
 
