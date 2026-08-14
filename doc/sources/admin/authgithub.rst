@@ -30,7 +30,7 @@ Then, go in ``GitHub parameters``:
 -  **Client ID**: the application ID you get
 -  **Client secret**: the corresponding secret
 -  **Field containing user identifier**: Field that will be used as main
-   user identifier in LL::NG, usually ``login``
+   user identifier in LemonLDAP::NG, usually ``login``
 -  **Scope**: OAuth 2.0 scopes, see
    https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/
 

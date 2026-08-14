@@ -5,11 +5,11 @@ Presentation
 ------------
 
 WebServices and API are mostly requested by an application, and not the
-end-user itself. In this case, you can not rely on LL::NG standard
+end-user itself. In this case, you can not rely on LemonLDAP::NG standard
 Handler to protect the webservice, as it will expect a cookie, which is
 not defined in the application requesting the service.
 
-LL::NG offers several solutions to protect this kind of service.
+LemonLDAP::NG offers several solutions to protect this kind of service.
 
 ServiceToken Handler
 --------------------
@@ -26,10 +26,10 @@ See :doc:`ServiceToken Handler documentation<servertoserver>`.
 OAuth2 endpoints
 ----------------
 
-We suppose here that LL::NG is acting as
+We suppose here that LemonLDAP::NG is acting as
 :doc:`OpenID Connect provider<idpopenidconnect>`. The web application
-will then be able to get an access token from LL::NG. This token could
-be sent to the webservice that can then validate it against LL::NG
+will then be able to get an access token from LemonLDAP::NG. This token could
+be sent to the webservice that can then validate it against LemonLDAP::NG
 OAuth2 endpoints.
 
 UserInfo
@@ -84,7 +84,7 @@ For example:
 OAuth2 Handler
 --------------
 
-We also suppose here that LL::NG is acting as
+We also suppose here that LemonLDAP::NG is acting as
 :doc:`OpenID Connect provider<idpopenidconnect>`. But the webservice
 will be protected by the OAuth2 Handler and will just have to read the
 HTTP headers to know which user is connected.

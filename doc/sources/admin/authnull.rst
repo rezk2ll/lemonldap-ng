@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG Null backend is a transparent backend:
+LemonLDAP::NG Null backend is a transparent backend:
 
 -  Authentication: will create session without prompting any credentials
    (but will register client IP and creation date)

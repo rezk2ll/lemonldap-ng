@@ -8,7 +8,7 @@ Presentation
 automation tool leveraging local IP behavior detection and a
 community-powered IP reputation system.
 
-LL::NG provides two **Crowdsec** plugins:
+LemonLDAP::NG provides two **Crowdsec** plugins:
 
 * a :ref:`Bouncer` that can reject CrowdSec banned IP requests or just provide
   an environment variable that can be used inanother plugin rule. For example,

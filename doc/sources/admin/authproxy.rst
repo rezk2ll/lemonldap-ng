@@ -10,11 +10,11 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG is able to send (through REST or SOAP) authentication
-credentials to another LL::NG portal, like a proxy.
+LemonLDAP::NG is able to send (through REST or SOAP) authentication
+credentials to another LemonLDAP::NG portal, like a proxy.
 
 The difference with :doc:`remote authentication<authremote>` is that the
-client will never be redirect to the main LL::NG portal. This
+client will never be redirect to the main LemonLDAP::NG portal. This
 configuration is useful if you want to expose your internal SSO portal
 to another network (DMZ).
 

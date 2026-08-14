@@ -475,4 +475,4 @@ If a notification is pending, JSON response fields are:
 -  ``error``: ``36``
 -  ``ciphered_id``: a ciphered session id is returned in this field.
    This id can be used to forward and continue the notification process if you call the REST ``/notifback`` endpoint
-   with a LL::NG cookie built with this id.
+   with a LemonLDAP::NG cookie built with this id.

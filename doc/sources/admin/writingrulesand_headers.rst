@@ -117,14 +117,14 @@ or to the specified URL if exists.
 
     Only current application is concerned by logout_app\*
     targets. Be careful with some applications which does not check
-    headers sent by LL::NG after having created their own application cookies.
+    headers sent by LemonLDAP::NG after having created their own application cookies.
     If so, you can redirect users to a HTML page that explain that it is better
     to close browser after logout.
 
 Rules based on authentication level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LL::NG set an "authentication level" during authentication process. This
+LemonLDAP::NG set an "authentication level" during authentication process. This
 level depends on authentication backend used by this user. Default
 values are:
 
@@ -210,7 +210,7 @@ Available functions
 In addition to macros and name, you can use some functions in rules and
 headers:
 
--  :doc:`LL::NG extended functions<extendedfunctions>`
+-  :doc:`LemonLDAP::NG extended functions<extendedfunctions>`
 -  :doc:`Your custom functions<customfunctions>`
 
 Wildcards in hostnames

@@ -49,9 +49,9 @@ Configure settings:
 
 - Authentication name: set here the value used for the redirection address
 - OAuth2 Provider: set OpenID Connect
-- Client ID: the Client ID configured on LL::NG side
-- Client Secret: the Client Secret configured on LL::NG side
-- OpenID Connect Auto Discovery URL: use the default OIDC configuration URL of your LL::NG server
+- Client ID: the Client ID configured on LemonLDAP::NG side
+- Client Secret: the Client Secret configured on LemonLDAP::NG side
+- OpenID Connect Auto Discovery URL: use the default OIDC configuration URL of your LemonLDAP::NG server
 - Enable the authentication source
 
 Usage

@@ -4,7 +4,7 @@ Installation on Suse Linux
 
 .. attention::
 
-    LL::NG requires at least SLES 12 SP1 or
+    LemonLDAP::NG requires at least SLES 12 SP1 or
     equivalent
 
 Organization

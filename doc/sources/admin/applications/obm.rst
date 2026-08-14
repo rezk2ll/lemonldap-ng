@@ -11,7 +11,7 @@ platform for workgroup or enterprises with many thousands users. OBM
 includes Groupware, messaging server, CRM, LDAP, Windows Domain,
 smartphone and PDA synchronization…
 
-OBM is shipped with a LL::NG plugin with these features:
+OBM is shipped with a LemonLDAP::NG plugin with these features:
 
 -  SSO on OBM web interface
 -  Logout
@@ -25,7 +25,7 @@ Configuration
 OBM
 ~~~
 
-To enable LL::NG authentication plugin, go in ``/etc/obm/obm_conf.inc``:
+To enable LemonLDAP::NG authentication plugin, go in ``/etc/obm/obm_conf.inc``:
 
 .. code-block:: php
 
@@ -112,10 +112,10 @@ To enable LL::NG authentication plugin, go in ``/etc/obm/obm_conf.inc``:
 
 Parameters:
 
--  **url_logout**: URL used by OBM to logout, will be caught by LL::NG
--  **headers_map**: map OBM internal field to LL::NG header
+-  **url_logout**: URL used by OBM to logout, will be caught by LemonLDAP::NG
+-  **headers_map**: map OBM internal field to LemonLDAP::NG header
 
-Edit also OBM configuration to enable LL::NG Handler:
+Edit also OBM configuration to enable LemonLDAP::NG Handler:
 
 -  For Apache:
 
@@ -151,7 +151,7 @@ Edit also OBM configuration to enable LL::NG Handler:
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LL::NG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 
@@ -173,7 +173,7 @@ Edit also OBM configuration to enable LL::NG Handler:
      }
    }
 
-LL::NG
+LemonLDAP::NG
 ~~~~~~
 
 Attributes and macros
@@ -210,7 +210,7 @@ mailR ``($uid =~ /admin0/i)[0] ? "" : ($mail =~ / ([ @]+)/)[0] . "\@example.com"
 Virtual host
 ^^^^^^^^^^^^
 
-Create OBM virtual host (for example obm.example.com) in LL::NG
+Create OBM virtual host (for example obm.example.com) in LemonLDAP::NG
 configuration: ``Virtual Hosts`` » ``New virtual host``.
 
 Then edit rules and headers.

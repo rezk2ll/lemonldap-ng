@@ -491,7 +491,7 @@ Access rules and HTTP headers
 
 See :doc:`Writing rules and headers<writingrulesand_headers>` to
 learn how to configure access control and HTTP headers sent to
-application by LL::NG.
+application by LemonLDAP::NG.
 
 
 .. attention::

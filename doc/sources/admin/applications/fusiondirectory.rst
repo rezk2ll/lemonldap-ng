@@ -25,8 +25,8 @@ Go in Configuration and in Login and Session panel. Set:
 See also
 https://documentation.fusiondirectory.org/en/documentation/admin_installation/core_configuration#login-and-session
 
-LL::NG
-~~~~~~
+LemonLDAP::NG
+~~~~~~~~~~~~~
 
 Just set the ``Auth-User`` header with the attribute that carries the
 user login, for example ``$uid``.

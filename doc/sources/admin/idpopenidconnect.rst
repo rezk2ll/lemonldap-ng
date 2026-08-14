@@ -10,11 +10,11 @@ Presentation
     OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE
     stacks. It is described here: http://openid.net/connect/.
 
-LL::NG can act as an OpenID Connect Provider (OP). It will reply to
+LemonLDAP::NG can act as an OpenID Connect Provider (OP). It will reply to
 OpenID Connect requests to give user identity (through ID Token) and
 information (through UserInfo endpoint).
 
-As an OP, LL::NG supports many OpenID Connect features:
+As an OP, LemonLDAP::NG supports many OpenID Connect features:
 
 -  Authorization Code, Implicit and Hybrid flows
 -  `Publication of JSON metadata and JWKS data (Discovery) <https://openid.net/specs/openid-connect-discovery-1_0.html>`__
@@ -73,10 +73,10 @@ and configure:
 
 
 
-Configuration of LL::NG in Relying Party
+Configuration of LemonLDAP::NG in Relying Party
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each Relying Party has its own configuration way. LL::NG exposes
+Each Relying Party has its own configuration way. LemonLDAP::NG exposes
 its OpenID Connect metadata to help clients configuration.
 
 Metadata can be downloaded at the standard "Well Known" URL:
@@ -157,8 +157,8 @@ OIDC metadata example:
       "registration_endpoint" : "http://auth.example.com/oauth2/register"
    }
 
-Configuration of Relying Party in LL::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configuration of Relying Party in LemonLDAP::NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in Manager and click on ``OpenID Connect Relying Parties``, then
 click on ``Add OpenID Relying Party``. Set a technical name
@@ -225,7 +225,7 @@ Options
       Tokens are in JWT format, this option lets you release the claims defined
       in the *Extra Claims* section inside the Access Token itself
    -  **Use refresh tokens**: If this option
-      is enabled, LL::NG will issue an *online* Refresh Token that can
+      is enabled, LemonLDAP::NG will issue an *online* Refresh Token that can
       be used to obtain new access tokens as long as the user session
       is still valid. This token is tied to the SSO session: it becomes
       invalid when the user logs out or the session expires
@@ -411,7 +411,7 @@ Scope values content
 When the **Always send exported attributes** option is disabled in **OpenID Connect Service**,
 attributes can only be released if they are part of a scope.
 
-By default, LL::NG will grant all requested scopes except if **Only allow declared scopes** option
+By default, LemonLDAP::NG will grant all requested scopes except if **Only allow declared scopes** option
 is enabled in **OpenID Connect Service**.
 
 In this case, only `standard OpenID Connect claims
@@ -420,7 +420,7 @@ exposed to applications. If you want to add non-standard attributes, you have
 to create a new scope in the *Scope values content* section and your
 application must request that scope.
 
-By default, the following scope-to-attributes are already mapped by LL::NG:
+By default, the following scope-to-attributes are already mapped by LemonLDAP::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
@@ -446,7 +446,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 .. important::
 
     Any attribute defined in this section must be mapped to a
-    LL::NG session variable in **Exported Attributes** section
+    LemonLDAP::NG session variable in **Exported Attributes** section
 
 .. important::
 
@@ -463,7 +463,7 @@ Scope rules
 |beta| This feature may change in a future version in a way that breaks
 compatibility with existing configuration.
 
-By default, LL::NG grants all scopes requested by the application, as
+By default, LemonLDAP::NG grants all scopes requested by the application, as
 long as the user consents to them.
 
 This configuration screen allows you to change that behavior by attaching

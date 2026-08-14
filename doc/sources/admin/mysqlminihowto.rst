@@ -1,14 +1,14 @@
 Configure LemonLDAP::NG to use MySQL as main database
 =====================================================
 
-LL::NG use 2 internal databases to store its configuration and sessions.
+LemonLDAP::NG use 2 internal databases to store its configuration and sessions.
 
 Use MySQL for Lemonldap::NG configuration
 -----------------------------------------
 
 Steps:
 
--  :doc:`Prepare the database and the LL::NG configuration file<sqlconfbackend>`
+-  :doc:`Prepare the database and the LemonLDAP::NG configuration file<sqlconfbackend>`
 -  :doc:`Convert existing configuration<changeconfbackend>`
 -  Restart all your Apache servers
 

@@ -1,7 +1,7 @@
 Configure LemonLDAP::NG to use REST proxy mechanism
 ===================================================
 
-LL::NG use 2 internal databases to store its configuration and sessions.
+LemonLDAP::NG use 2 internal databases to store its configuration and sessions.
 It can be configured to use REST instead of direct access to those
 databases (for remote servers).
 
@@ -9,7 +9,7 @@ databases (for remote servers).
 
     This mechanism can be used to
     secure access for remote servers that cross an unsecured network to
-    access to LL::NG databases.
+    access to LemonLDAP::NG databases.
 
 Use REST for Lemonldap::NG configuration
 ----------------------------------------

@@ -28,8 +28,8 @@ GRR will check the username in REMOTE_USER, so use
 :doc:`remote header conversion<../header_remote_user_conversion>` if you
 are in proxy mode.
 
-GRR virtual host in LL::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+GRR virtual host in LemonLDAP::NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Access rules:
 

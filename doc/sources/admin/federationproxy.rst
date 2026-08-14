@@ -1,7 +1,7 @@
-LL::NG as federation protocol proxy
-===================================
+LemonLDAP::NG as federation protocol proxy
+==========================================
 
-LL::NG can use federation protocols (SAML, CAS, OpenID) independently to:
+LemonLDAP::NG can use federation protocols (SAML, CAS, OpenID) independently to:
 
 -  authenticate users
 -  provide identities to other systems
@@ -30,7 +30,7 @@ Tested schemes:
       Identity Provider
 
 Note that OpenID-Connect consortium has not already defined single-logout
-initiated by OpenID-Connect Provider. LL::NG will implement it when this
+initiated by OpenID-Connect Provider. LemonLDAP::NG will implement it when this
 standard will be published.
 
 

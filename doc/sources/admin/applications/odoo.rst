@@ -57,7 +57,7 @@ To generate a key/certificate pair, you can run the following command::
     openssl req -x509 -newkey rsa:4096 -keyout odoo-key.pem -out odoo-cert.pem -sha256 -days 3650 -nodes
 
 * Select a signature method in the *Signature Algorithm*, such as *SIG_RSA_SHA256*
-* If you do not want to use the email address to match between LL::NG and Odoo accounts, set the *Identity Provider matching attribute* to a different value
+* If you do not want to use the email address to match between LemonLDAP::NG and Odoo accounts, set the *Identity Provider matching attribute* to a different value
 * All other fields may be left to default values
 
 Configuring users

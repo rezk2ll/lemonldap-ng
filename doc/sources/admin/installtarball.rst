@@ -143,7 +143,7 @@ Available parameters are:
 Install cron jobs
 -----------------
 
-LL::NG use cron jobs (or systemd timers) to:
+LemonLDAP::NG use cron jobs (or systemd timers) to:
 
 -  purge old sessions
 -  clean Handler cache

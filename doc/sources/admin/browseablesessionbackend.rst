@@ -11,7 +11,7 @@ index that increase the speed of some operations. It is recommended in productio
 
 .. note::
 
-    Without index, LL::NG will have to retrieve all sessions stored in
+    Without index, LemonLDAP::NG will have to retrieve all sessions stored in
     backend and deserialize then filter each of them.
 
 The following table list fields to index for each session type:

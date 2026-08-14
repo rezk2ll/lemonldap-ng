@@ -2,7 +2,7 @@ Documentation for LemonLDAP::NG 3.0
 ===================================
 
 .. image:: logos/logo_llng_600px.png
-   :alt: LL::NG logo
+   :alt: LemonLDAP::NG logo
    :align: center
    :target: https://www.lemonldap-ng.org
 
@@ -136,7 +136,7 @@ Official Backends                                                    Authenticat
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
 :doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔
 :doc:`PAM<authpam>`                                                  ✔
-:doc:`Proxy LL::NG<authproxy>`                                       ✔                                               ✔
+:doc:`Proxy LemonLDAP::NG<authproxy>`                                       ✔                                               ✔
 :doc:`Radius<authradius>`                                            ✔
 :doc:`REST<authrest>`                                                ✔                                               ✔        ✔
 :doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
@@ -158,7 +158,7 @@ Combo Backends                                                       Authenticat
 ==================================================================== =============================================== ======== ========
 Obsolete Backends                                                    Authentication                                  Users    Password
 ==================================================================== =============================================== ======== ========
-:doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
+:doc:`Remote LemonLDAP::NG<authremote>`                                     ✔                                               ✔
 ==================================================================== =============================================== ======== ========
 
 ==================================================================== ============== =================
@@ -242,20 +242,20 @@ Attacks and Protection
 
 |image27|
 
-====================================================== =============== ============================
+====================================================== ======================== ============================
 Attack                                                 LemonLDAP::NG protection System Integrator protection
-====================================================== =============== ============================
-:doc:`Brute Force<bruteforceprotection>`               ✔               ✔
+====================================================== ======================== ============================
+:doc:`Brute Force<bruteforceprotection>`               ✔                        ✔
 :ref:`Page Content<security-portal>`                   ✔
 :ref:`CSRF<security-portal>`                           ✔
-Deny of Service                                                        ✔
-:ref:`Invisible iFrame<portalcustom-other-parameters>` ✔               ✔
-Man-in-the-Middle                                                      ✔
-Software Exploit                                                       ✔
-:ref:`SSO by-passing<security-reverseproxies>`                         ✔
+Deny of Service                                                                 ✔
+:ref:`Invisible iFrame<portalcustom-other-parameters>` ✔                        ✔
+Man-in-the-Middle                                                               ✔
+Software Exploit                                                                ✔
+:ref:`SSO by-passing<security-reverseproxies>`                                  ✔
 :doc:`XSS<safejail>`                                   ✔
-:doc:`IP reputation<crowdsec>`                         ✔               ✔
-====================================================== =============== ============================
+:doc:`IP reputation<crowdsec>`                         ✔                        ✔
+====================================================== ======================== ============================
 
 Plugins
 ^^^^^^^
@@ -309,7 +309,7 @@ Handlers are software control agents to be installed on your web servers
 *(Nginx, Traefik, Caddy, Apache, PSGI like Plack based servers or Node.js)*.
 
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
-Handler type                                                         Apache     LemonLDAP::NG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
+Handler type                                                         Apache     LL::NG FastCGI/uWSGI server (Nginx, Traefik, Caddy or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 Main *(default handler)*                                             ✔          ✔                                                                            ✔                                           :doc:`Partial<nodehandler>`  ** [1]_ **                                            ✔
 :doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                                            ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
@@ -324,7 +324,7 @@ Main *(default handler)*                                             ✔        
 ==================================================================== ========== ============================================================================ =========================================== ================================================================================== =============================================== ======================================================================================================================
 
 LemonLDAP::NG databases
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _start-configuration-database:
 
@@ -333,7 +333,7 @@ Configuration database
 
 |image46|
 
-LL::NG needs a storage system to store its own configuration (managed by
+LemonLDAP::NG needs a storage system to store its own configuration (managed by
 the manager). Choose one in the following list:
 
 ===================================================== ========= ====================================================================
@@ -430,7 +430,7 @@ Well known compatible applications
 .. note::
 
     Here is a list of well known applications that are compatible with
-    LL::NG. A full list is available on
+    LemonLDAP::NG. A full list is available on
     :doc:`vendor applications page<applications>`.
 
 |adfs|
@@ -473,7 +473,6 @@ Advanced features
    controller <https://github.com/lemonldap-ng-controller/lemonldap-ng-controller>`__
 -  :doc:`Safe jail<safejail>`
 -  :doc:`Login history<loginhistory>`
--  :doc:`Fast CGI support<fastcgi>`
 -  :doc:`Advanced PSGI usage<psgi>`
 -  :doc:`Ignore some manager tests<managertests>`
 -  :doc:`See full parameters list<parameterlist>`
@@ -502,7 +501,7 @@ Mini howtos
 -  :doc:`Convert HTTP header into environment variable<header_remote_user_conversion>`
 -  :doc:`Connect to Renater Federation<renater>`
 -  :doc:`Run LemonLDAP::NG components behind a reverse proxy<behindproxyminihowto>`
--  :doc:`Configure LL::NG to use an outgoing proxy<useoutgoingproxy>`
+-  :doc:`Configure LemonLDAP::NG to use an outgoing proxy<useoutgoingproxy>`
 
 Exploitation
 ------------
@@ -572,8 +571,7 @@ by your language code):
    ``lemonldap-ng-portal/site/templates/common/mail/XX.json``
 
 .. [1]
-   :doc:`Node.js handler<nodehandler>` has not yet reached the same
-   level of functionalities
+   :doc:`Node.js handler<nodehandler>` has not yet reached the same level of functionalities
 
 .. [2]
    When configured as an additional second factor, see :ref:`sfextraregister`

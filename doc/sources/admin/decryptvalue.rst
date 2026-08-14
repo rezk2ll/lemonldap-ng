@@ -1,7 +1,7 @@
 Decrypt value plugin
 ====================
 
-This plugin allows us to decrypt ciphered values. LL::NG can be
+This plugin allows us to decrypt ciphered values. LemonLDAP::NG can be
 configured to send encrypted values to protected applications by using
 :doc:`extended functions<extendedfunctions>`.
 

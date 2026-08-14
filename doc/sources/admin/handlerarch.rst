@@ -14,13 +14,13 @@ Handlers are build on rows of modules:
 Overview of Handler packages
 ----------------------------
 
-============================================================================== ============  =========== ====
-Usage                                                                          Platform      Types       Main
-============================================================================== ============  =========== ====
-Apache2 protection                                                             ApacheMP2     Lib::<type> Main
+=============================================================================== ============  =========== ====
+Usage                                                                           Platform      Types       Main
+=============================================================================== ============  =========== ====
+Apache2 protection                                                              ApacheMP2     Lib::<type> Main
 Plack servers protection or Nginx/Traefik/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server Server       
-:doc:`Self protected applications<selfmadeapplication>`                        PSGI          
-============================================================================== ============  =========== ====
+:doc:`Self protected applications<selfmadeapplication>`                         PSGI          
+=============================================================================== ============  =========== ====
 
 Types are:
 

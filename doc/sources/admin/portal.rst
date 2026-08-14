@@ -1,7 +1,7 @@
 The Portal
 ==========
 
-The Portal is the main component of LL::NG. It provides many features:
+The Portal is the main component of LemonLDAP::NG. It provides many features:
 
 -  **Authentication service** of course
 
@@ -12,7 +12,7 @@ The Portal is the main component of LL::NG. It provides many features:
          :doc:`SSL<authssl>`, :doc:`Kerberos<authapache>`,
          :doc:`HTTP basic authentication<authapache>`, ...)
       -  using external identity provider (:doc:`SAML<authsaml>`,
-         :doc:`CAS<authcas>`, other LL::NG system, ...)
+         :doc:`CAS<authcas>`, other LemonLDAP::NG system, ...)
       -  all together (based on user :doc:`choice<authchoice>`,
          :doc:`rules<authmulti>`, ...)
 
@@ -20,14 +20,14 @@ The Portal is the main component of LL::NG. It provides many features:
       :doc:`REST based<restservices>` for client-server software,
       specific development, ...
 
--  **Identity provider**: LL::NG is able to provide identity service
+-  **Identity provider**: LemonLDAP::NG is able to provide identity service
    using:
 
    -  :doc:`SAML<idpsaml>`
    -  :doc:`OpenID Connect<idpopenidconnect>`
    -  :doc:`CAS<idpcas>`
 
--  :doc:`Identity provider proxy<federationproxy>`: LL::NG can be
+-  :doc:`Identity provider proxy<federationproxy>`: LemonLDAP::NG can be
    used as proxy translator between systems talking SAML, OpenID, CAS,
    ...
 -  **Internal SOAP server** used by
@@ -55,7 +55,7 @@ The Portal is the main component of LL::NG. It provides many features:
 How it works
 ------------
 
-LL::NG portal is a modular component. It needs 4 modules to work:
+LemonLDAP::NG portal is a modular component. It needs 4 modules to work:
 
 -  :ref:`Authentication<start-authentication-users-and-password-databases>`:
    how to check user credentials
@@ -80,7 +80,7 @@ Kinematics
    -  If not authenticated (or authentication is forced), try to find
       (userDB module) and authenticate him (auth module), collect user data,
       compute groups and macros, ask for second factor if required,
-      create a session and store it. LL::NG affords a captcha feature
+      create a session and store it. LemonLDAP::NG affords a captcha feature
       which can be enabled.
 
 #. Modify password if asked (password module)

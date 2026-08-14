@@ -16,11 +16,11 @@ Presentation
     OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE
     stacks. It is described here: http://openid.net/connect/.
 
-LL::NG can act as an OpenID Connect Relying Party (RP) towards multiple
+LemonLDAP::NG can act as an OpenID Connect Relying Party (RP) towards multiple
 OpenID Connect Providers (OP). It will get the user identity through an
 ID Token, and grab user attributes through UserInfo endpoint.
 
-As an RP, LL::NG supports many OpenID Connect features:
+As an RP, LemonLDAP::NG supports many OpenID Connect features:
 
 -  Authorization Code, Implicit and Hybrid flows
 -  Automatic download of JWKS
@@ -34,7 +34,7 @@ As an RP, LL::NG supports many OpenID Connect features:
 -  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 
-You can use this authentication module to link your LL::NG server to any
+You can use this authentication module to link your LemonLDAP::NG server to any
 OpenID Connect Provider. Here are some examples, with their specific
 documentation:
 
@@ -70,7 +70,7 @@ Google          France Connect     Pro Santé Connect  ProConnect
     OpenID Connect specification is not achieved for logout propagation.
     So logout initiated by relying-party will be forwarded to
     OpenID Connect provider but logout initiated by the provider (or another
-    RP) will not be propagated. LL::NG will implement this when specification
+    RP) will not be propagated. LemonLDAP::NG will implement this when specification
     is published.
 
 Configuration
@@ -93,7 +93,7 @@ In ``General Parameters`` > ``Authentication modules``, set:
 
 .. tip::
 
-    As passwords will not be managed by LL::NG, you can disable
+    As passwords will not be managed by LemonLDAP::NG, you can disable
     :ref:`menu password module<portalmenu-menu-modules>`.
 
 
@@ -119,13 +119,13 @@ Then in ``General Parameters`` > ``Authentication modules`` >
    state information between authentication request and authentication
    response) in seconds (default: 600)
 
-Register LL::NG to an OpenID Connect Provider
+Register LemonLDAP::NG to an OpenID Connect Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To register LL::NG, you will need to give some information like
+To register LemonLDAP::NG, you will need to give some information like
 application name or logo.
 
-You will be prompted to provide a *Redirect URI* for LL::NG, which is built
+You will be prompted to provide a *Redirect URI* for LemonLDAP::NG, which is built
 by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:
@@ -139,7 +139,7 @@ For example:
     you need to set SameSite cookie value to "Lax" or "None".
     See :doc:`SSO cookie parameters<ssocookie>`
 
-You may also be prompted for lougout type. LL::NG supports both *back* and
+You may also be prompted for lougout type. LemonLDAP::NG supports both *back* and
 *front* channels. Its default logout urls are:
 
 - https://<portal>/oauth2/flogout for the Front Channel
@@ -153,9 +153,9 @@ You may also be prompted for lougout type. LL::NG supports both *back* and
 - https://<portal>/oauth2/rlogoutreturn should be allowed as a *post-logout* redirect URI
 
 After registration, the OP must give you a *Client ID* and a *Client
-secret* required to configure the OP in LL::NG.
+secret* required to configure the OP in LemonLDAP::NG.
 
-Declare the OpenID Connect Provider in LL::NG
+Declare the OpenID Connect Provider in LemonLDAP::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, select node ``OpenID Connect Providers`` and click on
@@ -201,7 +201,7 @@ Example template:
 JWKS data
 ^^^^^^^^^
 
-JWKS is a JSON file containing public keys. LL::NG can grab them
+JWKS is a JSON file containing public keys. LemonLDAP::NG can grab them
 automatically if jwks_uri is defined in metadata. Else you can paste
 the JSON file content in the textarea.
 
@@ -214,10 +214,10 @@ the JSON file content in the textarea.
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-Define here mapping between LL::NG session content and fields
+Define here mapping between LemonLDAP::NG session content and fields
 provided in UserInfo endpoint response. These fields are defined in
 `OpenID Connect standard <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__,
-and depends on the scope requested by LL::NG (see options below).
+and depends on the scope requested by LemonLDAP::NG (see options below).
 
 So you can define by example:
 
@@ -238,7 +238,7 @@ Configuration
    Do not enable it unless you need to replay this token on an application,
    or if you need the id_token_hint parameter when using logout.
 -  **Configuration endpoint**: URL of OP configuration endpoint
--  **JWKS data timeout**: After this time, LL::NG will do a request
+-  **JWKS data timeout**: After this time, LemonLDAP::NG will do a request
    to get a fresh version of JWKS data. Set to 0 to disable it
 -  **Client ID**: client ID given by OP
 -  **Client secret**: client secret given by OP
@@ -276,7 +276,7 @@ Protocol
    :doc:`different key <keys>` for signing requests.
 -  **Check JWT signature**: Set to 0 to disable JWT signature
    checking
--  **ID Token max age**: If defined, LL::NG will check the ID Token
+-  **ID Token max age**: If defined, LemonLDAP::NG will check the ID Token
    date and reject it if too old
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token

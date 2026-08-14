@@ -1,7 +1,7 @@
 Sessions
 ========
 
-LL::NG rely on a session mechanism with the session ID as a shared
+LemonLDAP::NG rely on a session mechanism with the session ID as a shared
 secret between the user (in :doc:`SSO cookie<ssocookie>`) and the
 :ref:`session database<start-sessions-database>`.
 

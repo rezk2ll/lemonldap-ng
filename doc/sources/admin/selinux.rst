@@ -18,7 +18,7 @@ install the ``lemonldap-ng-selinux`` package to configure SELinux context correc
 This package will not configure SELinux booleans, please read the next sections to see which booleans you need to enable manually
 
 Disk cache (sessions and configuration)
---------------------------------------
+---------------------------------------
 
 LDAP
 ----

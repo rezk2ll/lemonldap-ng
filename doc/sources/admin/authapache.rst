@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG can delegate authentication to Apache, so it is possible to use
+LemonLDAP::NG can delegate authentication to Apache, so it is possible to use
 any `Apache authentication
 module <http://httpd.apache.org/docs/current/howto/auth.html>`__, for
 example Kerberos, Radius, OTP, etc.
@@ -26,14 +26,14 @@ example Kerberos, Radius, OTP, etc.
 .. tip::
 
     Apache authentication module will set the ``REMOTE_USER``
-    environment variable, which will be used by LL::NG to get authenticated
+    environment variable, which will be used by LemonLDAP::NG to get authenticated
     user.
 
 Configuration
 -------------
 
-LL::NG
-~~~~~~
+LemonLDAP::NG
+~~~~~~~~~~~~~
 
 In General Parameters > Authentication modules, choose ``Apache`` as
 authentication backend.
@@ -51,7 +51,7 @@ the Apache authentication fails. Use then the
 
     In this case, the Apache authentication module should not
     require a valid user and not be authoritative, else Apache server will
-    return an error and not let LL::NG Portal manage the failback
+    return an error and not let LemonLDAP::NG Portal manage the failback
     authentication.
 
 .. _apache-1:

@@ -1,13 +1,13 @@
 LDAP session backend
 ====================
 
-An Apache session module was created by LL::NG team to store sessions in
+An Apache session module was created by LemonLDAP::NG team to store sessions in
 an LDAP directory.
 
 
 .. attention::
 
-    This module is not part of LL::NG distribution, and can
+    This module is not part of LemonLDAP::NG distribution, and can
     be found on CPAN:
     `Apache::Session::LDAP <http://search.cpan.org/dist/Apache-Session-LDAP/>`__.
 

@@ -10,9 +10,9 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG can use SAML2 to get user identity and grab some attributes
+LemonLDAP::NG can use SAML2 to get user identity and grab some attributes
 defined in user profile on its Identity Provider (IDP). In this case,
-LL::NG acts like an SAML2 Service Provider (SP).
+LemonLDAP::NG acts like an SAML2 Service Provider (SP).
 
 Several IDPs are allowed, in this case the user will choose the IDP he
 wants. You can preselect IDP with an IDP resolution rule.
@@ -24,8 +24,8 @@ opened.
 
 .. tip::
 
-    LL::NG can also act as :doc:`SAML IDP<idpsaml>`, that allows
-    one to interconnect two LL::NG systems.
+    LemonLDAP::NG can also act as :doc:`SAML IDP<idpsaml>`, that allows
+    one to interconnect two LemonLDAP::NG systems.
 
 Configuration
 -------------
@@ -59,7 +59,7 @@ In ``General Parameters`` > ``Authentication modules``, set:
 
 .. tip::
 
-    As passwords will not be managed by LL::NG, you can disable
+    As passwords will not be managed by LemonLDAP::NG, you can disable
     :ref:`menu password module<portalmenu-menu-modules>`.
 
 Register LemonLDAP::NG on partner Identity Provider

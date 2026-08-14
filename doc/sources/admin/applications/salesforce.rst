@@ -14,14 +14,14 @@ SP and IdP initiated modes.
 
 This page presents the SP initiated mode.
 
-To work with LL::NG it requires:
+To work with LemonLDAP::NG it requires:
 
--  LL::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
+-  LemonLDAP::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
 
 Configuration
 -------------
 
-You should have configured LL::NG as a
+You should have configured LemonLDAP::NG as a
 :doc:`SAML Identity Provider<../idpsaml>`.
 
 Create Salesforce domain

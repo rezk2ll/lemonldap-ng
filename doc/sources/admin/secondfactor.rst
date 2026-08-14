@@ -11,7 +11,7 @@ combination of two different factors between:
 #. something they have *(Webauthn Key, smartphone, …)*
 #. something they are *(biometrics like fingerprints, ...)*
 
-LL::NG provides some second factor plugins that can be used for
+LemonLDAP::NG provides some second factor plugins that can be used for
 completing authentication module with 2FA:
 
 Second factors that can be registered by the user:

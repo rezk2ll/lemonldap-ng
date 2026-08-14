@@ -21,7 +21,7 @@ This caused several issues:
 * The memory consumption is very high
 * The manager interface becomes crowded with service definitions that are very rarely use
 
-Now LL::NG works with a separated federation metadata file, and provide the possibility to override some settings in its configuration.
+Now LemonLDAP::NG works with a separated federation metadata file, and provide the possibility to override some settings in its configuration.
 
 Configuration
 -------------

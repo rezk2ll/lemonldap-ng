@@ -11,12 +11,12 @@ allows one to use SAML to authenticate users. It works by default with
 IDP intiated mechanism, but can works with the standard SP initiated
 cinematic.
 
-To work with LL::NG it requires:
+To work with LemonLDAP::NG it requires:
 
 -  An enterprise account
--  LL::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
+-  LemonLDAP::NG configured as :doc:`SAML Identity Provider<../idpsaml>`
 -  Registered users on CSOD with the same email than those used by
-   LL::NG (email will be the NameID exchanged between CSOD and LL::NG)
+   LemonLDAP::NG (email will be the NameID exchanged between CSOD and LemonLDAP::NG)
 
 Configuration
 -------------
@@ -24,7 +24,7 @@ Configuration
 New Service Provider
 ~~~~~~~~~~~~~~~~~~~~
 
-You should have configured LL::NG as an
+You should have configured LemonLDAP::NG as an
 :doc:`SAML Identity Provider<../idpsaml>`,
 
 Now we will add CSOD as a new SAML Service Provider:
@@ -65,7 +65,7 @@ Now we will add CSOD as a new SAML Service Provider:
 CSOD control panel
 ~~~~~~~~~~~~~~~~~~
 
-CSOD needs two things to configure LL::NG as an IDP:
+CSOD needs two things to configure LemonLDAP::NG as an IDP:
 
 -  Certificate
 -  SAML assertion
@@ -79,7 +79,7 @@ a certificate from you SAML private key.
 SAML assertion
 ^^^^^^^^^^^^^^
 
-You need to use the IDP initiated feature of LL::NG. Just call this URL:
+You need to use the IDP initiated feature of LemonLDAP::NG. Just call this URL:
 
 ::
 

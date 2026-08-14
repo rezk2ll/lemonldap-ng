@@ -4,7 +4,7 @@ Password reset by mail
 Presentation
 ------------
 
-LL::NG can propose a password reset form, for users who loose their
+LemonLDAP::NG can propose a password reset form, for users who loose their
 password (this kind of application is also called a self service
 password interface).
 
@@ -12,10 +12,10 @@ password interface).
 
 -  User clicks on the link ``Reset my password``
 -  User provides his email address (or another information) in password reset form
--  LL::NG try to find the user in users database with the provided information
+-  LemonLDAP::NG try to find the user in users database with the provided information
 -  An email contening a token is sent to the user
 -  The user clicks on the link in the mail
--  LL::NG validates the token and proposes a password change form
+-  LemonLDAP::NG validates the token and proposes a password change form
 -  The user can choose a password or ask to generate a new one
 -  The new password is sent to user by mail if user ask to generate one,
    else the sent mail only confirms that the password has been successfully changed

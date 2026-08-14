@@ -18,7 +18,7 @@ SAML
 For this example, we use these sample values:
 
 -  Gitlab URL : https://gitlab.example.com
--  LL::NG portal URL : https://auth.example.com
+-  LemonLDAP::NG portal URL : https://auth.example.com
 
 Gitlab configuration
 ~~~~~~~~~~~~~~~~~~~~
@@ -46,7 +46,7 @@ Find the gitlab.rb file and add these settings:
          issuer: 'https://gitlab.example.com',
          name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
        },
-       label: 'Login with LL::NG' # optional label for SAML login button
+       label: 'Login with LemonLDAP::NG' # optional label for SAML login button
      }
    ]
 
@@ -54,7 +54,7 @@ Find the gitlab.rb file and add these settings:
 .. tip::
 
     To get the fingerprint of IDP certificate, copy SAML
-    certificate from LL::NG configuration in a file and use openssl:
+    certificate from LemonLDAP::NG configuration in a file and use openssl:
 
     ::
 
@@ -77,10 +77,10 @@ To apply changes:
 
    gitlab-ctl reconfigure
 
-LL::NG configuration
+LemonLDAP::NG configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-We suppose LL::NG is configured as SAML IDP, and that you converted the
+We suppose LemonLDAP::NG is configured as SAML IDP, and that you converted the
 public key into a certificate for SAML signature. You must enable the
 option to send certificates in response. If you don't want to, you need
 to copy the certificate value into Gitlab configuration, in \`idp_cert\`
@@ -89,7 +89,7 @@ parameter.
 You can get Gitlab SAML metadata on
 https://gitlab.example.com/users/auth/saml/metadata
 
-Register them in LL::NG and send these SAML attributes:
+Register them in LemonLDAP::NG and send these SAML attributes:
 
 -  mail => email
 -  uid => uid
@@ -98,7 +98,7 @@ Register them in LL::NG and send these SAML attributes:
 
 .. attention::
 
-    The value from LL::NG mail session attribute must be the
+    The value from LemonLDAP::NG mail session attribute must be the
     email of the user in Gitlab database, in order to associate
     accounts.
 
@@ -117,7 +117,7 @@ gitlab.rb:
        groups_attribute: 'groups',
    ...
 
-And in LL::NG, export the groups attribute:
+And in LemonLDAP::NG, export the groups attribute:
 
 -  groups => groups
 
@@ -164,7 +164,7 @@ In ``/etc/gitlab/gitlab.rb``
 
 .. _llng-configuration-1:
 
-LL::NG configuration
+LemonLDAP::NG configuration
 ~~~~~~~~~~~~~~~~~~~~
 
 Add an OpenID Connect RP to LemonLDAP::NG

@@ -219,7 +219,7 @@ Simple usage example:
 decrypt
 ~~~~~~~
 
-This function uses the secret key of LL::NG configuration to decrypt a value.
+This function uses the secret key of LemonLDAP::NG configuration to decrypt a value.
 
 ::
 
@@ -228,7 +228,7 @@ This function uses the secret key of LL::NG configuration to decrypt a value.
 encrypt
 ~~~~~~~
 
-This function uses the secret key of LL::NG configuration to crypt a data.
+This function uses the secret key of LemonLDAP::NG configuration to crypt a data.
 This can be used for anonymizing identifier given to the protected
 application.
 

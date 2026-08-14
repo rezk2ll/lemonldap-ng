@@ -154,7 +154,7 @@ Configure LemonLDAP (OIDC)
 
 Configure LemonLDAP as an :doc:`OpenID Connect provider <../idpopenidconnect>`.
 
-As describe in documentation link above, also define a new Relying Party in LL::NG.
+As describe in documentation link above, also define a new Relying Party in LemonLDAP::NG.
 
 Take care to configure at least these parameters:
 

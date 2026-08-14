@@ -6,7 +6,7 @@ This is the case for example with CAS authentication (validation of
 service ticket) or OpenID Connect authentication (access to token
 endpoint and userinfo endpoint).
 
-If the LL::NG server needs a proxy for outgoing connections, then you
+If the LemonLDAP::NG server needs a proxy for outgoing connections, then you
 need to configure some environment variables. By default, only connections
 to external systems (CAS, OIDC, etc.) are done through the proxy, while HTTP
 connections in between LemonLDAP::NG components are not.

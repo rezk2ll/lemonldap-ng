@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG uses `Perl
+LemonLDAP::NG uses `Perl
 Authen::Radius <http://search.cpan.org/~manowar/RadiusPerl-0.12/Radius.pm>`__
 as a simple authentication backend.
 
@@ -37,8 +37,8 @@ In Debian/Ubuntu, install the library through APT
 
    apt install libauthen-radius-perl
 
-Configuration of LL::NG
-~~~~~~~~~~~~~~~~~~~~~~~
+Configuration of LemonLDAP::NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Radius for authentication.

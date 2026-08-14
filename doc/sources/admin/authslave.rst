@@ -10,14 +10,14 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG Slave backend relies on HTTP headers to retrieve user login
+LemonLDAP::NG Slave backend relies on HTTP headers to retrieve user login
 and/or attributes.
 
 -  Authentication: will check user login in a header and create session
    without prompting any credentials (but will register client IP and creation date)
 -  Users: collect data transferred in HTTP headers by the "master".
 
-It allows one to put LL::NG::portal behind another web SSO, or behind a
+It allows one to put LemonLDAP::NG::portal behind another web SSO, or behind a
 SSL hardware to delegate SSL authentication to that hardware.
 
 Configuration
@@ -54,7 +54,7 @@ Exported Variables
 You have then to declare HTTP headers exported by the main SSO. Example :
 
 ================= ========================
-Key (LL::NG name) Value (HTTP header name)
+Key (LemonLDAP::NG name) Value (HTTP header name)
 ================= ========================
 uid               Auth-User
 mail              User-Email

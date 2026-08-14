@@ -4,7 +4,7 @@ REST session backend
 Session <type> can be 'global' for SSO sessions or 'persistent' for
 persistent sessions.
 
-LL::NG Portal provides REST end points for sessions management:
+LemonLDAP::NG Portal provides REST end points for sessions management:
 
 -  GET /sessions/<type>/<session-id> : get session data
 -  GET /sessions/<type>/<session-id>/<key> : get a session key value
@@ -83,7 +83,7 @@ your web server.
 .. attention::
 
     By default, user password and other secret keys are
-    hidden by LL::NG REST server. You can force REST server to export their
+    hidden by LemonLDAP::NG REST server. You can force REST server to export their
     real values by selecting "Export secret attributes in REST" in the
     Manager. This less secure option is disabled by default.
 

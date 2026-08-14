@@ -34,7 +34,7 @@ authentication:
    </tomcat-users>
 
 
-LL::NG provides a valve that will check an HTTP header to set the authenticated user on
+LemonLDAP::NG provides a valve that will check an HTTP header to set the authenticated user on
 the J2EE container.
 
 Compilation
@@ -102,15 +102,15 @@ section):
 Configure attributes:
 
 -  **userKey**: key in the HTTP header containing user login.
--  **roleKey**: key in the HTTP header containing roles. If LL::NG send
+-  **roleKey**: key in the HTTP header containing roles. If LemonLDAP::NG send
    some roles split by some commas, configure **roleSeparator**.
 -  **roleSeparator** (optional): role values separator.
 -  **allows** (optional): Define allowed remote IP (use "," separator
-   for multiple IP). Just set the LL::NG Handler IP on this attribute in
+   for multiple IP). Just set the LemonLDAP::NG Handler IP on this attribute in
    order to add more security. If this attribute is missed all hosts are
    allowed.
 -  **passThrough** (optional): Allow anonymous access or not. When it
-   takes "false", HTTP headers have to be sent by LL::NG to make
+   takes "false", HTTP headers have to be sent by LemonLDAP::NG to make
    authentication. So, if the user is not recognized or HTTP headers not
    present, a 403 error is sent.
 

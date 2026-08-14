@@ -8,7 +8,7 @@ The AuthBasic Handler is a special Handler using AuthBasic method to
 authenticate and grante access to a virtual host.
 
 The Handler sends a WWW-Authenticate header to the client, to request
-user id and password. Then it checks credentials by using LL::NG REST
+user id and password. Then it checks credentials by using LemonLDAP::NG REST
 web service (REST session service must be enabled in the manager). Once
 session is granted, the Handler will check authorizations like the
 standard Handler.

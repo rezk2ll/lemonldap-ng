@@ -463,7 +463,7 @@ Compliance Matrix
 """""""""""""""""
 
 .. csv-table::
-   :header: "Category", "Recommendations", "LL::NG Implementation"
+   :header: "Category", "Recommendations", "LemonLDAP::NG Implementation"
    :widths: 20, 30, 50
 
    "Flow Security", "R1", "Disable Implicit/Hybrid (configurable)"

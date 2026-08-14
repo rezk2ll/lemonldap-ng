@@ -13,7 +13,7 @@ Presentation
 Drivers
 ~~~~~~~
 
-LL::NG can use a lot of databases as authentication, users and password
+LemonLDAP::NG can use a lot of databases as authentication, users and password
 backend:
 
 -  MariaDB/MySQL
@@ -28,7 +28,7 @@ can be used.
 Schema
 ~~~~~~
 
-LL::NG can use two tables:
+LemonLDAP::NG can use two tables:
 
 -  Authentication table: where login and password are stored
 -  User table: where user data are stored (mail, name, etc.)
@@ -80,7 +80,7 @@ id user       password                                 name             mail
 SQL
 ~~~
 
-LL::NG will operate some SQL queries:
+LemonLDAP::NG will operate some SQL queries:
 
 -  Authentication: select row in authentication table matching user and
    password

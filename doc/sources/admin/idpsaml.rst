@@ -4,10 +4,10 @@ SAML Identity Provider
 Presentation
 ------------
 
-LL::NG can act as an SAML 2.0 Identity Provider, that can allow one to
-federate LL::NG with:
+LemonLDAP::NG can act as an SAML 2.0 Identity Provider, that can allow one to
+federate LemonLDAP::NG with:
 
--  Another LL::NG system configured with
+-  Another LemonLDAP::NG system configured with
    :doc:`SAML authentication<authsaml>`
 -  Any SAML Service Provider
 

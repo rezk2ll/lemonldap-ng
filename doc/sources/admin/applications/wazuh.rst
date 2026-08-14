@@ -12,22 +12,22 @@ solution that supports the :doc:`SAML <../idpsaml>` protocol.
 Configuration
 --------------
 
-LL::NG
-~~~~~~
+LemonLDAP::NG
+~~~~~~~~~~~~~
 
 This page assumes you already have configured the SAML Service in
 LemonLDAP::NG, if not please follow :
 :doc:`SAML service configuration<../samlservice>`
 
 
-LL::NG SAML Key & Certificate
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LemonLDAP::NG SAML Key & Certificate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Wazuh requires a certificate in the published Identity Provider metadata (i.e. not a public key). Make sure you have generated a set of private key and public certificate in
 ``SAML`` » ``Security`` » ``Keys``.
 
-LL::NG SAML Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^
+LemonLDAP::NG SAML Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Use RSA-SHA256 for the IDP signature method.
 

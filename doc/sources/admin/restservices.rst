@@ -1,7 +1,7 @@
 REST services
 =============
 
-LL::NG portal is a REST server that gives access to configuration,
+LemonLDAP::NG portal is a REST server that gives access to configuration,
 session and also authentication.
 
 Portal REST services

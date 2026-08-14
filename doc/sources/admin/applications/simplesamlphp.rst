@@ -79,7 +79,7 @@ We suppose you configured LemonLDAP::NG as
 :doc:`SAML Identity Provider<../idpsaml>` and want to use simpleSAMLphp
 as Service Provider.
 
-In LL::NG Manager, create an new SP and load simpleSAMLphp metadata
+In LemonLDAP::NG Manager, create an new SP and load simpleSAMLphp metadata
 through URL (by default:
 http://localhost/simplesamlphp/module.php/saml/sp/metadata.php/default-sp):
 
@@ -101,7 +101,7 @@ You can also force all signatures:
 
 On simpleSAMLphp side, use the metadata converter (by default:
 http://localhost/simplesamlphp/admin/metadata-converter.php) to convert
-LL::NG metadata (by default: http://auth.example.com/saml/metadata) into
+LemonLDAP::NG metadata (by default: http://auth.example.com/saml/metadata) into
 internal PHP representation. Copy the ``saml20-idp-remote`` content:
 
 ::
@@ -188,7 +188,7 @@ And create a default IDP configuration:
     You need to configure your own certificates and
     authentication scheme
 
-Now in LL::NG Manager, create a new IDP and import metadata with URL (by
+Now in LemonLDAP::NG Manager, create a new IDP and import metadata with URL (by
 default: http://localhost/simplesamlphp/saml2/idp/metadata.php):
 
 |image5|
@@ -207,10 +207,10 @@ And activate all signatures:
 
 |image7|
 
-To finish, you need to declare LL::NG SP in simpleSAMLphp. Use the
+To finish, you need to declare LemonLDAP::NG SP in simpleSAMLphp. Use the
 metadata converter (by default:
 http://localhost/simplesamlphp/admin/metadata-converter.php) to convert
-LL::NG metadata (by default: http://auth.example.com/saml/metadata) into
+LemonLDAP::NG metadata (by default: http://auth.example.com/saml/metadata) into
 internal PHP representation. Copy the ``saml20-sp-remote`` content:
 
 ::
@@ -232,7 +232,7 @@ internal PHP representation. Copy the ``saml20-sp-remote`` content:
     Don't forget PHP start and end tag to have a valid PHP
     file.
 
-All is ready, you can now test the authentication from LL::NG portal.
+All is ready, you can now test the authentication from LemonLDAP::NG portal.
 
 .. |image0| image:: /applications/simplesamlphp_logo.png
    :class: align-center

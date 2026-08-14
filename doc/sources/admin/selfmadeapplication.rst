@@ -45,7 +45,7 @@ PHP
 Perl auto-protected CGI
 -----------------------
 
-LL::NG now uses FastCGI instead of CGI, but you still can write your own
+LemonLDAP::NG now uses FastCGI instead of CGI, but you still can write your own
 protected CGI.
 
 First create a PSGI module based on Lemonldap::NG::Handler:

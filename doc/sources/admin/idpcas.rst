@@ -4,12 +4,12 @@ CAS server
 Presentation
 ------------
 
-LL::NG can be used as a CAS server. It can allow one to federate LL::NG with:
+LemonLDAP::NG can be used as a CAS server. It can allow one to federate LemonLDAP::NG with:
 
--  Another :doc:`CAS authentication<authcas>` LL::NG provider
+-  Another :doc:`CAS authentication<authcas>` LemonLDAP::NG provider
 -  Any CAS consumer
 
-LL::NG is compatible with the `CAS protocol <https://apereo.github.io/cas/6.5.x/index.html>`__
+LemonLDAP::NG is compatible with the `CAS protocol <https://apereo.github.io/cas/6.5.x/index.html>`__
 versions 1.0, 2.0 and part of 3.0 (attributes exchange).
 
 Configuration
@@ -149,7 +149,7 @@ and not registered in the session of the user.
 URL Matching
 ^^^^^^^^^^^^
 
-.. notice::
+.. note::
 
     Entire service URL is compared to the Service URL defined in LemonLDAP::NG. The longest prefix wins.
 

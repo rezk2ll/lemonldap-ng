@@ -14,11 +14,11 @@ Presentation
 network authentication protocol used for authenticating users based on
 their desktop session.
 
-LL::NG uses GSSAPI module to validate Kerberos ticket against a local
+LemonLDAP::NG uses GSSAPI module to validate Kerberos ticket against a local
 keytab.
 
-LL::NG Configuration
---------------------
+LemonLDAP::NG Configuration
+---------------------------
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Kerberos for authentication. Then go to "Kerberos parameters"

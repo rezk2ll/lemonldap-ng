@@ -8,7 +8,7 @@ keeping history. It is set in LemonLDAP::NG utilities directory
 How it works
 ------------
 
-The ``convertConfig`` utility reads 2 LL::NG configuration files
+The ``convertConfig`` utility reads 2 LemonLDAP::NG configuration files
 (``lemonldap-ng.ini``):
 
 -  **Current**: to extract all configuration history
@@ -25,7 +25,7 @@ Let's go
 
    convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini
 
--  Install the new lemonldap-ng.ini file at the place of the old file in all LL::NG servers
+-  Install the new lemonldap-ng.ini file at the place of the old file in all LemonLDAP::NG servers
 -  Restart all your web servers
 
 .. note::

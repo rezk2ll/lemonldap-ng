@@ -4,7 +4,7 @@ Deploy Apache configuration
 
 .. note::
 
-    This step should have been already done if you installed LL::NG
+    This step should have been already done if you installed LemonLDAP::NG
     with packages.
 
 Files

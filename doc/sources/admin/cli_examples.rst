@@ -1,7 +1,7 @@
 Command Line Interface (lemonldap-ng-cli) examples
 ==================================================
 
-This page shows some examples of LL::NG Command Line Interface. See
+This page shows some examples of LemonLDAP::NG Command Line Interface. See
 :ref:`how to use the command<configlocation-command-line-interface-cli>`.
 
 
@@ -39,7 +39,7 @@ Configure HTTPS
 ---------------
 
 When setting HTTPS, you first need to modify Apache/Nginx configuration,
-then you must configure LL::NG to change portal URL, Handler
+then you must configure LemonLDAP::NG to change portal URL, Handler
 redirections, cookie settings, ...
 
 ::
@@ -162,7 +162,7 @@ Configure virtual host
 ----------------------
 
 A virtual host must be defined in Apache/Nginx and access rules and
-exported headers must be configured in LL::NG.
+exported headers must be configured in LemonLDAP::NG.
 
 In this example we have:
 

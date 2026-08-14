@@ -4,13 +4,13 @@ SAML service configuration
 
 .. note::
 
-    SAML service configuration is a common step to configure LL::NG as
+    SAML service configuration is a common step to configure LemonLDAP::NG as
     :doc:`SAML SP<authsaml>` or :doc:`SAML IDP<idpsaml>`.
 
 Presentation
 ------------
 
-This documentation explains how configure SAML service in LL::NG, in
+This documentation explains how configure SAML service in LemonLDAP::NG, in
 particular:
 
 -  Install prerequisites
@@ -20,7 +20,7 @@ particular:
 
 .. attention::
 
-    Service configuration will be used to generate LL::NG
+    Service configuration will be used to generate LemonLDAP::NG
     SAML metadata, that will be shared with other providers. It means that
     if you modify some settings here, you will have to share again the
     metadata with other providers. In other words, take the time to
@@ -59,7 +59,7 @@ You will only need to install liblasso-perl package:
 RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
 
-RPMs are available in LL::NG RPM "extras" repository (see
+RPMs are available in LemonLDAP::NG RPM "extras" repository (see
 :ref:`installrpm-yum-repository`)
 
 Then install lasso and lasso-perl packages:
@@ -179,7 +179,7 @@ NameID formats
 
 SAML can use different NameID formats. The NameID is the main user
 identifier, carried in SAML messages. You can configure here which field
-of LL::NG session will be associated to a NameID format.
+of LemonLDAP::NG session will be associated to a NameID format.
 
 
 .. note::
@@ -212,7 +212,7 @@ Other NameID formats are automatically managed:
 Authentication contexts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Each LL::NG authentication module has an authentication level, which can
+Each LemonLDAP::NG authentication module has an authentication level, which can
 be associated to an `SAML authentication
 context <http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
 
@@ -482,14 +482,14 @@ Discovery Protocol
     information can be found in the specification:
     `sstc-saml-idp-discovery-cs-01.pdf <https://www.oasis-open.org/committees/download.php/28049/sstc-saml-idp-discovery-cs-01.pdf>`__.
 
-When Discovery Protocol is enabled, the LL::NG IDP list is no more used.
+When Discovery Protocol is enabled, the LemonLDAP::NG IDP list is no more used.
 Instead user is redirected on the discovery service and is redirected
-back to LL::NG with the chosen IDP.
+back to LemonLDAP::NG with the chosen IDP.
 
 
 .. attention::
 
-    If the chosen IDP is not registered in LL::NG, user will
+    If the chosen IDP is not registered in LemonLDAP::NG, user will
     be redirected to discovery service again.
 
 Configuration parameters are:

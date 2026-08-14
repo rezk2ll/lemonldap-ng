@@ -10,7 +10,7 @@ Presentation
 
 To configure SSO with Sympa, you have the choice between:
   * CAS
-  * **Magic authentication**: a special SSO URL is protected by LL::NG, Sympa will display a button for users who wants to use this feature.
+  * **Magic authentication**: a special SSO URL is protected by LemonLDAP::NG, Sympa will display a button for users who wants to use this feature.
 
 We recommend to use CAS.
 
@@ -65,7 +65,7 @@ Magic authentication
 
 .. tip::
 
-    Since LL::NG 1.9, old Auto-Login feature has been
+    Since LemonLDAP::NG 1.9, old Auto-Login feature has been
     removed since it works only with Sympa-5 which has been deprecated
 
 
@@ -148,7 +148,7 @@ authentication URL.
        fastcgi_param CONTENT_LENGTH "";
        # Prevent attacks on older Nginx versions (<1.29.5)
        fastcgi_param HTTP_HOST $host;
-       # Keep original request (LL::NG server will receive /lmauth)
+       # Keep original request (LemonLDAP::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

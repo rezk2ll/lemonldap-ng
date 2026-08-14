@@ -26,7 +26,7 @@ modules to access it.
 
 .. attention::
 
-    Note that all LL::NG components must have access:
+    Note that all LemonLDAP::NG components must have access:
 
     -  to the configuration backend
     -  to the sessions storage backend
@@ -97,7 +97,7 @@ editing ``lemonldap-ng.ini`` and changing the ``protection`` parameter:
 .. tip::
 
     See :doc:`Manager protection documentation<managerprotection>`
-    to know how to use Apache modules or LL::NG to manage access to
+    to know how to use Apache modules or LemonLDAP::NG to manage access to
     Manager.
 
 The Manager displays main branches:
@@ -450,7 +450,7 @@ See :doc:`how to deploy them<confignginx>`.
 
 .. danger::
 
-    \ :doc:`LL::NG FastCGI<fastcgiserver>` server must be
+    \ :doc:`LemonLDAP::NG FastCGI<fastcgiserver>` server must be
     enabled and started separately.
 
 .. _portal-1:

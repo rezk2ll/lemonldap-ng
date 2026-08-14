@@ -247,7 +247,7 @@ Bad expression                    Solution                            Explanatio
 Auth::Apache authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using this module, LL::NG portal will be called only if Apache does
+When using this module, LemonLDAP::NG portal will be called only if Apache does
 not return "401 Authentication required", but this is not the Apache
 behaviour: if the auth module fails, Apache returns 401. So it can be
 used only with a "and" boolean expression.
