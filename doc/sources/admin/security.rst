@@ -269,9 +269,9 @@ reverse-proxy mechanism. Example:
        ProxyPassReverseCookieDomain / http://hiddenappl1.example.com/
    </VirtualHost>
 
-See `mod_proxy <http://httpd.apache.org/docs/2.2/mod/mod_proxy.html>`__
+See `mod_proxy <https://httpd.apache.org/docs/2.4/mod/mod_proxy.html>`__
 and
-`mod_rewrite <http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html>`__
+`mod_rewrite <https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html>`__
 documentation for more about configuring Apache reverse-proxies.
 
 Such configuration can have some security problems:
@@ -293,7 +293,7 @@ of:
 -  server based restriction (like Apache "allow/deny" mechanism)
 -  SSL client certificate for the reverse-proxy (see SSLProxy\*
    parameters in `mod_ssl
-   documentation <http://httpd.apache.org/docs/2.2/mod/mod_ssl.html>`__)
+   documentation <https://httpd.apache.org/docs/2.4/mod/mod_ssl.html>`__)
 
 .. _security-configure-security-settings:
 

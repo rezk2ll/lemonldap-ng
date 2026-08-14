@@ -33,7 +33,7 @@ Alfresco
 .. tip::
 
     The official documentation can be found here:
-    http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html\
+    https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services-Community-Edition/23.3/Alfresco-Content-Services-Community-Edition/Administer/Manage-Security/Authentication-and-sync/How-is-Alfresco-Office-Services-related-to-external-authentication/Configure-Alfresco-Share-to-use-an-external-SSO\
 
 You need to find the following files in your Alfresco installation:
 

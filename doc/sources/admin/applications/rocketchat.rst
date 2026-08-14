@@ -65,7 +65,7 @@ Configure SAML within RocketChat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SAML authentication that is documented on the `official Rocket.Chat SAML documentation
-<https://docs.rocket.chat/guides/administration/admin-panel/settings/saml/rocket.chat-server-settings>`__
+<https://docs.rocket.chat/docs/saml>`__
 
 Select a **Custom Provider** name that does not contain spaces. It will be
 used as part of metadata url **Custom Issuer** and as name of SAML service

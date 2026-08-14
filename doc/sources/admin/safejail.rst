@@ -19,7 +19,7 @@ LemonLDAP::NG uses Safe jail to evaluate all expressions:
    -  Session opening
 
 More information about Safe on
-`CPAN <http://search.cpan.org/search?query=Safe&mode=module>`__
+`CPAN <https://metacpan.org/pod/Safe>`__
 
 Disable Safe jail
 -----------------

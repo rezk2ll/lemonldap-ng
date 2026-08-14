@@ -26,13 +26,13 @@ Guacamole
 ~~~~~~~~~
 
 Refer to `the official Guacamole
-documentation <http://guacamole.apache.org/doc/gug/>`__ to install
+documentation <https://guacamole.apache.org/doc/gug/>`__ to install
 Guacamole, either manually or through Docker images
 
 You need to be able to enable extensions. If you are using docker, you
 need to `follow these instructions in order to provide your own
 extensions directory and Guacamole configuration
-file <http://guacamole.apache.org/doc/gug/guacamole-docker.html#guacamole-docker-guacamole-home>`__
+file <https://guacamole.apache.org/doc/gug/guacamole-docker.html#guacamole-docker-guacamole-home>`__
 
 Your Guacamole configuration directory will look something like this.
 

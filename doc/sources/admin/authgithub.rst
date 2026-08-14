@@ -11,7 +11,7 @@ Presentation
 ------------
 
 `GitHub <https://github.com/>`__ uses
-`OAuth2 <http://en.wikipedia.org/wiki/OAuth2>`__ protocol to allow
+`OAuth2 <https://en.wikipedia.org/wiki/OAuth2>`__ protocol to allow
 applications to reuse its own authentication process (see
 https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/).
 

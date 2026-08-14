@@ -13,7 +13,7 @@ Prerequisites and dependencies
 ------------------------------
 
 You must install
-`Auth::Yubikey_WebClient <http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/>`__
+`Auth::Yubikey_WebClient <https://metacpan.org/pod/Auth::Yubikey_WebClient>`__
 package.
 
 You have to retrieve a client ID and a secret key from Yubico. See

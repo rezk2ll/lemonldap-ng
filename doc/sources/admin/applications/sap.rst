@@ -6,14 +6,14 @@ SAP
 HTTP header
 -----------
 
-Read the following documentation:
-http://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm
+Refer to the "Header Variable Logon" documentation of your SAP NetWeaver
+version on the `SAP Help Portal <https://help.sap.com>`__.
 
 SAML
 ----
 
 Read the following documentation:
-https://help.sap.com/saphelp_nw70/helpdata/en/94/695b3ebd564644e10000000a114084/content.htm
+https://help.sap.com/docs/SAP_NETWEAVER_700/d4376868476e433b9d2bd2d25e67c71c/94695b3ebd564644e10000000a114084.html
 
 .. |SAP| image:: /applications/SAPLogo.gif
    :class: align-center

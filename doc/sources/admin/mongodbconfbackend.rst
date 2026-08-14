@@ -56,7 +56,7 @@ Example :
    password = llpassword
 
 ===================================================================================================================== ================================ ==========
-Optional parameters (see `MongoDB::MongoClient <http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient>`__ man page)
+Optional parameters (see `MongoDB::MongoClient <https://metacpan.org/pod/MongoDB::MongoClient>`__ man page)
 ===================================================================================================================== ================================ ==========
 Name                                                                                                                  Comment                          Example
 db_name                                                                                                               Admin database (default: admin)  admin

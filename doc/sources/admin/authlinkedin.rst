@@ -11,7 +11,7 @@ Presentation
 ------------
 
 `LinkedIn <https://www.linkedin.com/>`__ is a professional social
-network. It uses `OAuth2 <http://en.wikipedia.org/wiki/OAuth2>`__
+network. It uses `OAuth2 <https://en.wikipedia.org/wiki/OAuth2>`__
 protocol to allow applications to reuse its own authentication process
 (see https://developer.linkedin.com/docs/oauth2).
 

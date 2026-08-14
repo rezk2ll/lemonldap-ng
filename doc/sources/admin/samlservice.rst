@@ -35,14 +35,14 @@ Lasso
 |image0|
 
 SAML2 implementation is based on
-`Lasso <http://lasso.entrouvert.org>`__. You will need a very recent
+`Lasso <https://lasso.entrouvert.org>`__. You will need a very recent
 version of Lasso (>= 2.6.0).
 
 Debian/Ubuntu
 ^^^^^^^^^^^^^
 
 You can use official Debian packages or those available here:
-http://deb.entrouvert.org/.
+https://deb.entrouvert.org/.
 
 
 .. tip::
@@ -78,7 +78,7 @@ Then install lasso and lasso-perl packages:
 Other
 ^^^^^
 
-`Download the Lasso tarball <http://lasso.entrouvert.org/download/>`__
+`Download the Lasso tarball <https://lasso.entrouvert.org/download/>`__
 and compile it on your system.
 
 Service configuration
@@ -226,7 +226,7 @@ Authentication contexts
 
 Each LL::NG authentication module has an authentication level, which can
 be associated to an `SAML authentication
-context <http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
+context <https://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
 
 .. note::
 
@@ -490,7 +490,7 @@ Discovery Protocol
 .. note::
 
     Discovery Protocol is also know as `WAYF
-    Service <http://www.switch.ch/aai/support/tools/wayf.html>`__. More
+    Service <https://www.switch.ch/aai/support/tools/wayf.html>`__. More
     information can be found in the specification:
     `sstc-saml-idp-discovery-cs-01.pdf <https://www.oasis-open.org/committees/download.php/28049/sstc-saml-idp-discovery-cs-01.pdf>`__.
 

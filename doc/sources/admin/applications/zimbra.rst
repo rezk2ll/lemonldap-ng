@@ -6,7 +6,7 @@ Zimbra
 Presentation
 ------------
 
-`Zimbra <http://www.zimbra.com/>`__ is open source server software for
+`Zimbra <https://www.zimbra.com/>`__ is open source server software for
 email and collaboration - email, group calendar, contacts, instant
 messaging, file storage and web document management. The Zimbra email
 and calendar server is available for Linux, Mac OS X and virtualization
@@ -19,7 +19,7 @@ Zimbra can be connected with `SAML protocol <../idpsaml>`__ which is the
 recommended way, but this requires Zimbra Network Edition.
 
 Zimbra can also use a specific `preauthentication
-protocol <http://wiki.zimbra.com/index.php?title=Preauth>`__ to provide
+protocol <https://wiki.zimbra.com/index.php?title=Preauth>`__ to provide
 SSO on its application. This protocol is implemented in an LL::NG
 specific Handler and is available in Zimbra Open Source Edition.
 
@@ -108,7 +108,7 @@ Zimbra preauth key
 You need to get a preauth key from Zimbra server.
 
 See `how to do
-this <http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_for_preauth>`__
+this <https://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_for_preauth>`__
 on Zimbra wiki.
 
 Zimbra application in menu

@@ -6,7 +6,7 @@ phpLDAPadmin
 Presentation
 ------------
 
-`phpLDAPadmin <http://phpldapadmin.sourceforge.net>`__ is an LDAP
+`phpLDAPadmin <https://phpldapadmin.sourceforge.net>`__ is an LDAP
 administration tool written in PHP.
 
 phpLDAPadmin will connect to the directory with a static DN and

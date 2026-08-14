@@ -6,7 +6,7 @@ GRR
 Presentation
 ------------
 
-`GRR <http://grr.devome.com/fr/>`__ is a room booking software.
+`GRR <https://grr.devome.com/>`__ is a room booking software.
 
 HTTP header
 -----------
