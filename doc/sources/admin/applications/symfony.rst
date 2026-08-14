@@ -182,7 +182,7 @@ Create the file src/AppBundle/Security/User/HeaderUserProvider.php :
 References
 ----------
 
--  http://symfony.com/doc/current/security/pre_authenticated.html#remote-user-based-authentication
+-  https://symfony.com/doc/current/security/pre_authenticated.html#remote-user-based-authentication
 -  https://symfony.com/doc/current/security/custom_provider.html
 
 .. |image0| image:: /applications/symfony_logo.png

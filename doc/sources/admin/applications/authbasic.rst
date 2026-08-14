@@ -13,7 +13,7 @@ Presentation
     handler.
 
 Extract from the `Wikipedia
-article <http://en.wikipedia.org/wiki/Basic_access_authentication>`__:
+article <https://en.wikipedia.org/wiki/Basic_access_authentication>`__:
 
 In the context of an HTTP transaction, the basic access authentication
 is a method designed to allow a web browser, or other client program, to

@@ -32,7 +32,7 @@ Pre-requisites
 On the Odoo side, you need to install the ``auth_saml`` module from OCA:
 
 * https://github.com/OCA/server-auth/tree/14.0/auth_saml 
-* https://odoo-community.org/shop/product/saml2-authentication-3211
+* https://apps.odoo-community.org/shop/saml2-authentication-3211
 
 This module requires the ``pysaml2`` and ``xmlsec1`` python dependencies.
 

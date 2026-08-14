@@ -55,18 +55,18 @@ Example :
    user = lluser
    password = llpassword
 
-===================================================================================================================== ================================ ==========
-Optional parameters (see `MongoDB::MongoClient <http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient>`__ man page)
-===================================================================================================================== ================================ ==========
-Name                                                                                                                  Comment                          Example
-db_name                                                                                                               Admin database (default: admin)  admin
-auth_mechanism                                                                                                        Authentication mechanism         PLAIN
+=========================================================================================================== ================================ ==========
+Optional parameters (see `MongoDB::MongoClient <https://metacpan.org/pod/MongoDB::MongoClient>`__ man page)
+=========================================================================================================== ================================ ==========
+Name                                                                                                        Comment                          Example
+db_name                                                                                                     Admin database (default: admin)  admin
+auth_mechanism                                                                                              Authentication mechanism         PLAIN
 auth_mechanism_properties
-connect_timeout                                                                                                       Connection timeout               10000
-ssl                                                                                                                   Boolean or hash ref (default: 0) 1
-username                                                                                                              Username to use to connect       lluser
-password                                                                                                              Password                         llpassword
-===================================================================================================================== ================================ ==========
+connect_timeout                                                                                             Connection timeout               10000
+ssl                                                                                                         Boolean or hash ref (default: 0) 1
+username                                                                                                    Username to use to connect       lluser
+password                                                                                                    Password                         llpassword
+=========================================================================================================== ================================ ==========
 
 Mini MongoDB howto
 ==================

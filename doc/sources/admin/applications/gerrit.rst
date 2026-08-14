@@ -16,7 +16,7 @@ Configuration
 Gerrit
 ------
 
-`Install <https://gerrit-review.googlesource.com/Documentation/config-plugins.html#installation>`__ the OAuth Provider plugin. A prebuilt package of the plugin can be found on the `Gerrit CI <https://gerrit-ci.gerritforge.com/job/plugin-oauth-bazel-master-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/oauth/oauth.jar>`__.
+`Install <https://gerrit-review.googlesource.com/Documentation/config-plugins.html#installation>`__ the OAuth Provider plugin. A prebuilt package of the plugin can be found on the `Gerrit CI <https://github.com/davido/gerrit-oauth-provider/releases>`__.
 
 Then, configure Gerrit:
 

@@ -11,7 +11,7 @@ Presentation
 ------------
 
 LL::NG uses `Perl
-Authen::Radius <http://search.cpan.org/~manowar/RadiusPerl-0.12/Radius.pm>`__
+Authen::Radius <https://metacpan.org/pod/Authen::Radius>`__
 as a simple authentication backend.
 
 Currently, the module is simply handling a Radius Authentication request

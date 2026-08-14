@@ -8,9 +8,9 @@ GNU Mailman
 Presentation
 ------------
 
-`Mailman <http://www.list.org/>`__ is free software for managing electronic mail discussion and e-newsletter lists. Mailman is integrated with the web, making it easy for users to manage their accounts and for list owners to administer their lists. Mailman supports built-in archiving, automatic bounce processing, content filtering, digest delivery, spam filters, and more.
+`Mailman <https://www.list.org/>`__ is free software for managing electronic mail discussion and e-newsletter lists. Mailman is integrated with the web, making it easy for users to manage their accounts and for list owners to administer their lists. Mailman supports built-in archiving, automatic bounce processing, content filtering, digest delivery, spam filters, and more.
 
-Mailman uses `django-allauth <https://www.intenct.nl/projects/django-allauth/>`__ for external authentication. And as of version 0.49, *django-allauth* is `compatible with LemonLDAP::NG <https://django-allauth.readthedocs.io/en/latest/providers.html#lemonldap-ng>`__
+Mailman uses `django-allauth <https://allauth.org/>`__ for external authentication. And as of version 0.49, *django-allauth* is `compatible with LemonLDAP::NG <https://docs.allauth.org/en/latest/socialaccount/providers/lemonldap.html>`__
 
 First, make sure you have set up LemonLDAP::NG 's
 :doc:`OpenID Connect service<..//openidconnectservice>` and added

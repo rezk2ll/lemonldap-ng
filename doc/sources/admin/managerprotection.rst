@@ -27,7 +27,7 @@ The configuration can be changed in ``etc/manager-apache2.conf`` or
 
 But you will rather prefer to use an Apache authentication module, like
 for example `LDAP authentication
-module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
+module <https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
 
 .. code-block:: apache
 

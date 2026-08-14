@@ -8,7 +8,7 @@ Presentation
 
 `Jitsi Meet <https://github.com/jitsi/jitsi-meet>`__ is a WEBRTC-based
 video conferencing application, powering the
-`meet.jit.si <http://meet.jit.si>`__ online service.
+`meet.jit.si <https://meet.jit.si>`__ online service.
 
 Users may install their own instance of Jitsi Meet for private use, in
 which case, they may use authentication to control the creation of

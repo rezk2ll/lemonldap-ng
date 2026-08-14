@@ -6,7 +6,7 @@ GLPI
 Presentation
 ------------
 
-`GLPI <http://www.glpi-project.org>`__ is the Information
+`GLPI <https://www.glpi-project.org>`__ is the Information
 Resource-Manager with an additional Administration- Interface. You can
 use it to build up a database with an inventory for your company
 (computer, software, printers...). It has enhanced functions to make the

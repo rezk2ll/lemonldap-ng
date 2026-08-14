@@ -8,7 +8,7 @@ Presentation
 
 `Mobilizon <https://joinmobilizon.org>`__ is an online tool to help manage your events, your profiles and your groups.
 
-Mobilizon lets users `authenticate with OpenID Connect <https://docs.joinmobilizon.org/administration/configure/auth/#oauth>`__ through the same plugin used by Keycloak.
+Mobilizon lets users `authenticate with OpenID Connect <https://docs.mobilizon.org/3.%20System%20administration/configure/auth/>`__ through the same plugin used by Keycloak.
 
 First, make sure you have set up LemonLDAP::NG 's
 :doc:`OpenID Connect service<..//openidconnectservice>` and added

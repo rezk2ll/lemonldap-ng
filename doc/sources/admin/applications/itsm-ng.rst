@@ -16,7 +16,7 @@ OpenID Connect
 Configuring ITSM-NG
 ^^^^^^^^^^^^^^^^^^^
 
-The configuration steps are described on `ITSM-NG wiki <https://wiki.itsm-ng.org/oidc/>`__.
+The configuration steps are described on `ITSM-NG wiki <https://wiki.itsm-ng.org/en/Features/oidc>`__.
 
 Just set LemonLDAP::NG main portail URL in ``Provider`` field, and define ``Client ID`` and ``Client Secret``.
 
