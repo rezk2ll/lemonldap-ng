@@ -15,6 +15,7 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 # INITIALIZATION
 
 has prefix => ( is => 'ro', default => 'test' );
+has type   => ( is => 'ro', default => 'test' );
 has logo   => ( is => 'rw', default => 'test.png' );
 
 # RUNNING METHODS
