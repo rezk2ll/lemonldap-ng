@@ -329,10 +329,7 @@ SKIP: {
         ),
         'Move to 2FA list'
     );
-    like( $res->[2]->[0],
-        qr/trspan="2fRegRequired"/, "Found registration required prompt" );
-    like( $res->[2]->[0],
-        qr(href="/2fregisters/totp"), "Found link to TOTP registration" );
+    expectRedirection( $res, 'http://auth.idp.com/2fregisters/totp' );
 
     ok(
         $res = $issuer->_get(

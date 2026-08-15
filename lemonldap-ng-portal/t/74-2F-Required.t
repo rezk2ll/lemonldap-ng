@@ -15,12 +15,14 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'error',
-                totp2fSelfRegistration => 1,
-                totp2fActivation       => 1,
-                totp2fAuthnLevel       => 5,
-                sfRequired             => 1,
-                tokenUseGlobalStorage  => 1,
+                logLevel                   => 'error',
+                totp2fSelfRegistration     => 1,
+                totp2fActivation           => 1,
+                totp2fAuthnLevel           => 5,
+                password2fSelfRegistration => 1,
+                password2fActivation       => 1,
+                sfRequired                 => 1,
+                tokenUseGlobalStorage      => 1,
             }
         }
     );
