@@ -673,11 +673,8 @@ sub _displayRegister {
     # If only one 2F is available, redirect to it
     return $self->p->sendRedirection( $req,
         $self->p->buildUrl( $req->portal, '2fregisters', $am[0]->{CODE} ) )
-      if (
-        @am == 1
-        and not( @$_2fDevices
-            or $req->data->{sfRegRequired} )
-      );
+      if ( @am == 1
+        and not @$_2fDevices );
 
    # Parse second factors to display delete button if allowed and upgrade button
     my ( $displayUpgBtn, $action ) = ( 0, '' );
