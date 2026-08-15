@@ -4,7 +4,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 19;
+my $maintests = 18;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -61,7 +61,7 @@ SKIP: {
     # Follow redirection to TOTP form
     ok( $res = $client->_get( '/2fregisters', cookie => $pdata ),
         'Follow redirection to /2fregisters' );
-    ok( $res->[2]->[0] =~ m#/2fregisters/totp#, 'Found TOTP link' );
+    expectRedirection( $res, qr'http://auth.example.com/+2fregisters/totp' );
 
     # TOTP form
     ok(

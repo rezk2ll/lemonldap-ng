@@ -365,11 +365,8 @@ ok(
     ),
     'Move to 2FA list'
 );
-like( $res->[2]->[0],
-    qr/trspan="2fRegRequired"/, "Found registration required prompt" );
-like( $res->[2]->[0],
-    qr(href="/2fregisters/totp"), "Found link to TOTP registration" );
 
+expectRedirection( $res, 'http://auth.op.com/2fregisters/totp' );
 ok(
     $res = $op->_get(
         '/2fregisters/totp',

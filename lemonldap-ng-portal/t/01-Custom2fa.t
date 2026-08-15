@@ -57,8 +57,7 @@ subtest "Register 2FA on first login" => sub {
         ),
         'Auth query'
     );
-    expectXpath( $res, '//a[@href="/2fregisters/test"]' );
-    expectXpath( $res, '//span[@trspan="2fRegRequired"]' );
+    expectRedirection( $res, "http://auth.example.com/2fregisters/test" );
     $pdata = expectCookie( $res, 'lemonldappdata' );
 
     ok(
