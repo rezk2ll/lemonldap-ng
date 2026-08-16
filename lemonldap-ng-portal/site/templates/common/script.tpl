@@ -15,9 +15,9 @@
 
  <TMPL_IF NAME="DISPLAY_PPOLICY">
  <!-- //if:jsminified
- <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/ppolicy.min.js?v=<TMPL_VAR CACHE_TAG>"></script>
  //else -->
- <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.js?v=<TMPL_VAR CACHE_TAG>"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/ppolicy.js?v=<TMPL_VAR CACHE_TAG>"></script>
  <!-- //endif -->
  </TMPL_IF>
 
