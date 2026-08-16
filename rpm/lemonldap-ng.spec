@@ -186,6 +186,7 @@ BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Perl::Tidy)
 BuildRequires:  perl(Plack::Handler::FCGI)
 BuildRequires:  perl(Pod::Usage)
+BuildRequires:  perl(Protocol::WebSocket::Client)
 BuildRequires:  perl(Storable)
 BuildRequires:  perl(threads::shared)
 BuildRequires:  perl(WWW::Form::UrlEncoded)
@@ -242,7 +243,7 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 
 # Setup requires filtering
 %{?perl_default_filter}
-%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)|perl\\(Protocol::WebSocket
+%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)
 
 
 %description
