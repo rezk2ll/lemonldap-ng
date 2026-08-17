@@ -31,7 +31,6 @@ my $ini = {
     portalDisplayResetPassword => 1,
 
     # portalDisplayCertificateResetByMail => 1, Missing dependencies
-    portalStatus         => 1,
     cda                  => 1,
     notification         => 1,
     portalCheckLogins    => 1,
