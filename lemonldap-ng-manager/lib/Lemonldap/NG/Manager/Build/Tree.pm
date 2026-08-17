@@ -625,7 +625,6 @@ sub tree {
                     nodes => [
                         'upgradeSession',
                         'refreshSessions',
-                        'portalStatus',
                         'oidcOfflineTokens',
                         'adaptativeAuthenticationLevelRules',
                         {

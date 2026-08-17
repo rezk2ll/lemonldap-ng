@@ -285,11 +285,10 @@ Name                                                                 Description
 :doc:`Impersonation<impersonation>`                                  Allow users to use another identity
 :doc:`Initialize passwordReset API<initializePasswordReset>`         Initialize Password Reset API
 :doc:`Location detection<newlocationwarning>`                        Send an email when user sign in from a new location
-:doc:`Login history<>`                                               Send an email when user sign in from a new location
+:doc:`Login history<loginhistory>`                                   Send an email when user sign in from a new location
 :doc:`Notifications system<notifications>`                           Display a message during log in process
 :doc:`Portal servers<portalservers>`                                 Enable Portal REST or SOAP server
 :doc:`Public pages<public_pages>`                                    Enable public pages system
-:doc:`Publish portal status<statuscollect>`                          Enable public pages system
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`Refresh session API<refreshsessionapi>`                        Plugin that provides an API to refresh a user session
 :doc:`Register new account<register>`                                Plugin that allows a user to create an account

@@ -482,12 +482,6 @@ sub attributes {
             type          => 'keyTextContainer',
             documentation => 'Custom templates parameters',
         },
-        portalStatus => {
-            type          => 'bool',
-            default       => 0,
-            help          => 'status.html',
-            documentation => 'Enable portal status',
-        },
         portalUserAttr => {
             type          => 'text',
             default       => '_user',

@@ -4335,10 +4335,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'keyTextContainer'
         },
-        'portalStatus' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'portalUserAttr' => {
             'default' => '_user',
             'type'    => 'text'
