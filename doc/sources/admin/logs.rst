@@ -379,9 +379,6 @@ Use it to enable more than one logger. Example:
 Audit logs
 ----------
 
-
-|beta| This feature may change in a future version, event codes and format should not be considered stable.
-
 LemonLDAP::NG user logs (see above) are being replaced with a new facility: :ref:`auditlogs`.
 
 Audit logs are structured logs that are meant to be easier to process than the current log messages.
@@ -425,4 +422,3 @@ Your logger class can look something like this:
 
     1;
 
-.. |beta| image:: /documentation/beta.png

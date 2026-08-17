@@ -497,11 +497,6 @@ Example *check if $uid is in /check-auth/ URI*:
    https://test1.example.com/check-auth/rtyler/api  -> false
    https://test1.example.com/check-auth/rtyler      -> false
 
-.. |image0| image:: /documentation/new.png
-   :width: 35px
-.. |image1| image:: /documentation/new.png
-   :width: 35px
-
 unicode2iso
 ~~~~~~~~~~~
 

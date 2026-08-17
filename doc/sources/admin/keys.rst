@@ -1,5 +1,5 @@
-Keys |beta|
-===========
+Keys
+====
 
 *General parameters* » *Keys*
 
@@ -53,8 +53,3 @@ Using placeholders
 You can use :ref:`configuration placeholders <configuration-placeholders>` as
 the value of any field in this section, which is a convenient way to store
 private keys externally.
-
-
-.. |beta| image:: /documentation/beta.png
-   :width: 35px
-   :alt: beta

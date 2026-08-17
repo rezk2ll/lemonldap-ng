@@ -10,12 +10,6 @@ Presentation
 authentication platform made by French government.
 
 
-.. attention::
-
-    It is for the moment only in BETA stage. This
-    documentation will explain how to configure LemonLDAP::NG with the developer
-    reserved space.
-
 Register on France Connect
 --------------------------
 

@@ -401,8 +401,6 @@ Display
 -  **Name**: Name of the RP application
 -  **Logo**: Logo of the RP application
 
-.. |beta| image:: /documentation/beta.png
-
 .. _oidcextraclaims:
 
 Scope values content
@@ -459,8 +457,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 Scope rules
 ^^^^^^^^^^^
 
-
-|beta| This feature may change in a future version in a way that breaks
+This feature may change in a future version in a way that breaks
 compatibility with existing configuration.
 
 By default, LemonLDAP::NG grants all scopes requested by the application, as

@@ -71,8 +71,3 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Certificate management
 
 .. danger::
    .p12 certificates only.
-
-
-
-.. |image0| image:: /documentation/beta.png
-   :width: 100px

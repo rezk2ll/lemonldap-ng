@@ -1,9 +1,7 @@
 CaptchEtat
 ==========
 
-|beta|
-
-this plugin has not been tested in production yet, its behavior and
+This plugin has not been tested in production yet, its behavior and
 parameters are subject to change in future versions
 
 Presentation
@@ -26,5 +24,3 @@ Configure captcha like :doc:`LemonLDAP::NG internal captcha<captcha>` but use a
    - ``captchaStyleName``: CAPTCHA style name (such as ``captchaFR``)
    - ``captchaApiBase``: base URL of the CaptchEtat API ( such as ``https://xxx.example.com/piste/captchetat/v2`` )
 
-
-.. |beta| image:: /documentation/beta.png

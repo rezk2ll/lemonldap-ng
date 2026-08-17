@@ -164,12 +164,12 @@ Other
    Possible `Extended LTS <https://wiki.debian.org/LTS/Extended>`__
 
 .. [2]
-   updated by `LemonLDAP::NG Team </team>`__ until dependencies are compatible.
+   Updated by `LemonLDAP::NG Team </team>`__ until dependencies are compatible.
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
 
 .. [3]
-   few days after release
+   Few days after release
 
 .. [4]
    Ubuntu universe/multiverse branches are community maintained *(so not

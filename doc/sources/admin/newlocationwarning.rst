@@ -48,6 +48,3 @@ Following variables are available in the Warning email body:
 * ``$location``: the location value, from **Session attribute to display**
 * ``$date``: the date of login
 * ``$ua``: the full user agent string
-
-.. |image0| image:: /documentation/beta.png
-   :width: 100px
