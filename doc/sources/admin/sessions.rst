@@ -10,6 +10,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
 
 -  **Store user password in session**: see
    :doc:`password store documentation<passwordstore>`
+-  **Encrypt password in session**: option disabled by default
 -  **Display session identifier**: should the session ID be displayed in the manager's session explorer. The session ID is a sensitive information that should only be shown to highly trusted administrators
 -  **Sessions timeout**: maximum lifetime of a session. Old sessions are
    deleted by a cron script
@@ -23,11 +24,11 @@ To configure sessions, go in Manager, ``General Parameters`` »
     Session activity timeout requires Handlers to have a write
     access to sessions database.
 
--  **Opening conditions**: rules which are evaluated before granting
-   session, see :doc:`Grant Session plugin documentation<grantsession>`
 -  **Log application access**: record OIDC/SAML/CAS application access
    to session. This can be used to define custom display rules based on
    previous access to application by user.
+-  **Opening conditions**: rules which are evaluated before granting
+   session, see :doc:`Grant Session plugin documentation<grantsession>`
 -  **Sessions storage**: you can define here which session backend to
    use, with the backend options. See
    :ref:`sessions database configuration<start-sessions-database>` to

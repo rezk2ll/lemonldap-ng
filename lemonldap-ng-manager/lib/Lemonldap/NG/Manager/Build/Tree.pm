@@ -626,6 +626,24 @@ sub tree {
                         'upgradeSession',
                         'refreshSessions',
                         'portalStatus',
+                        'oidcOfflineTokens',
+                        'adaptativeAuthenticationLevelRules',
+                        {
+                            title => 'adminLogoutServer',
+                            nodes => ['adminLogoutServerSecret']
+                        },
+                        'autoSigninRules',
+                        {
+                            title => 'devOpsCheck',
+                            help  => 'checkdevops.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'checkDevOps',
+                                'checkDevOpsDownload',
+                                'checkDevOpsDisplayNormalizedHeaders',
+                                'checkDevOpsCheckSessionAttributes'
+                            ],
+                        },
                         {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
@@ -633,141 +651,69 @@ sub tree {
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
-                            title => 'webCron',
-                            form  => 'simpleInputContainer',
-                            nodes => [ 'webCronSecret', ],
-                        },
-                        {
-                            title => 'portalServers',
-                            help  => 'portalservers.html',
+                            title => 'checkUsers',
+                            help  => 'checkuser.html',
                             nodes => [
-                                'exportedAttr',
+                                'checkUser',
+                                'checkUserIdRule',
+                                'checkUserUnrestrictedUsersRule',
+                                'checkUserSearchAttributes',
+                                'checkUserHiddenAttributes',
+                                'checkUserHiddenHeaders',
                                 {
-                                    title => 'restServices',
-                                    help  => 'portalservers.html#REST',
+                                    title => 'checkUserDisplay',
+                                    help  => 'checkuser.html#configuration',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'restSessionServer',
-                                        'restConfigServer',
-                                        'restAuthServer',
-                                        'restPasswordServer',
-                                        'restExportSecretKeys',
-                                        'restClockTolerance',
-                                    ]
-                                },
-                                {
-                                    title => 'soapServices',
-                                    help  =>
-                                      'portalservers.html#SOAP_(deprecated)',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'soapSessionServer',
-                                        'soapConfigServer',
-                                        'wsdlServer',
+                                        'checkUserDisplayComputedSession',
+                                        'checkUserDisplayPersistentInfo',
+                                        'checkUserDisplayNormalizedHeaders',
+                                        'checkUserDisplayEmptyHeaders',
+                                        'checkUserDisplayEmptyValues',
+                                        'checkUserDisplayHiddenAttributes',
+                                        'checkUserDisplayHistory'
                                     ]
                                 },
                             ]
                         },
                         {
-                            title => 'register',
-                            help  => 'register.html',
-                            nodes => [ {
-                                    title => 'mailContent',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'registerConfirmSubject',
-                                        'registerConfirmBody',
-                                        'registerDoneSubject',
-                                        'registerDoneBody'
-                                    ]
-                                },
-                                {
-                                    title => 'mailOther',
-                                    form  => 'simpleInputContainer',
-                                    nodes =>
-                                      [ 'registerUrl', 'registerTimeout' ]
-                                }
-                            ]
+                            title => 'decryptValue',
+                            help  => 'decryptvalue.html',
+                            form  => 'simpleInputContainer',
+                            nodes =>
+                              [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                         {
-                            title => 'passwordResetByMailManagement',
-                            help  => 'resetpassword.html',
-                            nodes => [ {
-                                    title => 'mailContent',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'mailSubject',
-                                        'mailBody',
-                                        'mailConfirmSubject',
-                                        'mailConfirmBody'
-                                    ]
-                                },
-                                {
-                                    title => 'mailOther',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'mailUrl',
-                                        'mailTimeout',
-                                        'passwordResetAllowedRetries',
-                                        'portalDisplayGeneratePassword',
-                                        'randomPasswordRegexp'
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            title => 'certificateResetByMailManagement',
-                            help  => 'resetcertificate.html',
-                            nodes => [ {
-                                    title => 'mailContent',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'certificateResetByMailStep1Subject',
-                                        'certificateResetByMailStep1Body',
-                                        'certificateResetByMailStep2Subject',
-                                        'certificateResetByMailStep2Body'
-                                    ]
-                                },
-                                {
-                                    title => 'mailOther',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'certificateResetByMailURL',
-                                        'certificateResetByMailCeaAttribute',
-'certificateResetByMailCertificateAttribute',
-                                        'certificateResetByMailValidityDelay'
-                                    ]
-                                }
-                            ]
-                        },
-                        'adaptativeAuthenticationLevelRules',
-                        'autoSigninRules',
-                        {
-                            title => 'stayConnect',
-                            help  => 'trustedbrowser.html',
+                            title => 'globalLogout',
+                            help  => 'globallogout.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'trustedBrowserRule',
-                                'stayConnected',
-                                'stayConnectedBypassFG',
-                                'stayConnectedTimeout',
-                                'stayConnectedCookieName',
-                                'stayConnectedSingleSession',
-                                'trustedBrowserUseTotp',
+                                'globalLogoutRule',
+                                'globalLogoutTimer',
+                                'globalLogoutCustomParam'
                             ],
                         },
                         {
-                            title => 'rememberAuthChoice',
-                            help  => 'rememberauthchoice.html',
+                            title => 'impersonation',
+                            help  => 'impersonation.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'rememberAuthChoiceRule',
-                                'rememberCookieName',
-                                'rememberCookieTimeout',
-                                'rememberDefaultChecked',
-                                'rememberTimer',
-                                'rememberAuthChoiceForgetAtLogout',
+                                'impersonationRule',
+                                'impersonationIdRule',
+                                'impersonationUnrestrictedUsersRule',
+                                'impersonationHiddenAttributes',
+                                'impersonationSkipEmptyValues',
+                                'impersonationMergeSSOgroups'
                             ]
+                        },
+                        {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
                         },
                         {
                             title => 'locationDetectPlugin',
@@ -824,65 +770,119 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'checkUsers',
-                            help  => 'checkuser.html',
+                            title => 'portalServers',
+                            help  => 'portalservers.html',
                             nodes => [
-                                'checkUser',
-                                'checkUserIdRule',
-                                'checkUserUnrestrictedUsersRule',
-                                'checkUserSearchAttributes',
-                                'checkUserHiddenAttributes',
-                                'checkUserHiddenHeaders',
+                                'exportedAttr',
                                 {
-                                    title => 'checkUserDisplay',
-                                    help  => 'checkuser.html#configuration',
+                                    title => 'restServices',
+                                    help  => 'portalservers.html#REST',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'checkUserDisplayComputedSession',
-                                        'checkUserDisplayPersistentInfo',
-                                        'checkUserDisplayNormalizedHeaders',
-                                        'checkUserDisplayEmptyHeaders',
-                                        'checkUserDisplayEmptyValues',
-                                        'checkUserDisplayHiddenAttributes',
-                                        'checkUserDisplayHistory'
+                                        'restSessionServer',
+                                        'restConfigServer',
+                                        'restAuthServer',
+                                        'restPasswordServer',
+                                        'restExportSecretKeys',
+                                        'restClockTolerance',
+                                    ]
+                                },
+                                {
+                                    title => 'soapServices',
+                                    help  =>
+                                      'portalservers.html#SOAP_(deprecated)',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'soapSessionServer',
+                                        'soapConfigServer',
+                                        'wsdlServer',
                                     ]
                                 },
                             ]
                         },
                         {
-                            title => 'devOpsCheck',
-                            help  => 'checkdevops.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'checkDevOps',
-                                'checkDevOpsDownload',
-                                'checkDevOpsDisplayNormalizedHeaders',
-                                'checkDevOpsCheckSessionAttributes'
-                            ],
-                        },
-                        {
-                            title => 'impersonation',
-                            help  => 'impersonation.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'impersonationRule',
-                                'impersonationIdRule',
-                                'impersonationUnrestrictedUsersRule',
-                                'impersonationHiddenAttributes',
-                                'impersonationSkipEmptyValues',
-                                'impersonationMergeSSOgroups'
+                            title => 'register',
+                            help  => 'register.html',
+                            nodes => [ {
+                                    title => 'mailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'registerConfirmSubject',
+                                        'registerConfirmBody',
+                                        'registerDoneSubject',
+                                        'registerDoneBody'
+                                    ]
+                                },
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes =>
+                                      [ 'registerUrl', 'registerTimeout' ]
+                                }
                             ]
                         },
                         {
-                            title => 'contextSwitching',
-                            help  => 'contextswitching.html',
+                            title => 'rememberAuthChoice',
+                            help  => 'rememberauthchoice.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'contextSwitchingRule',
-                                'contextSwitchingIdRule',
-                                'contextSwitchingUnrestrictedUsersRule',
-                                'contextSwitchingAllowed2fModifications',
-                                'contextSwitchingStopWithLogout',
+                                'rememberAuthChoiceRule',
+                                'rememberCookieName',
+                                'rememberCookieTimeout',
+                                'rememberDefaultChecked',
+                                'rememberTimer',
+                                'rememberAuthChoiceForgetAtLogout',
+                            ]
+                        },
+                        {
+                            title => 'certificateResetByMailManagement',
+                            help  => 'resetcertificate.html',
+                            nodes => [ {
+                                    title => 'mailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailStep1Subject',
+                                        'certificateResetByMailStep1Body',
+                                        'certificateResetByMailStep2Subject',
+                                        'certificateResetByMailStep2Body'
+                                    ]
+                                },
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailURL',
+                                        'certificateResetByMailCeaAttribute',
+'certificateResetByMailCertificateAttribute',
+                                        'certificateResetByMailValidityDelay'
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            title => 'passwordResetByMailManagement',
+                            help  => 'resetpassword.html',
+                            nodes => [ {
+                                    title => 'mailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'mailSubject',
+                                        'mailBody',
+                                        'mailConfirmSubject',
+                                        'mailConfirmBody'
+                                    ]
+                                },
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'mailUrl',
+                                        'mailTimeout',
+                                        'passwordResetAllowedRetries',
+                                        'portalDisplayGeneratePassword',
+                                        'randomPasswordRegexp'
+                                    ]
+                                }
                             ]
                         },
                         {
@@ -899,34 +899,35 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'globalLogout',
-                            help  => 'globallogout.html',
+                            title => 'contextSwitching',
+                            help  => 'contextswitching.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'globalLogoutRule',
-                                'globalLogoutTimer',
-                                'globalLogoutCustomParam'
+                                'contextSwitchingRule',
+                                'contextSwitchingIdRule',
+                                'contextSwitchingUnrestrictedUsersRule',
+                                'contextSwitchingAllowed2fModifications',
+                                'contextSwitchingStopWithLogout',
+                            ]
+                        },
+                        {
+                            title => 'stayConnect',
+                            help  => 'trustedbrowser.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'trustedBrowserRule',
+                                'stayConnected',
+                                'stayConnectedBypassFG',
+                                'stayConnectedTimeout',
+                                'stayConnectedCookieName',
+                                'stayConnectedSingleSession',
+                                'trustedBrowserUseTotp',
                             ],
                         },
                         {
-                            title => 'decryptValue',
-                            help  => 'decryptvalue.html',
+                            title => 'webCron',
                             form  => 'simpleInputContainer',
-                            nodes =>
-                              [ 'decryptValueRule', 'decryptValueFunctions', ]
-                        },
-                        {
-                            title => 'initializePasswordResetLabel',
-                            help  => 'initializePasswordReset.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'initializePasswordReset',
-                                'initializePasswordResetSecret',
-                            ],
-                        },
-                        {
-                            title => 'adminLogoutServer',
-                            nodes => ['adminLogoutServerSecret']
+                            nodes => [ 'webCronSecret', ],
                         },
                         {
                             title => 'customPluginsNode',
@@ -937,7 +938,6 @@ sub tree {
                                 'disabledPlugins'
                             ]
                         },
-                        'oidcOfflineTokens',
                     ]
                 },
                 {

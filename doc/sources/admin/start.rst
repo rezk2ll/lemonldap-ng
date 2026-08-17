@@ -266,37 +266,40 @@ Plugins
 Name                                                                 Description
 ==================================================================== ============================================================================================================================================
 :doc:`Adaptative authentication<adaptativeauthenticationlevel>`      Rules to modulate authentication level
+:doc:`Admin logout server<adminlogout>`                              Add API to allow Sessions-explorer to call portal when using "Global logout" *(to call back-channel-logout)*
 :doc:`Auto Signin<autosignin>`                                       Sign-in automatically
 :doc:`Brute Force protection<bruteforceprotection>`                  User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
-:doc:`Check DevOps<checkdevops>`                                     Check DevOps handler file
+:doc:`Check DevOps handler file<checkdevops>`                        Check DevOps handler file
 :doc:`Check HIBP<checkhibp>`                                         Check Have I Been Pwned
 :doc:`Check entropy<checkentropy>`                                   Check entropy of password
-:doc:`InitializePasswordReset<initializePasswordReset>`              Initialize Password Reset by mail
 :doc:`Check state<checkstate>`                                       Check state plugin (test page)
-:doc:`Check user<checkuser>`                                         Check access rights, transmitted headers and session attibutes for a specific user and URL
-:doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
-:doc:`Context switching<contextswitching>`                           Switch context other users
+:doc:`Check user SSO profile<checkuser>`                             Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`CrowdSec<crowdsec>`                                            CrowdSec agent and bouncer
-:doc:`Custom<plugincustom>`                                          Write a custom plugin
+:doc:`Custom plugins<plugincustom>`                                  Write custom plugins
 :doc:`Decrypt value<decryptvalue>`                                   Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
-:doc:`Find user<finduser>`                                           Search for user account
 :doc:`Force authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global logout<globallogout>`                                   Suggest to close all opened sessions at logout
 :doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`                                  Allow users to use another identity
-:doc:`NewLocationWarning<newlocationwarning>`                        Send an email when user sign in from a new location
+:doc:`Initialize passwordReset API<initializePasswordReset>`         Initialize Password Reset API
+:doc:`Location detection<newlocationwarning>`                        Send an email when user sign in from a new location
+:doc:`Login history<>`                                               Send an email when user sign in from a new location
 :doc:`Notifications system<notifications>`                           Display a message during log in process
+:doc:`Portal servers<portalservers>`                                 Enable Portal REST or SOAP server
 :doc:`Public pages<public_pages>`                                    Enable public pages system
+:doc:`Publish portal status<statuscollect>`                          Enable public pages system
+:doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`Refresh session API<refreshsessionapi>`                        Plugin that provides an API to refresh a user session
+:doc:`Register new account<register>`                                Plugin that allows a user to create an account
+:doc:`Remember authentification choice<rememberauthchoice>`          Remember user last authentication choice
 :doc:`Reset certificate by mail<resetcertificate>`                   Allow users to reset their certificate
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Remember auth choice<rememberauthchoice>`                      Remember user last authentication choice
-:doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
+:doc:`Search for user account<finduser>`                             Search for user account
+:doc:`Switch context<contextswitching>`                              Switch context other users
 :doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
 :doc:`Web Cron<webcron>`                                             Add API to trigger scheduled tasks
-:doc:`Admin logout server<adminlogout>`                              Add API to permit Session-Explorer to call portal when using "Global logout" *(to call back-channel-logout)*
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
