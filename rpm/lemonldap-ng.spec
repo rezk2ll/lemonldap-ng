@@ -342,8 +342,9 @@ Recommends:     perl(Glib)
 Recommends:     perl(Lasso)
 # Facebook
 Recommends:     perl(Net::Facebook::Oauth2)
-# OpenID
+# Twitter
 Recommends:     perl(Net::OAuth)
+# OpenID
 Recommends:     perl(Net::OpenID::Consumer)
 # LDAP mtls
 Recommends:     perl(Authen::SASL)
