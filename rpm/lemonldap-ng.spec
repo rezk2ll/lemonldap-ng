@@ -758,6 +758,9 @@ fi
 * Wed Jul 22 2026 Clement Oudot <clement.oudot@worteks.com> - 2.23.1-1
 - Update to 2.23.1
 
+* Thu Jul 16 2026 Fedora Release Engineering <releng@fedoraproject.org> - 2.23.0-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_45_Mass_Rebuild
+
 * Fri May 29 2026 Clement Oudot <clement.oudot@worteks.com> - 2.23.0-1
 - Update to 2.23.0
 
@@ -766,6 +769,9 @@ fi
 
 * Fri Jan 30 2026 Clement Oudot <clement.oudot@worteks.com> - 2.22.2-1
 - Update to 2.22.2
+
+* Fri Jan 16 2026 Fedora Release Engineering <releng@fedoraproject.org> - 2.22.1-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
 
 * Tue Nov 25 2025 Clement Oudot <clement.oudot@worteks.com> - 2.22.1-1
 - Update to 2.22.1
