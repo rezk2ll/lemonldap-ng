@@ -165,7 +165,7 @@ consistent when writing access rules ::
 SAML URL parameters
 ~~~~~~~~~~~~~~~~~~~
 
-To automatically select idp, ``idp`` parameter is replaced by ``idpUrl`` parameter to specify
+To automatically select an IDP, ``idp`` parameter is replaced by ``idpUrl`` parameter to specify
 SAML IDP by its encoded url: https://auth.example.com/?idpUrl=https%3A%2F%2Fidp.example.com%2Fsaml.
 
 ``idpName`` parameter is replaced by ``idp`` parameter to specify
