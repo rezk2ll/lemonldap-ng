@@ -35,7 +35,7 @@ SKIP: {
                 '/',
                 accept => 'text/html',
                 query  => buildForm( {
-                        idp =>
+                        idpUrl =>
                           'https://auth.centrale-marseille.fr/idp/shibboleth'
                     }
                 )

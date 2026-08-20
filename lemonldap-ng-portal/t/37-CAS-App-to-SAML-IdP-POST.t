@@ -93,7 +93,7 @@ sub test {
         ok(
             $res = $proxy->_get(
                 "/",
-                query => "idp="
+                query => "idpUrl="
                   . uri_escape("http://auth.idp.com/saml/metadata"),
                 accept => 'text/html',
                 cookie => $proxyPdata,

@@ -241,16 +241,15 @@ When using multiple SAML IDPs, LemonLDAP will display an additional choice
 screen to let the user decide which IDP they want to use.
 
 In addition to the *resolution rule* described above, you can also use the
-``idp`` or ``idpName`` URL parameters to automatically select an IDP for the
-user.
+``idp`` or ``idpUrl`` URL parameters to automatically select an IDP for the user.
 
-Use the ``idp`` parameter to specify the SAML Entity ID of the provider.
+Use the ``idpUrl`` parameter to specify the SAML Entity ID of the provider.
 Do not forget to url-encode the value:
-``https://auth.example.com/?idp=https%3A%2F%2Fidp.example.com%2Fsaml``.
+``https://auth.example.com/?idpUrl=https%3A%2F%2Fidp.example.com%2Fsaml``.
 
-Alternatively, use the ``idpName`` parameter to specify the name of the
+Alternatively, use the ``idp`` parameter to specify the name of the
 provider in the LemonLDAP::NG manager:
-``https://auth.example.com/?idpName=idp-example``
+``https://auth.example.com/?idp=idp-example``
 
 .. |image0| image:: /documentation/manager-saml-metadata.png
    :class: align-center

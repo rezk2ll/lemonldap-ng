@@ -113,7 +113,7 @@ sub test {
         ok(
             $res = $sp->_get(
                 "/",
-                query => "idp="
+                query => "idpUrl="
                   . uri_escape("http://auth.idp.com/saml/metadata"),
                 accept => 'text/html',
                 cookie => $spPdata,
