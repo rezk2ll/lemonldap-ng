@@ -682,8 +682,9 @@ sub _displayRegister {
         my $type   = $reg_mod_info->{t};
         my $prefix = $reg_mod_info->{p};
         my $module = $reg_mod_info->{m};
+        $self->logger->debug("Processing 2fModule with prefix $prefix");
         foreach (@$_2fDevices) {
-
+            $self->logger->debug("Found $_->{type} 2f device");
             if ( $_->{type} eq $type ) {
 
                 # Set k_v template variables for non_private values
@@ -697,6 +698,8 @@ sub _displayRegister {
                 $_->{prefix}     = $prefix;
                 $_->{label}      = $module->label;
                 $_->{delAllowed} = $self->isDelAllowed( $req, $reg_mod_info );
+
+                $self->logger->debug(" -> Device can be deleted") if $_->{delAllowed};
 
                 # Display upgrade button
                 $displayUpgBtn ||= $module->authnLevel
@@ -1178,7 +1181,7 @@ sub canUpdateSfa {
 "$module in progress! $user is not allowed to $action ${prefix}2f device"
             );
             $self->logger->debug(
-"$user is NOT allowed to $action ${prefix}2f device because $module is in progress"
+"$user is not allowed to $action ${prefix}2f device because $module is in progress"
             );
         }
         else {
