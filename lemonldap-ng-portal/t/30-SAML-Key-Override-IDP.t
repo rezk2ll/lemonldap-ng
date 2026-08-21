@@ -24,7 +24,7 @@ sub runTest {
     ok(
         $res = $client->_get(
             '/',
-            query  => { idpName => $sp },
+            query  => { idp => $sp },
             accept => 'text/html',
         ),
         'Initiate authentication'

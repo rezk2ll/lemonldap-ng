@@ -1491,14 +1491,16 @@ sub getIDP {
     my $idp;
     my $idpName;
 
-    # Case 1: Recover IDP from idp URL Parameter
-    unless ( $idp = $req->param("idp") ) {
-
-        # Case 2: Recover IDP from idpName URL Parameter
-        if ( $idpName = $req->param("idpName") ) {
-            $idp = $self->getEntityID($idpName);
+    # Case 1: Recover IDP from idpUrl URL Parameter
+    if ( $idp = $req->param("idpUrl") ) {
+        $self->logger->debug("IDP $idp selected from idpUrl URL Parameter");
+    }
+    else {
+        # Case 2: Recover IDP from idp URL Parameter
+        if ( my $_idp = $req->param("idp") ) {
+            $idp = $self->getEntityID($_idp);
             $self->logger->debug(
-                "IDP $idp selected from idpName URL Parameter ($idpName)")
+                "IDP $idp selected from idpName URL Parameter ($_idp)")
               if $idp;
         }
 
@@ -1516,10 +1518,7 @@ sub getIDP {
                 }
             }
         }
-        $self->logger->debug('No IDP selected') unless ($idp);
-    }
-    else {
-        $self->logger->debug("IDP $idp selected from idp URL Parameter");
+        $self->logger->debug('No IDP selected') unless $idp;
     }
 
     # Lazy load IDP

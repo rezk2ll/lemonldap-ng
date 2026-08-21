@@ -155,10 +155,18 @@ Second factor routes
 ~~~~~~~~~~~~~~~~~~~~
 
 All second factor routes are now relative to ``2ndfa`` to be more
-consistent when writting access rules ::
+consistent when writing access rules ::
 
     /sfa/persistent/
     becomes
     /2ndfa/persistent/
     like 2ndfa.html
 
+SAML URL parameters
+~~~~~~~~~~~~~~~~~~~
+
+To automatically select an IDP, ``idp`` parameter is replaced by ``idpUrl`` parameter to specify
+SAML IDP by its encoded url: https://auth.example.com/?idpUrl=https%3A%2F%2Fidp.example.com%2Fsaml.
+
+``idpName`` parameter is replaced by ``idp`` parameter to specify
+the IDP name in LemonLDAP::NG Manager: https://auth.example.com/?idp=idp-example
