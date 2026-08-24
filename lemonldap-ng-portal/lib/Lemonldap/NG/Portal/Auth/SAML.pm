@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Auth::SAML;
 
 use strict;
-use MIME::Base64 qw/encode_base64/;
 use Mouse;
+use MIME::Base64 qw/encode_base64/;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
@@ -1491,9 +1491,9 @@ sub getIDP {
     my $idp;
     my $idpName;
 
-    # Case 1: Recover IDP from idpUrl URL Parameter
-    if ( $idp = $req->param("idpUrl") ) {
-        $self->logger->debug("IDP $idp selected from idpUrl URL Parameter");
+    # Case 1: Recover IDP from idpEntityId URL Parameter
+    if ( $idp = $req->param("idpEntityId") ) {
+        $self->logger->debug("IDP $idp selected from idpEntityId URL Parameter");
     }
     else {
         # Case 2: Recover IDP from idp URL Parameter

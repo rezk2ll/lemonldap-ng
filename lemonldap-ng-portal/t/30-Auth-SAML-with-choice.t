@@ -80,7 +80,7 @@ m%<img src="/static/common/icons/sfa_manager.png" class="me-2" alt="IDP2" title=
     my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Choose SAML issuer
-    $query .= '&idpUrl=http%3A%2F%2Fauth.idp.com%2Fsaml%2Fmetadata';
+    $query .= '&idpEntityId=http%3A%2F%2Fauth.idp.com%2Fsaml%2Fmetadata';
     ok(
         $res = $sp->_post(
             '/'    => IO::String->new($query),

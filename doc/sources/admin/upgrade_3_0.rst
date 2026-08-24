@@ -165,8 +165,8 @@ consistent when writing access rules ::
 SAML URL parameters
 ~~~~~~~~~~~~~~~~~~~
 
-To automatically select an IDP, ``idp`` parameter is replaced by ``idpUrl`` parameter to specify
-SAML IDP by its encoded url: https://auth.example.com/?idpUrl=https%3A%2F%2Fidp.example.com%2Fsaml.
+To automatically select an IDP, ``idp`` parameter is replaced by ``idpEntityId`` parameter to specify
+SAML IDP by its encoded url: https://auth.example.com/?idpEntityId=https%3A%2F%2Fidp.example.com%2Fsaml.
 
 ``idpName`` parameter is replaced by ``idp`` parameter to specify
 the IDP name in LemonLDAP::NG Manager: https://auth.example.com/?idp=idp-example
