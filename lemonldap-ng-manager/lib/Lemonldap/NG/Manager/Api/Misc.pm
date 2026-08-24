@@ -7,6 +7,7 @@ package Lemonldap::NG::Manager::Api;
 
 use strict;
 use Mouse;
+
 extends 'Lemonldap::NG::Manager::Api::Common';
 
 # Health-check endpoint

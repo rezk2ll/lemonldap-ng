@@ -1,10 +1,10 @@
 package Lemonldap::NG::Manager::Cli;
 
 use strict;
-use Crypt::URandom;
 use Mouse;
-use Data::Dumper;
 use JSON;
+use Crypt::URandom;
+use Data::Dumper;
 use Hash::Merge::Simple;
 use Getopt::Long qw(GetOptionsFromArray);
 use Lemonldap::NG::Common::Conf::ReConstants;

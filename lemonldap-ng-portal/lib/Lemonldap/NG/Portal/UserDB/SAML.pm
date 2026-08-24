@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::UserDB::SAML;
 
 use strict;
-use Encode;
 use Mouse;
+use Encode;
 use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';

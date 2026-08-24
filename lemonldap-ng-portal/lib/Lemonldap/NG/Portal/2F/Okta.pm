@@ -1,9 +1,10 @@
 package Lemonldap::NG::Portal::2F::Okta;
 
-use HTTP::Request;
-use JSON;
+use strict;
 use Mouse;
+use JSON;
 use URI;
+use HTTP::Request;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants;
 

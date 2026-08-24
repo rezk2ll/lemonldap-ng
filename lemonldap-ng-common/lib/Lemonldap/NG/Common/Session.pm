@@ -7,12 +7,12 @@
 package Lemonldap::NG::Common::Session;
 
 use strict;
+use Mouse;
 use Exporter 'import';
 use Digest::SHA;
 use JSON;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
-use Mouse;
 
 our $VERSION = '2.20.0';
 

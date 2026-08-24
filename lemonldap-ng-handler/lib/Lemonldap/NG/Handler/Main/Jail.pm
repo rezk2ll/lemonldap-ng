@@ -1,9 +1,9 @@
 package Lemonldap::NG::Handler::Main::Jail;
 
 use strict;
+use Mouse;
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Mouse;
 
 has customFunctions      => ( is => 'rw', isa => 'Maybe[Str]' );
 has useSafeJail          => ( is => 'rw', isa => 'Maybe[Int]' );

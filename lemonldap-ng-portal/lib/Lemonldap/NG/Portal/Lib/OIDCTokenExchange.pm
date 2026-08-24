@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Lib::OIDCTokenExchange;
 
 use strict;
-use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';
 

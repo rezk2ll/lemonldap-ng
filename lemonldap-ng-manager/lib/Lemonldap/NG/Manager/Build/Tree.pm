@@ -17,6 +17,8 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
+use strict;
+
 our $VERSION = '2.23.3';
 
 sub tree {

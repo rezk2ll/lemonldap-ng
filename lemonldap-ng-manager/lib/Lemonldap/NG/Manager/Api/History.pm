@@ -4,10 +4,11 @@ package Lemonldap::NG::Manager::Api::History;
 our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Manager::Api;
-use Lemonldap::NG::Common::Session;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Session;
+
 extends 'Lemonldap::NG::Manager::Api::Common';
 
 sub getHistory {

@@ -1,13 +1,13 @@
 package Lemonldap::NG::Common::MessageBroker::Web;
 
 use strict;
+use JSON;
 use IO::Socket::INET;
 use IO::Socket::SSL;
 use IO::Select;
+use Protocol::WebSocket::Client;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
-use JSON;
-use Protocol::WebSocket::Client;
 
 our $VERSION = '2.22.0';
 

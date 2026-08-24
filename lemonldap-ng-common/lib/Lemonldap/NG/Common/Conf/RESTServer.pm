@@ -1,8 +1,8 @@
 package Lemonldap::NG::Common::Conf::RESTServer;
 
 use strict;
-use JSON 'from_json';
 use Mouse;
+use JSON 'from_json';
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 

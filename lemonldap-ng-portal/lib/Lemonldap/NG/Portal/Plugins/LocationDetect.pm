@@ -1,5 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::LocationDetect;
 
+use strict;
 use Mouse;
 use List::MoreUtils qw/uniq/;
 use Scalar::Util    qw/blessed/;

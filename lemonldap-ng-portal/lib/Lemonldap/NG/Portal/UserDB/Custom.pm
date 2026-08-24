@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::UserDB::Custom;
-use Lemonldap::NG::Portal::Lib::CustomModule;
 
 use strict;
+use Lemonldap::NG::Portal::Lib::CustomModule;
 
 our @ISA = qw(Lemonldap::NG::Portal::Lib::CustomModule);
 use constant {

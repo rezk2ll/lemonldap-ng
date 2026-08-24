@@ -1,4 +1,6 @@
 package Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration;
+
+use strict;
 use Mouse::Role;
 
 requires qw(load_config);

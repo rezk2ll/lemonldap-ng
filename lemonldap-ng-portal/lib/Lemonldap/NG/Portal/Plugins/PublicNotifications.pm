@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Plugins::PublicNotifications;
 
 use strict;
-use JSON;
 use Mouse;
+use JSON;
 use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '3.0';

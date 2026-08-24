@@ -1,9 +1,9 @@
 package Lemonldap::NG::Handler::Lib::DevOps;
 
 use strict;
+use JSON                        qw(from_json);
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Util qw(isHiddenAttr);
-use JSON                        qw(from_json);
 
 our $VERSION = '2.23.0';
 our $_ua;

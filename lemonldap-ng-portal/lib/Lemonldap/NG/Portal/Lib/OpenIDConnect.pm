@@ -5,8 +5,8 @@
 # Common OpenID Connect functions
 package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 
-use Mouse;
 use strict;
+use Mouse;
 use Crypt::URandom;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;

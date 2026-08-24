@@ -3,9 +3,9 @@ package Lemonldap::NG::Portal::Captcha::CaptchEtat;
 use strict;
 use Mouse;
 use JSON;
-use Lemonldap::NG::Common::UserAgent;
-use HTTP::Request::Common;
 use URI;
+use HTTP::Request::Common;
+use Lemonldap::NG::Common::UserAgent;
 
 # Add constants used by this module
 

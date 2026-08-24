@@ -5,6 +5,7 @@ package Lemonldap::NG::Portal::Main::Display;
 our $VERSION = '2.23.0';
 
 package Lemonldap::NG::Portal::Main;
+
 use strict;
 use Mouse;
 use JSON;

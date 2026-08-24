@@ -4,8 +4,8 @@ use strict;
 use JSON;
 use Mouse;
 use Encode;
-use Lemonldap::NG::Common::PSGI;
 use IO::String;
+use Lemonldap::NG::Common::PSGI;
 
 our $VERSION = '2.0.10';
 

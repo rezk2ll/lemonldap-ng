@@ -1,5 +1,6 @@
 package Lemonldap::NG::Common::AuditLogger::UserLoggerCompat;
 
+use strict;
 use Scalar::Util qw(weaken);
 
 our $VERSION = '2.21.0';

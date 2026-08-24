@@ -1,8 +1,8 @@
 package Lemonldap::NG::Common::EmailTransport;
 
 use strict;
-use Email::Sender::Transport::SMTP qw();
 use MIME::Entity;
+use Email::Sender::Transport::SMTP qw();
 use Email::Sender::Simple qw(sendmail);
 use Email::Date::Format   qw(email_date);
 

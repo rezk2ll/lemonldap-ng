@@ -2,8 +2,8 @@
 package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
-use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

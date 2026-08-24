@@ -6,9 +6,10 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.23.3';
 use strict;
 use Regexp::Common qw/URI/;
+
+our $VERSION = '2.23.3';
 
 sub perlExpr {
     my ( $val, $conf ) = @_;

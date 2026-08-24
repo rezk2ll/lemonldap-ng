@@ -8,11 +8,11 @@ package Lemonldap::NG::Common::Safelib;
 use strict;
 use Encode;
 use MIME::Base64;
-use Lemonldap::NG::Common::IPv6;
 use JSON::XS;
 use Net::CIDR;
 use Digest::SHA;
 use Date::Parse;
+use Lemonldap::NG::Common::IPv6;
 
 our $VERSION = '2.23.0';
 

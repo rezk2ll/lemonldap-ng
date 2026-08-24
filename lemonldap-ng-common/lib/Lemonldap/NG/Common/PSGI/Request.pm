@@ -3,9 +3,9 @@ package Lemonldap::NG::Common::PSGI::Request;
 use strict;
 use Mouse;
 use JSON;
+use URI::Escape;
 use Plack::Request;
 use Lemonldap::NG::Common::Request::WithEncoding;
-use URI::Escape;
 
 our $VERSION = '2.19.0';
 

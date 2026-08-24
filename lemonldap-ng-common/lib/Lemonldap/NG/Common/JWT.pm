@@ -5,6 +5,7 @@ our @EXPORT_OK =
   qw(getAccessTokenSessionId getJWTHeader getJWTPayload getJWTSignature getJWTSignedData)
   ;    # symbols to export on request
 
+use strict;
 use JSON;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 

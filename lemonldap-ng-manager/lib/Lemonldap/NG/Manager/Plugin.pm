@@ -2,9 +2,9 @@ package Lemonldap::NG::Manager::Plugin;
 
 use strict;
 use Mouse;
+use URI::URL;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Conf::Constants;
-use URI::URL;
 
 our $VERSION = '2.18.0';
 

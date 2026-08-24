@@ -6,8 +6,6 @@ our $VERSION = '2.23.0';
 package Lemonldap::NG::Handler::Main;
 
 use strict;
-
-#use AutoLoader 'AUTOLOAD';
 use MIME::Base64;
 use URI;
 use URI::Escape;

@@ -1,4 +1,5 @@
 package Lemonldap::NG::Common::Util::Crypto;
+
 use strict;
 use warnings;
 

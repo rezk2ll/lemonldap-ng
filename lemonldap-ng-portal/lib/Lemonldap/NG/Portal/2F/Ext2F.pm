@@ -2,8 +2,8 @@ package Lemonldap::NG::Portal::2F::Ext2F;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
 use IPC::Run;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.16';
 

@@ -5,7 +5,6 @@ package Lemonldap::NG::Handler::ApacheMP2;
 
 use strict;
 use Lemonldap::NG::Handler::ApacheMP2::Request;
-
 use Lemonldap::NG::Handler::ApacheMP2::Main;
 
 our $VERSION = '2.19.0';

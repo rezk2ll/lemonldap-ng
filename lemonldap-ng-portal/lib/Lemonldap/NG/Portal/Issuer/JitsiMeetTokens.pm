@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Issuer::JitsiMeetTokens;
 
 use strict;
-use URI;
 use Mouse;
+use URI;
 use JSON;
 use MIME::Base64 qw/decode_base64url encode_base64url/;
 use Crypt::JWT   qw(encode_jwt);

@@ -1,5 +1,7 @@
 package Lemonldap::NG::Portal::UserDB::Combination;
 
+use strict;
+
 our $VERSION = '2.23.0';
 
 sub new {

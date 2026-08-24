@@ -5,9 +5,9 @@ package Lemonldap::NG::Common::TOTP;
 
 use strict;
 use Mouse;
-use Convert::Base32 qw(decode_base32 encode_base32);
 use Crypt::URandom;
 use Digest::SHA;
+use Convert::Base32 qw(decode_base32 encode_base32);
 use Lemonldap::NG::Common::Crypto;
 
 my $hash_func = {

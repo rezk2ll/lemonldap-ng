@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Lib::RESTProxy;
 
 use strict;
-use JSON;
 use Mouse;
+use JSON;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants ':all';
 use Lemonldap::NG::Common::FormEncode;

@@ -2,12 +2,14 @@
 
 package Lemonldap::NG::Manager::Build::OpenApi;
 
-our $VERSION = '2.23.0';
 
+use strict;
+use JSON;
+use Lemonldap::NG::Common;
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Api::Common;
-use Lemonldap::NG::Common;
-use JSON;
+
+our $VERSION = '2.23.0';
 
 my %TYPEMAP = (
     "bool"      => sub { { type => "boolean" } },

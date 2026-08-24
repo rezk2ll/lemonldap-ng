@@ -1,9 +1,9 @@
 package Lemonldap::NG::Common::OpenIDConnect::Metadata;
 
 use strict;
-use Lemonldap::NG::Common::OpenIDConnect::Constants;
 use JSON;
 use Mouse::Role;
+use Lemonldap::NG::Common::OpenIDConnect::Constants;
 
 our $VERSION = '2.22.0';
 

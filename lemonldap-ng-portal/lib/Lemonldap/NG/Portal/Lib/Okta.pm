@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Lib::Okta;
 
 use strict;
-use HTTP::Request;
 use Mouse::Role;
+use HTTP::Request;
 use URI;
 
 has ua => (

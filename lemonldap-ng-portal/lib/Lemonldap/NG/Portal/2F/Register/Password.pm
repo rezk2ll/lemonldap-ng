@@ -2,10 +2,10 @@
 package Lemonldap::NG::Portal::2F::Register::Password;
 
 use strict;
-use Lemonldap::NG::Portal::Main::Constants;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 

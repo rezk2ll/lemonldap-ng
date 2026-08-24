@@ -1,5 +1,6 @@
 package Lemonldap::NG::Common::Logger::Apache2;
 
+use strict;
 use Apache2::ServerRec;
 use Encode;
 

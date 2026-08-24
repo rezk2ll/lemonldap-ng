@@ -13,8 +13,6 @@ use Time::HiRes;
 use POSIX qw(strftime);
 use IO::Socket::Timeout;
 
-our $VERSION = '3.0.0';
-
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 our $VERSION = '3.0.0';

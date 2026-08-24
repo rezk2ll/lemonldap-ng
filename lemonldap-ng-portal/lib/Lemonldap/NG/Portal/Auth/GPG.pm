@@ -1,9 +1,9 @@
 package Lemonldap::NG::Portal::Auth::GPG;
 
 use strict;
+use Mouse;
 use File::Temp 'tempdir';
 use IPC::Run;
-use Mouse;
 use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.12';

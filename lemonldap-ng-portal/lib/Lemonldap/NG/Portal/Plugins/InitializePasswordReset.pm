@@ -1,5 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::InitializePasswordReset;
 
+use strict;
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants;

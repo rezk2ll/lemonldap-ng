@@ -1,5 +1,7 @@
 package Lemonldap::NG::Portal::Lib::CustomModule;
 
+use strict;
+
 # Fake 'new' method here
 sub new {
     my ( $class, $self ) = @_;

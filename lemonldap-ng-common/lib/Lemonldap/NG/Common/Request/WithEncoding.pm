@@ -1,7 +1,6 @@
 # Based on Plack::Request::WithEncoding
 
 package Lemonldap::NG::Common::Request::WithEncoding;
-use 5.008_001;
 use strict;
 use warnings;
 use parent qw/Plack::Request/;

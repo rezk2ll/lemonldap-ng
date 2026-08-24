@@ -1,8 +1,8 @@
 package Lemonldap::NG::Common::Cli;
 
 use strict;
-use JSON;
 use Mouse;
+use JSON;
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::EmailTransport;
 

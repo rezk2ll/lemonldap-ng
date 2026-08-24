@@ -3,9 +3,9 @@ package Lemonldap::NG::Manager::Viewer;
 use strict;
 use utf8;
 use Mouse;
+use URI::URL;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::UserAgent;
-use URI::URL;
 
 extends 'Lemonldap::NG::Manager::Conf';
 

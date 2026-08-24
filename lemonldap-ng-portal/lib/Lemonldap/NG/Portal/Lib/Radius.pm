@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Lib::Radius;
-use Authen::Radius;
 
 use strict;
 use Mouse;
+use Authen::Radius;
 
 our $VERSION = '2.18.0';
 

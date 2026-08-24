@@ -2,11 +2,10 @@ package Lemonldap::NG::Manager::Conf::Tests;
 
 use strict;
 use utf8;
-use strict;
+use URI;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
-use URI;
 
 our $VERSION = '2.23.3';
 

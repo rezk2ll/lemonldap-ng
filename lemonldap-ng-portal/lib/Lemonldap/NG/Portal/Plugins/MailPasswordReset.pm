@@ -2,8 +2,8 @@ package Lemonldap::NG::Portal::Plugins::MailPasswordReset;
 
 use strict;
 use Mouse;
-use POSIX qw(strftime);
 use JSON;
+use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants;
 

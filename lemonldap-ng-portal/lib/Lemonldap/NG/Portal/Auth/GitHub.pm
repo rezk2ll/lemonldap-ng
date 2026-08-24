@@ -1,8 +1,8 @@
 package Lemonldap::NG::Portal::Auth::GitHub;
 
 use strict;
-use JSON;
 use Mouse;
+use JSON;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;

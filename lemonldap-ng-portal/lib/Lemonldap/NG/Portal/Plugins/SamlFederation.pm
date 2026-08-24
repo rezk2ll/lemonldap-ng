@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Plugins::SamlFederation;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
 use Carp qw(croak);
 use XML::LibXML::Reader;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.23.0';
 
