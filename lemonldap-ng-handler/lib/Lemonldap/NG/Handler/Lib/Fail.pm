@@ -1,6 +1,7 @@
 package Lemonldap::NG::Handler::Lib::Fail;
 
-use base Lemonldap::NG::Handler::Main;
+use strict;
+use base 'Lemonldap::NG::Handler::Main';
 
 sub run {
     return $_[0]->SERVER_ERROR;

@@ -1,8 +1,8 @@
 package Lemonldap::NG::Common::Conf::Backends::Overlay;
 
 use strict;
-use Lemonldap::NG::Common::Conf::Constants qw($hashParameters );
 use JSON;
+use Lemonldap::NG::Common::Conf::Constants qw($hashParameters );
 
 our $VERSION = '2.19.0';
 
