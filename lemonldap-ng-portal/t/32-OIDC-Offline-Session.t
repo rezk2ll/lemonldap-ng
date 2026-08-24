@@ -90,7 +90,7 @@ sub runTest {
     my $refresh_token = $json->{refresh_token};
 
     # Make sure refresh token session has no _lastSeen to avoid purge
-    ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
+    ok( !getOidcSession($refresh_token)->{data}->{_lastSeen} );
 
     my $id_token = $json->{id_token};
     ok( $access_token,  "Got access token" );
@@ -130,9 +130,9 @@ sub runTest {
     }
 
     # Make sure refresh token session has no _lastSeen to avoid purge
-    ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
+    ok( !getOidcSession($refresh_token)->{data}->{_lastSeen} );
     {
-        my $session_data = getSamlSession($refresh_token)->{data};
+        my $session_data = getOidcSession($refresh_token)->{data};
         is( $session_data->{_auth},   'Demo', '_auth was preserved' );
         is( $session_data->{_userDB}, 'Demo', '_userDB was preserved' );
         if ( $op->p->conf->{authentication} eq "Choice" ) {
@@ -188,7 +188,7 @@ sub runTest {
     }
 
     # Make sure refresh token session has no _lastSeen to avoid purge
-    ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
+    ok( !getOidcSession($refresh_token)->{data}->{_lastSeen} );
 
     $access_token = $json->{access_token};
     if ($jwt) {
