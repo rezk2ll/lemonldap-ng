@@ -65,7 +65,7 @@ LWP::Protocol::PSGI->register(
 # Read a state token from the global session storage
 sub getStateSession {
     my $id = shift;
-    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
+    $id = id2store($id);
     return Lemonldap::NG::Common::Session->new( {
             storageModule        => 'Apache::Session::File',
             storageModuleOptions => {

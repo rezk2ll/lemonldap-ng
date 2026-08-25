@@ -1,7 +1,6 @@
 use warnings;
 use Test::More;
 use strict;
-use Lemonldap::NG::Common::Session 'id2storage';
 use utf8;
 use IO::String;
 use LWP::UserAgent;
@@ -97,14 +96,7 @@ SKIP: {
           ),
         'Try get_key_from_all_sessions'
     );
-    ok(
-        defined $res->{
-            $ENV{LLNG_HASHED_SESSION_STORE}
-            ? id2storage($spId)
-            : $spId
-        },
-        ' Found session'
-    );
+    ok( defined $res->{ id2store($spId) }, ' Found session' );
     count(3);
 
     # Logout
@@ -138,12 +130,16 @@ done_testing( count() );
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel          => $debug,
-                domain            => 'idp.com',
-                portal            => 'http://auth.idp.com/',
-                authentication    => 'Demo',
-                userDB            => 'Same',
-                soapSessionServer => 1,
+                logLevel       => $debug,
+                domain         => 'idp.com',
+                portal         => 'http://auth.idp.com/',
+                authentication => 'Demo',
+                userDB         => 'Same',
+
+                # The SOAP session server exchanges storage identifiers, not
+                # session ones, so it can't serve a hashed session store
+                hashedSessionStore => 0,
+                soapSessionServer  => 1,
             }
         }
     );
@@ -159,6 +155,9 @@ sub sp {
                 userDB           => 'Same',
                 proxyAuthService => 'http://auth.idp.com/sessions',
                 proxyUseSoap     => 1,
+
+                # See issuer() above
+                hashedSessionStore => 0,
             },
         }
     );

@@ -103,30 +103,22 @@ expectOK($res);
 # Test other REST queries
 
 # Session content
-ok(
-    getSession($spId)->data->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $spId" );
+ok( getSession($spId)->data->{_session_id} eq ( id2store($spId) ), ' Good ID' )
+  or explain( $res, "_session_id => $spId" );
 count(1);
 
 # Session key
 ok(
     $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId )
-          . "/[_session_id,uid,cn]"
+        "/sessions/global/" . ( id2store($spId) ) . "/[_session_id,uid,cn]"
     ),
     'Some session keys'
 );
 expectOK($res);
 ok( $res = eval { JSON::decode_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-ok(
-    $res->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $spId" );
+ok( $res->{_session_id} eq ( id2store($spId) ), ' Good ID' )
+  or explain( $res, "_session_id => $spId" );
 ok( $res->{uid} eq 'french', ' Uid is french' )
   or explain( $res, 'uid => french' );
 ok( $res->{cn} eq 'Frédéric Accents', ' UTF-8 values' );

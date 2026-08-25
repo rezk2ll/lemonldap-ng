@@ -98,22 +98,16 @@ expectOK($res);
 
 # Session content
 $res = getSession($spId)->data;
-ok(
-    $res->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $spId" );
+ok( $res->{_session_id} eq ( id2store($spId) ), ' Good ID' )
+  or explain( $res, "_session_id => $spId" );
 ok( $res->{array} =~ /;/, 'Mulivalued attribute found' )
   or explain( $res, "Multivalued attribute" );
 count(2);
 
 # Session key
 $res = getSession($spId)->data;
-ok(
-    $res->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $spId" );
+ok( $res->{_session_id} eq ( id2store($spId) ), ' Good ID' )
+  or explain( $res, "_session_id => $spId" );
 ok( $res->{uid} eq 'french', ' Uid is french' )
   or explain( $res, 'uid => french' );
 

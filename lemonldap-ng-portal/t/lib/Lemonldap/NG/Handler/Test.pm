@@ -16,14 +16,15 @@ sub init {
 
     my $h = Lemonldap::NG::Handler::Server->new( {} );
     $h->init( {
-            cookieName    => 'lemonldap',
-            securedCookie => 0,
-            https         => 0,
-            logger        => 'Lemonldap::NG::Common::Logger::Std',
-            domain        => 'idp.com',
-            logLevel      => $main::debug,
-            portal        => 'http://auth.idp.com',
-            configStorage => {
+            cookieName         => 'lemonldap',
+            securedCookie      => 0,
+            https              => 0,
+            logger             => 'Lemonldap::NG::Common::Logger::Std',
+            domain             => 'idp.com',
+            hashedSessionStore => 1,
+            logLevel           => $main::debug,
+            portal             => 'http://auth.idp.com',
+            configStorage      => {
                 type     => 'File',
                 dirName  => 't',
                 confFile => '/dev/null',

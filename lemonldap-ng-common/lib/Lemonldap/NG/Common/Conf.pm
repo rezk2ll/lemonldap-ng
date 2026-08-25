@@ -166,7 +166,6 @@ sub saveConf {
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
     $self->setDefault($conf);
-    $self->setValuesFromEnv($conf);
     $self->compactConf($conf);
 
     if (    Lemonldap::NG::Handler::Main->can('tsv')
@@ -232,7 +231,6 @@ sub getConf {
             $r = $self->getDBConf( { cfgNum => $cfgNum } );
             return undef unless ( $r->{cfgNum} );
             $self->setDefault( $r, $localPrm );
-            $self->setValuesFromEnv($r);
             $self->compactConf($r);
         }
         else {
@@ -275,7 +273,6 @@ sub getConf {
     }
 
     $self->setDefault( $res, $localPrm );
-    $self->setValuesFromEnv($res);
     $self->compactConf($res);
 
     # Create cipher object and replace variable placeholder
@@ -322,13 +319,6 @@ sub setDefault {
         $conf->{whatToTrace} =~ s/^\$//;
     }
 
-    return $conf;
-}
-
-sub setValuesFromEnv {
-    my ( $self, $conf ) = @_;
-    $conf->{hashedSessionStore} = $ENV{LLNG_HASHED_SESSION_STORE}
-      if $ENV{LLNG_HASHED_SESSION_STORE};
     return $conf;
 }
 

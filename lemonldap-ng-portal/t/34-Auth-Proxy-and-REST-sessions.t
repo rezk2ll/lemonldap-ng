@@ -99,20 +99,14 @@ count(1);
 expectOK($res);
 
 # Test if user is reject on IdP
-SKIP: {
-    count(1);
-    skip(
-'LLNG_HASHED_SESSION_STORE is set, Auth::Proxy is unable to delete internal session',
-        1
-    ) if $ENV{LLNG_HASHED_SESSION_STORE};
-    ok(
-        $res = $sp->_get(
-            '/', cookie => "lemonldap=$spId",
-        ),
-        'Test if user is reject on IdP'
-    );
-    expectReject($res);
-}
+ok(
+    $res = $sp->_get(
+        '/', cookie => "lemonldap=$spId",
+    ),
+    'Test if user is reject on IdP'
+);
+count(1);
+expectReject($res);
 clean_sessions();
 done_testing( count() );
 
@@ -129,13 +123,17 @@ sub switch {
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
-                domain            => 'idp.com',
-                portal            => 'http://auth.idp.com/',
-                authentication    => 'Demo',
-                secret            => 'abc',
-                userDB            => 'Same',
-                restSessionServer => 1,
-                restConfigServer  => 1,
+                domain         => 'idp.com',
+                portal         => 'http://auth.idp.com/',
+                authentication => 'Demo',
+                secret         => 'abc',
+                userDB         => 'Same',
+
+                # Auth::Proxy is unable to delete the internal session when
+                # the session store is hashed
+                hashedSessionStore => 0,
+                restSessionServer  => 1,
+                restConfigServer   => 1,
             }
         }
     );
@@ -155,7 +153,10 @@ sub sp {
                 globalStorage => 'Lemonldap::NG::Common::Apache::Session::REST',
                 globalStorageOptions => {
                     'baseUrl' => 'http://auth.idp.com/sessions/global',
-                }
+                },
+
+                # See issuer() above
+                hashedSessionStore => 0,
             },
         }
     );

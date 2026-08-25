@@ -247,11 +247,7 @@ sub runTest {
         expectOK(
             $se->adminLogout(
                 query => "sessionType=offline&sessionId="
-                  . (
-                    $ENV{LLNG_HASHED_SESSION_STORE}
-                    ? id2storage($refresh_token)
-                    : $refresh_token
-                  )
+                  . ( id2store($refresh_token) )
             )
         );
     }

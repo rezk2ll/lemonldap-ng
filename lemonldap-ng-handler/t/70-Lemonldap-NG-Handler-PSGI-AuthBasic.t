@@ -71,10 +71,13 @@ LWP::Protocol::PSGI->register(
         my $session = Lemonldap::NG::Common::Session->new( {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => { Directory => 't/sessions' },
-                id                   => $id,
-                force                => 1,
-                kind                 => 'SSO',
-                info                 => $sessionData,
+
+                # SSO sessions are hashed by the REST session server we mock
+                hashStore => 1,
+                id        => $id,
+                force     => 1,
+                kind      => 'SSO',
+                info      => $sessionData,
             }
         );
 

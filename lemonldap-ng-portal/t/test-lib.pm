@@ -188,9 +188,25 @@ sub getCache {
     );
 }
 
-sub getSession {
+=head4 id2store($id)
+
+Returns the identifier under which a session is stored: session identifiers are
+hashed in the store, unless the tested configuration sets C<hashedSessionStore>
+to 0 I<(legacy behavior)>.
+
+=cut
+
+# Set when a portal is built (see LLNG::Manager::Test), from the tested
+# configuration
+our $hashedSessionStore = 1;
+
+sub id2store {
     my $id = shift;
-    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
+    return $hashedSessionStore ? id2storage($id) : $id;
+}
+
+sub getSession {
+    my $id           = id2store(shift);
     my @sessionsOpts = (
         storageModule        => "Apache::Session::File",
         storageModuleOptions => {
@@ -242,8 +258,7 @@ sub getSamlSession {
 # OIDC sessions (tokens) are stored beside SAML ones in tests, but unlike SAML
 # they honour hashedSessionStore
 sub getOidcSession {
-    my $id = shift;
-    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
+    my $id           = id2store(shift);
     my @sessionsOpts = (
         storageModule        => "Apache::Session::File",
         storageModuleOptions => {
@@ -469,7 +484,7 @@ sub expectSessionAttributes {
 sub getSessionAttributes {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $app, $id ) = @_;
-    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
+    $id = id2store($id);
     my $res;
     ok(
         $res = $app->_get("/sessions/global/$id"),
@@ -954,6 +969,9 @@ our $defaultIni = {
     tokenUseGlobalStorage => 0,
     securedCookie         => 0,
 
+    # Tests run against a "new installation" default (see Manager::Conf::Zero)
+    hashedSessionStore => 1,
+
     # If lasso is too old, force algo to SHA1
     (
         eval
@@ -1044,6 +1062,11 @@ has ini => (
             main::ok( $self->{p}->init($ini),           'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
+
+            # Tests that read sessions directly from the store need to know
+            # if identifiers are hashed in it (see main::id2store)
+            $main::hashedSessionStore = $self->{p}->conf->{hashedSessionStore};
+
             no warnings 'redefine';
             eval
 'sub Lemonldap::NG::Common::Logger::Std::error {return $_[0]->warn($_[1])}';

@@ -170,3 +170,14 @@ SAML IDP by its encoded url: https://auth.example.com/?idpEntityId=https%3A%2F%2
 
 ``idpName`` parameter is replaced by ``idp`` parameter to specify
 the IDP name in LemonLDAP::NG Manager: https://auth.example.com/?idp=idp-example
+
+Hashed session storage enabled on new installations
+---------------------------------------------------
+
+``hashedSessionStore`` is now enabled on new installations: sessions are stored
+under the SHA-256 hash of their identifier, so a read access to the session
+backend is no longer enough to hijack a session.
+
+Existing installations keep their own value. To benefit from it, migrate your
+sessions using the ``convertToHashSessionStorage`` utility (see
+:doc:`changesessionbackend`).

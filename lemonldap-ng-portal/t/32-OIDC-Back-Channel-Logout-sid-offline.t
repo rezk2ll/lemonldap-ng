@@ -215,17 +215,8 @@ sub runTest {
                 query => (
                     $useRT
                     ? "sessionType=offline&sessionId="
-                      . (
-                        $ENV{LLNG_HASHED_SESSION_STORE}
-                        ? id2storage($refresh_token)
-                        : $refresh_token
-                      )
-                    : "sessionType=global&sessionId="
-                      . (
-                        $ENV{LLNG_HASHED_SESSION_STORE}
-                        ? id2storage($anotherId)
-                        : $anotherId
-                      )
+                      . ( id2store($refresh_token) )
+                    : "sessionType=global&sessionId=" . ( id2store($anotherId) )
                 ),
             )
         );
