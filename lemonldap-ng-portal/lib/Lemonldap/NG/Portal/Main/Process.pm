@@ -361,10 +361,15 @@ sub authLogout {
     return $res;
 }
 
+# Delete the current SSO session
+#
+# Callers holding a storage identifier instead of a session one may ask for it
+# using [ 'deleteSession', rawSessionId => 1 ] as step
 sub deleteSession {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
     if ( my $id = $req->id || $req->userData->{_session_id} ) {
-        my $apacheSession = $self->getApacheSession($id);
+        my $apacheSession = $self->getApacheSession( $id,
+            ( $args{rawSessionId} ? ( hashStore => 0 ) : () ) );
         unless ($apacheSession) {
             $self->logger->debug("Session $id already deleted");
             return PE_OK;
