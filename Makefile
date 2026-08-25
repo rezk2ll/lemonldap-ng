@@ -552,14 +552,19 @@ manager:	manager_conf handler
 # it, and npm is not needed to build or install LemonLDAP::NG.
 # Maintainers refresh it explicitly with "make new_manager".
 
-new_manager: rollup_clean
+new_manager: new_manager_clean
 	@$(MAKE) $(NEW_MGR_DST)
 
+# npm/rollup residue only: this is called by "make clean", which must not
+# remove the committed build result (templates and bundles).
 rollup_clean:
-	@rm -rf $(NEW_MGR_TMP_DIST) \
-		$(NEW_MGR_TPL_DIR) \
-		$(NEW_MGR_JS_DIR)
+	@rm -rf $(NEW_MGR_TMP_DIST)
 	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
+
+# Drops the committed build result as well, so a rebuild can't keep stale
+# files. Reserved for "make new_manager".
+new_manager_clean: rollup_clean
+	@rm -rf $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
 
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	@install -d $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
