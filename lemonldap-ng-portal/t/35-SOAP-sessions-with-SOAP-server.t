@@ -115,13 +115,17 @@ done_testing( count() );
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel          => $debug,
-                domain            => 'idp.com',
-                portal            => 'http://auth.idp.com/',
-                authentication    => 'Demo',
-                userDB            => 'Same',
-                soapSessionServer => 1,
-                wsdlServer        => 1,
+                logLevel       => $debug,
+                domain         => 'idp.com',
+                portal         => 'http://auth.idp.com/',
+                authentication => 'Demo',
+                userDB         => 'Same',
+
+                # The SOAP session server exchanges storage identifiers, not
+                # session ones, so it can't serve a hashed session store
+                hashedSessionStore => 0,
+                soapSessionServer  => 1,
+                wsdlServer         => 1,
             }
         }
     );
@@ -138,6 +142,9 @@ sub sp {
                 globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
                 globalStorageOptions =>
                   { proxy => 'http://auth.idp.com/adminSessions' },
+
+                # See issuer() above
+                hashedSessionStore => 0,
             },
         }
     );

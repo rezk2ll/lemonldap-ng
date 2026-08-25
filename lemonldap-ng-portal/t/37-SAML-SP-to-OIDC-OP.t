@@ -66,11 +66,11 @@ LWP::Protocol::PSGI->register(
 );
 
 sub test {
-    my ( $method, $hashStorage ) = @_;
+    my ( $method, $unhashedStorage ) = @_;
     reset_tmpdir;
 
     # Initialization
-    $op = register( 'op', \&op );
+    $op = register( 'op', sub { op($unhashedStorage) } );
 
     ok(
         $res = $op->_get('/oauth2/jwks'),
@@ -86,8 +86,9 @@ sub test {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    $sp    = register( 'sp',    sub { sp($method) } );
-    $proxy = register( 'proxy', sub { proxy( $jwks, $metadata, $method ) } );
+    $sp    = register( 'sp', sub { sp( $method, $unhashedStorage ) } );
+    $proxy = register( 'proxy',
+        sub { proxy( $jwks, $metadata, $method, $unhashedStorage ) } );
 
     # SAML
     ok(
@@ -372,7 +373,10 @@ SKIP: {
     subtest "Test with POST binding" => sub {
         test("POST");
     };
-    subtest "Test with POST binding and hashStorage" => sub {
+
+    # Session identifiers are hashed in the store by default: check the legacy
+    # unhashed store too
+    subtest "Test with POST binding and unhashed storage" => sub {
         test( "POST", 1 );
     };
 }
@@ -381,10 +385,10 @@ clean_sessions();
 done_testing();
 
 sub op {
-    my ($hashStorage) = @_;
+    my ($unhashedStorage) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
+                ( $unhashedStorage ? ( hashedSessionStore => 0 ) : () ),
                 domain                          => 'op.com',
                 portal                          => 'http://auth.op.com/',
                 authentication                  => 'Demo',
@@ -439,10 +443,10 @@ sub op {
 }
 
 sub proxy {
-    my ( $jwks, $metadata, $method, $hashStorage ) = @_;
+    my ( $jwks, $metadata, $method, $unhashedStorage ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
+                ( $unhashedStorage ? ( hashedSessionStore => 0 ) : () ),
                 domain                     => 'proxy.com',
                 portal                     => 'http://auth.proxy.com/',
                 authentication             => 'OpenIDConnect',
@@ -511,10 +515,10 @@ sub proxy {
 }
 
 sub sp {
-    my ( $method, $hashStorage ) = @_;
+    my ( $method, $unhashedStorage ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                ( $hashStorage ? ( hashedSessionStore => 1 ) : () ),
+                ( $unhashedStorage ? ( hashedSessionStore => 0 ) : () ),
                 domain                            => 'sp.com',
                 portal                            => 'http://auth.sp.com/',
                 authentication                    => 'SAML',

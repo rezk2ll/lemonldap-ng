@@ -8,10 +8,6 @@ use Test::More;
 
 no warnings 'once';
 
-BEGIN {
-    $ENV{LLNG_HASHED_SESSION_STORE} = 1;
-}
-
 our $debug = 'error';
 my ( $p, $res, $spId );
 $| = 1;

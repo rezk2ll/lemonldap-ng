@@ -7,7 +7,6 @@ BEGIN {
     require 't/test-lib.pm';
     use_ok('Lemonldap::NG::Common::Session');
     use_ok('Lemonldap::NG::Portal::Main::Request');
-    delete $ENV{LLNG_HASHED_SESSION_STORE};
 }
 
 foreach my $hashedSessionStore ( 0 .. 1 ) {

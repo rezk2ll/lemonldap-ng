@@ -91,30 +91,23 @@ $spId = expectCookie($res);
 # Test other REST queries
 
 # Session content
-ok(
-    getSession($idpId)->data->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($idpId) : $idpId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $idpId" );
+ok( getSession($idpId)->data->{_session_id} eq ( id2store($idpId) ),
+    ' Good ID' )
+  or explain( $res, "_session_id => $idpId" );
 count(1);
 
 # Session key
 ok(
     $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($idpId) : $idpId )
-          . "/[_session_id,uid]"
+        "/sessions/global/" . ( id2store($idpId) ) . "/[_session_id,uid]"
     ),
     'Some session keys'
 );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-ok(
-    $res->{_session_id} eq
-      ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($idpId) : $idpId ),
-    ' Good ID'
-) or explain( $res, "_session_id => $idpId" );
+ok( $res->{_session_id} eq ( id2store($idpId) ), ' Good ID' )
+  or explain( $res, "_session_id => $idpId" );
 ok( $res->{uid} eq 'dwho', ' Uid is dwho' ) or explain( $res, 'uid => dwho' );
 count(4);
 
@@ -134,11 +127,7 @@ my $newId = $res->{session}->{_session_id};
 
 # Verify a key
 ok(
-    $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId )
-          . "/uid"
-    ),
+    $res = $issuer->_get( "/sessions/global/" . ( id2store($newId) ) . "/uid" ),
     'Verify uid'
 );
 ok( $res->[2]->[0] eq 'zz', ' Uid is good' );
@@ -150,20 +139,14 @@ ok(
             HTTP_ACCEPT          => 'application/json',
             HTTP_ACCEPT_LANGUAGE => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             HTTP_HOST            => 'auth.idp.com',
-            PATH_INFO            => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              ),
-            REMOTE_ADDR    => '127.0.0.1',
-            REQUEST_METHOD => 'PUT',
-            REQUEST_URI    => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              ),
-            SCRIPT_NAME            => '',
-            SERVER_NAME            => 'auth.example.com',
-            SERVER_PORT            => '80',
-            SERVER_PROTOCOL        => 'HTTP/1.1',
+            PATH_INFO            => "/sessions/global/" . ( id2store($newId) ),
+            REMOTE_ADDR          => '127.0.0.1',
+            REQUEST_METHOD       => 'PUT',
+            REQUEST_URI          => "/sessions/global/" . ( id2store($newId) ),
+            SCRIPT_NAME          => '',
+            SERVER_NAME          => 'auth.example.com',
+            SERVER_PORT          => '80',
+            SERVER_PROTOCOL      => 'HTTP/1.1',
             'psgix.input.buffered' => 0,
             'psgi.input'           => IO::String->new('{"cn":"CN"}'),
             CONTENT_TYPE           => 'application/json',
@@ -180,11 +163,7 @@ count(3);
 
 # Verify new key
 ok(
-    $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId )
-          . "/cn"
-    ),
+    $res = $issuer->_get( "/sessions/global/" . ( id2store($newId) ) . "/cn" ),
     'Verify cn'
 );
 ok( $res->[2]->[0] eq 'CN', ' CN is good' );
@@ -196,21 +175,13 @@ ok(
             HTTP_ACCEPT          => 'application/json',
             HTTP_ACCEPT_LANGUAGE => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             HTTP_HOST            => 'auth.idp.com',
-            PATH_INFO            => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              )
-              . '/zz',
-            REMOTE_ADDR    => '127.0.0.1',
+            PATH_INFO   => "/sessions/global/" . ( id2store($newId) ) . '/zz',
+            REMOTE_ADDR => '127.0.0.1',
             REQUEST_METHOD => 'PUT',
-            REQUEST_URI    => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              )
-              . '/zz',
-            SCRIPT_NAME            => '',
-            SERVER_NAME            => 'auth.example.com',
-            SERVER_PORT            => '80',
+            REQUEST_URI => "/sessions/global/" . ( id2store($newId) ) . '/zz',
+            SCRIPT_NAME => '',
+            SERVER_NAME => 'auth.example.com',
+            SERVER_PORT => '80',
             SERVER_PROTOCOL        => 'HTTP/1.1',
             'psgix.input.buffered' => 0,
             'psgi.input'           => IO::String->new('"ZZ value"'),
@@ -228,11 +199,7 @@ count(3);
 
 # Verify new key
 ok(
-    $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId )
-          . "/zz"
-    ),
+    $res = $issuer->_get( "/sessions/global/" . ( id2store($newId) ) . "/zz" ),
     'Verify cn'
 );
 ok( $res->[2]->[0] eq 'ZZ value', ' ZZ is good' );
@@ -321,20 +288,14 @@ ok(
             HTTP_ACCEPT          => 'application/json',
             HTTP_ACCEPT_LANGUAGE => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             HTTP_HOST            => 'auth.idp.com',
-            PATH_INFO            => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              ),
-            REMOTE_ADDR    => '127.0.0.1',
-            REQUEST_METHOD => 'DELETE',
-            REQUEST_URI    => "/sessions/global/"
-              . (
-                $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId
-              ),
-            SCRIPT_NAME     => '',
-            SERVER_NAME     => 'auth.example.com',
-            SERVER_PORT     => '80',
-            SERVER_PROTOCOL => 'HTTP/1.1',
+            PATH_INFO            => "/sessions/global/" . ( id2store($newId) ),
+            REMOTE_ADDR          => '127.0.0.1',
+            REQUEST_METHOD       => 'DELETE',
+            REQUEST_URI          => "/sessions/global/" . ( id2store($newId) ),
+            SCRIPT_NAME          => '',
+            SERVER_NAME          => 'auth.example.com',
+            SERVER_PORT          => '80',
+            SERVER_PROTOCOL      => 'HTTP/1.1',
         }
     ),
     'Delete new session'
@@ -347,11 +308,7 @@ count(3);
 
 # Verify that session is deleted
 ok(
-    $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($newId) : $newId )
-          . "/cn"
-    ),
+    $res = $issuer->_get( "/sessions/global/" . ( id2store($newId) ) . "/cn" ),
     'New session is deleted'
 );
 ok( $res->[0] == 400, ' Session does not exist' );

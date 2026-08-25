@@ -55,7 +55,7 @@ SKIP: {
         ok(
             unlink(
                 $client->ini->{globalStorageOptions}->{Directory} . '/'
-                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+                  . ( id2store($id) )
             ),
             'Delete session from global storage'
         );
@@ -78,7 +78,7 @@ SKIP: {
         ok(
             unlink(
                 $client->ini->{globalStorageOptions}->{Directory} . '/'
-                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+                  . ( id2store($id) )
             ),
             'Delete session from global storage'
         );
@@ -95,9 +95,7 @@ SKIP: {
         ok(
             unlink(
                 $client->ini->{globalStorageOptions}->{Directory} . '/'
-                  . (
-                    $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id2) : $id2
-                  )
+                  . ( id2store($id2) )
             ),
             'Delete session from global storage'
         );
@@ -124,7 +122,7 @@ SKIP: {
         ok(
             unlink(
                 $client->ini->{globalStorageOptions}->{Directory} . '/'
-                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+                  . ( id2store($id) )
             ),
             'Delete session from global storage'
         );
