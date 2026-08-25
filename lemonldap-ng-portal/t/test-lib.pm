@@ -969,6 +969,9 @@ our $defaultIni = {
     tokenUseGlobalStorage => 0,
     securedCookie         => 0,
 
+    # Tests run against a "new installation" default (see Manager::Conf::Zero)
+    hashedSessionStore => 1,
+
     # If lasso is too old, force algo to SHA1
     (
         eval

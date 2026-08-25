@@ -193,7 +193,7 @@ sub zeroConf {
         },
         "oidcServiceIgnoreScopeForClaims" => 1,
         "webauthnDefaultTransports"       => "usb, nfc, ble, internal",
-        hashedSessionStorage              => 1,
+        "hashedSessionStore"              => 1,
     };
 }
 

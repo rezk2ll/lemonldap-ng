@@ -33,6 +33,7 @@
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "groups": {},
+  "hashedSessionStore": 1,
   "key": "qwertyui",
   "locationRules": {
     "manager.example.com": {
