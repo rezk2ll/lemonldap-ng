@@ -51,6 +51,7 @@ sub load {
 sub store {
     my ( $self, $fields ) = @_;
     my @files = eval { overList($self) };
+    die $@ if $@;
 
     my @errors;
     foreach my $file (@files) {
@@ -66,12 +67,12 @@ sub store {
             }
 
             else {
-                push @errors, "Unable to write over file $file: $@";
+                push @errors, "Unable to write over file $file: $!";
             }
         }
     }
 
-    die join( "\n", @errors ) if $@;
+    die join( "\n", @errors ) if @errors;
     no strict 'refs';
 
     return &{

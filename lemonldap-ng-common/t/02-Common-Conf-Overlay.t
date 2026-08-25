@@ -9,6 +9,7 @@ use warnings;
 
 use strict;
 use Test::More;
+use File::Temp;
 BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 
 #########################
@@ -79,6 +80,53 @@ ok(
     'Hash override'
 );
 $count += 3;
+
+# A corrupted overlay file must not be silently ignored: store() has to fail
+# instead of writing the overlay parameters into the main configuration
+my $tmpDir = File::Temp::tempdir( CLEANUP => 1 );
+mkdir "$tmpDir/overlay";
+foreach (
+    [ globalStorage        => 'Test::GlobalStorage' ],
+    [ globalStorageOptions => '{bad json' ]
+  )
+{
+    open my $f, '>', "$tmpDir/overlay/$_->[0]" or die $!;
+    print $f $_->[1];
+    close $f;
+}
+
+my $badAcc = Lemonldap::NG::Common::Conf->new( {
+        type             => 'Overlay',
+        dirName          => $tmpDir,
+        overlayRealtype  => 'File',
+        overlayDirectory => "$tmpDir/overlay",
+        overlayWrite     => 1,
+    }
+);
+ok( $badAcc, 'Overlay accessor with a corrupted over file' );
+
+my $res;
+$Lemonldap::NG::Common::Conf::msg = '';
+{
+    my $stderr;
+    local *STDERR;
+    open STDERR, '>', \$stderr;
+    $res = $badAcc->store( {
+            cfgNum               => 2,
+            a                    => 'string',
+            globalStorage        => 'Test2',
+            globalStorageOptions => { param => 'parameter2' },
+        }
+    );
+}
+ok( !$res, 'Store refused' );
+like(
+    $Lemonldap::NG::Common::Conf::msg,
+    qr/Bad over file globalStorageOptions/,
+    'Corrupted over file reported'
+);
+ok( !-e "$tmpDir/lmConf-2.json", 'No configuration written' );
+$count += 4;
 
 done_testing($count);
 unlink 't/overlay_test/lmConf-2.json', 't/overlay_test/lmConf-3.json';
