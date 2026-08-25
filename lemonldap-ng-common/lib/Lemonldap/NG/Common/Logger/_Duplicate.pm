@@ -33,7 +33,7 @@ sub clearRequestObj {
 sub AUTOLOAD {
     my $self = shift;
     no strict;
-    $AUTOLOAD =~ s/.*:://;
+    our $AUTOLOAD =~ s/.*:://;
     return if $AUTOLOAD eq 'DESTROY';
     $self->{logger}->$AUTOLOAD(@_);
     return if $AUTOLOAD !~ m/^(?:error|warn|notice|info|debug)$/;

@@ -33,6 +33,7 @@ my $cfg;
 unlink 't/overlay_test/lmConf-2.json', 't/overlay_test/lmConf-3.json';
 
 # READ
+diag "$Lemonldap::NG::Common::Conf::msg $!" unless $confAcc;
 ok( $cfg = $confAcc->load(1), 'Load conf' )
   or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
 my $count = 2;

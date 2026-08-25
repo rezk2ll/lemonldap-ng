@@ -1,11 +1,13 @@
 package Lemonldap::NG::Common::Conf::Backends::Overlay;
 
+use strict;
 use Lemonldap::NG::Common::Conf::Constants qw($hashParameters );
 use JSON;
 
 our $VERSION = '2.19.0';
 
 sub load {
+    no strict 'refs';
     my ( $self, $cfgNum, $fields ) = @_;
     my @files = eval { overList($self) };
     if ($@) {
@@ -70,6 +72,7 @@ sub store {
     }
 
     die join( "\n", @errors ) if $@;
+    no strict 'refs';
 
     return &{
         "Lemonldap::NG::Common::Conf::Backends::$self->{overlayRealtype}::store"
@@ -96,13 +99,6 @@ sub overList {
                 if ($@) {
                     push @errors, "Bad over file $file: $@";
                 }
-                else {
-                    $conf->{$file} = $content;
-                }
-            }
-            else {
-                $content =~ s/^\s*(.*?)\s*$/$1/;
-                $conf->{$file} = $content;
             }
         }
     }
@@ -111,15 +107,16 @@ sub overList {
 }
 
 sub AUTOLOAD {
+    no strict;
     my ($self) = @_;
     die 'Missing overlayRealtype'
       unless $self->{overlayRealtype};
     eval
       "require Lemonldap::NG::Common::Conf::Backends::$self->{overlayRealtype}";
     die $@ if $@;
-    $AUTOLOAD =~ s/::Overlay::/::$self->{overlayRealtype}::/;
+    our $AUTOLOAD =~ s/::Overlay::/::$self->{overlayRealtype}::/;
     my @res = &{$AUTOLOAD}(@_);
-    return wantarray ? (@res) : $res;
+    return wantarray ? (@res) : $res[0];
 }
 
 1;
