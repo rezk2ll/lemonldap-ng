@@ -260,7 +260,7 @@ sub userBind {
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
                 $self->{portal}->userLogger->warn(
-                    "Bad password for $req->{user} (" . $req->address . ")" );
+                    'Bad password for ' . $req->user .'(' . $req->address . ')' );
                 return PE_BADCREDENTIALS;
             }
             elsif ( $mesg->code == 0 ) {
@@ -338,7 +338,7 @@ sub userBind {
         }
     }
     $self->{portal}->userLogger->warn(
-        "Bad password for $req->{user} (" . $req->address . ")" );
+        'Bad password for ' . $req->user .'(' . $req->address . ')' );
     return PE_BADCREDENTIALS;
 }
 

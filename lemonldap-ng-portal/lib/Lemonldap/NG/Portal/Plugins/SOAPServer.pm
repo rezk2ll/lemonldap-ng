@@ -209,7 +209,7 @@ sub getCookies {
     my ( $self, $req, $user, $password, $sessionid ) = @_;
     $self->logger->debug("SOAP authentication request for $user");
 
-    $req->{user} = $user;
+    $req->user( $user);
     $req->data->{password} = $password;
     if ($sessionid) {
         $req->{id}    = $sessionid;
@@ -219,7 +219,7 @@ sub getCookies {
     $req->{error} = PE_OK;
 
     # User and password are required
-    unless ( $req->{user} && $req->data->{password} ) {
+    unless ( $req->user && $req->data->{password} ) {
         $req->{error} = PE_FORMEMPTY;
     }
 

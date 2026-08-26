@@ -234,14 +234,16 @@ sub extractFormInfo {
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
     $local_url =~ s/\&$//;
-    ( $req->{user}, $req->data->{casAttrs} ) =
+    my $user;
+    ( $user, $req->data->{casAttrs} ) =
       $self->validateST( $req, $local_url, $ticket, $srvConf, $proxied );
-    unless ( $req->{user} ) {
-        $self->userLogger->error("CAS: Unable to validate ST $ticket");
-        return PE_ERROR;
+    if ( $user ) {
+        $req->user($user);
+        $self->logger->debug("CAS: User $user found");
     }
     else {
-        $self->logger->debug("CAS: User $req->{user} found");
+        $self->userLogger->error("CAS: Unable to validate ST $ticket");
+        return PE_ERROR;
     }
 
     # Request proxy tickets for proxied services

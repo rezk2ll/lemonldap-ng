@@ -28,7 +28,7 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
     my $table = $self->table;
     my $pivot = $args{useMail} ? $self->mailField : $self->pivot;
-    my $user  = $req->{user};
+    my $user  = $req->user;
     my $sth;
     eval {
         $sth = $self->dbh->prepare("SELECT * FROM $table WHERE $pivot=?");

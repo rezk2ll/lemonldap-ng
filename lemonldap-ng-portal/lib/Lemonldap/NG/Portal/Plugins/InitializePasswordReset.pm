@@ -73,11 +73,11 @@ sub initializePasswordReset {
 
     my $mailPasswordReset = $self->p->loadedModules->{
         'Lemonldap::NG::Portal::Plugins::MailPasswordReset'};
-    $req->{user} = $mail;
+    $req->user($mail);
 
     if ( $mailPasswordReset->searchUser( $req, 1 ) == PE_OK ) {
 
-        my $mailSession = $mailPasswordReset->getMailSession( $req->{user} );
+        my $mailSession = $mailPasswordReset->getMailSession( $req->user );
 
         unless ($mailSession) {
             $mailSession = $mailPasswordReset->createMailSession($req);

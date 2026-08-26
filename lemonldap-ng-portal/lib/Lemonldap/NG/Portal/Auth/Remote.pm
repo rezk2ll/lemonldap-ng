@@ -15,8 +15,8 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $r = $self->checkRemoteId($req);
     return $r unless ( $r == PE_OK );
-    $req->{user} =
-      $req->data->{rSessionInfo}->{ $self->conf->{remoteUserField} || 'uid' };
+    $req->user(
+      $req->data->{rSessionInfo}->{ $self->conf->{remoteUserField} || 'uid' });
     $req->data->{password} = $req->data->{rSessionInfo}->{'_password'};
     return PE_OK;
 }

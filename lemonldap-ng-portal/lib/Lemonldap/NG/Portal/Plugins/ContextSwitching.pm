@@ -97,7 +97,7 @@ sub display {
     if ( $req->userData->{ $self->prefixedSId } ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->userLogger->notice("Stop ContextSwitching for $req->{user}");
+            $self->userLogger->notice('Stop ContextSwitching for ' . $req->user);
             $self->userLogger->info("Remove real session $realSessionId");
             $realSession->remove;
             return $self->p->do( $req,
@@ -106,7 +106,7 @@ sub display {
 
         }
         else {
-            $req = $self->_abortImpersonation( $req, $req->{user},
+            $req = $self->_abortImpersonation( $req, $req->user,
                 $realSession->data->{ $self->conf->{whatToTrace} }, 0 );
             $self->p->updateSession( $req, $req->userData );
             return $self->p->doPE( $req, PE_REDIRECT );
@@ -158,7 +158,7 @@ sub run {
     }
 
     # ContextSwitching required -> Check user Id
-    if ( $spoofId && $spoofId ne $req->{user} ) {
+    if ( $spoofId && $spoofId ne $req->user ) {
         $self->logger->debug("Spoofed Id: $spoofId");
         unless ( $spoofId =~ /$self->{conf}->{userControl}/ ) {
             $self->userLogger->warn('Malformed spoofed Id');
@@ -195,7 +195,7 @@ sub _switchContext {
     my $realAuthLevel = $req->userData->{authenticationLevel};
     my $realId        = $req->userData->{ $self->conf->{whatToTrace} };
     my $raz           = 0;
-    $req->{user} = $spoofId;
+    $req->user($spoofId);
 
     # Search user in database & create session
     $req->steps( [
@@ -209,7 +209,7 @@ sub _switchContext {
     if ( my $error = $self->p->process($req) ) {
         $self->userLogger->warn(
                 'ContextSwitching requested for an invalid user ('
-              . $req->{user}
+              . $req->user
               . ")" )
           if ( $error == PE_BADCREDENTIALS );
         $self->logger->debug("Process returned error: $error");
@@ -222,7 +222,7 @@ sub _switchContext {
     unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
                 'ContextSwitching requested for an invalid user ('
-              . $req->{user}
+              . $req->user
               . ")" );
         $self->logger->debug('Identity NOT authorized');
         $req->error(PE_MALFORMEDUSER);    # Catch error to preserve protected Id
@@ -285,7 +285,7 @@ sub _abortImpersonation {
 
     # Restore real session
     $req->{$type} = { %{ $session->data } };
-    $req->{user} = $session->data->{_user};
+    $req->user($session->data->{_user});
     $req->urldc( $req->portal );
     $req->id($realSessionId);
     $self->p->buildCookie($req);

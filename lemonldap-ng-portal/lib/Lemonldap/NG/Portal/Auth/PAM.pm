@@ -60,13 +60,13 @@ sub authenticate {
     foreach my $sub (qw(pam_authenticate pam_acct_mgmt)) {
         my $res = $pam->$sub;
         unless ( $res == PAM_SUCCESS ) {
-            $self->userLogger->warn( "PAM failed to authenticate $req->{user}: "
+            $self->userLogger->warn( 'PAM failed to authenticate' . $req->user . ': '
                   . $pam->pam_strerror($res) );
             $self->setSecurity($req);
             return PE_BADCREDENTIALS;
         }
     }
-    $self->userLogger->notice("Good PAM authentication for $req->{user}");
+    $self->userLogger->notice('Good PAM authentication for ' . $req->user);
     return PE_OK;
 }
 

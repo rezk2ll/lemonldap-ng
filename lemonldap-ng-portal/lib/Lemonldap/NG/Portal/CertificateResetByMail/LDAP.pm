@@ -32,8 +32,6 @@ sub modifCertificate {
         return PE_ERROR;
     }
 
-    #my $dn = "uid=" . $req->{user}. "," . $self->conf->{ldapBase};
-
     my $result = $self->ldap->modify(
         $dn,
         replace => [

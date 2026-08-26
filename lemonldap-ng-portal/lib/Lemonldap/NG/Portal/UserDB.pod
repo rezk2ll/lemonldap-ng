@@ -113,7 +113,7 @@ $req->steps array.
 =head4 getUser($req,%args)
 
 First method called to search user in database. If $args{useMail} is set then
-$req->{user} contains a mail address.
+$req->user contains a mail address.
 
 =head4 setSessionInfo($req)
 

@@ -18,13 +18,14 @@ sub init {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    unless ( $req->{user} = $req->env->{REMOTE_USER} ) {
+    unless ( $req->env->{REMOTE_USER} ) {
         $self->logger->error('Apache is not configured to authenticate users!');
         return PE_ERROR;
     }
+$req->user($req->env->{REMOTE_USER});
 
     # This is needed for Kerberos authentication
-    $req->{user} =~ s/^(.*)@.*$/$1/g;
+    $req->user($req->user =~ s/^(.*)@.*$/$1/gr);
     return PE_OK;
 }
 
