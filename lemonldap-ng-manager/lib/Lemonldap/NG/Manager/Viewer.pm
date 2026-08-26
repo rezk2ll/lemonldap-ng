@@ -106,8 +106,8 @@ sub viewDiff {
     my ( $self, $req, @path ) = @_;
 
     # Check Diff activation rule
-    unless ( $self->diffRule->( $req, $req->{userData} ) ) {
-        my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
+    unless ( $self->diffRule->( $req, $req->userData ) ) {
+        my $user = $req->userData->{_whatToTrace} || 'anonymous';
         $self->auditLog(
             $req,
             code    => "CONF_COMPARISON_REFUSED",
@@ -164,7 +164,7 @@ sub viewKey {
     $self->logger->debug("Viewer requested URI -> $req->{env}->{REQUEST_URI}");
 
     # Check Browser activation rule
-    if ( $self->brwRule->( $req, $req->{userData} ) ) {
+    if ( $self->brwRule->( $req, $req->userData ) ) {
         $self->logger->debug(" No restriction");
         $self->SUPER::getKey( $req, @args );
     }
@@ -176,7 +176,7 @@ sub viewKey {
         else {
             $self->logger->debug(
                 " $req->{env}->{REQUEST_URI} -> URI FORBIDDEN");
-            my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
+            my $user = $req->userData->{_whatToTrace} || 'anonymous';
             $self->auditLog(
                 $req,
                 code    => "CONF_BROWSING_REFUSED",
