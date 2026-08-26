@@ -69,7 +69,7 @@ sub getUser {
             (
                 $self->conf->{proxyAuthServiceImpersonation}
                   && $req->param('spoofId')
-                ? ( spoofId => $req->param('spoofId') )
+                ? ( spoofId => scalar $req->param('spoofId') )
                 : ()
             )
         }
