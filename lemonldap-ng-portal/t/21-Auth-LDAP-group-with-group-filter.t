@@ -50,7 +50,8 @@ SKIP: {
     expectOK($res);
     my $id = expectCookie($res);
 
-    ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8' );
+    ok( $res = $client->_get( "/sessions/global/$id", query => 'hash=1' ),
+        'Get UTF-8' );
     expectOK($res);
     ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;
