@@ -558,14 +558,14 @@ $(window).on('load', function() {
       $(".toggle-password").on('mousedown touchstart', function() {
         field = $(this).attr('id');
         field = field.replace(/^toggle_/, '');
-        console.debug('Display', field);
         $(this).toggleClass("fa-eye fa-eye-slash");
-        return $(`input[name=${field}]`).attr('class', 'form-control');
+        $(this).closest("form").find(`input[name=${field}]`).removeClass('key');
       });
       $(".toggle-password").on('mouseup touchend', function() {
         $(this).toggleClass("fa-eye fa-eye-slash");
-        if ($(`input[name=${field}]`).get(0).value) {
-          return $(`input[name=${field}]`).attr('class', 'form-control key');
+        var target = $(this).closest("form").find(`input[name=${field}]`).get(0);
+        if (target && target.value) {
+          $(target).addClass('key');
         }
       });
     } else {
@@ -574,11 +574,11 @@ $(window).on('load', function() {
         field = field.replace(/^toggle_/, '');
         console.debug('Display', field);
         $(this).toggleClass("fa-eye fa-eye-slash");
-        return $(`input[name=${field}]`).attr("type", "text");
+        $(this).closest("form").find(`input[name=${field}]`).attr("type", "text");
       });
       $(".toggle-password").on('mouseup touchend', function() {
         $(this).toggleClass("fa-eye fa-eye-slash");
-        return $(`input[name=${field}]`).attr("type", "password");
+        $(this).closest("form").find(`input[name=${field}]`).attr("type", "password");
       });
     }
   }
