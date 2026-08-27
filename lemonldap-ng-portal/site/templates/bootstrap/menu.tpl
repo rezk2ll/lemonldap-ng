@@ -114,7 +114,11 @@
             <TMPL_IF NAME="ContextSwitching">
               <li class="dropdown-item" role="menuitem" id="menu-item-contextswitching">
                 <a href="<TMPL_VAR NAME="PORTAL_BASE">switchcontext" class="nav-link">
-                  <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/switchcontext_<TMPL_VAR NAME="contextSwitching">.png" width="20" height="20" alt="ContextSwitching" />
+                  <TMPL_IF NAME="ContextSwitchingON">
+                  <i class="fa-solid fa-person-circle-check text-success me-1"></i>
+                  <TMPL_ELSE>
+                  <i class="fa-solid fa-person-circle-xmark text-danger me-1"></i>
+                  </TMPL_IF>
                   <span trspan="contextSwitching_<TMPL_VAR NAME="contextSwitching">">contextSwitching_<TMPL_VAR NAME="ContextSwitching"></span>
                 </a>
               </li>
