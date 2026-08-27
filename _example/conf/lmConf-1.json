@@ -162,7 +162,6 @@
    },
    "portal" : "http://auth.__DNSDOMAIN__/",
    "portalSkin" : "bootstrap",
-   "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
    "registerDB" : "Demo",
    "securedCookie" : 0,
    "sessionDataToRemember" : {},
