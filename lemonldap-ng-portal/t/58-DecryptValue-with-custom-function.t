@@ -52,9 +52,9 @@ ok(
     ),
     'CheckUser form',
 );
-ok( $res->[2]->[0] =~ m%<img src="/static/common/icons/decryptValue\.png"%,
-    'Found decryptValue.png' )
-  or explain( $res->[2]->[0], 'decryptValue.png' );
+ok( $res->[2]->[0] =~ m%id="menu-item-decryptvalue"%,
+    'Found decrypt value menu item' )
+  or explain( $res->[2]->[0], 'menu-item-decryptvalue' );
 count(3);
 
 # DecryptValue form
