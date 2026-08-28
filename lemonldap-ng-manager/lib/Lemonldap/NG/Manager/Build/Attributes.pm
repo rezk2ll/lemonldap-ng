@@ -229,9 +229,6 @@ sub types {
         portalskin => {
             test => sub { 1 }
         },
-        portalskinbackground => {
-            test => sub { 1 }
-        },
         post => {
             test => sub { 1 }
         },
