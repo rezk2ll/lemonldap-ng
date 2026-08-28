@@ -29,3 +29,12 @@ lemonldap-ng-portal/blib/
 lemonldap-ng-portal/pm_to_blib
 lemonldap-ng-*/MANIFEST.bak
 node_modules
+dev/sessions/
+dev/conf/
+ui/manager/build
+ui/manager/dist
+ui/manager/coverage
+*.css.json
+# New manager: minified-bundle source maps are large (several MB) and rebuilt
+# on every `make new_manager`; the readable bundle is committed instead.
+lemonldap-ng-manager/site/htdocs/static/new/*.min.js.map

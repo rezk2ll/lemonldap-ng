@@ -244,10 +244,15 @@ MANAGERJSONSRC= scripts/jsongenerator lemonldap-ng-manager/scripts/llng-build-ma
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/CTrees.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm \
+		ui/manager/src/static/attributes-ui.json
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
+		$(SRCMANAGERDIR)/site/htdocs/static/nstruct.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/reverseTree.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \
+		$(UIMANAGERDIR)/src/static/attributes.json \
+		$(UIMANAGERDIR)/src/static/definitions.json \
+		$(UIMANAGERDIR)/src/static/tree.json \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
@@ -262,12 +267,12 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 # Javascript and CSS to minify
 # NB: bootstrap.bundle*.js (vendored Bootstrap 5) ship their own minified
 # version, so they are excluded from the JS minifier.
-JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js' ! -name 'bootstrap.bundle*.js') \
+JSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/js $(SRCMANAGERDIR)/site/htdocs/static/new $(SRCPORTALDIR)/site/htdocs/static/bootstrap $(SRCPORTALDIR)/site/htdocs/static/common -type f -name '*.js' ! -name '*.min.js' ! -name 'bootstrap.bundle*.js' 2>/dev/null) \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
 # NB: the bootstrap skin CSS is built by `make scss` (styles.css/.min.css) and
 # its fontawesome/ assets are vendored, so the whole bootstrap skin dir is left
 # out of the generic CSS minifier.
-CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES=$(shell find $(SRCMANAGERDIR)/site/htdocs/static/css $(SRCMANAGERDIR)/site/htdocs/static/new $(SRCPORTALDIR)/site/htdocs/static/common  -type f -name '*.css' ! -name '*.min.css' 2>/dev/null)
 
 # JS source files
 MANAGERJSSRCFILES=$(shell find lemonldap-ng-manager/site/js-src -type f -name '*.js')
@@ -275,10 +280,17 @@ PORTALJSSRCFILES=$(shell find lemonldap-ng-portal/site/js-src -type f -name '*.j
 MANAGERJSDSTFILES=$(subst js-src/,htdocs/static/js/,$(MANAGERJSSRCFILES:.js=.js))
 PORTALJSDSTFILES=$(subst js-src/,htdocs/static/common/js/,$(PORTALJSSRCFILES:.js=.js))
 JSDSTFILES=$(MANAGERJSDSTFILES) $(PORTALJSDSTFILES)
-
 # Minified files
 JSMINFILES=$(JSSRCFILES:.js=.min.js)
 CSSMINFILES=$(CSSSRCFILES:.css=.min.css)
+
+# New manager
+UIMANAGERDIR=ui/manager
+NEW_MGR_SRC_FILES=$(shell find $(UIMANAGERDIR)/src ui/manager/*.*s $(UIMANAGERDIR)/src ui/manager/*.json -type f)
+NEW_MGR_TMP_DIST=$(UIMANAGERDIR)/dist
+NEW_MGR_TPL_DIR=$(SRCMANAGERDIR)/site/templates/new
+NEW_MGR_JS_DIR=$(SRCMANAGERDIR)/site/htdocs/static/new
+NEW_MGR_DST=$(NEW_MGR_TPL_DIR)/manager.tpl
 
 # -------
 # TARGETS
@@ -480,7 +492,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/js-src/%.js
 
 json:	$(MANAGERJSONDST) debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
-	$(MAKE) minify
+#	$(MAKE) minify
 
 debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/scripts/purgeLocalCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
@@ -532,6 +544,54 @@ portal:		portal_conf handler
 
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
+
+# New manager targets
+#
+# The build result (templates and bundles) is committed, like the portal
+# vendored assets: neither the test server nor the install targets rebuild
+# it, and npm is not needed to build or install LemonLDAP::NG.
+# Maintainers refresh it explicitly with "make new_manager".
+
+new_manager: new_manager_clean
+	@$(MAKE) $(NEW_MGR_DST)
+
+# npm/rollup residue only: this is called by "make clean", which must not
+# remove the committed build result (templates and bundles).
+rollup_clean:
+	@rm -rf $(NEW_MGR_TMP_DIST)
+	@find $(UIMANAGERDIR)/src/ -name '*.css.json' -type f -delete
+
+# Drops the committed build result as well, so a rebuild can't keep stale
+# files. Reserved for "make new_manager".
+new_manager_clean: rollup_clean
+	@rm -rf $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
+
+$(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
+	@install -d $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
+	cp $(UIMANAGERDIR)/dist/static/new/*.js $(UIMANAGERDIR)/dist/static/new/*.css \
+		$(NEW_MGR_JS_DIR)/
+	cp $(UIMANAGERDIR)/dist/templates/new/*.tpl $(NEW_MGR_TPL_DIR)/
+	# Configuration metadata is fetched at runtime (see src/metadata.ts), not
+	# bundled: serve the JSON as static assets next to the bundles.
+	cp $(UIMANAGERDIR)/src/static/attributes.json \
+		$(UIMANAGERDIR)/src/static/definitions.json \
+		$(UIMANAGERDIR)/src/static/tree.json \
+		$(UIMANAGERDIR)/src/static/attributes-ui.json \
+		$(NEW_MGR_JS_DIR)/
+	@$(MAKE) new_manager_minify
+
+# rollup emits readable bundles; the templates load the *.min.js / *.min.css.
+# Produce them with the shared minify rules (falls back to a copy when no JS
+# minifier is installed). Run as a sub-make so the wildcards see the files just
+# copied above.
+new_manager_minify: $(patsubst %.js,%.min.js,$(wildcard $(NEW_MGR_JS_DIR)/*.js)) $(patsubst %.css,%.min.css,$(wildcard $(NEW_MGR_JS_DIR)/*.css))
+	@:
+
+$(NEW_MGR_TMP_DIST):
+	@$(MAKE) rollup_clean
+	@set -ex; cd $(UIMANAGERDIR);\
+		npm ci --legacy-peer-deps || npm i --legacy-peer-deps; \
+		NODE_OPTIONS=--max-old-space-size=6144 rollup -c
 
 # Test targets
 # ------------
@@ -1027,6 +1087,11 @@ install_manager_site:	install_conf_dir
 			cssminified $(CSSCOMPRESS) <$$f \
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
+	@if test -d $(SRCMANAGERDIR)/site/templates/new; then \
+		install -d $(RMANAGERTEMPLATESDIR)/new; \
+		cp -pR -f $(SRCMANAGERDIR)/site/templates/new/*.tpl \
+			$(RMANAGERTEMPLATESDIR)/new/; \
+	fi
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(MANAGEREXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
@@ -1278,7 +1343,7 @@ ubuntu-install-for-nginx:
 distclean:	clean
 
 clean:
-	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
+	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server rollup_clean
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
 	@if [ ! "$(SKIP_DOCUMENTATION)" ]; then rm -rf doc/pages/documentation/current/*; fi

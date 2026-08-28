@@ -1,0 +1,15 @@
+.addButton {
+  left: 2vw;
+}
+
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  top: -30px;
+  padding: 1px 10px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: xx-large;
+  background: #ffffff;
+  border-radius: 50%;
+}

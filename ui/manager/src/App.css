@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+/* The global nav is a top AppBar now (see Navbar.tsx / NavBar.css), so the
+   page content simply flows below it instead of being offset by a left
+   margin for a persistent drawer. */
+.pageContent {
+  width: 100%;
+}
+
+.breadcrumbs {
+  padding-top: 1vw;
+  padding-left: 2vw;
+  background-color: #f7f8fa;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .main {
+    margin-top: 100px;
+  }
+}
+
+.toggleButton {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  background-color: #aaa;
+  border: 1px solid black;
+  border-radius: 90px;
+  cursor: pointer;
+}

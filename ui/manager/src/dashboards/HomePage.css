@@ -1,0 +1,102 @@
+/* ---- Header / toolbar ---------------------------------------------------- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #e2e4e8;
+  padding: 20px 2vw 24px;
+}
+
+.head .title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #26262b;
+}
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+/* Push the "browse a configuration" group to the far right on wide screens. */
+.search-browse {
+  margin-left: auto;
+}
+
+/* ---- Content cards ------------------------------------------------------- */
+.desc {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+  padding: 28px 2vw;
+  overflow-wrap: break-word;
+}
+
+.descBox {
+  flex: 1 1 380px;
+  min-width: 300px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ---- "Current configuration" info table --------------------------------- */
+.infoTable {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.infoTable thead th {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #26262b;
+  padding: 0 0 12px;
+  border-bottom: 2px solid #f0f0f2;
+}
+
+.infoTable tbody th {
+  width: 38%;
+  padding: 11px 16px 11px 0;
+  color: #6b6b73;
+  font-weight: 600;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.infoTable tbody td {
+  padding: 11px 0;
+  color: #1f1f24;
+  word-break: break-word;
+}
+
+.infoTable tbody tr + tr th,
+.infoTable tbody tr + tr td {
+  border-top: 1px solid #f4f4f6;
+}
+
+.logo {
+  width: 20vw;
+}

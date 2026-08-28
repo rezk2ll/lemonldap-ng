@@ -256,6 +256,31 @@
     };
   }]);
 
+  // Switch between the historical interface and the new (beta) one.
+  // The choice is stored in the "llngmanagerbeta" cookie, which is read
+  // server-side to select the template directory.
+
+  // Example:
+  // <a href="#" switch-ui="1">Try the new manager</a>
+  llapp.directive('switchUi', [function () {
+    return {
+      restrict: 'A',
+      scope: false,
+      link: function (scope, element, attrs) {
+        return element.on('click', function (event) {
+          event.preventDefault();
+          if (attrs.switchUi === '1') {
+            document.cookie = 'llngmanagerbeta=1; path=/; SameSite=Lax';
+          } else {
+            // An expiration date in the past deletes the cookie
+            document.cookie = 'llngmanagerbeta=; path=/; SameSite=Lax; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          }
+          return window.location.reload();
+        });
+      }
+    };
+  }]);
+
   // Resize system
 
   // Add a "resizer" HTML attribute
