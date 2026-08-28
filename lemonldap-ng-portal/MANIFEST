@@ -276,12 +276,7 @@ site/htdocs/static/common/apps/tux.png
 site/htdocs/static/common/apps/web.png
 site/htdocs/static/common/apps/wheels.png
 site/htdocs/static/common/ar.png
-site/htdocs/static/common/backgrounds/1280px-Anse_Source_d'Argent_2-La_Digue.jpg
-site/htdocs/static/common/backgrounds/1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg
-site/htdocs/static/common/backgrounds/1280px-BrockenSnowedTrees.jpg
-site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_National_Monument_partially.jpg
-site/htdocs/static/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
-site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
+site/htdocs/static/common/backgrounds/.gitkeep
 site/htdocs/static/common/co.png
 site/htdocs/static/common/css/entropy.css
 site/htdocs/static/common/css/entropy.min.css
