@@ -118,34 +118,6 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/fonts/password.ttf
 Copyright: 2007, the Tap2Play Team, https://git.tap2play.org.au/tap2play/web/tree/dev/fonts
 License: Expat
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Anse_Source_*
-Copyright: Tobias Alt
-License: CC-BY-4.0
-Comment: downloaded from https://commons.wikimedia.org
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Autumn-clear*
-Copyright: ForestWander <https://www.forestwander.com>
-License: CC-BY-3.0
-Comment: downloaded from https://commons.wikimedia.org
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-BrockenSnowedTrees.jpg
-Copyright: Andreas Tille
-License: CC-BY-SA-4.0
-Comment: downloaded from https://commons.wikimedia.org
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_*
-Copyright: Michael Gäbler
-License: CC-BY-3.0
-Comment: downloaded from https://commons.wikimedia.org
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Parry_Peak_*
-Copyright: EpicV27
-License: CC-BY-SA-4.0 or CC-BY-3.0
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_*
-Copyright: Jo Simon
-License: CC-BY-SA-4.0
-
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
 Copyright: 2010-2018, Google, Inc. https://angularjs.org
 License: Expat

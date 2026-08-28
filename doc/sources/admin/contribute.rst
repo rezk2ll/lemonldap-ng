@@ -122,7 +122,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git terser rollup node-rollup-plugin-babel autopkgtest cpanminus
+   apt install make devscripts equivs yui-compressor git terser rollup node-rollup-plugin-babel autopkgtest cpanminus sassc npm
 
 
 Install dependencies
@@ -140,7 +140,7 @@ For SAML:
 
 ::
 
-   apt install liblasso-perl libglib-perl
+   sudo apt install liblasso-perl libglib-perl
 
 Configure hosts file
 ~~~~~~~~~~~~~~~~~~~~
