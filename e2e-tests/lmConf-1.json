@@ -194,7 +194,6 @@
   },
   "portal": "http://auth.__domain__:__port__/",
   "portalSkin": "bootstrap",
-  "portalSkinBackground": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
   "post": {
     "test2.__domain__": {},
     "manager.__domain__": {},
