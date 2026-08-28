@@ -184,11 +184,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 1;
             }
         },
-        'portalskinbackground' => {
-            'test' => sub {
-                1;
-            }
-        },
         'post' => {
             'test' => sub {
                 1;
