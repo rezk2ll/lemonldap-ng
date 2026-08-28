@@ -107,8 +107,10 @@ sub params {
           ? $plugin->displayLink( $req, $req->userData )
           : '';
         my $msg = "Display $_ link";
-        $msg .= " -> $res{ContextSwitching}"
-          if ( $_ eq 'ContextSwitching' && $res{$_} );
+        if ( $_ eq 'ContextSwitching' && $res{$_} ) {
+            $msg .= " -> $res{ContextSwitching}";
+            $res{$_."ON"} = $res{$_} eq "ON" ? 1 : 0;
+        }
         $self->logger->debug($msg) if $res{$_};
         undef $plugin;
     }
