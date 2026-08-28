@@ -328,19 +328,6 @@
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "authlinkedin.html",
-                  "nodes": [
-                     "linkedInAuthnLevel",
-                     "linkedInClientID",
-                     "linkedInClientSecret",
-                     "linkedInFields",
-                     "linkedInUserField",
-                     "linkedInScope"
-                  ],
-                  "title": "linkedinParams"
-               },
-               {
-                  "form": "simpleInputContainer",
                   "help": "authgithub.html",
                   "nodes": [
                      "githubAuthnLevel",
@@ -366,16 +353,6 @@
                      "nullAuthnLevel"
                   ],
                   "title": "nullParams"
-               },
-               {
-                  "help": "authopenid.html",
-                  "nodes": [
-                     "openIdAuthnLevel",
-                     "openIdExportedVars",
-                     "openIdSecret",
-                     "openIdIDPList"
-                  ],
-                  "title": "openidParams"
                },
                {
                   "form": "simpleInputContainer",
@@ -517,28 +494,6 @@
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "authtwitter.html",
-                  "nodes": [
-                     "twitterAuthnLevel",
-                     "twitterKey",
-                     "twitterSecret",
-                     "twitterAppName",
-                     "twitterUserField"
-                  ],
-                  "title": "twitterParams"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "authwebid.html",
-                  "nodes": [
-                     "webIDAuthnLevel",
-                     "webIDExportedVars",
-                     "webIDWhitelist"
-                  ],
-                  "title": "webidParams"
-               },
-               {
-                  "form": "simpleInputContainer",
                   "help": "authcustom.html",
                   "nodes": [
                      "customAuth",
@@ -586,39 +541,6 @@
                      "issuerDBOpenIDConnectRule"
                   ],
                   "title": "issuerDBOpenIDConnect"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "idpopenid.html",
-                  "nodes": [
-                     "issuerDBOpenIDActivation",
-                     "issuerDBOpenIDPath",
-                     "issuerDBOpenIDRule",
-                     {
-                        "nodes": [
-                           "openIdIssuerSecret",
-                           "openIdAttr",
-                           "openIdSPList",
-                           {
-                              "form": "simpleInputContainer",
-                              "nodes": [
-                                 "openIdSreg_fullname",
-                                 "openIdSreg_nickname",
-                                 "openIdSreg_language",
-                                 "openIdSreg_postcode",
-                                 "openIdSreg_timezone",
-                                 "openIdSreg_country",
-                                 "openIdSreg_gender",
-                                 "openIdSreg_email",
-                                 "openIdSreg_dob"
-                              ],
-                              "title": "openIdSreg"
-                           }
-                        ],
-                        "title": "issuerDBOpenIDOptions"
-                     }
-                  ],
-                  "title": "issuerDBOpenID"
                },
                {
                   "form": "simpleInputContainer",
@@ -745,7 +667,26 @@
             "nodes": [
                "upgradeSession",
                "refreshSessions",
-               "portalStatus",
+               "oidcOfflineTokens",
+               "adaptativeAuthenticationLevelRules",
+               {
+                  "nodes": [
+                     "adminLogoutServerSecret"
+                  ],
+                  "title": "adminLogoutServer"
+               },
+               "autoSigninRules",
+               {
+                  "form": "simpleInputContainer",
+                  "help": "checkdevops.html",
+                  "nodes": [
+                     "checkDevOps",
+                     "checkDevOpsDownload",
+                     "checkDevOpsDisplayNormalizedHeaders",
+                     "checkDevOpsCheckSessionAttributes"
+                  ],
+                  "title": "devOpsCheck"
+               },
                {
                   "form": "simpleInputContainer",
                   "help": "checkstate.html",
@@ -756,11 +697,123 @@
                   "title": "stateCheck"
                },
                {
-                  "form": "simpleInputContainer",
+                  "help": "checkuser.html",
                   "nodes": [
-                     "webCronSecret"
+                     "checkUser",
+                     "checkUserIdRule",
+                     "checkUserUnrestrictedUsersRule",
+                     "checkUserSearchAttributes",
+                     "checkUserHiddenAttributes",
+                     "checkUserHiddenHeaders",
+                     {
+                        "form": "simpleInputContainer",
+                        "help": "checkuser.html#configuration",
+                        "nodes": [
+                           "checkUserDisplayComputedSession",
+                           "checkUserDisplayPersistentInfo",
+                           "checkUserDisplayNormalizedHeaders",
+                           "checkUserDisplayEmptyHeaders",
+                           "checkUserDisplayEmptyValues",
+                           "checkUserDisplayHiddenAttributes",
+                           "checkUserDisplayHistory"
+                        ],
+                        "title": "checkUserDisplay"
+                     }
                   ],
-                  "title": "webCron"
+                  "title": "checkUsers"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "decryptvalue.html",
+                  "nodes": [
+                     "decryptValueRule",
+                     "decryptValueFunctions"
+                  ],
+                  "title": "decryptValue"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "globallogout.html",
+                  "nodes": [
+                     "globalLogoutRule",
+                     "globalLogoutTimer",
+                     "globalLogoutCustomParam"
+                  ],
+                  "title": "globalLogout"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "impersonation.html",
+                  "nodes": [
+                     "impersonationRule",
+                     "impersonationIdRule",
+                     "impersonationUnrestrictedUsersRule",
+                     "impersonationHiddenAttributes",
+                     "impersonationSkipEmptyValues",
+                     "impersonationMergeSSOgroups"
+                  ],
+                  "title": "impersonation"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "initializePasswordReset.html",
+                  "nodes": [
+                     "initializePasswordReset",
+                     "initializePasswordResetSecret"
+                  ],
+                  "title": "initializePasswordResetLabel"
+               },
+               {
+                  "form": "simpleInputContainer",
+                  "help": "locationdetect.html",
+                  "nodes": [
+                     "locationDetect",
+                     "locationDetectGeoIpDatabase",
+                     "locationDetectGeoIpLanguages",
+                     "locationDetectIpDetail",
+                     "locationDetectUaDetail"
+                  ],
+                  "title": "locationDetectPlugin"
+               },
+               {
+                  "help": "loginhistory.html",
+                  "nodes": [
+                     "loginHistoryEnabled",
+                     "successLoginNumber",
+                     "failedLoginNumber",
+                     "sessionDataToRemember"
+                  ],
+                  "title": "loginHistory"
+               },
+               {
+                  "help": "notifications.html",
+                  "nodes": [
+                     "notification",
+                     "publicNotifications",
+                     "notificationsExplorer",
+                     "notificationWildcard",
+                     "notificationStorage",
+                     "notificationStorageOptions",
+                     {
+                        "help": "notifications.html#notification-server",
+                        "nodes": [
+                           "notificationServer",
+                           "notificationDefaultCond",
+                           "notificationServerSentAttributes",
+                           {
+                              "form": "simpleInputContainer",
+                              "nodes": [
+                                 "notificationServerPOST",
+                                 "notificationServerGET",
+                                 "notificationServerDELETE"
+                              ],
+                              "title": "notificationServerMethods"
+                           }
+                        ],
+                        "title": "serverNotification"
+                     }
+                  ],
+                  "title": "notifications"
                },
                {
                   "help": "portalservers.html",
@@ -817,31 +870,17 @@
                   "title": "register"
                },
                {
-                  "help": "resetpassword.html",
+                  "form": "simpleInputContainer",
+                  "help": "rememberauthchoice.html",
                   "nodes": [
-                     {
-                        "form": "simpleInputContainer",
-                        "nodes": [
-                           "mailSubject",
-                           "mailBody",
-                           "mailConfirmSubject",
-                           "mailConfirmBody"
-                        ],
-                        "title": "mailContent"
-                     },
-                     {
-                        "form": "simpleInputContainer",
-                        "nodes": [
-                           "mailUrl",
-                           "mailTimeout",
-                           "passwordResetAllowedRetries",
-                           "portalDisplayGeneratePassword",
-                           "randomPasswordRegexp"
-                        ],
-                        "title": "mailOther"
-                     }
+                     "rememberAuthChoiceRule",
+                     "rememberCookieName",
+                     "rememberCookieTimeout",
+                     "rememberDefaultChecked",
+                     "rememberTimer",
+                     "rememberAuthChoiceForgetAtLogout"
                   ],
-                  "title": "passwordResetByMailManagement"
+                  "title": "rememberAuthChoice"
                },
                {
                   "help": "resetcertificate.html",
@@ -869,150 +908,32 @@
                   ],
                   "title": "certificateResetByMailManagement"
                },
-               "adaptativeAuthenticationLevelRules",
-               "autoSigninRules",
                {
-                  "form": "simpleInputContainer",
-                  "help": "trustedbrowser.html",
+                  "help": "resetpassword.html",
                   "nodes": [
-                     "trustedBrowserRule",
-                     "stayConnected",
-                     "stayConnectedBypassFG",
-                     "stayConnectedTimeout",
-                     "stayConnectedCookieName",
-                     "stayConnectedSingleSession",
-                     "trustedBrowserUseTotp"
-                  ],
-                  "title": "stayConnect"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "rememberauthchoice.html",
-                  "nodes": [
-                     "rememberAuthChoiceRule",
-                     "rememberCookieName",
-                     "rememberCookieTimeout",
-                     "rememberDefaultChecked",
-                     "rememberTimer",
-                     "rememberAuthChoiceForgetAtLogout"
-                  ],
-                  "title": "rememberAuthChoice"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "locationdetect.html",
-                  "nodes": [
-                     "locationDetect",
-                     "locationDetectGeoIpDatabase",
-                     "locationDetectGeoIpLanguages",
-                     "locationDetectIpDetail",
-                     "locationDetectUaDetail"
-                  ],
-                  "title": "locationDetectPlugin"
-               },
-               {
-                  "help": "loginhistory.html",
-                  "nodes": [
-                     "loginHistoryEnabled",
-                     "successLoginNumber",
-                     "failedLoginNumber",
-                     "sessionDataToRemember"
-                  ],
-                  "title": "loginHistory"
-               },
-               {
-                  "help": "notifications.html",
-                  "nodes": [
-                     "notification",
-                     "publicNotifications",
-                     "notificationsExplorer",
-                     "notificationWildcard",
-                     "oldNotifFormat",
-                     "notificationXSLTfile",
-                     "notificationStorage",
-                     "notificationStorageOptions",
-                     {
-                        "help": "notifications.html#notification-server",
-                        "nodes": [
-                           "notificationServer",
-                           "notificationDefaultCond",
-                           "notificationServerSentAttributes",
-                           {
-                              "form": "simpleInputContainer",
-                              "nodes": [
-                                 "notificationServerPOST",
-                                 "notificationServerGET",
-                                 "notificationServerDELETE"
-                              ],
-                              "title": "notificationServerMethods"
-                           }
-                        ],
-                        "title": "serverNotification"
-                     }
-                  ],
-                  "title": "notifications"
-               },
-               {
-                  "help": "checkuser.html",
-                  "nodes": [
-                     "checkUser",
-                     "checkUserIdRule",
-                     "checkUserUnrestrictedUsersRule",
-                     "checkUserSearchAttributes",
-                     "checkUserHiddenAttributes",
-                     "checkUserHiddenHeaders",
                      {
                         "form": "simpleInputContainer",
-                        "help": "checkuser.html#configuration",
                         "nodes": [
-                           "checkUserDisplayComputedSession",
-                           "checkUserDisplayPersistentInfo",
-                           "checkUserDisplayNormalizedHeaders",
-                           "checkUserDisplayEmptyHeaders",
-                           "checkUserDisplayEmptyValues",
-                           "checkUserDisplayHiddenAttributes",
-                           "checkUserDisplayHistory"
+                           "mailSubject",
+                           "mailBody",
+                           "mailConfirmSubject",
+                           "mailConfirmBody"
                         ],
-                        "title": "checkUserDisplay"
+                        "title": "mailContent"
+                     },
+                     {
+                        "form": "simpleInputContainer",
+                        "nodes": [
+                           "mailUrl",
+                           "mailTimeout",
+                           "passwordResetAllowedRetries",
+                           "portalDisplayGeneratePassword",
+                           "randomPasswordRegexp"
+                        ],
+                        "title": "mailOther"
                      }
                   ],
-                  "title": "checkUsers"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "checkdevops.html",
-                  "nodes": [
-                     "checkDevOps",
-                     "checkDevOpsDownload",
-                     "checkDevOpsDisplayNormalizedHeaders",
-                     "checkDevOpsCheckSessionAttributes"
-                  ],
-                  "title": "devOpsCheck"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "impersonation.html",
-                  "nodes": [
-                     "impersonationRule",
-                     "impersonationIdRule",
-                     "impersonationUnrestrictedUsersRule",
-                     "impersonationHiddenAttributes",
-                     "impersonationSkipEmptyValues",
-                     "impersonationMergeSSOgroups"
-                  ],
-                  "title": "impersonation"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "contextswitching.html",
-                  "nodes": [
-                     "contextSwitchingRule",
-                     "contextSwitchingIdRule",
-                     "contextSwitchingUnrestrictedUsersRule",
-                     "contextSwitchingAllowed2fModifications",
-                     "contextSwitchingStopWithLogout"
-                  ],
-                  "title": "contextSwitching"
+                  "title": "passwordResetByMailManagement"
                },
                {
                   "help": "finduser.html",
@@ -1029,37 +950,36 @@
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "globallogout.html",
+                  "help": "contextswitching.html",
                   "nodes": [
-                     "globalLogoutRule",
-                     "globalLogoutTimer",
-                     "globalLogoutCustomParam"
+                     "contextSwitchingRule",
+                     "contextSwitchingIdRule",
+                     "contextSwitchingUnrestrictedUsersRule",
+                     "contextSwitchingAllowed2fModifications",
+                     "contextSwitchingStopWithLogout"
                   ],
-                  "title": "globalLogout"
+                  "title": "contextSwitching"
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "decryptvalue.html",
+                  "help": "trustedbrowser.html",
                   "nodes": [
-                     "decryptValueRule",
-                     "decryptValueFunctions"
+                     "trustedBrowserRule",
+                     "stayConnected",
+                     "stayConnectedBypassFG",
+                     "stayConnectedTimeout",
+                     "stayConnectedCookieName",
+                     "stayConnectedSingleSession",
+                     "trustedBrowserUseTotp"
                   ],
-                  "title": "decryptValue"
+                  "title": "stayConnect"
                },
                {
                   "form": "simpleInputContainer",
-                  "help": "initializePasswordReset.html",
                   "nodes": [
-                     "initializePasswordReset",
-                     "initializePasswordResetSecret"
+                     "webCronSecret"
                   ],
-                  "title": "initializePasswordResetLabel"
-               },
-               {
-                  "nodes": [
-                     "adminLogoutServerSecret"
-                  ],
-                  "title": "adminLogoutServer"
+                  "title": "webCron"
                },
                {
                   "form": "simpleInputContainer",
@@ -1070,8 +990,7 @@
                      "disabledPlugins"
                   ],
                   "title": "customPluginsNode"
-               },
-               "oidcOfflineTokens"
+               }
             ],
             "title": "plugins"
          },
@@ -1205,6 +1124,7 @@
                      "ext2FSendCommand",
                      "ext2FValidateCommand",
                      "ext2fResendInterval",
+                     "ext2fTimeout",
                      "ext2fAuthnLevel",
                      "ext2fLabel",
                      "ext2fLogo"
@@ -1292,6 +1212,7 @@
                      "SMTPPort",
                      "SMTPAuthUser",
                      "SMTPAuthPass",
+                     "SMTPAuthMech",
                      "SMTPTLS",
                      "SMTPTLSOpts",
                      {

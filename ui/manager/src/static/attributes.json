@@ -13,6 +13,10 @@
    "LDAPFilter": {
       "type": "text"
    },
+   "SMTPAuthMech": {
+      "default": "",
+      "type": "text"
+   },
    "SMTPAuthPass": {
       "type": "password"
    },
@@ -141,20 +145,12 @@
                "v": "LDAP"
             },
             {
-               "k": "LinkedIn",
-               "v": "LinkedIn"
-            },
-            {
                "k": "PAM",
                "v": "PAM"
             },
             {
                "k": "Null",
                "v": "None"
-            },
-            {
-               "k": "OpenID",
-               "v": "OpenID 2.0 (deprecated)"
             },
             {
                "k": "OpenIDConnect",
@@ -187,14 +183,6 @@
             {
                "k": "SSL",
                "v": "mTLS"
-            },
-            {
-               "k": "Twitter",
-               "v": "Twitter"
-            },
-            {
-               "k": "WebID",
-               "v": "WebID (deprecated)"
             },
             {
                "k": "WebAuthn",
@@ -239,10 +227,6 @@
                "v": "None"
             },
             {
-               "k": "OpenID",
-               "v": "OpenID 2.0 (deprecated)"
-            },
-            {
                "k": "OpenIDConnect",
                "v": "OpenID Connect"
             },
@@ -265,10 +249,6 @@
             {
                "k": "Slave",
                "v": "Slave"
-            },
-            {
-               "k": "WebID",
-               "v": "WebID (deprecated)"
             },
             {
                "k": "Combination",
@@ -360,10 +340,6 @@
             "v": "LDAP"
          },
          {
-            "k": "LinkedIn",
-            "v": "LinkedIn"
-         },
-         {
             "k": "PAM",
             "v": "PAM"
          },
@@ -378,14 +354,6 @@
          {
             "k": "SSL",
             "v": "mTLS"
-         },
-         {
-            "k": "Twitter",
-            "v": "Twitter"
-         },
-         {
-            "k": "WebID",
-            "v": "WebID (deprecated)"
          },
          {
             "k": "WebAuthn",
@@ -406,10 +374,6 @@
          {
             "k": "CAS",
             "v": "Central Authentication Service (CAS)"
-         },
-         {
-            "k": "OpenID",
-            "v": "OpenID 2.0 (deprecated)"
          },
          {
             "k": "OpenIDConnect",
@@ -853,10 +817,6 @@
             "v": "LDAP"
          },
          {
-            "k": "LinkedIn",
-            "v": "LinkedIn"
-         },
-         {
             "k": "PAM",
             "v": "PAM"
          },
@@ -873,14 +833,6 @@
             "v": "mTLS"
          },
          {
-            "k": "Twitter",
-            "v": "Twitter"
-         },
-         {
-            "k": "WebID",
-            "v": "WebID (deprecated)"
-         },
-         {
             "k": "WebAuthn",
             "v": "WebAuthn"
          },
@@ -891,10 +843,6 @@
          {
             "k": "CAS",
             "v": "Central Authentication Service (CAS)"
-         },
-         {
-            "k": "OpenID",
-            "v": "OpenID 2.0 (deprecated)"
          },
          {
             "k": "OpenIDConnect",
@@ -1286,6 +1234,9 @@
    "ext2fResendInterval": {
       "type": "text"
    },
+   "ext2fTimeout": {
+      "type": "text"
+   },
    "externalMenu": {
       "default": "",
       "type": "text"
@@ -1526,10 +1477,6 @@
       "default": 1,
       "type": "boolOrExpr"
    },
-   "issuerDBOpenIDActivation": {
-      "default": 0,
-      "type": "bool"
-   },
    "issuerDBOpenIDConnectActivation": {
       "default": 0,
       "type": "bool"
@@ -1539,14 +1486,6 @@
       "type": "text"
    },
    "issuerDBOpenIDConnectRule": {
-      "default": 1,
-      "type": "boolOrExpr"
-   },
-   "issuerDBOpenIDPath": {
-      "default": "^/openidserver/",
-      "type": "pcre"
-   },
-   "issuerDBOpenIDRule": {
       "default": 1,
       "type": "boolOrExpr"
    },
@@ -1870,28 +1809,6 @@
       "default": 3,
       "type": "int"
    },
-   "linkedInAuthnLevel": {
-      "default": 1,
-      "type": "int"
-   },
-   "linkedInClientID": {
-      "type": "text"
-   },
-   "linkedInClientSecret": {
-      "type": "password"
-   },
-   "linkedInFields": {
-      "default": "id,first-name,last-name,email-address",
-      "type": "text"
-   },
-   "linkedInScope": {
-      "default": "r_liteprofile r_emailaddress",
-      "type": "text"
-   },
-   "linkedInUserField": {
-      "default": "emailAddress",
-      "type": "text"
-   },
    "localSessionStorage": {
       "default": "Cache::FileCache",
       "type": "PerlModule"
@@ -2206,9 +2123,6 @@
       "default": "allusers",
       "type": "text"
    },
-   "notificationXSLTfile": {
-      "type": "text"
-   },
    "notificationsExplorer": {
       "default": 0,
       "type": "bool"
@@ -2261,6 +2175,7 @@
       "type": "text"
    },
    "oidcOPMetaDataOptionsAuthEndpointExtraParams": {
+      "default": {},
       "type": "keyTextContainer"
    },
    "oidcOPMetaDataOptionsAuthnEndpointAuthMethod": {
@@ -2745,6 +2660,10 @@
          {
             "k": "private_key_jwt",
             "v": "private_key_jwt"
+         },
+         {
+            "k": "tls_client_auth",
+            "v": "tls_client_auth"
          }
       ],
       "type": "select"
@@ -3152,6 +3071,34 @@
    },
    "oidcRPMetaDataOptionsLogoutUrl": {
       "type": "text"
+   },
+   "oidcRPMetaDataOptionsMtlsCertIdentifier": {
+      "type": "text"
+   },
+   "oidcRPMetaDataOptionsMtlsCertIdentifierType": {
+      "select": [
+         {
+            "k": "",
+            "v": "SAN DNS"
+         },
+         {
+            "k": "DN",
+            "v": "Subject DN"
+         },
+         {
+            "k": "Email",
+            "v": "SAN Email"
+         },
+         {
+            "k": "IP",
+            "v": "SAN IP"
+         },
+         {
+            "k": "URI",
+            "v": "SAN URI"
+         }
+      ],
+      "type": "select"
    },
    "oidcRPMetaDataOptionsNoJwtHeader": {
       "default": 0,
@@ -3715,68 +3662,6 @@
    "okta2fLogo": {
       "type": "text"
    },
-   "oldNotifFormat": {
-      "default": 0,
-      "type": "bool"
-   },
-   "openIdAttr": {
-      "type": "text"
-   },
-   "openIdAuthnLevel": {
-      "default": 1,
-      "type": "int"
-   },
-   "openIdExportedVars": {
-      "default": {},
-      "keyMsgFail": "__badVariableName__",
-      "msgFail": "__badValue__",
-      "type": "keyTextContainer"
-   },
-   "openIdIDPList": {
-      "default": "0;",
-      "type": "blackWhiteList"
-   },
-   "openIdIssuerSecret": {
-      "type": "text"
-   },
-   "openIdSPList": {
-      "default": "0;",
-      "type": "blackWhiteList"
-   },
-   "openIdSecret": {
-      "type": "text"
-   },
-   "openIdSreg_country": {
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_dob": {
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_email": {
-      "default": "mail",
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_fullname": {
-      "default": "cn",
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_gender": {
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_language": {
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_nickname": {
-      "default": "uid",
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_postcode": {
-      "type": "lmAttrOrMacro"
-   },
-   "openIdSreg_timezone": {
-      "default": "_timezone",
-      "type": "lmAttrOrMacro"
-   },
    "pamAuthnLevel": {
       "default": 2,
       "type": "int"
@@ -4031,46 +3916,12 @@
       "type": "portalskin"
    },
    "portalSkinBackground": {
-      "select": [
-         {
-            "k": "",
-            "v": "None"
-         },
-         {
-            "k": "1280px-Anse_Source_d'Argent_2-La_Digue.jpg",
-            "v": "Anse"
-         },
-         {
-            "k": "1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg",
-            "v": "Waterfall"
-         },
-         {
-            "k": "1280px-BrockenSnowedTrees.jpg",
-            "v": "Snowed Trees"
-         },
-         {
-            "k": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
-            "v": "National Monument"
-         },
-         {
-            "k": "1280px-Parry_Peak_from_Winter_Park.jpg",
-            "v": "Winter"
-         },
-         {
-            "k": "Aletschgletscher_mit_Pinus_cembra1.jpg",
-            "v": "Pinus"
-         }
-      ],
-      "type": "portalskinbackground"
+      "type": "text"
    },
    "portalSkinRules": {
       "keyMsgFail": "__badSkinRule__",
       "msgFail": "__badValue__",
       "type": "keyTextContainer"
-   },
-   "portalStatus": {
-      "default": 0,
-      "type": "bool"
    },
    "portalUserAttr": {
       "default": "_user",
@@ -5167,25 +5018,7 @@
    },
    "securedCookie": {
       "default": 0,
-      "select": [
-         {
-            "k": "0",
-            "v": "unsecuredCookie"
-         },
-         {
-            "k": "1",
-            "v": "securedCookie"
-         },
-         {
-            "k": "2",
-            "v": "doubleCookie"
-         },
-         {
-            "k": "3",
-            "v": "doubleCookieForSingleSession"
-         }
-      ],
-      "type": "select"
+      "type": "bool"
    },
    "sentryDsn": {
       "type": "text"
@@ -5481,23 +5314,6 @@
    "trustedDomains": {
       "type": "text"
    },
-   "twitterAppName": {
-      "type": "text"
-   },
-   "twitterAuthnLevel": {
-      "default": 1,
-      "type": "int"
-   },
-   "twitterKey": {
-      "type": "text"
-   },
-   "twitterSecret": {
-      "type": "text"
-   },
-   "twitterUserField": {
-      "default": "screen_name",
-      "type": "text"
-   },
    "u2fActivation": {
       "default": 0,
       "type": "boolOrExpr"
@@ -5705,19 +5521,6 @@
       "type": "virtualHostContainer"
    },
    "webCronSecret": {
-      "type": "text"
-   },
-   "webIDAuthnLevel": {
-      "default": 1,
-      "type": "int"
-   },
-   "webIDExportedVars": {
-      "default": {},
-      "keyMsgFail": "__badVariableName__",
-      "msgFail": "__badValue__",
-      "type": "keyTextContainer"
-   },
-   "webIDWhitelist": {
       "type": "text"
    },
    "webauthn2fActivation": {
