@@ -224,10 +224,10 @@ sub run {
     }
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
+    my $session_id = $req->sessionInfo->{_session_id} || $req->id;
 
     # Session creation timestamp
-    my $time = $req->{sessionInfo}->{_utime} || time();
+    my $time = $req->sessionInfo->{_utime} || time();
 
     # Get HTTP request information to know
     # if we are receving SAML request or response
@@ -277,8 +277,8 @@ sub run {
         if ( $request or $idp_initiated ) {
 
             # Load Session and Identity if they exist
-            my $session  = $req->{sessionInfo}->{ $self->lsDump };
-            my $identity = $req->{sessionInfo}->{ $self->liDump };
+            my $session  = $req->sessionInfo->{ $self->lsDump };
+            my $identity = $req->sessionInfo->{ $self->liDump };
 
             if ($session) {
                 unless ( $self->setSessionFromDump( $login, $session ) ) {
@@ -662,7 +662,7 @@ sub run {
 
             # Check if we have sufficient auth level
             my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
+              $req->sessionInfo->{authenticationLevel} || 0;
             if ( $authenticationLevel < $spAuthnLevel ) {
                 $self->logger->debug(
                     "Insufficient authentication level for service $spConfKey"
@@ -734,14 +734,14 @@ sub run {
             {
                 $nameIDContent =
                   $self->spMacros->{$spConfKey}->{$nameIDSessionKey}
-                  ->( $req, $req->{sessionInfo} );
+                  ->( $req, $req->sessionInfo );
             }
             elsif ( $nameIDSessionKey
-                and ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) )
+                and ( defined $req->sessionInfo->{$nameIDSessionKey} ) )
             {
                 $nameIDContent =
                   $self->p->getFirstValue(
-                    $req->{sessionInfo}->{$nameIDSessionKey} );
+                    $req->sessionInfo->{$nameIDSessionKey} );
             }
 
             # Manage Entity NameID format
@@ -873,10 +873,10 @@ sub run {
                     my $value;
                     if ( $self->spMacros->{$spConfKey}->{$_} ) {
                         $value = $self->spMacros->{$spConfKey}->{$_}
-                          ->( $req, $req->{sessionInfo} );
+                          ->( $req, $req->sessionInfo );
                     }
                     else {
-                        $value = $req->{sessionInfo}->{$_};
+                        $value = $req->sessionInfo->{$_};
                     }
 
                     # Check whether the value is required or not
@@ -1230,7 +1230,7 @@ sub run {
                 "Link session $session_id to SAML session $saml_session_id");
 
             $self->p->registerProtectedAppAccess( $req,
-                $req->{sessionInfo}->{ $self->conf->{whatToTrace} },
+                $req->sessionInfo->{ $self->conf->{whatToTrace} },
                 "saml:$spConfKey" );
 
             # Send SSO Response
@@ -1269,7 +1269,7 @@ sub run {
             }
 
             # log that a SAML authn response is build
-            my $user      = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+            my $user      = $req->sessionInfo->{ $self->conf->{whatToTrace} };
             my $nameIDLog = '';
             foreach my $format (qw(persistent transient)) {
                 if ( $login->nameIdentifier->Format eq
@@ -1675,7 +1675,7 @@ sub logout {
     return PE_OK if ( $req->data->{samlSLOCalled} );
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
+    my $session_id = $req->sessionInfo->{_session_id} || $req->id;
 
     # Close SAML sessions
     unless ( $self->deleteSAMLSecondarySessions($session_id) ) {
@@ -1686,8 +1686,8 @@ sub logout {
     my $logout = $self->createLogout( $self->lassoServer );
 
     # Load Session and Identity if they exist
-    my $session  = $req->{sessionInfo}->{ $self->lsDump };
-    my $identity = $req->{sessionInfo}->{ $self->liDump };
+    my $session  = $req->sessionInfo->{ $self->lsDump };
+    my $identity = $req->sessionInfo->{ $self->liDump };
 
     if ($session) {
         unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -2108,9 +2108,9 @@ sub sloServer {
             $self->logger->debug(
                 "Get session id $local_session_id (from cookie)");
         }
-        if ( $req->{sessionInfo} ) {
-            $session  = $req->{sessionInfo}->{ $self->lsDump };
-            $identity = $req->{sessionInfo}->{ $self->liDump };
+        if ( $req->sessionInfo ) {
+            $session  = $req->sessionInfo->{ $self->lsDump };
+            $identity = $req->sessionInfo->{ $self->liDump };
         }
         unless ($session) {
 

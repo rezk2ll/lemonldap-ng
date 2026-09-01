@@ -36,9 +36,10 @@ sub findUser {
 # Search exportedVars values in HTTP headers.
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     return PE_FORBIDDENIP
-      unless ( $self->checkIP($req) );
+      unless $self->checkIP($req);
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
@@ -47,8 +48,9 @@ sub setSessionInfo {
     while ( my ( $k, $v ) = each %vars ) {
         $v = 'HTTP_' . uc($v);
         $v =~ s/\-/_/g;
-        $req->{sessionInfo}->{$k} = $req->{$v};
+        $sessionInfo->{$k} = $req->{$v};
     }
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

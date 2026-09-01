@@ -79,7 +79,7 @@ sub run {
         my $sessions = $self->module->searchOn(
             $moduleOptions,
             $self->conf->{whatToTrace},
-            $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+            $req->sessionInfo->{ $self->conf->{whatToTrace} }
         );
 
         # searchOn() returns sessions indexed by their storage ID, then
@@ -95,7 +95,7 @@ sub run {
             if (
                 $self->singleSessionRule->( $req, $req->sessionInfo )
                 or (    $self->singleIPRule->( $req, $req->sessionInfo )
-                    and $req->{sessionInfo}->{ipAddr} ne
+                    and $req->sessionInfo->{ipAddr} ne
                     $session->data->{ipAddr} )
               )
             {
@@ -114,7 +114,7 @@ sub run {
     }
 
     $token = $self->ott->createToken( {
-            user     => $req->{sessionInfo}->{ $self->conf->{whatToTrace} },
+            user     => $req->sessionInfo->{ $self->conf->{whatToTrace} },
             sessions => to_json( \@otherSessionsId )
         }
     ) if @otherSessionsId;
@@ -132,7 +132,7 @@ sub run {
             my $session =
               $self->p->getApacheSession( $id, hashStore => 0, kind => 'SSO' )
               or next;
-            unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
+            unless ( $req->sessionInfo->{ $self->conf->{whatToTrace} } eq
                 $session->data->{ $self->conf->{whatToTrace} } )
             {
                 push @$deleted, $self->p->_sumUpSession( $session->data );

@@ -37,7 +37,8 @@ has ldapGroupAttributeNameSearch => (
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{_dn} = $req->data->{dn};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{_dn} = $req->data->{dn};
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
@@ -53,8 +54,9 @@ sub setSessionInfo {
         # value. See #2403
         $value = undef if ( $value eq "" );
 
-        $req->sessionInfo->{$k} = $value;
+        $sessionInfo->{$k} = $value;
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }
@@ -67,8 +69,9 @@ sub setGroups {
     # Bail out if we are being called out of sequence
     return PE_OK unless ( $req->data->{ldapentry} );
 
-    my $groups  = $req->{sessionInfo}->{groups}  || '';
-    my $hGroups = $req->{sessionInfo}->{hGroups} || {};
+    my $sessionInfo = $req->sessionInfo;
+    my $groups  = $req->sessionInfo->{groups}  || '';
+    my $hGroups = $req->sessionInfo->{hGroups} || {};
 
     if ( $self->conf->{ldapGroupBase} ) {
 
@@ -101,11 +104,10 @@ sub setGroups {
             $groups .= $self->conf->{multiValuesSeparator} if $groups;
             $groups .= join( '|', @$groupValues );
         }
-
     }
-
-    $req->{sessionInfo}->{groups}  = $groups;
-    $req->{sessionInfo}->{hGroups} = $hGroups;
+    $sessionInfo->{groups}  = $groups;
+    $sessionInfo->{hGroups} = $hGroups;
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

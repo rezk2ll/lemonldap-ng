@@ -41,13 +41,14 @@ sub findUser {
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     foreach my $k ( keys %{ $self->vars } ) {
         my $v        = $self->{vars}->{$k};
         my $attr     = $k;
         my $required = ( $attr =~ s/^!// ) ? 1 : 0;
-        $req->{sessionInfo}->{$attr} = $req->data->{_facebookData}->{$v};
-        if ( $required and not( defined $req->{sessionInfo}->{$attr} ) ) {
+        $sessionInfo->{$attr} = $req->data->{_facebookData}->{$v};
+        if ( $required and not( defined $sessionInfo->{$attr} ) ) {
             $self->logger->warn(
 "Required parameter $v is not provided by Facebook server, aborted"
             );
@@ -56,6 +57,7 @@ sub setSessionInfo {
             return PE_MISSINGREQATTR;
         }
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

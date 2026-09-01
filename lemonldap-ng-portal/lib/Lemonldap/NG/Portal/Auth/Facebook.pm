@@ -48,7 +48,9 @@ sub extractFormInfo {
             return PE_ERROR;
         }
         if ($access_token) {
-            $req->{sessionInfo}->{_facebookToken} = $access_token;
+            my $sessionInfo = $req->sessionInfo;
+            $sessionInfo->{_facebookToken} = $access_token;
+            $req->sessionInfo($sessionInfo);
 
      # Get mandatory fields (see https://developers.facebook.com/tools/explorer)
             my @fields = ( $self->conf->{facebookUserField} );
@@ -99,7 +101,9 @@ sub extractFormInfo {
             }
             $req->user( $data->{ $self->conf->{facebookUserField} } );
             $req->data->{_facebookData} = $data;
-            $req->{sessionInfo}->{_facebookData} = $data;
+            my $sessionInfo = $req->sessionInfo;
+            $sessionInfo->{_facebookData} = $data;
+            $req->sessionInfo($sessionInfo);
 
             # Force redirection to avoid displaying Oauth data
             $req->mustRedirect(1);
@@ -138,8 +142,9 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} =
-      $self->conf->{facebookAuthnLevel};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{facebookAuthnLevel};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

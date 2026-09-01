@@ -248,7 +248,7 @@ sub check {
         unless ( $unUser || $self->rules->{IdRule}->( $req, $attrs ) ) {
             $self->userLogger->warn(
                 "checkUser requested for an invalid user ($user)");
-            $req->{sessionInfo} = {};
+            $req->sessionInfo({});
             $self->logger->debug('Identity not authorized');
             $req->error(PE_BADCREDENTIALS)
               ;    # Catch error to preserve protected Id
@@ -443,7 +443,7 @@ sub _userData {
     }
 
     $self->logger->debug('Return ' . $req->user . ' sessionInfo');
-    return $req->{sessionInfo};
+    return $req->sessionInfo;
 }
 
 sub _authorization {

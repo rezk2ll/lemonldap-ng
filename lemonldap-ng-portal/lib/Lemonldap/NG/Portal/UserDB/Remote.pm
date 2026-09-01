@@ -24,7 +24,7 @@ sub findUser {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
     delete $req->data->{rSessionInfo}->{_session_id};
-    $req->{sessionInfo} = $req->data->{rSessionInfo};
+    $req->sessionInfo($req->data->{rSessionInfo});
 
     return PE_OK;
 }

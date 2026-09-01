@@ -143,7 +143,7 @@ sub createMailSession {
     # Store mail
     $infos->{ $self->conf->{mailSessionKey} } =
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     # Store user
     $infos->{user} = $req->user;
@@ -300,7 +300,7 @@ sub _reset {
         # Get mail address
         $req->data->{mailAddress} ||=
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
         return PE_MAILERROR unless $req->data->{mailAddress};
 
         # Build confirmation url
@@ -470,7 +470,7 @@ sub changePwd {
         return $cpq;
     }
 
-    $req->user( $req->{sessionInfo}->{_user} );
+    $req->user( $req->sessionInfo->{_user} );
     my $result =
       $self->p->_passwordDB->setNewPassword( $req,
         $req->data->{newpassword}, 1 );
@@ -490,7 +490,7 @@ sub changePwd {
     # Send mail containing the new password
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     my $password = $req->data->{newpassword};
 

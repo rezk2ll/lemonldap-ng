@@ -673,7 +673,7 @@ sub _authorizeEndpoint {
 
         # Check that id_token_hint sub match current user
         my $sub     = $self->getIDTokenSub($id_token_hint);
-        my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+        my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
         unless ( $sub eq $user_id ) {
             $self->logger->error(
                 "ID Token hint sub $sub does not match user $user_id");
@@ -694,7 +694,7 @@ sub _authorizeEndpoint {
     }
 
     my $max_age         = $oidc_request->{'max_age'};
-    my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
+    my $_lastAuthnUTime = $req->sessionInfo->{_lastAuthnUTime};
     if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
         $self->logger->debug(
                 "Reauthentication forced because authentication time"
@@ -704,7 +704,7 @@ sub _authorizeEndpoint {
     }
 
     # Check if we have sufficient auth level
-    my $authenticationLevel = $req->{sessionInfo}->{authenticationLevel} || 0;
+    my $authenticationLevel = $req->sessionInfo->{authenticationLevel} || 0;
     if ( $authenticationLevel < $spAuthnLevel ) {
         $self->logger->debug(
                 "Insufficient authentication level for service $rp"
@@ -734,9 +734,9 @@ sub _authorizeEndpoint {
         # Loading existing oidcConsents
         $self->logger->debug("Looking for OIDC Consents ...");
 
-        if ( $req->{sessionInfo}->{_oidcConsents} ) {
+        if ( $req->sessionInfo->{_oidcConsents} ) {
             $_oidcConsents = eval {
-                from_json( $req->{sessionInfo}->{_oidcConsents},
+                from_json( $req->sessionInfo->{_oidcConsents},
                     { allow_nonref => 1 } );
             };
             if ($@) {
@@ -1434,7 +1434,7 @@ sub _check_bypass_confirm {
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutBypassConfirm} ) {
 
         my $sub     = $payload->{sub};
-        my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+        my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
         if ( $sub ne $user_id ) {
             $self->userLogger->info(
                     "ID Token hint sub $sub does not match user $user_id,"
@@ -1443,7 +1443,7 @@ sub _check_bypass_confirm {
         }
 
         my $sid = $payload->{sid};
-        if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne $sid ) {
+        if ( $self->getSidFromSession( $rp, $req->sessionInfo ) ne $sid ) {
             $self->userLogger->info(
                     "ID Token hint `sid` does not match user session,"
                   . " forcing confirmation" );
@@ -1983,16 +1983,17 @@ sub _handleRefreshTokenGrant {
           or return $self->sendOIDCError( $req, 'invalid_grant', 400 );
 
         # Cleanup sessionInfo
-        delete $req->sessionInfo->{_utime};
-        delete $req->sessionInfo->{_startTime};
-        delete $req->sessionInfo->{_lastSeen};
+        my $sessionInfo = $req->sessionInfo;
+        delete $sessionInfo->{_utime};
+        delete $sessionInfo->{_startTime};
+        delete $sessionInfo->{_lastSeen};
+        $req->sessionInfo($sessionInfo);
 
         # Update refresh session
         $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
         $userData = $refreshSession->data;
-        for ( keys %{ $req->sessionInfo } ) {
-            $refreshSession->data->{$_} = $req->sessionInfo->{$_};
-        }
+        $refreshSession->data->{$_} = $req->sessionInfo->{$_}
+          foreach ( keys %{ $req->sessionInfo } );
 
         my $h = $self->p->processHook( $req, 'oidcGotOfflineRefresh', $rp,
             $refreshSession->data );
@@ -2585,7 +2586,7 @@ sub logout {
                           . build_urlencoded(
                             iss => $self->get_issuer($req),
                             sid => $self->getSidFromSession(
-                                $rp, $req->{sessionInfo}
+                                $rp, $req->sessionInfo
                             )
                           );
                     }
@@ -2792,7 +2793,7 @@ sub _convertOldFormatConsents {
     my $scope        = '';
     my $epoch        = '';
     my $rp           = '';
-    unless ( $req->{sessionInfo} ) {
+    unless ( $req->sessionInfo ) {
         $self->logger->error("Corrupted session");
         return PE_ERROR;
     }
@@ -2800,7 +2801,7 @@ sub _convertOldFormatConsents {
     # Search Relying Parties
     $self->logger->debug(
         "Searching for previously registered Relying Parties...");
-    foreach ( keys %{ $req->{sessionInfo} } ) {
+    foreach ( keys %{ $req->sessionInfo } ) {
         if ( $_ =~ /^_oidc_consent_scope_([\w-]+)$/ ) {
             push @rps, $1;
             $self->logger->debug("Found RP $1");
@@ -2811,8 +2812,8 @@ sub _convertOldFormatConsents {
     $self->logger->debug("Convert Relying Party Consent(s)...");
     my $count = 0;
     foreach (@rps) {
-        $scope = $req->{sessionInfo}->{ "_oidc_consent_scope_" . $_ };
-        $epoch = $req->{sessionInfo}->{ "_oidc_consent_time_" . $_ };
+        $scope = $req->sessionInfo->{ "_oidc_consent_scope_" . $_ };
+        $epoch = $req->sessionInfo->{ "_oidc_consent_time_" . $_ };
         $rp    = $_;
 
         if ( $scope and $epoch and $rp ) {

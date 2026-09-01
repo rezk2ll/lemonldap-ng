@@ -259,6 +259,7 @@ sub extractFormInfo {
         }
 
         # Get a proxy ticket for each proxied service
+        my $sessionInfo = $req->sessionInfo;
         foreach ( keys %$proxied ) {
             my $service = $proxied->{$_};
             my $pt      = $self->retrievePT( $service, $pgtId, $srvConf );
@@ -273,9 +274,9 @@ sub extractFormInfo {
                 "CAS: Received proxy ticket $pt for service $service");
 
             # Store it in session
-            $req->{sessionInfo}->{ '_casPT' . $_ } = $pt;
+            $sessionInfo->{ "_casPT$_" } = $pt;
         }
-
+        $req->sessionInfo($sessionInfo);
     }
 
     return PE_OK;
@@ -311,7 +312,7 @@ sub authFinish {
 
     # Real session was stored, get id and utime
     my $id    = $req->{id};
-    my $utime = $req->{sessionInfo}->{_utime};
+    my $utime = $req->sessionInfo->{_utime};
 
     $self->logger->debug( "Store ticket " . $ticket . " for session $id" );
 
@@ -340,8 +341,10 @@ sub authenticate {
 # Set authenticationLevel.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{casAuthnLevel};
-    $req->{sessionInfo}->{_casSrv}             = $req->data->{_casSrvCurrent};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{casAuthnLevel};
+    $sessionInfo->{_casSrv}             = $req->data->{_casSrvCurrent};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

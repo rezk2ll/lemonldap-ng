@@ -56,7 +56,7 @@ sub checkForNotifications {
             $self->logger->debug("Get reference: $reference");
 
             # Check it in session
-            if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
+            if ( exists $req->sessionInfo->{"notification_$reference"} ) {
 
                 # The notification was already accepted
                 $self->logger->debug(
@@ -248,7 +248,7 @@ sub getNotifBack {
                 $self->logger->debug("Get reference: $reference");
 
                 # Check it in session
-                if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
+                if ( exists $req->sessionInfo->{"notification_$reference"} ) {
 
                     # The notification was already accepted
                     $self->logger->debug(

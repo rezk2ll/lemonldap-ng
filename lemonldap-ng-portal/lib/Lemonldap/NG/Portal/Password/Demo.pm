@@ -15,7 +15,7 @@ sub init {
 
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
-    return ( $pwd eq $req->{sessionInfo}->{uid} );
+    return ( $pwd eq $req->sessionInfo->{uid} );
 }
 
 sub modifyPassword {

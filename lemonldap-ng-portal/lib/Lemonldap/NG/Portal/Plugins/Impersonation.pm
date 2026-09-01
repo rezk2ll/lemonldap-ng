@@ -128,19 +128,19 @@ sub run {
     $self->logger->debug("Rename real attributes...");
     my @hidden = split /[,\s]+/, $self->conf->{impersonationHiddenAttributes};
 
-    foreach my $k ( keys %{ $req->{sessionInfo} } ) {
+    foreach my $k ( keys %{ $req->sessionInfo } ) {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
-            next unless defined $req->{sessionInfo}->{$k};
+            next unless defined $req->sessionInfo->{$k};
         }
         my $spk = $self->prefix . $k;
         unless ( isHiddenAttr( $self->conf, $k, @hidden )
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
         {
-            $realSession->{$spk} = $req->{sessionInfo}->{$k};
+            $realSession->{$spk} = $req->sessionInfo->{$k};
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
         $self->logger->debug("Delete $k");
-        delete $req->{sessionInfo}->{$k};
+        delete $req->sessionInfo->{$k};
     }
 
     $spoofSession = $self->_userData( $req, $spoofId, $realSession, $unUser );
@@ -199,9 +199,10 @@ sub run {
     }
 
     # Main session
+    my $sessionInfo = $req->sessionInfo;
     $self->p->updateSession( $req, $spoofSession );
-    $req->{sessionInfo}->{_loginHistory} =
-      $loginHistory;    # Restore login history
+    $sessionInfo->{_loginHistory} = $loginHistory; # Restore login history
+    $req->sessionInfo($sessionInfo);
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
     return $statut;
@@ -248,8 +249,7 @@ sub _userData {
 
     # Same real and spoof session - Compute Macros and Groups
     if ($raz) {
-        $req->{sessionInfo} = {};
-        $req->{sessionInfo} = {%$realSession};
+        $req->sessionInfo($realSession);
         $req->user($realId);
         $req->steps( [
                 'getUser',   'setSessionInfo',
@@ -266,9 +266,11 @@ sub _userData {
     }
 
     # Compute groups & macros again with real authenticationLevel
-    $req->sessionInfo->{authenticationLevel} =
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} =
       $realSession->{real_authenticationLevel};
-    delete $req->sessionInfo->{groups};
+    delete $sessionInfo->{groups};
+    $req->sessionInfo($sessionInfo);
     $req->steps(
         [ 'setSessionInfo', 'setGroups', 'setMacros', 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
@@ -277,7 +279,7 @@ sub _userData {
     }
 
     $self->logger->debug('Return ' . $req->user . ' sessionInfo');
-    return $req->{sessionInfo};
+    return $req->sessionInfo;
 }
 
 sub setSecurity {

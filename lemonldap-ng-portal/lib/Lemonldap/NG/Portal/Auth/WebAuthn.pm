@@ -176,7 +176,9 @@ sub authLogout {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->authnLevel;
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

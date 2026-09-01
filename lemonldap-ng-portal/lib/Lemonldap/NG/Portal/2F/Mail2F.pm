@@ -70,11 +70,11 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     if ( !$self->is_registrable ) {
-        my $dest = $req->{sessionInfo}->{ $self->sessionKey };
+        my $dest = $req->sessionInfo->{ $self->sessionKey };
         unless ($dest) {
             $self->logger->error( $self->prefix
                   . '2f: could not find mail attribute for login '
-                  . $req->{sessionInfo}->{_user} );
+                  . $req->sessionInfo->{_user} );
             return PE_MUSTHAVEMAIL;
         }
     }

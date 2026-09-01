@@ -103,7 +103,7 @@ sub setSessionInfo {
         return PE_ERROR;
     }
     foreach ( keys %{ $res->{attributes} } ) {
-        $req->{sessionInfo}->{$_} ||= $res->{attributes}->{$_}
+        $req->sessionInfo->{$_} ||= $res->{attributes}->{$_}
           unless (/^_/);
     }
     $req->data->{_setSessionInfoDone}++;

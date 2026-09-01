@@ -125,7 +125,7 @@ sub _modifyPassword {
             # Send mail containing the new password
             $req->data->{mailAddress} ||=
               $self->p->getFirstValue(
-                $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+                $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
             my $password = $req->data->{newpassword};
 

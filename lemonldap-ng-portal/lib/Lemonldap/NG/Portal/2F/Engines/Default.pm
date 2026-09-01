@@ -515,12 +515,12 @@ sub restore2faSessionInfo {
     # Update sessionInfo
     delete $info->{$_}
       foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
+    $info->{_utime} = delete $info->{_2fUtime};
     $req->data->{_2fRetries} = delete $info->{_2fRetries};
+    $req->id( delete $info->{_2fRealSession} );
+    $req->urldc( delete $info->{_2fUrldc} );
+    $req->info( delete $info->{_2fInfo} );
     $req->sessionInfo($info);
-    $req->id( delete $req->sessionInfo->{_2fRealSession} );
-    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
-    $req->info( delete $req->sessionInfo->{_2fInfo} );
-    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
 }
 
 # bool public display2fRegisters($req, $session)

@@ -457,44 +457,30 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    my $op = $req->data->{_oidcOPCurrent};
+    my $op          = $req->data->{_oidcOPCurrent};
+    my $sessionInfo = $req->sessionInfo;
 
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{oidcAuthnLevel};
-
-    $req->{sessionInfo}->{_oidc_OP} = $op;
-    $req->{sessionInfo}->{_oidc_access_token} =
-      $req->data->{access_token};
-
-    if ( $req->data->{refresh_token} ) {
-        $req->{sessionInfo}->{_oidc_refresh_token} =
-          $req->data->{refresh_token};
-    }
-
-    if ( $req->data->{access_token_eol} ) {
-        $req->{sessionInfo}->{_oidc_access_token_eol} =
-          $req->data->{access_token_eol};
-    }
-
-    if ( $req->data->{op_sid} ) {
-        $req->{sessionInfo}->{_oidc_sid} = $req->data->{op_sid};
-    }
-
-    if ( $req->data->{id_token_sub} ) {
-        $req->{sessionInfo}->{_oidc_sub} = $req->data->{id_token_sub};
-    }
-
-    if ( $req->data->{id_token_acr} ) {
-        $req->{sessionInfo}->{_oidc_acr} = $req->data->{id_token_acr};
-    }
+    $sessionInfo->{authenticationLevel} = $self->conf->{oidcAuthnLevel};
+    $sessionInfo->{_oidc_OP}            = $op;
+    $sessionInfo->{_oidc_access_token}  = $req->data->{access_token};
+    $sessionInfo->{_oidc_refresh_token} = $req->data->{refresh_token}
+      if $req->data->{refresh_token};
+    $sessionInfo->{_oidc_access_token_eol} = $req->data->{access_token_eol}
+      if $req->data->{access_token_eol};
+    $sessionInfo->{_oidc_sid} = $req->data->{op_sid} if $req->data->{op_sid};
+    $sessionInfo->{_oidc_sub} = $req->data->{id_token_sub}
+      if $req->data->{id_token_sub};
+    $sessionInfo->{_oidc_acr} = $req->data->{id_token_acr}
+      if $req->data->{id_token_acr};
 
     if ( $req->data->{id_token_amr} ) {
         if ( ref( $req->data->{id_token_amr} ) eq "ARRAY" ) {
-            $req->{sessionInfo}->{_oidc_amr} =
+            $sessionInfo->{_oidc_amr} =
               join $self->conf->{multiValuesSeparator},
               sort @{ $req->data->{id_token_amr} };
         }
         else {
-            $req->{sessionInfo}->{_oidc_amr} = $req->data->{id_token_amr};
+            $sessionInfo->{_oidc_amr} = $req->data->{id_token_amr};
         }
     }
 
@@ -503,11 +489,13 @@ sub setAuthSessionInfo {
       $self->opOptions->{$op}->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->logger->debug("Store ID Token in session");
-        $req->{sessionInfo}->{_oidc_id_token} = $req->data->{id_token};
+        $sessionInfo->{_oidc_id_token} = $req->data->{id_token};
     }
     else {
         $self->logger->debug("ID Token will not be stored in session");
     }
+
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }
@@ -517,7 +505,7 @@ sub authLogout {
 
     return PE_OK if $req->data->{oidcSkipLogout};
 
-    my $op = $req->{sessionInfo}->{_oidc_OP};
+    my $op = $req->sessionInfo->{_oidc_OP};
 
     # Find endession endpoint
     my $endsession_endpoint =
@@ -536,8 +524,9 @@ sub authLogout {
 
         $req->urldc(
             $self->buildLogoutRequest(
-                $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},
-                $logout_url, $state, $client_id,
+                $endsession_endpoint, $req->sessionInfo->{_oidc_id_token},
+                $logout_url,          $state,
+                $client_id,
             )
         );
 

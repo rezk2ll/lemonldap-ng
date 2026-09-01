@@ -473,9 +473,9 @@ sub isAuthorizedURI {
         return 0;
     }
 
-    $req->{sessionInfo} = $session->data;
+    $req->sessionInfo($session->data);
     my $r =
-      $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $uri, undef, $host );
+      $self->p->HANDLER->grant( $req, $req->sessionInfo, $uri, undef, $host );
 
     return $r;
 }

@@ -90,9 +90,10 @@ sub getUser {
         $self->logger->error("No cookie named '$name'");
         return PE_ERROR;
     }
-
-    $req->sessionInfo->{_proxyCookies} = join '; ',
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{_proxyCookies} = join '; ',
       map { s/;.*$//r } $resp->header('Set-Cookie');
+    $req->sessionInfo($sessionInfo);
     $self->logger->debug( 'Store remote cookies in session ('
           . $req->sessionInfo->{_proxyCookies}
           . ')' );
@@ -131,9 +132,11 @@ sub setSessionInfo {
         $self->logger->error("Bad content: $@");
         return PE_ERROR;
     }
+    my $sessionInfo = $req->sessionInfo;
     foreach ( keys %$res ) {
-        $req->{sessionInfo}->{$_} ||= $res->{$_} unless (/^_/);
+        $sessionInfo->{$_} ||= $res->{$_} unless (/^_/);
     }
+    $req->sessionInfo($sessionInfo);
     $req->data->{_setSessionInfoDone}++;
 
     return PE_OK;
@@ -162,7 +165,7 @@ sub authLogout {
         $self->logger->error("Bad content: $@");
         return PE_OK;
     }
-    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
     unless ( $res->{result} ) {
         $self->userLogger->warn("Internal Portal logout failed for $user")
           if $user;

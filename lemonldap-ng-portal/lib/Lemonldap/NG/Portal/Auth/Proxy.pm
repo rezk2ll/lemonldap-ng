@@ -28,7 +28,9 @@ sub init {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{proxyAuthnLevel};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{proxyAuthnLevel};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

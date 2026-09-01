@@ -238,7 +238,7 @@ sub _certificateReset {
         # Store mail
         $infos->{ $self->conf->{mailSessionKey} } =
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
         # Store user
         $infos->{user} = $req->user;
@@ -300,7 +300,7 @@ sub _certificateReset {
         # Get mail address
         $req->data->{mailAddress} ||=
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
         return PE_MAILERROR unless ( $req->data->{mailAddress} );
 
         # Build confirmation url
@@ -457,7 +457,7 @@ sub modifyCertificate {
     my $cert = $self->certificateHash($file);
 
     # Modify ldap certificate attribute
-    $req->user( $req->{sessionInfo}->{_user} );
+    $req->user( $req->sessionInfo->{_user} );
     my $result =
       $self->registerModule->modifCertificate( $req, $certificatExactAssertion,
         $cert );
@@ -469,7 +469,7 @@ sub modifyCertificate {
     # Send mail to notify the certificate has been successfully reset
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     # Send mail
     return PE_MAILERROR

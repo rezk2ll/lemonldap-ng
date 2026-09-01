@@ -135,7 +135,7 @@ Last method called during authentication process.
 
 =head4 setAuthSessionInfo($req)
 
-Method that must at least set $req->{sessionInfo}->{authenticationLevel} to
+Method that must at least set $req->sessionInfo->{authenticationLevel} to
 an integer that indicates the strong of authentication.
 
 Proposed levels:

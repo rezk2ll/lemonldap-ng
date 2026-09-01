@@ -132,14 +132,16 @@ sub findUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
         %{ $self->conf->{demoExportedVars} }
     );
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $demoAccounts{ $req->user }->{$v};
+        $sessionInfo->{$k} = $demoAccounts{ $req->user }->{$v};
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

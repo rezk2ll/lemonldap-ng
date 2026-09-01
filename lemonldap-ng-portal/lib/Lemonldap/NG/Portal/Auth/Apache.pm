@@ -35,8 +35,9 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} =
-      $self->conf->{apacheAuthnLevel};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{apacheAuthnLevel};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

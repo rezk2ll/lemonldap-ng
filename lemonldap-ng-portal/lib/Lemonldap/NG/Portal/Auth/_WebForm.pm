@@ -148,23 +148,25 @@ sub extractFormInfo {
 # Set password in session data if wanted.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # authenticationLevel
-    $req->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
+    $sessionInfo->{authenticationLevel} = $self->authnLevel;
 
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
         my $passwordToStore =
           $req->data->{'newpassword'} || $req->data->{'password'};
-        $req->{sessionInfo}->{'_password'} =
+        $sessionInfo->{'_password'} =
             $self->conf->{storePasswordEncrypted}
           ? $self->p->HANDLER->tsv->{cipher}->encrypt($passwordToStore)
           : $passwordToStore;
     }
 
     # Store user timezone
-    $req->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
+    $sessionInfo->{'_timezone'} = $self->{'timezone'};
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

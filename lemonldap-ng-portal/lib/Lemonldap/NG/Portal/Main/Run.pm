@@ -671,7 +671,7 @@ sub updatePersistentSession {
         and %$infos
         and !$self->conf->{disablePersistentStorage} );
 
-    $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+    $uid ||= $req->sessionInfo->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };
     $self->logger->debug("Found 'whatToTrace' -> $uid");
     unless ($uid) {
@@ -718,7 +718,7 @@ sub updateSession {
         foreach ( keys %$infos ) {
             $self->logger->debug("Update sessionInfo $_");
             $self->_dump( $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $infos->{$_};
+            $req->sessionInfo->{$_} = $infos->{$_};
             if (   $self->HANDLER->data->{_session_id}
                 && $id eq $self->HANDLER->data->{_session_id} )
             {
@@ -767,13 +767,14 @@ sub _deleteSession {
     ) unless ($preserveCookie);
 
     # Log
-    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    my $mod  = $req->{sessionInfo}->{_auth};
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    my $mod  = $req->sessionInfo->{_auth};
     if ($user) {
         $self->auditLog(
             $req,
             message => (
-"User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
+                "User $user has been disconnected from $mod ("
+                  . $req->sessionInfo->{ipAddr} . ")"
             ),
             code => "LOGOUT",
             user => $user,
@@ -1260,24 +1261,16 @@ sub rebuildCookies {
 sub tplParams {
     my ( $self, $req ) = @_;
     my %templateParams;
-
-    my $portalPath = $req->portal;
+    my $sessionInfo = $req->sessionInfo;
+    my $portalPath  = $req->portal;
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.fcgi$##;
 
-    for my $session_key ( keys %{ $req->{sessionInfo} } ) {
-        $templateParams{ "session_" . $session_key } =
-          $req->{sessionInfo}->{$session_key};
-    }
-
-    for my $env_key ( keys %{ $req->env } ) {
-        $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
-    }
-
-    for my $custom_key ( keys %{ $self->conf->{portalCustomTplParams} } ) {
-        $templateParams{$custom_key} =
-          $self->conf->{portalCustomTplParams}->{$custom_key};
-    }
+    $templateParams{"env_$_"} = $req->env->{$_} foreach keys %{ $req->env };
+    $templateParams{"session_$_"} = $sessionInfo->{$_}
+      foreach keys %$sessionInfo;
+    $templateParams{$_} = $self->conf->{portalCustomTplParams}->{$_}
+      foreach keys %{ $self->conf->{portalCustomTplParams} };
 
     return (
         CACHE_TAG    => $self->cacheTag,

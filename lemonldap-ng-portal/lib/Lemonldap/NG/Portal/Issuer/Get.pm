@@ -44,10 +44,10 @@ sub run {
     }
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
+    my $session_id = $req->sessionInfo->{_session_id} || $req->id;
 
     # Session creation timestamp
-    my $time = $req->{sessionInfo}->{_utime} || time();
+    my $time = $req->sessionInfo->{_utime} || time();
 
     if ( $req->path =~ m#^$self->{conf}->{issuerDBGetPath}/logout# ) {
         $self->logger->debug("IssuerGet: request for logout");
@@ -87,7 +87,7 @@ sub computeGetParams {
             return '';
         }
         foreach my $param ( keys %$prms ) {
-            my $value = $req->{sessionInfo}->{ $prms->{$param} };
+            my $value = $req->sessionInfo->{ $prms->{$param} };
             $value =~ s/[\r\n\t]//;
             $getPrms{$param} = $value;
         }

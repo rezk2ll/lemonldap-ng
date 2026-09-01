@@ -27,12 +27,15 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # Store password (deleted in checkRemoteId() if local policy does not accept
     # stored passwords)
-    $req->{sessionInfo}->{'_password'} = $req->data->{'password'};
-    $req->{sessionInfo}->{authenticationLevel} =
+    $sessionInfo->{'_password'} = $req->data->{'password'};
+    $sessionInfo->{authenticationLevel} =
       $req->data->{rSessionInfo}->{authenticationLevel};
+    $req->sessionInfo($sessionInfo);
+
     return PE_OK;
 }
 

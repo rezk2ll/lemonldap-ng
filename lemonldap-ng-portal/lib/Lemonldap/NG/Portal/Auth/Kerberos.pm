@@ -319,8 +319,10 @@ sub authLogout {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{krbAuthnLevel};
-    $req->{sessionInfo}->{_krbUser}            = $req->data->{_krbUser};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{krbAuthnLevel};
+    $sessionInfo->{_krbUser}            = $req->data->{_krbUser};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

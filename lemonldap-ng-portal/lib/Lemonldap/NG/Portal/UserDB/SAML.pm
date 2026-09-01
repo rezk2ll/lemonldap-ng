@@ -55,7 +55,7 @@ sub setSessionInfo {
               split( /;/, $self->idpAttributes->{$idp}->{$_} );
 
             # Keep mandatory attributes not sent in authentication response
-            if ( $mandatory and not defined $req->{sessionInfo}->{$_} ) {
+            if ( $mandatory and not defined $req->sessionInfo->{$_} ) {
                 $exportedAttr->{$_} =
                   $self->idpAttributes->{$idp}->{$_};
                 $self->logger->debug(
@@ -135,6 +135,7 @@ sub setSessionInfo {
     }
 
     # Check we have all required attributes
+    my $sessionInfo = $req->sessionInfo; 
     foreach ( keys %$exportedAttr ) {
 
         # Extract fields from exportedAttr value
@@ -155,8 +156,9 @@ sub setSessionInfo {
         $self->logger->debug("Get value $value for attribute $_");
 
         # Store value in sessionInfo
-        $req->{sessionInfo}->{$_} = $value;
+        $sessionInfo->{$_} = $value;
     }
+    $req->sessionInfo($sessionInfo);
 
     # Restore current Lasso::Server
     $self->lassoServer = $current_server;

@@ -137,7 +137,7 @@ sub run {
     unless ( $self->_hasYubikey( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn( $self->prefix
               . '2f: user '
-              . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
               . ' has no device registered' );
         return PE_BADOTP;
     }

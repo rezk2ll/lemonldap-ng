@@ -84,8 +84,9 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $attributeMap = $self->sessionKeys;
-    $req->{sessionInfo}->{authenticationLevel} =
-      $self->conf->{radiusAuthnLevel};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{radiusAuthnLevel};
+    $req->sessionInfo($sessionInfo);
 
     if ($attributeMap) {
         while ( my ( $attr_radname, $attr_value ) =

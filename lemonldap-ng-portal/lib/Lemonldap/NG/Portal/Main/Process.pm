@@ -135,7 +135,7 @@ sub restoreArgs {
 
 sub importHandlerData {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo} = $req->userData;
+    $req->sessionInfo( $req->userData );
     $req->id( $req->sessionInfo->{_session_id} );
     $req->user( $req->sessionInfo->{ $self->conf->{whatToTrace} } );
     return PE_OK;
@@ -266,9 +266,9 @@ sub cleanPdata {
             delete $req->pdata->{$k};
         }
     }
-    my $user_log    = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    my $auth_module = $req->{sessionInfo}->{_auth};
-    my $ipAddr      = $req->{sessionInfo}->{ipAddr};
+    my $user_log    = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    my $auth_module = $req->sessionInfo->{_auth};
+    my $ipAddr      = $req->sessionInfo->{ipAddr};
 
     if ($user_log) {
         $self->auditLog(
@@ -568,50 +568,51 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{_lastAuthnUTime} = time();
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{_lastAuthnUTime} = time();
+    $req->sessionInfo($sessionInfo);
     my $ret = $self->_authentication->setAuthSessionInfo($req);
-    if ( $ret == PE_OK
-        and not( defined $req->sessionInfo->{authenticationLevel} ) )
-    {
-        $self->logger->error('Authentication level is not set by auth module');
-    }
+    $self->logger->error('Authentication level is not set by auth module')
+      if ( $ret == PE_OK
+        and not( defined $req->sessionInfo->{authenticationLevel} ) );
     return $ret;
 }
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # Set _user
-    $req->{sessionInfo}->{_user} //= $req->user;
+    $sessionInfo->{_user} //= $req->user;
 
     # Get the current user module
-    $req->{sessionInfo}->{_auth}   = $self->getModule( $req, "auth" );
-    $req->{sessionInfo}->{_userDB} = $self->getModule( $req, "user" );
+    $sessionInfo->{_auth}   = $self->getModule( $req, "auth" );
+    $sessionInfo->{_userDB} = $self->getModule( $req, "user" );
 
     # Store IP address from remote address or X-FORWARDED-FOR header
-    $req->{sessionInfo}->{ipAddr} = $req->address;
+    $sessionInfo->{ipAddr} = $req->address;
 
     # Date and time
     if ( $self->conf->{updateSession} ) {
-        $req->{sessionInfo}->{_updateTime} =
+        $sessionInfo->{_updateTime} =
           strftime( "%Y%m%d%H%M%S", localtime() );
     }
     else {
-        $req->{sessionInfo}->{_utime} ||= time();
-        $req->{sessionInfo}->{_startTime} =
+        $sessionInfo->{_utime} ||= time();
+        $sessionInfo->{_startTime} =
           strftime( "%Y%m%d%H%M%S", localtime() );
-        $req->{sessionInfo}->{_lastSeen} = time()
+        $sessionInfo->{_lastSeen} = time()
           if $self->conf->{timeoutActivity};
     }
 
     # Currently selected language
-    $req->{sessionInfo}->{_language} = $self->getLanguage($req);
+    $sessionInfo->{_language} = $self->getLanguage($req);
 
     # Store URL origin in session
-    $req->{sessionInfo}->{_url} = $req->{urldc};
+    $sessionInfo->{_url} = $req->{urldc};
 
     # Share sessionInfo with underlying handler (needed for safe jail)
-    $req->userData( $req->sessionInfo );
+    $req->userData( $req->sessionInfo($sessionInfo) );
 
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);
@@ -619,10 +620,11 @@ sub setSessionInfo {
 
 sub setMacros {
     my ( $self, $req ) = @_;
-    foreach ( sort keys %{ $self->_macros } ) {
-        $req->{sessionInfo}->{$_} =
-          $self->_macros->{$_}->( $req, $req->sessionInfo );
-    }
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{$_} = $self->_macros->{$_}->( $req, $sessionInfo )
+      foreach sort keys %{ $self->_macros };
+
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 
@@ -633,11 +635,11 @@ sub setGroups {
 
 sub setPersistentSessionInfo {
     my ( $self, $req ) = @_;
-
-    my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $key = $req->sessionInfo->{ $self->conf->{whatToTrace} };
 
     return PE_OK unless ( $key and length($key) );
 
+    my $sessionInfo       = $req->sessionInfo;
     my $persistentSession = $self->getPersistentSession($key);
     if ($persistentSession) {
         $self->logger->debug("Persistent session found for $key");
@@ -646,29 +648,30 @@ sub setPersistentSessionInfo {
             # Do not restore some parameters
             next if $k =~ /^_(?:utime|session_(?:u?id|kind))$/;
             $self->logger->debug("Restore persistent parameter $k");
-            $req->{sessionInfo}->{$k} = $persistentSession->data->{$k};
+            $sessionInfo->{$k} = $persistentSession->data->{$k};
         }
+        $req->sessionInfo($sessionInfo);
     }
     return PE_OK;
 }
 
 sub setLocalGroups {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{groups}  //= '';
-    $req->{sessionInfo}->{hGroups} //= {};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{groups}  //= '';
+    $sessionInfo->{hGroups} //= {};
     foreach ( sort keys %{ $self->_groups } ) {
-        if ( $self->_groups->{$_}->( $req, $req->sessionInfo ) ) {
-            $req->{sessionInfo}->{groups} .=
-              $self->conf->{multiValuesSeparator} . $_;
-            $req->{sessionInfo}->{hGroups}->{$_}->{name} = $_;
+        if ( $self->_groups->{$_}->( $req, $sessionInfo ) ) {
+            $sessionInfo->{groups} .= $self->conf->{multiValuesSeparator} . $_;
+            $sessionInfo->{hGroups}->{$_}->{name} = $_;
         }
     }
 
     # Clear values separator at the beginning
-    if ( $req->{sessionInfo}->{groups} ) {
-        $req->{sessionInfo}->{groups} =~
-          s/^$self->{conf}->{multiValuesSeparator}//o;
+    if ( $sessionInfo->{groups} ) {
+        $sessionInfo->{groups} =~ s/^$self->{conf}->{multiValuesSeparator}//o;
     }
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 
@@ -680,13 +683,13 @@ sub store {
 
     # Fill session
     my $infos = {};
-    foreach my $k ( sort keys %{ $req->{sessionInfo} } ) {
-        next unless defined $req->{sessionInfo}->{$k};
-        my $displayValue = $req->{sessionInfo}->{$k};
+    foreach my $k ( sort keys %{ $req->sessionInfo } ) {
+        next unless defined $req->sessionInfo->{$k};
+        my $displayValue = $req->sessionInfo->{$k};
         $displayValue = '****' if isHiddenAttr( $self->conf, $k );
         $self->logger->debug("Store $displayValue in session key $k");
         $self->_dump($displayValue) if ref($displayValue);
-        $infos->{$k} = $req->{sessionInfo}->{$k};
+        $infos->{$k} = $req->sessionInfo->{$k};
     }
 
     # Main session
@@ -700,12 +703,14 @@ sub store {
     return PE_APACHESESSIONERROR unless $session;
 
     # Update current request
+    my $sessionInfo = $req->sessionInfo;
     $req->id( $session->id );
     unless ( $self->_sfEngine->searchForAuthorized2Fmodules($req) ) {
         $self->logger->debug(
             "No 2F module authorized -> Update current request");
-        $req->{sessionInfo}->{_session_id}   = $session->{id};
-        $req->{sessionInfo}->{_session_kind} = $session->{kind};
+        $sessionInfo->{_session_id}   = $session->{id};
+        $sessionInfo->{_session_kind} = $session->{kind};
+        $req->sessionInfo($sessionInfo);
     }
 
     $req->refresh(0);
@@ -728,8 +733,8 @@ sub buildCookie {
         );
     }
     my $ref = (
-        %{ $req->{sessionInfo} }
-        ? $req->{sessionInfo}
+        %{ $req->sessionInfo }
+        ? $req->sessionInfo
         : $req->userData
     );
     $req->data->{newAuth} = 1;
