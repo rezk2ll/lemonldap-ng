@@ -682,12 +682,32 @@ sub sendFragmentResponse {
     return $self->_redirectToUrl( $req, $response_uri );
 }
 
+# Add parameters to the query string of an URI object
+#
+# URI::QueryParam::query_param() silently drops the existing query string
+# when it does not contain any "=" (URI treats it as an "isindex" query).
+# Keep such parameters, they are part of the registered redirect URI (#3707)
+# @param uri URI object, modified in place
+# @param response_params Hashref of parameters to add
+sub _addQueryParams {
+    my ( $self, $uri, $response_params ) = @_;
+
+    my $query = $uri->query;
+    if ( defined $query and length $query and $query !~ /=/ ) {
+        $uri->query( $query . '&' . build_urlencoded(%$response_params) );
+    }
+    else {
+        $uri->query_param( $_, $response_params->{$_} )
+          for ( keys %$response_params );
+    }
+
+    return $uri;
+}
+
 sub getQueryResponse {
     my ( $self, $redirect_uri, $response_params ) = @_;
     my $uri = URI->new($redirect_uri);
-    for ( keys %$response_params ) {
-        $uri->query_param( $_, $response_params->{$_} );
-    }
+    $self->_addQueryParams( $uri, $response_params );
     return $uri;
 }
 
@@ -698,9 +718,7 @@ sub getFragmentResponse {
    # Use a temporary URL so we can use QueryParam features to build the fragment
     my $tmp = URI->new;
     $tmp->query( $uri->fragment );
-    for ( keys %$response_params ) {
-        $tmp->query_param( $_, $response_params->{$_} );
-    }
+    $self->_addQueryParams( $tmp, $response_params );
 
     $uri->fragment( $tmp->query );
 
