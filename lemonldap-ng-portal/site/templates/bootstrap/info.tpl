@@ -11,14 +11,14 @@
       </TMPL_IF>
     </TMPL_IF>
     <div class="card border-info">
-      <div class="card-header text-white bg-info">
+      <div class="card-header bg-secondary">
         <h3 class="card-title" trspan="info">Information</h3>
       </div>
       <div class="card-body">
         <TMPL_VAR NAME="MSG">
       </div>
       <TMPL_IF NAME="ACTIVE_TIMER">
-      <div id="divToHide" class="card-footer text-white bg-info">
+      <div id="divToHide" class="card-footer bg-secondary">
         <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
       </div>
       </TMPL_IF>

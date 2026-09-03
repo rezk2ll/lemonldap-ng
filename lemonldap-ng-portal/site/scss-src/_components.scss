@@ -31,6 +31,19 @@ main,
   flex: 1 0 auto;
 }
 
+// Links --------------------------------------------------------------------
+a {
+  text-decoration: none;
+}
+
+.actions a {
+  color: $primary3;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
 // Page header --------------------------------------------------------------
 #header {
   padding: 1.5rem 0 .75rem;
@@ -38,14 +51,8 @@ main,
 }
 
 #header img {
-  max-height: 5.5rem;
-  width: auto;
   margin-bottom: 1rem;
   padding: .5rem .75rem;
-  background-color: rgba(255, 255, 255, .75);
-  border-radius: var(--bs-border-radius);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, .04);
-  backdrop-filter: blur(4px);
 }
 
 // Cards (login, menu, password, errors…) -----------------------------------
@@ -93,29 +100,11 @@ div.form {
   cursor: pointer;
 }
 
-div.actions {
-  margin-top: 1rem;
-}
-
-div.actions a,
-div.actions button {
-  margin-top: .625rem;
-}
-
 // Buttons ------------------------------------------------------------------
 .btn {
   white-space: normal;
   font-weight: 500;
   letter-spacing: .01em;
-  transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0);
 }
 
 .btn-success,
@@ -153,10 +142,6 @@ div.actions button {
   transition: border-color .12s ease, box-shadow .12s ease;
 }
 
-.form-control::placeholder {
-  color: #9ca3af; // slate-400
-}
-
 // Input groups: keep addons visually distinct but soft
 .input-group .input-group-text {
   background-color: var(--bs-tertiary-bg);
@@ -169,25 +154,29 @@ div.actions button {
   box-shadow: 0 2px 6px rgba(15, 23, 42, .04);
 }
 
-// Notifications & legacy "message-*" classes (mapped to alert-* by JS) ----
-.message-positive { background-color: #ecfccb; color: #3f6212; } // lime
-.message-warning  { background-color: #fef3c7; color: #92400e; } // amber
-.message-negative { background-color: #fee2e2; color: #991b1b; } // red
-
 // Navbar -------------------------------------------------------------------
 .navbar {
   position: relative;
   z-index: 1030; // above .card (no z-index) so dropdown-menu pops over apps
-  border-radius: var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0 0;
-}
-
-.navbar.bg-light {
-  background-color: rgba(255, 255, 255, .85) !important;
-  backdrop-filter: blur(6px);
+  border-radius: var(--bs-border-radius-lg);
 }
 
 .nav-link {
   font-weight: 500;
+}
+
+.nav-item {
+  border-radius: var(--bs-border-radius-sm);
+}
+
+.ui-state-active {
+  background: $active-bg;
+}
+
+// Applications list --------------------------------------------------------
+.application {
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
 }
 
 // 2FA chooser tiles --------------------------------------------------------
@@ -198,7 +187,6 @@ div.actions button {
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
   margin-bottom: .625rem;
-  text-decoration: none;
   color: inherit;
   background-color: #ffffff;
   transition:
@@ -225,25 +213,12 @@ div.actions button {
 // Page footer --------------------------------------------------------------
 #footer {
   flex-shrink: 0;
-  margin-top: 2.5rem;
-  padding: 1.25rem 0;
   background-color: rgba(255, 255, 255, .75);
   border-top: 1px solid rgba(15, 23, 42, .06);
   text-align: center;
   color: var(--bs-secondary-color);
   font-size: .875rem;
   backdrop-filter: blur(6px);
-}
-
-#footer a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-#footer a:hover,
-#footer a:focus {
-  color: var(--bs-primary);
 }
 
 // Back-to-top button (shown by portal.js once the page is scrolled down) ----
@@ -253,6 +228,10 @@ div.actions button {
   right: 15px;
   display: none;
   z-index: 1030;
+}
+
+#btn-back-to-top i.fa {
+  margin: 0;
 }
 
 // Reduced motion -----------------------------------------------------------

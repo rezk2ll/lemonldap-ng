@@ -34,7 +34,7 @@
     </div>
 
     <div class="card mb-3 border-info" id='myNotification' hidden>
-      <div class="card-header text-white bg-info">
+      <div class="card-header bg-secondary">
         <h3 class="card-title"><span trspan="validationDate">Validation date</span>: <span id="notifEpoch"></span> - <span trspan="reference">Reference</span>: <span id="notifRef"></span></h3>
       </div>
       <div class="card-body">
@@ -50,7 +50,7 @@
 </div>
 
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-secondary" role="button">
     <span class="fa fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
   </a>

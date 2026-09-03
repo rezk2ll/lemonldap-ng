@@ -17,7 +17,7 @@
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
     <div class="card border-info">
-      <div class="card-header text-white bg-info">
+      <div class="card-header bg-secondary">
         <h3 class="card-title">
           <span trspan="confirmation">Confirmation</span>
         </h3>

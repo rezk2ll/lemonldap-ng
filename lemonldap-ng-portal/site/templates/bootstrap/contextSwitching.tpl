@@ -8,14 +8,14 @@
       </TMPL_IF>
       <TMPL_INCLUDE NAME="impersonation.tpl">
       <div class="buttons">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-primary">
           <span class="fa fa-random"></span>
           <span trspan="switchContext">switchContext</span>
         </button>
       </div>
     </form>
     <div class="buttons">
-      <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
+      <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-secondary" role="button">
         <span class="fa fa-home"></span>
         <span trspan="goToPortal">Go to portal</span>
       </a>
