@@ -11,7 +11,7 @@
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
     <div class="card border-info">
-      <div class="card-header text-white bg-info">
+      <div class="card-header bg-secondary">
         <h3 class="card-title" trspan="gotNewMessages">You have some new messages</h3>
       </div>
       <div class="card-body">

@@ -11,7 +11,7 @@ form
 
 <main id="redirectcontent" class="container">
   <div class="card border-secondary">
-    <div class="card-header text-white bg-secondary">
+    <div class="card-header bg-secondary">
       <h4 class="text-center card-title"><span trspan="waitFor2f">Wait for 2F</span></h4>
     </div>
     <div class="card-body">

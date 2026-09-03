@@ -14,7 +14,7 @@
       <span trspan="<TMPL_VAR NAME="BUTTON">">Upgrade session</span>
     </button>
     <TMPL_IF NAME="PORTALBUTTON">
-    <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
+    <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-secondary" role="button">
       <span class="fa fa-home"></span>
       <span trspan="goToPortal">Go to portal</span>
     </a>

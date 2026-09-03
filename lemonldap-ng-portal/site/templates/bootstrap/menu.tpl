@@ -8,7 +8,7 @@
 
   <div id="menu">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <div class="container-fluid">
     <a class="navbar-brand" href="<TMPL_VAR NAME="PORTAL_BASE">"><span trspan="home" hidden></span><i class="fa fa-home"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,9 +157,9 @@
             <TMPL_IF NAME="category">
             <!-- Category -->
 
-              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
+              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary my-3" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
 
-                <div class="card-header text-white bg-secondary">
+                <div class="card-header bg-secondary">
                 <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-end" ></i></span></h4>
                 </div>
 
@@ -171,11 +171,10 @@
                     <TMPL_LOOP NAME=applications>
 
                       <!-- Application -->
-                      <div class="col-md-4">
-                      <div class="application <TMPL_VAR NAME="appid"> card">
+                      <div class="col-md-4 py-1">
+                      <div class="application <TMPL_VAR NAME="appid"> p-3 h-100">
                         <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="apptip">" >
 
-                        <div class="card-body">
                         <div class="row">
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
@@ -194,7 +193,7 @@
                         </TMPL_IF>
 
                         <!-- Name and link (mandatory) -->
-                        <h5 class="appname <TMPL_VAR NAME="appid"> card-title">
+                        <h5 class="appname <TMPL_VAR NAME="appid">">
                           <TMPL_VAR NAME="appname">
                         </h5>
 
@@ -206,7 +205,6 @@
                         </TMPL_IF>
 
                           </div>
-                        </div>
                         </div>
                         </a>
 
@@ -233,7 +231,7 @@
       <TMPL_IF NAME="ChangePassword">
         <div id="password">
             <div class="card border-secondary">
-              <div class="card-header text-white bg-secondary">
+              <div class="card-header bg-secondary">
               <h4 class="card-title" trspan="changePwd">Change your password</h4>
               </div>
               <div class="card-body">
@@ -246,8 +244,8 @@
       <TMPL_IF NAME="LoginHistory">
         <div id="loginHistory">
             <TMPL_IF NAME="SUCCESS_LOGIN">
-            <div class="card border-secondary">
-              <div class="card-header text-white bg-secondary">
+            <div class="card border-secondary mb-3">
+              <div class="card-header bg-secondary">
               <h4 class="card-title" trspan="lastLogins">Last logins</h4>
               </div>
               <div class="card-body">
@@ -257,7 +255,7 @@
             </TMPL_IF>
             <TMPL_IF NAME="FAILED_LOGIN">
             <div class="card border-secondary">
-              <div class="card-header text-white bg-secondary">
+              <div class="card-header bg-secondary">
               <h4 class="card-title" trspan="lastFailedLogins">Last failed logins</h4>
               </div>
               <div class="card-body">
@@ -271,7 +269,7 @@
       <TMPL_IF NAME="OidcConsents">
         <div id="oidcConsents">
             <div class="card border-secondary">
-              <div class="card-header text-white bg-secondary">
+              <div class="card-header bg-secondary">
               <h4 class="card-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h4>
               </div>
               <div class="card-body">
@@ -284,11 +282,11 @@
       <TMPL_IF NAME="Logout">
         <div id="logout">
           <div class="card border-secondary">
-            <div class="card-header text-white bg-secondary">
+            <div class="card-header bg-secondary">
               <h4 class="card-title" trspan="areYouSure">Are you sure ?</h4>
             </div>
             <div class="card-body buttons">
-            <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
+            <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-primary" role="button">
               <span class="fa fa-check-circle"></span>
               <span trspan="imSure">I'm sure</span>
             </a>
