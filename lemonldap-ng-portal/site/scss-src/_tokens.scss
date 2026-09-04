@@ -6,24 +6,20 @@
 // rules.
 
 // Brand palette ------------------------------------------------------------
-// Warm orange/brown — LemonLDAP::NG's identity is the lemon turned
-// citrus-amber. Pastel by default; saturated tints reserved for primary
-// action buttons.
-$primary:       #d97706;   // amber-600 (warm brand orange)
-$secondary:     #78716c;   // stone-500 (neutral, complements warm tones)
-$success:       #65a30d;   // lime-600 (works with the warm palette)
-$info:          #0891b2;   // cyan-600
-$warning:       #f59e0b;   // amber-500
-$danger:        #dc2626;   // red-600
-
-// Light, low-contrast canvas. The page background uses a pastel gradient
-// applied in _components.scss; this is the fallback solid color.
-$body-bg:    #fdf8f3;       // very pale peach/cream
-$body-color: #292524;       // stone-800
+$primary:       #2e294e;
+$secondary:     #f5f7fa;
+$success:       #c5d86d;
+$body-bg:       #fdf8f3;
+$body-color:    #292524;
 
 // Surface colors -----------------------------------------------------------
 $light:        #faf6f1;
-$dark:         #1c1917;     // stone-900
+$dark:         #1c1917;
+
+// Custom colors ------------------------------------------------------------
+$active-bg:    #eeeeee;
+$primary2:     #fda30b;
+$primary3:     #12645a;
 
 // Typography ---------------------------------------------------------------
 $font-family-sans-serif:
@@ -35,7 +31,7 @@ $font-size-base:    1rem;
 $line-height-base:  1.55;
 $headings-font-weight: 600;
 $headings-line-height: 1.25;
-$headings-color:    #1c1917; // stone-900
+$headings-color:    $primary;
 
 // Shape --------------------------------------------------------------------
 // Generous rounding for a modern feel. Nothing harsh.
@@ -60,7 +56,7 @@ $card-spacer-x:     1.75rem;
 $input-bg:                #ffffff;
 $input-border-color:      #e7e5e4;          // stone-200
 $input-focus-border-color: $primary;
-$input-focus-box-shadow:   0 0 0 .2rem rgba(217, 119, 6, .18);
+$input-focus-box-shadow:   0 0 0 .2rem $secondary;
 $input-padding-y:          .625rem;
 $input-padding-x:          .9rem;
 $input-border-radius:      $border-radius-sm;

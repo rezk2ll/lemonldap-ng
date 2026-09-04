@@ -4,7 +4,10 @@ use File::Find;
 find(
     sub {
         return unless /\.js$/;
-        return if $File::Find::dir =~ m#/bwr/#;
+
+        # bwr/ holds vendored libraries, new/ the bundled beta manager: both
+        # embed third-party code we do not control
+        return if $File::Find::dir =~ m#/(?:bwr|new)(?:/|$)#;
         return unless -f;
         my $err;
         if ( open my $f, '<', $_ ) {

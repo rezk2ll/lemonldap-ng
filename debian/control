@@ -58,9 +58,11 @@ Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      libwww-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
+                     npm,
                      perl,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
+                     rollup,
                      terser | uglifyjs
 Standards-Version: 4.7.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng

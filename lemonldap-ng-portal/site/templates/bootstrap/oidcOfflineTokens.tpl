@@ -3,7 +3,7 @@
 {"sessions":<TMPL_VAR NAME="sessions">}
 </script>
 <div class="card border-secondary">
-  <div class="card-header text-white bg-secondary">
+  <div class="card-header bg-secondary">
     <h4 class="card-title" trspan="oidcOfflineTokens">Oidc Offline tokens</h4>
   </div>
   <div class="card-body buttons">

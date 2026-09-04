@@ -21,7 +21,8 @@ SKIP: {
         skip 'Missing dependencies', $maintests;
     }
 
-    my $client = LLNG::Manager::Test->new( {
+    my $client = LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                 => 'error',
                 useSafeJail              => 1,
@@ -88,7 +89,7 @@ s/^.*token=([^&]+).*$/token=$1&firstname=who&lastname=doctor&mail=dwho%40badwolf
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
     ok(
         $res->[2]->[0] =~
-m%<a class="btn btn-secondary" href="http://auth.example.com/register\?skin=bootstrap">%,
+          m%href="http://auth.example.com/register\?skin=bootstrap"%,
         'Found Register link & submit button'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok(

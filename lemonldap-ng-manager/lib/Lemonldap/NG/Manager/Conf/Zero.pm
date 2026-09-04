@@ -181,8 +181,6 @@ sub zeroConf {
         'cfgVersion'           => $VERSION,
         'exportedVars'         => {},
         'portalSkin'           => 'bootstrap',
-        'portalSkinBackground' =>
-          '1280px-Cedar_Breaks_National_Monument_partially.jpg',
         'localSessionStorage'        => 'Cache::FileCache',
         'localSessionStorageOptions' => {
             'namespace'          => 'lemonldap-ng-sessions',

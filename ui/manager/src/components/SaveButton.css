@@ -1,0 +1,29 @@
+/* Bottom-right floating action button: out of the top toolbar, so it never
+   overlaps the header actions. */
+.saveButton {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+}
+
+.notif {
+  position: fixed;
+  background-color: #fff;
+  left: 50%;
+  padding: 2px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  justify-items: center;
+  text-align: left;
+  top: 65px;
+  align-content: center;
+  z-index: 5000;
+}
+
+.notif.red {
+  background-color: rgb(255, 192, 192);
+}
+.notif.hidden {
+  visibility: hidden;
+}

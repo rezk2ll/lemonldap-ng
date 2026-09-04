@@ -10,7 +10,7 @@ former Bootstrap 4 implementation of the ``bootstrap`` skin.
    This is an in-place upgrade of the ``bootstrap`` skin: the skin name is
    unchanged, so existing configurations (``portalSkin = bootstrap``) keep
    working with no change. However, if you maintain a **custom skin derived
-   from the old Bootstrap 4 ``bootstrap`` skin**, you will need to port it
+   from the old Bootstrap 4** ``bootstrap`` **skin**, you will need to port it
    to Bootstrap 5 — see `Migrating a custom skin to Bootstrap 5`_ below.
 
 This page describes what the skin ships with, how to customize it, and how
@@ -22,13 +22,6 @@ Activation
 The ``bootstrap`` skin is the default; nothing needs to be done to enable
 it. It can be (re)selected in the Manager under ``General Parameters`` >
 ``Portal`` > ``Customization`` > ``Default skin`` (choose ``Bootstrap``).
-
-Or via ``lemonldap-ng.ini``:
-
-.. code-block:: ini
-
-   [portal]
-   portalSkin = bootstrap
 
 Per-URL or per-user skin selection (via ``portalSkinRules``) works as
 usual.
@@ -61,11 +54,11 @@ Configuration parameters (skin background, custom CSS, custom JS, login
 options, etc.) work identically to the ``bootstrap`` skin — see
 :doc:`portalcustom` for the full list.
 
-Custom CSS overrides (``portalCustomCSS``)
+Custom CSS overrides (``portalCustomCss``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Drop a CSS file under ``/usr/share/lemonldap-ng/portal/htdocs/static/`` and
-reference it via ``portalCustomCSS``. It is loaded after the skin's
+reference it via ``portalCustomCss``. It is loaded after the skin's
 compiled stylesheet, so any selector you add wins.
 
 SCSS overrides (advanced)

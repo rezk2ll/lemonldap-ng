@@ -25,6 +25,11 @@
 
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
+          <TMPL_IF NAME="BETA_UI">
+            <li><a href="#" name="switchUi" switch-ui="0" class="link" trspan="backToLegacyManager"></a></li>
+          <TMPL_ELSE>
+            <li><a href="#" name="switchUi" switch-ui="1" class="link" trspan="tryNewManager"></a></li>
+          </TMPL_IF>
           <li uib-dropdown>
             <a id="mainlangmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span ng-bind="translate('menu')"></span> <span class="caret"></span></a>
             <ul uib-dropdown-menu aria-labelled-by="mainlangmenu" role="grid">

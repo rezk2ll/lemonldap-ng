@@ -648,7 +648,6 @@
 	},
 	"portal": "http://auth.llng.localhost:8080/",
 	"portalSkin": "bootstrap",
-	"portalSkinBackground": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
 	"post": {
 		"manager.llng.localhost": {},
 		"test1.llng.localhost": {

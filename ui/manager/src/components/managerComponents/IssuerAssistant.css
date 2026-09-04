@@ -1,0 +1,59 @@
+.issuerAssistant {
+  padding: 3vh;
+  background-color: white;
+  z-index: 900;
+  border-radius: 15px;
+  text-align: center;
+  width: max-content;
+  height: max-content;
+  font-size: medium;
+}
+
+.issuerInitials {
+  margin-bottom: 5px;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+}
+
+.issuerAssistant Button {
+  border: none;
+  border-radius: 5px;
+  padding: 1vh 2vh;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.ignoreButton {
+  margin-left: 10px;
+}
+
+.ignoreButton:last-child {
+  margin-right: 0;
+}
+.issuerAssistant.hidden {
+  visibility: hidden;
+}
+
+.text {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formInput,
+.fileInput,
+.generateButton,
+.previousButton,
+.nextButton,
+.ignoreButton {
+  margin-top: 5px;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+}
+
+.ignoreButton {
+  margin-left: 10px;
+}

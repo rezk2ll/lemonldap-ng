@@ -181,3 +181,29 @@ backend is no longer enough to hijack a session.
 Existing installations keep their own value. To benefit from it, migrate your
 sessions using the ``convertToHashSessionStorage`` utility (see
 :doc:`changesessionbackend`).
+
+Graphical interface
+-------------------
+
+Portal skin
+~~~~~~~~~~~
+
+Portal skin has been upgrade to Boostrap5.
+
+Read carefully :doc:`bootstrapskin` to know what changes you need to do.
+
+Backgrounds
+~~~~~~~~~~~
+
+Default background images have been deleted, these files are no more in LemonLDAP::NG packages:
+
+* 1280px-Anse_Source_d'Argent_2-La_Digue.jpg
+* 1280px-Autumn-clear-water-waterfall-landscape\_-_Virginia_-_ForestWander.jpg
+* 1280px-BrockenSnowedTrees.jpg
+* 1280px-Cedar_Breaks_National_Monument_partially.jpg
+* 1280px-Parry_Peak_from_Winter_Park.jpg
+* Aletschgletscher_mit_Pinus_cembra1.jpg
+
+If you are using one of them, you can download it and install it in ``/usr/share/lemonldap-ng/portal/htdocs/static/common/backgrounds``.
+
+If you already configured a custom background image, you have nothing to do.

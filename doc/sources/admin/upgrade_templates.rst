@@ -16,8 +16,8 @@ Template updates
     * OR you created a custom theme and the only templates you modified are the ones that start with ``custom`` (``customfooter.tpl``, etc.)
 
 
-Next release
-------------
+3.0
+---
 
 ``bootstrap`` skin upgraded to Bootstrap 5
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -28,8 +28,8 @@ from SCSS sources. The skin name is unchanged, so ``portalSkin =
 bootstrap`` keeps working: standard deployments that did not fork the
 templates need no action.
 
-If you maintain a **custom skin derived from the old Bootstrap 4
-``bootstrap`` skin**, you must port it to Bootstrap 5. See
+If you maintain a **custom skin derived from the old Bootstrap 4**
+``bootstrap`` **skin**, you must port it to Bootstrap 5. See
 :doc:`bootstrapskin` for the full migration checklist (class renames,
 removed component wrappers, Font Awesome v4 → v6 notes).
 

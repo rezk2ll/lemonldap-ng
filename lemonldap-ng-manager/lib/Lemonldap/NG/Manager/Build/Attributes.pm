@@ -229,9 +229,6 @@ sub types {
         portalskin => {
             test => sub { 1 }
         },
-        portalskinbackground => {
-            test => sub { 1 }
-        },
         post => {
             test => sub { 1 }
         },
@@ -1107,33 +1104,8 @@ sub attributes {
             select        => [ { k => 'bootstrap', v => 'Bootstrap' }, ],
         },
         portalSkinBackground => {
-            type          => 'portalskinbackground',
+            type          => 'text',
             documentation => 'Background image of portal skin',
-            select        => [
-                { k => "", v => 'None' },
-                {
-                    k => "1280px-Anse_Source_d'Argent_2-La_Digue.jpg",
-                    v => 'Anse'
-                },
-                {
-                    k =>
-"1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg",
-                    v => 'Waterfall'
-                },
-                { k => "1280px-BrockenSnowedTrees.jpg", v => 'Snowed Trees' },
-                {
-                    k => "1280px-Cedar_Breaks_National_Monument_partially.jpg",
-                    v => 'National Monument'
-                },
-                {
-                    k => "1280px-Parry_Peak_from_Winter_Park.jpg",
-                    v => 'Winter'
-                },
-                {
-                    k => "Aletschgletscher_mit_Pinus_cembra1.jpg",
-                    v => 'Pinus'
-                },
-            ],
         },
         portalSkinRules => {
             type          => 'keyTextContainer',

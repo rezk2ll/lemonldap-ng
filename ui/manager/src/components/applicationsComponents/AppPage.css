@@ -1,0 +1,117 @@
+@media (max-width: 500px) {
+  .box th {
+    font-size: smaller;
+  }
+  .appDesc table {
+    width: 45vw;
+  }
+  select {
+    width: 5vh;
+  }
+}
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.appDesc {
+  margin: 2%;
+  border-radius: 15px;
+  flex-wrap: wrap;
+  height: 75vh;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.divider {
+  height: 80vh;
+}
+
+.box tr {
+  text-align: left;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #acacac;
+}
+
+.box tbody {
+  border-bottom: 2px solid #3f3f3f;
+}
+
+.box td {
+  padding-right: 2%;
+  flex-wrap: wrap;
+}
+
+.authLevel {
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.plus {
+  color: rgb(6, 190, 0);
+  font-size: xx-large;
+  background-color: transparent;
+}
+
+.minus {
+  color: red;
+  font-size: xx-large;
+  background-color: transparent;
+}
+
+.appDesc table {
+  width: 75%;
+  max-width: 100%;
+  flex-wrap: wrap;
+  border-collapse: collapse;
+}
+
+textarea {
+  height: 200px;
+  width: 100%;
+}
+
+.optionNavbar {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: rgb(37, 63, 63); */
+  padding: 2%;
+  color: rgb(95, 95, 95);
+  justify-content: space-around;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.optionNavbar :hover {
+  background-color: antiquewhite;
+}
+
+.optionNavbar.sub :hover {
+  background-color: rgb(248, 217, 177);
+}
+
+.option {
+  margin: 1%;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+}
+.suboption {
+  margin: 1%;
+  margin-left: 2%;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.suboption.selected {
+  background-color: rgb(248, 217, 177);
+}
+
+.option.selected {
+  background-color: antiquewhite;
+}
+
+.scopes {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}

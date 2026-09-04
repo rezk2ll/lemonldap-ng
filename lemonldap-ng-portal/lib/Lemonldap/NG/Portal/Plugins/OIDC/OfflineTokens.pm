@@ -89,8 +89,8 @@ sub display {
     }
     return {
         logo => "wrench",
-        name => "OidcOfflineTokens",
-        id   => "OidcOfflineTokens",
+        name => "oidcOfflineTokens",
+        id   => "oidcofflinetokens",
         html => $self->loadTemplate(
             $req,
             "oidcOfflineTokens",
