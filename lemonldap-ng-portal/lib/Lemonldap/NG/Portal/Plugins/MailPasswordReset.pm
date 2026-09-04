@@ -199,7 +199,7 @@ sub _reset {
             return PE_BADMAILTOKEN;
         }
 
-        $req->user($mailSession->data->{user});
+        $req->user( $mailSession->data->{user} );
         $req->data->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
         $self->logger->debug( 'User associated to: ' . $req->user );
@@ -213,7 +213,7 @@ sub _reset {
     else {
 
         # Use submitted value
-        $req->user($req->param('mail') || '');
+        $req->user( $req->param('mail') || '' );
 
         # Captcha for register form
         if ( $self->captcha->( $req, {} ) ) {

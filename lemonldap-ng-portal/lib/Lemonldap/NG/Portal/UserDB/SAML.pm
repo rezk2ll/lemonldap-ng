@@ -135,7 +135,7 @@ sub setSessionInfo {
     }
 
     # Check we have all required attributes
-    my $sessionInfo = $req->sessionInfo; 
+    my $sessionInfo = $req->sessionInfo;
     foreach ( keys %$exportedAttr ) {
 
         # Extract fields from exportedAttr value

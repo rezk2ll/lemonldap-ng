@@ -237,7 +237,7 @@ sub extractFormInfo {
     my $user;
     ( $user, $req->data->{casAttrs} ) =
       $self->validateST( $req, $local_url, $ticket, $srvConf, $proxied );
-    if ( $user ) {
+    if ($user) {
         $req->user($user);
         $self->logger->debug("CAS: User $user found");
     }
@@ -274,7 +274,7 @@ sub extractFormInfo {
                 "CAS: Received proxy ticket $pt for service $service");
 
             # Store it in session
-            $sessionInfo->{ "_casPT$_" } = $pt;
+            $sessionInfo->{"_casPT$_"} = $pt;
         }
         $req->sessionInfo($sessionInfo);
     }

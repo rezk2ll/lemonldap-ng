@@ -209,7 +209,7 @@ sub getCookies {
     my ( $self, $req, $user, $password, $sessionid ) = @_;
     $self->logger->debug("SOAP authentication request for $user");
 
-    $req->user( $user);
+    $req->user($user);
     $req->data->{password} = $password;
     if ($sessionid) {
         $req->{id}    = $sessionid;
@@ -473,7 +473,7 @@ sub isAuthorizedURI {
         return 0;
     }
 
-    $req->sessionInfo($session->data);
+    $req->sessionInfo( $session->data );
     my $r =
       $self->p->HANDLER->grant( $req, $req->sessionInfo, $uri, undef, $host );
 

@@ -348,7 +348,7 @@ sub newAuthSession {
     );
     $req->{error} = $self->p->process($req);
     $self->logger->debug(
-        'REST authentication result for ' . $req->user . "code $req->{error}");
+        'REST authentication result for ' . $req->user . "code $req->{error}" );
 
     if ( $req->error != 0 ) {
         $self->p->deleteSession($req);

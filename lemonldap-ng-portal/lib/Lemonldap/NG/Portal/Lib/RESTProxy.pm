@@ -81,7 +81,7 @@ sub getUser {
         return PE_ERROR;
     }
     unless ( $res->{result} ) {
-        $self->userLogger->warn('Authentication failed for ' . $req->user);
+        $self->userLogger->warn( 'Authentication failed for ' . $req->user );
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }

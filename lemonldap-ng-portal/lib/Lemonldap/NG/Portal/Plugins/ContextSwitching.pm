@@ -97,7 +97,8 @@ sub display {
     if ( $req->userData->{ $self->prefixedSId } ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->userLogger->notice('Stop ContextSwitching for ' . $req->user);
+            $self->userLogger->notice(
+                'Stop ContextSwitching for ' . $req->user );
             $self->userLogger->info("Remove real session $realSessionId");
             $realSession->remove;
             return $self->p->do( $req,
@@ -285,7 +286,7 @@ sub _abortImpersonation {
 
     # Restore real session
     $req->{$type} = { %{ $session->data } };
-    $req->user($session->data->{_user});
+    $req->user( $session->data->{_user} );
     $req->urldc( $req->portal );
     $req->id($realSessionId);
     $self->p->buildCookie($req);

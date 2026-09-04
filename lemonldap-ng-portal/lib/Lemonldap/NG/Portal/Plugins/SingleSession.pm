@@ -95,8 +95,8 @@ sub run {
             if (
                 $self->singleSessionRule->( $req, $req->sessionInfo )
                 or (    $self->singleIPRule->( $req, $req->sessionInfo )
-                    and $req->sessionInfo->{ipAddr} ne
-                    $session->data->{ipAddr} )
+                    and $req->sessionInfo->{ipAddr} ne $session->data->{ipAddr}
+                )
               )
             {
                 push @$deleted, $self->p->_sumUpSession( $session->data );

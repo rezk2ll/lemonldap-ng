@@ -33,7 +33,7 @@ sub authenticate {
     my ( $self, $req ) = @_;
 
     unless ( $req->user eq $req->data->{password} ) {
-        $self->userLogger->warn('Bad password for ' . $req->user);
+        $self->userLogger->warn( 'Bad password for ' . $req->user );
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }

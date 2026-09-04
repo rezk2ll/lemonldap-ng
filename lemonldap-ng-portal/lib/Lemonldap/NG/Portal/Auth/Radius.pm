@@ -59,7 +59,8 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
 
-    $self->logger->debug( 'Send authentication request (' . $req->user
+    $self->logger->debug( 'Send authentication request ('
+          . $req->user
           . ") to Radius server ($self->{conf}->{radiusServer})" );
 
     # Session info is empty or unknown at this step
@@ -84,7 +85,7 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $attributeMap = $self->sessionKeys;
-    my $sessionInfo = $req->sessionInfo;
+    my $sessionInfo  = $req->sessionInfo;
     $sessionInfo->{authenticationLevel} = $self->conf->{radiusAuthnLevel};
     $req->sessionInfo($sessionInfo);
 

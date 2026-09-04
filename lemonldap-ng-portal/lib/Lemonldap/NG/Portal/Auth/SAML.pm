@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::SAML;
 
 use strict;
 use Mouse;
-use MIME::Base64 qw/encode_base64/;
+use MIME::Base64   qw/encode_base64/;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
@@ -1139,7 +1139,7 @@ sub setAuthSessionInfo {
     my $idpConfKey     = $req->data->{_idpConfKey};
     my $nameIdentifier = $req->data->{_nameID};
     my $session_index  = $req->data->{_sessionIndex};
-    my $sessionInfo = $req->sessionInfo;
+    my $sessionInfo    = $req->sessionInfo;
 
     # Get SAML assertion
     my $assertion = $self->getAssertion($login);
@@ -1492,7 +1492,8 @@ sub getIDP {
 
     # Case 1: Recover IDP from idpEntityId URL Parameter
     if ( $idp = $req->param("idpEntityId") ) {
-        $self->logger->debug("IDP $idp selected from idpEntityId URL Parameter");
+        $self->logger->debug(
+            "IDP $idp selected from idpEntityId URL Parameter");
     }
     else {
         # Case 2: Recover IDP from idp URL Parameter

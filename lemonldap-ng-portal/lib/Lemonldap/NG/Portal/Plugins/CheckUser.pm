@@ -248,7 +248,7 @@ sub check {
         unless ( $unUser || $self->rules->{IdRule}->( $req, $attrs ) ) {
             $self->userLogger->warn(
                 "checkUser requested for an invalid user ($user)");
-            $req->sessionInfo({});
+            $req->sessionInfo( {} );
             $self->logger->debug('Identity not authorized');
             $req->error(PE_BADCREDENTIALS)
               ;    # Catch error to preserve protected Id
@@ -331,7 +331,8 @@ sub check {
         if ( $auth >= 0 ) {
             $auth = $auth ? "allowed" : "forbidden";
             $self->logger->debug(
-                    "checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is $auth to access $url" );
+"checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is $auth to access $url"
+            );
 
             # Return VirtualHost headers
             $array_hdrs =
@@ -427,7 +428,7 @@ sub _userData {
     unless ( defined $req->sessionInfo->{uid} ) {
 
         # Avoid error with SAML, OIDC, etc...
-        $self->logger->debug($req->user . ' NOT found in userDB');
+        $self->logger->debug( $req->user . ' NOT found in userDB' );
         return $req->error(PE_BADCREDENTIALS);
     }
 
@@ -442,7 +443,7 @@ sub _userData {
         return $req->error($error);
     }
 
-    $self->logger->debug('Return ' . $req->user . ' sessionInfo');
+    $self->logger->debug( 'Return ' . $req->user . ' sessionInfo' );
     return $req->sessionInfo;
 }
 

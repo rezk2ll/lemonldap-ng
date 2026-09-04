@@ -115,8 +115,8 @@ sub setSessionInfo {
             and ref($value) eq "ARRAY"
             and not grep { ref($_) } @$value )
         {
-            $sessionInfo->{$k} =
-              join $self->conf->{multiValuesSeparator}, @$value;
+            $sessionInfo->{$k} = join $self->conf->{multiValuesSeparator},
+              @$value;
         }
 
         # Else, store the value as-is

@@ -80,22 +80,22 @@ sub extractFormInfo {
     # 2. If user and password defined -> login form
     elsif ( $defUser and $defPassword ) {
         $res = PE_FORMEMPTY
-          unless ( $req->param('user') 
+          unless ( $req->param('user')
             && ( $req->data->{password} = $req->param('password') ) );
-        $req->user($req->param('user') || '');
+        $req->user( $req->param('user') || '' );
     }
 
     # 3. If user and oldpassword defined -> password form
     elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
           unless (
-                $req->param('user') 
+               $req->param('user')
             && ( $req->data->{oldpassword} = $req->param('oldpassword') )
             && ( $req->data->{newpassword} = $req->param('newpassword') )
             && ( $req->data->{confirmpassword} =
                 $req->param('confirmpassword') )
           );
-        $req->user($req->param('user') || '');
+        $req->user( $req->param('user') || '' );
     }
 
     # If form seems empty

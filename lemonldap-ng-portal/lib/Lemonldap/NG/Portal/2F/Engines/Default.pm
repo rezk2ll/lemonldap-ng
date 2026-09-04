@@ -699,7 +699,8 @@ sub _displayRegister {
                 $_->{label}      = $module->label;
                 $_->{delAllowed} = $self->isDelAllowed( $req, $reg_mod_info );
 
-                $self->logger->debug(" -> Device can be deleted") if $_->{delAllowed};
+                $self->logger->debug(" -> Device can be deleted")
+                  if $_->{delAllowed};
 
                 # Display upgrade button
                 $displayUpgBtn ||= $module->authnLevel

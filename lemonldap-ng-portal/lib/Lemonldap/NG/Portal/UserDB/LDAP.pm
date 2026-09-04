@@ -70,8 +70,8 @@ sub setGroups {
     return PE_OK unless ( $req->data->{ldapentry} );
 
     my $sessionInfo = $req->sessionInfo;
-    my $groups  = $req->sessionInfo->{groups}  || '';
-    my $hGroups = $req->sessionInfo->{hGroups} || {};
+    my $groups      = $req->sessionInfo->{groups}  || '';
+    my $hGroups     = $req->sessionInfo->{hGroups} || {};
 
     if ( $self->conf->{ldapGroupBase} ) {
 

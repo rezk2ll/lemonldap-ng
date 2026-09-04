@@ -1266,7 +1266,7 @@ sub tplParams {
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.fcgi$##;
 
-    $templateParams{"env_$_"} = $req->env->{$_} foreach keys %{ $req->env };
+    $templateParams{"env_$_"}     = $req->env->{$_} foreach keys %{ $req->env };
     $templateParams{"session_$_"} = $sessionInfo->{$_}
       foreach keys %$sessionInfo;
     $templateParams{$_} = $self->conf->{portalCustomTplParams}->{$_}

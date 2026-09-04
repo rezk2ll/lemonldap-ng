@@ -314,7 +314,7 @@ sub setAuthSessionInfo {
     $sessionInfo->{authenticationLevel} = $self->conf->{githubAuthnLevel};
 
     foreach ( keys %{ $req->data->{githubData} } ) {
-        $sessionInfo->{ "github_$_" } =
+        $sessionInfo->{"github_$_"} =
           $req->data->{githubData}->{$_};
     }
     $req->sessionInfo($sessionInfo);
