@@ -89,7 +89,7 @@ REST realm                                                                    re
 REST user                                                                     user
 REST password                                                                 password
 SOAP server location (URL)                                                    proxy                :doc:`SOAP<soapconfbackend>`
-`LWP::UserAgent <http://search.cpan.org/perldoc?LWP::UserAgent>`__ parameters proxyOptions
+`LWP::UserAgent <https://metacpan.org/pod/LWP::UserAgent>`__ parameters       proxyOptions
 SOAP user                                                                     User
 SOAP password                                                                 Password
 Overlay real configuration backend                                            overlayRealtype      :doc:`Overlay<overlayconfbackend>`
