@@ -512,7 +512,13 @@ sub logAndRun {
               . $req->method . " "
               . $req->request_uri );
     }
-    my $res = $sub->($req);
+    my $res = eval { $sub->($req) };
+    if ($@) {
+        if ( ref( $self->logger ) ) {
+            $self->logger->error("Perl exception while processing request: $@");
+        }
+        die;
+    }
 
     # Clear the logging system before the next request
     if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {
