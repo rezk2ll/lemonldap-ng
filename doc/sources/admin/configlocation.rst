@@ -166,6 +166,8 @@ You can also create :doc:`your own placeholder <customconfigplaceholder>` to
 fetch data from password vaults or other sources.
 
 
+.. _managerapi:
+
 Manager API
 -----------
 

@@ -3135,11 +3135,6 @@ portalSkinRules
     :Description: Rules to choose portal skin
     :Used by portal: yes
 
-portalStatus
-    :Location: General Parameters » Plugins » Publish portal status
-    :Description: Enable portal status
-    :Used by portal: yes
-
 portalUserAttr
     :Location: General Parameters » Portal » Customization » Other » User attribute
     :Description: Session parameter to display connected user in portal

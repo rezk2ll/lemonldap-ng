@@ -78,15 +78,34 @@ Configuration
 Provisioning
 ------------
 
-If you don't want to use self-registration, set public part of user's
-yubikey in Second Factor Devices array (JSON) in your user-database.
-Then map it to the \_2fDevices attribute (see
-:doc:`exported variables<exportedvars>`):
+It is possible to use WebAuthn credentials that have been externally
+provisionned if you don't want to use LemonLDAP::NG-s self-registration.
 
-.. code::
+In order to do this, you can manually modify the `_2fDevices` variable in the
+user's persistent session, or use the :ref:`Manager API<managerapi>`.
 
-   [{"name" : "MyFIDO2" , "type" : "WebAuthn" , "epoch":"1524078936"}, ...]
+The entry for each device must contain the following subkeys
 
+* ``name``: Human-visible label for this device
+* ``type``: ``WebAuthn``
+* ``epoch``: UNIX timestamp of registration time
+* ``resident``: optional, ``1`` if the key is resident
+* ``_credentialId``: base64-encoded credential ID
+* ``_credentialPublicKey``: base64-encoded public key
+* ``_signCount``: *optional*, integer, signature counter
+* ``_transports``: *optional*, comma-separated list of allowed transports (``nfc,usb``...)
+* ``_aaguid``: *optional*, UUID-formatted authenticator AAGUID (``00000000-0000-0000-0000-000000000000``)
+
+.. warning::
+
+   The credential ID and public key are tied to the domain they were registered
+   to. If you are performing WebAuthn registration in an external application,
+   be sure to set the *Relying Party ID* of both LemonLDAP::NG and your
+   registration system to a common registrable DNS suffix.  Registering on
+   ``webauthn.example.com`` and authenticating on
+   ``auth.example.com`` will work if the Relying Party ID is ``example.com``.
+   But registering on ``webauthn.domain1.com`` and authenticating on
+   ``auth.domain2.com`` will not work.
 
 
 .. _migrateu2ftowebauthn:
