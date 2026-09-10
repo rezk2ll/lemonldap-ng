@@ -1,6 +1,6 @@
 use warnings;
 use strict;
-use Test::More tests => 17;
+use Test::More tests => 21;
 use Data::Dumper;
 
 BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
@@ -175,6 +175,105 @@ EOF
         is( $localConf->{myS}, "%SECRET:myS%",
             'configuration variable not replaced' );
     }
+};
+
+require t::Placeholders;
+my $phDir = File::Temp::tempdir( CLEANUP => 1 );
+
+# Build a configuration access declaring t::Placeholders on the PH prefix
+sub phAccess {
+    return Lemonldap::NG::Common::Conf->new( {
+            type                     => 'File',
+            dirName                  => $phDir,
+            configPlaceHolderModules => 'PH=t::Placeholders',
+            @_,
+        }
+    );
+}
+
+subtest 'Fail-closed: a module which dies' => sub {
+    my $h = phAccess();
+    ok( $h->store( { cfgNum => 1, globalStorage => '%PH:die%' } ) == 1,
+        'Conf is stored' )
+      or print STDERR $Lemonldap::NG::Common::Conf::msg;
+
+    $Lemonldap::NG::Common::Conf::msg = '';
+    is( $h->getConf( { cfgNum => 1 } ), undef, 'Configuration is refused' );
+    like(
+        $Lemonldap::NG::Common::Conf::msg,
+        qr/Error: placeholder %PH:die% could not be resolved: no such secret/,
+        'Error is reported'
+    );
+
+    my $conf = { globalStorage => '%PH:die%' };
+    ok( !$h->replacePlaceholders($conf), 'replacePlaceholders() fails' );
+    is( $conf->{globalStorage}, '%PH:die%', 'Placeholder is left as is' );
+};
+
+subtest 'Fail-closed: a module which returns undef' => sub {
+    my $h = phAccess();
+    ok( $h->store( { cfgNum => 1, globalStorage => '%PH:undef%' } ) == 1,
+        'Conf is stored' )
+      or print STDERR $Lemonldap::NG::Common::Conf::msg;
+
+    $Lemonldap::NG::Common::Conf::msg = '';
+    is( $h->getConf( { cfgNum => 1 } ), undef, 'Configuration is refused' );
+    like(
+        $Lemonldap::NG::Common::Conf::msg,
+qr/Error: placeholder %PH:undef% could not be resolved: module returned an undefined value/,
+        'Error is reported'
+    );
+
+    my $conf = { globalStorage => 'a %PH:undef% b' };
+    ok( !$h->replacePlaceholders($conf), 'replacePlaceholders() fails' );
+    is( $conf->{globalStorage}, 'a %PH:undef% b', 'Placeholder is left as is' );
+};
+
+subtest 'An undefined environment variable is still an empty string' => sub {
+    delete $ENV{LLNG_UNDEFINED_VARIABLE};
+    my $h = phAccess( useServerEnv => 1 );
+    ok(
+        $h->store( {
+                cfgNum        => 1,
+                globalStorage => '%SERVERENV:LLNG_UNDEFINED_VARIABLE%',
+                whatToTrace   => 'a %SERVERENV:LLNG_UNDEFINED_VARIABLE% b',
+            }
+        ) == 1,
+        'Conf is stored'
+    ) or print STDERR $Lemonldap::NG::Common::Conf::msg;
+
+    $Lemonldap::NG::Common::Conf::msg = '';
+    my $cfg = $h->getConf( { cfgNum => 1 } );
+    ok( $cfg, 'Configuration is accepted' )
+      or print STDERR $Lemonldap::NG::Common::Conf::msg;
+    is( $cfg->{globalStorage}, '',
+        'Whole value is replaced by an empty string' );
+    is( $cfg->{whatToTrace}, 'a  b',
+        'Nested value is replaced by an empty string' );
+    unlike( $Lemonldap::NG::Common::Conf::msg, qr/Error:/, 'No error' );
+};
+
+subtest 'A reference is refused' => sub {
+    my $h = phAccess();
+
+    my $conf = { globalStorageOptions => '%PH:hash%' };
+    $Lemonldap::NG::Common::Conf::msg = '';
+    ok( !$h->replacePlaceholders($conf), 'replacePlaceholders() fails' );
+    is( $conf->{globalStorageOptions},
+        '%PH:hash%', 'Placeholder is left as is' );
+    like(
+        $Lemonldap::NG::Common::Conf::msg,
+qr/Error: placeholder %PH:hash% could not be resolved: module returned a reference/,
+        'Error is reported'
+    );
+
+    my $conf2 = { '%PH:hash%' => 'x' };
+    $Lemonldap::NG::Common::Conf::msg = '';
+    ok(
+        !$h->replacePlaceholders($conf2),
+        'replacePlaceholders() fails on a key'
+    );
+    ok( exists $conf2->{'%PH:hash%'}, 'Key is left as is' );
 };
 
 unlink 't/lmConf-1.json';

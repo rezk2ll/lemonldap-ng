@@ -64,3 +64,14 @@ Here is an example of a Perl module that implements a configuration placeholder:
     }
     1;
 
+Error handling
+--------------
+
+The resolution of a module placeholder is *fail-closed*: if ``replace()`` dies
+or does not return a string (``undef``, a reference), the placeholder is left
+as is, an error is logged and the whole configuration is rejected. Portals and
+handlers then keep the configuration they had already loaded, rather than
+running with an empty secret.
+
+``%SERVERENV:VariableName%`` is not concerned: an undefined environment
+variable is still replaced by an empty string.
