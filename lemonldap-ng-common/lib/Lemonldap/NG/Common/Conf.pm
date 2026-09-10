@@ -27,7 +27,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::Backends::SOAP
 #inherits Lemonldap::NG::Common::Conf::Backends::LDAP
 
-our $VERSION = '2.23.0';
+our $VERSION = '3.0.0';
 our $msg     = '';
 our $iniObj;
 
@@ -278,7 +278,15 @@ sub getConf {
     # Create cipher object and replace variable placeholder
     unless ($raw) {
 
-        $self->replacePlaceholders($res);
+        # Fail-closed: an empty secret is more dangerous than an outdated
+        # configuration, which handlers keep when getConf() fails
+        unless ( $self->replacePlaceholders($res) ) {
+            $msg .=
+                "Error: configuration "
+              . ( $res->{cfgNum} // '?' )
+              . " rejected, some placeholders could not be resolved.\n";
+            return undef;
+        }
         eval {
             $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} );
         };
@@ -580,25 +588,67 @@ sub logError {
     return shift->_launch( 'logError', @_ );
 }
 
+## @method protected string _substPlaceHolders(string string, hashRef config)
+# Replace each %PREFIX:variable% found inside $string. An unresolved
+# placeholder is left as is, the error has been pushed into $msg.
+# @return string
 sub _substPlaceHolders {
     my ( $self, $string, $placeholder_config ) = @_;
     return $string unless $string;
 
-    while ( my ( $key, $value ) = each %$placeholder_config ) {
-        $string =~ s/%\Q$key\E:(.*?)%/$value->($1)/ge;
+    foreach my $key ( keys %$placeholder_config ) {
+        my $value = $placeholder_config->{$key};
+        $string =~ s{%\Q$key\E:(.*?)%}{
+            my $variable = $1;
+            my $res      = $value->($variable);
+            defined $res ? $res : "%$key:$variable%";
+        }ge;
     }
     return $string;
 }
 
-## @method void replacePlaceholders(res: LLNG_Conf)
+## @method private code _moduleResolver(string prefix, string module, ref ok)
+# Build the resolver of a placeholder module. Fail-closed: on error $$ok is set
+# to 0 and undef is returned, so that the placeholder is kept as is.
+# @return sub
+sub _moduleResolver {
+    my ( $self, $prefix, $module, $ok ) = @_;
+    return sub {
+        my ($variable) = @_;
+        my ( $value, $error );
+        if ( eval { $value = $module->replace( $self, $variable ); 1 } ) {
+            $error = 'module returned an undefined value'
+              unless ( defined $value );
+            $error = 'module returned a reference' if ( ref $value );
+        }
+        else { $error = $@ }
+        return $value unless ($error);
+        chomp $error;
+        $msg .= "Error: placeholder %$prefix:$variable% could not be resolved:"
+          . " $error\n";
+        $$ok = 0;
+        return undef;
+    };
+}
+
+## @method boolean replacePlaceholders(res: LLNG_Conf)
 #
-# Recursively replace %SERVERENV:VariableName% by $ENV{VariableName} value
+# Recursively replace %SERVERENV:VariableName% by $ENV{VariableName} value and
+# %PREFIX:variable% by the value returned by the module declared for PREFIX.
+# Fail-closed: if a module dies or does not return a string, the placeholder
+# is left as is and this method returns false, so getConf() drops the
+# configuration.
+# @return true unless a placeholder could not be resolved
 sub replacePlaceholders {
     my ( $self, $conf ) = @_;
+    my $result = 1;
 
     my $placeholder_config = {};
     if ( $self->{useServerEnv} ) {
-        $placeholder_config->{SERVERENV} = sub { $ENV{ $_[0] } };
+
+        # An undefined environment variable gives an empty string, not a
+        # failure
+        $placeholder_config->{SERVERENV} = sub { $ENV{ $_[0] } // '' };
     }
     if ( my $moduleList = $self->{configPlaceHolderModules} ) {
         for my $moduledef ( split( /[,\s]+/, $moduleList ) ) {
@@ -607,12 +657,13 @@ sub replacePlaceholders {
             {
                 eval "require $module";
                 $placeholder_config->{$prefix} =
-                  sub { $module->replace( $self, $_[0] ) };
+                  $self->_moduleResolver( $prefix, $module, \$result );
             }
         }
     }
 
-    return $self->_replacePlaceholder_recurse( $conf, $placeholder_config );
+    $self->_replacePlaceholder_recurse( $conf, $placeholder_config );
+    return $result;
 }
 
 sub _replacePlaceholder_recurse {
