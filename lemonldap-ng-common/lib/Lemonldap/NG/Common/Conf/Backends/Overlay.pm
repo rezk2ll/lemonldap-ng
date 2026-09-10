@@ -1,123 +1,18 @@
+##@file
+# Removed in 3.0, see doc/sources/admin/overlayconfbackend.rst
 package Lemonldap::NG::Common::Conf::Backends::Overlay;
 
 use strict;
-use JSON;
-use Lemonldap::NG::Common::Conf::Constants qw($hashParameters );
 
-our $VERSION = '2.19.0';
+our $VERSION = '3.0.0';
 
-sub load {
-    no strict 'refs';
-    my ( $self, $cfgNum, $fields ) = @_;
-    my @files = eval { overList($self) };
-    if ($@) {
-        $Lemonldap::NG::Common::Conf::msg .= $@;
-        return undef;
-    }
-    my $conf =
-      &{"Lemonldap::NG::Common::Conf::Backends::$self->{overlayRealtype}::load"}
-      (@_);
-    my @errors;
-    foreach my $file (@files) {
-        if ( open my $f, '<', "$self->{overlayDirectory}/$file" ) {
-            local $/ = undef;
-            my $content = <$f>;
-            close $f;
-            if ( $file =~ $hashParameters ) {
-                eval { $content = JSON::decode_json($content) };
-                if ($@) {
-                    push @errors, "Bad over file $file: $@";
-                }
-                else {
-                    $conf->{$file} = $content;
-                }
-            }
-            else {
-                $content =~ s/^\s*(.*?)\s*$/$1/;
-                $conf->{$file} = $content;
-            }
-        }
-        else {
-            push @errors, $!;
-        }
-    }
-    if (@errors) {
-        $Lemonldap::NG::Common::Conf::msg .= join "\n", @errors;
-        return undef;
-    }
-    return $conf;
-}
-
-sub store {
-    my ( $self, $fields ) = @_;
-    my @files = eval { overList($self) };
-    die $@ if $@;
-
-    my @errors;
-    foreach my $file (@files) {
-        my $data = delete $fields->{$file};
-        if ( $self->{overlayWrite} ) {
-            if ( open my $f, '>', "$self->{overlayDirectory}/$file" ) {
-                print $f (
-                    $file =~ $hashParameters
-                    ? JSON::encode_json($data)
-                    : $data
-                );
-                close $f;
-            }
-
-            else {
-                push @errors, "Unable to write over file $file: $!";
-            }
-        }
-    }
-
-    die join( "\n", @errors ) if @errors;
-    no strict 'refs';
-
-    return &{
-        "Lemonldap::NG::Common::Conf::Backends::$self->{overlayRealtype}::store"
-    }( $self, $fields );
-}
-
-sub overList {
-    my ($self) = @_;
-
-    my $overDir = $self->{overlayDirectory} or die 'Missing overlayDirectory';
-    die "$overDir directory doesn't exist" unless -d $overDir and -r $overDir;
-    opendir my $dir, $overDir or die $!;
-    my @files = grep /^[^\.]/, readdir $dir;
-    closedir $dir;
-    my @errors;
-
-    foreach my $file (@files) {
-        if ( open my $f, '<', "$overDir/$file" ) {
-            local $/ = undef;
-            my $content = <$f>;
-            close $f;
-            if ( $file =~ $hashParameters ) {
-                eval { $content = JSON::decode_json($content) };
-                if ($@) {
-                    push @errors, "Bad over file $file: $@";
-                }
-            }
-        }
-    }
-    die join "\n", @errors if @errors;
-    return @files;
-}
-
-sub AUTOLOAD {
-    no strict;
-    my ($self) = @_;
-    die 'Missing overlayRealtype'
-      unless $self->{overlayRealtype};
-    eval
-      "require Lemonldap::NG::Common::Conf::Backends::$self->{overlayRealtype}";
-    die $@ if $@;
-    our $AUTOLOAD =~ s/::Overlay::/::$self->{overlayRealtype}::/;
-    my @res = &{$AUTOLOAD}(@_);
-    return wantarray ? (@res) : $res[0];
-}
-
-1;
+die 'the "Overlay" configuration backend has been removed in 3.0.'
+  . ' In lemonldap-ng.ini, replace "type = Overlay" and "overlayRealtype = X"'
+  . ' by "type = X" (the options of the real backend are unchanged), and'
+  . ' "overlayDirectory = D" by "configPlaceHolderModules ='
+  . ' FILE=Lemonldap::NG::Common::Conf::Placeholder::Filesystem" and'
+  . ' "filesystemPlaceholderDirectory = D". Then give to each formerly'
+  . ' overlayed parameter P the value "%FILE:P%" in the configuration.'
+  . ' "overlayWrite" has no equivalent: the Manager no longer writes secrets'
+  . ' on disk, this is deliberate. See'
+  . " https://lemonldap-ng.org/documentation/latest/overlayconfbackend.html\n";

@@ -182,6 +182,32 @@ Existing installations keep their own value. To benefit from it, migrate your
 sessions using the ``convertToHashSessionStorage`` utility (see
 :doc:`changesessionbackend`).
 
+Overlay configuration backend removed
+-------------------------------------
+
+The ``Overlay`` configuration backend has been removed, with no compatibility
+layer: a ``type = Overlay`` configuration backend refuses to load and logs the
+migration to perform.
+
+It is replaced by the new :doc:`Filesystem placeholder
+<filesystemplaceholder>`, which reads secrets in the files of a directory. The
+former ``overlayRealtype`` becomes the ``type``, and ``overlayDirectory``
+becomes ``filesystemPlaceholderDirectory``:
+
+.. code-block:: ini
+
+   [configuration]
+   type = File
+   dirName = /var/lib/lemonldap-ng/conf
+   configPlaceHolderModules = FILE=Lemonldap::NG::Common::Conf::Placeholder::Filesystem
+   filesystemPlaceholderDirectory = /var/lib/lemonldap-ng/secrets
+
+Then each overlayed parameter must hold a placeholder as value in the
+configuration: ``%FILE:<parameter name>%`` keeps using the same files. A
+parameter declared as a hash can not be replaced as a whole any more: put a
+placeholder in each of its values. ``overlayWrite`` has no equivalent. See
+:doc:`overlayconfbackend`.
+
 Graphical interface
 -------------------
 

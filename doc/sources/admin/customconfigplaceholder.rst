@@ -4,7 +4,11 @@ Custom configuration placeholder
 
 LemonLDAP::NG optionally supports the ``%SERVERENV:VariableName%`` syntax to read configuration values from the environment.
 
-You may also define additional placeholder syntaxes by creating your own Perl module
+You may also define additional placeholder syntaxes by creating your own Perl module.
+
+Ready-to-use implementations are provided:
+
+* :doc:`filesystemplaceholder`: secrets stored in local files
 
 Enable and configure your module
 --------------------------------
