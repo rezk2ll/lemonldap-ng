@@ -205,8 +205,7 @@ becomes ``filesystemPlaceholderDirectory``:
 Then each overlayed parameter must hold a placeholder as value in the
 configuration: ``%FILE:<parameter name>%`` keeps using the same files. A
 parameter declared as a hash can not be replaced as a whole any more: put a
-placeholder in each of its values. ``overlayWrite`` has no equivalent. See
-:doc:`overlayconfbackend`.
+placeholder in each of its values. ``overlayWrite`` has no equivalent.
 
 Graphical interface
 -------------------

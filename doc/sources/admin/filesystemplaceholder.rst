@@ -14,8 +14,7 @@ configuration is loaded, in each LemonLDAP::NG process.
 It suits the platforms that deliver secrets as files: Docker secrets
 (``/run/secrets``), Kubernetes secrets mounted as a volume, systemd
 credentials (``$CREDENTIALS_DIRECTORY``), or files deployed by a configuration
-management tool. It replaces the former
-:doc:`Overlay configuration backend<overlayconfbackend>`.
+management tool. It replaces the former *"Overlay configuration backend"*.
 
 Resolution is *fail-closed*: if a file can not be read, the whole
 configuration is rejected. Running handlers and portals keep the configuration
