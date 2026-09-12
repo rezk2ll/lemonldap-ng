@@ -11,5 +11,6 @@ Development
    hooks
    customhandlers
    customconfigplaceholder
+   filesystemplaceholder
    oidctokenexchange
    devutf8

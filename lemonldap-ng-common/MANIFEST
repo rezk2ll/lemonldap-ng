@@ -34,6 +34,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/YAMLFile.pm
 lib/Lemonldap/NG/Common/Conf/Compact.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+lib/Lemonldap/NG/Common/Conf/Placeholder/Filesystem.pm
 lib/Lemonldap/NG/Common/Conf/ReConstants.pm
 lib/Lemonldap/NG/Common/Conf/RESTServer.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
@@ -107,7 +108,7 @@ scripts/rotateOidcKeys
 scripts/rotateOidcKeys.cron.d
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t
-t/02-Common-Conf-Overlay.t
+t/02-Common-Conf-Placeholder-Filesystem.t
 t/02-Common-Conf-Placeholders.t
 t/03-Common-Conf-CDBI.t
 t/03-Common-Conf-Patroni.t
@@ -143,9 +144,6 @@ t/99-pod.t
 t/data/preview-all-test-metadata.xml
 t/lemonldap-ng.ini
 t/log4perl.ini
-t/overlay_test/lmConf-1.json
-t/overlay_test/overlay/globalStorage
-t/overlay_test/overlay/globalStorageOptions
 t/Placeholders.pm
 t/saml-lib.pm
 t/saml-schemas/saml-schema-assertion-2.0.xsd

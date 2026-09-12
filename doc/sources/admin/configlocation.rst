@@ -162,6 +162,10 @@ To enable this feature, you must edit ``lemonldap-ng.ini`` to set
    useServerEnv = 1
 
 
+Secrets stored in local files (Docker or Kubernetes secrets, systemd
+credentials, ...) can be read with the :doc:`Filesystem placeholder
+<filesystemplaceholder>`.
+
 You can also create :doc:`your own placeholder <customconfigplaceholder>` to
 fetch data from password vaults or other sources.
 

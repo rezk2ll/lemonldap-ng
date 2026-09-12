@@ -92,9 +92,6 @@ SOAP server location (URL)                                                    pr
 `LWP::UserAgent <https://metacpan.org/pod/LWP::UserAgent>`__ parameters       proxyOptions
 SOAP user                                                                     User
 SOAP password                                                                 Password
-Overlay real configuration backend                                            overlayRealtype      :doc:`Overlay<overlayconfbackend>`
-Overlay directory                                                             overlayDirectory     :doc:`Overlay<overlayconfbackend>`
-Overlay write authorization                                                   overlayWrite         :doc:`Overlay<overlayconfbackend>`
 
 ============================================================================= ==================== ===========================================================
 EOF

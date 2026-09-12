@@ -358,9 +358,6 @@ Backend                                               Shareable Comment
                                                                 backend. \ **Can be used to secure another backend** for
                                                                 remote servers.
 :doc:`Local<localconfbackend>`                                  Use only lemonldap-ng.ini parameters.
-:doc:`Overlay<overlayconfbackend>`                    ✔         Pseudo configuration backend that permits one to store part of the
-                                                                configuration into local files. \ *(for example to not store secrets
-                                                                into central configuration)*
 ===================================================== ========= ====================================================================
 
 
