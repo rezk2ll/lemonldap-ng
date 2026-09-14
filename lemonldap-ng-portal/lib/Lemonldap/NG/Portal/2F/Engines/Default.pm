@@ -879,7 +879,11 @@ sub _registration_with_mandatory_token {
     else {
         $self->logger->warn(
             "Cannot restore session state during mandatory 2FA registration");
-        return $self->p->sendRedirection( $req, $req->portal );
+        if ($req->wantJSON) {
+            return $self->sendError($req, "PE".PE_TOKENEXPIRED);
+        } else {
+            return $self->p->sendRedirection( $req, $req->portal );
+        }
     }
 }
 
