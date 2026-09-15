@@ -44,7 +44,7 @@ use constant hook => { updateSessionId => 'updateOidcSecondarySessions' };
 
 use constant sessionKind => 'OIDCI';
 
-has rule => ( is => 'rw' );
+has rule        => ( is => 'rw' );
 has ssoMatchUrl => ( is => 'rw' );
 
 has iss => (
