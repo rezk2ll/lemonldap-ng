@@ -147,7 +147,7 @@ sub _certificateReset {
     else {
 
         # Use submitted value
-        $req->user( $req->param('mail') );
+        $req->user( $req->param('mail') || '' );
 
         # Captcha for register form
         if ( $self->captcha->( $req, {} ) ) {

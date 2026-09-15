@@ -114,7 +114,7 @@ sub run {
 
     # Check activation & unrestrictedUsers rules
     if ( $spoofId ne $req->user ) {
-        $self->logger->debug( 'Spoof Id: $spoofId / Real Id: ' . $req->user );
+        $self->logger->debug( "Spoof Id: $spoofId / Real Id: " . $req->user );
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn('Impersonation service not authorized');
             $spoofId = $req->user;

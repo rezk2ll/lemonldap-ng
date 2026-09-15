@@ -60,7 +60,7 @@ sub authenticate {
     foreach my $sub (qw(pam_authenticate pam_acct_mgmt)) {
         my $res = $pam->$sub;
         unless ( $res == PAM_SUCCESS ) {
-            $self->userLogger->warn( 'PAM failed to authenticate'
+            $self->userLogger->warn( 'PAM failed to authenticate '
                   . $req->user . ': '
                   . $pam->pam_strerror($res) );
             $self->setSecurity($req);
