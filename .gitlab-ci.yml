@@ -44,12 +44,6 @@ stages:
 before_script:
   - env | grep ^CI_
 
-# EOLTS: 2026-08-31
-build_bullseye:
-  extends: .debian_build_job
-  variables:
-    CODENAME: bullseye
-
 # EOLTS: 2028-06-30
 build_bookworm:
   extends: .debian_build_job
