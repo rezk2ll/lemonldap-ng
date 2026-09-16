@@ -15,6 +15,7 @@ use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::OpenIDConnect::Constants;
+use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::JWT
   qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
@@ -1760,7 +1761,7 @@ sub decodeJWT {
                 "Cannot verify $alg signature: no JWKS data found");
             return;
         }
-        unless ($jwks->{keys}
+        unless ( $jwks->{keys}
             and ref( $jwks->{keys} ) eq 'ARRAY'
             and @{ $jwks->{keys} } )
         {
@@ -3031,9 +3032,17 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return $sessionInfo->{_oidc_sid}
-      || Digest::SHA::hmac_sha256_base64(
-        $sessionInfo->{_session_id} . ':' . $rp );
+    return $sessionInfo->{_oidc_sid} if $sessionInfo->{_oidc_sid};
+
+    # sid is computed from the storage ID: it is the only one available when
+    # the session is read by its storage ID (GlobalLogout, SingleSession)
+    my $storageId = $sessionInfo->{_session_storage_id};
+    unless ( defined $storageId ) {
+        $storageId = $sessionInfo->{_session_id};
+        $storageId = id2storage($storageId)
+          if $self->conf->{hashedSessionStore};
+    }
+    return Digest::SHA::hmac_sha256_base64( $storageId . ':' . $rp );
 }
 
 sub decryptJwt {
