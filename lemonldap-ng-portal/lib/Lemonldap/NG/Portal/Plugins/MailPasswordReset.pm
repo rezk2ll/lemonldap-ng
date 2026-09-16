@@ -95,7 +95,7 @@ sub searchUser {
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
         if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                'Reset asked for an invalid user (' . $req->{user} . ')' );
+                'Reset asked for an invalid user (' . $req->user . ')' );
 
             # To avoid mail enumeration, return OK
             # unless portalErrorOnMailNotFound is set
@@ -143,10 +143,10 @@ sub createMailSession {
     # Store mail
     $infos->{ $self->conf->{mailSessionKey} } =
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     # Store user
-    $infos->{user} = $req->{user};
+    $infos->{user} = $req->user;
 
     # Store type
     $infos->{_type} = 'mail';
@@ -199,21 +199,21 @@ sub _reset {
             return PE_BADMAILTOKEN;
         }
 
-        $req->{user} = $mailSession->data->{user};
+        $req->user( $mailSession->data->{user} );
         $req->data->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
-        $self->logger->debug( 'User associated to: ' . $req->{user} );
+        $self->logger->debug( 'User associated to: ' . $req->user );
 
         # Restore pdata if any
         $req->pdata( $mailSession->data->{_pdata} || {} );
-        $searchByMail = 0 unless ( $req->{user} =~ /\@/ );
+        $searchByMail = 0 unless ( $req->user =~ /\@/ );
     }
 
     # Check for values posted
     else {
 
         # Use submitted value
-        $req->{user} = $req->param('mail');
+        $req->user( $req->param('mail') || '' );
 
         # Captcha for register form
         if ( $self->captcha->( $req, {} ) ) {
@@ -241,7 +241,7 @@ sub _reset {
             }
         }
 
-        unless ( $req->{user} =~ /$self->{conf}->{userControl}/ ) {
+        unless ( $req->user =~ /$self->{conf}->{userControl}/ ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
         }
@@ -250,7 +250,7 @@ sub _reset {
     my $searchUserCode = $self->searchUser( $req, $searchByMail );
     return $searchUserCode unless $searchUserCode == PE_OK;
 
-    my $mailSession = $self->getMailSession( $req->{user} );
+    my $mailSession = $self->getMailSession( $req->user );
     unless ( $mailSession or $mailToken ) {
         $mailSession = $self->createMailSession( $req, $mailToken );
         $req->id( $mailSession->id );
@@ -288,7 +288,7 @@ sub _reset {
             and not $req->param('resendconfirmation') )
         {
             $self->userLogger->notice(
-                'Reset mail already sent to ' . $req->{user} );
+                'Reset mail already sent to ' . $req->user );
 
             # Return mail already sent only if it is allowed at previous step
             if ( $self->conf->{portalErrorOnMailNotFound} ) {
@@ -300,7 +300,7 @@ sub _reset {
         # Get mail address
         $req->data->{mailAddress} ||=
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
         return PE_MAILERROR unless $req->data->{mailAddress};
 
         # Build confirmation url
@@ -470,11 +470,11 @@ sub changePwd {
         return $cpq;
     }
 
-    $req->user( $req->{sessionInfo}->{_user} );
+    $req->user( $req->sessionInfo->{_user} );
     my $result =
       $self->p->_passwordDB->setNewPassword( $req,
         $req->data->{newpassword}, 1 );
-    undef $req->{user};
+    $req->user(undef);
 
     # Mail token can be used only one time, delete the session if all is ok
     unless ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
@@ -490,7 +490,7 @@ sub changePwd {
     # Send mail containing the new password
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     my $password = $req->data->{newpassword};
 
@@ -540,8 +540,8 @@ sub display {
             : ()
         ),
         MAIL => (
-              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
-            : $req->{user}
+              $self->p->checkXSSAttack( 'mail', $req->user ) ? ''
+            : $req->user
         ),
         DISPLAY_FORM            => 0,
         DISPLAY_RESEND_FORM     => 0,

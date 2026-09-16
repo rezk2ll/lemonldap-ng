@@ -93,31 +93,31 @@ sub run {
       if $req->authResult >
       PE_OK;    # Skip Impersonation if an error occurs during Auth process
 
-    my $statut = PE_OK;
-    my $unUser = 0;
-    my $loginHistory =
-      $req->{sessionInfo}->{_loginHistory};    # Store login history
-    $req->{user} ||= $req->{sessionInfo}->{_impUser};   # If 2FA is enabled
-    my $spoofId = $req->param('spoofId')                # Impersonation required
-      || $req->{sessionInfo}->{_impSpoofId}             # If 2FA is enabled
-      || $req->{user};    # Impersonation not required
+    my $statut       = PE_OK;
+    my $unUser       = 0;
+    my $loginHistory = $req->sessionInfo->{_loginHistory}; # Store login history
+    $req->user( $req->user || $req->sessionInfo->{_impUser} )
+      ;                                                    # If 2FA is enabled
+    my $spoofId = $req->param('spoofId')     # Impersonation required
+      || $req->sessionInfo->{_impSpoofId}    # If 2FA is enabled
+      || $req->user;                         # Impersonation not required
 
     $self->logger->debug("No impersonation required")
-      if ( $spoofId eq $req->{user} );
+      if ( $spoofId eq $req->user );
 
     unless ( $spoofId =~ /$self->{conf}->{userControl}/ ) {
         $self->userLogger->warn('Malformed spoofed Id');
         $self->logger->debug("Impersonation tried with spoofed Id: $spoofId");
-        $spoofId = $req->{user};
+        $spoofId = $req->user;
         $statut  = PE_MALFORMEDUSER;
     }
 
     # Check activation & unrestrictedUsers rules
-    if ( $spoofId ne $req->{user} ) {
-        $self->logger->debug("Spoof Id: $spoofId / Real Id: $req->{user}");
+    if ( $spoofId ne $req->user ) {
+        $self->logger->debug( "Spoof Id: $spoofId / Real Id: " . $req->user );
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn('Impersonation service not authorized');
-            $spoofId = $req->{user};
+            $spoofId = $req->user;
             $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
         }
         $unUser = $self->unrestrictedUsersRule->( $req, $req->sessionInfo );
@@ -128,19 +128,19 @@ sub run {
     $self->logger->debug("Rename real attributes...");
     my @hidden = split /[,\s]+/, $self->conf->{impersonationHiddenAttributes};
 
-    foreach my $k ( keys %{ $req->{sessionInfo} } ) {
+    foreach my $k ( keys %{ $req->sessionInfo } ) {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
-            next unless defined $req->{sessionInfo}->{$k};
+            next unless defined $req->sessionInfo->{$k};
         }
         my $spk = $self->prefix . $k;
         unless ( isHiddenAttr( $self->conf, $k, @hidden )
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
         {
-            $realSession->{$spk} = $req->{sessionInfo}->{$k};
+            $realSession->{$spk} = $req->sessionInfo->{$k};
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
         $self->logger->debug("Delete $k");
-        delete $req->{sessionInfo}->{$k};
+        delete $req->sessionInfo->{$k};
     }
 
     $spoofSession = $self->_userData( $req, $spoofId, $realSession, $unUser );
@@ -199,9 +199,10 @@ sub run {
     }
 
     # Main session
+    my $sessionInfo = $req->sessionInfo;
     $self->p->updateSession( $req, $spoofSession );
-    $req->{sessionInfo}->{_loginHistory} =
-      $loginHistory;    # Restore login history
+    $sessionInfo->{_loginHistory} = $loginHistory;    # Restore login history
+    $req->sessionInfo($sessionInfo);
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
     return $statut;
@@ -209,9 +210,9 @@ sub run {
 
 sub _userData {
     my ( $self, $req, $spoofId, $realSession, $unUser ) = @_;
-    my $realId = $req->{user};
+    my $realId = $req->user;
     my $raz    = 0;
-    $req->{user} = $spoofId;
+    $req->user($spoofId);
 
     # Compute Macros and Groups with real and spoof sessions
     $req->sessionInfo($realSession);
@@ -225,7 +226,7 @@ sub _userData {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
                     'Impersonation requested for an invalid user ('
-                  . $req->{user}
+                  . $req->user
                   . ")" );
         }
         $self->logger->debug("Process returned error: $error");
@@ -239,7 +240,7 @@ sub _userData {
         unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn(
                     'Impersonation requested for an invalid user ('
-                  . $req->{user}
+                  . $req->user
                   . ")" );
             $self->logger->debug('Identity NOT authorized');
             $raz = 1;
@@ -248,9 +249,8 @@ sub _userData {
 
     # Same real and spoof session - Compute Macros and Groups
     if ($raz) {
-        $req->{sessionInfo} = {};
-        $req->{sessionInfo} = {%$realSession};
-        $req->{user}        = $realId;
+        $req->sessionInfo($realSession);
+        $req->user($realId);
         $req->steps( [
                 'getUser',   'setSessionInfo',
                 'setGroups', 'setMacros',
@@ -266,9 +266,11 @@ sub _userData {
     }
 
     # Compute groups & macros again with real authenticationLevel
-    $req->sessionInfo->{authenticationLevel} =
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} =
       $realSession->{real_authenticationLevel};
-    delete $req->sessionInfo->{groups};
+    delete $sessionInfo->{groups};
+    $req->sessionInfo($sessionInfo);
     $req->steps(
         [ 'setSessionInfo', 'setGroups', 'setMacros', 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
@@ -276,8 +278,8 @@ sub _userData {
         $req->error($error);
     }
 
-    $self->logger->debug("Return \"$req->{user}\" sessionInfo");
-    return $req->{sessionInfo};
+    $self->logger->debug( 'Return ' . $req->user . ' sessionInfo' );
+    return $req->sessionInfo;
 }
 
 sub setSecurity {

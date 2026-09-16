@@ -189,7 +189,7 @@ sub init {
 sub tplParams {
     my ( $self, $req ) = @_;
     my $res = eval {
-        $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} );
+        $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->userData );
     } || 0;
     return (
         VERSION      => $VERSION,
@@ -205,7 +205,7 @@ sub javascript {
     my $res = eval {
              $self->hLoadedPlugins->{viewer}
           && $self->hLoadedPlugins->{viewer}
-          ->diffRule->( $req, $req->{userData} );
+          ->diffRule->( $req, $req->userData );
     } || 0;
     print STDERR $@ if $@;
     my $impPrefix = $self->{impersonationPrefix} || 'real_';

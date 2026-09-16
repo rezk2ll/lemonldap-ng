@@ -80,20 +80,22 @@ sub extractFormInfo {
     # 2. If user and password defined -> login form
     elsif ( $defUser and $defPassword ) {
         $res = PE_FORMEMPTY
-          unless ( ( $req->{user} = $req->param('user') )
+          unless ( $req->param('user')
             && ( $req->data->{password} = $req->param('password') ) );
+        $req->user( $req->param('user') || '' );
     }
 
     # 3. If user and oldpassword defined -> password form
     elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
           unless (
-               ( $req->{user} = $req->param('user') )
+               $req->param('user')
             && ( $req->data->{oldpassword} = $req->param('oldpassword') )
             && ( $req->data->{newpassword} = $req->param('newpassword') )
             && ( $req->data->{confirmpassword} =
                 $req->param('confirmpassword') )
           );
+        $req->user( $req->param('user') || '' );
     }
 
     # If form seems empty
@@ -146,23 +148,25 @@ sub extractFormInfo {
 # Set password in session data if wanted.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # authenticationLevel
-    $req->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
+    $sessionInfo->{authenticationLevel} = $self->authnLevel;
 
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
         my $passwordToStore =
           $req->data->{'newpassword'} || $req->data->{'password'};
-        $req->{sessionInfo}->{'_password'} =
+        $sessionInfo->{'_password'} =
             $self->conf->{storePasswordEncrypted}
           ? $self->p->HANDLER->tsv->{cipher}->encrypt($passwordToStore)
           : $passwordToStore;
     }
 
     # Store user timezone
-    $req->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
+    $sessionInfo->{'_timezone'} = $self->{'timezone'};
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

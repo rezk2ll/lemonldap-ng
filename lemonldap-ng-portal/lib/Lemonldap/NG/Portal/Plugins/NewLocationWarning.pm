@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Plugins::NewLocationWarning;
 
 use strict;
 use Mouse;
-use POSIX qw(strftime);
+use POSIX           qw(strftime);
 use List::MoreUtils qw/uniq/;
 use Lemonldap::NG::Portal::Main::Constants;
 

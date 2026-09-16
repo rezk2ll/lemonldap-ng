@@ -171,7 +171,7 @@ sub run {
     my $url = $req->uri();
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
+    my $session_id = $req->sessionInfo->{_session_id} || $req->id;
 
     # 1. LOGIN
     if ( $target eq $cas_login ) {
@@ -253,7 +253,7 @@ sub run {
 
             # Check if we have sufficient auth level
             my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
+              $req->sessionInfo->{authenticationLevel} || 0;
             if ( $authenticationLevel < $spAuthnLevel ) {
                 $self->logger->debug(
                         "Insufficient authentication level for service $app"
@@ -278,7 +278,7 @@ sub run {
         # Check last authentication time to decide if
         # the authentication is recent or not
         my $casRenewFlag     = 0;
-        my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
+        my $last_authn_utime = $req->sessionInfo->{_lastAuthnUTime} || 0;
         if (
             time() - $last_authn_utime <
             $self->conf->{portalForceAuthnInterval} )
@@ -296,7 +296,7 @@ sub run {
           $self->conf->{casTicketExpiration}
           ? (
             time + $self->conf->{casTicketExpiration} - $self->conf->{timeout} )
-          : ( $req->{sessionInfo}->{_utime} || time() );
+          : ( $req->sessionInfo->{_utime} || time() );
 
         my $Sinfos;
         $Sinfos->{type}    = 'casService';
@@ -489,7 +489,7 @@ sub logout {
     my ( $self, $req ) = @_;
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
+    my $session_id = $req->sessionInfo->{_session_id} || $req->id;
 
     # Delete linked CAS sessions
     $self->deleteCasSecondarySessions($session_id) if ($session_id);

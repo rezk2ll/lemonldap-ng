@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::SAML;
 
 use strict;
 use Mouse;
-use MIME::Base64 qw/encode_base64/;
+use MIME::Base64   qw/encode_base64/;
 use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
@@ -1139,6 +1139,7 @@ sub setAuthSessionInfo {
     my $idpConfKey     = $req->data->{_idpConfKey};
     my $nameIdentifier = $req->data->{_nameID};
     my $session_index  = $req->data->{_sessionIndex};
+    my $sessionInfo    = $req->sessionInfo;
 
     # Get SAML assertion
     my $assertion = $self->getAssertion($login);
@@ -1168,13 +1169,13 @@ sub setAuthSessionInfo {
                 \@attributes );
 
             # Store value in sessionInfo
-            $req->{sessionInfo}->{$_} = $value if defined $value;
+            $sessionInfo->{$_} = $value if defined $value;
         }
     }
 
     # Store other information in session
-    $req->{sessionInfo}->{_idp}        = $idp;
-    $req->{sessionInfo}->{_idpConfKey} = $idpConfKey;
+    $sessionInfo->{_idp}        = $idp;
+    $sessionInfo->{_idpConfKey} = $idpConfKey;
 
     # Adapt _utime with SessionNotOnOrAfter
     my $sessionNotOnOrAfter;
@@ -1187,7 +1188,6 @@ sub setAuthSessionInfo {
         $self->logger->debug("No SessionNotOnOrAfter value found");
     }
     else {
-
         my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
         my $utime    = time();
         my $timeout  = $self->conf->{timeout};
@@ -1198,12 +1198,11 @@ sub setAuthSessionInfo {
 
             # Use SAML time to determine the start of the session
             my $new_utime = $samltime - $timeout;
-            $req->{sessionInfo}->{_utime} = $new_utime;
+            $sessionInfo->{_utime} = $new_utime;
             $self->logger->debug(
 "Adapt _utime with SessionNotOnOrAfter value, new _utime: $new_utime"
             );
         }
-
     }
 
     # Establish federation (required for attribute request in UserDBSAML)
@@ -1218,24 +1217,24 @@ sub setAuthSessionInfo {
     my $identity = $login->get_identity;
 
     # Dump Lasso objects in session
-    $req->{sessionInfo}->{ $self->lsDump } = $session->dump()  if $session;
-    $req->{sessionInfo}->{ $self->liDump } = $identity->dump() if $identity;
-    $req->{sessionInfo}->{ $self->niDump } = $nameIdentifier->dump()
+    $sessionInfo->{ $self->lsDump } = $session->dump()  if $session;
+    $sessionInfo->{ $self->liDump } = $identity->dump() if $identity;
+    $sessionInfo->{ $self->niDump } = $nameIdentifier->dump()
       if ref($nameIdentifier);
-    $req->{sessionInfo}->{ $self->sIndex } = $session_index if $session_index;
+    $sessionInfo->{ $self->sIndex } = $session_index if $session_index;
 
     # Keep SAML Token in session
     my $store_samlToken =
       $self->idpOptions->{$idp}->{samlIDPMetaDataOptionsStoreSAMLToken};
     if ($store_samlToken) {
         $self->logger->debug("Store SAML Token in session");
-        $req->{sessionInfo}->{_samlToken} = $req->data->{_samlToken};
+        $sessionInfo->{_samlToken} = $req->data->{_samlToken};
     }
     else {
         $self->logger->debug("SAML Token will not be stored in session");
     }
-
     $req->data->{_lassoLogin} = $login;
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }
@@ -1253,7 +1252,7 @@ sub authFinish {
 
     # Real session was stored, get id and utime
     my $id    = $req->{id};
-    my $utime = $req->{sessionInfo}->{_utime};
+    my $utime = $req->sessionInfo->{_utime};
 
     $self->logger->debug( "Store NameID "
           . $nameid
@@ -1291,7 +1290,7 @@ sub authLogout {
     $self->deleteSAMLSecondarySessions($session_id);
 
     # Recover Lasso::Session dump
-    my $session_dump = $req->{sessionInfo}->{ $self->lsDump };
+    my $session_dump = $req->sessionInfo->{ $self->lsDump };
 
     unless ($session_dump) {
         $self->userLogger->error("Could not get session dump from session");
@@ -1493,7 +1492,8 @@ sub getIDP {
 
     # Case 1: Recover IDP from idpEntityId URL Parameter
     if ( $idp = $req->param("idpEntityId") ) {
-        $self->logger->debug("IDP $idp selected from idpEntityId URL Parameter");
+        $self->logger->debug(
+            "IDP $idp selected from idpEntityId URL Parameter");
     }
     else {
         # Case 2: Recover IDP from idp URL Parameter

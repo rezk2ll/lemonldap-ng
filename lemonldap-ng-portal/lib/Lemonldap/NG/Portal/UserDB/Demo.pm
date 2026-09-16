@@ -53,10 +53,10 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
 
     if ( $args{useMail} ) {
-        my ($user) = grep { $demoAccounts{$_}->{mail} eq $req->{user} }
+        my ($user) = grep { $demoAccounts{$_}->{mail} eq $req->user }
           keys %demoAccounts;
         if ($user) {
-            $req->{user} = $user;
+            $req->user($user);
             return PE_OK;
         }
     }
@@ -132,14 +132,16 @@ sub findUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
         %{ $self->conf->{demoExportedVars} }
     );
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $demoAccounts{ $req->{user} }->{$v};
+        $sessionInfo->{$k} = $demoAccounts{ $req->user }->{$v};
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

@@ -15,8 +15,9 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $r = $self->checkRemoteId($req);
     return $r unless ( $r == PE_OK );
-    $req->{user} =
-      $req->data->{rSessionInfo}->{ $self->conf->{remoteUserField} || 'uid' };
+    $req->user(
+        $req->data->{rSessionInfo}->{ $self->conf->{remoteUserField} || 'uid' }
+    );
     $req->data->{password} = $req->data->{rSessionInfo}->{'_password'};
     return PE_OK;
 }
@@ -27,12 +28,15 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # Store password (deleted in checkRemoteId() if local policy does not accept
     # stored passwords)
-    $req->{sessionInfo}->{'_password'} = $req->data->{'password'};
-    $req->{sessionInfo}->{authenticationLevel} =
+    $sessionInfo->{'_password'} = $req->data->{'password'};
+    $sessionInfo->{authenticationLevel} =
       $req->data->{rSessionInfo}->{authenticationLevel};
+    $req->sessionInfo($sessionInfo);
+
     return PE_OK;
 }
 

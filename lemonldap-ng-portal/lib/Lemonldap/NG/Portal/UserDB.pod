@@ -113,7 +113,7 @@ $req->steps array.
 =head4 getUser($req,%args)
 
 First method called to search user in database. If $args{useMail} is set then
-$req->{user} contains a mail address.
+$req->user contains a mail address.
 
 =head4 setSessionInfo($req)
 
@@ -122,7 +122,7 @@ $req->sessionInfo.
 
 =head4 setGroups($req)
 
-This method populates $req->{sessionInfo}->{groups} if backend is able to
+This method populates $req->sessionInfo->{groups} if backend is able to
 provide groups I<(Like LDAP)>. Else, it juste return PE_OK.
 
 =head1 LOGGING

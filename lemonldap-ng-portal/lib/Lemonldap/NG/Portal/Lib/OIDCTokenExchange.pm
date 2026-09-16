@@ -100,7 +100,7 @@ sub tokenExchange {
         if ( $error == PE_OK ) {
             $self->userLogger->warn(
                     'Token exchange requested for an invalid user ('
-                  . $req->{user}
+                  . $req->user
                   . ")" );
         }
         $self->logger->error("Unable to find user $uid");

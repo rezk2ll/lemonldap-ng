@@ -44,7 +44,7 @@ sub extractFormInfo {
     return PE_MALFORMEDUSER
       unless ( $req->env->{$user_header} =~ /$self->{conf}->{userControl}/ );
 
-    $req->{user} = $req->env->{$user_header};
+    $req->user( $req->env->{$user_header} );
     return PE_OK;
 }
 
@@ -55,7 +55,9 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{slaveAuthnLevel};
+    my $sessionInfo = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{slaveAuthnLevel};
+    $req->sessionInfo($sessionInfo);
     return PE_OK;
 }
 

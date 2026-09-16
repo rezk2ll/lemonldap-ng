@@ -28,7 +28,7 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
     my $table = $self->table;
     my $pivot = $args{useMail} ? $self->mailField : $self->pivot;
-    my $user  = $req->{user};
+    my $user  = $req->user;
     my $sth;
     eval {
         $sth = $self->dbh->prepare("SELECT * FROM $table WHERE $pivot=?");
@@ -107,16 +107,18 @@ sub findUser {
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
     # Set _user unless already defined
-    $req->{sessionInfo}->{_user} ||= $req->user;
+    $sessionInfo->{_user} ||= $req->user;
 
     foreach my $var ( keys %{ $self->exportedVars } ) {
         my $attr = $self->exportedVars->{$var};
         if ( defined( my $value = $req->data->{dbientry}->{$attr} ) ) {
-            $req->{sessionInfo}->{$var} = $value;
+            $sessionInfo->{$var} = $value;
         }
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

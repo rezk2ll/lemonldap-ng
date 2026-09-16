@@ -283,11 +283,11 @@ sub display {
         $skinfile = 'menu';
 
         %templateParams = (
-            AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
-            NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL     => $self->buildUrl( $req->portal, { logout => 1 } ),
-            APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
-            PING           => $self->conf->{portalPingInterval},
+            AUTH_USER  => $req->sessionInfo->{ $self->conf->{portalUserAttr} },
+            NEWWINDOW  => $self->conf->{portalOpenLinkInNewWindow},
+            LOGOUT_URL => $self->buildUrl( $req->portal, { logout => 1 } ),
+            APPSLIST_ORDER          => $req->sessionInfo->{'_appsListOrder'},
+            PING                    => $self->conf->{portalPingInterval},
             DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD        => 0,
             ENABLE_PASSWORD_DISPLAY =>
@@ -697,11 +697,13 @@ sub buildHiddenForm {
 # @return skin name
 sub getSkin {
     my ( $self, $req ) = @_;
-    my $skin = $self->conf->{portalSkin};
+    my $skin        = $self->conf->{portalSkin};
+    my $sessionInfo = $req->sessionInfo;
 
     # Fill sessionInfo to eval rule if empty (unauthenticated user)
-    $req->{sessionInfo}->{_url}   ||= $req->{urldc};
-    $req->{sessionInfo}->{ipAddr} ||= $req->address;
+    $sessionInfo->{_url}   ||= $req->{urldc};
+    $sessionInfo->{ipAddr} ||= $req->address;
+    $req->sessionInfo($sessionInfo);
 
     # Load specific skin from skinRules
     foreach my $rule ( @{ $self->skinRules } ) {

@@ -309,14 +309,15 @@ sub extractFormInfo {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
+    my $sessionInfo = $req->sessionInfo;
 
-    $req->{sessionInfo}->{authenticationLevel} =
-      $self->conf->{githubAuthnLevel};
+    $sessionInfo->{authenticationLevel} = $self->conf->{githubAuthnLevel};
 
     foreach ( keys %{ $req->data->{githubData} } ) {
-        $req->{sessionInfo}->{ 'github_' . $_ } =
+        $sessionInfo->{"github_$_"} =
           $req->data->{githubData}->{$_};
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

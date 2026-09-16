@@ -106,6 +106,7 @@ sub setSessionInfo {
     my %vars =
       ( %{ $self->conf->{exportedVars} }, %{ $self->opAttributes->{$op} } );
 
+    my $sessionInfo = $req->sessionInfo;
     while ( my ( $k, $v ) = each %vars ) {
         my $value = $req->data->{OpenIDConnect_user_info}->{$v};
 
@@ -114,15 +115,16 @@ sub setSessionInfo {
             and ref($value) eq "ARRAY"
             and not grep { ref($_) } @$value )
         {
-            $req->{sessionInfo}->{$k} =
-              join( $self->conf->{multiValuesSeparator}, @$value );
+            $sessionInfo->{$k} = join $self->conf->{multiValuesSeparator},
+              @$value;
         }
 
         # Else, store the value as-is
         else {
-            $req->{sessionInfo}->{$k} = $value;
+            $sessionInfo->{$k} = $value;
         }
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

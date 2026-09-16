@@ -59,8 +59,9 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
 
-    $self->logger->debug( "Send authentication request ($req->{user})"
-          . " to Radius server ($self->{conf}->{radiusServer})" );
+    $self->logger->debug( 'Send authentication request ('
+          . $req->user
+          . ") to Radius server ($self->{conf}->{radiusServer})" );
 
     # Session info is empty or unknown at this step
     my $res = $self->radiusLib->check_pwd( $req, {}, $req->user,
@@ -68,7 +69,7 @@ sub authenticate {
     return PE_RADIUSCONNECTFAILED unless $res;
     unless ( $res->{result} == 1 ) {
         $self->userLogger->warn(
-            "Radius authentication failed for user " . $req->{user} );
+            "Radius authentication failed for user " . $req->user );
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
@@ -84,8 +85,9 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $attributeMap = $self->sessionKeys;
-    $req->{sessionInfo}->{authenticationLevel} =
-      $self->conf->{radiusAuthnLevel};
+    my $sessionInfo  = $req->sessionInfo;
+    $sessionInfo->{authenticationLevel} = $self->conf->{radiusAuthnLevel};
+    $req->sessionInfo($sessionInfo);
 
     if ($attributeMap) {
         while ( my ( $attr_radname, $attr_value ) =

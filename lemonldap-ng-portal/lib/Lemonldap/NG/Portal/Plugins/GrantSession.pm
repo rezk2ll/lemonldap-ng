@@ -42,7 +42,7 @@ sub run {
         return PE_BADCREDENTIALS;
     }
 
-    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         my $rule = $self->conf->{grantSessionRules}->{$_};
         $self->logger->debug("Grant session rule: $rule");
@@ -83,7 +83,7 @@ sub run {
     }
 
     # Log
-    my $mod = $req->{sessionInfo}->{_auth};
+    my $mod = $req->sessionInfo->{_auth};
     $self->userLogger->notice(
         "Session granted for $user by $mod ($req->{sessionInfo}->{ipAddr})")
       if $user;

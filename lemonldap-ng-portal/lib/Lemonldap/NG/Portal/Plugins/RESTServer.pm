@@ -347,8 +347,9 @@ sub newAuthSession {
         ]
     );
     $req->{error} = $self->p->process($req);
-    $self->logger->debug(
-        "REST authentication result for $req->{user}: code $req->{error}");
+    $self->logger->debug( 'REST authentication result for '
+          . $req->user
+          . ": code $req->{error}" );
 
     if ( $req->error != 0 ) {
         $self->p->deleteSession($req);
@@ -730,7 +731,7 @@ sub pwdReset {
     }
     $result =
       $self->p->_passwordDB->setNewPassword( $req, $password, $mail ? 1 : 0 );
-    $req->{user} = undef;
+    $req->user(undef);
 
     if ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
         return $self->p->sendJSONresponse( $req, { 'result' => JSON::true } );

@@ -190,12 +190,12 @@ sub check {
         );
     }
 
-    if ( !$user || $req->{user} eq $user ) {
+    if ( !$user || $req->user eq $user ) {
         $self->userLogger->info("checkUser requested for himself");
         $self->userLogger->info("Using spoofed SSO groups if exist")
           if $self->conf->{impersonationRule};
         $attrs = $req->userData;
-        $user  = $req->{user};
+        $user  = $req->user;
     }
     else {
         $self->userLogger->info("checkUser requested for $user");
@@ -233,7 +233,7 @@ sub check {
             }
         }
         unless ( defined $attrs->{_session_id} ) {
-            $req->{user} = $user;
+            $req->user($user);
             $self->userLogger->info(
                 "No session found in DB. Compute userData...");
             $attrs    = $self->_userData($req);
@@ -248,7 +248,7 @@ sub check {
         unless ( $unUser || $self->rules->{IdRule}->( $req, $attrs ) ) {
             $self->userLogger->warn(
                 "checkUser requested for an invalid user ($user)");
-            $req->{sessionInfo} = {};
+            $req->sessionInfo( {} );
             $self->logger->debug('Identity not authorized');
             $req->error(PE_BADCREDENTIALS)
               ;    # Catch error to preserve protected Id
@@ -331,8 +331,8 @@ sub check {
         if ( $auth >= 0 ) {
             $auth = $auth ? "allowed" : "forbidden";
             $self->logger->debug(
-                    "checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is "
-                  . "$auth to access $url" );
+"checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is $auth to access $url"
+            );
 
             # Return VirtualHost headers
             $array_hdrs =
@@ -348,7 +348,6 @@ sub check {
     if    ( $auth eq 'allowed' )   { $alert_auth = 'alert-success' }
     elsif ( $auth eq 'forbidden' ) { $alert_auth = 'alert-danger' }
 
-    # TODO:
     my $params = {
         FORM_ACTION => $self->p->relativeUrl( $req, 'checkuser' ),
         MSG         => $msg,
@@ -420,7 +419,7 @@ sub _userData {
     $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
         $self->userLogger->warn(
-            'checkUser requested for an invalid user (' . $req->{user} . ")" )
+            'checkUser requested for an invalid user (' . $req->user . ')' )
           if ( $error == PE_BADCREDENTIALS );
         $self->logger->debug("Process returned error: $error");
         return $req->error(PE_BADCREDENTIALS);
@@ -429,7 +428,7 @@ sub _userData {
     unless ( defined $req->sessionInfo->{uid} ) {
 
         # Avoid error with SAML, OIDC, etc...
-        $self->logger->debug("\"$req->{user}\" NOT found in userDB");
+        $self->logger->debug( $req->user . ' NOT found in userDB' );
         return $req->error(PE_BADCREDENTIALS);
     }
 
@@ -444,8 +443,8 @@ sub _userData {
         return $req->error($error);
     }
 
-    $self->logger->debug("Return \"$req->{user}\" sessionInfo");
-    return $req->{sessionInfo};
+    $self->logger->debug( 'Return ' . $req->user . ' sessionInfo' );
+    return $req->sessionInfo;
 }
 
 sub _authorization {

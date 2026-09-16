@@ -40,9 +40,11 @@ sub setSessionInfo {
         %{ $self->conf->{casSrvMetaDataExportedVars}->{$srv} || {} },
         %{ $self->conf->{exportedVars} }
     );
+    my $sessionInfo = $req->sessionInfo;
     foreach ( keys %ev ) {
-        $req->{sessionInfo}->{$_} = $req->data->{casAttrs}->{$_};
+        $sessionInfo->{$_} = $req->data->{casAttrs}->{$_};
     }
+    $req->sessionInfo($sessionInfo);
 
     return PE_OK;
 }

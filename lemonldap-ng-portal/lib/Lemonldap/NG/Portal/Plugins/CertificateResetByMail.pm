@@ -132,22 +132,22 @@ sub _certificateReset {
             return PE_BADMAILTOKEN;
         }
 
-        $req->{user} = $mailSession->data->{user};
+        $req->user( $mailSession->data->{user} );
         $req->data->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
-        $self->logger->debug( 'User associated to: ' . $req->{user} );
+        $self->logger->debug( 'User associated to ' . $req->user );
 
         # Restore pdata if any
         $req->pdata( $mailSession->data->{_pdata} || {} );
         $mailSession->remove;
-        $searchByMail = 0 unless ( $req->{user} =~ /\@/ );
+        $searchByMail = 0 unless ( $req->user =~ /\@/ );
     }
 
     # Check for posted values
     else {
 
         # Use submitted value
-        $req->{user} = $req->param('mail');
+        $req->user( $req->param('mail') || '' );
 
         # Captcha for register form
         if ( $self->captcha->( $req, {} ) ) {
@@ -175,7 +175,7 @@ sub _certificateReset {
             }
         }
 
-        unless ( $req->{user} =~ /$self->{conf}->{userControl}/ ) {
+        unless ( $req->user =~ /$self->{conf}->{userControl}/ ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
         }
@@ -215,7 +215,7 @@ sub _certificateReset {
     }
 
     # Build temporary session
-    my $mailSession = $self->getCertificateSession( $req->{user} );
+    my $mailSession = $self->getCertificateSession( $req->user );
     unless ( $mailSession or $mailToken ) {
 
         ## Create a new session
@@ -238,10 +238,10 @@ sub _certificateReset {
         # Store mail
         $infos->{ $self->conf->{mailSessionKey} } =
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
         # Store user
-        $infos->{user} = $req->{user};
+        $infos->{user} = $req->user;
 
         # Store type
         $infos->{_type} = 'certificate';
@@ -288,7 +288,7 @@ sub _certificateReset {
             and not $req->param('resendconfirmation') )
         {
             $self->userLogger->notice(
-                'Reset mail already sent to ' . $req->{user} );
+                'Reset mail already sent to ' . $req->user );
 
             # Return mail already sent only if it is allowed at previous step
             if ( $self->conf->{portalErrorOnMailNotFound} ) {
@@ -300,7 +300,7 @@ sub _certificateReset {
         # Get mail address
         $req->data->{mailAddress} ||=
           $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+            $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
         return PE_MAILERROR unless ( $req->data->{mailAddress} );
 
         # Build confirmation url
@@ -457,11 +457,11 @@ sub modifyCertificate {
     my $cert = $self->certificateHash($file);
 
     # Modify ldap certificate attribute
-    $req->user( $req->{sessionInfo}->{_user} );
+    $req->user( $req->sessionInfo->{_user} );
     my $result =
       $self->registerModule->modifCertificate( $req, $certificatExactAssertion,
         $cert );
-    $self->{user} = undef;
+    $req->user(undef);
 
     # Mail token can be used only one time, delete the session if all is ok
     return $result unless ( $result == PE_OK );
@@ -469,7 +469,7 @@ sub modifyCertificate {
     # Send mail to notify the certificate has been successfully reset
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
-        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        $req->sessionInfo->{ $self->conf->{mailSessionKey} } );
 
     # Send mail
     return PE_MAILERROR
@@ -520,8 +520,8 @@ sub display {
             : ()
         ),
         MAIL => (
-              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
-            : $req->{user}
+              $self->p->checkXSSAttack( 'mail', $req->user ) ? ''
+            : $req->user
         ),
         DISPLAY_FORM            => 0,
         DISPLAY_RESEND_FORM     => 0,
