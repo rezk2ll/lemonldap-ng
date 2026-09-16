@@ -2039,8 +2039,33 @@ sub checkEndPointAuthenticationCredentials {
 
     # Check client_secret
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
-        $self->logger->debug(
-            "Relying Party $rp is public, do not check client secret");
+
+        # A public client is only authenticated by the client secret
+        # registered for it: else endpoints must not consider it as such. A
+        # wrong secret is rejected, but a secret given to a public client
+        # without registered secret is ignored, as before. JWS methods
+        # (client_secret_jwt, private_key_jwt) are kept: their signature was
+        # already verified by getEndPointAuthenticationCredentials
+        if ( $method =~ /^client_secret_(?:basic|post)$/ ) {
+            my $secret =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+              // '';
+            if ( !length $secret ) {
+                $self->logger->debug( "Relying Party $rp is public without"
+                      . " client secret, given secret is ignored" )
+                  if length( $client_secret // '' );
+                $method = 'none';
+            }
+            elsif ( !length( $client_secret // '' ) ) {
+                $self->logger->debug(
+                    "Relying Party $rp is public, no client secret given");
+                $method = 'none';
+            }
+            elsif ( $client_secret ne $secret ) {
+                $self->logger->error("Wrong credentials for $rp");
+                return undef;
+            }
+        }
     }
     else {
         if ( $method eq "none" ) {
