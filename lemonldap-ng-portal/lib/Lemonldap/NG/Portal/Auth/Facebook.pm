@@ -101,7 +101,7 @@ sub extractFormInfo {
             }
             $req->user( $data->{ $self->conf->{facebookUserField} } );
             $req->data->{_facebookData} = $data;
-            my $sessionInfo = $req->sessionInfo;
+            $sessionInfo = $req->sessionInfo;
             $sessionInfo->{_facebookData} = $data;
             $req->sessionInfo($sessionInfo);
 

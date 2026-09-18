@@ -2,7 +2,7 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
-use Lemonldap::NG::Common::Notifications::LDAP "JSON";
+use Lemonldap::NG::Common::Notifications::LDAP;
 use Lemonldap::NG::Common::Logger::Std;
 
 my $res;

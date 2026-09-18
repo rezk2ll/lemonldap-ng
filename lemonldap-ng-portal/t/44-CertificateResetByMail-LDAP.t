@@ -188,8 +188,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
     ok( $res->[2]->[0] =~ /certif/s, ' Ask for a new certificate file' );
 
-    #print STDERR Dumper($query);
-    %inputs = split( /[=&]/, $query );
+    %inputs = split /=/, ( grep /^token=.+/, split /&/, $query )[0];
 
     # Create the certificate  file
     $cert = "INVALID CERTIFICATE";

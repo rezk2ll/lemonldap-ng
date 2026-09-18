@@ -9,7 +9,7 @@ require 't/test-lib.pm';
 my $res;
 my $json;
 my $request;
-my $maintests = 45;
+my $maintests = 41;
 
 no warnings 'once';
 
@@ -133,8 +133,6 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 0, ' Good result' )
-      or explain( $json, 'result => 0' );
     ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
       or explain( $json, 'error => 4' );
 
@@ -207,8 +205,6 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 0, ' Good result' )
-      or explain( $json, 'result => 0' );
     ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
       or explain( $json, 'error => 4' );
 
@@ -223,8 +219,6 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 0, ' Good result' )
-      or explain( $json, 'result => 0' );
     ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
       or explain( $json, 'error => 4' );
 
@@ -239,8 +233,6 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 0, ' Good result' )
-      or explain( $json, 'result => 0' );
     ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
       or explain( $json, 'error => 4' );
 

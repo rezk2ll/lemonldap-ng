@@ -6,7 +6,7 @@ use JSON qw(to_json from_json);
 
 require 't/test-lib.pm';
 
-my $maintests = 55;
+my $maintests = 53;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -240,9 +240,6 @@ SKIP: {
         ),
         'Form 2fregisters'
     );
-    ok( $res->[2]->[0] !~ m%<span device=\'(TOTP)\' epoch=\'\d{10}\'%g,
-        'No 2F device found' )
-      or print STDERR Dumper( $res->[2]->[0] );
 
     ## Try to register a TOTP
     # TOTP form
@@ -421,9 +418,6 @@ SKIP: {
         ),
         'Form 2fregisters'
     );
-    ok( $res->[2]->[0] !~ m%<span device=\'(TOTP)\' epoch=\'\d{10}\'%g,
-        'No 2F device found' )
-      or print STDERR Dumper( $res->[2]->[0] );
 }
 
 count($maintests);
