@@ -378,6 +378,37 @@ Use it to enable more than one logger. Example:
     Sentry collects ``error`` and ``warn`` levels and all user
     actions, while syslog stores technical ``notice``, ``info`` and ``debug`` logs.
 
+
+.. _webserverlogs:
+
+Webserver logs
+--------------
+
+The Apache or Nginx webserver has also the capacity to log the user access to resources.
+
+Depending on the load trafic, you should enable such logs for accountability reasons.
+
+If using Nginx, it consists in adding this line in ``portal-nginx.conf`` virtual host:
+
+.. code-block:: nginx
+
+    access_log /var/log/nginx/portal.log lm_app;
+
+and this line in all handler virtual hosts (for example in ``test-nginx.conf``):
+
+.. code-block:: nginx
+
+    access_log /var/log/nginx/access.log lm_combined;
+
+Take care to ensure that the ``log_format`` parameter is already defined before. Usually, it is declared in ``nginx-lmlog.conf``, loaded by ``handler-nginx.conf``:
+
+.. code-block:: nginx
+
+    include /etc/lemonldap-ng/nginx-lmlog.conf;
+
+For more information, read the :doc:`Configuration overview<configlocation>`.
+
+
 .. _auditlogs:
 
 Audit logs
