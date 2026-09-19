@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.4';
 
 package Lemonldap::NG::Portal::Main;
 
