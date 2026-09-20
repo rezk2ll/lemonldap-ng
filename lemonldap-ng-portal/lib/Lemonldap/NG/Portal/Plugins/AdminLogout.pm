@@ -5,7 +5,7 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.4';
 
 sub init {
     my ($self) = @_;

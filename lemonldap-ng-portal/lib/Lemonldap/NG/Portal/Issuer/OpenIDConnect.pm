@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants ':all';
 
-our $VERSION = '2.23.1';
+our $VERSION = '2.23.4';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer

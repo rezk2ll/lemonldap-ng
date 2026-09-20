@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.23.3';
+our $VERSION = '2.23.4';
 
 package Lemonldap::NG::Portal::Main;
 

@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCPlugin';
 
-our $VERSION = '2.23.0';
+our $VERSION = '2.23.4';
 
 # INTERFACE
 use constant hook => { oidcGotTokenExchange => 'tokenExchange' };
