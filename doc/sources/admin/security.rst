@@ -229,10 +229,38 @@ Regular expression                    Rule                       Comment
 Encoded characters
 ~~~~~~~~~~~~~~~~~~
 
-Some characters are encoded in URLs by the browser (such as space,...).
-To avoid problems, LL::NG decode them using
-https://metacpan.org/pod/Apache2::URI#unescape_url. So write your rules
-using normal characters.
+Some characters are encoded in URLs by the browser (such as space,...) and
+web servers normalize the path before routing requests to applications
+(dot segments and duplicate slashes are removed). To avoid any mismatch,
+LL::NG tests rules against the same canonical URL, that is the decoded and
+normalized path (the query string is left untouched). So write your rules
+using normal characters:
+
+===================================== ==========================
+URL received                          URL tested by the rules
+===================================== ==========================
+``/my%73ession``                      ``/mysession``
+``/./mysession``                      ``/mysession``
+``/foo/../mysession``                 ``/mysession``
+``//mysession``                       ``/mysession``
+``/index.php?url=%2Fhome``            ``/index.php?url=%2Fhome``
+===================================== ==========================
+
+.. attention::
+
+    A rule whose path contains percent-encoded characters (ie ``/foo%20bar``)
+    is therefore never applied: use the decoded form (ie ``/foo bar``). The
+    query string is not decoded, so a rule matching a GET parameter can still
+    be worked around by encoding it.
+
+.. danger::
+
+    With the Nginx handler, rules are tested against ``X_ORIGINAL_URI`` as
+    given by Nginx. It must be set to ``$original_uri``
+    (``set $original_uri $uri$is_args$args;``, see :doc:`configvhost`), which
+    Nginx has already decoded and normalized. The old ``$request_uri`` form
+    gives the URL as sent by the client: rules can then be bypassed with an
+    encoded URL.
 
 IP in rules
 ~~~~~~~~~~~

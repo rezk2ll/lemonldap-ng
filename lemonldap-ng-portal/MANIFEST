@@ -1053,6 +1053,8 @@ t/91-no-console.log.t
 t/92-Required-Auth-Methods.t
 t/92-Required-Issuer-Methods.t
 t/92-Required-UserDB-Methods.t
+t/93-locationRules-encoded-urls.t
+t/95-soap-isAuthorizedURI.t
 t/99-Bad-logLevel.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t

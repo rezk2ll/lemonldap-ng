@@ -213,7 +213,7 @@ sub controlUrl {
             if ( $u->scheme =~ /^https?$/ ) {
                 $proto  = $u->scheme;
                 $vhost  = $u->host if $u->can("host");
-                $appuri = $u->path_query;
+                $appuri = $self->HANDLER->canonicalUri( $u->path_query );
             }
         }
 
