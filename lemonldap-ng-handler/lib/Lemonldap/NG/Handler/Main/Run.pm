@@ -373,7 +373,7 @@ sub grant {
     return $cond->( $req, $session ) if $cond;
 
     $vhost ||= $class->resolveAlias($req);
-    my $level = $class->getLevel( $req, $uri );
+    my $level = $class->getLevel( $req, $uri, $vhost );
 
     # Using VH authentification level if exists
     if ($level) {
