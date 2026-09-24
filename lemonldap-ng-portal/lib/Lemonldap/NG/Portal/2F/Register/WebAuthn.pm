@@ -184,7 +184,7 @@ sub _registration {
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response: $state_id" );
-        return $self->failResponse( $req, 'PE82', 400 );
+        return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
     }
     my $registration_options = ( $state_data->{registration_options} );
     unless ($registration_options) {
@@ -270,7 +270,7 @@ sub _registration {
     }
     else {
         $self->logger->error( $self->prefix . '2f: unable to add device' );
-        return $self->failResponse( $req, "PE$res" );
+        return $self->failResponse( $req, $res );
     }
 }
 
@@ -329,7 +329,7 @@ sub _verification {
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response ($state_id)" );
-        return $self->failResponse( $req, 'PE82', 400 );
+        return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
     }
 
     my $signature_options = ( $state_data->{authentication_options} );

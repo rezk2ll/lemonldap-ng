@@ -56,7 +56,7 @@ sub verify {
     # Verify that token exists in DB (note that "keep" flag is set to
     # permit more than 1 try during token life
     unless ( $token = $self->ott->getToken( $token, 1 ) ) {
-        return $self->failResponse( $req, 'PE82', 400 );
+        return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
     }
 
     # Now check TOTP code to verify that user has a valid TOTP app
@@ -119,7 +119,7 @@ sub verify {
     }
     else {
         $self->logger->error( $self->prefix . "2f: unable to add device" );
-        return $self->failResponse( $req, "PE$res" );
+        return $self->failResponse( $req, $res );
     }
 }
 
