@@ -1,3 +1,10 @@
+lemonldap-ng (2.23.4-1) unstable; urgency=medium
+
+  * New release. See changes on our website:
+    https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng
+
+ -- Clement Oudot <clement.oudot@worteks.com>  Thu, 24 Sep 2026 12:00:00 +0200
+
 lemonldap-ng (2.23.3-1) unstable; urgency=medium
 
   * New release. See changes on our website:

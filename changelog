@@ -1,3 +1,25 @@
+lemonldap-ng (2.23.4) noble; urgency=medium
+
+  * Bugs:
+    * #3697: AdminLogout not compatible with hashedStorage
+    * #3700: [Security:low] OIDC Token-Exchange grant_type injects arbitrary keys into refresh_token
+    * #3701: Password hiding fails on multiple choice forms when "dontStorePassword" is enabled
+    * #3707: OIDC redirect_uri stripped from parameters
+    * #3716: Confusing error reporting when sfRegisterTimeout is elapsed during mandatory 2FA registration
+    * #3717: OIDC Back-Channel-Logout broken with hashed storage
+    * #3719: [Security:medium, CVE-2026-92288, CVE-2026-92289] OIDC: public clients are treated as authenticated with any client secret
+    * #3723: [Security:high, CVE-2026-95811] locationRules bypass with an encoded URL (rules are tested on the raw REQUEST_URI)
+    * #3726: grant() uses the authentication level of the current vhost instead of the requested one
+
+  * Improvements:
+    * #3689: Avoid multiple carousel instanciations
+    * #3699: Propose numeric keyboard when entering TOTP with smartphone
+
+  * Templates:
+    * #3699: Propose numeric keyboard when entering TOTP with smartphone
+
+ -- Clement Oudot <clement.oudot@worteks.com>  Thu, 24 Sep 2026 12:00:00 +0200
+
 lemonldap-ng (2.23.3) noble; urgency=medium
 
   * Bugs:
