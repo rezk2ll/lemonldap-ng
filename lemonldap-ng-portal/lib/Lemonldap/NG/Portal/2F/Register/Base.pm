@@ -206,7 +206,7 @@ sub failHtmlResponse {
     my $loglabel = $error;
     my $label    = $error;
     if ( looks_like_number($error) ) {
-        $pe       = portalConsts->{$1};
+        $pe       = portalConsts->{$error};
         $loglabel = $pe;
         $label    = "PE" . $error;
     }
@@ -239,7 +239,7 @@ sub failResponse {
     my $loglabel = $error;
     my $label    = $error;
     if ( looks_like_number($error) ) {
-        $pe       = portalConsts->{$1};
+        $pe       = portalConsts->{$error};
         $loglabel = $pe;
         $label    = "PE" . $error;
     }
