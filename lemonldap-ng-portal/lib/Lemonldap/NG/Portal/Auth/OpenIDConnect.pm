@@ -48,6 +48,8 @@ sub init {
           $self->opOptions->{$_}->{oidcOPMetaDataOptionsTooltip} || $name;
         my $order = $self->opOptions->{$_}->{oidcOPMetaDataOptionsSortNumber}
           // 999999;
+        $order = 999999 if $order eq "";
+
         my $img_src;
 
         if ($icon) {
