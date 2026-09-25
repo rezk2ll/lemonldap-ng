@@ -22,7 +22,7 @@ EOF
 use Lemonldap::NG::Portal::Main::Request;
 my $rp = rp($metadata);
 
-ok( my $oidc = $rp->p->_authentication );
+ok( my $oidc = $rp->p->_authentication->auth_modules->{Default} );
 
 sub checkRequestParams {
     my ( $extra_options, $expected_result ) = @_;

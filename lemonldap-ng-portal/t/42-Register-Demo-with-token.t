@@ -39,7 +39,7 @@ SKIP: {
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
     ok(
         $res->[2]->[0] =~
-          m%href="http://auth.example.com/register\?skin=bootstrap"%,
+          m%href="http://auth.example.com/register\?skin=bootstrap&lmAuth=Default"%,
         'Found Register link & submit button'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok(

@@ -202,8 +202,12 @@ is( $id_token_payload->{nonce}, "qwerty", "ID token contains nonce" );
 count(3);
 
 my $at;
-ok( $at = $rp->p->_userDB->getUserInfo( 'op', $prms{access_token} ),
-    'Get access token' );
+ok(
+    $at =
+      $rp->p->_authentication->userdb_modules->{Default}
+      ->getUserInfo( 'op', $prms{access_token} ),
+    'Get access token'
+);
 ok( $at->{name} eq 'Doctor Who',        ' Get name' );
 ok( $at->{family_name} eq 'Doctor Who', ' Get family_name' );
 ok( $at->{sub} eq 'dwho',               ' Get sub' );

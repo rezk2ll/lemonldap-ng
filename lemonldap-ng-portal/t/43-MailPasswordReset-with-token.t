@@ -44,7 +44,7 @@ SKIP: {
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
     ok(
         $res->[2]->[0] =~
-          m%href="http://auth.example.com/resetpwd\?skin=bootstrap"%,
+          m%href="http://auth.example.com/resetpwd\?skin=bootstrap&lmAuth=Default"%,
         'Found ResetPassword link & submit button'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ),

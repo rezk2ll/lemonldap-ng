@@ -15,7 +15,7 @@ BEGIN {
 my $debug = "error";
 
 sub runTest {
-    my ( $op, $jwt, $refresh_rotation, $adminLogout, $inactive ) = @_;
+    my ( $op, $jwt, $refresh_rotation, $adminLogout, $inactive, $args ) = @_;
     Time::Fake->reset;
 
     LWP::Protocol::PSGI->register(
@@ -59,7 +59,7 @@ sub runTest {
     my $query;
     my $res;
 
-    my $idpId = $op->login( 'french', { lmAuth => '1_Demo' } );
+    my $idpId = $op->login( 'french', $args );
 
     my $expected_auth_time = getSession($idpId)->data->{_lastAuthnUTime};
 
@@ -426,7 +426,7 @@ subtest "Using choice authentication method" => sub {
     $baseConfig->{ini}->{authentication} = "Choice";
     $baseConfig->{ini}->{authChoiceModules}->{'1_Demo'} = 'Demo;Demo;Null';
     my $op = LLNG::Manager::Test->new($baseConfig);
-    runTest( $op, 1, 1 );
+    runTest( $op, 1, 1, 0, 0, { lmAuth => "1_Demo" } );
 };
 
 clean_sessions();
