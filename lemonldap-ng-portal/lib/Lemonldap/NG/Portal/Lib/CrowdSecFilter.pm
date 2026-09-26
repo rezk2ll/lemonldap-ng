@@ -202,6 +202,9 @@ sub _readConfigFile {
         return undef;
     }
     my $value;
+
+    # Don't modify caller's $_ (the loop may stop with "last")
+    local $_;
     while (<$fh>) {
         chomp;
         s/[^\x21-\x7E]//g;    # Remove non-printable characters and spaces

@@ -418,6 +418,15 @@ subtest 'Admin probing ban with per-scenario maxFailures=3', sub {
     @mockPreviousAlerts = ();
 };
 
+subtest 'Loading filters does not modify $_', sub {
+    my $agent = $client->p->loadedModules->{
+        'Lemonldap::NG::Portal::Plugins::CrowdSecAgent'};
+    ok( $agent, 'CrowdSecAgent loaded' );
+    local $_ = 'unchanged';
+    $agent->initializeFilters;
+    is( $_, 'unchanged', '$_ preserved' );
+};
+
 clean_sessions();
 
 done_testing();
