@@ -59,6 +59,7 @@ t/51-Lemonldap-NG-Handler-Zimbra.t
 t/60-Lemonldap-NG-Handler-PSGI-unprotected.t
 t/60-Lemonldap-NG-Handler-PSGI.t
 t/61-Lemonldap-NG-Handler-PSGI-Server.t
+t/61-Lemonldap-NG-Handler-PSGI-Server-onReload-alias.t
 t/62-Lemonldap-NG-Handler-Apache.t
 t/62-Lemonldap-NG-Handler-Nginx.t
 t/62-Lemonldap-NG-Handler-Traefik.t
