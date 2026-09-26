@@ -1401,7 +1401,7 @@ dist:	clean
 	@rm -rf lemonldap-ng-$(VERSION)/docker
 	@rm -rf lemonldap-ng-$(VERSION)/Dockerfile
 	@rm -rf lemonldap-ng-$(VERSION)/dev
-	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
+	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \; || true
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
@@ -1411,7 +1411,7 @@ debian-dist:	clean
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)/dev
-	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
+	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \; || true
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 

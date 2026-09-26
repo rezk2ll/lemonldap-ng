@@ -52,8 +52,8 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Crypt::OpenSSL::RSA'    => 0,
-        'Lemonldap::NG::Common'  => '2.23.2',
-        'Lemonldap::NG::Handler' => '2.23.2',
+        'Lemonldap::NG::Common'  => '2.23.4',
+        'Lemonldap::NG::Handler' => '2.23.4',
         'LWP::UserAgent'         => 0,
     },    # e.g., Module::Name => 1.1
     (
