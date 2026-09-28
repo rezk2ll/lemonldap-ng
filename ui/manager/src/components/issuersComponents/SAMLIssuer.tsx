@@ -32,6 +32,7 @@ import { VisuallyHiddenInput } from "../managerComponents/VisuallyHiddenInput";
 import "../applicationsComponents/AppPage.css";
 import BoolForm from "../../forms/BoolForm";
 import TextForm from "../../forms/TextForm";
+import PasswordForm from "../../forms/PasswordForm";
 import HomeButton from "../HomeButton";
 export function SAMLIssuer() {
   const config = useAppSelector((state) => state.config.data.config);
@@ -243,8 +244,8 @@ export function SAMLIssuer() {
                   </td>
                 </tr>
                 <tr>
-                  <TextForm
-                    fieldName="samlServiceKeyIdSig"
+                  <PasswordForm
+                    fieldName="samlServicePrivateKeySigPwd"
                     value={
                       config.samlServicePrivateKeySigPwd ||
                       attributes.samlServicePrivateKeySigPwd.default

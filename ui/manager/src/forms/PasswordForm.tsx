@@ -33,6 +33,7 @@ export default function PasswordForm({
           size="small"
           label={t(fieldName)}
           type="password"
+          autoComplete="new-password"
           onChange={(e) => updateFunc(e.target.value)}
           placeholder={t(fieldName)}
           value={

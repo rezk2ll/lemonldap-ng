@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateConfigParams } from "../../features/config/configSlice";
 import { attributes } from "../../metadata";
 import TextForm from "../../forms/TextForm";
+import PasswordForm from "../../forms/PasswordForm";
 import BoolForm from "../../forms/BoolForm";
 import { ExportedVars } from "./ExportedVars";
 
@@ -50,7 +51,7 @@ export function LDAPSimpleView() {
             />
           </tr>
           <tr>
-            <TextForm
+            <PasswordForm
               fieldName="managerPassword"
               updateFunc={(e: string) =>
                 dispatch(

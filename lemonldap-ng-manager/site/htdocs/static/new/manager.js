@@ -44980,7 +44980,7 @@
 	    var attribute = attributes[fieldName];
 	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: (definitions[fieldName]
 	                        ? definitions[fieldName]
-	                        : "") + "" }), children: jsxRuntimeExports.jsx("th", { children: t$2(fieldName) }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", label: t$2(fieldName), type: "password", onChange: function (e) { return updateFunc(e.target.value); }, placeholder: t$2(fieldName), value: value !== undefined && value !== null
+	                        : "") + "" }), children: jsxRuntimeExports.jsx("th", { children: t$2(fieldName) }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", label: t$2(fieldName), type: "password", autoComplete: "new-password", onChange: function (e) { return updateFunc(e.target.value); }, placeholder: t$2(fieldName), value: value !== undefined && value !== null
 	                        ? value
 	                        : attribute
 	                            ? "default" in attribute
@@ -60096,7 +60096,7 @@
 	                                                                    } })] })] }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", label: t$2("samlServicePrivateKeySig"), margin: "normal", multiline: true, fullWidth: true, rows: 4, className: "formInput", value: config.samlServicePrivateKeySig ||
 	                                                            attributes.samlServicePrivateKeySig.default, onChange: function (e) {
 	                                                            return dispatch(saveSAMLPrivSig(e.target.value));
-	                                                        } }) })] }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlServiceKeyIdSig", value: config.samlServicePrivateKeySigPwd ||
+	                                                        } }) })] }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(PasswordForm, { fieldName: "samlServicePrivateKeySigPwd", value: config.samlServicePrivateKeySigPwd ||
 	                                                    attributes.samlServicePrivateKeySigPwd.default, updateFunc: function (e) { return dispatch(saveSAMLPrivIdSig(e)); } }) }), jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsxs("th", { children: [jsxRuntimeExports.jsx("div", { children: t$2("samlServicePublicKeySig") }), jsxRuntimeExports.jsxs(Button$1, { sx: { margin: "5px" }, component: "label", role: undefined, variant: "contained", tabIndex: -1, startIcon: jsxRuntimeExports.jsx(CloudUploadIcon, {}), children: [t$2("upload"), jsxRuntimeExports.jsx(VisuallyHiddenInput, { type: "file", onChange: function (e) {
 	                                                                        if (e.target instanceof HTMLInputElement) {
 	                                                                            handleChangeFile(e).then(function (fileContent) {
@@ -60239,7 +60239,7 @@
 	                                        param: "managerDn",
 	                                        value: e,
 	                                    }));
-	                                }, value: config.managerDn || attributes.managerDn.default }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "managerPassword", updateFunc: function (e) {
+	                                }, value: config.managerDn || attributes.managerDn.default }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(PasswordForm, { fieldName: "managerPassword", updateFunc: function (e) {
 	                                    return dispatch(updateConfigParams({
 	                                        param: "managerPassword",
 	                                        value: e,
@@ -71125,7 +71125,7 @@ Use the data prop if you want to provide your own handlers.`);
 	                                                setNewKeysSAML(__assign(__assign({}, newKeysSAML), { private: fileContent }));
 	                                            });
 	                                        }
-	                                    } })] }), jsxRuntimeExports.jsxs("div", { children: [t$2("samlServiceKeyIdSig"), jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", variant: "filled", "data-testid": "hash", className: "formInput", value: newKeysSAML.hash || "", onChange: function (e) {
+	                                    } })] }), jsxRuntimeExports.jsxs("div", { children: [t$2("samlServicePrivateKeySigPwd"), jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", variant: "filled", type: "password", autoComplete: "new-password", "data-testid": "hash", className: "formInput", value: newKeysSAML.hash || "", onChange: function (e) {
 	                                        return setNewKeysSAML(__assign(__assign({}, newKeysSAML), { hash: e.target.value }));
 	                                    } })] }), jsxRuntimeExports.jsx("span", { className: "text", children: t$2("samlServicePublicKeySig") }), jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", multiline: true, variant: "filled", fullWidth: true, rows: 4, "data-testid": "public", className: "formInput", value: newKeysSAML.public || "", onChange: function (e) {
 	                                return setNewKeysSAML(__assign(__assign({}, newKeysSAML), { public: e.target.value }));

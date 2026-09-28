@@ -147,11 +147,13 @@ export function IssuerAssistant({
             </Button>
 
             <div>
-              {t("samlServiceKeyIdSig")}
+              {t("samlServicePrivateKeySigPwd")}
               <TextField
                 size="small"
                 margin="normal"
                 variant="filled"
+                type="password"
+                autoComplete="new-password"
                 data-testid="hash"
                 className="formInput"
                 value={newKeysSAML.hash || ""}
