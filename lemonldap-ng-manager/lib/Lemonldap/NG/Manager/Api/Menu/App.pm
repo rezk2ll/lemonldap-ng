@@ -164,7 +164,7 @@ sub addMenuApp {
             $add->{confKey} ) );
 
     my $res =
-      $self->_pushMenuApp( $conf, $catConfKey, $add->{confKey}, $add, 1 );
+      $self->_pushMenuApp( $req, $conf, $catConfKey, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -213,7 +213,7 @@ sub updateMenuApp {
       );
 
     my $res =
-      $self->_pushMenuApp( $conf, $catConfKey, $appConfKey, $update, 0 );
+      $self->_pushMenuApp( $req, $conf, $catConfKey, $appConfKey, $update, 0 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -275,7 +275,7 @@ sub replaceMenuApp {
       );
 
     my $res =
-      $self->_pushMenuApp( $conf, $catConfKey, $appConfKey, $replace, 1 );
+      $self->_pushMenuApp( $req, $conf, $catConfKey, $appConfKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
@@ -313,7 +313,7 @@ sub deleteMenuApp {
     delete $conf->{applicationList}->{$catConfKey}->{$appConfKey};
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -358,7 +358,7 @@ sub _getMenuAppByConfKey {
 }
 
 sub _pushMenuApp {
-    my ( $self, $conf, $catConfKey, $appConfKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $catConfKey, $appConfKey, $push, $replace ) = @_;
 
     if ($replace) {
         $conf->{applicationList}->{$catConfKey}->{$appConfKey} = {};
@@ -399,7 +399,7 @@ sub _pushMenuApp {
     }
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf, $appConfKey );
 
     return { res => 'ok' };
 }

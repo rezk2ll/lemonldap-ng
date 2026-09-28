@@ -259,6 +259,7 @@ site/templates/viewer.tpl
 t/02-HTML-template.t
 t/03-HTML-forms.t
 t/04-2F-api.t
+t/04-api-conf-metadata.t
 t/04-history-api.t
 t/04-menu-api.t
 t/04-misc-api.t
