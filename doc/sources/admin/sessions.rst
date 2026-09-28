@@ -18,12 +18,14 @@ To configure sessions, go in Manager, ``General Parameters`` »
 -  **Sessions update interval**: minimum interval used to update session
    when activity timeout is set
 
-
 .. danger::
 
     Session activity timeout requires Handlers to have a write
     access to sessions database.
 
+-  **Bind session to IP**: every time a session is used, make sure the request
+   comes from the original IP. This can cause issues if you have a lot of
+   roaming users.
 -  **Log application access**: record OIDC/SAML/CAS application access
    to session. This can be used to define custom display rules based on
    previous access to application by user.
