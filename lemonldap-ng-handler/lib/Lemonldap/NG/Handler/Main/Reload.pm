@@ -183,6 +183,8 @@ sub reload {
 #      - outputPostData
 # - aliasInit():
 #      - vhostAlias
+# - sessionBindingInit():
+#      - bindSessionIP
 # - oauth2Init():
 #      - oauth2Options
 # - msgBrokerInit():
@@ -203,7 +205,7 @@ sub configReload {
     foreach my $sub (
         qw( defaultValuesInit jailInit portalInit locationRulesInit
         sessionStorageInit headersInit postUrlInit aliasInit
-        oauth2Init msgBrokerInit )
+        sessionBindingInit oauth2Init msgBrokerInit )
       )
     {
         $class->logger->debug("Process $$ calls $sub");
@@ -286,7 +288,31 @@ sub defaultValuesInit {
               $conf->{vhostOptions}->{$vhost}->{vhostDevOpsRulesUrl};
         }
     }
+
     return 1;
+}
+
+## @imethod protected void sessionBindingInit
+# Initialize rule for session-IP binding
+# @param $args reference to the configuration hash
+sub sessionBindingInit {
+    my ( $class, $conf ) = @_;
+
+    # Compile rule for session IP binding
+    $class->tsv->{bindSessionIPRule} = sub { };
+    if ( my $rule_text = $conf->{bindSessionIP} ) {
+        if ( my $sub = $class->buildSub( $class->substitute($rule_text) ) ) {
+            $class->logger->debug(
+                "$class: Condition for session IP binding: $rule_text");
+            $class->tsv->{bindSessionIPRule} = $sub;
+        }
+        else {
+            $class->logger->error(
+                "$class: Unable to build condition ($rule_text): "
+                  . $class->tsv->{jail}->error );
+        }
+    }
+    return;
 }
 
 ## @imethod protected void portalInit(hashRef args)

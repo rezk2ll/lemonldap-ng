@@ -620,6 +620,19 @@ sub fetchId {
 # @return true if the session was found, false else
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
+
+    my $data = $class->_fetchSessionData( $req, $id );
+    if ($data) {
+        if ( !$class->_isIpAddressAllowed( $req, $data ) ) {
+            return 0;
+        }
+    }
+    return $data;
+}
+
+# Internal method that gets data from cache or backend
+sub _fetchSessionData {
+    my ( $class, $req, $id ) = @_;
     my $now = time();
 
     # 1. Search if the user was the same as previous (very efficient in
@@ -724,6 +737,28 @@ sub retrieveSession {
         $class->logger->info( $session->error );
 
         return 0;
+    }
+}
+
+sub _isIpAddressAllowed {
+    my ( $class, $req, $data ) = @_;
+
+    # If IP checks are disabled: always allow
+    if ( $class->tsv->{bindSessionIPRule}->( $req, $data ) ) {
+        my $session_ip = $data->{ipAddr};
+        my $request_ip = $req->address;
+        if ( $session_ip and $request_ip and $session_ip eq $request_ip ) {
+            return 1;
+        }
+        else {
+            my $id = $data->{_session_id};
+            $class->logger->info(
+                "Session $id ($session_ip) cannot be used from $request_ip");
+            return 0;
+        }
+    }
+    else {
+        return 1;
     }
 }
 
