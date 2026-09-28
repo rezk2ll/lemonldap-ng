@@ -138,6 +138,7 @@
 "badValue":"ערך שגוי",
 "badVariableName":"שם המשתנה שגוי",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"רשימת חסימה",
 "bool":"בוליאני",
 "browse":"עיון",

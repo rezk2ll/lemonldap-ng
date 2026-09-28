@@ -138,6 +138,7 @@
 "badValue":"Valor inválido",
 "badVariableName":"Nome de variável inválida",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"Lista negra",
 "bool":"Boleano",
 "browse":"Procurar",

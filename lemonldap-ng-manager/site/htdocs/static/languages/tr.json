@@ -138,6 +138,7 @@
 "badValue":"Hatalı değer",
 "badVariableName":"Hatalı değişken adı",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"Kara liste",
 "bool":"Mantıksal",
 "browse":"Göz at",

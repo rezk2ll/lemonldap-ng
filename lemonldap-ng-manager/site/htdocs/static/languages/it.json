@@ -138,6 +138,7 @@
 "badValue":"Velore errato",
 "badVariableName":"Nome variabile errato",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"Black list",
 "bool":"Boolean",
 "browse":"Naviga",

@@ -138,6 +138,7 @@
 "badValue":"錯誤的值",
 "badVariableName":"錯誤的變數名稱",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"黑名單",
 "bool":"布林",
 "browse":"瀏覽",

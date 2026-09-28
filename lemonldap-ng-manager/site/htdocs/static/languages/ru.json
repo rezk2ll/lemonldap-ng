@@ -138,6 +138,7 @@
 "badValue":"Неверное значение",
 "badVariableName":"Неверное имя переменной",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"Черный список",
 "bool":"Булеан",
 "browse":"Просмотр",

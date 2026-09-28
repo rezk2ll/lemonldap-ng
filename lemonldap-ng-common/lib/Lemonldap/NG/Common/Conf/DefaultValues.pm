@@ -20,6 +20,7 @@ sub defaultValues {
         'available2F'     =>
           'TOTP,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
         'available2FSelfRegistration'     => 'Password,TOTP,WebAuthn,Yubikey',
+        'bindSessionIP'                   => 0,
         'bruteForceProtectionLockTimes'   => '15, 30, 60, 300, 600',
         'bruteForceProtectionMaxAge'      => 300,
         'bruteForceProtectionMaxFailed'   => 3,

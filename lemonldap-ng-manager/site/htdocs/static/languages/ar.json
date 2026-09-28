@@ -138,6 +138,7 @@
 "badValue":"قيمة خاطئة",
 "badVariableName":"اسم المتغيرة خاطئ",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"القائمة السوداء",
 "bool":"Boolean",
 "browse":"تصفح",
