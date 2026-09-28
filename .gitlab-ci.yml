@@ -104,9 +104,9 @@ new_manager_vitest:
   rules:
     - if: $SONARJOB == "1"
       when: never
+    # No "changes:" filter: in branch pipelines it compares with the previous
+    # push only, so it could skip a commit that breaks the tests
     - if: $CI_PIPELINE_SOURCE == "push"
-      changes:
-        - ui/manager/**/*
 
 # Fail on high/critical advisories in npm dependencies. Not restricted to
 # changed files: new advisories appear without any change on our side, so it
