@@ -63,7 +63,6 @@ describe("Manager homepage", () => {
         },
       },
       issuerDBCASActivation: 1,
-      issuerDBOpenIDActivation: 0,
       issuerDBGetActivation: 0,
       issuerDBOpenIDConnectActivation: 1,
       issuerDBSAMLActivation: 1,

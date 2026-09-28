@@ -14,7 +14,6 @@ import { push } from "redux-first-history";
 import {
   toggleCAS,
   toggleGET,
-  toggleOID2,
   toggleOIDC,
   toggleSAML,
 } from "../../features/config/configSlice";
@@ -271,20 +270,6 @@ function Issuers() {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem>
-              <span
-                onClick={() => {
-                  dispatch(push("#issuer/oid"));
-                }}
-              >
-                {t("issuerDBOpenID")}
-              </span>
-              <Checkbox
-                checked={Boolean(config.issuerDBOpenIDActivation)}
-                onClick={() => dispatch(toggleOID2())}
-              />
-            </MenuItem>
-            <Divider />
             <MenuItem>
               <span
                 onClick={() => {
