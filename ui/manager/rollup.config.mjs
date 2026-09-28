@@ -134,6 +134,8 @@ const makeConfig = ({ input, route, tpl, prefix, title }) => ({
     typescript({
       tsconfig: "./tsconfig.build.json",
       declaration: false,
+      // Type errors are only warnings by default: abort the build instead
+      noEmitOnError: true,
     }),
     postcss({
       // Produce static/new/<prefix>.css instead of injecting a <style> at
