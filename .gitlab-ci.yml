@@ -92,6 +92,37 @@ build_rocky_10:
   variables:
     MAJOR: 10
 
+new_manager_vitest:
+  stage: build
+  image: node:24
+  script:
+    - cd ui/manager
+    - npm ci --legacy-peer-deps --no-audit --no-fund
+    - npx tsc --noEmit
+    - npm test
+  rules:
+    - if: $SONARJOB == "1"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - ui/manager/**/*
+
+# Fail on high/critical advisories in npm dependencies. Not restricted to
+# changed files: new advisories appear without any change on our side.
+npm_audit:
+  stage: build
+  image: node:24
+  script:
+    - for dir in ui/manager lemonldap-ng-portal; do
+        echo "== $dir";
+        (cd $dir && npm audit --audit-level=high) || exit 1;
+      done
+  rules:
+    - if: $SONARJOB == "1"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+
 sonar-inspect:
   image: debian:bookworm
   stage: build
