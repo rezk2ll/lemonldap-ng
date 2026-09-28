@@ -134,13 +134,6 @@ const configSlice = createSlice({
       state.data.config.issuerDBCASActivation =
         1 - Number(state.data.config.issuerDBCASActivation);
     },
-    toggleOID2(state) {
-      if (!state.data.config.issuerDBOpenIDActivation) {
-        state.data.config.issuerDBOpenIDActivation = 0;
-      }
-      state.data.config.issuerDBOpenIDActivation =
-        1 - Number(state.data.config.issuerDBOpenIDActivation);
-    },
     toggleGET(state) {
       if (!state.data.config.issuerDBGetActivation) {
         state.data.config.issuerDBGetActivation = 0;
@@ -1628,7 +1621,6 @@ export const {
   toggleOIDC,
   toggleSAML,
   toggleGET,
-  toggleOID2,
   saveOIDCPrivSig,
   saveOIDCPrivIdSig,
   saveOIDCPubSig,

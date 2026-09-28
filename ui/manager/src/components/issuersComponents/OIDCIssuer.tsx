@@ -88,7 +88,7 @@ export function OIDCIssuer() {
                       fieldName="issuerDBOpenIDConnectActivation"
                       value={Number(
                         config.issuerDBOpenIDConnectActivation ||
-                          attributes.issuerDBOpenIDActivation.default
+                          attributes.issuerDBOpenIDConnectActivation.default
                       )}
                       updateFunc={() => dispatch(toggleOIDC())}
                     />

@@ -18,7 +18,9 @@
   },
   "include": [
     "src",
-    "__test__"  ],
+    "__test__",
+    "vitest.d.ts"
+  ],
     "exclude": ["src/setupProxy.js"]
 
 }

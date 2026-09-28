@@ -8,6 +8,7 @@
   except:
     variables:
       - $SONARJOB == "1"
+      - $NPMAUDITJOB == "1"
 
 .debian_build_job:
   extends: .build_job
@@ -91,6 +92,38 @@ build_rocky_10:
   extends: .rocky_build_job
   variables:
     MAJOR: 10
+
+new_manager_vitest:
+  stage: build
+  image: node:24
+  script:
+    - cd ui/manager
+    - npm ci --legacy-peer-deps --no-audit --no-fund
+    - npx tsc --noEmit
+    - npm test
+  rules:
+    - if: $SONARJOB == "1"
+      when: never
+    # No "changes:" filter: in branch pipelines it compares with the previous
+    # push only, so it could skip a commit that breaks the tests
+    - if: $CI_PIPELINE_SOURCE == "push"
+
+# Fail on high/critical advisories in npm dependencies. Not restricted to
+# changed files: new advisories appear without any change on our side, so it
+# also runs alone in a scheduled pipeline defining NPMAUDITJOB=1.
+npm_audit:
+  stage: build
+  image: node:24
+  script:
+    - for dir in ui/manager lemonldap-ng-portal; do
+        echo "== $dir";
+        (cd $dir && npm audit --audit-level=high) || exit 1;
+      done
+  rules:
+    - if: $SONARJOB == "1"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $NPMAUDITJOB == "1"
 
 sonar-inspect:
   image: debian:bookworm

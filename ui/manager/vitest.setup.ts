@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom";
+import { configure } from "@testing-library/react";
 import { vi } from "vitest";
+
+// findBy*/waitFor give up after 1s by default, too short on slow CI runners
+configure({ asyncUtilTimeout: 10000 });
 
 // The configuration metadata is fetched at runtime in the app; tests render
 // components synchronously, so preload the real JSON into the metadata module.

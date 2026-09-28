@@ -10,6 +10,10 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     include: ["__test__/**/*.test.{ts,tsx}"],
     clearMocks: true,
+    // Shared CI runners are much slower than a workstation (and may expose
+    // more CPUs than their quota): the 5s default makes rendering-heavy
+    // dashboard tests time out there.
+    testTimeout: 30000,
     css: false,
     coverage: {
       provider: "v8",
