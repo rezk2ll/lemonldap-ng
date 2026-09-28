@@ -8,6 +8,7 @@
   except:
     variables:
       - $SONARJOB == "1"
+      - $NPMAUDITJOB == "1"
 
 .debian_build_job:
   extends: .build_job
@@ -103,12 +104,13 @@ new_manager_vitest:
   rules:
     - if: $SONARJOB == "1"
       when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "push"
       changes:
         - ui/manager/**/*
 
 # Fail on high/critical advisories in npm dependencies. Not restricted to
-# changed files: new advisories appear without any change on our side.
+# changed files: new advisories appear without any change on our side, so it
+# also runs alone in a scheduled pipeline defining NPMAUDITJOB=1.
 npm_audit:
   stage: build
   image: node:24
@@ -120,8 +122,8 @@ npm_audit:
   rules:
     - if: $SONARJOB == "1"
       when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $NPMAUDITJOB == "1"
 
 sonar-inspect:
   image: debian:bookworm
