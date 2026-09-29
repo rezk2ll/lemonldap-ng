@@ -6,7 +6,12 @@ use URI::Escape;
 
 require 't/test-psgi-lib.pm';
 
-init('Lemonldap::NG::Handler::PSGI');
+init(
+    'Lemonldap::NG::Handler::PSGI',
+    {
+        bindSessionIP => 'not $env->{BYPASS_BIND}'
+    }
+);
 
 my $res;
 my $SKIPUSER = 0;
@@ -35,6 +40,25 @@ count(4);
 ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),
     'Authentified query' );
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+# Check that session IP binding works
+ok(
+    $res = $client->_get(
+        '/', undef, undef, "lemonldap=$sessionId",
+        REMOTE_ADDR => "1.2.3.4",
+        BYPASS_BIND => 1,
+    ),
+);
+is( $res->[0], 200, 'Session was allowed with session IP binding bypass' );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/', undef, undef, "lemonldap=$sessionId", REMOTE_ADDR => "1.2.3.4",
+    ),
+);
+is( $res->[0], 302, 'Session was ignored because IP does not match' );
 count(2);
 
 # Request an URI protected by custom function -> allowed
