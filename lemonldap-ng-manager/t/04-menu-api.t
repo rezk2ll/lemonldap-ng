@@ -99,22 +99,31 @@ sub add {
 
 sub checkAdd {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check201( $test, add( $test, $type, $add ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] POST /api/v1/menu/$type ($add->{confKey})" );
 }
 
 sub checkAddNotFound {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, add( $test, $type, $add ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkAddFailsIfExists {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check409( $test, add( $test, $type, $add ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkAddFailsOnInvalidConfkey {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, add( $test, $type, $add ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub get {
@@ -185,22 +194,31 @@ sub update {
 
 sub checkUpdate {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, update( $test, $type, $confKey, $update ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] PATCH /api/v1/menu/$type/$confKey" );
 }
 
 sub checkUpdateNotFound {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkUpdateFailsIfExists {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check409( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkUpdateWithUnknownAttributes {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub replace {
@@ -221,22 +239,30 @@ sub replace {
 
 sub checkReplace {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfStored( $test, $cfgNum, "[API] PUT /api/v1/menu/$type/$confKey" );
 }
 
 sub checkReplaceAlreadyThere {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkReplaceNotFound {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, replace( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkReplaceWithInvalidAttribute {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub findByConfKey {
@@ -287,12 +313,17 @@ sub deleteMenu {
 
 sub checkDelete {
     my ( $test, $type, $confKey ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, deleteMenu( $test, $type, $confKey ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] DELETE /api/v1/menu/$type/$confKey" );
 }
 
 sub checkDeleteNotFound {
     my ( $test, $type, $confKey ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, deleteMenu( $test, $type, $confKey ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 my $test;

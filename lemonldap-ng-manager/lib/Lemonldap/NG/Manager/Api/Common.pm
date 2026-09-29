@@ -172,10 +172,42 @@ sub _getSSOMod {
     return $mod;
 }
 
+# Save the modified configuration with its metadata (author, date, log), as
+# the manager web interface does, then audit and apply it
 sub _saveApplyConf {
-    my ( $self, $conf ) = @_;
-    $self->_confAcc->saveConf($conf);
-    $self->applyConf($conf);
+    my ( $self, $req, $conf, $confKey ) = @_;
+
+    # API client identity (OAuth2 client ID, user, web server basic auth)
+    my $user = $self->p->userId($req);
+    $user = $req->env->{REMOTE_USER}
+      if ( $user eq 'anonymous' and $req->env->{REMOTE_USER} );
+
+    my $log = '[API] ' . $req->method . ' ' . $req->path_info;
+    $log .= " ($confKey)"
+      if ( defined $confKey and $req->path_info !~ m#/\Q$confKey\E$# );
+
+    $conf->{cfgAuthor}   = $user;
+    $conf->{cfgAuthorIP} = $req->address;
+    $conf->{cfgDate}     = time;
+    $conf->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
+    $conf->{cfgLog}      = $log;
+
+    my $s = $self->_confAcc->saveConf($conf);
+    if ( $s > 0 ) {
+        $self->auditLog(
+            $req,
+            message => "User $user has stored conf $s: $log",
+            code    => "CONF_STORED",
+            user    => $user,
+            cfgNum  => $s,
+        );
+        $self->applyConf($conf);
+    }
+    else {
+        $self->logger->error( "[API] Unable to store configuration ($s): "
+              . ( $Lemonldap::NG::Common::Conf::msg // '' ) );
+    }
+    return $s;
 }
 
 sub _merge_hash {

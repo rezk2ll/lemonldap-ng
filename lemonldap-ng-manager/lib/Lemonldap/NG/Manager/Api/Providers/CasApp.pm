@@ -136,7 +136,7 @@ sub addCasApp {
         }
     }
 
-    my $res = $self->_pushCasApp( $conf, $add->{confKey}, $add, 1 );
+    my $res = $self->_pushCasApp( $req, $conf, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -177,7 +177,7 @@ sub updateCasApp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    $res = $self->_pushCasApp( $conf, $confKey, $update, 0 );
+    $res = $self->_pushCasApp( $req, $conf, $confKey, $update, 0 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -211,7 +211,7 @@ sub replaceCasApp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    $res = $self->_pushCasApp( $conf, $confKey, $replace, 1 );
+    $res = $self->_pushCasApp( $req, $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
@@ -241,7 +241,7 @@ sub deleteCasApp {
     delete $conf->{casAppMetaDataMacros}->{$confKey};
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -337,7 +337,7 @@ sub _isNewCasAppServiceUrlUnique {
 }
 
 sub _pushCasApp {
-    my ( $self, $conf, $confKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $confKey, $push, $replace ) = @_;
 
     my $translatedOptions = {};
     if ($replace) {
@@ -413,7 +413,7 @@ sub _pushCasApp {
     }
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf, $confKey );
 
     return { res => 'ok' };
 }
