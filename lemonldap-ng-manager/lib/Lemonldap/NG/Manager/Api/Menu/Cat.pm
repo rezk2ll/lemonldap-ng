@@ -99,7 +99,7 @@ sub addMenuCat {
         409
     ) if ( defined $self->_getMenuCatByConfKey( $conf, $add->{confKey} ) );
 
-    my $res = $self->_pushMenuCat( $conf, $add->{confKey}, $add, 1 );
+    my $res = $self->_pushMenuCat( $req, $conf, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -134,7 +134,7 @@ sub updateMenuCat {
     return $self->sendError( $req, "Menu category '$confKey' not found", 404 )
       unless ( defined $current );
 
-    my $res = $self->_pushMenuCat( $conf, $confKey, $update, 0 );
+    my $res = $self->_pushMenuCat( $req, $conf, $confKey, $update, 0 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -181,7 +181,7 @@ sub replaceMenuCat {
     return $self->sendError( $req, "Menu category '$confKey' not found", 404 )
       unless ( defined $self->_getMenuCatByConfKey( $conf, $confKey ) );
 
-    my $res = $self->_pushMenuCat( $conf, $confKey, $replace, 1 );
+    my $res = $self->_pushMenuCat( $req, $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
@@ -209,7 +209,7 @@ sub deleteMenuCat {
     delete $conf->{applicationList}->{$confKey};
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -232,7 +232,7 @@ sub _getMenuCatByConfKey {
 }
 
 sub _pushMenuCat {
-    my ( $self, $conf, $confKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $confKey, $push, $replace ) = @_;
 
     if ($replace) {
         $conf->{applicationList}->{$confKey} = {};
@@ -262,7 +262,7 @@ sub _pushMenuCat {
     }
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf, $confKey );
 
     return { res => 'ok' };
 }

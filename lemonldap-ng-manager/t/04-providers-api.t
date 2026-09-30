@@ -98,17 +98,24 @@ sub add {
 
 sub checkAdd {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check201( $test, add( $test, $type, $add ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] POST /api/v1/providers/$type ($add->{confKey})" );
 }
 
 sub checkAddFailsIfExists {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check409( $test, add( $test, $type, $add ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkAddWithUnknownAttributes {
     my ( $test, $type, $add ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, add( $test, $type, $add ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub get {
@@ -186,22 +193,31 @@ sub update {
 
 sub checkUpdate {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, update( $test, $type, $confKey, $update ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] PATCH /api/v1/providers/$type/$confKey" );
 }
 
 sub checkUpdateNotFound {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkUpdateFailsIfExists {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check409( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkUpdateWithUnknownAttributes {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, update( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub replace {
@@ -222,22 +238,31 @@ sub replace {
 
 sub checkReplace {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] PUT /api/v1/providers/$type/$confKey" );
 }
 
 sub checkReplaceAlreadyThere {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkReplaceNotFound {
     my ( $test, $type, $confKey, $update ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, replace( $test, $type, $confKey, $update ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub checkReplaceWithInvalidAttribute {
     my ( $test, $type, $confKey, $replace ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check400( $test, replace( $test, $type, $confKey, $replace ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 sub findByConfKey {
@@ -336,12 +361,17 @@ sub deleteProvider {
 
 sub checkDelete {
     my ( $test, $type, $confKey ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check204( $test, deleteProvider( $test, $type, $confKey ) );
+    checkConfStored( $test, $cfgNum,
+        "[API] DELETE /api/v1/providers/$type/$confKey" );
 }
 
 sub checkDeleteNotFound {
     my ( $test, $type, $confKey ) = splice @_;
+    my $cfgNum = lastConf()->{cfgNum};
     check404( $test, deleteProvider( $test, $type, $confKey ) );
+    checkConfNotStored( $test, $cfgNum );
 }
 
 my $test;
@@ -826,6 +856,38 @@ checkDelete( $test, 'cas/app', 'myCasApp1' );
 checkDelete( $test, 'cas/app', 'myCasApp2' );
 $test = "CasApp - Entity should not be found after clean up";
 checkDeleteNotFound( $test, 'cas/app', 'myCasApp1' );
+
+$test = "OidcRp - Author is the web server user (basic auth)";
+checkAdd(
+    $test,
+    'oidc/rp',
+    {
+        confKey      => 'myOidcRpBasic',
+        clientId     => 'myOidcClientBasic',
+        redirectUris => ['https://rp.example.com/cb'],
+    }
+);
+my $cfgNum = lastConf()->{cfgNum};
+my $res    = &client->app->(
+    {
+        'HTTP_ACCEPT'     => 'application/json, text/plain, */*',
+        'SCRIPT_NAME'     => '',
+        'SERVER_NAME'     => '127.0.0.1',
+        'QUERY_STRING'    => '',
+        'PATH_INFO'       => '/api/v1/providers/oidc/rp/myOidcRpBasic',
+        'REQUEST_METHOD'  => 'DELETE',
+        'REQUEST_URI'     => '/api/v1/providers/oidc/rp/myOidcRpBasic',
+        'SERVER_PORT'     => '8002',
+        'SERVER_PROTOCOL' => 'HTTP/1.1',
+        'REMOTE_ADDR'     => '10.1.2.3',
+        'REMOTE_USER'     => 'apiuser',
+        'HTTP_HOST'       => '127.0.0.1:8002',
+    }
+);
+check204( $test, $res );
+checkConfStored( $test, $cfgNum,
+    '[API] DELETE /api/v1/providers/oidc/rp/myOidcRpBasic',
+    'apiuser', '10.1.2.3' );
 
 # Clean up generated conf files, except for "lmConf-1.json"
 unlink grep { $_ ne "$main::tmpdir/conf/lmConf-1.json" }

@@ -79,6 +79,41 @@ sub count {
     return $count;
 }
 
+# Returns the last stored configuration
+sub lastConf {
+    my ($last) = sort { $b <=> $a }
+      map { /lmConf-(\d+)\.json$/ ? $1 : () }
+      glob "$main::tmpdir/conf/lmConf-*.json";
+    open my $fh, '<', "$main::tmpdir/conf/lmConf-$last.json" or die $!;
+    my $conf = from_json( do { local $/; <$fh> } );
+    close $fh;
+    return $conf;
+}
+
+# Checks that an API request stored a new configuration with its metadata
+sub checkConfStored {
+    my ( $test, $cfgNum, $log, $author, $ip ) = @_;
+    my $conf = lastConf();
+    is( $conf->{cfgNum},      $cfgNum + 1, "$test: New configuration stored" );
+    is( $conf->{cfgAuthor},   $author // 'anonymous', "$test: Author is set" );
+    is( $conf->{cfgAuthorIP}, $ip // '127.0.0.1', "$test: Author IP is set" );
+    ok( $conf->{cfgDate} >= time - 60, "$test: Date is updated" );
+    is(
+        $conf->{cfgVersion},
+        $Lemonldap::NG::Manager::VERSION,
+        "$test: Version is set"
+    );
+    is( $conf->{cfgLog}, $log, "$test: Log describes the API request" );
+    count(6);
+}
+
+# Checks that a failed API request did not store a configuration
+sub checkConfNotStored {
+    my ( $test, $cfgNum ) = @_;
+    is( lastConf()->{cfgNum}, $cfgNum, "$test: No configuration stored" );
+    count(1);
+}
+
 1;
 
 package LLNG::Manager::Test;

@@ -125,7 +125,7 @@ sub addSamlSp {
         "Invalid input: A SAML SP with entityID $entityId already exists", 409 )
       if ( defined $self->_getSamlSpByEntityId( $conf, $entityId ) );
 
-    my $res = $self->_pushSamlSp( $conf, $add->{confKey}, $add, 1 );
+    my $res = $self->_pushSamlSp( $req, $conf, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -169,7 +169,7 @@ sub replaceSamlSp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    $res = $self->_pushSamlSp( $conf, $confKey, $replace, 1 );
+    $res = $self->_pushSamlSp( $req, $conf, $confKey, $replace, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -210,7 +210,7 @@ sub updateSamlSp {
 
     }
 
-    $res = $self->_pushSamlSp( $conf, $confKey, $update, 0 );
+    $res = $self->_pushSamlSp( $req, $conf, $confKey, $update, 0 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
@@ -240,7 +240,7 @@ sub deleteSamlSp {
     delete $conf->{samlSPMetaDataMacros}->{$confKey};
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -379,7 +379,7 @@ sub _readSamlSpExportedAttributes {
 }
 
 sub _pushSamlSp {
-    my ( $self, $conf, $confKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $confKey, $push, $replace ) = @_;
 
     my $translatedOptions = {};
     if ($replace) {
@@ -453,7 +453,7 @@ sub _pushSamlSp {
     }
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf, $confKey );
 
     return { res => 'ok' };
 }

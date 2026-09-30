@@ -144,7 +144,7 @@ sub addOidcRp {
     $add->{options}->{clientId}     = $add->{clientId};
     $add->{options}->{redirectUris} = $add->{redirectUris};
 
-    my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
+    my $res = $self->_pushOidcRp( $req, $conf, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -196,7 +196,7 @@ sub updateOidcRp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    $res = $self->_pushOidcRp( $conf, $confKey, $update, 0 );
+    $res = $self->_pushOidcRp( $req, $conf, $confKey, $update, 0 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -250,7 +250,7 @@ sub replaceOidcRp {
     $replace->{options}->{clientId} = $replace->{clientId};
     $replace->{options}->{redirectUris} = $replace->{redirectUris};
 
-    $res = $self->_pushOidcRp( $conf, $confKey, $replace, 1 );
+    $res = $self->_pushOidcRp( $req, $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
@@ -280,7 +280,7 @@ sub deleteOidcRp {
     delete $conf->{oidcRPMetaDataScopeRules}->{$confKey};
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -369,7 +369,7 @@ sub _isNewOidcRpClientIdUnique {
 }
 
 sub _pushOidcRp {
-    my ( $self, $conf, $confKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $confKey, $push, $replace ) = @_;
 
     my $translatedOptions = {};
     if ($replace) {
@@ -489,7 +489,7 @@ sub _pushOidcRp {
     }
 
     # Save configuration
-    $self->_saveApplyConf($conf);
+    $self->_saveApplyConf( $req, $conf, $confKey );
 
     return { res => 'ok' };
 }
