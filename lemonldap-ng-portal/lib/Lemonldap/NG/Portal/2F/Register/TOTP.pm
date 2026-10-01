@@ -55,7 +55,7 @@ sub verify {
 
     # Verify that token exists in DB (note that "keep" flag is set to
     # permit more than 1 try during token life
-    unless ( $token = $self->ott->getToken( $token, 1 ) ) {
+    unless ( $token = $self->ott->getTokenData( $token, 1 ) ) {
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
     }
 
@@ -137,7 +137,7 @@ sub getkey {
 
     # Secret is stored in a token: we choose to not accept secret returned
     # by Ajax request to avoid some attacks
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->createTokenData( {
             _totp2fSecret => $secret,
         }
     );

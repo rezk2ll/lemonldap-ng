@@ -120,7 +120,8 @@ my $state = $params{state};
 my $stateSession = getStateSession($state);
 ok( !$stateSession->error, ' State stored in global storage as a token' )
   or explain( $stateSession->error );
-is( $stateSession->data->{_type}, 'githubState', ' Good state type' );
+is( from_json( $stateSession->data->{stored_data} )->{_type},
+    'githubState', ' Good state type' );
 count(2);
 
 # 2. The state must not be usable as a session cookie

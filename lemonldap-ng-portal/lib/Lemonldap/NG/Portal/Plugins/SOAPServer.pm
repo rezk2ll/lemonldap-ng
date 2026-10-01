@@ -411,7 +411,7 @@ sub getCipheredToken {
     return $self->conf->{cipher}->encrypt(
         Lemonldap::NG::Portal::Lib::OneTimeToken->new(
             { p => $self->p, conf => $self->conf, timeout => 5 }
-        )->createToken()
+        )->createTokenData()
     );
 }
 
@@ -425,7 +425,7 @@ sub get_key_from_all_sessions {
     unless (
         Lemonldap::NG::Portal::Lib::OneTimeToken->new(
             { p => $self->p, conf => $self->conf }
-        )->getToken($token)
+        )->getTokenData($token)
       )
     {
         die SOAP::Fault->faultcode('Server.Custom')->faultstring('Bad token');

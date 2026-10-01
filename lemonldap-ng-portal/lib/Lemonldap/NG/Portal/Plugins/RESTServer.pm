@@ -435,7 +435,7 @@ sub mysession {
 
     if ( defined $req->param('gettoken') ) {
         return $self->p->sendJSONresponse( $req,
-            { token => $self->ott->createToken() } );
+            { token => $self->ott->createTokenData() } );
     }
 
     # Verify authorizationfor arg
@@ -508,7 +508,7 @@ sub updateMySession {
     my $mKeys = [];
 
     if ( my $token = $req->param('token') ) {
-        if ( $self->ott->getToken($token) ) {
+        if ( $self->ott->getTokenData($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
                 foreach
                   my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )
@@ -559,7 +559,7 @@ sub delKeyInMySession {
     my $sub   = $req->param('sub');
 
     if ( my $token = $req->param('token') ) {
-        if ( $self->ott->getToken($token) ) {
+        if ( $self->ott->getTokenData($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
                 foreach
                   my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )

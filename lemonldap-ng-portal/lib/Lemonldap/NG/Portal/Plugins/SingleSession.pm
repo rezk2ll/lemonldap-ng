@@ -113,7 +113,7 @@ sub run {
         }
     }
 
-    $token = $self->ott->createToken( {
+    $token = $self->ott->createTokenData( {
             user     => $req->sessionInfo->{ $self->conf->{whatToTrace} },
             sessions => to_json( \@otherSessionsId )
         }
@@ -163,7 +163,7 @@ sub removeOther {
     $req->{urldc} = decode_base64( $req->param('url') );
 
     if ( my $token = $req->param('token') ) {
-        if ( $token = $self->ott->getToken($token) ) {
+        if ( $token = $self->ott->getTokenData($token) ) {
 
             # Read sessions from token
             my $sessions = eval { from_json( $token->{sessions} ) };

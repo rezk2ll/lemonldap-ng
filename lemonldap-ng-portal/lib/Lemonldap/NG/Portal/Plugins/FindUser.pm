@@ -46,7 +46,7 @@ sub provideUser {
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
         if ( my $token = $req->param('token') ) {
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getTokenData($token) ) {
                 $self->userLogger->warn(
                     'FindUser called with an expired/bad token');
                 $error = PE_TOKENEXPIRED;

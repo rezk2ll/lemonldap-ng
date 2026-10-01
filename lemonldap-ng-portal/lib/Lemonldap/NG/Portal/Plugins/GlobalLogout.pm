@@ -83,7 +83,7 @@ sub run {
     }
 
     # Prepare token
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->createTokenData( {
             user     => $user,
             sessions => to_json($sessions)
         }
@@ -121,7 +121,7 @@ sub globalLogout {
 
     if ( $req->param('all') ) {
         if ( my $token = $req->param('token') ) {
-            if ( $token = $self->ott->getToken($token) ) {
+            if ( $token = $self->ott->getTokenData($token) ) {
                 my $storeId =
                   $self->conf->{hashedSessionStore}
                   ? id2storage( $req->userData->{_session_id} )

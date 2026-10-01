@@ -62,7 +62,7 @@ sub display {
         ALERTE      => 'alert-info',
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->createTokenData()
             : ''
         )
     };
@@ -83,17 +83,17 @@ sub parse {
         my $token;
         $msg = PE_OK;
         if ( $token = $req->param('token') ) {
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getTokenData($token) ) {
                 $self->userLogger->warn(
                     'CheckDevOps called with an expired/bad token');
                 $msg   = PE_TOKENEXPIRED;
-                $token = $self->ott->createToken();
+                $token = $self->ott->createTokenData();
             }
         }
         else {
             $self->userLogger->warn('CheckDevOps called without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createToken();
+            $token = $self->ott->createTokenData();
         }
 
         # Prepare form
@@ -302,7 +302,7 @@ sub parse {
         URL         => $url,
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->createTokenData()
             : ''
         )
     };

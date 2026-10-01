@@ -75,7 +75,7 @@ sub _getCaptcha {
 
     my $imageData = $self->_render($rdm);
     my $img       = 'data:image/png;base64,' . encode_base64( $imageData, '' );
-    my $token     = $self->ott->createToken( { captcha => $rdm } );
+    my $token     = $self->ott->createTokenData( { captcha => $rdm } );
     return ( $token, $img );
 }
 
@@ -182,9 +182,9 @@ sub _sendCaptcha {
 
 sub _validate_captcha_token {
     my ( $self, $token, $value ) = @_;
-    my $s = $self->ott->getToken($token);
+    my $s = $self->ott->getTokenData($token);
     unless ($s) {
-        $self->logger->warn("Captcha token $token isn't valid");
+        $self->logger->warn("Captcha token $token is not valid");
         return 0;
     }
     unless ( $s->{captcha} eq $value ) {

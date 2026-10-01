@@ -41,7 +41,7 @@ use_ok('Lemonldap::NG::Common::FormEncode');
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel              => 'error',
+            logLevel              => 'debug',
             localSessionStorage   => "Cache::NullCache",
             tokenUseGlobalStorage => 1,
             authentication        => 'Demo',

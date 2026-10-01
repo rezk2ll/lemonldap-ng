@@ -122,7 +122,7 @@ sub display {
         IMPERSONATION => $self->conf->{contextSwitchingRule},
         TOKEN         => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->createTokenData()
             : ''
         )
     };
@@ -144,7 +144,7 @@ sub run {
             $self->userLogger->warn('ContextSwitching called without token');
             return $self->p->doPE( $req, PE_NOTOKEN );
         }
-        unless ( $self->ott->getToken($token) ) {
+        unless ( $self->ott->getTokenData($token) ) {
             $self->userLogger->warn(
                 'ContextSwitching called with an expired/bad token');
             return $self->p->doPE( $req, PE_TOKENEXPIRED );

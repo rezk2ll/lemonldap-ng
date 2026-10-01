@@ -124,7 +124,7 @@ sub extractFormInfo {
             $self->userLogger->error('GitHub response without state parameter');
             return PE_ERROR;
         }
-        my $stateData = $self->state_ott->getToken($state);
+        my $stateData = $self->state_ott->getTokenData($state);
         unless ( $stateData and ( $stateData->{_type} // '' ) eq 'githubState' )
         {
             $self->userLogger->error('Invalid or expired GitHub state');
@@ -276,7 +276,7 @@ sub extractFormInfo {
         $self->logger->debug('Redirection to GitHub');
 
         # Store state
-        my $stateToken = $self->state_ott->createToken( {
+        my $stateToken = $self->state_ott->createTokenData( {
                 _type       => 'githubState',
                 urldc       => $req->urldc,
                 checkLogins => $req->{checkLogins},

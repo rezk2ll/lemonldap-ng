@@ -245,7 +245,7 @@ sub storeRequest {
         next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
-    my $token = $self->_ott->createToken($info);
+    my $token = $self->_ott->createTokenData($info);
     $self->logger->debug("Store issuer request as $token");
     return $token;
 }
@@ -255,7 +255,7 @@ sub restoreRequest {
     $self->logger->debug("Restore issuer request from $token");
 
     my $result = 0;
-    my $env    = $self->_ott->getToken($token);
+    my $env    = $self->_ott->getTokenData($token);
     if ($env) {
         $result = 1;
         $self->logger->debug("Restoring request from $token");

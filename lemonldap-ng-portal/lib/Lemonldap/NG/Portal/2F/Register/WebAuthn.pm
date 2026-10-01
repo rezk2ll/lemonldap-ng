@@ -155,7 +155,7 @@ sub _registrationchallenge {
     };
 
     # Challenge is persisted on the server
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->createTokenData( {
             registration_options => $request,
         }
     );
@@ -181,7 +181,7 @@ sub _registration {
         return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
     my $state_data;
-    unless ( $state_data = $self->ott->getToken($state_id) ) {
+    unless ( $state_data = $self->ott->getTokenData($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response: $state_id" );
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
@@ -291,7 +291,7 @@ sub _verificationchallenge {
     }
 
     # Request is persisted on the server
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->createTokenData( {
             authentication_options => $request,
         }
     );
@@ -326,7 +326,7 @@ sub _verification {
 
     # Recover challenge
     my $state_data;
-    unless ( $state_data = $self->ott->getToken($state_id) ) {
+    unless ( $state_data = $self->ott->getTokenData($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response ($state_id)" );
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );

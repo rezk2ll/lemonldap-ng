@@ -234,7 +234,7 @@ sub _reset {
                 $self->userLogger->warn('Reset try without token');
                 return PE_NOTOKEN;
             }
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getTokenData($token) ) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try with expired/bad token');
                 return PE_TOKENEXPIRED;
@@ -360,7 +360,7 @@ sub changePwd {
     $self->logger->debug('Change password form response');
 
     if ( my $token = $req->param('token') ) {
-        $req->sessionInfo( $self->ott->getToken($token) );
+        $req->sessionInfo( $self->ott->getTokenData($token) );
         unless ( $req->sessionInfo ) {
             $self->userLogger->warn(
                 'User tries to change password with an invalid or expired token'

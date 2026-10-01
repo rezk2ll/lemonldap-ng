@@ -112,7 +112,7 @@ sub display {
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->createTokenData()
             : ''
         )
     };
@@ -135,17 +135,17 @@ sub check {
     if ( $self->ottRule->( $req, {} ) ) {
         my $token;
         if ( $token = $req->param('token') ) {
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getTokenData($token) ) {
                 $self->userLogger->warn(
                     'CheckUser called with an expired/bad token');
                 $msg   = PE_TOKENEXPIRED;
-                $token = $self->ott->createToken();
+                $token = $self->ott->createTokenData();
             }
         }
         else {
             $self->userLogger->warn('CheckUser called without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createToken();
+            $token = $self->ott->createTokenData();
         }
 
         my $params = {
@@ -183,7 +183,7 @@ sub check {
                 LOGIN       => '',
                 TOKEN       => (
                       $self->ottRule->( $req, {} )
-                    ? $self->ott->createToken()
+                    ? $self->ott->createTokenData()
                     : ''
                 )
             }
@@ -370,7 +370,7 @@ sub check {
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->createTokenData()
             : ''
         )
     };

@@ -521,7 +521,7 @@ sub authLogout {
 
         my $state;
         if ( my $next_url = ( $req->{issuerNextUrl} || $req->urldc ) ) {
-            $state = $self->state_ott->createToken( { next_url => $next_url } );
+            $state = $self->state_ott->createTokenData( { next_url => $next_url } );
         }
 
         $req->urldc(
@@ -548,7 +548,7 @@ sub rpLogoutReturn {
 
     if ( my $state = $req->param('state') ) {
 
-        $state = $self->state_ott->getToken($state);
+        $state = $self->state_ott->getTokenData($state);
         if ($state) {
             $url = $state->{next_url};
         }

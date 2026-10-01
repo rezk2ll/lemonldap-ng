@@ -114,7 +114,7 @@ sub _register {
 
         # Get the corresponding session
         if ( my $data =
-            $self->mailott->getToken( $req->data->{register_token} ) )
+            $self->mailott->getTokenData( $req->data->{register_token} ) )
         {
             $self->logger->debug(
                 'Token ' . $req->data->{register_token} . ' found' );
@@ -164,7 +164,7 @@ sub _register {
                     $self->userLogger->warn('Register try without token');
                     return PE_NOTOKEN;
                 }
-                unless ( $self->ott->getToken($token) ) {
+                unless ( $self->ott->getTokenData($token) ) {
                     $self->setSecurity($req);
                     $self->userLogger->warn(
                         'Register try with expired/bad token');
@@ -197,7 +197,7 @@ sub _register {
     unless ( $req->data->{register_token} or $register_session ) {
 
         # Create mail token
-        $register_session = $self->mailott->createToken( {
+        $register_session = $self->mailott->createTokenData( {
                 mail      => $req->data->{registerInfo}->{mail},
                 firstname => $req->data->{registerInfo}->{firstname},
                 lastname  => $req->data->{registerInfo}->{lastname},

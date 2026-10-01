@@ -118,8 +118,8 @@ sub confirm {
         $upg = 1;
     }
     else {
-        if ( my $t = $req->param('upgrading') ) {
-            if ( $self->ott->getToken($t) ) {
+        if ( my $token = $req->param('upgrading') ) {
+            if ( $self->ott->getTokenData($token) ) {
                 $upg = 1;
             }
             else {
@@ -151,7 +151,7 @@ sub confirm {
         else {
             $self->p->setHiddenFormValue(
                 $req,
-                upgrading => $self->ott->createToken,
+                upgrading => $self->ott->createTokenData(),
                 '', 0
             );    # Insert token
                   # Do a regular login
