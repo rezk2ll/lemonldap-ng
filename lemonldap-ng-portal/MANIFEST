@@ -623,6 +623,7 @@ t/01-Unauth-Logout.t
 t/01-WebAuthn-Registration.t
 t/01-WebAuthn.t
 t/02-Custom-Template-Parameters.t
+t/02-Menu-AuthnLevel.t
 t/02-Menu-Homonymous-Apps.t
 t/02-Password-Demo-checkEntropy.t
 t/02-Password-Demo-checkHIBP.t
