@@ -425,11 +425,15 @@ sub _filterHash {
                 }
             }
 
-            # Check grant function if display is "auto" (this is the default)
+            # Check grant function if display is "auto" (this is the default).
+            # Required authentication level is ignored: users will be
+            # prompted to upgrade their session when opening the app (#3735)
+            my $session = $req->userData;
+            $session = { %$session, authenticationLevel => 999 } unless $cond;
             delete $apphash->{$key}
               unless (
                 $self->p->HANDLER->grant(
-                    $req, $req->userData, $appuri, $cond, $vhost
+                    $req, $session, $appuri, $cond, $vhost
                 )
               );
             next;
