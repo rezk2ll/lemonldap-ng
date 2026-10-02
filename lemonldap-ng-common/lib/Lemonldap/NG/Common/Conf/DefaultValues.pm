@@ -242,7 +242,7 @@ sub defaultValues {
         'oidcServiceKeyTypeSig'                  => 'RSA',
         'oidcServiceMetaDataAmrRules'            => {
             'mfa' => '$_2f',
-            'otp' => '$_2f eq "TOTP"',
+            'otp' => '$_2f eq "totp"',
             'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
             'pwd' => '$authenticationLevel == 2'
         },

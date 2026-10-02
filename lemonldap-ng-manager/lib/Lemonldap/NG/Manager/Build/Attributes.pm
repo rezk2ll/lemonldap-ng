@@ -5057,7 +5057,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'pwd' => '$authenticationLevel == 2',
                 'mfa' => '$_2f',
                 'pop' => '$_auth eq "WebAuthn" or $_auth eq "SSL"',
-                'otp' => '$_2f eq "TOTP"',
+                'otp' => '$_2f eq "totp"',
             },
             documentation => 'OpenID Connect AMR rules',
             help          => 'openidconnectservice.html#amrrules',
