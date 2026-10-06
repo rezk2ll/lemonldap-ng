@@ -2062,7 +2062,8 @@ sub checkEndPointAuthenticationCredentials {
                 $method = 'none';
             }
             elsif ( $client_secret ne $secret ) {
-                $self->logger->error("Wrong credentials for $rp");
+                $self->logger->error( "Wrong credentials for $rp"
+                      . ( $rp ne $client_id ? " ($client_id)" : '' ) );
                 return undef;
             }
         }
@@ -2084,7 +2085,8 @@ sub checkEndPointAuthenticationCredentials {
             unless ( $client_secret eq
                 $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
             {
-                $self->logger->error("Wrong credentials for $rp");
+                $self->logger->error("Wrong credentials for $rp"
+                      . ( $rp ne $client_id ? " ($client_id)" : '' ) );
                 return undef;
             }
         }
