@@ -56,12 +56,6 @@ build_trixie:
   variables:
     CODENAME: trixie
 
-# EOL: May 2025
-build_focal:
-  extends: .ubuntu_build_job
-  variables:
-    CODENAME: focal
-
 # EOL: Apr 2027
 build_jammy:
   extends: .ubuntu_build_job
@@ -73,6 +67,13 @@ build_noble:
   extends: .ubuntu_build_job
   variables:
     CODENAME: noble
+
+# EOL: May 2031
+build_resolute:
+  extends: .ubuntu_build_job
+  variables:
+    CODENAME: resolute
+
 
 # EOL: 31 May 2029
 build_rocky_8:
