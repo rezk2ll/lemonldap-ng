@@ -8,6 +8,6 @@
   <body>
     <div id="root" />
     <script src="<TMPL_VAR NAME="SCRIPTNAME">psgi.js"></script>
-    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.min.js?v=cfc00e6e932e"></script>
+    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/sessions.min.js?v=cb4f66088ed8"></script>
   </body>
 </html>

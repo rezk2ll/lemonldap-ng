@@ -27473,6 +27473,7 @@
 	// Each manager section is a separate SPA (separate HTML page + bundle).
 	// Navigating between them is a full page load, like the legacy manager.
 	// Items without a `target` are placeholders not implemented yet.
+	// `target` is the default route of the matching manager module.
 	var NAV_ITEMS = [
 	    {
 	        key: "Configuration",
@@ -27495,6 +27496,17 @@
 	        target: "2ndfa.html",
 	    },
 	];
+	// Only show the sections whose module is enabled (enabledModules in
+	// lemonldap-ng.ini): psgi.js lists them in `links`, by default route. Without
+	// it (dev server, tests), show every section.
+	// Enabled modules without a new UI yet (viewer, api, custom) are not shown.
+	function enabledNavItems() {
+	    var links = window.links;
+	    if (!Array.isArray(links))
+	        return NAV_ITEMS;
+	    var targets = new Set(links.map(function (l) { return l.target; }));
+	    return NAV_ITEMS.filter(function (item) { return item.target && targets.has(item.target); });
+	}
 	// The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 	// the temporary Drawer used on narrow screens (< ~950px) to hold the section
 	// links, instead of the old wide/narrow persistent left rail. Per-app pages
@@ -27505,7 +27517,7 @@
 	    var t = useTranslation().t;
 	    var partial = htmlName == "partial.html";
 	    var renderNavItems = function (closeDrawerOnClick) {
-	        return NAV_ITEMS.map(function (item) {
+	        return enabledNavItems().map(function (item) {
 	            var active = item.target === htmlName;
 	            return (jsxRuntimeExports.jsxs("div", { className: "navItem" +
 	                    (active ? " active" : "") +

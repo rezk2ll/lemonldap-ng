@@ -23,6 +23,7 @@ import "./NavBar.css";
 // Each manager section is a separate SPA (separate HTML page + bundle).
 // Navigating between them is a full page load, like the legacy manager.
 // Items without a `target` are placeholders not implemented yet.
+// `target` is the default route of the matching manager module.
 const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   {
     key: "Configuration",
@@ -46,6 +47,17 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   },
 ];
 
+// Only show the sections whose module is enabled (enabledModules in
+// lemonldap-ng.ini): psgi.js lists them in `links`, by default route. Without
+// it (dev server, tests), show every section.
+// Enabled modules without a new UI yet (viewer, api, custom) are not shown.
+function enabledNavItems() {
+  const links = (window as any).links as { target: string }[] | undefined;
+  if (!Array.isArray(links)) return NAV_ITEMS;
+  const targets = new Set(links.map((l) => l.target));
+  return NAV_ITEMS.filter((item) => item.target && targets.has(item.target));
+}
+
 // The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 // the temporary Drawer used on narrow screens (< ~950px) to hold the section
 // links, instead of the old wide/narrow persistent left rail. Per-app pages
@@ -64,7 +76,7 @@ function Navbar({
   const partial = htmlName == "partial.html";
 
   const renderNavItems = (closeDrawerOnClick: boolean) =>
-    NAV_ITEMS.map((item) => {
+    enabledNavItems().map((item) => {
       const active = item.target === htmlName;
       return (
         <div
