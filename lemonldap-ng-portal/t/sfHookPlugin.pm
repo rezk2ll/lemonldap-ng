@@ -76,7 +76,8 @@ sub sfAfterVerify {
         $verify_result->{retries} = 1;
     }
 
-    if (   $verify_result->{result} == PE_OK
+    if ( $verify_result->{result} == PE_OK
+        && $verify_result->{device}->{type}
         && $verify_result->{device}->{type} eq "test" )
     {
 

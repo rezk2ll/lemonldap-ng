@@ -325,10 +325,10 @@ sub run {
             foreach ( @{ $self->{'sfModules'} } ) {
                 if ( $_->{m}->{type} eq $device->{type} ) {
                     $prefix = $_->{m}->{prefix};
+                    $ttl = $self->conf->{"${prefix}2fTTL"};
                     last;
                 }
             }
-            $ttl = $self->conf->{"${prefix}2fTTL"};
             if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
