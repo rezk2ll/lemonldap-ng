@@ -68,16 +68,14 @@ sub verify {
     }
 
     @totp2f = $self->find2fDevicesByType( $req, $session, $self->type );
-
     foreach my $device (@totp2f) {
         $self->logger->debug( "Trying TOTP device " . display2F($device) );
 
         if ( my $secret = $device->{_secret} ) {
-
             my $verify_result = $self->verify_totp(
-                interval        => $self->conf->{totp2fInterval},
-                digits          => $self->conf->{totp2fDigits},
-                hash            => $self->conf->{totp2fAlgorithm},
+                interval        => $device->{_interval} || $self->conf->{totp2fInterval},
+                digits          => $device->{_digits} || $self->conf->{totp2fDigits},
+                hash            => $device->{_hash} || $self->conf->{totp2fAlgorithm},
                 range_tolerance => $self->conf->{totp2fRange},
                 stored_secret   => $secret,
                 code            => $code,
