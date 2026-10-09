@@ -14,6 +14,7 @@ import KeyTextContainerForm from "../../forms/KeyTextContainerForm";
 import LongtextForm from "../../forms/LongtextForm";
 import OidcAttributeContainerForm from "../../forms/OidcAttributeContainerForm";
 import PasswordForm from "../../forms/PasswordForm";
+import SamlAttributeContainerForm from "../../forms/SamlAttributeContainerForm";
 import SelectForm from "../../forms/SelectForm";
 import TextForm from "../../forms/TextForm";
 import TroolForm from "../../forms/TroolForm";
@@ -40,9 +41,9 @@ function findByPath(nodes: CtreeNode[], path: string[]): CtreeNode | undefined {
   return node;
 }
 
-// One parameter of the application: leaves are stored in
-// config[<type>Options][name][param], hashes (macros, claims...) in
-// config[param][name].
+// One parameter of the application, stored like Manager::Conf::Parser does:
+// options in config[<type>Options][name][param], other leaves (SAML metadata
+// XML) in config[param][name][param], hashes (macros...) in config[param][name].
 function AppField({ node, name, optionsKey }: { node: CtreeNode; name: string; optionsKey: string }) {
   const config = useAppSelector((state) => state.config.data.config) as unknown as Record<
     string,
@@ -58,6 +59,12 @@ function AppField({ node, name, optionsKey }: { node: CtreeNode; name: string; o
     switch (type) {
       case "oidcAttributeContainer":
         return <OidcAttributeContainerForm value={value} fieldName={title} appName={name} />;
+      case "samlAttributeContainer":
+        return (
+          <tr>
+            <SamlAttributeContainerForm value={value} fieldName={title} appName={name} />
+          </tr>
+        );
       case "keyTextContainer":
         return (
           <tr>
@@ -73,8 +80,9 @@ function AppField({ node, name, optionsKey }: { node: CtreeNode; name: string; o
     }
   }
 
-  const value = config[optionsKey]?.[name]?.[title];
-  const update = (v: unknown) => dispatch(updateAppParam({ key: optionsKey, name, option: title, value: v }));
+  const key = title.startsWith(optionsKey) ? optionsKey : title;
+  const value = config[key]?.[name]?.[title];
+  const update = (v: unknown) => dispatch(updateAppParam({ key, name, option: title, value: v }));
   const updateInt = (v: string) => update(v === "" ? "" : Number(v));
   const props = { fieldName: title, updateFunc: update };
   let field;

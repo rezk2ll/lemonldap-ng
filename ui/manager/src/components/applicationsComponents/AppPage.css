@@ -134,6 +134,19 @@ textarea {
 }
 
 .appDesc td > table .MuiTextField-root {
-  min-width: 12em;
+  min-width: 9em;
   width: 100%;
+}
+
+/* Rows holding such a table or a document (XML/JSON, see FileForm): label
+   above, content across the whole width */
+.box > table:has(td > table),
+.box > table:has(textarea[wrap="off"]) {
+  width: 100%;
+}
+
+.box tr:has(> td > table),
+.box tr:has(textarea[wrap="off"]) {
+  display: flex;
+  flex-direction: column;
 }

@@ -471,6 +471,7 @@
 "impersonationSkipEmptyValues":"Пропустить пустые значения",
 "impersonationUnrestrictedUsersRule":"Правило неограниченных пользователей",
 "incompleteForm":"Отсутствуют обязательные поля",
+"indent":"Indent",
 "index":"Индекс",
 "infoFormMethod":"Метод для информационной формы",
 "initializePasswordReset":"Активация",

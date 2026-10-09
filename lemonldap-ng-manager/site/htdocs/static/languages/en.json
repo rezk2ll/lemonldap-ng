@@ -471,6 +471,7 @@
 "impersonationSkipEmptyValues":"Skip empty values",
 "impersonationUnrestrictedUsersRule":"Unrestricted users rule",
 "incompleteForm":"Required fields are missing",
+"indent":"Indent",
 "index":"Index",
 "infoFormMethod":"Method for info form",
 "initializePasswordReset":"Activation",

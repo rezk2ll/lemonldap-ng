@@ -28512,7 +28512,7 @@ ${String(error)}`;
 	        });
 	    },
 	});
-	var setError = (_a$1 = configSlice.actions, _a$1.setError), removeError = _a$1.removeError, toggleMaintenance = _a$1.toggleMaintenance, toggleCAS = _a$1.toggleCAS, toggleOIDC = _a$1.toggleOIDC, toggleSAML = _a$1.toggleSAML, toggleGET = _a$1.toggleGET, saveOIDCPrivSig = _a$1.saveOIDCPrivSig, saveOIDCPrivIdSig = _a$1.saveOIDCPrivIdSig, saveOIDCPubSig = _a$1.saveOIDCPubSig, saveSAMLPrivIdSig = _a$1.saveSAMLPrivIdSig, saveSAMLPrivSig = _a$1.saveSAMLPrivSig, saveSAMLPubSig = _a$1.saveSAMLPubSig, updateLocationRule = _a$1.updateLocationRule, updateDefaultLocationRule = _a$1.updateDefaultLocationRule, newLocationRule = _a$1.newLocationRule, delLocationRule = _a$1.delLocationRule, newVhostHeaders = _a$1.newVhostHeaders, delVhostHeader = _a$1.delVhostHeader, updateVhostHeaders = _a$1.updateVhostHeaders, updateVhostPost = _a$1.updateVhostPost, delVhostPost = _a$1.delVhostPost, newVhostPost = _a$1.newVhostPost, updateVhostOptions = _a$1.updateVhostOptions, changeAppName = _a$1.changeAppName, delApp = _a$1.delApp, dupApp = _a$1.dupApp, newApp = _a$1.newApp, updateOIDCclientID = _a$1.updateOIDCclientID, updateOIDCPrivateClient = _a$1.updateOIDCPrivateClient, updateOIDCPublicClient = _a$1.updateOIDCPublicClient, updateCASexportedVars = _a$1.updateCASexportedVars, newCASexportedVars = _a$1.newCASexportedVars, delCASexportedVars = _a$1.delCASexportedVars, delCASAppMetaDataMacros = _a$1.delCASAppMetaDataMacros, updateCASAppMetaDataMacros = _a$1.updateCASAppMetaDataMacros, newCASAppMetaDataMacros = _a$1.newCASAppMetaDataMacros, updateCASOptions = _a$1.updateCASOptions, updateSamlSPMetadata = _a$1.updateSamlSPMetadata, newSAMLSPMetaDataMacros = _a$1.newSAMLSPMetaDataMacros, updateSAMLSPMetaDataMacros = _a$1.updateSAMLSPMetaDataMacros, delSAMLSPMetaDataMacros = _a$1.delSAMLSPMetaDataMacros, updateSamlMetadataExportedAttribute = _a$1.updateSamlMetadataExportedAttribute, newSamlMetadataExportedAttribute = _a$1.newSamlMetadataExportedAttribute, delSamlMetadataExportedAttribute = _a$1.delSamlMetadataExportedAttribute, updateSamlMetaDataOptions = _a$1.updateSamlMetaDataOptions; _a$1.newOIDCRPMetaDataMacros; _a$1.updateOIDCRPMetaDataMacros; _a$1.delOIDCRPMetaDataMacros; var updateOidcRPMetaDataExportedVars = _a$1.updateOidcRPMetaDataExportedVars, newOidcRPMetaDataExportedVars = _a$1.newOidcRPMetaDataExportedVars, delOidcRPMetaDataExportedVars = _a$1.delOidcRPMetaDataExportedVars, updateAppParam = _a$1.updateAppParam; _a$1.updateOidcMetaDataOptions; _a$1.delOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataOptionsExtraClaims; _a$1.updateOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataScopeRules; _a$1.delOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataOptionsJwks; var updateAuthParams = _a$1.updateAuthParams, updateConfigParams = _a$1.updateConfigParams, delCombParam = _a$1.delCombParam, newCombParam = _a$1.newCombParam, updateCombParam = _a$1.updateCombParam, newCombOverParam = _a$1.newCombOverParam, delCombOverParam = _a$1.delCombOverParam, updateCombOverParam = _a$1.updateCombOverParam, newChoiceParam = _a$1.newChoiceParam, delChoiceParam = _a$1.delChoiceParam, updateChoiceParam = _a$1.updateChoiceParam, newChoiceOverParam = _a$1.newChoiceOverParam, delChoiceOverParam = _a$1.delChoiceOverParam, updateChoiceOverParam = _a$1.updateChoiceOverParam, newModuleOpt = _a$1.newModuleOpt, delModuleOpt = _a$1.delModuleOpt, updateModuleOpt = _a$1.updateModuleOpt, updateGetParamHostname = _a$1.updateGetParamHostname, delGetParam = _a$1.delGetParam, updateGetParamOption = _a$1.updateGetParamOption, newGetParam = _a$1.newGetParam, delGetParamOption = _a$1.delGetParamOption, newGetParamOption = _a$1.newGetParamOption, changeConf = _a$1.changeConf, newSfExtraOverParam = _a$1.newSfExtraOverParam, updateSfExtraOverParam = _a$1.updateSfExtraOverParam, deleteSfExtraOverParam = _a$1.deleteSfExtraOverParam, newCategory = _a$1.newCategory, renameCategory = _a$1.renameCategory, delCategory = _a$1.delCategory, newApplication = _a$1.newApplication, changeApplicationField = _a$1.changeApplicationField, delApplication = _a$1.delApplication, moveCat = _a$1.moveCat, moveApp = _a$1.moveApp;
+	var setError = (_a$1 = configSlice.actions, _a$1.setError), removeError = _a$1.removeError, toggleMaintenance = _a$1.toggleMaintenance, toggleCAS = _a$1.toggleCAS, toggleOIDC = _a$1.toggleOIDC, toggleSAML = _a$1.toggleSAML, toggleGET = _a$1.toggleGET, saveOIDCPrivSig = _a$1.saveOIDCPrivSig, saveOIDCPrivIdSig = _a$1.saveOIDCPrivIdSig, saveOIDCPubSig = _a$1.saveOIDCPubSig, saveSAMLPrivIdSig = _a$1.saveSAMLPrivIdSig, saveSAMLPrivSig = _a$1.saveSAMLPrivSig, saveSAMLPubSig = _a$1.saveSAMLPubSig, updateLocationRule = _a$1.updateLocationRule, updateDefaultLocationRule = _a$1.updateDefaultLocationRule, newLocationRule = _a$1.newLocationRule, delLocationRule = _a$1.delLocationRule, newVhostHeaders = _a$1.newVhostHeaders, delVhostHeader = _a$1.delVhostHeader, updateVhostHeaders = _a$1.updateVhostHeaders, updateVhostPost = _a$1.updateVhostPost, delVhostPost = _a$1.delVhostPost, newVhostPost = _a$1.newVhostPost, updateVhostOptions = _a$1.updateVhostOptions, changeAppName = _a$1.changeAppName, delApp = _a$1.delApp, dupApp = _a$1.dupApp, newApp = _a$1.newApp, updateOIDCclientID = _a$1.updateOIDCclientID, updateOIDCPrivateClient = _a$1.updateOIDCPrivateClient, updateOIDCPublicClient = _a$1.updateOIDCPublicClient; _a$1.updateCASexportedVars; _a$1.newCASexportedVars; _a$1.delCASexportedVars; _a$1.delCASAppMetaDataMacros; _a$1.updateCASAppMetaDataMacros; _a$1.newCASAppMetaDataMacros; _a$1.updateCASOptions; var updateSamlSPMetadata = _a$1.updateSamlSPMetadata; _a$1.newSAMLSPMetaDataMacros; _a$1.updateSAMLSPMetaDataMacros; _a$1.delSAMLSPMetaDataMacros; var updateSamlMetadataExportedAttribute = _a$1.updateSamlMetadataExportedAttribute, newSamlMetadataExportedAttribute = _a$1.newSamlMetadataExportedAttribute, delSamlMetadataExportedAttribute = _a$1.delSamlMetadataExportedAttribute; _a$1.updateSamlMetaDataOptions; _a$1.newOIDCRPMetaDataMacros; _a$1.updateOIDCRPMetaDataMacros; _a$1.delOIDCRPMetaDataMacros; var updateOidcRPMetaDataExportedVars = _a$1.updateOidcRPMetaDataExportedVars, newOidcRPMetaDataExportedVars = _a$1.newOidcRPMetaDataExportedVars, delOidcRPMetaDataExportedVars = _a$1.delOidcRPMetaDataExportedVars, updateAppParam = _a$1.updateAppParam; _a$1.updateOidcMetaDataOptions; _a$1.delOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataOptionsExtraClaims; _a$1.updateOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataScopeRules; _a$1.delOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataOptionsJwks; var updateAuthParams = _a$1.updateAuthParams, updateConfigParams = _a$1.updateConfigParams, delCombParam = _a$1.delCombParam, newCombParam = _a$1.newCombParam, updateCombParam = _a$1.updateCombParam, newCombOverParam = _a$1.newCombOverParam, delCombOverParam = _a$1.delCombOverParam, updateCombOverParam = _a$1.updateCombOverParam, newChoiceParam = _a$1.newChoiceParam, delChoiceParam = _a$1.delChoiceParam, updateChoiceParam = _a$1.updateChoiceParam, newChoiceOverParam = _a$1.newChoiceOverParam, delChoiceOverParam = _a$1.delChoiceOverParam, updateChoiceOverParam = _a$1.updateChoiceOverParam, newModuleOpt = _a$1.newModuleOpt, delModuleOpt = _a$1.delModuleOpt, updateModuleOpt = _a$1.updateModuleOpt, updateGetParamHostname = _a$1.updateGetParamHostname, delGetParam = _a$1.delGetParam, updateGetParamOption = _a$1.updateGetParamOption, newGetParam = _a$1.newGetParam, delGetParamOption = _a$1.delGetParamOption, newGetParamOption = _a$1.newGetParamOption, changeConf = _a$1.changeConf, newSfExtraOverParam = _a$1.newSfExtraOverParam, updateSfExtraOverParam = _a$1.updateSfExtraOverParam, deleteSfExtraOverParam = _a$1.deleteSfExtraOverParam, newCategory = _a$1.newCategory, renameCategory = _a$1.renameCategory, delCategory = _a$1.delCategory, newApplication = _a$1.newApplication, changeApplicationField = _a$1.changeApplicationField, delApplication = _a$1.delApplication, moveCat = _a$1.moveCat, moveApp = _a$1.moveApp;
 	var configReducer = configSlice.reducer;
 
 	const CALL_HISTORY_METHOD = '@@router/CALL_HISTORY_METHOD';
@@ -52789,18 +52789,25 @@ ${String(error)}`;
 	    }
 	}
 
-	function LongtextForm(_a) {
-	    var value = _a.value, fieldName = _a.fieldName, updateFunc = _a.updateFunc;
-	    var attribute = attributes[fieldName];
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: (definitions[fieldName]
-	                        ? definitions[fieldName]
-	                        : "") + "" }), children: jsxRuntimeExports.jsx("th", { children: t$1(fieldName) }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", type: "text", inputProps: { "aria-label": t$1(fieldName) }, multiline: true, rows: 4, onChange: function (e) { return updateFunc(e.target.value); }, placeholder: t$1(fieldName), value: value !== undefined && value !== null
-	                        ? value
-	                        : attribute
-	                            ? "default" in attribute
-	                                ? attribute.default
-	                                : ""
-	                            : "" }) })] }));
+	function transformJsonToList(key) {
+	    var regex = /(?:\(\?#([\w|\s?]+)\))?([^()]+)(?:\(\?#AuthnLevel=(\d+)\))?/;
+	    var matches = key.match(regex);
+	    if (matches) {
+	        var result = [matches[1], matches[2], matches[3] || ""];
+	        return result;
+	    }
+	    else {
+	        console.debug("No match found.");
+	        return ["", "default", ""];
+	    }
+	}
+	function transformListToJson(list) {
+	    var locationRules = {};
+	    list.forEach(function (part) {
+	        var formattedString = "".concat(part.comment ? "(?#".concat(part.comment, ")") : "").concat(part.regex).concat(part.authLevel ? "(?#AuthnLevel=".concat(part.authLevel, ")") : "");
+	        locationRules[formattedString] = part.rule;
+	    });
+	    return locationRules;
 	}
 
 	function TroolForm(_a) {
@@ -52841,101 +52848,6 @@ ${String(error)}`;
 	    return (jsxRuntimeExports.jsx(IconButton$1, { size: "large", onClick: function () {
 	            dispatch(push("#conf/latest"));
 	        }, children: jsxRuntimeExports.jsx(HomeIcon, {}) }));
-	}
-
-	function CasApp(_a) {
-	    var name = _a.name;
-	    var vars = useAppSelector(function (state) {
-	        if (state.config.data.config.casAppMetaDataExportedVars) {
-	            return state.config.data.config.casAppMetaDataExportedVars[name];
-	        }
-	    }) || {};
-	    var casAppMetaDataMacros = useAppSelector(function (state) {
-	        if (state.config.data.config.casAppMetaDataMacros) {
-	            return state.config.data.config.casAppMetaDataMacros[name];
-	        }
-	    }) || {};
-	    var casAppMetaDataOptions = useAppSelector(function (state) {
-	        if (state.config.data.config.casAppMetaDataOptions) {
-	            return state.config.data.config.casAppMetaDataOptions[name];
-	        }
-	    }) || {};
-	    var _b = reactExports.useState("basic"), optionSelected = _b[0], setOptionSelected = _b[1];
-	    var dispatch = useAppDispatch();
-	    return (jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("div", { className: "top", children: [jsxRuntimeExports.jsx(HomeButton, {}), jsxRuntimeExports.jsx("strong", { className: "title", children: name })] }), jsxRuntimeExports.jsxs("div", { className: "app", children: [jsxRuntimeExports.jsxs("div", { className: "optionNavbar", children: [jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "basic" ? "selected" : ""), onClick: function () { return setOptionSelected("basic"); }, children: t$1("basicOptions") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "casAppMetaDataExportedVars" ? "selected" : ""), onClick: function () { return setOptionSelected("casAppMetaDataExportedVars"); }, children: t$1("casAppMetaDataExportedVars") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "casAppMetaDataMacros" ? "selected" : ""), onClick: function () { return setOptionSelected("casAppMetaDataMacros"); }, children: t$1("casAppMetaDataMacros") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "casAppMetaDataOptions" ? "selected" : ""), onClick: function () { return setOptionSelected("casAppMetaDataOptions"); }, children: t$1("casAppMetaDataOptions") })] }), jsxRuntimeExports.jsx(Divider$1, { className: "divider", orientation: "vertical", variant: "middle" }), jsxRuntimeExports.jsxs("div", { className: "appDesc", children: [(optionSelected === "casAppMetaDataExportedVars" ||
-	                                optionSelected === "basic") && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsx("strong", { className: "title2", children: t$1("casAppMetaDataExportedVars") }), jsxRuntimeExports.jsxs("table", { id: "exportedVars", children: [jsxRuntimeExports.jsx("thead", { children: jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: t$1("keys") }), jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: definitions.casAppMetaDataExportedVars }), children: jsxRuntimeExports.jsx("th", { children: t$1("values") }) }), jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newCASexportedVars(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) }) })] }) }), jsxRuntimeExports.jsx(TableVars, { appName: name, vars: vars, tableID: "exportedVars", dispatch: dispatch, delFunction: delCASexportedVars, updateFunction: updateCASexportedVars })] }), jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newCASexportedVars(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) })] })), optionSelected === "casAppMetaDataMacros" && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsx("strong", { className: "title2", children: t$1("casAppMetaDataMacros") }), jsxRuntimeExports.jsxs("table", { id: "macros", children: [jsxRuntimeExports.jsx("thead", { children: jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: t$1("keys") }), jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: definitions.casAppMetaDataMacros }), children: jsxRuntimeExports.jsx("th", { children: t$1("values") }) }), jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newCASAppMetaDataMacros(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) }) })] }) }), jsxRuntimeExports.jsx(TableVars, { appName: name, vars: casAppMetaDataMacros, tableID: "macros", dispatch: dispatch, delFunction: delCASAppMetaDataMacros, updateFunction: updateCASAppMetaDataMacros })] }), jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newCASAppMetaDataMacros(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) })] })), optionSelected === "casAppMetaDataOptions" && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsx("strong", { className: "title2", children: t$1("casAppMetaDataOptions") }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { value: String(casAppMetaDataOptions.casAppMetaDataOptionsDisplayName
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsDisplayName
-	                                                            : ""), fieldName: "casAppMetaDataOptionsDisplayName", updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsDisplayName",
-	                                                                value: e,
-	                                                            }));
-	                                                        } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { value: String(casAppMetaDataOptions.casAppMetaDataOptionsService
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsService
-	                                                            : ""), fieldName: "casAppMetaDataOptionsService", updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsService",
-	                                                                value: e,
-	                                                            }));
-	                                                        } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TroolForm, { fieldName: "casAppMetaDataOptionsLogout", value: Number(casAppMetaDataOptions.casAppMetaDataOptionsLogout !==
-	                                                            undefined &&
-	                                                            casAppMetaDataOptions.casAppMetaDataOptionsLogout !==
-	                                                                null
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsLogout
-	                                                            : attributes.casAppMetaDataOptionsLogout.default), updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsLogout",
-	                                                                value: Number(e),
-	                                                            }));
-	                                                        } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(IntForm$1, { value: Number(casAppMetaDataOptions.casAppMetaDataOptionsAuthnLevel
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsAuthnLevel
-	                                                            : 0), fieldName: "casAppMetaDataOptionsAuthnLevel", updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsAuthnLevel",
-	                                                                value: e,
-	                                                            }));
-	                                                        } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { value: String(casAppMetaDataOptions.casAppMetaDataOptionsRule
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsRule
-	                                                            : ""), fieldName: "casAppMetaDataOptionsRule", updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsRule",
-	                                                                value: e,
-	                                                            }));
-	                                                        } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(LongtextForm, { value: String(casAppMetaDataOptions.casAppMetaDataOptionsComment
-	                                                            ? casAppMetaDataOptions.casAppMetaDataOptionsComment
-	                                                            : ""), fieldName: "casAppMetaDataOptionsComment", updateFunc: function (e) {
-	                                                            dispatch(updateCASOptions({
-	                                                                name: name,
-	                                                                option: "casAppMetaDataOptionsComment",
-	                                                                value: e,
-	                                                            }));
-	                                                        } }) })] }) })] }))] })] })] }));
-	}
-
-	function transformJsonToList(key) {
-	    var regex = /(?:\(\?#([\w|\s?]+)\))?([^()]+)(?:\(\?#AuthnLevel=(\d+)\))?/;
-	    var matches = key.match(regex);
-	    if (matches) {
-	        var result = [matches[1], matches[2], matches[3] || ""];
-	        return result;
-	    }
-	    else {
-	        console.debug("No match found.");
-	        return ["", "default", ""];
-	    }
-	}
-	function transformListToJson(list) {
-	    var locationRules = {};
-	    list.forEach(function (part) {
-	        var formattedString = "".concat(part.comment ? "(?#".concat(part.comment, ")") : "").concat(part.regex).concat(part.authLevel ? "(?#AuthnLevel=".concat(part.authLevel, ")") : "");
-	        locationRules[formattedString] = part.rule;
-	    });
-	    return locationRules;
 	}
 
 	function updateRules$1(tableID) {
@@ -53236,6 +53148,30 @@ ${String(error)}`;
 	var CloudUploadExports = /*@__PURE__*/ requireCloudUpload();
 	var CloudUploadIcon = /*@__PURE__*/getDefaultExportFromCjs(CloudUploadExports);
 
+	var FormatIndentIncrease = {};
+
+	var hasRequiredFormatIndentIncrease;
+
+	function requireFormatIndentIncrease () {
+		if (hasRequiredFormatIndentIncrease) return FormatIndentIncrease;
+		hasRequiredFormatIndentIncrease = 1;
+
+		var _interopRequireDefault = requireInteropRequireDefault();
+		Object.defineProperty(FormatIndentIncrease, "__esModule", {
+		  value: true
+		});
+		FormatIndentIncrease.default = void 0;
+		var _createSvgIcon = _interopRequireDefault(/*@__PURE__*/ requireCreateSvgIcon());
+		var _jsxRuntime = requireJsxRuntime();
+		FormatIndentIncrease.default = (0, _createSvgIcon.default)(/*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+		  d: "M3 21h18v-2H3zM3 8v8l4-4zm8 9h10v-2H11zM3 3v2h18V3zm8 6h10V7H11zm0 4h10v-2H11z"
+		}), 'FormatIndentIncrease');
+		return FormatIndentIncrease;
+	}
+
+	var FormatIndentIncreaseExports = /*@__PURE__*/ requireFormatIndentIncrease();
+	var FormatIndentIncreaseIcon = /*@__PURE__*/getDefaultExportFromCjs(FormatIndentIncreaseExports);
+
 	function getFromURL(url) {
 	    return __awaiter$1(this, void 0, void 0, function () {
 	        var response, result, error_1;
@@ -53318,6 +53254,51 @@ ${String(error)}`;
 	    width: 1,
 	});
 
+	// Indent an XML or JSON document (SAML metadata, JWKS...) so its structure
+	// shows. Returns null when the text is neither valid XML nor valid JSON.
+	function indentDocument(text) {
+	    var trimmed = text.trim();
+	    if (/^[[{]/.test(trimmed)) {
+	        try {
+	            return JSON.stringify(JSON.parse(trimmed), null, 2);
+	        }
+	        catch (_a) {
+	            return null;
+	        }
+	    }
+	    if (trimmed.startsWith("<")) {
+	        var doc = new DOMParser().parseFromString(trimmed, "application/xml");
+	        if (doc.getElementsByTagName("parsererror").length)
+	            return null;
+	        return indentXml(trimmed);
+	    }
+	    return null;
+	}
+	// Only whitespace between tags is changed: text content (certificates...) is
+	// kept as is.
+	function indentXml(xml) {
+	    var depth = 0;
+	    return xml
+	        .replace(/>\s*</g, ">\0<")
+	        // keep empty elements (<a ...></a>) on one line
+	        .replace(/(<([\w:.-]+)(?:\s[^<>]*[^/<>])?)>\0<\/\2>/g, "$1></$2>")
+	        .split("\0")
+	        .map(function (node) {
+	        var isClosing = node.startsWith("</");
+	        var isOpening = !isClosing &&
+	            !/^<[?!]/.test(node) &&
+	            !node.endsWith("/>") &&
+	            !node.includes("</");
+	        if (isClosing)
+	            depth = Math.max(depth - 1, 0);
+	        var line = "  ".repeat(depth) + node;
+	        if (isOpening)
+	            depth++;
+	        return line;
+	    })
+	        .join("\n");
+	}
+
 	function handleChangeFile(e) {
 	    return new Promise(function (resolve, reject) {
 	        if (e.target.files && e.target.files[0]) {
@@ -53346,14 +53327,25 @@ ${String(error)}`;
 	function FileForm(_a) {
 	    var value = _a.value, fieldName = _a.fieldName, updateFunc = _a.updateFunc;
 	    attributes[fieldName];
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("th", { className: "title2", children: t$1(fieldName) }), jsxRuntimeExports.jsxs("td", { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", multiline: true, fullWidth: true, rows: 12, inputProps: { "aria-label": t$1(fieldName) }, placeholder: t$1(fieldName), onChange: function (e) { return updateFunc(e.target.value); }, value: value || "" }) }), jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsxs(Button$1, { sx: { margin: "5px" }, component: "label", role: undefined, variant: "contained", tabIndex: -1, startIcon: jsxRuntimeExports.jsx(CloudUploadIcon, {}), children: [t$1("upload"), jsxRuntimeExports.jsx(VisuallyHiddenInput, { type: "file", onChange: function (e) {
-	                                        if (e.target instanceof HTMLInputElement) {
-	                                            handleChangeFile(e).then(function (fileContent) {
-	                                                console.debug("File content:", fileContent);
-	                                                updateFunc(fileContent);
-	                                            });
-	                                        }
-	                                    } })] }) }), jsxRuntimeExports.jsx(URLLoader, { appName: fieldName, loadFunction: updateFunc })] })] }));
+	    // Explicit action: indenting changes the stored text (and would break a
+	    // signed metadata document)
+	    var indented = value ? indentDocument(value) : null;
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("th", { className: "title2", children: t$1(fieldName) }), jsxRuntimeExports.jsxs("td", { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", multiline: true, fullWidth: true, rows: 12, 
+	                            // XML/JSON/PEM documents: keep their layout, like <pre>
+	                            inputProps: { "aria-label": t$1(fieldName), wrap: "off" }, sx: {
+	                                "& textarea": {
+	                                    fontFamily: "monospace",
+	                                    whiteSpace: "pre",
+	                                    overflowX: "auto",
+	                                },
+	                            }, placeholder: t$1(fieldName), onChange: function (e) { return updateFunc(e.target.value); }, value: value || "" }) }), jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs(Button$1, { sx: { margin: "5px" }, component: "label", role: undefined, variant: "contained", tabIndex: -1, startIcon: jsxRuntimeExports.jsx(CloudUploadIcon, {}), children: [t$1("upload"), jsxRuntimeExports.jsx(VisuallyHiddenInput, { type: "file", onChange: function (e) {
+	                                            if (e.target instanceof HTMLInputElement) {
+	                                                handleChangeFile(e).then(function (fileContent) {
+	                                                    console.debug("File content:", fileContent);
+	                                                    updateFunc(fileContent);
+	                                                });
+	                                            }
+	                                        } })] }), jsxRuntimeExports.jsx(Button$1, { sx: { margin: "5px" }, variant: "outlined", startIcon: jsxRuntimeExports.jsx(FormatIndentIncreaseIcon, {}), disabled: indented === null || indented === value, onClick: function () { return updateFunc(indented); }, children: t$1("indent") })] }), jsxRuntimeExports.jsx(URLLoader, { appName: fieldName, loadFunction: updateFunc })] })] }));
 	}
 
 	function IntForm(_a) {
@@ -53438,6 +53430,20 @@ ${String(error)}`;
 	    return headerList;
 	}
 
+	function LongtextForm(_a) {
+	    var value = _a.value, fieldName = _a.fieldName, updateFunc = _a.updateFunc;
+	    var attribute = attributes[fieldName];
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: (definitions[fieldName]
+	                        ? definitions[fieldName]
+	                        : "") + "" }), children: jsxRuntimeExports.jsx("th", { children: t$1(fieldName) }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", type: "text", inputProps: { "aria-label": t$1(fieldName) }, multiline: true, rows: 4, onChange: function (e) { return updateFunc(e.target.value); }, placeholder: t$1(fieldName), value: value !== undefined && value !== null
+	                        ? value
+	                        : attribute
+	                            ? "default" in attribute
+	                                ? attribute.default
+	                                : ""
+	                            : "" }) })] }));
+	}
+
 	function OidcAttributeContainerForm(_a) {
 	    var value = _a.value, fieldName = _a.fieldName, appName = _a.appName;
 	    var i = 0;
@@ -53502,192 +53508,6 @@ ${String(error)}`;
 	        }
 	    }
 	    return attrList;
-	}
-
-	function getTree() {
-	    try {
-	        var response = fetch(staticUrl("nstruct.json"));
-	        return response;
-	    }
-	    catch (error) {
-	        throw new Error(JSON.stringify(error));
-	    }
-	}
-
-	var struct;
-	function loadStruct() {
-	    if (!struct) {
-	        struct = getTree()
-	            .then(function (r) { return r.json(); })
-	            .catch(function (e) {
-	            struct = undefined;
-	            throw e;
-	        });
-	    }
-	    return struct;
-	}
-	// The ctree of `<type>s` (e.g. "oidcRPMetaDataNodes"), wherever it sits.
-	function findCtree(nodes, type) {
-	    for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
-	        var node = nodes_1[_i];
-	        if (!node || typeof node !== "object")
-	            continue;
-	        if (node.title === "".concat(type, "s") && Array.isArray(node.cnodes)) {
-	            return node.cnodes;
-	        }
-	        for (var _a = 0, _b = [node._nodes, node._nodes_cond, node.cnodes]; _a < _b.length; _a++) {
-	            var sub = _b[_a];
-	            if (Array.isArray(sub)) {
-	                var found = findCtree(sub, type);
-	                if (found)
-	                    return found;
-	            }
-	        }
-	    }
-	    return undefined;
-	}
-	function children(node) {
-	    return __spreadArray(__spreadArray([], (node._nodes || []), true), (node._nodes_cond || []), true);
-	}
-	function isGroup(node) {
-	    return Array.isArray(node._nodes);
-	}
-
-	// Groups listed in the side menu: those of a plain container. The groups of a
-	// "simpleInputContainer" (e.g. mTLS inside security) are shown inline.
-	function navGroups(node) {
-	    return node.type === "simpleInputContainer" ? [] : children(node).filter(isGroup);
-	}
-	function findByPath(nodes, path) {
-	    var node;
-	    var level = nodes;
-	    var _loop_1 = function (title) {
-	        node = level.find(function (n) { return n.title === title; });
-	        if (!node)
-	            return { value: undefined };
-	        level = children(node);
-	    };
-	    for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
-	        var title = path_1[_i];
-	        var state_1 = _loop_1(title);
-	        if (typeof state_1 === "object")
-	            return state_1.value;
-	    }
-	    return node;
-	}
-	// One parameter of the application: leaves are stored in
-	// config[<type>Options][name][param], hashes (macros, claims...) in
-	// config[param][name].
-	function AppField(_a) {
-	    var _b, _c, _d, _e;
-	    var node = _a.node, name = _a.name, optionsKey = _a.optionsKey;
-	    var config = useAppSelector(function (state) { return state.config.data.config; });
-	    var dispatch = useAppDispatch();
-	    var title = node.title;
-	    var type = node.type || ((_b = attributes[title]) === null || _b === void 0 ? void 0 : _b.type) || "text";
-	    if (typeof node.cnodes === "string") {
-	        var value_1 = ((_c = config[title]) === null || _c === void 0 ? void 0 : _c[name]) || {};
-	        switch (type) {
-	            case "oidcAttributeContainer":
-	                return jsxRuntimeExports.jsx(OidcAttributeContainerForm, { value: value_1, fieldName: title, appName: name });
-	            case "keyTextContainer":
-	                return (jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(KeyTextContainerForm, { value: value_1, fieldName: title, updateFunc: function (v) { return dispatch(updateAppParam({ key: title, name: name, value: v })); } }) }));
-	            default:
-	                return null;
-	        }
-	    }
-	    var value = (_e = (_d = config[optionsKey]) === null || _d === void 0 ? void 0 : _d[name]) === null || _e === void 0 ? void 0 : _e[title];
-	    var update = function (v) { return dispatch(updateAppParam({ key: optionsKey, name: name, option: title, value: v })); };
-	    var updateInt = function (v) { return update(v === "" ? "" : Number(v)); };
-	    var props = { fieldName: title, updateFunc: update };
-	    var field;
-	    switch (type) {
-	        case "bool":
-	            field = jsxRuntimeExports.jsx(BoolForm, __assign({}, props, { value: Number(value) }));
-	            break;
-	        case "trool":
-	            field = jsxRuntimeExports.jsx(TroolForm, __assign({}, props, { value: Number(value) }));
-	            break;
-	        case "boolOrExpr":
-	            field = jsxRuntimeExports.jsx(BoolOrExprForm, __assign({}, props, { value: value }));
-	            break;
-	        case "select":
-	            field = jsxRuntimeExports.jsx(SelectForm, __assign({}, props, { value: value !== null && value !== void 0 ? value : "" }));
-	            break;
-	        case "int":
-	            field = jsxRuntimeExports.jsx(IntForm$1, __assign({}, props, { updateFunc: updateInt, value: Number(value) }));
-	            break;
-	        case "intOrNull":
-	            field = jsxRuntimeExports.jsx(IntForm, __assign({}, props, { updateFunc: updateInt, value: value }));
-	            break;
-	        case "password":
-	            field = jsxRuntimeExports.jsx(PasswordForm, __assign({}, props, { value: value }));
-	            break;
-	        case "longtext":
-	            field = jsxRuntimeExports.jsx(LongtextForm, __assign({}, props, { value: value }));
-	            break;
-	        case "url":
-	            field = jsxRuntimeExports.jsx(UrlForm, __assign({}, props, { value: value }));
-	            break;
-	        case "file":
-	            field = jsxRuntimeExports.jsx(FileForm, __assign({}, props, { value: value }));
-	            break;
-	        default:
-	            field = jsxRuntimeExports.jsx(TextForm, __assign({}, props, { value: value }));
-	    }
-	    return jsxRuntimeExports.jsx("tr", { children: field });
-	}
-	// Parameters of a section; inline groups get a sub-heading.
-	function SectionFields(_a) {
-	    var node = _a.node, name = _a.name, optionsKey = _a.optionsKey;
-	    if (!isGroup(node)) {
-	        return jsxRuntimeExports.jsx(AppField, { node: node, name: name, optionsKey: optionsKey });
-	    }
-	    var inNav = new Set(navGroups(node));
-	    return (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children(node)
-	            .filter(function (child) { return !inNav.has(child); })
-	            .map(function (child) {
-	            return isGroup(child) ? (jsxRuntimeExports.jsx(SectionGroup, { node: child, name: name, optionsKey: optionsKey }, child.title)) : (jsxRuntimeExports.jsx(AppField, { node: child, name: name, optionsKey: optionsKey }, child.title));
-	        }) }));
-	}
-	function SectionGroup(props) {
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("tr", { className: "subsection", children: jsxRuntimeExports.jsx("th", { colSpan: 2, children: t$1(props.node.title) }) }), jsxRuntimeExports.jsx(SectionFields, __assign({}, props))] }));
-	}
-	function NavItem(_a) {
-	    var node = _a.node, path = _a.path, selected = _a.selected, select = _a.select, depth = _a.depth;
-	    var groups = navGroups(node);
-	    var key = path.join("/");
-	    var isSelected = selected.join("/") === key;
-	    var isOpen = selected.slice(0, path.length).join("/") === key;
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("label", { className: "".concat(depth ? "suboption" : "option", " ").concat(isSelected ? "selected" : ""), "data-testid": node.title, onClick: function () { return select(path); }, children: [groups.length > 0 && jsxRuntimeExports.jsx("div", { children: isOpen ? jsxRuntimeExports.jsx(ExpandLess, {}) : jsxRuntimeExports.jsx(ExpandMoreIcon, {}) }), jsxRuntimeExports.jsx("span", { children: t$1(node.title) })] }), groups.length > 0 && (jsxRuntimeExports.jsx(Collapse$1, { in: isOpen, timeout: "auto", unmountOnExit: true, children: jsxRuntimeExports.jsx(List$1, { className: "optionNavbar sub", children: groups.map(function (group) { return (jsxRuntimeExports.jsx(NavItem, { node: group, path: __spreadArray(__spreadArray([], path, true), [group.title], false), selected: selected, select: select, depth: depth + 1 }, group.title)); }) }) }))] }));
-	}
-	// Page of a configured object (OIDC RP...), generated from its ctree in
-	// nstruct.json: one menu entry per top-level node, sub-entries for groups.
-	function AppCtree(_a) {
-	    var type = _a.type, name = _a.name;
-	    var _b = reactExports.useState(), ctree = _b[0], setCtree = _b[1];
-	    var _c = reactExports.useState([]), selected = _c[0], setSelected = _c[1];
-	    var optionsKey = type.replace(/Node$/, "Options");
-	    reactExports.useEffect(function () {
-	        var active = true;
-	        loadStruct()
-	            .then(function (struct) { return findCtree(struct, type) || []; })
-	            .catch(function () { return []; })
-	            .then(function (nodes) {
-	            if (!active)
-	                return;
-	            setCtree(nodes);
-	            setSelected(function (cur) { return (cur.length || !nodes.length ? cur : [nodes[0].title]); });
-	        });
-	        return function () {
-	            active = false;
-	        };
-	    }, [type]);
-	    if (!ctree) {
-	        return (jsxRuntimeExports.jsx(Box$1, { sx: { display: "flex" }, children: jsxRuntimeExports.jsx(CircularProgress$1, {}) }));
-	    }
-	    var section = findByPath(ctree, selected);
-	    return (jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("div", { className: "top", children: [jsxRuntimeExports.jsx(HomeButton, {}), jsxRuntimeExports.jsx("strong", { className: "title", children: name })] }), jsxRuntimeExports.jsxs("div", { className: "app", children: [jsxRuntimeExports.jsx(List$1, { className: "optionNavbar", component: "nav", children: ctree.map(function (node) { return (jsxRuntimeExports.jsx(NavItem, { node: node, path: [node.title], selected: selected, select: setSelected, depth: 0 }, node.title)); }) }), jsxRuntimeExports.jsx(Divider$1, { className: "divider", orientation: "vertical", variant: "middle" }), jsxRuntimeExports.jsx("div", { className: "appDesc", children: section && (jsxRuntimeExports.jsxs("div", { className: "box", children: [isGroup(section) && jsxRuntimeExports.jsx("strong", { className: "title", children: t$1(section.title) }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx(SectionFields, { node: section, name: name, optionsKey: optionsKey }) }) })] })) })] })] }));
 	}
 
 	function SamlAttributeContainerForm(_a) {
@@ -53780,215 +53600,193 @@ ${String(error)}`;
 	    return attrList;
 	}
 
-	function OptionSaml(_a) {
-	    var name = _a.name, dispatch = _a.dispatch, optionSelect = _a.optionSelect;
-	    var data = useAppSelector(function (state) {
-	        if (state.config.data.config.samlSPMetaDataOptions) {
-	            return state.config.data.config.samlSPMetaDataOptions[name];
-	        }
-	    }) || {};
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [optionSelect === "authResponse" && (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SelectForm, { fieldName: "samlSPMetaDataOptionsNameIDFormat", value: String(data.samlSPMetaDataOptionsNameIDFormat ||
-	                                    attributes.samlSPMetaDataOptionsNameIDFormat.default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsNameIDFormat",
-	                                        value: String(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsNameIDSessionKey", value: String(data.samlSPMetaDataOptionsNameIDSessionKey
-	                                    ? data.samlSPMetaDataOptionsNameIDSessionKey
-	                                    : ""), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsNameIDSessionKey",
-	                                        value: e || "",
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(BoolForm, { fieldName: "samlSPMetaDataOptionsOneTimeUse", value: Number(data.samlSPMetaDataOptionsOneTimeUse) ||
-	                                    attributes.samlSPMetaDataOptionsOneTimeUse.default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsOneTimeUse",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsSessionNotOnOrAfterTimeout", value: String(data.samlSPMetaDataOptionsSessionNotOnOrAfterTimeout
-	                                    ? data.samlSPMetaDataOptionsSessionNotOnOrAfterTimeout
-	                                    : attributes.samlSPMetaDataOptionsSessionNotOnOrAfterTimeout
-	                                        .default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsSessionNotOnOrAfterTimeout",
-	                                        value: e || "",
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsNotOnOrAfterTimeout", value: String(data.samlSPMetaDataOptionsNotOnOrAfterTimeout
-	                                    ? data.samlSPMetaDataOptionsNotOnOrAfterTimeout
-	                                    : attributes.samlSPMetaDataOptionsNotOnOrAfterTimeout
-	                                        .default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsNotOnOrAfterTimeout",
-	                                        value: e || "",
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(BoolForm, { fieldName: "samlSPMetaDataOptionsForceUTF8", value: Number(data.samlSPMetaDataOptionsForceUTF8) ||
-	                                    attributes.samlMetadataForceUTF8.default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsForceUTF8",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) })] }) })), optionSelect === "signature" && (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SelectForm, { fieldName: "samlSPMetaDataOptionsSignatureMethod", value: String(data.samlSPMetaDataOptionsSignatureMethod ||
-	                                    attributes.samlSPMetaDataOptionsSignatureMethod.default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsSignatureMethod",
-	                                        value: String(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TroolForm, { fieldName: "samlSPMetaDataOptionsSignSSOMessage", value: data.samlSPMetaDataOptionsSignSSOMessage !== undefined &&
-	                                    data.samlSPMetaDataOptionsSignSSOMessage !== null
-	                                    ? Number(data.samlSPMetaDataOptionsSignSSOMessage)
-	                                    : attributes.samlSPMetaDataOptionsSignSSOMessage.default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsSignSSOMessage",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(BoolForm, { fieldName: "samlSPMetaDataOptionsCheckSSOMessageSignature", value: Number(data.samlSPMetaDataOptionsCheckSSOMessageSignature) ||
-	                                    attributes.samlSPMetaDataOptionsCheckSSOMessageSignature
-	                                        .default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsCheckSSOMessageSignature",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TroolForm, { fieldName: "samlSPMetaDataOptionsSignSLOMessage", value: data.samlSPMetaDataOptionsSignSLOMessage !== undefined &&
-	                                    data.samlSPMetaDataOptionsSignSLOMessage !== null
-	                                    ? Number(data.samlSPMetaDataOptionsSignSLOMessage)
-	                                    : attributes.samlSPMetaDataOptionsSignSLOMessage.default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsSignSLOMessage",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(BoolForm, { fieldName: "samlSPMetaDataOptionsCheckSLOMessageSignature", value: Number(data.samlSPMetaDataOptionsCheckSLOMessageSignature) ||
-	                                    attributes.samlSPMetaDataOptionsCheckSLOMessageSignature
-	                                        .default, updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsCheckSLOMessageSignature",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) })] }) })), optionSelect === "security" && (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SelectForm, { fieldName: "samlSPMetaDataOptionsEncryptionMode", value: String(data.samlSPMetaDataOptionsEncryptionMode ||
-	                                    attributes.samlSPMetaDataOptionsEncryptionMode.default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsEncryptionMode",
-	                                        value: String(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(BoolForm, { fieldName: "samlSPMetaDataOptionsEnableIDPInitiatedURL", value: Number(data.samlSPMetaDataOptionsEnableIDPInitiatedURL ||
-	                                    attributes.samlSPMetaDataOptionsEnableIDPInitiatedURL
-	                                        .default), updateFunc: function (e) {
-	                                    dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsEnableIDPInitiatedURL",
-	                                        value: Number(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsAuthnLevel", value: String(data.samlSPMetaDataOptionsAuthnLevel || ""), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsAuthnLevel",
-	                                        value: e || "",
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsRule", value: String(data.samlSPMetaDataOptionsRule || ""), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsRule",
-	                                        value: e || "",
-	                                    }));
-	                                } }) })] }) })), optionSelect === "federation" && (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(TextForm, { fieldName: "samlSPMetaDataOptionsFederationEntityID", value: String(data.samlSPMetaDataOptionsFederationEntityID
-	                                    ? data.samlSPMetaDataOptionsFederationEntityID
-	                                    : ""), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsFederationEntityID",
-	                                        value: e || "",
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SelectForm, { fieldName: "samlSPMetaDataOptionsFederationOptionalAttributes", value: String(data.samlSPMetaDataOptionsFederationOptionalAttributes ||
-	                                    attributes.samlSPMetaDataOptionsFederationOptionalAttributes
-	                                        .default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsFederationOptionalAttributes",
-	                                        value: String(e || ""),
-	                                    }));
-	                                } }) }), jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SelectForm, { fieldName: "samlSPMetaDataOptionsFederationRequiredAttributes", value: String(data.samlSPMetaDataOptionsFederationRequiredAttributes ||
-	                                    attributes.samlSPMetaDataOptionsFederationRequiredAttributes
-	                                        .default), updateFunc: function (e) {
-	                                    return dispatch(updateSamlMetaDataOptions({
-	                                        name: name,
-	                                        option: "samlSPMetaDataOptionsFederationRequiredAttributes",
-	                                        value: String(e || ""),
-	                                    }));
-	                                } }) })] }) })), optionSelect === "comment" && (jsxRuntimeExports.jsx(LongtextForm, { fieldName: "samlSPMetaDataOptionsComment", value: String(data.samlSPMetaDataOptionsComment
-	                    ? data.samlSPMetaDataOptionsComment
-	                    : ""), updateFunc: function (e) {
-	                    return dispatch(updateSamlMetaDataOptions({
-	                        name: name,
-	                        option: "samlSPMetaDataOptionsComment",
-	                        value: e || "",
-	                    }));
-	                } }))] }));
-	}
-	function SubObtionSelector(_a) {
-	    var optionSelect = _a.optionSelect, setOptionSelected = _a.setOptionSelected;
-	    return (jsxRuntimeExports.jsxs("div", { className: "optionNavbar sub", children: [jsxRuntimeExports.jsx("label", { "data-testid": "samlSPMetaDataOptionsAuthnResponse", className: "suboption ".concat(optionSelect === "authResponse" ? "selected" : ""), onClick: function () { return setOptionSelected("authResponse"); }, children: t$1("samlSPMetaDataOptionsAuthnResponse") }), jsxRuntimeExports.jsx("label", { "data-testid": "samlSPMetaDataOptionsSignature", className: "suboption ".concat(optionSelect === "signature" ? "selected" : ""), onClick: function () { return setOptionSelected("signature"); }, children: t$1("samlSPMetaDataOptionsSignature") }), jsxRuntimeExports.jsx("label", { "data-testid": "samlSPMetaDataOptionsSecurity", className: "suboption ".concat(optionSelect === "security" ? "selected" : ""), onClick: function () { return setOptionSelected("security"); }, children: t$1("samlSPMetaDataOptionsSecurity") }), jsxRuntimeExports.jsx("label", { "data-testid": "samlSPMetaDataOptionsFederation", className: "suboption ".concat(optionSelect === "federation" ? "selected" : ""), onClick: function () { return setOptionSelected("federation"); }, children: t$1("samlSPMetaDataOptionsFederation") }), jsxRuntimeExports.jsx("label", { "data-testid": "samlSPMetaDataOptionsComment", className: "suboption ".concat(optionSelect === "comment" ? "selected" : ""), onClick: function () { return setOptionSelected("comment"); }, children: t$1("samlSPMetaDataOptionsComment") })] }));
+	function getTree() {
+	    try {
+	        var response = fetch(staticUrl("nstruct.json"));
+	        return response;
+	    }
+	    catch (error) {
+	        throw new Error(JSON.stringify(error));
+	    }
 	}
 
-	function SAMLApp(_a) {
-	    var name = _a.name, dispatch = _a.dispatch;
-	    var data = useAppSelector(function (state) { return state.config.data.config; });
-	    var _b = reactExports.useState("basic"), optionSelected = _b[0], setOptionSelected = _b[1];
-	    var _c = reactExports.useState("authResponse"), suboptionSelect = _c[0], setSubOptionSelected = _c[1];
-	    var _d = reactExports.useState(false), open = _d[0], setOpen = _d[1];
-	    return (jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("div", { className: "top", children: [jsxRuntimeExports.jsx(HomeButton, {}), jsxRuntimeExports.jsx("strong", { className: "title", children: name })] }), jsxRuntimeExports.jsxs("div", { className: "app", children: [jsxRuntimeExports.jsxs(List$1, { className: "optionNavbar", children: [jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "basic" ? "selected" : ""), onClick: function () {
-	                                    setOptionSelected("basic");
-	                                    setOpen(false);
-	                                }, children: t$1("basicOptions") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "samlSPMetaDataXML" ? "selected" : ""), onClick: function () {
-	                                    setOptionSelected("samlSPMetaDataXML");
-	                                    setOpen(false);
-	                                }, children: t$1("samlSPMetaDataXML") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "samlSPMetaDataExportedAttributes"
-	                                    ? "selected"
-	                                    : ""), onClick: function () {
-	                                    setOptionSelected("samlSPMetaDataExportedAttributes");
-	                                    setOpen(false);
-	                                }, children: t$1("samlSPMetaDataExportedAttributes") }), jsxRuntimeExports.jsx("label", { className: "option ".concat(optionSelected === "samlSPMetaDataMacros" ? "selected" : ""), onClick: function () {
-	                                    setOptionSelected("samlSPMetaDataMacros");
-	                                    setOpen(false);
-	                                }, children: t$1("samlSPMetaDataMacros") }), jsxRuntimeExports.jsxs("label", { className: "option ".concat(optionSelected === "samlSPMetaDataOptions" ? "selected" : ""), onClick: function () {
-	                                    setOptionSelected("samlSPMetaDataOptions");
-	                                    setOpen(!open);
-	                                }, "data-testid": "samlSPMetaDataOptions", children: [jsxRuntimeExports.jsx("div", { children: open ? jsxRuntimeExports.jsx(ExpandLess, {}) : jsxRuntimeExports.jsx(ExpandMoreIcon, {}) }), jsxRuntimeExports.jsxs("span", { children: [" ", t$1("samlSPMetaDataOptions")] })] }), jsxRuntimeExports.jsx(Collapse$1, { className: "option ".concat(optionSelected === "samlSPMetaDataOptions" ? "selected" : ""), in: open, timeout: "auto", unmountOnExit: true, children: jsxRuntimeExports.jsx(SubObtionSelector, { optionSelect: suboptionSelect, setOptionSelected: setSubOptionSelected }) })] }), jsxRuntimeExports.jsx(Divider$1, { className: "divider", orientation: "vertical", variant: "middle", flexItem: true }), jsxRuntimeExports.jsxs("div", { className: "appDesc", children: [optionSelected === "samlSPMetaDataXML" && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsxs("strong", { className: "title2", children: [t$1("samlSPMetaDataXML"), name
-	                                                ? data.samlSPMetaDataXML
-	                                                    ? data.samlSPMetaDataXML[name]
-	                                                        ? data.samlSPMetaDataXML[name].samlSPMetaDataXML === ""
-	                                                            ? "⚠️"
-	                                                            : ""
-	                                                        : "⚠️"
-	                                                    : ""
-	                                                : "⚠️"] }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(FileForm, { value: (name
-	                                                        ? data.samlSPMetaDataXML
-	                                                            ? data.samlSPMetaDataXML[name]
-	                                                                ? data.samlSPMetaDataXML[name].samlSPMetaDataXML
-	                                                                : undefined
-	                                                            : undefined
-	                                                        : undefined) || "", fieldName: "samlSPMetaDataXML", updateFunc: function (e) {
-	                                                        dispatch(updateSamlSPMetadata({
-	                                                            name: name ? name : "",
-	                                                            data: e,
-	                                                        }));
-	                                                    } }) }) }) })] })), (optionSelected === "samlSPMetaDataExportedAttributes" ||
-	                                optionSelected === "basic") && (jsxRuntimeExports.jsx("div", { className: "box", children: jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SamlAttributeContainerForm, { value: data.samlSPMetaDataExportedAttributes
-	                                                    ? data.samlSPMetaDataExportedAttributes[name]
-	                                                        ? data.samlSPMetaDataExportedAttributes[name]
-	                                                        : {}
-	                                                    : {}, appName: name, fieldName: "samlSPMetaDataExportedAttributes" }) }) }) }) })), optionSelected === "samlSPMetaDataMacros" && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsx("strong", { className: "title2", children: t$1("samlSPMetaDataMacros") }), jsxRuntimeExports.jsxs("table", { id: "samlSPMetaDataMacros", children: [jsxRuntimeExports.jsx("thead", { children: jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: t$1("keys") }), jsxRuntimeExports.jsx(Tooltip$1, { title: jsxRuntimeExports.jsx(Markdown, { children: definitions.samlSPMetaDataMacros }), children: jsxRuntimeExports.jsx("th", { children: t$1("values") }) }), jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newSAMLSPMetaDataMacros(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) }) })] }) }), data.samlSPMetaDataMacros ? (jsxRuntimeExports.jsx(TableVars, { appName: name, vars: data.samlSPMetaDataMacros[name], tableID: "samlSPMetaDataMacros", dispatch: dispatch, delFunction: delSAMLSPMetaDataMacros, updateFunction: updateSAMLSPMetaDataMacros })) : ("")] }), jsxRuntimeExports.jsx(IconButton$1, { className: "plus", onClick: function () { return dispatch(newSAMLSPMetaDataMacros(name)); }, children: jsxRuntimeExports.jsx(AddCircleIcon, { color: "success" }) })] })), optionSelected === "samlSPMetaDataOptions" && (jsxRuntimeExports.jsxs("div", { className: "box", children: [jsxRuntimeExports.jsxs("strong", { className: "title2", children: [t$1("samlSPMetaDataOptions"), " / ", t$1(suboptionSelect)] }), jsxRuntimeExports.jsx(OptionSaml, { name: name, dispatch: dispatch, optionSelect: suboptionSelect })] }))] })] })] }));
+	var struct;
+	function loadStruct() {
+	    if (!struct) {
+	        struct = getTree()
+	            .then(function (r) { return r.json(); })
+	            .catch(function (e) {
+	            struct = undefined;
+	            throw e;
+	        });
+	    }
+	    return struct;
+	}
+	// The ctree of `<type>s` (e.g. "oidcRPMetaDataNodes"), wherever it sits.
+	function findCtree(nodes, type) {
+	    for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+	        var node = nodes_1[_i];
+	        if (!node || typeof node !== "object")
+	            continue;
+	        if (node.title === "".concat(type, "s") && Array.isArray(node.cnodes)) {
+	            return node.cnodes;
+	        }
+	        for (var _a = 0, _b = [node._nodes, node._nodes_cond, node.cnodes]; _a < _b.length; _a++) {
+	            var sub = _b[_a];
+	            if (Array.isArray(sub)) {
+	                var found = findCtree(sub, type);
+	                if (found)
+	                    return found;
+	            }
+	        }
+	    }
+	    return undefined;
+	}
+	function children(node) {
+	    return __spreadArray(__spreadArray([], (node._nodes || []), true), (node._nodes_cond || []), true);
+	}
+	function isGroup(node) {
+	    return Array.isArray(node._nodes);
+	}
+
+	// Groups listed in the side menu: those of a plain container. The groups of a
+	// "simpleInputContainer" (e.g. mTLS inside security) are shown inline.
+	function navGroups(node) {
+	    return node.type === "simpleInputContainer" ? [] : children(node).filter(isGroup);
+	}
+	function findByPath(nodes, path) {
+	    var node;
+	    var level = nodes;
+	    var _loop_1 = function (title) {
+	        node = level.find(function (n) { return n.title === title; });
+	        if (!node)
+	            return { value: undefined };
+	        level = children(node);
+	    };
+	    for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
+	        var title = path_1[_i];
+	        var state_1 = _loop_1(title);
+	        if (typeof state_1 === "object")
+	            return state_1.value;
+	    }
+	    return node;
+	}
+	// One parameter of the application, stored like Manager::Conf::Parser does:
+	// options in config[<type>Options][name][param], other leaves (SAML metadata
+	// XML) in config[param][name][param], hashes (macros...) in config[param][name].
+	function AppField(_a) {
+	    var _b, _c, _d, _e;
+	    var node = _a.node, name = _a.name, optionsKey = _a.optionsKey;
+	    var config = useAppSelector(function (state) { return state.config.data.config; });
+	    var dispatch = useAppDispatch();
+	    var title = node.title;
+	    var type = node.type || ((_b = attributes[title]) === null || _b === void 0 ? void 0 : _b.type) || "text";
+	    if (typeof node.cnodes === "string") {
+	        var value_1 = ((_c = config[title]) === null || _c === void 0 ? void 0 : _c[name]) || {};
+	        switch (type) {
+	            case "oidcAttributeContainer":
+	                return jsxRuntimeExports.jsx(OidcAttributeContainerForm, { value: value_1, fieldName: title, appName: name });
+	            case "samlAttributeContainer":
+	                return (jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(SamlAttributeContainerForm, { value: value_1, fieldName: title, appName: name }) }));
+	            case "keyTextContainer":
+	                return (jsxRuntimeExports.jsx("tr", { children: jsxRuntimeExports.jsx(KeyTextContainerForm, { value: value_1, fieldName: title, updateFunc: function (v) { return dispatch(updateAppParam({ key: title, name: name, value: v })); } }) }));
+	            default:
+	                return null;
+	        }
+	    }
+	    var key = title.startsWith(optionsKey) ? optionsKey : title;
+	    var value = (_e = (_d = config[key]) === null || _d === void 0 ? void 0 : _d[name]) === null || _e === void 0 ? void 0 : _e[title];
+	    var update = function (v) { return dispatch(updateAppParam({ key: key, name: name, option: title, value: v })); };
+	    var updateInt = function (v) { return update(v === "" ? "" : Number(v)); };
+	    var props = { fieldName: title, updateFunc: update };
+	    var field;
+	    switch (type) {
+	        case "bool":
+	            field = jsxRuntimeExports.jsx(BoolForm, __assign({}, props, { value: Number(value) }));
+	            break;
+	        case "trool":
+	            field = jsxRuntimeExports.jsx(TroolForm, __assign({}, props, { value: Number(value) }));
+	            break;
+	        case "boolOrExpr":
+	            field = jsxRuntimeExports.jsx(BoolOrExprForm, __assign({}, props, { value: value }));
+	            break;
+	        case "select":
+	            field = jsxRuntimeExports.jsx(SelectForm, __assign({}, props, { value: value !== null && value !== void 0 ? value : "" }));
+	            break;
+	        case "int":
+	            field = jsxRuntimeExports.jsx(IntForm$1, __assign({}, props, { updateFunc: updateInt, value: Number(value) }));
+	            break;
+	        case "intOrNull":
+	            field = jsxRuntimeExports.jsx(IntForm, __assign({}, props, { updateFunc: updateInt, value: value }));
+	            break;
+	        case "password":
+	            field = jsxRuntimeExports.jsx(PasswordForm, __assign({}, props, { value: value }));
+	            break;
+	        case "longtext":
+	            field = jsxRuntimeExports.jsx(LongtextForm, __assign({}, props, { value: value }));
+	            break;
+	        case "url":
+	            field = jsxRuntimeExports.jsx(UrlForm, __assign({}, props, { value: value }));
+	            break;
+	        case "file":
+	            field = jsxRuntimeExports.jsx(FileForm, __assign({}, props, { value: value }));
+	            break;
+	        default:
+	            field = jsxRuntimeExports.jsx(TextForm, __assign({}, props, { value: value }));
+	    }
+	    return jsxRuntimeExports.jsx("tr", { children: field });
+	}
+	// Parameters of a section; inline groups get a sub-heading.
+	function SectionFields(_a) {
+	    var node = _a.node, name = _a.name, optionsKey = _a.optionsKey;
+	    if (!isGroup(node)) {
+	        return jsxRuntimeExports.jsx(AppField, { node: node, name: name, optionsKey: optionsKey });
+	    }
+	    var inNav = new Set(navGroups(node));
+	    return (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children(node)
+	            .filter(function (child) { return !inNav.has(child); })
+	            .map(function (child) {
+	            return isGroup(child) ? (jsxRuntimeExports.jsx(SectionGroup, { node: child, name: name, optionsKey: optionsKey }, child.title)) : (jsxRuntimeExports.jsx(AppField, { node: child, name: name, optionsKey: optionsKey }, child.title));
+	        }) }));
+	}
+	function SectionGroup(props) {
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("tr", { className: "subsection", children: jsxRuntimeExports.jsx("th", { colSpan: 2, children: t$1(props.node.title) }) }), jsxRuntimeExports.jsx(SectionFields, __assign({}, props))] }));
+	}
+	function NavItem(_a) {
+	    var node = _a.node, path = _a.path, selected = _a.selected, select = _a.select, depth = _a.depth;
+	    var groups = navGroups(node);
+	    var key = path.join("/");
+	    var isSelected = selected.join("/") === key;
+	    var isOpen = selected.slice(0, path.length).join("/") === key;
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs("label", { className: "".concat(depth ? "suboption" : "option", " ").concat(isSelected ? "selected" : ""), "data-testid": node.title, onClick: function () { return select(path); }, children: [groups.length > 0 && jsxRuntimeExports.jsx("div", { children: isOpen ? jsxRuntimeExports.jsx(ExpandLess, {}) : jsxRuntimeExports.jsx(ExpandMoreIcon, {}) }), jsxRuntimeExports.jsx("span", { children: t$1(node.title) })] }), groups.length > 0 && (jsxRuntimeExports.jsx(Collapse$1, { in: isOpen, timeout: "auto", unmountOnExit: true, children: jsxRuntimeExports.jsx(List$1, { className: "optionNavbar sub", children: groups.map(function (group) { return (jsxRuntimeExports.jsx(NavItem, { node: group, path: __spreadArray(__spreadArray([], path, true), [group.title], false), selected: selected, select: select, depth: depth + 1 }, group.title)); }) }) }))] }));
+	}
+	// Page of a configured object (OIDC RP...), generated from its ctree in
+	// nstruct.json: one menu entry per top-level node, sub-entries for groups.
+	function AppCtree(_a) {
+	    var type = _a.type, name = _a.name;
+	    var _b = reactExports.useState(), ctree = _b[0], setCtree = _b[1];
+	    var _c = reactExports.useState([]), selected = _c[0], setSelected = _c[1];
+	    var optionsKey = type.replace(/Node$/, "Options");
+	    reactExports.useEffect(function () {
+	        var active = true;
+	        loadStruct()
+	            .then(function (struct) { return findCtree(struct, type) || []; })
+	            .catch(function () { return []; })
+	            .then(function (nodes) {
+	            if (!active)
+	                return;
+	            setCtree(nodes);
+	            setSelected(function (cur) { return (cur.length || !nodes.length ? cur : [nodes[0].title]); });
+	        });
+	        return function () {
+	            active = false;
+	        };
+	    }, [type]);
+	    if (!ctree) {
+	        return (jsxRuntimeExports.jsx(Box$1, { sx: { display: "flex" }, children: jsxRuntimeExports.jsx(CircularProgress$1, {}) }));
+	    }
+	    var section = findByPath(ctree, selected);
+	    return (jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("div", { className: "top", children: [jsxRuntimeExports.jsx(HomeButton, {}), jsxRuntimeExports.jsx("strong", { className: "title", children: name })] }), jsxRuntimeExports.jsxs("div", { className: "app", children: [jsxRuntimeExports.jsx(List$1, { className: "optionNavbar", component: "nav", children: ctree.map(function (node) { return (jsxRuntimeExports.jsx(NavItem, { node: node, path: [node.title], selected: selected, select: setSelected, depth: 0 }, node.title)); }) }), jsxRuntimeExports.jsx(Divider$1, { className: "divider", orientation: "vertical", variant: "middle" }), jsxRuntimeExports.jsx("div", { className: "appDesc", children: section && (jsxRuntimeExports.jsxs("div", { className: "box", children: [isGroup(section) && jsxRuntimeExports.jsx("strong", { className: "title", children: t$1(section.title) }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx(SectionFields, { node: section, name: name, optionsKey: optionsKey }) }) })] })) })] })] }));
 	}
 
 	function ApplicationDashboard(_a) {
@@ -53999,9 +53797,9 @@ ${String(error)}`;
 	            case "native":
 	                return jsxRuntimeExports.jsx(NativeApp, { name: name });
 	            case "AppCas":
-	                return jsxRuntimeExports.jsx(CasApp, { name: name });
+	                return jsxRuntimeExports.jsx(AppCtree, { type: "casAppMetaDataNode", name: name });
 	            case "SPsaml":
-	                return jsxRuntimeExports.jsx(SAMLApp, { dispatch: dispatch, name: name });
+	                return jsxRuntimeExports.jsx(AppCtree, { type: "samlSPMetaDataNode", name: name });
 	            case "RPoidc":
 	                return jsxRuntimeExports.jsx(AppCtree, { type: "oidcRPMetaDataNode", name: name });
 	            default:

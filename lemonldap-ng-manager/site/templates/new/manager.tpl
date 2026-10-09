@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <title>LemonLDAP::NG Manager</title>
     <link rel="icon" href="<TMPL_VAR NAME="STATIC_PREFIX">logos/favicon.ico" />
-    <link rel="stylesheet" href="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.css?v=724025846443" />
+    <link rel="stylesheet" href="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.css?v=894613e85158" />
   </head>
   <body>
     <div id="root" />
     <script src="<TMPL_VAR NAME="SCRIPTNAME">psgi.js"></script>
-    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.js?v=ac940c874448"></script>
+    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.js?v=8308cda218b8"></script>
   </body>
 </html>
