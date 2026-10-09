@@ -1,8 +1,9 @@
 import { llngConfig } from "../../utils/types";
+import { apiUrl } from "../../utils/urls";
 
 export function getMetadataConfig(num?: number) {
   try {
-    const response = fetch(`/confs/${num ? num : "latest"}`);
+    const response = fetch(apiUrl(`confs/${num ? num : "latest"}`));
     return response;
   } catch (error) {
     // console.error(error)
@@ -12,7 +13,7 @@ export function getMetadataConfig(num?: number) {
 
 export function getConfig(num: number) {
   try {
-    const response = fetch(`/manager.fcgi/confs/${num}?full=1`, {
+    const response = fetch(apiUrl(`confs/${num}?full=1`), {
       credentials: "include",
     });
     return response;
@@ -32,7 +33,7 @@ export function getPartialConfig() {
 
 export function saveConfig(config: llngConfig) {
   try {
-    const response = fetch(`/manager.fcgi/confs/raw`, {
+    const response = fetch(apiUrl("confs/raw"), {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(config),

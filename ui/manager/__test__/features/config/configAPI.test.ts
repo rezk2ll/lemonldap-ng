@@ -44,7 +44,7 @@ describe("API functions", () => {
     });
 
     await getConfig(456);
-    expect(fetch).toHaveBeenCalledWith("/manager.fcgi/confs/456?full=1", {
+    expect(fetch).toHaveBeenCalledWith("/confs/456?full=1", {
       credentials: "include",
     });
   });
@@ -70,7 +70,7 @@ describe("API functions", () => {
 
     await saveConfig(mockConfig);
     expect(fetch).toHaveBeenCalledWith(
-      "/manager.fcgi/confs/raw",
+      "/confs/raw",
       expect.objectContaining({
         method: "POST",
         headers: { "content-type": "application/json" },

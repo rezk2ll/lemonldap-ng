@@ -129,7 +129,7 @@ describe("Issuer Dashboard", () => {
     fireEvent.click(screen.getByText(t("newRSAKey")));
     expect(await screen.findByText("private")).toBeDefined();
 
-    expect(fetch).toHaveBeenCalledWith("/manager.fcgi/confs//newEcKeys", {
+    expect(fetch).toHaveBeenCalledWith("/confs//newEcKeys", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });

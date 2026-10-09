@@ -23238,6 +23238,13 @@
 	    return links.some(function (l) { return l.target === target; });
 	}
 
+	// URLs of the manager API and static files, built from the globals defined
+	// by psgi.js: the manager is not always served at the root (e.g.
+	// /manager.psgi/). Both scriptname and staticPrefix end with "/".
+	var staticUrl = function (path) {
+	    return "".concat(window.staticPrefix || "/static/").concat(path);
+	};
+
 	// Each manager section is a separate SPA (separate HTML page + bundle).
 	// Navigating between them is a full page load, like the legacy manager.
 	// Items without a `target` are placeholders not implemented yet.
@@ -23291,7 +23298,7 @@
 	                }, children: [item.icon, jsxRuntimeExports.jsx("span", { children: t(item.key) })] }, item.key));
 	        });
 	    };
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: "static/logos/llng-logo-32.png", alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: staticUrl("logos/llng-logo-32.png"), alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
 	}
 	// Leave the beta interface: dropping the cookie sends the user back to the
 	// historical manager, which is served by the same routes.

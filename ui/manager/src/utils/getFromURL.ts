@@ -1,6 +1,7 @@
+import { apiUrl } from "./urls";
 export async function getFromURL(url: string) {
   try {
-    const response = await fetch("/prx", {
+    const response = await fetch(apiUrl("prx"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

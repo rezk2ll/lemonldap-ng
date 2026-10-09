@@ -27373,9 +27373,19 @@ ${String(error)}`;
 	    return false;
 	}
 
+	// URLs of the manager API and static files, built from the globals defined
+	// by psgi.js: the manager is not always served at the root (e.g.
+	// /manager.psgi/). Both scriptname and staticPrefix end with "/".
+	var apiUrl = function (path) {
+	    return "".concat(window.scriptname || "/").concat(path);
+	};
+	var staticUrl = function (path) {
+	    return "".concat(window.staticPrefix || "/static/").concat(path);
+	};
+
 	function getMetadataConfig(num) {
 	    try {
-	        var response = fetch("/confs/".concat(num ? num : "latest"));
+	        var response = fetch(apiUrl("confs/".concat(num ? num : "latest")));
 	        return response;
 	    }
 	    catch (error) {
@@ -27385,7 +27395,7 @@ ${String(error)}`;
 	}
 	function getConfig(num) {
 	    try {
-	        var response = fetch("/manager.fcgi/confs/".concat(num, "?full=1"), {
+	        var response = fetch(apiUrl("confs/".concat(num, "?full=1")), {
 	            credentials: "include",
 	        });
 	        return response;
@@ -27405,7 +27415,7 @@ ${String(error)}`;
 	}
 	function saveConfig(config) {
 	    try {
-	        var response = fetch("/manager.fcgi/confs/raw", {
+	        var response = fetch(apiUrl("confs/raw"), {
 	            method: "POST",
 	            headers: { "content-type": "application/json" },
 	            body: JSON.stringify(config),
@@ -51226,7 +51236,7 @@ ${String(error)}`;
 	                }, children: [item.icon, jsxRuntimeExports.jsx("span", { children: t(item.key) })] }, item.key));
 	        });
 	    };
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: "static/logos/llng-logo-32.png", alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: staticUrl("logos/llng-logo-32.png"), alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
 	}
 	// Leave the beta interface: dropping the cookie sends the user back to the
 	// historical manager, which is served by the same routes.
@@ -53352,7 +53362,7 @@ ${String(error)}`;
 	            switch (_a.label) {
 	                case 0:
 	                    _a.trys.push([0, 3, , 4]);
-	                    return [4 /*yield*/, fetch("/prx", {
+	                    return [4 /*yield*/, fetch(apiUrl("prx"), {
 	                            method: "POST",
 	                            headers: {
 	                                "Content-Type": "application/json",
@@ -67134,7 +67144,7 @@ ${String(error)}`;
 	    var response, responseData, _a, jsonString, link;
 	    return __generator(this, function (_b) {
 	        switch (_b.label) {
-	            case 0: return [4 /*yield*/, fetch("/confs/".concat(num, "?").concat(data, "=1"))];
+	            case 0: return [4 /*yield*/, fetch(apiUrl("confs/".concat(num, "?").concat(data, "=1")))];
 	            case 1:
 	                response = _b.sent();
 	                if (!(data === "samlMetadata")) return [3 /*break*/, 3];
@@ -67164,7 +67174,7 @@ ${String(error)}`;
 	    var response, responseData, jsonString, link;
 	    return __generator(this, function (_a) {
 	        switch (_a.label) {
-	            case 0: return [4 /*yield*/, fetch("/manager.fcgi/confs/".concat(confNum, "?oidcMetadata=1"))];
+	            case 0: return [4 /*yield*/, fetch(apiUrl("confs/".concat(confNum, "?oidcMetadata=1")))];
 	            case 1:
 	                response = _a.sent();
 	                return [4 /*yield*/, response.json()];
@@ -67183,7 +67193,7 @@ ${String(error)}`;
 	    var response, responseData, jsonString, link;
 	    return __generator(this, function (_a) {
 	        switch (_a.label) {
-	            case 0: return [4 /*yield*/, fetch("/manager.fcgi/confs/".concat(confNum, "?samlMetadata=1"))];
+	            case 0: return [4 /*yield*/, fetch(apiUrl("confs/".concat(confNum, "?samlMetadata=1")))];
 	            case 1:
 	                response = _a.sent();
 	                return [4 /*yield*/, response.text()];
@@ -67376,7 +67386,7 @@ ${String(error)}`;
 	            switch (_a.label) {
 	                case 0:
 	                    _a.trys.push([0, 3, , 4]);
-	                    return [4 /*yield*/, fetch("/manager.fcgi/confs//newEcKeys", {
+	                    return [4 /*yield*/, fetch(apiUrl("confs//newEcKeys"), {
 	                            method: "POST",
 	                            headers: {
 	                                "Content-Type": "application/json",
@@ -67405,7 +67415,7 @@ ${String(error)}`;
 	                case 0:
 	                    _a.trys.push([0, 3, , 4]);
 	                    body = password ? JSON.stringify({ password: password }) : undefined;
-	                    return [4 /*yield*/, fetch("/manager.fcgi/confs//newCertificate", {
+	                    return [4 /*yield*/, fetch(apiUrl("confs//newCertificate"), {
 	                            method: "POST",
 	                            headers: {
 	                                "Content-Type": "application/json",
@@ -77500,7 +77510,7 @@ Use the data prop if you want to provide your own handlers.`);
 	            switch (_a.label) {
 	                case 0:
 	                    _a.trys.push([0, 3, , 4]);
-	                    return [4 /*yield*/, fetch("/manager.fcgi/confs//sendTestMail", {
+	                    return [4 /*yield*/, fetch(apiUrl("confs//sendTestMail"), {
 	                            method: "POST",
 	                            headers: {
 	                                "Content-Type": "application/json",
@@ -78208,7 +78218,7 @@ Use the data prop if you want to provide your own handlers.`);
 
 	function getTree() {
 	    try {
-	        var response = fetch("/static/nstruct.json");
+	        var response = fetch(staticUrl("nstruct.json"));
 	        return response;
 	    }
 	    catch (error) {

@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import { isModuleEnabled } from "../utils/modules";
 import "./NavBar.css";
+import { staticUrl } from "../utils/urls";
 
 // Each manager section is a separate SPA (separate HTML page + bundle).
 // Navigating between them is a full page load, like the legacy manager.
@@ -103,7 +104,7 @@ function Navbar({
           >
             <img
               className="brandLogo"
-              src={`static/logos/llng-logo-32.png`}
+              src={staticUrl("logos/llng-logo-32.png")}
               alt="LemonLogo"
             />
           </a>
