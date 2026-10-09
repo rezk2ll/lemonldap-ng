@@ -27813,7 +27813,7 @@
 	                            reference: reference,
 	                            condition: condition || undefined,
 	                            date: date || undefined,
-	                            xml: content,
+	                            content: content,
 	                        })];
 	                case 2:
 	                    res = _a.sent();

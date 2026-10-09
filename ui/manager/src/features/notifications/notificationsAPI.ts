@@ -66,7 +66,7 @@ export type NewNotification = {
   reference: string;
   condition?: string;
   date?: string;
-  xml: string;
+  content: string;
 };
 
 export async function createNotification(
