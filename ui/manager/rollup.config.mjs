@@ -72,6 +72,7 @@ const htmlTemplate =
     return `<!DOCTYPE html>
 <html ${makeAttrs(attributes.html)}>
   <head>
+    <meta charset="utf-8" />
     <title>${title}</title>
     <link rel="icon" href="<TMPL_VAR NAME="STATIC_PREFIX">logos/favicon.ico" />${styles}
   </head>
