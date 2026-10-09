@@ -9,6 +9,6 @@
   <body>
     <div id="root" />
     <script src="<TMPL_VAR NAME="SCRIPTNAME">psgi.js"></script>
-    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/twofa.min.js?v=045bdc4d35c7"></script>
+    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/twofa.min.js?v=9d002d349a5f"></script>
   </body>
 </html>
