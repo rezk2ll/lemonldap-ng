@@ -1458,7 +1458,7 @@
 "webCron":"WebCron",
 "webCronSecret":"Secret",
 "webIDAuthnLevel":"Mức xác thực",
-"webIDExportedVars":"Xuất khẩu biến",
+"webIDExportedVars":"Biến đã được xuất",
 "webIDWhitelist":"WebID white list",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"Kích hoạt",

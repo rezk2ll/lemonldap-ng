@@ -1406,7 +1406,7 @@
 "twitterKey":"מפתח API",
 "twitterParams":"משתני טוויטר",
 "twitterSecret":"סוד API",
-"twitterUserField":"שדה שמכיל מזהה משתמש",
+"twitterUserField":"שדה שמכיל את מזהה המשתמש",
 "type":"סוג",
 "uid":"מזהה",
 "unknownAttrOrMacro":"Unknown attribute or macro",

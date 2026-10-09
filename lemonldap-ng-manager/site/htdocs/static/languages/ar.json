@@ -1179,7 +1179,7 @@
 "samlIDPMetaDataOptionsFederation":"Federation",
 "samlIDPMetaDataOptionsFederationEntityID":"معرف الكيان",
 "samlIDPMetaDataOptionsForceAuthn":"فرض إثبات الهوية",
-"samlIDPMetaDataOptionsForceUTF8":"فرضUTF-8 ",
+"samlIDPMetaDataOptionsForceUTF8":"فرضUTF-8  ",
 "samlIDPMetaDataOptionsIcon":"شعار",
 "samlIDPMetaDataOptionsIsPassive":"إثبات الهوية السلبي",
 "samlIDPMetaDataOptionsNameIDFormat":"صيغة معرف الاسم",
