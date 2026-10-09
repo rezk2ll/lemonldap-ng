@@ -420,7 +420,6 @@ textarea {
 .applications.MuiCardContent-root {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 16px;
   gap: 16px;
   padding: 18px;
 }
@@ -430,7 +429,8 @@ textarea {
   border-radius: 10px !important;
   box-shadow: none !important;
   transition:
-    box-shadow 0.16s ease, border-color 0.16s ease;
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 .appMenuCard:hover {
   border-color: rgba(255, 152, 0, 0.5) !important;
@@ -842,7 +842,9 @@ textarea {
   position: relative;
   flex-direction: row;
   transition:
-    transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
 .cardInfo {
