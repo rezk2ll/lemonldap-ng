@@ -171,6 +171,13 @@ const makeConfig = ({ input, route, tpl, prefix, title }) => ({
 
 export default [
   makeConfig({
+    input: "src/home.tsx",
+    route: "home.html",
+    tpl: "templates/new/home.tpl",
+    prefix: "home",
+    title: "LemonLDAP::NG Manager",
+  }),
+  makeConfig({
     input: "src/index.tsx",
     route: "manager.html",
     tpl: "templates/new/manager.tpl",

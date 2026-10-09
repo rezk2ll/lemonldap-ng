@@ -18,6 +18,7 @@ import {
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import { isModuleEnabled } from "../utils/modules";
 import "./NavBar.css";
 
 // Each manager section is a separate SPA (separate HTML page + bundle).
@@ -47,16 +48,10 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   },
 ];
 
-// Only show the sections whose module is enabled (enabledModules in
-// lemonldap-ng.ini): psgi.js lists them in `links`, by default route. Without
-// it (dev server, tests), show every section.
-// Enabled modules without a new UI yet (viewer, api, custom) are not shown.
-function enabledNavItems() {
-  const links = (window as any).links as { target: string }[] | undefined;
-  if (!Array.isArray(links)) return NAV_ITEMS;
-  const targets = new Set(links.map((l) => l.target));
-  return NAV_ITEMS.filter((item) => item.target && targets.has(item.target));
-}
+// Only show the sections whose module is enabled. Enabled modules without a
+// new UI yet (viewer, api, custom) are not shown.
+const enabledNavItems = () =>
+  NAV_ITEMS.filter((item) => item.target && isModuleEnabled(item.target));
 
 // The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 // the temporary Drawer used on narrow screens (< ~950px) to hold the section
@@ -101,11 +96,17 @@ function Navbar({
     <>
       <AppBar position="sticky" color="transparent" elevation={0} className="topNav">
         <Toolbar className="topNavToolbar" disableGutters>
-          <img
-            className="brandLogo"
-            src={`static/logos/llng-logo-32.png`}
-            alt="LemonLogo"
-          />
+          {/* The logo leads to the home page (manager default route) */}
+          <a
+            className="brandLink"
+            href={partial ? undefined : (window as any).scriptname || "./"}
+          >
+            <img
+              className="brandLogo"
+              src={`static/logos/llng-logo-32.png`}
+              alt="LemonLogo"
+            />
+          </a>
           {!partial && (
             <nav className="navMenu navMenuDesktop">
               {renderNavItems(false)}

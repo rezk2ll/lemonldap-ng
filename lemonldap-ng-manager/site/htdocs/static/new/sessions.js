@@ -23368,6 +23368,16 @@
 	});
 	var Toolbar$1 = Toolbar;
 
+	// Manager modules enabled in lemonldap-ng.ini (enabledModules): psgi.js lists
+	// them in `links`, identified by their default route (e.g. "sessions.html").
+	// Without psgi.js (dev server, tests), every module is considered enabled.
+	function isModuleEnabled(target) {
+	    var links = window.links;
+	    if (!Array.isArray(links))
+	        return true;
+	    return links.some(function (l) { return l.target === target; });
+	}
+
 	// Each manager section is a separate SPA (separate HTML page + bundle).
 	// Navigating between them is a full page load, like the legacy manager.
 	// Items without a `target` are placeholders not implemented yet.
@@ -23394,17 +23404,11 @@
 	        target: "2ndfa.html",
 	    },
 	];
-	// Only show the sections whose module is enabled (enabledModules in
-	// lemonldap-ng.ini): psgi.js lists them in `links`, by default route. Without
-	// it (dev server, tests), show every section.
-	// Enabled modules without a new UI yet (viewer, api, custom) are not shown.
-	function enabledNavItems() {
-	    var links = window.links;
-	    if (!Array.isArray(links))
-	        return NAV_ITEMS;
-	    var targets = new Set(links.map(function (l) { return l.target; }));
-	    return NAV_ITEMS.filter(function (item) { return item.target && targets.has(item.target); });
-	}
+	// Only show the sections whose module is enabled. Enabled modules without a
+	// new UI yet (viewer, api, custom) are not shown.
+	var enabledNavItems = function () {
+	    return NAV_ITEMS.filter(function (item) { return item.target && isModuleEnabled(item.target); });
+	};
 	// The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 	// the temporary Drawer used on narrow screens (< ~950px) to hold the section
 	// links, instead of the old wide/narrow persistent left rail. Per-app pages
@@ -23427,7 +23431,7 @@
 	                }, children: [item.icon, jsxRuntimeExports.jsx("span", { children: t(item.key) })] }, item.key));
 	        });
 	    };
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("img", { className: "brandLogo", src: "static/logos/llng-logo-32.png", alt: "LemonLogo" }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: "static/logos/llng-logo-32.png", alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
 	}
 	// Leave the beta interface: dropping the cookie sends the user back to the
 	// historical manager, which is served by the same routes.

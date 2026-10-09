@@ -1,0 +1,132 @@
+/* Home page of the new interface: one card per enabled module. Colors follow
+   the configuration home page (HomePage.css) and the top bar. */
+.homePage {
+  min-height: calc(100vh - 56px);
+  background-color: #f7f8fa;
+}
+
+.homeHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  padding: 28px 2vw 8px;
+}
+
+.homeHead .title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #26262b;
+}
+
+.homeVersion {
+  color: #6b6b75;
+  font-size: 0.95rem;
+}
+
+.homeCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 20px 2vw 32px;
+}
+
+.homeCard.MuiCard-root {
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.homeCard.MuiCard-root:hover {
+  border-color: #ffb74d;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.homeCardAction.MuiCardActionArea-root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 22px 24px 24px;
+}
+
+.homeCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.homeCardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(255, 152, 0, 0.12);
+  color: #ef6c00;
+}
+
+.homeCardTitle {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #26262b;
+}
+
+.homeCardArrow {
+  color: #b0b0b8;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.homeCard:hover .homeCardArrow {
+  color: #ef6c00;
+  transform: translateX(3px);
+}
+
+.homeCardValue {
+  margin-top: 22px;
+  min-height: 2.8rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #26262b;
+}
+
+.homeCardSkeleton {
+  width: 90px;
+  height: 2.8rem;
+}
+
+.homeCardUnavailable {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #9a9aa3;
+}
+
+.homeCardLabel {
+  color: #6b6b75;
+  font-size: 0.9rem;
+}
+
+.homeCardDetails {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f2;
+  font-size: 0.85rem;
+}
+
+.homeCardDetails dt {
+  color: #8a8a93;
+}
+
+.homeCardDetails dd {
+  margin: 0;
+  color: #3a3a42;
+  overflow-wrap: anywhere;
+}

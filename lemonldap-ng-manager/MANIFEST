@@ -231,6 +231,10 @@ site/htdocs/static/logos/zh_TW.png
 site/htdocs/static/new/attributes-ui.json
 site/htdocs/static/new/attributes.json
 site/htdocs/static/new/definitions.json
+site/htdocs/static/new/home.css
+site/htdocs/static/new/home.js
+site/htdocs/static/new/home.min.css
+site/htdocs/static/new/home.min.js
 site/htdocs/static/new/manager.css
 site/htdocs/static/new/manager.js
 site/htdocs/static/new/manager.min.css
@@ -270,6 +274,7 @@ site/templates/header.tpl
 site/templates/manager.tpl
 site/templates/menubar.tpl
 site/templates/new/2ndfa.tpl
+site/templates/new/home.tpl
 site/templates/new/manager.tpl
 site/templates/new/notifications.tpl
 site/templates/new/sessions.tpl

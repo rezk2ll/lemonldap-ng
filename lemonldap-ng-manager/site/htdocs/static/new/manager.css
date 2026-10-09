@@ -51,6 +51,11 @@
   min-height: 56px;
 }
 
+.brandLink {
+  display: block;
+  flex-shrink: 0;
+}
+
 .brandLogo {
   display: block;
   height: 32px;
