@@ -1,7 +1,6 @@
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
   Radio,
   RadioGroup,
   Tooltip,
@@ -37,8 +36,8 @@ export default function BoolForm({
       </Tooltip>
       <td>
         <FormControl>
-          <FormLabel>{t(fieldName)}</FormLabel>
           <RadioGroup
+            aria-label={t(fieldName)}
             row
             value={
               !isNaN(value)

@@ -32,7 +32,7 @@ export default function LongtextForm({
         <TextField
           size="small"
           type="text"
-          label={t(fieldName)}
+          inputProps={{ "aria-label": t(fieldName) }}
           multiline
           rows={4}
           onChange={(e) => updateFunc(e.target.value)}

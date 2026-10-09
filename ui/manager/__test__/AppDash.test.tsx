@@ -253,102 +253,78 @@ describe("Application Dashboard", () => {
     });
     expect(authLevelInput).toHaveDisplayValue("1");
   });
-  test('should render ApplicationDashboard for app type "oidc" and change datas', async () => {
+  test('should render ApplicationDashboard for app type "oidc" from the parameter tree', async () => {
     const location = {
       type: "app",
       info: { name: "oidc_test", type: "RPoidc" },
     };
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
+    const { store } = renderWithProviders(<Configuration location={location} />);
+    const rp = () =>
+      store.getState().config.data.config.oidcRPMetaDataOptions!.oidc_test;
+    const row = (param: string) =>
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByText(param, { selector: "th" }).closest("tr")!;
 
-    clickOption(t("oidcRPMetaDataOptionsBasic"));
+    // Basic options: only the parameters of the tree, labelled once
+    fireEvent.click(await screen.findByTestId("oidcRPMetaDataOptionsBasic"));
+    expect(screen.getAllByText("oidcRPMetaDataOptionsClientID")).toHaveLength(1);
+    expect(screen.queryByText("oidcRPMetaDataOptionsAuthMethod")).toBeNull();
+    fireEvent.change(screen.getByDisplayValue("abab"), {
+      target: { value: "New Client ID" },
+    });
+    expect(rp().oidcRPMetaDataOptionsClientID).toBe("New Client ID");
 
-    changeInput(0, "New Client ID");
-    changeInput(1, "New Client Secret");
-    changeInput(2, "http://new-redirect-uri.com");
-    changeInput(3, "New Auth Method");
-    changeInput(4, "New Display");
-    changeInput(5, "New Icon");
+    // Security: the token endpoint auth method is a select, mTLS is inline
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptions"));
+    fireEvent.click(await screen.findByTestId("security"));
+    expect(screen.getByText("mtls", { selector: "th" })).toBeInTheDocument();
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsAuthMethod").querySelector(".MuiSelect-select")
+    ).not.toBeNull();
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsAuthMethod").querySelector("input")!,
+      { target: { value: "private_key_jwt" } }
+    );
+    expect(rp().oidcRPMetaDataOptionsAuthMethod).toBe("private_key_jwt");
 
-    clickOption("oidcRPMetaDataExportedVars");
-
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New Claim Name");
-    changeInput(1, "New Variable Name");
-    changeSelect(t("string"), 0, "int");
-    expect(screen.getByText(t("int"))).toBeDefined();
-    changeSelect(t("auto"), 0, "always");
-    expect(screen.getByText(t("always"))).toBeDefined();
-    clickOption("oidcRPMetaDataMacros");
-
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-
-    changeInput(0, "New Key");
-    changeInput(1, "New Value");
-
-    const option = screen.getByTestId("oidcOptions");
-    fireEvent.click(option);
-    expect(option).toHaveClass("selected");
-    changeInput(0, "New user");
-    changeInput(1, "additionnal audience ");
-    changeRadio(0);
-    changeRadio(1);
-    changeRadio(2);
-    changeRadio(3);
-    clickSubOption("security");
-    changeRadio(0);
-    changeRadio(1);
-    changeRadio(2);
-    changeRadio(3);
-    changeInput(0, "url");
-    changeInput(1, "level");
-    changeInput(2, "access Rules");
-    changeSelect("HS512", 0, "HS384");
-    expect(screen.getByText(t("HS384"))).toBeDefined();
-    changeSelect("RS256", 0, "EdDSA");
-    expect(screen.getByText(t("EdDSA"))).toBeDefined();
-    changeSelect("JSON", 0, "HS256");
-    expect(screen.getByText(t("HS256"))).toBeDefined();
-
-    clickSubOption("oidcRPMetaDataOptionsScopes");
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New key");
-    changeInput(1, "New Value");
+    // Scopes: two independent hashes stored outside the options
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsScopes"));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[2]);
-    changeInput(2, "New h");
-    changeInput(3, "New e");
-    fireEvent.click(screen.getAllByTestId("RemoveCircleIcon")[0]);
-    fireEvent.click(screen.getAllByTestId("RemoveCircleIcon")[0]);
-    clickSubOption("keys");
+    expect(
+      store.getState().config.data.config.oidcRPMetaDataScopeRules?.oidc_test
+    ).toEqual({ new: "" });
+    expect(
+      store.getState().config.data.config.oidcRPMetaDataOptionsExtraClaims
+        ?.oidc_test
+    ).toBeUndefined();
 
+    // Timeouts are stored as numbers
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsTimeouts"));
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsRtActivity").querySelector("input")!,
+      { target: { value: "30" } }
+    );
+    expect(rp().oidcRPMetaDataOptionsRtActivity).toBe(30);
+
+    // Keys: JWKS document upload
+    fireEvent.click(screen.getByTestId("oidcRpKeys"));
     const file = new File(["file content"], "file.txt", { type: "text/plain" });
-
     fireEvent.change(screen.getByLabelText("upload"), {
       target: { files: [file] },
     });
-    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
-    clickSubOption("oidcRPMetaDataOptionsTimeouts");
-    changeInput(0, 1);
-    changeInput(1, 2);
-    changeInput(2, 3);
-    changeInput(3, 4);
 
-    clickSubOption("logout");
-    changeSelect(
-      t("Front Channel"),
-      0,
-      attributes.oidcRPMetaDataOptionsLogoutType.select[1].k
+    // Display section, missing from the former hard-coded page
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsDisplay"));
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsDisplayName").querySelector("input")!,
+      { target: { value: "My RP" } }
     );
-    expect(
-      screen.getByText(
-        t(attributes.oidcRPMetaDataOptionsLogoutType.select[1].v)
-      )
-    ).toBeDefined();
-    changeInput(0, "url");
-    changeInput(1, "redirection");
-    changeRadio(0);
-    changeRadio(1);
+    expect(rp().oidcRPMetaDataOptionsDisplayName).toBe("My RP");
   });
   test('should render ApplicationDashboard for app type "saml" and change datas', async () => {
     const location = {

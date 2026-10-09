@@ -832,6 +832,28 @@ const configSlice = createSlice({
         ][action.payload.key];
       }
     },
+    // Set a per-application parameter: config[key][name][option], or the
+    // whole config[key][name] (hashes like macros) when no option is given.
+    updateAppParam(
+      state,
+      action: PayloadAction<{
+        key: string;
+        name: string;
+        option?: string;
+        value: unknown;
+      }>
+    ) {
+      const { key, name, option, value } = action.payload;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const conf = state.data.config as Record<string, any>;
+      conf[key] = conf[key] || {};
+      if (option === undefined) {
+        conf[key][name] = value;
+      } else {
+        conf[key][name] = conf[key][name] || {};
+        conf[key][name][option] = value;
+      }
+    },
     updateOidcMetaDataOptions(
       state,
       action: PayloadAction<{
@@ -1666,6 +1688,7 @@ export const {
   updateOidcRPMetaDataExportedVars,
   newOidcRPMetaDataExportedVars,
   delOidcRPMetaDataExportedVars,
+  updateAppParam,
   updateOidcMetaDataOptions,
   delOidcRPMetaDataOptionsExtraClaims,
   newOidcRPMetaDataOptionsExtraClaims,

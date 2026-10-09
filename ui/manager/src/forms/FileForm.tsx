@@ -27,7 +27,7 @@ export default function FileForm({
             multiline
             fullWidth
             rows={12}
-            label={t(fieldName)}
+            inputProps={{ "aria-label": t(fieldName) }}
             placeholder={t(fieldName)}
             onChange={(e) => updateFunc(e.target.value)}
             value={value || ""}

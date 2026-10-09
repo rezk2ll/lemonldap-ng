@@ -14,12 +14,11 @@ export default function KeyTextContainerForm({
   fieldName: string;
   updateFunc: Function;
 }) {
-  let i = 0;
   return (
     <>
       <th className="title2">{t(fieldName)}</th>
       <td>
-        <table id="exportedvalue">
+        <table id={fieldName}>
           <thead>
             <tr>
               <th>{t("keys")}</th>
@@ -36,7 +35,7 @@ export default function KeyTextContainerForm({
                 <IconButton
                   className="plus"
                   onClick={() =>
-                    updateFunc(addHeader("exportedvalue", fieldName))
+                    updateFunc(addHeader(fieldName, fieldName))
                   }
                 >
                   <AddCircleIcon color="success" />
@@ -45,8 +44,8 @@ export default function KeyTextContainerForm({
             </tr>
           </thead>
           <tbody>
-            {Object.keys(value).map((key) => {
-              i++;
+            {Object.keys(value).map((key, index) => {
+              const i = index + 1;
               return (
                 <tr key={fieldName + i}>
                   <td>
@@ -56,7 +55,7 @@ export default function KeyTextContainerForm({
                       variant="filled"
                       className="form"
                       onChange={() =>
-                        updateFunc(updateHeaders("exportedvalue"))
+                        updateFunc(updateHeaders(fieldName))
                       }
                       type="text"
                       value={key}
@@ -69,7 +68,7 @@ export default function KeyTextContainerForm({
                       variant="filled"
                       className="form"
                       onChange={() =>
-                        updateFunc(updateHeaders("exportedvalue"))
+                        updateFunc(updateHeaders(fieldName))
                       }
                       type="text"
                       value={value[key]}
@@ -80,7 +79,7 @@ export default function KeyTextContainerForm({
                     <IconButton
                       className="minus"
                       onClick={() =>
-                        updateFunc(removeHeader("exportedvalue", i))
+                        updateFunc(removeHeader(fieldName, i))
                       }
                     >
                       <RemoveCircleIcon color="error" />
@@ -93,7 +92,7 @@ export default function KeyTextContainerForm({
         </table>
         <IconButton
           className="plus"
-          onClick={() => updateFunc(addHeader("exportedvalue", fieldName))}
+          onClick={() => updateFunc(addHeader(fieldName, fieldName))}
         >
           <AddCircleIcon color="success" />
         </IconButton>
@@ -143,7 +142,7 @@ function removeHeader(tableID: string, id: number) {
   const rows = table?.getElementsByTagName("tr");
   if (rows) {
     for (let i = 1; i < rows.length; i++) {
-      if (i + 1 !== id) {
+      if (i !== id) {
         const cells = rows[i].getElementsByTagName("td");
         const key = cells[0].querySelector("input")?.value;
         const values = cells[1].querySelector("input")?.value;

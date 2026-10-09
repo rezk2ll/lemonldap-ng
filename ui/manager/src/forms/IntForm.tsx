@@ -31,7 +31,7 @@ export default function IntForm({
       <td>
         <TextField
           size="small"
-          label={t(fieldName)}
+          inputProps={{ "aria-label": t(fieldName) }}
           type="number"
           onChange={(e) => updateFunc(e.target.value)}
           placeholder={t(fieldName)}

@@ -1,7 +1,6 @@
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
   Radio,
   RadioGroup,
   TextField,
@@ -38,8 +37,8 @@ export default function BoolOrExprForm({
       </Tooltip>
       <td>
         <FormControl>
-          <FormLabel>{t(fieldName)}</FormLabel>
           <RadioGroup
+            aria-label={t(fieldName)}
             row
             value={
               typeof value === "number"
@@ -61,7 +60,7 @@ export default function BoolOrExprForm({
           <TextField
             size="small"
             multiline
-            label={t(fieldName)}
+            inputProps={{ "aria-label": t(fieldName) }}
             variant="filled"
             rows={4}
             onChange={(e) => updateFunc(e.target.value)}

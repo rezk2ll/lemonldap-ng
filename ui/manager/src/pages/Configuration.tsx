@@ -30,16 +30,20 @@ export function Configuration({
 
   useEffect(() => {
     async function fetchData() {
+      // Pages reached directly (reload, shared link) have no config loaded yet
+      if (
+        !metadata.cfgNum &&
+        ["app", "issuer", "catandapp", "tree"].includes(location.type)
+      ) {
+        dispatch(getConfigAsync());
+      }
       if (location.type === "tree") {
-        if (!config.cfgNum) {
-          dispatch(getConfigAsync());
-        }
         const tree = await getTree();
         setTree(await tree.json());
       }
     }
     fetchData();
-  }, [config, dispatch, location.type]);
+  }, [config, metadata.cfgNum, dispatch, location.type]);
 
   const content = (() => {
     switch (location.type) {

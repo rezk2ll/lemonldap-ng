@@ -33,7 +33,7 @@ export default function UrlForm({
           size="small"
           type="url"
           onChange={(e) => updateFunc(e.target.value)}
-          label={t(fieldName)}
+          inputProps={{ "aria-label": t(fieldName) }}
           placeholder={t(fieldName)}
           value={
             value !== undefined && value !== null

@@ -31,7 +31,7 @@ export default function PasswordForm({
       <td>
         <TextField
           size="small"
-          label={t(fieldName)}
+          inputProps={{ "aria-label": t(fieldName) }}
           type="password"
           autoComplete="new-password"
           onChange={(e) => updateFunc(e.target.value)}
