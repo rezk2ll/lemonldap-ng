@@ -5,7 +5,7 @@ use utf8;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 29;
+my $maintests = 34;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -118,8 +118,33 @@ SKIP: {
       or explain( $res->[2]->[0], 'JSON content' );
     ok( $res->{result} == 1, 'Key is registered' );
 
+    # Verify that TOTP is well stored
+    my $session    = getPSession("dwho");
+    my $_2fDevices = $session->data->{_2fDevices};
+    ok( $_2fDevices, 'TOTP persistent data found' );
+    $_2fDevices = from_json($_2fDevices);
+    is( @{$_2fDevices}, 1, 'Only one device found' );
+    my $hash = $_2fDevices->[0]->{_hash};
+    is( $hash, 'sha256', 'Hash algo is sha256' );
+    my $digits = $_2fDevices->[0]->{_digits};
+    is( $digits, 8, 'Number of digits is 8' );
+    my $interval = $_2fDevices->[0]->{_interval};
+    is( $interval, 10, 'Interval is 10s' );
+
     # Try to sign-in
     $client->logout($id);
+    $client->ini( {
+                totp2fSelfRegistration => 1,
+                totp2fActivation       => 1,
+                totp2fTTL              => -1,
+                formTimeout            => 120,
+                requireToken           => 1,
+                tokenUseGlobalStorage  => 1,
+                totp2fInterval         => 1,
+                totp2fDigits           => 5,
+                totp2fAlgorithm        => "sha1",
+            }
+    );
 
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
     ( $host, $url, $query ) =

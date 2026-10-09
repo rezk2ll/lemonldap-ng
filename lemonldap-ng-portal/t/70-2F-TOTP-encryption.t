@@ -5,7 +5,7 @@ use IO::String;
 use JSON qw/from_json to_json/;
 
 require 't/test-lib.pm';
-my $maintests = 29;
+my $maintests = 32;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -208,15 +208,20 @@ SKIP: {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/totp2fcheck', 'token' );
 
-    # Verify that TOTP secret is encrypted
+    # Verify that TOTP secret is encrypted and well stored
     my $session    = getPSession("dwho");
     my $_2fDevices = $session->data->{_2fDevices};
-    ok( $_2fDevices, "TOTP persistent data found" );
+    ok( $_2fDevices, 'TOTP persistent data found' );
     $_2fDevices = from_json($_2fDevices);
-    is( @{$_2fDevices}, 1, "Only one device found" );
+    is( @{$_2fDevices}, 1, 'Only one device found' );
     my $secret = $_2fDevices->[0]->{_secret};
-    like( $secret, qr/^\{llngcrypt\}/, "TOTP secret is encrypted" );
-
+    like( $secret, qr/^\{llngcrypt\}/, 'TOTP secret is encrypted' );
+    my $hash = $_2fDevices->[0]->{_hash};
+    is( $hash, 'sha1', 'Hash algo is sha1' );
+    my $digits = $_2fDevices->[0]->{_digits};
+    is( $digits, 6, 'Number of digits is 6' );
+    my $interval = $_2fDevices->[0]->{_interval};
+    is( $interval, 30, 'Interval is 30s' );
 }
 count($maintests);
 
