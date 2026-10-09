@@ -22,7 +22,19 @@ import postcssPresetEnv from "postcss-preset-env";
 import postcss from "rollup-plugin-postcss";
 import typescript from "@rollup/plugin-typescript";
 import progress from "rollup-plugin-progress";
+import license from "rollup-plugin-license";
 import { createHash } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
+
+// License text of a bundled module: from its package, or from
+// third-party-licenses/ when the package does not ship one. A missing text
+// aborts the build: the notices must be complete.
+const licenseText = (dep) => {
+  if (dep.licenseText) return dep.licenseText.trim();
+  const file = `third-party-licenses/${dep.name}.txt`;
+  if (existsSync(file)) return readFileSync(file, "utf8").trim();
+  throw new Error(`No license text for ${dep.name}: add ${file}`);
+};
 
 // https://github.com/d3/d3-interpolate/issues/58
 const D3_WARNING = /Circular dependency.*d3-interpolate/;
@@ -154,6 +166,31 @@ const makeConfig = ({ input, route, tpl, prefix, title }) => ({
       ],
     }),
     commonjs(),
+    // Third-party notices: the bundles embed npm modules whose licenses
+    // (MIT, ISC...) require their copyright and permission notices to be
+    // distributed with them. The allow list also aborts the build if a module
+    // under a license incompatible with LLNG (GPL-2+) gets bundled.
+    license({
+      thirdParty: {
+        allow: {
+          test: "(MIT OR ISC OR 0BSD OR BSD-2-Clause OR BSD-3-Clause)",
+          failOnUnlicensed: true,
+          failOnViolation: true,
+        },
+        output: {
+          file: `dist/static/new/${prefix}.licenses.txt`,
+          template: (deps) =>
+            `Third-party software bundled in ${prefix}.js\n\n` +
+            deps
+              .map(
+                (d) =>
+                  `${"=".repeat(72)}\n${d.name} ${d.version} (${d.license})\n` +
+                  `${"=".repeat(72)}\n\n${licenseText(d)}\n`
+              )
+              .join("\n"),
+        },
+      },
+    }),
     inject({
       React: "react",
     }),

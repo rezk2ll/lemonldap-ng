@@ -569,7 +569,7 @@ new_manager_clean: rollup_clean
 $(NEW_MGR_DST): $(NEW_MGR_TMP_DIST)
 	@install -d $(NEW_MGR_TPL_DIR) $(NEW_MGR_JS_DIR)
 	cp $(UIMANAGERDIR)/dist/static/new/*.js $(UIMANAGERDIR)/dist/static/new/*.css \
-		$(NEW_MGR_JS_DIR)/
+		$(UIMANAGERDIR)/dist/static/new/*.licenses.txt $(NEW_MGR_JS_DIR)/
 	cp $(UIMANAGERDIR)/dist/templates/new/*.tpl $(NEW_MGR_TPL_DIR)/
 	# Configuration metadata is fetched at runtime (see src/metadata.ts), not
 	# bundled: serve the JSON as static assets next to the bundles.
