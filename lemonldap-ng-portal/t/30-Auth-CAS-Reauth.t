@@ -1,6 +1,6 @@
-use warnings;
-use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
+use warnings;
+use Test::More;
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;

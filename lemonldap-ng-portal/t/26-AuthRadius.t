@@ -6,6 +6,7 @@ use Authen::Radius;
 use File::Temp 'tempdir';
 
 BEGIN {
+    no warnings 'once';
     $LLNG::TMPDIR =
       tempdir( 'tmpSessionXXXXX', DIR => 't/sessions', CLEANUP => 1 );
 }

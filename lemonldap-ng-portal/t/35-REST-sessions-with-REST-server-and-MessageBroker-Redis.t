@@ -61,6 +61,7 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
+    no warnings 'once';
     skip( "LLNGTESTREDIS isn't set", 1 ) unless $ENV{LLNGTESTREDIS};
     require 't/redis/redis.pm';
     skip( 'Redis is missing', 1 ) if $main::noRedis;

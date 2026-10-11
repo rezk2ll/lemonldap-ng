@@ -4,9 +4,7 @@ use strict;
 use utf8;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 my $client = LLNG::Manager::Test->new( {
