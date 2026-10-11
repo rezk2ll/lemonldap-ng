@@ -162,7 +162,12 @@ ok(
 );
 count(1);
 
-$res = expectJWT( $res->[2]->[0], name => 'Frédéric Accents' );
+$res = expectJWT(
+    $res->[2]->[0],
+    name => 'Frédéric Accents',
+    iss  => 'http://auth.op.com/',
+    aud  => 'rpid',
+);
 
 ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );

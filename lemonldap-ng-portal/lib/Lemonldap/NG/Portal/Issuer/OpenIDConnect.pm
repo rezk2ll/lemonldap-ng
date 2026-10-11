@@ -2187,6 +2187,12 @@ sub userInfo {
 
     }
     else {
+
+        # Signed UserInfo must contain iss and aud (OIDC Core 5.3.2)
+        $userinfo_response->{iss} //= $self->get_issuer($req);
+        $userinfo_response->{aud} //=
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
         my $userinfo_jwt = $self->encryptToken(
             $rp,
             $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp ),
