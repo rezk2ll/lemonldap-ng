@@ -3,7 +3,6 @@ use Test::More;
 use strict;
 use utf8;
 use IO::String;
-use Data::Dumper;
 
 require 't/test-lib.pm';
 my $maintests = 15;
