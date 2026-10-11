@@ -112,8 +112,8 @@ Assistance
 ----------
 
 If a user loses its key, you can remove it from manager Second Factor
-module.// // To enable manager Second Factor Administration Module, set
-``enabledModules`` key in your ``lemonldap-ng.ini`` file :// //
+module. To enable manager Second Factor Administration Module, set
+``enabledModules`` key in your ``lemonldap-ng.ini`` file :
 
 .. code-block:: ini
 
