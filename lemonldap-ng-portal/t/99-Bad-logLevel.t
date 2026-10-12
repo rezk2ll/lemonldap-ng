@@ -1,7 +1,6 @@
 use warnings;
 use Test::More;
 use strict;
-use Data::Dumper;
 
 require 't/test-lib.pm';
 

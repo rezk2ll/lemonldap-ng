@@ -1,3 +1,4 @@
+use strict;
 use warnings;
 use Test::More;
 use IO::String;
@@ -47,15 +48,15 @@ my $baseConfig = {
                 oidcRPMetaDataOptionsRedirectUris => 'http://test/',
             }
         },
-        oidcServicePrivateKeySig   => oidc_key_op_private_sig,
-        oidcServicePublicKeySig    => oidc_cert_op_public_sig,
+        oidcServicePrivateKeySig   => oidc_key_op_private_sig(),
+        oidcServicePublicKeySig    => oidc_cert_op_public_sig(),
         oidcOfflineTokens          => 1,
         portalDisplayOfflineTokens => 1,
     }
 };
 
 sub runTest {
-    my ($op) = @_;
+    my ( $op, $jwt ) = @_;
     Time::Fake->reset;
 
     my $res;

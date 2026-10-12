@@ -2,7 +2,6 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
-use Data::Dumper;
 
 require 't/test-lib.pm';
 require 't/smtp.pm';

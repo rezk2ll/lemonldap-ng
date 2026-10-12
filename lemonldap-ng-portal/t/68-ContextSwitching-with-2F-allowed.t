@@ -1,12 +1,11 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use IO::String;
-use JSON qw(to_json from_json);
+use JSON;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
+
 my $maintests = 76;
 
 SKIP: {

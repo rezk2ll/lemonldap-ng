@@ -1,7 +1,9 @@
 use strict;
+use warnings;
 use Test::More;
 use IO::String;
 use Time::Fake;
+
 require 't/test-lib.pm';
 
 my $client = LLNG::Manager::Test->new( { ini => {} } );

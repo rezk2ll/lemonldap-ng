@@ -39,7 +39,6 @@ sub runTestSp {
         $sr,             '/samlp:AuthnRequest/samlp:NameIDPolicy/@Format',
         $expect_req_nif, 'Found expected NameID Format in response',
     );
-
 }
 
 SKIP: {

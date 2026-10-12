@@ -25,7 +25,7 @@ sub new {
     my $self = Plack::Request::new(@_);
     $self->env->{REQUEST_URI} = $self->env->{X_ORIGINAL_URI}
       if ( $self->env->{X_ORIGINAL_URI} );
-    $self->env->{PATH_INFO} =~ s|//+|/|g;
+    $self->env->{PATH_INFO} =~ s|//+|/|g if $self->env->{PATH_INFO};
     $self->env->{PATH_INFO} ||= '/';
     $self->env->{REQUEST_URI} =~ s|^//+|/|g;
     $self->{uri}        = uri_unescape( $self->env->{REQUEST_URI} );

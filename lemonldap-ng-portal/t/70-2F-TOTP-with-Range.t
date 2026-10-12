@@ -128,10 +128,8 @@ SKIP: {
         'Auth query'
     );
     ( $host, $url, $query ) = expectForm( $res, undef, '/totp2fcheck' );
-    ok(
-        $res->[2]->[0] =~ m%inputmode="numeric"%,
-        'Inputmode numeric'
-    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ m%inputmode="numeric"%, 'Inputmode numeric' )
+      or print STDERR Dumper( $res->[2]->[0] );
     $query =~ s/code=/code=$code/;
     ok(
         $res = $client->_post(
