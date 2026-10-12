@@ -17,6 +17,7 @@ my $refresh_token;
 
 my $op2rpRequestCount = 0;
 my $lastRpRequest     = '';
+my $lastLogoutToken;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -34,6 +35,8 @@ LWP::Protocol::PSGI->register(
             $client = $rp;
             $op2rpRequestCount++;
             $lastRpRequest = $req->uri;
+            ($lastLogoutToken) = ( $req->content =~ /logout_token=([^&]+)/ )
+              if $url =~ /blogout/;
         }
         else {
             fail('  Aborting REST request (external)');
@@ -284,6 +287,52 @@ subtest "Offline Back-Channel-Logout using admin logout and refresh_token" =>
         runTest( 1, 1 );
     }
   };
+
+# The Manager gives the storage ID of the SSO session (raw=1): the logout
+# token must carry the sid of the ID token, even when sessions are stored
+# hashed
+subtest "Back-Channel-Logout sid using admin logout of the SSO session" => sub {
+  SKIP: {
+        eval { require Lemonldap::NG::Manager::Sessions };
+        skip 'No manager found', 1 if $@;
+
+        my $id   = $op->login('french');
+        my $code = codeAuthorize(
+            $op, $id,
+            {
+                response_type => 'code',
+                scope         => 'openid profile email',
+                client_id     => 'rpid',
+                state         => 'af0ifjsldkj',
+                redirect_uri  => 'http://auth.rp.com/?openidconnectcallback=1',
+            }
+        );
+        my $json = expectJSON(
+            codeGrant(
+                $op,   'rpid',
+                $code, 'http://auth.rp.com/?openidconnectcallback=1'
+            )
+        );
+        my $sid = id_token_payload( $json->{id_token} )->{sid};
+        ok( $sid, 'ID token has a sid' );
+
+        undef $lastLogoutToken;
+        require t::SessionExplorer;
+        my $se;
+        ok( $se = t::SessionExplorer->new( $op->p->conf ),
+            'Create SessionExplorer object' );
+        expectOK(
+            $se->adminLogout(
+                query => "sessionType=global&sessionId="
+                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+            )
+        );
+        ok( $lastLogoutToken, 'Back-channel logout sent to RP' );
+        is( getJWTPayload($lastLogoutToken)->{sid},
+            $sid, 'Logout token sid is the one of the ID token' );
+        expectReject( $op->_get( '/', cookie => "lemonldap=$id" ) );
+    }
+};
 
 clean_sessions();
 done_testing();

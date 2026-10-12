@@ -64,7 +64,13 @@ sub ssoLogout {
         return $self->sendError( $req, "Session $id not found", 400 );
     }
 
-    $req->userData( $req->sessionInfo( $session->data ) );
+    my $sessionData = $session->data;
+
+    # Read by its storage ID, the session holds it as _session_id: tell
+    # getSidFromSession() not to hash it again
+    $sessionData = { %$sessionData, _session_storage_id => $id } if $raw;
+
+    $req->userData( $req->sessionInfo($sessionData) );
     return $self->p->do(
         $req,
         [
