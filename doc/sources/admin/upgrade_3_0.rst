@@ -105,6 +105,27 @@ In most situations, you will want your internal domains to be added to the
 ``no_proxy`` list so that requests performed internally by LemonLDAP::NG will
 not go through the proxy.
 
+New TOTP storage format
+-----------------------
+
+As of LemonLDAP::NG 3.0, the storage format for TOTP registrations has evolved
+to allow changing the parameters (algorithm, code length, and time interval) in
+the future. It is recommanded to run the `migrateTotpSecrets` script in order
+to update the existing registrations with this information. If you don't do
+this, TOTP registrations will start failing if you change the parameters in the
+future.
+
+In most situations, you can update the storage with this command ::
+
+    migrateTotpSecrets --interval 30 --digits 6 --algorithm sha1
+
+If you are currenly using a different set of parameters, you need adjust the command
+accordingly.
+
+.. warning:: Make sure to back up your persistent sessions before running this
+   command. If you use incorrect parameters, TOTP registrations will no longer
+   work. The parameters must match the configuration you used in LemonLDAP 2.0
+
 Plugins
 -------
 
