@@ -485,10 +485,36 @@ sub _transformNew2fTotp {
         };
     }
 
+    if ( $add->{algorithm} and $add->{algorithm} !~ /^sha(?:1|256|512)$/ ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid algorithm must be one of: sha1, sha256, sha512",
+        };
+    }
+    if ( $add->{interval} and $add->{interval} !~ /^\d+$/ ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid interval must be a number",
+        };
+    }
+    if ( $add->{digits} and $add->{digits} !~ /^\d+$/ ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid digits: must be a number",
+        };
+    }
+
     my $newdevice = {
         type => "TOTP",
         ( $add->{name} ? ( name => $add->{name} ) : () ),
         _secret => $secret,
+        %{ $self->{totpParams} },
+        ( $add->{digits}    ? ( _digits   => $add->{digits} )    : () ),
+        ( $add->{interval}  ? ( _interval => $add->{interval} )  : () ),
+        ( $add->{algorithm} ? ( _hash     => $add->{algorithm} ) : () ),
     };
 
     return {

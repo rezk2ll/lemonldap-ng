@@ -624,6 +624,17 @@ checkAddWithBadAttributes(
     qr/Invalid secret/
 );
 
+checkAddWithBadAttributes(
+    "Add/badalg",
+    "amy", "TOTP",
+    {
+        name      => "test",
+        key       => "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ",
+        algorithm => "md5"
+    },
+    qr/Invalid algorithm/
+);
+
 checkAdd( "Add/goodkey", "amy", "TOTP",
     { name => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " } );
 checkGetList( 1, 'amy', 'TOTP' );
@@ -631,21 +642,36 @@ checkGetList( 1, 'amy', 'TOTP' );
 checkTotpData(
     get2fDevices($amypsession)->[0],
     "gezdgnbvgy3tqojqgezdgnbvgy3tqojq",
-    name => "test"
+    name        => "test",
+    '_digits'   => 6,
+    '_hash'     => 'sha1',
+    '_interval' => 30,
 );
 
-# 2FA add (TOTP) with undef 2fDevices
+# 2FA add (TOTP) with undef 2fDevices and custom params
 newSession( 'rory', '127.10.0.1', 'SSO', undef );
 my $rorypsession = newSession( 'rory', '127.10.0.1', 'Persistent', undef );
 
-checkAdd( "Add/goodkey", "rory", "TOTP",
-    { name => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " } );
+checkAdd(
+    "Add/goodkey",
+    "rory", "TOTP",
+    {
+        name      => "test",
+        key       => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  ",
+        algorithm => "sha256",
+        digits    => 8,
+        interval  => 10
+    }
+);
 checkGetList( 1, 'rory', 'TOTP' );
 
 checkTotpData(
     get2fDevices($rorypsession)->[0],
     "gezdgnbvgy3tqojqgezdgnbvgy3tqojq",
-    name => "test"
+    name        => "test",
+    '_digits'   => 8,
+    '_hash'     => 'sha256',
+    '_interval' => 10,
 );
 
 # 2FA add with nonexisting session

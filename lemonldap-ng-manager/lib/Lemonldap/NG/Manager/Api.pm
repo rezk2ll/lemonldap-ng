@@ -249,6 +249,11 @@ sub init {
     $self->setTypes($conf);
     $self->{multiValuesSeparator} ||= '; ';
     $self->{hiddenAttributes} //= "_password";
+    $self->{totpParams} = {
+        _interval => $conf->{totp2fInterval}  || 30,
+        _digits   => $conf->{totp2fDigits}    || 6,
+        _hash     => $conf->{totp2fAlgorithm} || 'sha1',
+    };
     return 1;
 }
 
