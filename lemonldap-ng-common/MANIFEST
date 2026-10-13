@@ -104,6 +104,7 @@ scripts/lemonldap-ng-cli
 scripts/lemonldap-ng-rotateOidcKeys.service
 scripts/lemonldap-ng-rotateOidcKeys.timer
 scripts/lemonldap-ng-sessions
+scripts/migrateTotpSecrets
 scripts/rotateOidcKeys
 scripts/rotateOidcKeys.cron.d
 t/01-Common-Conf.t

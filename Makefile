@@ -856,6 +856,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/convertSessions \
 		${SRCCOMMONDIR}/scripts/convertToHashSessionStorage \
 		${SRCCOMMONDIR}/scripts/encryptTotpSecrets \
+		${SRCCOMMONDIR}/scripts/migrateTotpSecrets \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
 		${SRCMANAGERDIR}/scripts/llng-build-manager-files \
