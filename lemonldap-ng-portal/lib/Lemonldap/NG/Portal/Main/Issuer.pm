@@ -34,7 +34,7 @@ has _ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott     = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        my $ott     = $_[0]->{p}->loadModule('::Lib::StateToken');
         my $timeout = $_[0]->{conf}->{issuersTimeout}
           // $_[0]->{conf}->{formTimeout};
         $ott->timeout($timeout);
@@ -245,7 +245,7 @@ sub storeRequest {
         next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
-    my $token = $self->_ott->createToken($info);
+    my $token = $self->_ott->storeState($info);
     $self->logger->debug("Store issuer request as $token");
     return $token;
 }
@@ -255,7 +255,7 @@ sub restoreRequest {
     $self->logger->debug("Restore issuer request from $token");
 
     my $result = 0;
-    my $env    = $self->_ott->getToken($token);
+    my $env    = $self->_ott->getState($token);
     if ($env) {
         $result = 1;
         $self->logger->debug("Restoring request from $token");

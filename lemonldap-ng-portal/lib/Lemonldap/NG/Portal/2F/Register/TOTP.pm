@@ -20,18 +20,6 @@ has logo     => ( is => 'rw', default => 'totp.png' );
 has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
 has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
-has ott => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
-          // $_[0]->{conf}->{formTimeout};
-        $ott->timeout($timeout);
-        return $ott;
-    }
-);
 
 use constant supportedActions => {
     delete => "delete",
@@ -55,7 +43,7 @@ sub verify {
 
     # Verify that token exists in DB (note that "keep" flag is set to
     # permit more than 1 try during token life
-    unless ( $token = $self->ott->getToken( $token, 1 ) ) {
+    unless ( $token = $self->ott->getState( $token, 1 ) ) {
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
     }
 
@@ -137,7 +125,7 @@ sub getkey {
 
     # Secret is stored in a token: we choose to not accept secret returned
     # by Ajax request to avoid some attacks
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->storeState( {
             _totp2fSecret => $secret,
         }
     );

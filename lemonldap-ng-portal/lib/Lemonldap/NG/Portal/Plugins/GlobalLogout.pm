@@ -24,7 +24,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -83,7 +83,7 @@ sub run {
     }
 
     # Prepare token
-    my $token = $self->ott->createToken( {
+    my $token = $self->ott->storeState( {
             user     => $user,
             sessions => to_json($sessions)
         }
@@ -121,7 +121,7 @@ sub globalLogout {
 
     if ( $req->param('all') ) {
         if ( my $token = $req->param('token') ) {
-            if ( $token = $self->ott->getToken($token) ) {
+            if ( $token = $self->ott->getState($token) ) {
                 my $storeId =
                   $self->conf->{hashedSessionStore}
                   ? id2storage( $req->userData->{_session_id} )

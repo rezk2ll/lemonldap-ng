@@ -77,7 +77,7 @@ sub init {
 
     # Initialize form token if needed (captcha provides also a token)
     else {
-        $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
+        $self->ott( $self->p->loadModule('::Lib::StateToken') ) or return 0;
         $self->ott->timeout( $self->conf->{formTimeout} );
     }
 

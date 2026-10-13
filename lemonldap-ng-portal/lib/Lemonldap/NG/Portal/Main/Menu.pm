@@ -109,7 +109,7 @@ sub params {
         my $msg = "Display $_ link";
         if ( $_ eq 'ContextSwitching' && $res{$_} ) {
             $msg .= " -> $res{ContextSwitching}";
-            $res{$_."ON"} = $res{$_} eq "ON" ? 1 : 0;
+            $res{ $_ . "ON" } = $res{$_} eq "ON" ? 1 : 0;
         }
         $self->logger->debug($msg) if $res{$_};
         undef $plugin;

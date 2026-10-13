@@ -121,7 +121,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -332,7 +332,7 @@ sub newAuthSession {
     }
 
     $req->id($id);
-    $req->{force}          = 1;
+    $req->{force} = 1;
     $req->env->{AuthBasic} = 1;
     $req->user( $req->param('user') );
     $req->data->{password} = $req->param('password');
@@ -435,7 +435,7 @@ sub mysession {
 
     if ( defined $req->param('gettoken') ) {
         return $self->p->sendJSONresponse( $req,
-            { token => $self->ott->createToken() } );
+            { token => $self->ott->storeState() } );
     }
 
     # Verify authorizationfor arg
@@ -508,7 +508,7 @@ sub updateMySession {
     my $mKeys = [];
 
     if ( my $token = $req->param('token') ) {
-        if ( $self->ott->getToken($token) ) {
+        if ( $self->ott->getState($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
                 foreach
                   my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )
@@ -559,7 +559,7 @@ sub delKeyInMySession {
     my $sub   = $req->param('sub');
 
     if ( my $token = $req->param('token') ) {
-        if ( $self->ott->getToken($token) ) {
+        if ( $self->ott->getState($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
                 foreach
                   my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )

@@ -1,9 +1,8 @@
-use warnings;
-use Test::More;
 use strict;
+use warnings;
 use utf8;
+use Test::More;
 use IO::String;
-use JSON;
 use Lemonldap::NG::Portal::Main::Constants;
 
 require 't/test-lib.pm';
@@ -68,8 +67,8 @@ SKIP: {
     # Try to get captcha value
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
-    $ts = eval { JSON::from_json($ts) };
-    ok( $captcha = $ts->{captcha}, ' Found captcha value' );
+    $ts = eval { from_json($ts) };
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
     ok(
         $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
@@ -136,7 +135,7 @@ SKIP: {
     # Try to renew captcha
     ok( $res = $client->_get( '/renewcaptcha', accept => 'text/html' ),
         'Unauth request to renew Captcha' );
-    $json = eval { JSON::from_json( $res->[2]->[0] ) };
+    $json = eval { from_json( $res->[2]->[0] ) };
     ok( ( defined $json->{newtoken} and $json->{newtoken} =~ /^\w+$/ ),
         'New token has been received' )
       or explain( $json->{newtoken}, 'New token not received' );
@@ -150,9 +149,10 @@ SKIP: {
     # Try to submit new captcha
     ok( $ts = getCache()->get( $json->{newtoken} ),
         ' Found new token session' );
-    $ts = eval { JSON::from_json($ts) };
+    $ts = eval { from_json($ts) };
+    $captcha = $ts->{storedData}->{captcha};
     $query =
-      "user=dwho&password=dwho&captcha=$ts->{captcha}&token=$json->{newtoken}";
+      "user=dwho&password=dwho&captcha=$captcha&token=$json->{newtoken}";
     ok(
         $res = $client->_post(
             '/',

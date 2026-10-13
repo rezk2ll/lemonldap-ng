@@ -24,7 +24,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -113,7 +113,7 @@ sub run {
         }
     }
 
-    $token = $self->ott->createToken( {
+    $token = $self->ott->storeState( {
             user     => $req->sessionInfo->{ $self->conf->{whatToTrace} },
             sessions => to_json( \@otherSessionsId )
         }
@@ -163,7 +163,7 @@ sub removeOther {
     $req->{urldc} = decode_base64( $req->param('url') );
 
     if ( my $token = $req->param('token') ) {
-        if ( $token = $self->ott->getToken($token) ) {
+        if ( $token = $self->ott->getState($token) ) {
 
             # Read sessions from token
             my $sessions = eval { from_json( $token->{sessions} ) };

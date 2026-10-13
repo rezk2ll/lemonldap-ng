@@ -100,8 +100,8 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
             $req->user( $data->{ $self->conf->{facebookUserField} } );
-            $req->data->{_facebookData} = $data;
-            $sessionInfo = $req->sessionInfo;
+            $req->data->{_facebookData}   = $data;
+            $sessionInfo                  = $req->sessionInfo;
             $sessionInfo->{_facebookData} = $data;
             $req->sessionInfo($sessionInfo);
 

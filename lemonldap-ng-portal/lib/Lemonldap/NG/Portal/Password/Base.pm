@@ -25,7 +25,7 @@ sub init {
     );
     return 0 unless $self->requireOldPwdRule;
 
-    $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
+    $self->ott( $self->p->loadModule('::Lib::StateToken') ) or return 0;
     $self->ott->timeout( $self->conf->{formTimeout} );
 
     $self->p->{_passwordDB} = $self;
@@ -65,7 +65,7 @@ sub _modifyPassword {
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
         my $token;
-        $token = $self->ott->getToken( $req->param('oldpassword') )
+        $token = $self->ott->getState( $req->param('oldpassword') )
           if $self->conf->{hideOldPassword} && $requireOldPwd;
         $req->data->{oldpassword} =
             $token

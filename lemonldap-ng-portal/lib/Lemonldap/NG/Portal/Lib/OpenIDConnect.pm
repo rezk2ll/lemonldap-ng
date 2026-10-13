@@ -74,7 +74,7 @@ has state_ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        my $ott = $_[0]->{p}->loadModule('::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{oidcRPStateTimeout}
               || $_[0]->conf->{timeout} );
         return $ott;
@@ -1354,7 +1354,7 @@ sub newAccessToken {
                   ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
             );
             $at_info->{sha256_hash} = $self->createHash( $at_jwt, 256 );
-            $self->updateToken( $session->id, $at_info );
+            $self->updateState( $session->id, $at_info );
             return $at_jwt;
         }
         else {
@@ -1519,10 +1519,10 @@ sub getRefreshToken {
 sub updateRefreshToken {
     my ( $self, $id, $infos ) = @_;
     $infos->{_oidcRtUpdate} = time;
-    return $self->updateToken( $id, $infos );
+    return $self->updateState( $id, $infos );
 }
 
-sub updateToken {
+sub updateState {
     my ( $self, $id, $infos ) = @_;
 
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
@@ -1663,7 +1663,7 @@ sub storeState {
     $infos->{_type} = "state";
 
     # Create state session and store infos
-    return $self->state_ott->createToken($infos);
+    return $self->state_ott->storeState($infos);
 }
 
 # Extract state information into $req
@@ -1673,7 +1673,7 @@ sub extractState {
     return 0 unless $state;
 
     # Open state session
-    my $stateSession = $self->state_ott->getToken($state);
+    my $stateSession = $self->state_ott->getState($state);
 
     return 0 unless $stateSession;
     return 0 unless $stateSession->{_type} eq "state";
@@ -2087,7 +2087,7 @@ sub checkEndPointAuthenticationCredentials {
             unless ( $client_secret eq
                 $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
             {
-                $self->logger->error("Wrong credentials for $rp"
+                $self->logger->error( "Wrong credentials for $rp"
                       . ( $rp ne $client_id ? " ($client_id)" : '' ) );
                 return undef;
             }

@@ -18,7 +18,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -53,7 +53,7 @@ sub display {
         ALERTE      => 'alert-warning',
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken()
+            ? $self->ott->storeState()
             : ''
         )
     };
@@ -77,17 +77,17 @@ sub run {
     if ( $self->ottRule->( $req, {} ) ) {
         my $token;
         if ( $token = $req->param('token') ) {
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->userLogger->warn(
                     'DecryptValue called with an expired/bad token');
                 $msg   = PE_TOKENEXPIRED;
-                $token = $self->ott->createToken();
+                $token = $self->ott->storeState();
             }
         }
         else {
             $self->userLogger->warn('DecryptValue called without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createToken();
+            $token = $self->ott->storeState();
         }
 
         my $params = {
@@ -157,7 +157,7 @@ sub run {
         ),
         ALERTE => 'alert-warning',
         TOKEN  => (
-            $self->ottRule->( $req, {} ) ? $self->ott->createToken()
+            $self->ottRule->( $req, {} ) ? $self->ott->storeState()
             : ''
         )
     };

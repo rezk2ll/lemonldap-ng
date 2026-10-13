@@ -27,7 +27,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -38,19 +38,6 @@ has registerModule => ( is => 'rw' );
 
 # Captcha generator
 has captcha => ( is => 'rw' );
-
-# Mail timeout token generator
-has mailott => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->cache(0);
-        $ott->timeout( $_[0]->conf->{formTimeout} || $_[0]->conf->{timeout} );
-        return $ott;
-    }
-);
 
 # INITIALIZATION
 
@@ -168,7 +155,7 @@ sub _certificateReset {
                 $self->userLogger->warn('Reset try without token');
                 return PE_NOTOKEN;
             }
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try with expired/bad token');
                 return PE_TOKENEXPIRED;
@@ -361,7 +348,7 @@ sub modifyCertificate {
     $self->logger->debug('Change your certificate form response');
 
     if ( my $token = $req->param('token') ) {
-        $req->sessionInfo( $self->ott->getToken($token) );
+        $req->sessionInfo( $self->ott->getState($token) );
         unless ( $req->sessionInfo ) {
             $self->userLogger->warn(
 'User tries to change certificate with an invalid or expired token'

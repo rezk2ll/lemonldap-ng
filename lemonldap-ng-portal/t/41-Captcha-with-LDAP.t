@@ -1,8 +1,7 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use IO::String;
-use JSON;
 
 require 't/test-lib.pm';
 
@@ -41,8 +40,8 @@ SKIP: {
     # Try to get captcha value
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
-    $ts = eval { JSON::from_json($ts) };
-    ok( $captcha = $ts->{captcha}, ' Found captcha value' );
+    $ts = eval { from_json($ts) };
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
 
     # Try to authenticate
     $query = "token=$token&user=dwho&password=dwho&captcha=$captcha";
@@ -81,8 +80,8 @@ SKIP: {
 
     # Try to get captcha value
     ok( $ts = getCache()->get($token), ' Found token session' );
-    $ts = eval { JSON::from_json($ts) };
-    ok( $captcha = $ts->{captcha}, ' Found captcha value' );
+    $ts = eval { from_json($ts) };
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
 }
 count($maintests);
 

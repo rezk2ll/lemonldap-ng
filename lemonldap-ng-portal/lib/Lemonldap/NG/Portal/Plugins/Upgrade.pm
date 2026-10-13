@@ -17,7 +17,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -118,8 +118,8 @@ sub confirm {
         $upg = 1;
     }
     else {
-        if ( my $t = $req->param('upgrading') ) {
-            if ( $self->ott->getToken($t) ) {
+        if ( my $token = $req->param('upgrading') ) {
+            if ( $self->ott->getState($token) ) {
                 $upg = 1;
             }
             else {
@@ -151,7 +151,7 @@ sub confirm {
         else {
             $self->p->setHiddenFormValue(
                 $req,
-                upgrading => $self->ott->createToken,
+                upgrading => $self->ott->storeState(),
                 '', 0
             );    # Insert token
                   # Do a regular login

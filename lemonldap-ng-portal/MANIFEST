@@ -76,7 +76,6 @@ lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCPlugin.pm
 lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
-lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
@@ -88,6 +87,7 @@ lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
 lib/Lemonldap/NG/Portal/Lib/SMTP.pm
 lib/Lemonldap/NG/Portal/Lib/SOAPProxy.pm
+lib/Lemonldap/NG/Portal/Lib/StateToken.pm
 lib/Lemonldap/NG/Portal/Lib/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/Main.pm
@@ -576,10 +576,10 @@ t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-Keys.t
 t/01-Mail-Tpl.t
-t/01-OneTimeToken.t
 t/01-pdata.t
 t/01-PluginEntrypoints.t
 t/01-Reject-Hashes-in-URL.t
+t/01-StateToken.t
 t/01-Unauth-Logout.t
 t/01-WebAuthn-Registration.t
 t/01-WebAuthn.t

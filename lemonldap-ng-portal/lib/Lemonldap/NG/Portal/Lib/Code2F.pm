@@ -84,8 +84,11 @@ sub challenge {
         $code = $self->random->randregex( $self->code_activation );
         $self->logger->debug(
             "Generated " . $self->prefix . "2f code : $code" );
-        $self->ott->updateToken( $token,
-            '__' . $self->prefix . '2fcode' => $code );
+        $self->ott->updateState(
+            $token,
+            '__' . $self->prefix . '2fcode' => $code,
+            '__lastRetry'                   => time
+        );
     }
 
     return $self->sendCode( $req, $sessionInfo, $code );
@@ -115,7 +118,7 @@ sub _resend {
     my $session;
 
     # Do not invalidate the token while getting it
-    unless ( $session = $self->ott->getToken( $token, 1 ) ) {
+    unless ( $session = $self->ott->getState( $token, 1 ) ) {
         $self->auditLog(
             $req,
             message =>
@@ -128,14 +131,11 @@ sub _resend {
         $req->noLoginDisplay(1);
         return $self->p->doPE( $req, PE_TOKENEXPIRED );
     }
-
-    my $code = $session->{ '__' . $self->prefix . '2fcode' };
-
+    my $code   = $session->{ '__' . $self->prefix . '2fcode' };
     my $legend = $self->legend;
 
     # Timer
-    my $lastretry =
-      $session->{__lastRetry} || $session->{tokenSessionStartTimestamp} || time;
+    my $lastretry = $session->{__lastRetry} || time;
 
     $self->p->_sfEngine->restore2faSessionInfo( $req, $session );
 
@@ -150,7 +150,7 @@ sub _resend {
         unless ( $self->sendCode( $req, $req->sessionInfo, $code ) ) {
             return $self->p->doPE( $req, PE_ERROR );
         }
-        $self->ott->updateToken( $token, __lastRetry => time );
+        $self->ott->updateState( $token, __lastRetry => time );
     }
     else {
         $self->logger->debug("Resend request arrived too soon");
