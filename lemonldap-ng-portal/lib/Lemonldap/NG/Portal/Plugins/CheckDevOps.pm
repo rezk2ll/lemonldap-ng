@@ -21,7 +21,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -62,7 +62,7 @@ sub display {
         ALERTE      => 'alert-info',
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createTokenData()
+            ? $self->ott->storeState()
             : ''
         )
     };
@@ -83,17 +83,17 @@ sub parse {
         my $token;
         $msg = PE_OK;
         if ( $token = $req->param('token') ) {
-            unless ( $self->ott->getTokenData($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->userLogger->warn(
                     'CheckDevOps called with an expired/bad token');
                 $msg   = PE_TOKENEXPIRED;
-                $token = $self->ott->createTokenData();
+                $token = $self->ott->storeState();
             }
         }
         else {
             $self->userLogger->warn('CheckDevOps called without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createTokenData();
+            $token = $self->ott->storeState();
         }
 
         # Prepare form
@@ -302,7 +302,7 @@ sub parse {
         URL         => $url,
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createTokenData()
+            ? $self->ott->storeState()
             : ''
         )
     };

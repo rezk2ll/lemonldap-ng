@@ -1,14 +1,12 @@
-use warnings;
 use strict;
+use warnings;
 use IO::String;
 use Test::More;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
-use JSON qw(to_json from_json);
+use JSON;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 LWP::Protocol::PSGI->register(
     sub {

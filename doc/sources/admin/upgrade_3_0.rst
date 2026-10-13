@@ -126,6 +126,12 @@ Refer to :doc:`notifications` section for more informations about notifications 
 
 If you use database to store notifications, you have to rename `xml` column into `content`.
 
+OneTimeToken library name changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Lib::OneTimeToken library becomes Lib::StateToken.
+getToken, updateToken and createToken methods become getState, updateState and storeState.
+
+
 Reload URLs do not exist anymore
 --------------------------------
 
@@ -133,7 +139,7 @@ The ``reloadUrls`` and ``reloadTimeout`` parameters have been removed, check out
 the :doc:`eventsmanagement` section for more information about configuration reload.
 
 No default kind
-~~~~~~~~~~~~~~~
+---------------
 
 ``$self->p->getApacheSession()`` used to fall back to the ``SSO`` session kind
 when the ``kind`` argument was missing. This default has been removed: ``kind``
@@ -152,7 +158,7 @@ Custom plugins must now declare the kind of session they expect::
 
 
 Second factor routes
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 All second factor routes are now relative to ``2ndfa`` to be more
 consistent when writing access rules ::
@@ -163,7 +169,7 @@ consistent when writing access rules ::
     like 2ndfa.html
 
 SAML URL parameters
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 To automatically select an IDP, ``idp`` parameter is replaced by ``idpEntityId`` parameter to specify
 SAML IDP by its encoded url: https://auth.example.com/?idpEntityId=https%3A%2F%2Fidp.example.com%2Fsaml.

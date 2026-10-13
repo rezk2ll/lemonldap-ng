@@ -21,7 +21,7 @@ sub setCaptcha {
 
     $self->captcha->setCaptcha($req);
 
-    my $info = $self->captcha->ott->getToken( $req->token, 1 );
+    my $info = $self->captcha->ott->getState( $req->token, 1 );
 
     return $self->sendJSONresponse(
         $req,
@@ -37,7 +37,7 @@ sub getCaptcha {
     my ( $self, $req ) = @_;
 
     my ( $token, $image ) = $self->captcha->getCaptcha;
-    my $info = $self->captcha->ott->getToken( $token, 1 );
+    my $info = $self->captcha->ott->getState( $token, 1 );
 
     return $self->sendJSONresponse( $req,
         { token => $token, img => $image, answer => $info->{captcha} } );

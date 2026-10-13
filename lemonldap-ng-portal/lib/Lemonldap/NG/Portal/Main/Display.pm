@@ -43,7 +43,7 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->loadModule('::Lib::OneTimeToken');
+        my $ott = $_[0]->loadModule('::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -504,7 +504,7 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->conf->{hideOldPassword}
-                ? $self->ott->createToken( {
+                ? $self->ott->storeState( {
                         oldpassword => $self->conf->{cipher}
                           ->encrypt( $req->data->{oldpassword}, 1 )
                     }

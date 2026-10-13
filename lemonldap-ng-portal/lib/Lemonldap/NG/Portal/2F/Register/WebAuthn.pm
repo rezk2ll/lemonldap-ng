@@ -19,19 +19,6 @@ has logo     => ( is => 'rw', default => 'webauthn.png' );
 has prefix   => ( is => 'rw', default => 'webauthn' );
 has template => ( is => 'ro', default => 'webauthn2fregister' );
 has welcome  => ( is => 'ro', default => 'webauthn2fWelcome' );
-has ott => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
-          // $_[0]->{conf}->{formTimeout};
-        $ott->timeout($timeout);
-        return $ott;
-    }
-);
-
 has displayname_attr => (
     is      => 'rw',
     lazy    => 1,
@@ -155,7 +142,7 @@ sub _registrationchallenge {
     };
 
     # Challenge is persisted on the server
-    my $token = $self->ott->createTokenData( {
+    my $token = $self->ott->storeState( {
             registration_options => $request,
         }
     );
@@ -181,7 +168,7 @@ sub _registration {
         return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
     my $state_data;
-    unless ( $state_data = $self->ott->getTokenData($state_id) ) {
+    unless ( $state_data = $self->ott->getState($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response: $state_id" );
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );
@@ -291,7 +278,7 @@ sub _verificationchallenge {
     }
 
     # Request is persisted on the server
-    my $token = $self->ott->createTokenData( {
+    my $token = $self->ott->storeState( {
             authentication_options => $request,
         }
     );
@@ -326,7 +313,7 @@ sub _verification {
 
     # Recover challenge
     my $state_data;
-    unless ( $state_data = $self->ott->getTokenData($state_id) ) {
+    unless ( $state_data = $self->ott->getState($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response ($state_id)" );
         return $self->failResponse( $req, PE_TOKENEXPIRED, 400 );

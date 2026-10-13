@@ -56,7 +56,7 @@ s/^.*token=([^&]+).*$/token=$1&firstname=who&lastname=doctor&mail=dwho%40badwolf
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json( $ts->{stored_data} )->{captcha},
+    ok( $captcha = $ts->{storedData}->{captcha},
         ' Found captcha value' );
     ok(
         $res->[2]->[0] =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
@@ -111,7 +111,7 @@ s/^.*token=([^&]+).*$/token=$1&firstname=foo&lastname=bar&mail=foobar%40badwolf.
     # Try to get captcha value
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json( $ts->{stored_data} )->{captcha},
+    ok( $captcha = $ts->{storedData}->{captcha},
         ' Found captcha value' );
     ok(
         $res->[2]->[0] =~ m%<img src="/static/common/logos/logo_llng_old.png"%,

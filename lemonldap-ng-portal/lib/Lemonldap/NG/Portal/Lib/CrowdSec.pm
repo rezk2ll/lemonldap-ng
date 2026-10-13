@@ -110,7 +110,7 @@ sub bouncer {
 sub ban {
     my $self = shift;
     my ( $ip, $msg, $data ) = @_;
-    if ( my $token = $self->getToken ) {
+    if ( my $token = $self->getState ) {
         my $request = HTTP::Request->new(
             POST => $self->crowdsecUrl . '/v1/alerts',
             [
@@ -233,7 +233,7 @@ sub _extractAlertContext {
 sub getAlertsByIp {
     my ( $self, $ip, $scenario, $timeWindow ) = @_;
     $scenario ||= $defaultBanValues->{scenario};
-    if ( my $token = $self->getToken ) {
+    if ( my $token = $self->getState ) {
 
         # Use API filters to avoid default 50 alerts limit
         my $url =
@@ -409,7 +409,7 @@ sub _banPayload {
     return to_json( [$alert] );
 }
 
-sub getToken {
+sub getState {
     my ($self) = @_;
 
     # Use token if available

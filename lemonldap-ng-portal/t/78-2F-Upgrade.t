@@ -3,10 +3,10 @@ use Test::More;
 use strict;
 use utf8;
 use IO::String;
-use Data::Dumper;
 use File::Temp 'tempdir';
 
 BEGIN {
+    no warnings 'once';
     $LLNG::TMPDIR =
       tempdir( 'tmpSessionXXXXX', DIR => 't/sessions', CLEANUP => 1 );
 }

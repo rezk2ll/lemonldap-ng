@@ -37,9 +37,9 @@ sub setChallenge {
     {
         my $code = random_string(RS_MSK);
         my $realState =
-          $self->oidc->state_ott->getToken( $token_request_params->{state}, 1 );
+          $self->oidc->state_ott->getState( $token_request_params->{state}, 1 );
         $realState->{state}->{data__auth_pkce} = $code;
-        $self->oidc->state_ott->updateToken( $token_request_params->{state},
+        $self->oidc->state_ott->updateState( $token_request_params->{state},
             state => $realState->{state} );
         my $challenge = encode_base64url( sha256($code) );
         $token_request_params->{code_challenge}        = $challenge;

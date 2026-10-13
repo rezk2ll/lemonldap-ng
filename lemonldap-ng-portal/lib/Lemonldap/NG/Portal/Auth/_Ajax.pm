@@ -34,7 +34,7 @@ has authott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->cache(0);
         return $ott;
     }
@@ -80,7 +80,7 @@ sub _auth_route {
 # Authentication token
 sub get_auth_token {
     my ( $self, $req, $token_id ) = @_;
-    my $token = $self->authott->getToken($token_id);
+    my $token = $self->authott->getState($token_id);
     if ($token) {
         if ( $token->{type} eq ( 'auth_token_' . $self->auth_id ) ) {
             return $token;
@@ -100,7 +100,7 @@ sub get_auth_token {
 # be stored in the session by setAuthSessionInfo
 sub ajax_success {
     my ( $self, $req, $user, $extraInfo ) = @_;
-    my $token = $self->authott->createToken( {
+    my $token = $self->authott->storeState( {
             user      => $user,
             type      => 'auth_token_' . $self->auth_id,
             extraInfo => $extraInfo,

@@ -19,7 +19,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -122,7 +122,7 @@ sub display {
         IMPERSONATION => $self->conf->{contextSwitchingRule},
         TOKEN         => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createTokenData()
+            ? $self->ott->storeState()
             : ''
         )
     };
@@ -144,7 +144,7 @@ sub run {
             $self->userLogger->warn('ContextSwitching called without token');
             return $self->p->doPE( $req, PE_NOTOKEN );
         }
-        unless ( $self->ott->getTokenData($token) ) {
+        unless ( $self->ott->getState($token) ) {
             $self->userLogger->warn(
                 'ContextSwitching called with an expired/bad token');
             return $self->p->doPE( $req, PE_TOKENEXPIRED );

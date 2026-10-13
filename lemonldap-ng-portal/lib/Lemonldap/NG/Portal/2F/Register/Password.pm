@@ -17,19 +17,6 @@ has logo     => ( is => 'rw', default => 'password.png' );
 has prefix   => ( is => 'rw', default => 'password' );
 has template => ( is => 'ro', default => 'password2fregister' );
 has welcome  => ( is => 'ro', default => 'PE71' );
-has ott => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
-          // $_[0]->{conf}->{formTimeout};
-        $ott->timeout($timeout);
-        return $ott;
-    }
-);
-
 has key => (
     is      => 'ro',
     lazy    => 1,

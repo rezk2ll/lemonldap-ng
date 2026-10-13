@@ -22,8 +22,7 @@ SKIP: {
         skip 'Missing dependencies', $maintests;
     }
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
@@ -71,7 +70,7 @@ SKIP: {
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json($ts->{stored_data})->{captcha}, ' Found captcha value' );
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
     ok(
         $res->[2]->[0] =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'

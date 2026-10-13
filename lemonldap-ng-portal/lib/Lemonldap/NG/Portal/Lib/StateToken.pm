@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Lib::OneTimeToken;
+package Lemonldap::NG::Portal::Lib::StateToken;
 
 use strict;
 use Mouse;
@@ -39,62 +39,17 @@ has cache => (
                 return undef;
             }
         }
-    },
+    }
 );
 
 sub init {
     return 1;
 }
 
-sub createToken {
-    my ( $self, $infos ) = @_;
-
-    # Set _utime for session autoremove
-    # Use default session timeout and register session timeout to compute it
-    my $time = time();
-
-    # Set _utime to remove token after $self->timeout
-    $infos->{_utime} = $time + ( $self->timeout - $self->conf->{timeout} );
-
-    # Store expiration timestamp for further use
-    $infos->{tokenTimeoutTimestamp} = $time + $self->timeout;
-
-    # Store start timestamp for further use
-    $infos->{tokenSessionStartTimestamp} = $time;
-
-    # Store type
-    $infos->{_type} ||= "token";
-
-    if ( $self->cache ) {
-        my $id =
-          $infos->{_utime} . '_' . unpack( 'S', Crypt::URandom::urandom(2) );
-
-        # Dereference $infos
-        my %h = %$infos;
-        $self->cache->set( $id, to_json( \%h ), $self->timeout . ' s' );
-        $self->logger->debug("Token $id created");
-        return $id;
-    }
-    else {
-
-        # Create a new session
-        my $tsession =
-          $self->p->getApacheSession( undef, info => $infos, kind => 'TOKEN' );
-        if ( $tsession->{id} ) {
-            $self->logger->debug("Token $tsession->{id} created");
-            return $tsession->id;
-        }
-        else {
-            $self->logger->error("NO token created");
-            return undef;
-        }
-    }
-}
-
-sub getToken {
+sub _getToken {
     my ( $self, $id, $keep ) = @_;
     unless ($id) {
-        $self->logger->error('getToken called without id');
+        $self->logger->error('getState called without id');
         return undef;
     }
     $self->logger->debug("Trying to load token $id");
@@ -112,7 +67,8 @@ sub getToken {
             return undef;
         }
         $self->cache->remove($id) unless $keep;
-        return from_json( $data, { allow_nonref => 1 } );
+        $data = from_json( $data, { allow_nonref => 1 } );
+        return $data->{_type} eq 'token' ? $data : undef;
     }
     else {
 
@@ -128,7 +84,7 @@ sub getToken {
     }
 }
 
-sub createTokenData {
+sub storeState {
     my ( $self, $data ) = @_;
     my $infos;
 
@@ -149,15 +105,12 @@ sub createTokenData {
     $infos->{_type} ||= "token";
 
     # Store data
-    $infos->{stored_data} = to_json($data);
+    $infos->{storedData} = $data;
 
     if ( $self->cache ) {
         my $id =
           $infos->{_utime} . '_' . unpack( 'S', Crypt::URandom::urandom(2) );
-
-        # Dereference $infos
-        my %h = %$infos;
-        $self->cache->set( $id, to_json( \%h ), $self->timeout . ' s' );
+        $self->cache->set( $id, to_json($infos), $self->timeout . ' s' );
         $self->logger->debug("Token $id created");
         return $id;
     }
@@ -177,50 +130,20 @@ sub createTokenData {
     }
 }
 
-sub getTokenData {
+sub getState {
     my ( $self, $id, $keep ) = @_;
-    my $tsession = $self->getToken( $id, $keep );
-    use Data::Dumper;
-    $self->logger->debug("------ " . Dumper $tsession);
-    
-    return $tsession && $tsession->{stored_data} && $tsession->{stored_data} ne 'null'
-      ? from_json( $tsession->{stored_data}, { allow_nonref => 1 } )
-      : $tsession ? $tsession : undef;
+    my $data = $self->_getToken( $id, $keep );
+
+    return
+         ref $data eq 'HASH'
+      && $data->{storedData}
+      && $data->{storedData} ne 'null' ? $data->{storedData}
+      : $data                          ? $data
+      :                                  undef;
 }
 
-sub updateToken {
-    my ( $self, $id, $k, $v ) = @_;
-    if ( $self->cache ) {
-        my $data;
-        unless ( $data = $self->cache->get($id) ) {
-            $self->logger->notice("Bad (or expired) token $id");
-            return undef;
-        }
-        my $h = from_json( $data, { allow_nonref => 1 } );
-        $h->{$k} = $v;
-        $self->cache->set( $id, to_json($h),
-            ( $h->{tokenTimeoutTimestamp} - time ) . ' s' );
-        return $id;
-    }
-    else {
-        if (
-            $self->p->getApacheSession(
-                $id,
-                kind => "TOKEN",
-                info => { $k => $v }
-            )
-          )
-        {
-            return $id;
-        }
-        else {
-            return undef;
-        }
-    }
-}
-
-sub updateTokenData {
-    my ( $self, $id, $k, $v ) = @_;
+sub updateState {
+    my ( $self, $id, %hash ) = @_;
     my ( $data, $h );
 
     if ( $self->cache ) {
@@ -228,12 +151,8 @@ sub updateTokenData {
             $self->logger->notice("Bad (or expired) token $id");
             return undef;
         }
-        $h                = from_json( $data, { allow_nonref => 1 } );
-        $data             = from_json( $h->{stored_data}, { allow_nonref => 1 } );
-    use Data::Dumper;
-    $self->logger->debug("+++++ " . Dumper $data);
-        $data->{$k}       = $v;
-        $h->{stored_data} = to_json($data);
+        $h = from_json( $data, { allow_nonref => 1 } );
+        $h->{storedData}->{$_} = $hash{$_} foreach ( keys %hash );
         $self->cache->set( $id, to_json($h),
             ( $h->{tokenTimeoutTimestamp} - time ) . ' s' );
         return $id;
@@ -245,10 +164,8 @@ sub updateTokenData {
             )
           )
         {
-            $h    = $tsession->{data};
-            $data = from_json( $h->{stored_data}, { allow_nonref => 1 } );
-            $data->{$k} = $v;
-            $h->{stored_data} = to_json($data);
+            $h = $tsession->{data};
+            $h->{storedData}->{$_} = $hash{$_} foreach ( keys %hash );
             return $self->p->getApacheSession(
                 $id,
                 kind => "TOKEN",
@@ -265,7 +182,7 @@ sub updateTokenData {
 sub setToken {
     my ( $self, $req, $info ) = @_;
     $self->logger->debug('Prepare token');
-    $req->token( $self->createTokenData($info) );
+    $req->token( $self->storeState($info) );
 }
 
 1;

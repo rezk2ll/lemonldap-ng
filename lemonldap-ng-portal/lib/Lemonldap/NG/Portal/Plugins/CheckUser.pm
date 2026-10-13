@@ -19,7 +19,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -112,7 +112,7 @@ sub display {
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createTokenData()
+            ? $self->ott->storeState()
             : ''
         )
     };
@@ -135,17 +135,17 @@ sub check {
     if ( $self->ottRule->( $req, {} ) ) {
         my $token;
         if ( $token = $req->param('token') ) {
-            unless ( $self->ott->getTokenData($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->userLogger->warn(
                     'CheckUser called with an expired/bad token');
                 $msg   = PE_TOKENEXPIRED;
-                $token = $self->ott->createTokenData();
+                $token = $self->ott->storeState();
             }
         }
         else {
             $self->userLogger->warn('CheckUser called without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createTokenData();
+            $token = $self->ott->storeState();
         }
 
         my $params = {
@@ -183,7 +183,7 @@ sub check {
                 LOGIN       => '',
                 TOKEN       => (
                       $self->ottRule->( $req, {} )
-                    ? $self->ott->createTokenData()
+                    ? $self->ott->storeState()
                     : ''
                 )
             }
@@ -370,7 +370,7 @@ sub check {
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createTokenData()
+            ? $self->ott->storeState()
             : ''
         )
     };

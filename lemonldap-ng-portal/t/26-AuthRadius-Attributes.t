@@ -1,6 +1,6 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use IO::String;
 use Authen::Radius;
 

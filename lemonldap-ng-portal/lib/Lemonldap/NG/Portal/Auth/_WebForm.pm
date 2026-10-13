@@ -44,7 +44,7 @@ sub init {
     unless ($self->{conf}->{captcha_login_enabled}
         and $self->{conf}->{captcha_login_enabled} eq '0' )
     {
-        $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
+        $self->ott( $self->p->loadModule('::Lib::StateToken') ) or return 0;
         $self->ott->timeout( $self->conf->{formTimeout} );
     }
     return 1;
@@ -129,7 +129,7 @@ sub extractFormInfo {
         }
         elsif ( $self->ottRule->( $req, {} ) ) {
             unless ( $req->data->{tokenVerified}
-                or $self->ott->getToken($token) )
+                or $self->ott->getState($token) )
             {
                 $self->ott->setToken($req);
                 $self->userLogger->warn('Invalid authentication form token');

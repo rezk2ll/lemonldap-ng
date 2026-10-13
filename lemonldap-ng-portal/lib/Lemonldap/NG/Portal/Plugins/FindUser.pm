@@ -17,7 +17,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -46,7 +46,7 @@ sub provideUser {
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
         if ( my $token = $req->param('token') ) {
-            unless ( $self->ott->getTokenData($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->userLogger->warn(
                     'FindUser called with an expired/bad token');
                 $error = PE_TOKENEXPIRED;

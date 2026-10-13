@@ -101,7 +101,7 @@ sub init {
     return 1;
 }
 
-sub getToken {
+sub getState {
     my ($self) = @_;
 
     my $cache = $self->access_token_cache;
@@ -271,7 +271,7 @@ sub request_authenticated_service {
 sub _request_with_token {
     my ( $self, $http_request ) = @_;
 
-    my $bearer_token = $self->getToken;
+    my $bearer_token = $self->getState;
 
     unless ($bearer_token) {
         $self->logger->info('Could not get bearer token for CaptchEtat');

@@ -1,11 +1,10 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
+
 my $maintests = 36;
 
 SKIP: {

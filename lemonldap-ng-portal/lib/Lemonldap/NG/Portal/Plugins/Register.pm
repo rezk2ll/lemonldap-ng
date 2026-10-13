@@ -25,7 +25,7 @@ has mailott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->cache(0);
         $ott->timeout( $_[0]->conf->{registerTimeout}
               || $_[0]->conf->{timeout} );
@@ -58,7 +58,7 @@ sub init {
     # Initialize form token if needed (captcha provides also a token)
     unless ( $self->conf->{captcha_register_enabled} ) {
         $_[0]->ott(
-            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
+            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::StateToken') )
           or return 0;
         $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
     }
@@ -114,7 +114,7 @@ sub _register {
 
         # Get the corresponding session
         if ( my $data =
-            $self->mailott->getTokenData( $req->data->{register_token} ) )
+            $self->mailott->getState( $req->data->{register_token} ) )
         {
             $self->logger->debug(
                 'Token ' . $req->data->{register_token} . ' found' );
@@ -164,7 +164,7 @@ sub _register {
                     $self->userLogger->warn('Register try without token');
                     return PE_NOTOKEN;
                 }
-                unless ( $self->ott->getTokenData($token) ) {
+                unless ( $self->ott->getState($token) ) {
                     $self->setSecurity($req);
                     $self->userLogger->warn(
                         'Register try with expired/bad token');
@@ -197,7 +197,7 @@ sub _register {
     unless ( $req->data->{register_token} or $register_session ) {
 
         # Create mail token
-        $register_session = $self->mailott->createTokenData( {
+        $register_session = $self->mailott->storeState( {
                 mail      => $req->data->{registerInfo}->{mail},
                 firstname => $req->data->{registerInfo}->{firstname},
                 lastname  => $req->data->{registerInfo}->{lastname},

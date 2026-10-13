@@ -44,7 +44,7 @@ sub extractFormInfo {
     # Keep token data for later use
     my ( $token, $gpgToken );
     if ( $token = $req->param('token') ) {
-        $gpgToken = $self->ott->getToken($token);
+        $gpgToken = $self->ott->getState($token);
         $req->data->{tokenVerified} = 1 if ($gpgToken);
     }
     my $res = $self->SUPER::extractFormInfo($req);

@@ -407,11 +407,11 @@ sub deleteSession {
 
 sub getCipheredToken {
     my ( $self, $req ) = @_;
-    require Lemonldap::NG::Portal::Lib::OneTimeToken;
+    require Lemonldap::NG::Portal::Lib::StateToken;
     return $self->conf->{cipher}->encrypt(
-        Lemonldap::NG::Portal::Lib::OneTimeToken->new(
+        Lemonldap::NG::Portal::Lib::StateToken->new(
             { p => $self->p, conf => $self->conf, timeout => 5 }
-        )->createTokenData()
+        )->storeState()
     );
 }
 
@@ -421,11 +421,11 @@ sub get_key_from_all_sessions {
     my $token = shift;
 
     # Verify that token is valid (must be unciphered by client)
-    require Lemonldap::NG::Portal::Lib::OneTimeToken;
+    require Lemonldap::NG::Portal::Lib::StateToken;
     unless (
-        Lemonldap::NG::Portal::Lib::OneTimeToken->new(
+        Lemonldap::NG::Portal::Lib::StateToken->new(
             { p => $self->p, conf => $self->conf }
-        )->getTokenData($token)
+        )->getState($token)
       )
     {
         die SOAP::Fault->faultcode('Server.Custom')->faultstring('Bad token');

@@ -46,7 +46,7 @@ sub run {
         return PE_WEBAUTHNFAILED;
     }
 
-    $self->ott->updateToken( $token, _webauthn_request => $request );
+    $self->ott->updateState( $token, _webauthn_request => $request );
 
     my $cacheTag = $self->p->cacheTag;
     $req->data->{customScript} .= <<"EOF";

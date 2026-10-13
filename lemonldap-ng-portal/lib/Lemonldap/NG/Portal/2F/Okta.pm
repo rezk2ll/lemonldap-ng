@@ -63,7 +63,7 @@ sub run {
         $self->logger->error( "No Okta user found for " . $okta_login );
         return PE_ERROR;
     }
-    $self->ott->updateToken( $token, __oktaUserId => $okta_userid );
+    $self->ott->updateState( $token, __oktaUserId => $okta_userid );
 
     # Get available factors ( factorid, factortype )
     my $okta_factors = $self->getOktaActiveFactors( $req, $okta_userid );
@@ -281,7 +281,7 @@ sub _issueFactor {
     }
 
     my $session;
-    unless ( $session = $self->ott->getToken( $token, 1 ) ) {
+    unless ( $session = $self->ott->getState( $token, 1 ) ) {
         $self->userLogger->info(
             'Invalid token during ' . $self->prefix . '2f choice' );
         $req->noLoginDisplay(1);
@@ -290,7 +290,7 @@ sub _issueFactor {
 
     my $okta_userid     = $session->{__oktaUserId};
     my $selected_factor = $req->param('sf');
-    $self->ott->updateToken( $token, __oktaFactorId => $selected_factor );
+    $self->ott->updateState( $token, __oktaFactorId => $selected_factor );
 
     my $issue_factor_response =
       $self->issueFactor( $okta_userid, $selected_factor );
@@ -323,7 +323,7 @@ sub _issueFactor {
 
         # Get poll URL
         my $okta_poll_url = $okta_issue->{_links}->{poll}->{href};
-        $self->ott->updateToken( $token, __oktaPollUrl => $okta_poll_url );
+        $self->ott->updateState( $token, __oktaPollUrl => $okta_poll_url );
 
         # Redirect on 2Fcheck endpoint
         my $redirect_uri = $self->p->portal . $self->prefix . "2fcheck";

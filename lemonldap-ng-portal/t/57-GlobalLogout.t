@@ -2,7 +2,6 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
-use Data::Dumper;
 use JSON;
 use Lemonldap::NG::Portal::Main::Constants;
 

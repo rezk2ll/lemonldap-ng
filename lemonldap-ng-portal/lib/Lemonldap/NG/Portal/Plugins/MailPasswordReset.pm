@@ -24,7 +24,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->cache(0);
         $ott->timeout( $_[0]->conf->{formTimeout} || $_[0]->conf->{timeout} );
         return $ott;
@@ -234,7 +234,7 @@ sub _reset {
                 $self->userLogger->warn('Reset try without token');
                 return PE_NOTOKEN;
             }
-            unless ( $self->ott->getTokenData($token) ) {
+            unless ( $self->ott->getState($token) ) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try with expired/bad token');
                 return PE_TOKENEXPIRED;
@@ -360,7 +360,7 @@ sub changePwd {
     $self->logger->debug('Change password form response');
 
     if ( my $token = $req->param('token') ) {
-        $req->sessionInfo( $self->ott->getTokenData($token) );
+        $req->sessionInfo( $self->ott->getState($token) );
         unless ( $req->sessionInfo ) {
             $self->userLogger->warn(
                 'User tries to change password with an invalid or expired token'

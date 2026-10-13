@@ -43,7 +43,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -54,7 +54,7 @@ has regOtt => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
           // $_[0]->{conf}->{formTimeout};
         $ott->timeout($timeout);
@@ -325,10 +325,10 @@ sub run {
             foreach ( @{ $self->{'sfModules'} } ) {
                 if ( $_->{m}->{type} eq $device->{type} ) {
                     $prefix = $_->{m}->{prefix};
+                    $ttl    = $self->conf->{"${prefix}2fTTL"};
                     last;
                 }
             }
-            $ttl = $self->conf->{"${prefix}2fTTL"};
             if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
@@ -402,7 +402,7 @@ sub run {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
-              $self->regOtt->createToken( $self->save2faSessionInfo($req) );
+              $self->regOtt->storeState( $self->save2faSessionInfo($req) );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
             $req->response(
@@ -442,7 +442,7 @@ sub run {
 
     # If only one 2F is authorized, display it
     unless ($#am) {
-        my $token = $am[0]->ott->createToken( $self->save2faSessionInfo($req) );
+        my $token = $am[0]->ott->storeState( $self->save2faSessionInfo($req) );
         $self->auditLog(
             $req,
             message => (
@@ -462,7 +462,7 @@ sub run {
     }
 
     # More than 1 2F has been found, display choice
-    my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
+    my $token = $self->ott->storeState( $self->save2faSessionInfo($req) );
     $self->logger->debug("Prepare 2F choice");
     my $res = $self->p->sendHtml(
         $req,
@@ -492,8 +492,7 @@ sub run {
 sub save2faSessionInfo {
     my ( $self, $req ) = @_;
     my $spoofId = $req->param('spoofId') || '';
-
-    my $info = { %{ $req->sessionInfo } };
+    my $info    = { %{ $req->sessionInfo } };
 
     # Store user data in a token
     $info->{_2fRetries}     = $req->data->{_2fRetries};
@@ -513,8 +512,6 @@ sub restore2faSessionInfo {
     my ( $self, $req, $info ) = @_;
 
     # Update sessionInfo
-    delete $info->{$_}
-      foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
     $info->{_utime} = delete $info->{_2fUtime};
     $req->data->{_2fRetries} = delete $info->{_2fRetries};
     $req->id( delete $info->{_2fRealSession} );
@@ -570,7 +567,7 @@ sub _choice {
             );
 
             # New token
-            my $token = $m->{m}->ott->createToken( $req->sessionInfo );
+            my $token = $m->{m}->ott->storeState( $req->sessionInfo );
             my $res   = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
@@ -810,8 +807,7 @@ sub _registration_with_token {
     my ( $self, $req, @path ) = @_;
 
     if ( my $token = $req->pdata->{sfRegToken} ) {
-        if ( my $sessionData = $self->regOtt->getToken( $token, 1 ) ) {
-
+        if ( my $sessionData = $self->regOtt->getState( $token, 1 ) ) {
             unless ( $sessionData->{_2fRealSession} ) {
                 $self->logger->error("Invalid 2FA registration token");
                 return $self->p->sendRedirection( $req, $req->portal );
@@ -828,12 +824,12 @@ sub _registration_with_token {
             my $res = $self->_handle_registration( $req, @path );
 
             if ( $req->data->{_2fRegistered} ) {
-                $self->regOtt->updateToken( $token,
+                $self->regOtt->updateState( $token,
                     "_2f" => $req->userData->{'_2f'} );
                 if ( my $authnLevel =
                     $req->userData->{registeredAuthenticationLevel} )
                 {
-                    $self->regOtt->updateToken( $token,
+                    $self->regOtt->updateState( $token,
                         "newAuthenticationLevel" => $authnLevel );
                 }
             }
@@ -1066,9 +1062,8 @@ sub _verify {
             "Retrying 2FA: " . $req->data->{_2fRetries} . " retries left" );
 
         $req->error(PE_RETRY_2FA);
-        my $token =
-          $module->ott->createToken( $self->save2faSessionInfo($req) );
-        my $res = $module->run( $req, $token );
+        my $token = $module->ott->storeState( $self->save2faSessionInfo($req) );
+        my $res   = $module->run( $req, $token );
         $req->authResult($res);
 
         return $self->p->doPE( $req, $res );
@@ -1303,7 +1298,7 @@ sub _check_token {
     }
 
     my $session;
-    unless ( $session = $ott->getToken($token) ) {
+    unless ( $session = $ott->getState($token) ) {
         $self->logger->error('Invalid 2F choice form token');
         $req->noLoginDisplay(1);
         return PE_TOKENEXPIRED;

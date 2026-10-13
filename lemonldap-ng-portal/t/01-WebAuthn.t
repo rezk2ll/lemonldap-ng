@@ -1,6 +1,6 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use IO::String;
 use MIME::Base64 qw/encode_base64url decode_base64url/;
 use JSON;

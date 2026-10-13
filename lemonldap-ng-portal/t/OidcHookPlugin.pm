@@ -4,7 +4,6 @@ use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use Lemonldap::NG::Portal::Main::Constants;
-use Data::Dumper;
 use Test::More;
 
 our $generateRefreshTokenCalled = '';

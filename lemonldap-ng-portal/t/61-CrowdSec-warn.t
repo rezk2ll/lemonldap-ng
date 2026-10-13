@@ -2,7 +2,6 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
-use Data::Dumper;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 

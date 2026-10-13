@@ -74,7 +74,7 @@ SKIP: {
     my $token = $json->{token};
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json( $ts->{stored_data} )->{captcha},
+    ok( $captcha = $ts->{storedData}->{captcha},
         ' Found captcha value' );
 
     ## Authentication request

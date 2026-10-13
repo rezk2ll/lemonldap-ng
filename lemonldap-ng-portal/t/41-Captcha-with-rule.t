@@ -18,7 +18,6 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                  => 'debug',
                 useSafeJail               => 1,
                 browsersDontStorePassword => 1,
                 loginHistoryEnabled       => 1,
@@ -78,7 +77,7 @@ SKIP: {
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
-    ok( $captcha = JSON::from_json( $ts->{stored_data} )->{captcha},
+    ok( $captcha = $ts->{storedData}->{captcha},
         ' Found captcha value' );
     ok(
         $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,

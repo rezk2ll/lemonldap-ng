@@ -15,20 +15,7 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has ott => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
-          // $_[0]->{conf}->{formTimeout};
-        $ott->timeout($timeout);
-        return $ott;
-    }
-);
-
-# The verification module that we'll use
+# The verification module that we will use
 has verificationModule => (
     is       => 'rw',
     isa      => 'Lemonldap::NG::Portal::Lib::Code2F',
@@ -74,7 +61,7 @@ sub sendcode {
 
     # Inject candidate value
     $sessionInfo->{destination} = $generic;
-    my $token = $self->ott->createToken($sessionInfo);
+    my $token = $self->ott->storeState($sessionInfo);
     my $result =
       $self->verificationModule->challenge( $req, $sessionInfo, $token );
     return $self->failResponse( $req, 'serverError' ) unless $result;
@@ -86,7 +73,6 @@ sub sendcode {
 }
 
 sub verify {
-
     my ( $self, $req ) = @_;
 
     return $self->failResponse( $req, 'csrfError', 400 )
@@ -101,7 +87,7 @@ sub verify {
     return $self->failResponse( $req, 'badName', 200 ) unless $genericname;
 
     # Verify code
-    my $token = $self->ott->getToken( $tokenid, 1 );
+    my $token = $self->ott->getState( $tokenid, 1 );
     my $res   = $self->verificationModule->verify_supplied_code( $req, $token,
         $genericcode );
     return $self->failResponse( $req, $res, 400 )

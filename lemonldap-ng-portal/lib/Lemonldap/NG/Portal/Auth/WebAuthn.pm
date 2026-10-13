@@ -73,26 +73,22 @@ sub auth_route {
 
 sub get_challenge {
     my ( $self, $req ) = @_;
-
     my $request = $self->generateDiscoverableChallenge($req);
     if ($request) {
 
         # Request is persisted on the server
-        #
         my $webauthn_data = { authentication_options => $request, };
         if ( my $token = $req->token ) {
-            $self->ott->updateToken( $token, "webauthn", $webauthn_data );
-
+            $self->ott->updateState( $token, webauthn => $webauthn_data );
         }
         else {
             $req->token(
-                $self->ott->createToken( {
+                $self->ott->storeState( {
                         webauthn => $webauthn_data
                     }
                 )
             );
         }
-
         return $request;
     }
     return;
@@ -103,8 +99,7 @@ sub extractFormInfo {
     if (    my $credential = $req->param('credential')
         and my $token = $req->param('token') )
     {
-
-        my $token = $self->ott->getToken($token);
+        $token = $self->ott->getState($token);
         if ($token) {
             $req->data->{webauthn_credential} = $credential;
             $req->data->{webauthn_options} =
@@ -126,7 +121,6 @@ sub extractFormInfo {
         }
     }
     else {
-
         $self->initDisplay( $req, 0 );
         return PE_FIRSTACCESS;
     }
@@ -134,10 +128,9 @@ sub extractFormInfo {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-
-    my $user = $req->user;
-
+    my $user                   = $req->user;
     my $authentication_options = $req->data->{webauthn_options};
+
     if ( !$authentication_options ) {
         $self->logger->error(
             "WebAuthn: missing authentication options for $user");
@@ -148,6 +141,7 @@ sub authenticate {
         $self->logger->error("WebAuthn: no 2FA registrations for $user");
         return PE_WEBAUTHNFAILED;
     }
+
     my $session_info = {
         _2fDevices          => $_2fDevices,
         _webAuthnUserHandle => $req->data->{webauthn__webAuthnUserHandle},
@@ -167,6 +161,7 @@ sub authenticate {
         $self->logger->error("WebAuthn: validation error for $user ($@)");
         return PE_WEBAUTHNFAILED;
     }
+
     return PE_OK;
 }
 
@@ -177,6 +172,7 @@ sub authLogout {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $sessionInfo = $req->sessionInfo;
+
     $sessionInfo->{authenticationLevel} = $self->authnLevel;
     $req->sessionInfo($sessionInfo);
     return PE_OK;

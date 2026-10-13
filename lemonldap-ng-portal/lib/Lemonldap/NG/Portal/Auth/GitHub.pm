@@ -32,7 +32,7 @@ has state_ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        my $ott = $_[0]->{p}->loadModule('::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{timeout} );
 
         # GitHub sends the user back to any portal of the farm, so the state
@@ -124,7 +124,7 @@ sub extractFormInfo {
             $self->userLogger->error('GitHub response without state parameter');
             return PE_ERROR;
         }
-        my $stateData = $self->state_ott->getTokenData($state);
+        my $stateData = $self->state_ott->getState($state);
         unless ( $stateData and ( $stateData->{_type} // '' ) eq 'githubState' )
         {
             $self->userLogger->error('Invalid or expired GitHub state');
@@ -276,7 +276,7 @@ sub extractFormInfo {
         $self->logger->debug('Redirection to GitHub');
 
         # Store state
-        my $stateToken = $self->state_ott->createTokenData( {
+        my $stateToken = $self->state_ott->storeState( {
                 _type       => 'githubState',
                 urldc       => $req->urldc,
                 checkLogins => $req->{checkLogins},

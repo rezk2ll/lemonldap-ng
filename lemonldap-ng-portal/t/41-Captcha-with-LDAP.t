@@ -41,7 +41,7 @@ SKIP: {
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json($ts->{stored_data})->{captcha}, ' Found captcha value' );
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
 
     # Try to authenticate
     $query = "token=$token&user=dwho&password=dwho&captcha=$captcha";
@@ -81,7 +81,7 @@ SKIP: {
     # Try to get captcha value
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { from_json($ts) };
-    ok( $captcha = from_json($ts->{stored_data})->{captcha}, ' Found captcha value' );
+    ok( $captcha = $ts->{storedData}->{captcha}, ' Found captcha value' );
 }
 count($maintests);
 

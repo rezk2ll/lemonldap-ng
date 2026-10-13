@@ -54,7 +54,7 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        my $ott = $_[0]->{p}->loadModule('::Lib::StateToken');
         $ott->timeout( $_[0]->timeout );
         return $ott;
     }
@@ -75,7 +75,7 @@ sub _getCaptcha {
 
     my $imageData = $self->_render($rdm);
     my $img       = 'data:image/png;base64,' . encode_base64( $imageData, '' );
-    my $token     = $self->ott->createTokenData( { captcha => $rdm } );
+    my $token     = $self->ott->storeState( { captcha => $rdm } );
     return ( $token, $img );
 }
 
@@ -182,7 +182,7 @@ sub _sendCaptcha {
 
 sub _validate_captcha_token {
     my ( $self, $token, $value ) = @_;
-    my $s = $self->ott->getTokenData($token);
+    my $s = $self->ott->getState($token);
     unless ($s) {
         $self->logger->warn("Captcha token $token is not valid");
         return 0;

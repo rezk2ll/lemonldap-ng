@@ -10,7 +10,7 @@ BEGIN {
     require 't/oidc-lib.pm';
 }
 
-my $debug = 'debug';
+my $debug = 'error';
 my ( $op, $rp, $res );
 
 LWP::Protocol::PSGI->register(

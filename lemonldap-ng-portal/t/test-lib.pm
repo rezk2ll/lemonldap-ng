@@ -67,8 +67,6 @@ use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
 use Carp                        qw/shortmess/;
 
-#use 5.10.0;
-
 no warnings 'redefine';
 
 BEGIN {
@@ -864,7 +862,7 @@ sub pushHandler {
     # another portal
     if (@currenthandler) {
         my $type = $currenthandler[-1];
-        note( '==> Saving handler  ' . uc($type) . ' <==' );
+        note( '==> Saving handler ' . uc($type) . ' <==' );
         $handlerOR{$type}   = [@Lemonldap::NG::Handler::Main::_onReload];
         $handlerTSHV{$type} = $Lemonldap::NG::Handler::Main::_tshv;
     }

@@ -1,4 +1,6 @@
 use strict;
+use warnings;
+no warnings 'once';
 use Test::More;
 use IO::String;
 use Lemonldap::NG::Common::Session;

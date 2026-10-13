@@ -1,9 +1,8 @@
+use strict;
 use warnings;
 use Test::More;
-use strict;
 use utf8;
 use IO::String;
-use Data::Dumper;
 
 require 't/test-lib.pm';
 require 't/smtp.pm';

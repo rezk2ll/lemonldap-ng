@@ -36,7 +36,7 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::StateToken');
         $ott->timeout( $_[0]->conf->{formTimeout} );
         return $ott;
     }
@@ -170,7 +170,7 @@ sub _getRegisterStateTplParams {
 
     my $checkLogins = $req->param('checkLogins') || 0;
     my $url         = $req->urldc;
-    my $token       = $self->ott->createTokenData( {
+    my $token       = $self->ott->storeState( {
             id          => $req->id,
             sessionInfo => $req->sessionInfo,
             totpSecret  => $totpSecret,
@@ -247,10 +247,8 @@ sub _restoreRegisterState {
     my ( $self, $req ) = @_;
 
     if ( my $token = $req->param('token') ) {
-        if ( my $saved_state = $self->ott->getTokenData($token) ) {
+        if ( my $saved_state = $self->ott->getState($token) ) {
 
-            use Data::Dumper;
-            $self->logger->debug("********** " . Dumper $saved_state);
             # checkLogins is restored automatically as a request parameter
             $req->urldc( $req->param('url') );
             $req->sessionInfo( $saved_state->{sessionInfo} );
@@ -344,9 +342,7 @@ sub getKnownBrowserState {
         my $uid        = $ps->data->{_session_uid};
         my $authnLevel = $ps->data->{authenticationLevel};
 
-        my $token_data = $self->ott->getTokenData($token);
-            use Data::Dumper;
-            $self->logger->debug("********** " . Dumper $token_data);
+        my $token_data = $self->ott->getState($token);
         return unless $token_data;
 
         if ( $self->checkFingerprint( $req, $ps, $uid, $fg ) ) {
@@ -392,7 +388,7 @@ sub checkFingerprint {
 
 sub challenge {
     my ( $self, $req, $action, $info ) = @_;
-    my $token = $self->ott->createTokenData($info);
+    my $token = $self->ott->storeState($info);
     $req->response(
         $self->p->sendHtml(
             $req,
