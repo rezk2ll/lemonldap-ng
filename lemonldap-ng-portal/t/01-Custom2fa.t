@@ -348,7 +348,7 @@ subtest "Delete 2FA" => sub {
     );
     expectReject( $res, 400, 'PE24' );
 
-    # Testing sucessful delete of device
+    # Testing successful delete of device
     ok(
         $res = $client->_post(
             '/2fregisters/test/delete',

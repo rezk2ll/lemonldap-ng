@@ -154,7 +154,7 @@ This method generates a RSA private key and a self-signed certificate, and retur
 
 =item public: certificate in PEM format, subject is built from given $cn
 
-=item private: private key in PEM format, optionnaly encrypted with supplied password
+=item private: private key in PEM format, optionally encrypted with supplied password
 
 =item hash: unique identifier for the key
 
