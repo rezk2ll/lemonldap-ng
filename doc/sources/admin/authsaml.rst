@@ -191,7 +191,10 @@ Authentication request
    that you can check to allow or deny session creation.
 -  **Allow URL as RelayState**: set to On if the RelayState value sent
    by IDP is the URL where the user must be redirected after
-   authentication
+   authentication. The RelayState is not covered by the assertion
+   signature, so this URL must belong to a protected virtual host or
+   to a domain listed in ``trustedDomains``, otherwise it is ignored
+   and the user is redirected to the portal
 -  **Federation**: see :doc:`samlfederation`
 -  **Activation**: The user can activate and deactivate a SP. By default, SPs
    are active upon creation.
