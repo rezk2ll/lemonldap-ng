@@ -20,6 +20,8 @@ export interface ConfigState {
   loading: boolean;
   error: { has: boolean; errorContent: string };
   data: { metadata: MetaData; config: llngConfig };
+  // Configuration as loaded, to show pending changes before saving
+  original?: llngConfig;
   saveResponse?: Record<string, Record<string, Array<Record<string, string>>>>;
 }
 
@@ -1571,6 +1573,7 @@ const configSlice = createSlice({
         (state: ConfigState, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = action.payload;
+          state.original = action.payload.config;
         }
       )
       .addCase(
@@ -1630,6 +1633,7 @@ const configSlice = createSlice({
         (state: ConfigState, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = action.payload;
+          state.original = action.payload.config;
         }
       );
   },

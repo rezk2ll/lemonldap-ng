@@ -4,61 +4,14 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Box, CircularProgress, Link } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { NodeApi, NodeRendererProps, Tree, TreeApi } from "react-arborist";
 import useResizeObserver from "use-resize-observer";
 import { TreeNode, recursTree, treeFormat } from "../utils/recursTree";
-import { findElementByTitleOrValue } from "../utils/searchIntree";
 import { llngConfig } from "../utils/types";
 import "./Tree.css";
 import { TreeNodeType } from "./TreeNode";
 import { t } from "i18next";
-
-export function ToggleConfTree(
-  itemId: string,
-  treeRef: React.RefObject<TreeApi<treeFormat>>,
-  tree: TreeNode[],
-  config: llngConfig,
-  setItems: React.Dispatch<React.SetStateAction<treeFormat[] | undefined>>
-): void {
-  const item = treeRef.current?.get(itemId)?.data;
-  if (item) {
-    const updateChildren = (node: treeFormat): treeFormat => {
-      if (node?.children) {
-        node.children = node.children.map((child: any) => {
-          const childId = child.id.split(";").at(-1) || "";
-          const foundElement = findElementByTitleOrValue(
-            tree,
-            childId,
-            child.id.split(";").at(-2)
-          );
-          if (foundElement) {
-            child = recursTree(foundElement, config, node.id, node.app);
-          }
-          child = updateChildren(child);
-          return child;
-        });
-      } else {
-        const id = node.id.split(";").at(-1) || "";
-        const foundElement = findElementByTitleOrValue(
-          tree,
-          id,
-          node.id.split(";").at(-2)
-        );
-        if (foundElement) {
-          return recursTree(foundElement, config, item.id, item.app);
-        }
-      }
-      return node;
-    };
-
-    item.children = item.children?.map(updateChildren);
-
-    setItems((prevItems) =>
-      prevItems?.map((el) => (el.id === itemId ? { ...item } : el))
-    );
-  }
-}
 
 export default function TreeRender({
   tree,
@@ -68,32 +21,44 @@ export default function TreeRender({
   config: llngConfig;
 }) {
   const treeRef = useRef<TreeApi<treeFormat>>(null);
-  const [ITEMS, setItems] = useState(
-    tree?.map((el: TreeNode) => recursTree(el, config, "root"))
+  // Children are built lazily (see recursTree), so rebuilding the roots on a
+  // configuration change is cheap. Open state is kept by react-arborist, keyed
+  // by node id.
+  const items = useMemo(
+    () => tree?.map((el: TreeNode) => recursTree(el, config, "root")),
+    [tree, config]
   );
   const [selectedItem, setSelectedItem] = useState<NodeApi<treeFormat> | null>(
     null
   );
   const { ref, width, height = 1 } = useResizeObserver();
+  // A configuration change rebuilds the nodes: point the detail pane at the
+  // new instance of the selected one (react-arborist has updated by now).
   useEffect(() => {
-    setItems(tree?.map((el: TreeNode) => recursTree(el, config, "root")));
-    treeRef.current?.closeAll();
-  }, [tree, config]);
+    setSelectedItem((prev) => (prev && treeRef.current?.get(prev.id)) || prev);
+  }, [items]);
 
-  useEffect(() => {
-    if (selectedItem) {
-      let node = selectedItem;
-      const parents = [];
-      while (node?.parent) {
-        node = node.parent;
-        parents.push(node);
-      }
-      parents.reverse().forEach((parent) => {
-        ToggleConfTree(parent.id, treeRef, tree || [], config, setItems);
-        treeRef.current?.get(parent.id)?.open();
-      });
+  // react-arborist rebuilds its whole node tree on each update (every
+  // open/close). Only hand it the children of visible nodes: those of an open
+  // node, and one level more so that the selected node's children are known
+  // to the detail pane (simpleInputContainer, container forms). Closed
+  // internal nodes get an empty list, which keeps them displayed as folders.
+  const childrenAccessor = useCallback((d: treeFormat) => {
+    if (!("children" in d)) return null;
+    const api = treeRef.current;
+    if (
+      d.parent === "root" ||
+      (api && (api.isOpen(d.id) || (d.parent && api.isOpen(d.parent))))
+    ) {
+      return d.children || [];
     }
-  }, [selectedItem, tree, config]);
+    return [];
+  }, []);
+  const onFocus = useCallback(
+    (node: NodeApi<treeFormat>) => setSelectedItem(node),
+    []
+  );
+
   if (tree) {
     return (
       <>
@@ -122,15 +87,11 @@ export default function TreeRender({
               disableDrag={true}
               rowHeight={34}
               ref={treeRef}
-              onToggle={(itemId) => {
-                ToggleConfTree(itemId, treeRef, tree, config, setItems);
-              }}
               height={height}
               width={width}
-              onFocus={(node) => {
-                setSelectedItem(node);
-              }}
-              data={ITEMS}
+              onFocus={onFocus}
+              data={items}
+              childrenAccessor={childrenAccessor}
               openByDefault={false}
             >
               {Node}

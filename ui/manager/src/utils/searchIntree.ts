@@ -1,43 +1,5 @@
-import { TreeNode, confFieldsEq, treeFormat } from "./recursTree";
+import { confFieldsEq, treeFormat } from "./recursTree";
 import { llngConfig } from "./types";
-
-export function findElementByTitleOrValue(
-  arr: TreeNode[],
-  searchTerm: string,
-  parent?: string
-): TreeNode | undefined {
-  for (const element of arr) {
-    if (element) {
-      if (element.id === parent) {
-        for (const child of element._nodes || []) {
-          if (child.id === searchTerm) {
-            return child;
-          }
-        }
-      }
-      if (element._nodes) {
-        const result =
-          findElementByTitleOrValue(element._nodes, searchTerm, parent) ||
-          (element._nodes_cond
-            ? findElementByTitleOrValue(element._nodes_cond, searchTerm, parent)
-            : undefined);
-        if (result) {
-          return result;
-        }
-      }
-      if (element.cnodes) {
-        const result = findElementByTitleOrValue(
-          element.cnodes,
-          searchTerm,
-          parent
-        );
-        if (result) {
-          return result;
-        }
-      }
-    }
-  }
-}
 
 export function findElementInConf(config: llngConfig, node: treeFormat): any {
   const searchedId = node.id.split(";").at(-1) || "";
