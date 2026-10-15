@@ -29,14 +29,18 @@
   background-color: rgba(251, 192, 45, 0.4);
 }
 
+/* One column on narrow screens, as many as fit on wide ones */
 .grid {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   margin-left: 2vw;
   margin-right: 5vw;
-  grid-gap: 12px;
-  flex-flow: column;
+  gap: 12px;
   padding-top: 14px;
+}
+
+.scrollSentinel {
+  height: 1px;
 }
 
 .top {
