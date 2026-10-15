@@ -54,16 +54,16 @@ sub new {
     $tlsParams{clientkey} ||= $conf->{ldapClientKey}
       if $conf->{ldapClientKey};
     require Authen::SASL if $conf->{ldapClientCert};
-    $self = Net::LDAP->new(
-        \@servers,
+    my %constructor_args = (
         onerror   => undef,
         keepalive => 1,
         %tlsParams,
         ( $conf->{ldapPort}    ? ( port    => $conf->{ldapPort} )    : () ),
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
-        ( $conf->{ldapRaw}     ? ( raw     => qr/$conf->{ldapRaw}/ ) : () ),
+        ( $args->{raw}         ? ( raw     => $args->{raw} )         : () ),
     );
+    $self = Net::LDAP->new( \@servers, %constructor_args );
 
     unless ($self) {
         $portal->logger->error( "LDAP initialization error: " . $@ );
