@@ -465,6 +465,23 @@
          },
          "NewSecondFactorTotp" : {
             "properties" : {
+               "algorithm" : {
+                  "description" : "algorithm",
+                  "enum" : [
+                     "sha1",
+                     "sha256",
+                     "sha512"
+                  ],
+                  "type" : "string"
+               },
+               "digits" : {
+                  "description" : "Number of digits",
+                  "type" : "integer"
+               },
+               "interval" : {
+                  "description" : "The time-step, in seconds",
+                  "type" : "integer"
+               },
                "key" : {
                   "description" : "The BASE32 encoded shared secret",
                   "type" : "string"
@@ -588,7 +605,8 @@
                      "client_secret_post",
                      "client_secret_basic",
                      "client_secret_jwt",
-                     "private_key_jwt"
+                     "private_key_jwt",
+                     "tls_client_auth"
                   ],
                   "type" : "string"
                },
@@ -742,6 +760,19 @@
                   "type" : "string"
                },
                "logoutUrl" : {
+                  "type" : "string"
+               },
+               "mtlsCertIdentifier" : {
+                  "type" : "string"
+               },
+               "mtlsCertIdentifierType" : {
+                  "enum" : [
+                     "",
+                     "DN",
+                     "Email",
+                     "IP",
+                     "URI"
+                  ],
                   "type" : "string"
                },
                "noJwtHeader" : {
@@ -1279,10 +1310,6 @@
                   "type" : "string"
                },
                "forceNameIDFormat" : {
-                  "type" : "boolean"
-               },
-               "forceUTF8" : {
-                  "default" : 1,
                   "type" : "boolean"
                },
                "nameIDFormat" : {

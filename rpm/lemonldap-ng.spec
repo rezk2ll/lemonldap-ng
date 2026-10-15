@@ -599,6 +599,7 @@ fi
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
 %{_mandir}/man1/encryptTotpSecrets*
+%{_mandir}/man1/migrateTotpSecrets*
 %{_mandir}/man1/lemonldap-ng-sessions*
 %{_mandir}/man1/rotateOidcKeys*
 %dir %{_libexecdir}/%{name}
@@ -608,6 +609,7 @@ fi
 %{lm_bindir}/convertSessions
 %{lm_bindir}/convertToHashSessionStorage
 %{lm_bindir}/encryptTotpSecrets
+%{lm_bindir}/migrateTotpSecrets
 %{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata
 %{lm_bindir}/rotateOidcKeys

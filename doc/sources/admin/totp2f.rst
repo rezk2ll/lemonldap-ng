@@ -144,6 +144,11 @@ The *Encrypt TOTP secrets* options only affects *NEW* secrets, meaning that:
 The ``encryptTotpSecrets`` script can be used to encrypt previously registered TOTP
 secrets so that they can be protected as well.
 
+Algorithm parameters
+--------------------
+
+Changing the *Algorithm*, *Digits* and *Interval* parameters will only affect new registrations, and require using the new storage format introduced in LemonLDAP::NG 3.0. If you have enabled TOTP on LemonLDAP::NG 2.X, you need to migrate the TOTP storage format before changing these parameters, as explained in :doc:`The LemonLDAP::NG 3.0 migration guide <upgrade_3_0>`.
+
 Encryption key
 ~~~~~~~~~~~~~~
 
@@ -169,5 +174,16 @@ map it to the \_2fDevices attribute (see
 
 .. code::
 
-   [{"name" : "MyTOTP" , "type" : "TOTP" , "_secret" : "########" , "epoch":"1524078936"}, ...]
+    [
+      {
+        "epoch": "1524078936",
+        "name": "MyTOTP",
+        "type": "TOTP",
+        "_secret": "########",
+        "_hash": "sha1",
+        "_digits": 6,
+        "_interval": 30
+      },
+      ...
+    ]
 

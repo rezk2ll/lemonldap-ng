@@ -2,7 +2,6 @@
 
 package Lemonldap::NG::Manager::Build::OpenApi;
 
-
 use strict;
 use JSON;
 use Lemonldap::NG::Common;
@@ -2152,8 +2151,21 @@ EOF
                         },
                         'name' => {
                             'type'        => 'string',
-                            'description' => 'A description of the device'
-                        }
+                            'description' => 'A description of the device',
+                        },
+                        'interval' => {
+                            'type'        => 'integer',
+                            'description' => 'The time-step, in seconds',
+                        },
+                        'algorithm' => {
+                            'type'        => 'string',
+                            'description' => 'algorithm',
+                            'enum'        => [ 'sha1', 'sha256', 'sha512' ],
+                        },
+                        'digits' => {
+                            'type'        => 'integer',
+                            'description' => 'Number of digits',
+                        },
                     },
                 },
                 'SecondFactor' => {

@@ -96,10 +96,13 @@ sub verify {
         $req,
         $req->userData,
         {
-            _secret => $storable_secret,
-            type    => $self->type,
-            name    => $TOTPName,
-            epoch   => time()
+            _secret   => $storable_secret,
+            _interval => $self->conf->{totp2fInterval},
+            _digits   => $self->conf->{totp2fDigits},
+            _hash     => $self->conf->{totp2fAlgorithm},
+            type      => $self->type,
+            name      => $TOTPName,
+            epoch     => time()
         }
     );
     if ( $res == PE_OK ) {

@@ -14,6 +14,7 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
+                logLevel => 'error',
                 totp2fActivation => 1,
             }
         }
@@ -38,6 +39,9 @@ SKIP: {
                         epoch   => "22222",
                         type    => "TOTP",
                         _secret => $key2,
+                        _hash   => 'sha256',
+                        _digits => 8,
+                        _interval => 20,
                         name    => "MyTOTP2",
                     }
                 ]
@@ -46,7 +50,7 @@ SKIP: {
     );
 
     sub authenticate {
-        my ( $client, $key, $should_succeed ) = @_;
+        my ( $client, $key, $should_succeed, %args ) = @_;
         ok(
             $res = $client->_post(
                 '/',
@@ -58,7 +62,7 @@ SKIP: {
         );
         my ( $host, $url, $query ) =
           expectForm( $res, undef, '/totp2fcheck', 'token' );
-        ok( my $code = getTotp( Convert::Base32::decode_base32($key) ),
+        ok( my $code = getTotp( Convert::Base32::decode_base32($key), %args ),
             'Code' );
         $query =~ s/code=/code=$code/;
         ok(
@@ -82,7 +86,7 @@ SKIP: {
         authenticate( $client, $key1, 1 );
     };
     subtest "Authenticate with second device" => sub {
-        authenticate( $client, $key2, 1 );
+        authenticate( $client, $key2, 1, interval => 20, digits => 8, hash => 'sha256' );
     };
 
     subtest "Authenticate with unknown device" => sub {

@@ -940,6 +940,19 @@
   "required" : [ "key" ],
   "type" : "object",
   "properties" : {
+    "algorithm" : {
+      "type" : "string",
+      "description" : "algorithm",
+      "enum" : [ "sha1", "sha256", "sha512" ]
+    },
+    "digits" : {
+      "type" : "integer",
+      "description" : "Number of digits"
+    },
+    "interval" : {
+      "type" : "integer",
+      "description" : "The time-step, in seconds"
+    },
     "key" : {
       "type" : "string",
       "description" : "The BASE32 encoded shared secret"
@@ -1010,7 +1023,7 @@
     },
     "authMethod" : {
       "type" : "string",
-      "enum" : [ "", "client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt" ]
+      "enum" : [ "", "client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt", "tls_client_auth" ]
     },
     "authRequiredForAuthorize" : {
       "type" : "boolean"
@@ -1097,6 +1110,13 @@
     },
     "logoutUrl" : {
       "type" : "string"
+    },
+    "mtlsCertIdentifier" : {
+      "type" : "string"
+    },
+    "mtlsCertIdentifierType" : {
+      "type" : "string",
+      "enum" : [ "", "DN", "Email", "IP", "URI" ]
     },
     "noJwtHeader" : {
       "type" : "boolean"
@@ -1347,9 +1367,6 @@
       "enum" : [ "", "optional", "ignore" ]
     },
     "forceNameIDFormat" : {
-      "type" : "boolean"
-    },
-    "forceUTF8" : {
       "type" : "boolean"
     },
     "nameIDFormat" : {
