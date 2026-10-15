@@ -314,8 +314,7 @@ subtest "Back-Channel-Logout sid using admin logout of the SSO session" => sub {
             'Create SessionExplorer object' );
         expectOK(
             $se->adminLogout(
-                query => "sessionType=global&sessionId="
-                  . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id )
+                query => "sessionType=global&sessionId=" . id2store($id)
             )
         );
         ok( $lastLogoutToken, 'Back-channel logout sent to RP' );
