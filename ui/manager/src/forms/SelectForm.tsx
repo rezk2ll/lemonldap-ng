@@ -1,6 +1,5 @@
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Tooltip,
@@ -44,11 +43,9 @@ export default function SelectForm({
         </Tooltip>
         <td>
           <FormControl>
-            <InputLabel shrink>{t(fieldName)}</InputLabel>
             <Select
-              labelId={fieldName}
               size="small"
-              label={t(fieldName)}
+              inputProps={{ "aria-label": t(fieldName) }}
               placeholder={t(fieldName)}
               value={currentValue}
               displayEmpty

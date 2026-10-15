@@ -29,17 +29,23 @@ export function Configuration({
   const [tree, setTree] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      if (location.type === "tree") {
-        if (!config.cfgNum) {
-          dispatch(getConfigAsync());
-        }
-        const tree = await getTree();
-        setTree(await tree.json());
-      }
+    // Pages reached directly (reload, shared link) have no config loaded yet
+    if (
+      !metadata.cfgNum &&
+      ["app", "issuer", "catandapp", "tree"].includes(location.type)
+    ) {
+      dispatch(getConfigAsync());
     }
-    fetchData();
-  }, [config, dispatch, location.type]);
+  }, [metadata.cfgNum, dispatch, location.type]);
+
+  // The parameter tree is static: fetch it once, not on every config change
+  useEffect(() => {
+    if (location.type === "tree" && !tree) {
+      getTree()
+        .then((response) => response.json())
+        .then(setTree);
+    }
+  }, [location.type, tree]);
 
   const content = (() => {
     switch (location.type) {

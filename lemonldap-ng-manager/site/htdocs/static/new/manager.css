@@ -51,6 +51,11 @@
   min-height: 56px;
 }
 
+.brandLink {
+  display: block;
+  flex-shrink: 0;
+}
+
 .brandLogo {
   display: block;
   height: 32px;
@@ -319,6 +324,41 @@ textarea {
   padding: 20px;
 }
 
+.box th,
+.box td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.box tr.subsection th {
+  padding-top: 20px;
+  font-size: larger;
+}
+
+/* Key/value tables nested in a parameter row (exported attributes, macros,
+   scopes...): use the whole cell and leave the text inputs room for values */
+.appDesc td > table {
+  width: 100%;
+}
+
+.appDesc td > table .MuiTextField-root {
+  min-width: 9em;
+  width: 100%;
+}
+
+/* Rows holding such a table or a document (XML/JSON, see FileForm): label
+   above, content across the whole width */
+.box > table:has(td > table),
+.box > table:has(textarea[wrap="off"]) {
+  width: 100%;
+}
+
+.box tr:has(> td > table),
+.box tr:has(textarea[wrap="off"]) {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Bottom-right floating action button: out of the top toolbar, so it never
    overlaps the header actions. */
 .saveButton {
@@ -420,7 +460,6 @@ textarea {
 .applications.MuiCardContent-root {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 16px;
   gap: 16px;
   padding: 18px;
 }
@@ -430,7 +469,8 @@ textarea {
   border-radius: 10px !important;
   box-shadow: none !important;
   transition:
-    box-shadow 0.16s ease, border-color 0.16s ease;
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 .appMenuCard:hover {
   border-color: rgba(255, 152, 0, 0.5) !important;
@@ -842,17 +882,19 @@ textarea {
   position: relative;
   flex-direction: row;
   transition:
-    transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
+/* Two rows, so that the card fits a grid column: type chip and name, then
+   the maintenance switch and the actions (.name takes a whole row) */
 .cardInfo {
   display: flex;
-  flex-flow: row;
-  /* Keep the type chip and the name together on the left; the actions are
-     pushed to the right with margin-left:auto on .name */
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 14px;
+  gap: 8px 12px;
 }
 .card:hover {
   transform: translateY(-2px);
@@ -880,13 +922,23 @@ textarea {
 }
 
 .name {
+  flex-basis: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.name .MuiButtonGroup-root {
   margin-left: auto;
-  padding-left: 18px;
-  border-left: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.maintenanceToggle p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
 }
 .menu-item {
   cursor: pointer;
@@ -908,6 +960,12 @@ textarea {
 }
 
 .card .title2 {
+  /* Long hostnames are cut so the card keeps its column width */
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0;
   font-size: 1.05rem;
   font-weight: 600;
@@ -918,6 +976,7 @@ textarea {
 }
 
 .bottomRectangle {
+  flex-shrink: 0;
   height: 22px;
   font-size: 11px;
   font-weight: 700;
@@ -1040,6 +1099,15 @@ textarea {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.issuersCaption {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  margin-right: -12px;
+}
+
 .issuers {
   font-size: 0.95rem;
   display: flex;
@@ -1131,14 +1199,18 @@ textarea {
   background-color: rgba(251, 192, 45, 0.4);
 }
 
+/* One column on narrow screens, as many as fit on wide ones */
 .grid {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   margin-left: 2vw;
   margin-right: 5vw;
-  grid-gap: 12px;
-  flex-flow: column;
+  gap: 12px;
   padding-top: 14px;
+}
+
+.scrollSentinel {
+  height: 1px;
 }
 
 .top {
@@ -1178,6 +1250,97 @@ textarea {
 .title3 {
   font-size: large;
   padding: 15px;
+}
+
+.configChanges {
+  margin-bottom: 16px;
+}
+
+.configChanges ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-height: 40vh;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.configChanges li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.85rem;
+}
+
+.configChanges li:last-child {
+  border-bottom: none;
+}
+
+.configChanges li.added {
+  border-left-color: #2e7d32;
+}
+
+.configChanges li.removed {
+  border-left-color: #c62828;
+}
+
+.configChanges li.changed {
+  border-left-color: #ed6c02;
+}
+
+.configChangePath {
+  color: #334155;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.configChangeValues {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.configChangeValues .before {
+  color: #c62828;
+  text-decoration: line-through;
+}
+
+.configChangeValues .after {
+  color: #2e7d32;
+}
+
+.configChangeValues details {
+  text-decoration: none;
+}
+
+.configChangeValues details summary {
+  cursor: pointer;
+}
+
+.configChangeValues details pre {
+  max-height: 200px;
+  overflow: auto;
+  white-space: pre-wrap;
+  background: #f8fafc;
+  padding: 6px;
+  margin: 4px 0 0;
+}
+
+.configChangeValues .arrow {
+  color: #64748b;
+}
+
+.configChangesEmpty,
+.configChangesMore {
+  color: #64748b;
+  font-style: italic;
 }
 
 /* Configuration app left rail, matching the sessions explorer look

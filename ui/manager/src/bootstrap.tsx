@@ -14,7 +14,6 @@ import React, { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import "./i18n";
 import "./index.css";
-import reportWebVitals from "./reportWebVitals";
 import { installFetchInterceptor } from "./utils/auth";
 
 const theme = createTheme({
@@ -46,7 +45,6 @@ export function mountApp(children: ReactNode) {
         </StyledEngineProvider>
       </ThemeProvider>
     );
-    reportWebVitals();
   };
 
   // psgi.js is loaded by a <script> tag placed before this bundle in the

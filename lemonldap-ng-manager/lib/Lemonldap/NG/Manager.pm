@@ -151,6 +151,12 @@ sub init {
     $self->logger->debug("Default index -> $index");
     $self->defaultRoute( $self->loadedPlugins->[$index]->defaultRoute );
 
+    # The new interface opens on a home page summarizing the enabled modules.
+    # The historical one has none: it keeps the default module page.
+    $self->{defaultTpl} = $self->defaultRoute =~ s/\.html$//r;
+    $self->addRoute( 'home.html' => 'home', ['GET'] );
+    $self->defaultRoute('home.html');
+
     $self->links( [] );
     for ( my $i = 0 ; $i < @links ; $i++ ) {
         next unless ( defined $links[$i] );
@@ -236,6 +242,12 @@ sub betaUi {
     my ( $self, $req ) = @_;
     my $c = $req->cookies->{ +BETAUICOOKIE };
     return ( defined $c and $c eq '1' ) ? 1 : 0;
+}
+
+sub home {
+    my ( $self, $req ) = @_;
+    return $self->sendHtml( $req,
+        $self->betaUi($req) ? 'home' : $self->{defaultTpl} );
 }
 
 sub sendHtml {

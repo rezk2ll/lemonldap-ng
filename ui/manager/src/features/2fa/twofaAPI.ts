@@ -30,7 +30,7 @@ async function toJson(res: Response) {
 
 // The session type is always "persistent" for the 2FA explorer.
 export async function listSfa(query: string): Promise<SfaListResponse> {
-  const res = await fetch(`${base()}sfa/persistent?${query}`, {
+  const res = await fetch(`${base()}2ndfa/persistent?${query}`, {
     credentials: "same-origin",
   });
   return toJson(res);
@@ -40,7 +40,7 @@ export async function getSfaSession(
   sessionId: string
 ): Promise<Record<string, any>> {
   const res = await fetch(
-    `${base()}sfa/persistent/${encodeURIComponent(sessionId)}`,
+    `${base()}2ndfa/persistent/${encodeURIComponent(sessionId)}`,
     { credentials: "same-origin" }
   );
   return toJson(res);
@@ -53,7 +53,7 @@ export async function deleteDevice(
   epoch: string | number
 ): Promise<{ result: number }> {
   const res = await fetch(
-    `${base()}sfa/persistent/${encodeURIComponent(
+    `${base()}2ndfa/persistent/${encodeURIComponent(
       sessionId
     )}?type=${encodeURIComponent(type)}&epoch=${encodeURIComponent(
       String(epoch)

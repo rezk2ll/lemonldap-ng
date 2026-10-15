@@ -74,7 +74,7 @@ function AppCard({
             size="small"
             className={`bottomRectangle type-${type}`}
           />
-          <strong className="title2">
+          <strong className="title2" title={info.name}>
             {info.name} <span> {!rule ? "⚠️" : ""}</span>
           </strong>
           <div className="name">

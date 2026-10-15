@@ -1,6 +1,7 @@
+import { apiUrl } from "./urls";
 export async function sendTestMail(dest: string) {
   try {
-    const response = await fetch("/manager.fcgi/confs//sendTestMail", {
+    const response = await fetch(apiUrl("confs//sendTestMail"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -18,11 +18,14 @@ import {
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import { isModuleEnabled } from "../utils/modules";
 import "./NavBar.css";
+import { staticUrl } from "../utils/urls";
 
 // Each manager section is a separate SPA (separate HTML page + bundle).
 // Navigating between them is a full page load, like the legacy manager.
 // Items without a `target` are placeholders not implemented yet.
+// `target` is the default route of the matching manager module.
 const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   {
     key: "Configuration",
@@ -46,6 +49,11 @@ const NAV_ITEMS: { key: string; icon: ReactNode; target?: string }[] = [
   },
 ];
 
+// Only show the sections whose module is enabled. Enabled modules without a
+// new UI yet (viewer, api, custom) are not shown.
+const enabledNavItems = () =>
+  NAV_ITEMS.filter((item) => item.target && isModuleEnabled(item.target));
+
 // The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 // the temporary Drawer used on narrow screens (< ~950px) to hold the section
 // links, instead of the old wide/narrow persistent left rail. Per-app pages
@@ -64,7 +72,7 @@ function Navbar({
   const partial = htmlName == "partial.html";
 
   const renderNavItems = (closeDrawerOnClick: boolean) =>
-    NAV_ITEMS.map((item) => {
+    enabledNavItems().map((item) => {
       const active = item.target === htmlName;
       return (
         <div
@@ -89,11 +97,17 @@ function Navbar({
     <>
       <AppBar position="sticky" color="transparent" elevation={0} className="topNav">
         <Toolbar className="topNavToolbar" disableGutters>
-          <img
-            className="brandLogo"
-            src={`static/logos/llng-logo-32.png`}
-            alt="LemonLogo"
-          />
+          {/* The logo leads to the home page (manager default route) */}
+          <a
+            className="brandLink"
+            href={partial ? undefined : (window as any).scriptname || "./"}
+          >
+            <img
+              className="brandLogo"
+              src={staticUrl("logos/llng-logo-32.png")}
+              alt="LemonLogo"
+            />
+          </a>
           {!partial && (
             <nav className="navMenu navMenuDesktop">
               {renderNavItems(false)}

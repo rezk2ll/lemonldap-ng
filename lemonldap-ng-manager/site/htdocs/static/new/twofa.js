@@ -4011,18 +4011,18 @@
 	const ClassNameGenerator = createClassNameGenerator();
 	var ClassNameGenerator$1 = ClassNameGenerator;
 
-	function r$1(e) {
+	function r(e) {
 	  var t,
 	    f,
 	    n = "";
 	  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == typeof e) if (Array.isArray(e)) {
 	    var o = e.length;
-	    for (t = 0; t < o; t++) e[t] && (f = r$1(e[t])) && (n && (n += " "), n += f);
+	    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
 	  } else for (f in e) e[f] && (n && (n += " "), n += f);
 	  return n;
 	}
 	function clsx() {
-	  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r$1(e)) && (n && (n += " "), n += t);
+	  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
 	  return n;
 	}
 
@@ -16648,17 +16648,19 @@
 	  if (UNSAFE_KEYS$1.indexOf(v) > -1) return false;
 	  if (v.indexOf("..") > -1) return false;
 	  if (v.indexOf("\\") > -1) return false;
-	  if (/[?#%\s@]/.test(v)) return false;
+	  if (/[?#%:\s]/.test(v)) return false;
 	  if (/[\x00-\x1F\x7F]/.test(v)) return false;
 	  return true;
 	}
 	function isSafeLangUrlSegment(v) {
 	  if (!isSafeUrlSegmentBase(v)) return false;
-	  if (v.indexOf("/") > -1) return false;
+	  if (v.indexOf("/") > -1 || v.indexOf("@") > -1) return false;
 	  return true;
 	}
 	function isSafeNsUrlSegment(v) {
-	  return isSafeUrlSegmentBase(v);
+	  if (!isSafeUrlSegmentBase(v)) return false;
+	  if (v.indexOf("//") > -1) return false;
+	  return true;
 	}
 	const SAFETY_CHECK_BY_KEY = {
 	  lng: isSafeLangUrlSegment,
@@ -16726,11 +16728,11 @@
 	}
 	//#endregion
 	//#region lib/request.js
-	const g$1 = typeof globalThis !== "undefined" ? globalThis : typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : void 0;
+	const g = typeof globalThis !== "undefined" ? globalThis : typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : void 0;
 	let fetchApi;
-	if (typeof fetch === "function") fetchApi = fetch;else if (g$1 && typeof g$1.fetch === "function") fetchApi = g$1.fetch;
-	const XmlHttpRequestApi = hasXMLHttpRequest() && g$1 ? g$1.XMLHttpRequest : void 0;
-	const ActiveXObjectApi = typeof ActiveXObject === "function" && g$1 ? g$1.ActiveXObject : void 0;
+	if (typeof fetch === "function") fetchApi = fetch;else if (g && typeof g.fetch === "function") fetchApi = g.fetch;
+	const XmlHttpRequestApi = hasXMLHttpRequest() && g ? g.XMLHttpRequest : void 0;
+	const ActiveXObjectApi = typeof ActiveXObject === "function" && g ? g.ActiveXObject : void 0;
 	const UNSAFE_KEYS = ["__proto__", "constructor", "prototype"];
 	const addQueryString = (url, params) => {
 	  if (params && typeof params === "object") {
@@ -17386,19 +17388,6 @@
 	    },
 	});
 
-	var reportWebVitals = function (onPerfEntry) {
-	    if (onPerfEntry && onPerfEntry instanceof Function) {
-	        Promise.resolve().then(function () { return webVitals; }).then(function (_a) {
-	            var getCLS = _a.getCLS, getFID = _a.getFID, getFCP = _a.getFCP, getLCP = _a.getLCP, getTTFB = _a.getTTFB;
-	            getCLS(onPerfEntry);
-	            getFID(onPerfEntry);
-	            getFCP(onPerfEntry);
-	            getLCP(onPerfEntry);
-	            getTTFB(onPerfEntry);
-	        });
-	    }
-	};
-
 	/******************************************************************************
 	Copyright (c) Microsoft Corporation.
 
@@ -17636,7 +17625,6 @@
 	    var root = clientExports.createRoot(container);
 	    var renderApp = function () {
 	        root.render(jsxRuntimeExports.jsx(ThemeProvider, { theme: theme, children: jsxRuntimeExports.jsx(StyledEngineProvider, { injectFirst: true, children: jsxRuntimeExports.jsx(React.StrictMode, { children: children }) }) }));
-	        reportWebVitals();
 	    };
 	    // psgi.js is loaded by a <script> tag placed before this bundle in the
 	    // template, so its globals are already set here. It used to be fetched and
@@ -27152,9 +27140,27 @@
 	});
 	var TextField$1 = TextField;
 
+	// Manager modules enabled in lemonldap-ng.ini (enabledModules): psgi.js lists
+	// them in `links`, identified by their default route (e.g. "sessions.html").
+	// Without psgi.js (dev server, tests), every module is considered enabled.
+	function isModuleEnabled(target) {
+	    var links = window.links;
+	    if (!Array.isArray(links))
+	        return true;
+	    return links.some(function (l) { return l.target === target; });
+	}
+
+	// URLs of the manager API and static files, built from the globals defined
+	// by psgi.js: the manager is not always served at the root (e.g.
+	// /manager.psgi/). Both scriptname and staticPrefix end with "/".
+	var staticUrl = function (path) {
+	    return "".concat(window.staticPrefix || "/static/").concat(path);
+	};
+
 	// Each manager section is a separate SPA (separate HTML page + bundle).
 	// Navigating between them is a full page load, like the legacy manager.
 	// Items without a `target` are placeholders not implemented yet.
+	// `target` is the default route of the matching manager module.
 	var NAV_ITEMS = [
 	    {
 	        key: "Configuration",
@@ -27177,6 +27183,11 @@
 	        target: "2ndfa.html",
 	    },
 	];
+	// Only show the sections whose module is enabled. Enabled modules without a
+	// new UI yet (viewer, api, custom) are not shown.
+	var enabledNavItems = function () {
+	    return NAV_ITEMS.filter(function (item) { return item.target && isModuleEnabled(item.target); });
+	};
 	// The global nav lives in a top AppBar; `open`/`toggleNavbar` now only drive
 	// the temporary Drawer used on narrow screens (< ~950px) to hold the section
 	// links, instead of the old wide/narrow persistent left rail. Per-app pages
@@ -27187,7 +27198,7 @@
 	    var t = useTranslation().t;
 	    var partial = htmlName == "partial.html";
 	    var renderNavItems = function (closeDrawerOnClick) {
-	        return NAV_ITEMS.map(function (item) {
+	        return enabledNavItems().map(function (item) {
 	            var active = item.target === htmlName;
 	            return (jsxRuntimeExports.jsxs("div", { className: "navItem" +
 	                    (active ? " active" : "") +
@@ -27199,7 +27210,7 @@
 	                }, children: [item.icon, jsxRuntimeExports.jsx("span", { children: t(item.key) })] }, item.key));
 	        });
 	    };
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("img", { className: "brandLogo", src: "static/logos/llng-logo-32.png", alt: "LemonLogo" }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(AppBar$1, { position: "sticky", color: "transparent", elevation: 0, className: "topNav", children: jsxRuntimeExports.jsxs(Toolbar$1, { className: "topNavToolbar", disableGutters: true, children: [jsxRuntimeExports.jsx("a", { className: "brandLink", href: partial ? undefined : window.scriptname || "./", children: jsxRuntimeExports.jsx("img", { className: "brandLogo", src: staticUrl("logos/llng-logo-32.png"), alt: "LemonLogo" }) }), !partial && (jsxRuntimeExports.jsxs("nav", { className: "navMenu navMenuDesktop", children: [renderNavItems(false), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })), jsxRuntimeExports.jsx("div", { className: "topNavSpacer" }), !partial && (jsxRuntimeExports.jsx(IconButton$1, { className: "navBurger", "aria-label": "open navigation menu", color: "inherit", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(MenuIcon, {}) })), jsxRuntimeExports.jsx(OptionMenu, {})] }) }), !partial && (jsxRuntimeExports.jsxs(Drawer$1, { className: "navDrawerMobile", anchor: "left", open: open, onClose: function () { return toggleNavbar(); }, children: [jsxRuntimeExports.jsx("div", { className: "navDrawerHeader", children: jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "close navigation menu", onClick: function () { return toggleNavbar(); }, children: jsxRuntimeExports.jsx(ChevronLeft, {}) }) }), jsxRuntimeExports.jsxs("nav", { className: "navMenu", children: [renderNavItems(true), jsxRuntimeExports.jsx(LegacyUiSwitch, {})] })] }))] }));
 	}
 	// Leave the beta interface: dropping the cookie sends the user back to the
 	// historical manager, which is served by the same routes.
@@ -27303,7 +27314,7 @@
 	        var res;
 	        return __generator(this, function (_a) {
 	            switch (_a.label) {
-	                case 0: return [4 /*yield*/, fetch("".concat(base(), "sfa/persistent?").concat(query), {
+	                case 0: return [4 /*yield*/, fetch("".concat(base(), "2ndfa/persistent?").concat(query), {
 	                        credentials: "same-origin",
 	                    })];
 	                case 1:
@@ -27318,7 +27329,7 @@
 	        var res;
 	        return __generator(this, function (_a) {
 	            switch (_a.label) {
-	                case 0: return [4 /*yield*/, fetch("".concat(base(), "sfa/persistent/").concat(encodeURIComponent(sessionId)), { credentials: "same-origin" })];
+	                case 0: return [4 /*yield*/, fetch("".concat(base(), "2ndfa/persistent/").concat(encodeURIComponent(sessionId)), { credentials: "same-origin" })];
 	                case 1:
 	                    res = _a.sent();
 	                    return [2 /*return*/, toJson(res)];
@@ -27332,7 +27343,7 @@
 	        var res;
 	        return __generator(this, function (_a) {
 	            switch (_a.label) {
-	                case 0: return [4 /*yield*/, fetch("".concat(base(), "sfa/persistent/").concat(encodeURIComponent(sessionId), "?type=").concat(encodeURIComponent(type), "&epoch=").concat(encodeURIComponent(String(epoch))), { method: "DELETE", credentials: "same-origin" })];
+	                case 0: return [4 /*yield*/, fetch("".concat(base(), "2ndfa/persistent/").concat(encodeURIComponent(sessionId), "?type=").concat(encodeURIComponent(type), "&epoch=").concat(encodeURIComponent(String(epoch))), { method: "DELETE", credentials: "same-origin" })];
 	                case 1:
 	                    res = _a.sent();
 	                    return [2 /*return*/, toJson(res)];
@@ -27515,7 +27526,7 @@
 	// Group/leaf on _session_uid: it is always present on persistent sessions and
 	// is the field the server populates as `userId` in the leaf list (grouping by
 	// _whatToTrace returns userId: null since that field is not always stored).
-	var T$1 = "_session_uid";
+	var T = "_session_uid";
 	var scheme = [
 	    function (t) { return "groupBy=substr(".concat(t, ",1)"); },
 	    function (t, v) { return "".concat(t, "=").concat(v, "*"); },
@@ -27540,9 +27551,9 @@
 	                case 0:
 	                    level = node.level;
 	                    over = node.over;
-	                    query = scheme[level](T$1, node.value);
+	                    query = scheme[level](T, node.value);
 	                    if (node.count != null && node.count > MAX) {
-	                        tmp = overScheme(T$1, node.value, level, over);
+	                        tmp = overScheme(T, node.value, level, over);
 	                        if (tmp) {
 	                            over++;
 	                            query = tmp;
@@ -27725,234 +27736,5 @@
 	}
 
 	mountApp(jsxRuntimeExports.jsx(TwofaApp, { htmlName: "2ndfa.html"  }));
-
-	var e,
-	  t,
-	  n,
-	  i,
-	  r = function (e, t) {
-	    return {
-	      name: e,
-	      value: void 0 === t ? -1 : t,
-	      delta: 0,
-	      entries: [],
-	      id: "v2-".concat(Date.now(), "-").concat(Math.floor(8999999999999 * Math.random()) + 1e12)
-	    };
-	  },
-	  a = function (e, t) {
-	    try {
-	      if (PerformanceObserver.supportedEntryTypes.includes(e)) {
-	        if ("first-input" === e && !("PerformanceEventTiming" in self)) return;
-	        var n = new PerformanceObserver(function (e) {
-	          return e.getEntries().map(t);
-	        });
-	        return n.observe({
-	          type: e,
-	          buffered: !0
-	        }), n;
-	      }
-	    } catch (e) {}
-	  },
-	  o = function (e, t) {
-	    var n = function n(i) {
-	      "pagehide" !== i.type && "hidden" !== document.visibilityState || (e(i), t && (removeEventListener("visibilitychange", n, !0), removeEventListener("pagehide", n, !0)));
-	    };
-	    addEventListener("visibilitychange", n, !0), addEventListener("pagehide", n, !0);
-	  },
-	  u = function (e) {
-	    addEventListener("pageshow", function (t) {
-	      t.persisted && e(t);
-	    }, !0);
-	  },
-	  c = function (e, t, n) {
-	    var i;
-	    return function (r) {
-	      t.value >= 0 && (r || n) && (t.delta = t.value - (i || 0), (t.delta || void 0 === i) && (i = t.value, e(t)));
-	    };
-	  },
-	  f = -1,
-	  s = function () {
-	    return "hidden" === document.visibilityState ? 0 : 1 / 0;
-	  },
-	  m = function () {
-	    o(function (e) {
-	      var t = e.timeStamp;
-	      f = t;
-	    }, !0);
-	  },
-	  v = function () {
-	    return f < 0 && (f = s(), m(), u(function () {
-	      setTimeout(function () {
-	        f = s(), m();
-	      }, 0);
-	    })), {
-	      get firstHiddenTime() {
-	        return f;
-	      }
-	    };
-	  },
-	  d = function (e, t) {
-	    var n,
-	      i = v(),
-	      o = r("FCP"),
-	      f = function (e) {
-	        "first-contentful-paint" === e.name && (m && m.disconnect(), e.startTime < i.firstHiddenTime && (o.value = e.startTime, o.entries.push(e), n(!0)));
-	      },
-	      s = window.performance && performance.getEntriesByName && performance.getEntriesByName("first-contentful-paint")[0],
-	      m = s ? null : a("paint", f);
-	    (s || m) && (n = c(e, o, t), s && f(s), u(function (i) {
-	      o = r("FCP"), n = c(e, o, t), requestAnimationFrame(function () {
-	        requestAnimationFrame(function () {
-	          o.value = performance.now() - i.timeStamp, n(!0);
-	        });
-	      });
-	    }));
-	  },
-	  p = !1,
-	  l = -1,
-	  h = function (e, t) {
-	    p || (d(function (e) {
-	      l = e.value;
-	    }), p = !0);
-	    var n,
-	      i = function (t) {
-	        l > -1 && e(t);
-	      },
-	      f = r("CLS", 0),
-	      s = 0,
-	      m = [],
-	      v = function (e) {
-	        if (!e.hadRecentInput) {
-	          var t = m[0],
-	            i = m[m.length - 1];
-	          s && e.startTime - i.startTime < 1e3 && e.startTime - t.startTime < 5e3 ? (s += e.value, m.push(e)) : (s = e.value, m = [e]), s > f.value && (f.value = s, f.entries = m, n());
-	        }
-	      },
-	      h = a("layout-shift", v);
-	    h && (n = c(i, f, t), o(function () {
-	      h.takeRecords().map(v), n(!0);
-	    }), u(function () {
-	      s = 0, l = -1, f = r("CLS", 0), n = c(i, f, t);
-	    }));
-	  },
-	  T = {
-	    passive: !0,
-	    capture: !0
-	  },
-	  y = new Date(),
-	  g = function (i, r) {
-	    e || (e = r, t = i, n = new Date(), w(removeEventListener), E());
-	  },
-	  E = function () {
-	    if (t >= 0 && t < n - y) {
-	      var r = {
-	        entryType: "first-input",
-	        name: e.type,
-	        target: e.target,
-	        cancelable: e.cancelable,
-	        startTime: e.timeStamp,
-	        processingStart: e.timeStamp + t
-	      };
-	      i.forEach(function (e) {
-	        e(r);
-	      }), i = [];
-	    }
-	  },
-	  S = function (e) {
-	    if (e.cancelable) {
-	      var t = (e.timeStamp > 1e12 ? new Date() : performance.now()) - e.timeStamp;
-	      "pointerdown" == e.type ? function (e, t) {
-	        var n = function () {
-	            g(e, t), r();
-	          },
-	          i = function () {
-	            r();
-	          },
-	          r = function () {
-	            removeEventListener("pointerup", n, T), removeEventListener("pointercancel", i, T);
-	          };
-	        addEventListener("pointerup", n, T), addEventListener("pointercancel", i, T);
-	      }(t, e) : g(t, e);
-	    }
-	  },
-	  w = function (e) {
-	    ["mousedown", "keydown", "touchstart", "pointerdown"].forEach(function (t) {
-	      return e(t, S, T);
-	    });
-	  },
-	  L = function (n, f) {
-	    var s,
-	      m = v(),
-	      d = r("FID"),
-	      p = function (e) {
-	        e.startTime < m.firstHiddenTime && (d.value = e.processingStart - e.startTime, d.entries.push(e), s(!0));
-	      },
-	      l = a("first-input", p);
-	    s = c(n, d, f), l && o(function () {
-	      l.takeRecords().map(p), l.disconnect();
-	    }, !0), l && u(function () {
-	      var a;
-	      d = r("FID"), s = c(n, d, f), i = [], t = -1, e = null, w(addEventListener), a = p, i.push(a), E();
-	    });
-	  },
-	  b = {},
-	  F = function (e, t) {
-	    var n,
-	      i = v(),
-	      f = r("LCP"),
-	      s = function (e) {
-	        var t = e.startTime;
-	        t < i.firstHiddenTime && (f.value = t, f.entries.push(e), n());
-	      },
-	      m = a("largest-contentful-paint", s);
-	    if (m) {
-	      n = c(e, f, t);
-	      var d = function () {
-	        b[f.id] || (m.takeRecords().map(s), m.disconnect(), b[f.id] = !0, n(!0));
-	      };
-	      ["keydown", "click"].forEach(function (e) {
-	        addEventListener(e, d, {
-	          once: !0,
-	          capture: !0
-	        });
-	      }), o(d, !0), u(function (i) {
-	        f = r("LCP"), n = c(e, f, t), requestAnimationFrame(function () {
-	          requestAnimationFrame(function () {
-	            f.value = performance.now() - i.timeStamp, b[f.id] = !0, n(!0);
-	          });
-	        });
-	      });
-	    }
-	  },
-	  P = function (e) {
-	    var t,
-	      n = r("TTFB");
-	    t = function () {
-	      try {
-	        var t = performance.getEntriesByType("navigation")[0] || function () {
-	          var e = performance.timing,
-	            t = {
-	              entryType: "navigation",
-	              startTime: 0
-	            };
-	          for (var n in e) "navigationStart" !== n && "toJSON" !== n && (t[n] = Math.max(e[n] - e.navigationStart, 0));
-	          return t;
-	        }();
-	        if (n.value = n.delta = t.responseStart, n.value < 0 || n.value > performance.now()) return;
-	        n.entries = [t], e(n);
-	      } catch (e) {}
-	    }, "complete" === document.readyState ? setTimeout(t, 0) : addEventListener("load", function () {
-	      return setTimeout(t, 0);
-	    });
-	  };
-
-	var webVitals = /*#__PURE__*/Object.freeze({
-		__proto__: null,
-		getCLS: h,
-		getFCP: d,
-		getFID: L,
-		getLCP: F,
-		getTTFB: P
-	});
 
 })();

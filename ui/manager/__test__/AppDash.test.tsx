@@ -1,15 +1,12 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import { t } from "i18next";
 import { Configuration } from "../src/pages/Configuration";
-import attributes from "../src/static/attributes.json";
 import { renderWithProviders } from "../src/utils/test-utils";
 import {
   changeInput,
   changeRadio,
   changeSelect,
-  changeSelectbis,
   clickOption,
-  clickSubOption,
 } from "../src/utils/test-utils";
 
 global.fetch = vi.fn();
@@ -40,7 +37,7 @@ describe("Application Dashboard", () => {
 
     expect(screen.getAllByText("saml_test")[0]).toBeInTheDocument();
     expect(screen.getByText("SPsaml")).toBeInTheDocument();
-    clickOption("samlSPMetaDataXML");
+    fireEvent.click(await screen.findByTestId("samlSPMetaDataXML"));
 
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -161,36 +158,6 @@ describe("Application Dashboard", () => {
       screen.getByText(location.info.name, { selector: ".title" })
     ).toBeInTheDocument();
   });
-  it('should render ApplicationDashboard for app type "cas" and navigate through data', async () => {
-    const location = {
-      type: "app",
-      info: { name: "cas_test", type: "AppCas" },
-    };
-
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
-
-    fireEvent.click(
-      screen.getByText(t("casAppMetaDataExportedVars"), { selector: ".option" })
-    );
-    expect(
-      screen.getByText(t("casAppMetaDataExportedVars"), { selector: ".title2" })
-    ).toBeInTheDocument();
-    fireEvent.click(
-      screen.getByText(t("casAppMetaDataMacros"), { selector: ".option" })
-    );
-    expect(
-      screen.getByText(t("casAppMetaDataMacros"), { selector: ".title2" })
-    ).toBeInTheDocument();
-
-    fireEvent.click(
-      screen.getByText(t("casAppMetaDataOptions"), { selector: ".option" })
-    );
-    expect(
-      screen.getByText(t("casAppMetaDataOptions"), { selector: ".title2" })
-    ).toBeInTheDocument();
-  });
-
   test('should render ApplicationDashboard for app type "cas" and adds new exported variable', async () => {
     const location = {
       type: "app",
@@ -202,221 +169,187 @@ describe("Application Dashboard", () => {
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
     expect(screen.getByDisplayValue("new")).toBeInTheDocument();
   });
-  test('should render ApplicationDashboard for app type "cas" and adds new macro', async () => {
+  test('should render ApplicationDashboard for app type "cas" from the parameter tree', async () => {
     const location = {
       type: "app",
       info: { name: "cas_test", type: "AppCas" },
     };
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
+    const { store } = renderWithProviders(<Configuration location={location} />);
+    const conf = () =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      store.getState().config.data.config as unknown as Record<string, any>;
+    const row = (param: string) =>
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByText(param, { selector: "th" }).closest("tr")!;
 
-    fireEvent.click(
-      screen.getByText(t("casAppMetaDataMacros"), { selector: ".option" })
-    );
+    fireEvent.click(await screen.findByTestId("casAppMetaDataMacros"));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    expect(screen.getByDisplayValue("new")).toBeInTheDocument();
-  });
-  test('should render ApplicationDashboard for app type "cas" and change datas', async () => {
-    const location = {
-      type: "app",
-      info: { name: "cas_test", type: "AppCas" },
-    };
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
+    expect(conf().casAppMetaDataMacros.cas_test).toEqual({ new: "" });
 
-    fireEvent.click(
-      screen.getByText(t("casAppMetaDataOptions"), { selector: ".option" })
+    fireEvent.click(screen.getByTestId("casAppMetaDataOptions"));
+    expect(screen.getByDisplayValue("https://google.com")).toBeInTheDocument();
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("casAppMetaDataOptionsUserAttribute").querySelector("input")!,
+      { target: { value: "mail" } }
     );
-    fireEvent.click(screen.getByText(t("on")));
-    expect(screen.getByLabelText(t("on"))).toBeChecked();
-    expect(screen.getByLabelText(t("off"))).not.toBeChecked();
+    expect(
+      conf().casAppMetaDataOptions.cas_test.casAppMetaDataOptionsUserAttribute
+    ).toBe("mail");
+    fireEvent.click(
+      within(row("casAppMetaDataOptionsLogout")).getByLabelText(t("on"))
+    );
+    expect(conf().casAppMetaDataOptions.cas_test.casAppMetaDataOptionsLogout).toBe(
+      1
+    );
 
-    const displayNameInput = screen.getAllByText("", {
-      selector: ".MuiInputBase-input",
-    })[0];
-    fireEvent.change(displayNameInput, {
-      target: { value: "New Display Name" },
-    });
-    expect(displayNameInput).toHaveDisplayValue("New Display Name");
-
-    const serviceInput = screen.getAllByText("", {
-      selector: ".MuiInputBase-input",
-    })[1];
-    fireEvent.change(serviceInput, { target: { value: "New Service Value" } });
-    expect(serviceInput).toHaveDisplayValue("New Service Value");
-
-    const authLevelInput = screen.getAllByText("", {
-      selector: ".MuiInputBase-input",
-    })[2];
-    fireEvent.change(authLevelInput, {
-      target: { value: 1 },
-    });
-    expect(authLevelInput).toHaveDisplayValue("1");
+    fireEvent.click(screen.getByTestId("casAppMetaDataOptionsDisplay"));
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("casAppMetaDataOptionsDisplayName").querySelector("input")!,
+      { target: { value: "My CAS app" } }
+    );
+    expect(
+      conf().casAppMetaDataOptions.cas_test.casAppMetaDataOptionsDisplayName
+    ).toBe("My CAS app");
   });
-  test('should render ApplicationDashboard for app type "oidc" and change datas', async () => {
+  test('should render ApplicationDashboard for app type "oidc" from the parameter tree', async () => {
     const location = {
       type: "app",
       info: { name: "oidc_test", type: "RPoidc" },
     };
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
+    const { store } = renderWithProviders(<Configuration location={location} />);
+    const rp = () =>
+      store.getState().config.data.config.oidcRPMetaDataOptions!.oidc_test;
+    const row = (param: string) =>
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByText(param, { selector: "th" }).closest("tr")!;
 
-    clickOption(t("oidcRPMetaDataOptionsBasic"));
+    // Basic options: only the parameters of the tree, labelled once
+    fireEvent.click(await screen.findByTestId("oidcRPMetaDataOptionsBasic"));
+    expect(screen.getAllByText("oidcRPMetaDataOptionsClientID")).toHaveLength(1);
+    expect(screen.queryByText("oidcRPMetaDataOptionsAuthMethod")).toBeNull();
+    fireEvent.change(screen.getByDisplayValue("abab"), {
+      target: { value: "New Client ID" },
+    });
+    expect(rp().oidcRPMetaDataOptionsClientID).toBe("New Client ID");
 
-    changeInput(0, "New Client ID");
-    changeInput(1, "New Client Secret");
-    changeInput(2, "http://new-redirect-uri.com");
-    changeInput(3, "New Auth Method");
-    changeInput(4, "New Display");
-    changeInput(5, "New Icon");
+    // Security: the token endpoint auth method is a select, mTLS is inline
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptions"));
+    fireEvent.click(await screen.findByTestId("security"));
+    expect(screen.getByText("mtls", { selector: "th" })).toBeInTheDocument();
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsAuthMethod").querySelector(".MuiSelect-select")
+    ).not.toBeNull();
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsAuthMethod").querySelector("input")!,
+      { target: { value: "private_key_jwt" } }
+    );
+    expect(rp().oidcRPMetaDataOptionsAuthMethod).toBe("private_key_jwt");
 
-    clickOption("oidcRPMetaDataExportedVars");
-
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New Claim Name");
-    changeInput(1, "New Variable Name");
-    changeSelect(t("string"), 0, "int");
-    expect(screen.getByText(t("int"))).toBeDefined();
-    changeSelect(t("auto"), 0, "always");
-    expect(screen.getByText(t("always"))).toBeDefined();
-    clickOption("oidcRPMetaDataMacros");
-
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-
-    changeInput(0, "New Key");
-    changeInput(1, "New Value");
-
-    const option = screen.getByTestId("oidcOptions");
-    fireEvent.click(option);
-    expect(option).toHaveClass("selected");
-    changeInput(0, "New user");
-    changeInput(1, "additionnal audience ");
-    changeRadio(0);
-    changeRadio(1);
-    changeRadio(2);
-    changeRadio(3);
-    clickSubOption("security");
-    changeRadio(0);
-    changeRadio(1);
-    changeRadio(2);
-    changeRadio(3);
-    changeInput(0, "url");
-    changeInput(1, "level");
-    changeInput(2, "access Rules");
-    changeSelect("HS512", 0, "HS384");
-    expect(screen.getByText(t("HS384"))).toBeDefined();
-    changeSelect("RS256", 0, "EdDSA");
-    expect(screen.getByText(t("EdDSA"))).toBeDefined();
-    changeSelect("JSON", 0, "HS256");
-    expect(screen.getByText(t("HS256"))).toBeDefined();
-
-    clickSubOption("oidcRPMetaDataOptionsScopes");
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New key");
-    changeInput(1, "New Value");
+    // Scopes: two independent hashes stored outside the options
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsScopes"));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[2]);
-    changeInput(2, "New h");
-    changeInput(3, "New e");
-    fireEvent.click(screen.getAllByTestId("RemoveCircleIcon")[0]);
-    fireEvent.click(screen.getAllByTestId("RemoveCircleIcon")[0]);
-    clickSubOption("keys");
+    expect(
+      store.getState().config.data.config.oidcRPMetaDataScopeRules?.oidc_test
+    ).toEqual({ new: "" });
+    expect(
+      store.getState().config.data.config.oidcRPMetaDataOptionsExtraClaims
+        ?.oidc_test
+    ).toBeUndefined();
 
+    // Timeouts are stored as numbers
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsTimeouts"));
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsRtActivity").querySelector("input")!,
+      { target: { value: "30" } }
+    );
+    expect(rp().oidcRPMetaDataOptionsRtActivity).toBe(30);
+
+    // Keys: JWKS document upload
+    fireEvent.click(screen.getByTestId("oidcRpKeys"));
     const file = new File(["file content"], "file.txt", { type: "text/plain" });
-
     fireEvent.change(screen.getByLabelText("upload"), {
       target: { files: [file] },
     });
-    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
-    clickSubOption("oidcRPMetaDataOptionsTimeouts");
-    changeInput(0, 1);
-    changeInput(1, 2);
-    changeInput(2, 3);
-    changeInput(3, 4);
 
-    clickSubOption("logout");
-    changeSelect(
-      t("Front Channel"),
-      0,
-      attributes.oidcRPMetaDataOptionsLogoutType.select[1].k
+    // Display section, missing from the former hard-coded page
+    fireEvent.click(screen.getByTestId("oidcRPMetaDataOptionsDisplay"));
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("oidcRPMetaDataOptionsDisplayName").querySelector("input")!,
+      { target: { value: "My RP" } }
     );
-    expect(
-      screen.getByText(
-        t(attributes.oidcRPMetaDataOptionsLogoutType.select[1].v)
-      )
-    ).toBeDefined();
-    changeInput(0, "url");
-    changeInput(1, "redirection");
-    changeRadio(0);
-    changeRadio(1);
+    expect(rp().oidcRPMetaDataOptionsDisplayName).toBe("My RP");
   });
-  test('should render ApplicationDashboard for app type "saml" and change datas', async () => {
+  test('should render ApplicationDashboard for app type "saml" from the parameter tree', async () => {
     const location = {
       type: "app",
       info: { name: "saml_test", type: "SPsaml" },
     };
-    renderWithProviders(<Configuration location={location} />);
-    await screen.findAllByText("14");
+    const { store } = renderWithProviders(<Configuration location={location} />);
+    const conf = () =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      store.getState().config.data.config as unknown as Record<string, any>;
+    const sp = () => conf().samlSPMetaDataOptions.saml_test;
+    const row = (param: string) =>
+      // eslint-disable-next-line testing-library/no-node-access
+      screen.getByText(param, { selector: "th" }).closest("tr")!;
+    const select = (param: string, value: string) =>
+      fireEvent.change(
+        // eslint-disable-next-line testing-library/no-node-access
+        row(param).querySelector("input")!,
+        { target: { value } }
+      );
 
-    clickOption("samlSPMetaDataXML");
+    // Metadata XML is stored apart from the options
+    fireEvent.click(await screen.findByTestId("samlSPMetaDataXML"));
     const file = new File(["file content"], "file.txt", { type: "text/plain" });
-
     fireEvent.change(screen.getByLabelText("upload"), {
       target: { files: [file] },
     });
-    vi.fn().mockResolvedValue("file content");
     expect(await screen.findByText("file content")).toBeDefined();
-
-    clickOption("samlSPMetaDataExportedAttributes");
-
-    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New Claim Name");
-    changeInput(1, "New Variable Name");
-
-    // changeRadio(0);
-    changeSelect(
-      "Unspecified",
-      0,
-      "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+    expect(conf().samlSPMetaDataXML.saml_test.samlSPMetaDataXML).toBe(
+      "file content"
     );
 
-    expect(screen.getByText(t("URI"))).toBeDefined();
-
-    clickOption("samlSPMetaDataMacros");
+    fireEvent.click(screen.getByTestId("samlSPMetaDataExportedAttributes"));
     fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
-    changeInput(0, "New Key");
-    changeInput(1, "New Value");
+    expect(conf().samlSPMetaDataExportedAttributes.saml_test).toHaveProperty(
+      "new"
+    );
 
-    const option = screen.getByTestId("samlSPMetaDataOptions");
-    fireEvent.click(option);
-    expect(option).toHaveClass("selected");
-    changeSelectbis(0, "email");
-    changeInput(0, "auth");
-    changeInput(1, 2);
-    changeInput(2, 3);
-    changeRadio(0);
-    changeRadio(1);
+    fireEvent.click(screen.getByTestId("samlSPMetaDataMacros"));
+    fireEvent.click(screen.getAllByTestId("AddCircleIcon")[0]);
+    expect(conf().samlSPMetaDataMacros.saml_test).toEqual({ new: "" });
 
-    clickSubOption("samlSPMetaDataOptionsSignature");
-    changeRadio(0);
+    fireEvent.click(screen.getByTestId("samlSPMetaDataOptions"));
+    fireEvent.click(
+      await screen.findByTestId("samlSPMetaDataOptionsAuthnResponse")
+    );
+    fireEvent.change(
+      // eslint-disable-next-line testing-library/no-node-access
+      row("samlSPMetaDataOptionsNotOnOrAfterTimeout").querySelector("input")!,
+      { target: { value: "120" } }
+    );
+    expect(sp().samlSPMetaDataOptionsNotOnOrAfterTimeout).toBe(120);
 
-    changeSelect(t("default"), 0, "RSA_SHA256");
-    expect(screen.getByText(t("RSA SHA256"))).toBeDefined();
-    changeRadio(1);
-    changeRadio(2);
-    changeRadio(3);
+    fireEvent.click(screen.getByTestId("samlSPMetaDataOptionsSignature"));
+    select("samlSPMetaDataOptionsSignatureMethod", "RSA_SHA256");
+    expect(sp().samlSPMetaDataOptionsSignatureMethod).toBe("RSA_SHA256");
 
-    clickSubOption("samlSPMetaDataOptionsSecurity");
-    changeInput(0, "auth");
-    changeInput(1, 2);
-    changeRadio(0);
+    fireEvent.click(screen.getByTestId("samlSPMetaDataOptionsSecurity"));
+    select("samlSPMetaDataOptionsEncryptionMode", "nameid");
+    expect(sp().samlSPMetaDataOptionsEncryptionMode).toBe("nameid");
 
-    changeSelect(t("None"), 0, "nameid");
-    expect(screen.getByText(t("Name ID"))).toBeDefined();
-
-    clickSubOption("samlSPMetaDataOptionsFederation");
-
-    changeSelect(t("keep"), 0, "ignore");
-    expect(screen.getByText(t("ignore"))).toBeDefined();
+    fireEvent.click(screen.getByTestId("samlSPMetaDataOptionsFederation"));
+    select("samlSPMetaDataOptionsFederationOptionalAttributes", "ignore");
+    expect(sp().samlSPMetaDataOptionsFederationOptionalAttributes).toBe(
+      "ignore"
+    );
   });
 });

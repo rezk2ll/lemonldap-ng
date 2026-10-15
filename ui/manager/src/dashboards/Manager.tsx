@@ -1,8 +1,8 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CachedIcon from "@mui/icons-material/Cached";
-import { Button, Divider, Menu, MenuItem, Pagination } from "@mui/material";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { Button, Divider, Menu, MenuItem } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { push } from "redux-first-history";
@@ -17,6 +17,7 @@ import {
   setError,
 } from "../features/config/configSlice";
 import { ruleCAS, ruleOIDC, ruleSAML } from "../utils/rules";
+import { useInfiniteScroll } from "../utils/useInfiniteScroll";
 import "./Manager.css";
 import HomeButton from "../components/HomeButton";
 
@@ -29,7 +30,6 @@ export default function Manager() {
   );
   const [filters, setFilters] = useState({ alpha: false, search: "" });
   const location = useLocation();
-  const [page, setPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,7 +60,7 @@ export default function Manager() {
 
   // Derive the application list from the config as plain data (memoized), so a
   // large configuration is walked once per config/filter change instead of on
-  // every render, and only the visible page is turned into <AppCard> elements
+  // every render, and only the displayed batch is turned into <AppCard> elements
   // below (the rule* validators then run for those cards only).
   type AppItem = {
     key: string;
@@ -111,12 +111,19 @@ export default function Manager() {
   }, [config.data.config]);
 
   const visibleApps = useMemo<AppItem[]>(() => {
-    let r = items.filter((it) => it.key.includes(filters.search));
+    const search = filters.search.toLowerCase();
+    let r = items.filter((it) => it.key.toLowerCase().includes(search));
     if (filters.alpha) {
       r = [...r].sort((a, b) => (a.key > b.key ? 1 : -1));
     }
     return r;
   }, [items, filters.search, filters.alpha]);
+  // Infinite scroll, back to the top when the search or the sort changes
+  const { shown, sentinel, hasMore } = useInfiniteScroll(
+    visibleApps,
+    24,
+    `${filters.search}\0${filters.alpha}`
+  );
 
   const ruleFor = (it: AppItem): boolean =>
     it.type === "SPsaml"
@@ -144,16 +151,6 @@ export default function Manager() {
         </div>
       );
     } else {
-      const pageLimit = 6;
-      const pageNb = Math.ceil(visibleApps.length / pageLimit);
-      const pageItems = visibleApps.slice(
-        (page - 1) * pageLimit,
-        page * pageLimit
-      );
-      const handleChangePage = (event: ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-      };
-
       return (
         <>
           <div className="top">
@@ -178,7 +175,7 @@ export default function Manager() {
           <Issuers />
           <FilterToggle filters={filters} setFilters={setFilters} />
           <div className="grid">
-            {pageItems.map((it) => (
+            {shown.map((it) => (
               <AppCard
                 key={it.key}
                 type={it.type}
@@ -188,18 +185,7 @@ export default function Manager() {
               />
             ))}
           </div>
-          <Pagination
-            sx={{
-              justifyContent: "center",
-              display: "flex",
-              margin: "15px",
-            }}
-            count={pageNb}
-            page={page}
-            onChange={handleChangePage}
-            showFirstButton
-            showLastButton
-          />
+          {hasMore && <div ref={sentinel} className="scrollSentinel" />}
           <Menu
             id="del-menu"
             anchorEl={anchorEl}

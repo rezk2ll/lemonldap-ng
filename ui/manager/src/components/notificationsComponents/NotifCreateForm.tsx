@@ -37,7 +37,7 @@ export function NotifCreateForm({ onCreated }: { onCreated: () => void }) {
         reference,
         condition: condition || undefined,
         date: date || undefined,
-        xml: content,
+        content,
       });
       if (res.result === 1) {
         setFeedback({ severity: "success", message: t("notificationCreated") });

@@ -10,13 +10,15 @@ import {
   TextField,
 } from "@mui/material";
 import { t } from "i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   saveConfigAsync,
   savePartialConfigAsync,
 } from "../features/config/configSlice";
+import { configDiff } from "../utils/configDiff";
 import { ruleOIDC, ruleSAML } from "../utils/rules";
+import { ConfigChanges } from "./ConfigChanges";
 import "./SaveButton.css";
 import { SavePopup } from "./SavePopup";
 export default function SaveButton({
@@ -33,9 +35,16 @@ export default function SaveButton({
   const dispatch = useAppDispatch();
   const config = useAppSelector((state) => state.config);
   const data = useAppSelector((state) => state.config.data.config);
+  const original = useAppSelector((state) => state.config.original);
+  // Only computed while the confirmation dialog is open
+  const changes = useMemo(
+    () => (openConfirm ? configDiff(original, data) : []),
+    [openConfirm, original, data]
+  );
 
   // Rule validation first; a valid config opens the confirmation dialog that
-  // asks for a summary (cfgLog), like the legacy manager, before saving.
+  // lists the pending changes and asks for a summary (cfgLog), like the legacy
+  // manager, before saving.
   const attemptSave = function () {
     let stateOk = true;
     if (data.oidcRPMetaDataOptions) {
@@ -100,11 +109,12 @@ export default function SaveButton({
         open={openConfirm}
         onClose={() => setOpenConfirm(false)}
         fullWidth
-        maxWidth="sm"
+        maxWidth={changes.length ? "md" : "sm"}
       >
         <DialogTitle>{t("savingConfirmation")}</DialogTitle>
         <Divider />
         <DialogContent>
+          <ConfigChanges changes={changes} />
           <TextField
             autoFocus
             fullWidth

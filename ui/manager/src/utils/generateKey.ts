@@ -1,6 +1,7 @@
+import { apiUrl } from "./urls";
 export async function GenerateEcKeys() {
   try {
-    const response = await fetch("/manager.fcgi/confs//newEcKeys", {
+    const response = await fetch(apiUrl("confs//newEcKeys"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +18,7 @@ export async function NewCertificate(password?: string) {
   try {
     const body = password ? JSON.stringify({ password }) : undefined;
 
-    const response = await fetch(`/manager.fcgi/confs//newCertificate`, {
+    const response = await fetch(apiUrl("confs//newCertificate"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

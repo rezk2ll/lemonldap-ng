@@ -19,15 +19,6 @@ module.exports = function (app) {
     })
   );
   app.use(
-    "/manager.fcgi",
-    createProxyMiddleware({
-      target: "http://manager.example.com:19876",
-      changeOrigin: true,
-      logger: console,
-      pathRewrite: { "^/": "/manager.fcgi/" },
-    })
-  );
-  app.use(
     "/partial",
     createProxyMiddleware({
       target: "http://manager.example.com:19876",

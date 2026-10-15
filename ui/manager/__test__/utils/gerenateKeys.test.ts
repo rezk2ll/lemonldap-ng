@@ -12,7 +12,7 @@ describe("GenerateKeys function", () => {
     );
     const result = await NewCertificate("RSA");
 
-    expect(fetch).toHaveBeenCalledWith("/manager.fcgi/confs//newCertificate", {
+    expect(fetch).toHaveBeenCalledWith("/confs//newCertificate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ describe("GenerateKeys function", () => {
     );
     const result = await GenerateEcKeys();
 
-    expect(fetch).toHaveBeenCalledWith("/manager.fcgi/confs//newEcKeys", {
+    expect(fetch).toHaveBeenCalledWith("/confs//newEcKeys", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });

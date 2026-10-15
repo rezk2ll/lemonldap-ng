@@ -20,6 +20,8 @@ export interface ConfigState {
   loading: boolean;
   error: { has: boolean; errorContent: string };
   data: { metadata: MetaData; config: llngConfig };
+  // Configuration as loaded, to show pending changes before saving
+  original?: llngConfig;
   saveResponse?: Record<string, Record<string, Array<Record<string, string>>>>;
 }
 
@@ -832,6 +834,28 @@ const configSlice = createSlice({
         ][action.payload.key];
       }
     },
+    // Set a per-application parameter: config[key][name][option], or the
+    // whole config[key][name] (hashes like macros) when no option is given.
+    updateAppParam(
+      state,
+      action: PayloadAction<{
+        key: string;
+        name: string;
+        option?: string;
+        value: unknown;
+      }>
+    ) {
+      const { key, name, option, value } = action.payload;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const conf = state.data.config as Record<string, any>;
+      conf[key] = conf[key] || {};
+      if (option === undefined) {
+        conf[key][name] = value;
+      } else {
+        conf[key][name] = conf[key][name] || {};
+        conf[key][name][option] = value;
+      }
+    },
     updateOidcMetaDataOptions(
       state,
       action: PayloadAction<{
@@ -1549,6 +1573,7 @@ const configSlice = createSlice({
         (state: ConfigState, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = action.payload;
+          state.original = action.payload.config;
         }
       )
       .addCase(
@@ -1608,6 +1633,7 @@ const configSlice = createSlice({
         (state: ConfigState, action: PayloadAction<any>) => {
           state.loading = false;
           state.data = action.payload;
+          state.original = action.payload.config;
         }
       );
   },
@@ -1666,6 +1692,7 @@ export const {
   updateOidcRPMetaDataExportedVars,
   newOidcRPMetaDataExportedVars,
   delOidcRPMetaDataExportedVars,
+  updateAppParam,
   updateOidcMetaDataOptions,
   delOidcRPMetaDataOptionsExtraClaims,
   newOidcRPMetaDataOptionsExtraClaims,

@@ -144,7 +144,7 @@ describe("Manager homepage", () => {
     fireEvent.click(screen.getByText(t("ok")));
     expect(screen.getByText(t("saveReport"))).toBeDefined();
     expect((fetch as jest.Mock).mock.calls[0][0]).toBe(
-      "/manager.fcgi/confs/raw"
+      "/confs/raw"
     );
     expect(
       JSON.parse((fetch as jest.Mock).mock.calls[0][1].body)

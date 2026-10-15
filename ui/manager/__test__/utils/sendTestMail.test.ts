@@ -8,7 +8,7 @@ it("should send a test mail to the specified destination when called with a vali
   const dest = "test@example.com";
   const response = await sendTestMail(dest);
 
-  expect(fetch).toHaveBeenCalledWith("/manager.fcgi/confs//sendTestMail", {
+  expect(fetch).toHaveBeenCalledWith("/confs//sendTestMail", {
     body: JSON.stringify({ dest }),
     headers: {
       "Content-Type": "application/json",

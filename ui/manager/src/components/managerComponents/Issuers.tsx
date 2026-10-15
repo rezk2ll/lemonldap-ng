@@ -73,6 +73,9 @@ function Issuers() {
   return (
     <>
       <div className="issuersList">
+        {/* These switches enable the issuer modules: without a caption they
+            read like display filters of the application list below. */}
+        <span className="issuersCaption">{t("activeIssuers")}</span>
         <div className="issuers" data-testid="issuer.saml">
           <div>
             <ToggleButton

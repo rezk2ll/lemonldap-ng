@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { HistoryRouter as Router } from "redux-first-history/rr6";
 import "./App.css";
 import { useAppSelector } from "./app/hooks";
@@ -57,6 +57,22 @@ function App({ htmlName }: { htmlName: string }) {
                   />
                 </div>
               )
+            }
+          />
+          {/* The server also serves this page on other paths (e.g. "/" for
+              the default route): redirect to the canonical URL, otherwise no
+              route matches and the page stays empty. */}
+          <Route
+            path="*"
+            element={
+              <Navigate
+                replace
+                to={{
+                  pathname: `/${htmlName}`,
+                  search: location?.search,
+                  hash: location?.hash,
+                }}
+              />
             }
           />
         </Routes>

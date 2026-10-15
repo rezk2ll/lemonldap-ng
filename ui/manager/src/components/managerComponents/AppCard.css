@@ -17,14 +17,14 @@
     border-color 0.16s ease;
 }
 
+/* Two rows, so that the card fits a grid column: type chip and name, then
+   the maintenance switch and the actions (.name takes a whole row) */
 .cardInfo {
   display: flex;
-  flex-flow: row;
-  /* Keep the type chip and the name together on the left; the actions are
-     pushed to the right with margin-left:auto on .name */
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 14px;
+  gap: 8px 12px;
 }
 .card:hover {
   transform: translateY(-2px);
@@ -52,13 +52,23 @@
 }
 
 .name {
+  flex-basis: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.name .MuiButtonGroup-root {
   margin-left: auto;
-  padding-left: 18px;
-  border-left: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.maintenanceToggle p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
 }
 .menu-item {
   cursor: pointer;
@@ -80,6 +90,12 @@
 }
 
 .card .title2 {
+  /* Long hostnames are cut so the card keeps its column width */
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0;
   font-size: 1.05rem;
   font-weight: 600;
@@ -90,6 +106,7 @@
 }
 
 .bottomRectangle {
+  flex-shrink: 0;
   height: 22px;
   font-size: 11px;
   font-weight: 700;

@@ -12,6 +12,10 @@ import attributes from "./src/static/attributes.json";
 import definitions from "./src/static/definitions.json";
 import tree from "./src/static/tree.json";
 setMetadata(attributes, definitions, tree);
+// Same for the per-object parameter trees (application pages)
+import { setStruct } from "./src/utils/ctrees";
+import nstruct from "../../lemonldap-ng-manager/site/htdocs/static/nstruct.json";
+setStruct(nstruct as never);
 
 // Initialize i18n before tests to avoid HTTP backend issues
 import i18n from "i18next";
