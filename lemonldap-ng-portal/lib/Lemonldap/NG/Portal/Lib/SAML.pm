@@ -15,6 +15,7 @@ use Time::Local;           # Convert SAML2 date into timestamp
 use Encode;                # Encode attribute values
 use URI;                   # Get metadata URL path
 use Lemonldap::NG::Portal::Main::Constants qw(
+  URIRE
   PE_OK
   PE_REDIRECT
   PE_LOGOUT_OK
@@ -1491,8 +1492,23 @@ sub extractRelayState {
     return 0 unless $relaystate;
     if ( $relayStateURL and $relaystate =~ /^https?:\/\// ) {
         $self->logger->debug("RelayState is a redirection URL: $relaystate");
-        $req->{urldc} = $relaystate;
-        return 1;
+        my $url = URI->new($relaystate)->as_string;
+
+        # Apply the same checks as for the "url" parameter
+        if (    $url =~ URIRE
+            and !$self->p->checkXSSAttack( 'RelayState', $url )
+            and $self->p->isTrustedUrl($url) )
+        {
+            $req->{urldc} = $url;
+            return 1;
+        }
+        $self->p->auditLog(
+            $req,
+            message => "RelayState contains an untrusted URL: $relaystate",
+            code    => "UNAUTHORIZED_REDIRECT",
+            url     => $relaystate,
+        );
+        return 0;
     }
     else {
 

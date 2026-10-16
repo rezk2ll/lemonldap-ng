@@ -709,6 +709,7 @@ t/30-CDC.t
 t/30-Lazy-Loading.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
+t/30-SAML-IdP-initiated-RelayState-URL.t
 t/30-SAML-Key-Override-IDP.t
 t/30-SAML-Key-Override-SP.t
 t/30-SAML-Macros.t
