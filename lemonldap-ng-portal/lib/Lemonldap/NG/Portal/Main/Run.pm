@@ -1103,33 +1103,94 @@ sub sendHtml {
         );
     }
 
-    # Set authorized URL for POST
-    my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
-    if ( my $url = $req->urldc ) {
-        $self->logger->debug("Required urldc: $url");
-        my $host = $self->cspGetHost($url);
-        if ($host) {
-            $self->logger->debug("Set CSP form-action with urldc: $url");
-            $csp .= " $host";
+    # Set CSP header
+    $self->setContentSecurityPolicy( $req, $res, %args );
+
+    return $res;
+}
+
+sub setContentSecurityPolicy {
+    my ( $self, $req, $res, %args ) = @_;
+
+    # Setup default policies
+    my $cspPolicies = {};
+    for my $policy ( keys %{ $self->csp } ) {
+        for my $source ( keys %{ $self->csp->{$policy} || {} } ) {
+            $cspPolicies->{$policy}->{$source} = 1;
         }
     }
-    my $url = $args{params}->{URL};
-    if ( defined $url ) {
-        $self->logger->debug("Required Params URL: $url");
-        my $host = $self->cspGetHost($url);
-        if ($host) {
-            $self->logger->debug("Set CSP form-action with Params URL: $url");
-            $csp .= " $host";
+
+    # Add context CSP
+    $self->_legacyCspFixup( $req, %args );
+
+    # Request overrides
+    for my $policy ( keys %{ $req->data->{csp} || {} } ) {
+        for my $source ( keys %{ $req->data->{csp}->{$policy} || {} } ) {
+
+            # If there is no configured default policy for this directive,
+            # we need to first copy from the default one that the current
+            # directive inherits from
+            if ( not $cspPolicies->{$policy} and $policy =~ /^(\w+)-src/ ) {
+                my $default_policy = "default-src";
+
+                if ( $policy =~ /^(\w+)-src-(\w+)$/ ) {
+                    my $lookup = "$1-src";
+                    if ( $cspPolicies->{$lookup} ) {
+                        $default_policy = $lookup;
+                    }
+                }
+                elsif ( $policy eq "frame-src" or $policy eq "worker-src" ) {
+                    my $lookup = "child-src";
+                    if ( $cspPolicies->{$lookup} ) {
+                        $default_policy = $lookup;
+                    }
+                }
+                $cspPolicies->{$policy} =
+                  { %{ $cspPolicies->{$default_policy} } };
+            }
+
+            # Merge per-request policy with default one
+            $cspPolicies->{$policy}->{$source} = 1;
         }
     }
-    if ( defined $req->data->{cspFormAction}
-        and ref( $req->data->{cspFormAction} ) eq "HASH" )
+
+    # Deny using portal in frame except if it is required
+    unless ( $req->frame
+        or $self->conf->{portalAntiFrame} == 0
+        or $self->conf->{cspFrameAncestors} )
     {
-        my $request_csp_form_action =
-          join( " ", keys %{ $req->data->{cspFormAction} } );
-        $self->logger->debug( "Set CSP form-action with request URL: "
-              . $request_csp_form_action );
-        $csp .= " " . $request_csp_form_action;
+        push @{ $res->[1] }, 'X-Frame-Options' => 'DENY';
+        $cspPolicies->{'frame-ancestors'} = { "'none'" => 1 };
+    }
+    if ( $self->conf->{cspFrameAncestors} ) {
+        push @{ $res->[1] }, 'X-Frame-Options' => 'ALLOW-FROM '
+          . "$self->{conf}->{cspFrameAncestors};";
+    }
+
+    my $csp = join( ";",
+        map { join( " ", $_, sort keys %{ $cspPolicies->{$_} } ) }
+        sort keys %$cspPolicies );
+
+    push @{ $res->[1] }, 'Content-Security-Policy' => $csp
+      unless $req->data->{dropCsp};
+    $self->logger->debug("Apply following CSP : $csp");
+}
+
+# This methods enriches per-request CSP based on other requests attributes
+# such as target URL or info iframes. Eventually this method should disappear
+# and allowCsp should be used throughout plugins instead
+sub _legacyCspFixup {
+    my ( $self, $req, %args ) = @_;
+
+    if ( $req->urldc ) {
+        $self->logger->debug( "Adding urldc to CSP policy: " . $req->urldc );
+        $req->allowCsp( 'form-action', $req->urldc );
+    }
+
+    if ( defined $args{params}->{URL} ) {
+        $self->logger->debug(
+            "Adding URL tpl param to CSP policy: $args{params}->{URL}");
+        $req->allowCsp( 'form-action', $args{params}->{URL} );
     }
 
     # Set SAML Discovery Protocol in form-action
@@ -1139,46 +1200,18 @@ sub sendHtml {
     {
         $self->logger->debug(
             "Add SAML Discovery Protocol URL in CSP form-action");
-        $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
-    }
-    $csp .= ';';
-
-    # Deny using portal in frame except if it is required
-    unless ( $req->frame
-        or $self->conf->{portalAntiFrame} == 0
-        or $self->conf->{cspFrameAncestors} )
-    {
-        push @{ $res->[1] }, 'X-Frame-Options' => 'DENY';
-        $csp .= "frame-ancestors 'none';";
-    }
-    if ( $self->conf->{cspFrameAncestors} ) {
-        push @{ $res->[1] }, 'X-Frame-Options' => 'ALLOW-FROM '
-          . "$self->{conf}->{cspFrameAncestors};";
-        $csp .= "frame-ancestors $self->{conf}->{cspFrameAncestors};";
+        $req->allowCsp( 'form-action',
+            $self->conf->{samlDiscoveryProtocolURL} );
     }
 
     # Check if frames need to be embedded
-    # FIXME: we should use $req->data->{cspChildSrc} anywhere an iframe is
+    # FIXME: we should use allowCsp anywhere an iframe is
     # created in the code, and remove this
-    my @url;
     if ( $req->info ) {
-        @url = map { s#https?://([^/]+).*#$1#r }
-          ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
+        for my $iframe_url ( $req->info =~ /<iframe.*?src="(.*?)"/sg ) {
+            $req->allowCsp( 'child-src', $iframe_url );
+        }
     }
-
-    # Update child-src header from request data
-    if ( ref( $req->data->{cspChildSrc} ) eq "HASH" ) {
-        push @url, keys %{ $req->data->{cspChildSrc} };
-    }
-    if (@url) {
-        $csp .= join( ' ', 'child-src', @url, "'self'" ) . ';';
-    }
-
-    # Set CSP header
-    push @{ $res->[1] }, 'Content-Security-Policy' => $csp
-      unless $req->data->{dropCsp};
-    $self->logger->debug("Apply following CSP: $csp");
-    return $res;
 }
 
 sub imgok {
@@ -1544,32 +1577,6 @@ sub loadTemplate {
         $tpl->param( %{ $prm{params} } );
     }
     return $tpl->output;
-}
-
-# This method extracts the scheme://host:port part of a URL for use in
-# Content-Security-Polity header
-sub cspGetHost {
-    my ( $self, $url ) = @_;
-    return unless $url;
-    my $uri = $url;
-    unless ( blessed($uri) && $uri->isa("URI") ) {
-        $uri = URI->new($uri);
-    }
-    my $scheme = $uri->scheme || "";
-    if ( $scheme =~ /^https?/ ) {
-        return (
-            $scheme . "://"
-              . (
-                ( $uri->port == $uri->default_port )
-                ? $uri->host
-                : $uri->host_port
-              )
-        );
-    }
-    elsif ($scheme) {
-        return ( $scheme . ":" );
-    }
-    return;
 }
 
 # Method that triggers back-channel logout notifications to federated

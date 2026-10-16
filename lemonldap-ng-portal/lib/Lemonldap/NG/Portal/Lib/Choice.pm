@@ -250,10 +250,8 @@ sub _buildAuthLoop {
                 $self->logger->debug("Displaying authentication choice $_");
 
                 # Default URL
-                $req->data->{cspFormAction} ||= {};
                 if ( defined $url and $url =~ URIRE ) {
-                    my $csp_uri = $self->cspGetHost($url);
-                    $req->data->{cspFormAction}->{$csp_uri} = 1;
+                    $req->allowCsp( 'form-action', $url );
                 }
                 else {
                     $url .= '#';

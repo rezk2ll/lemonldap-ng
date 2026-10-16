@@ -2900,8 +2900,7 @@ sub sendLogoutRequestToProvider {
                 name => $providerName,
             }
         );
-        $req->data->{cspChildSrc}->{ $self->p->cspGetHost( $logout->msg_url ) }
-          = 1;
+        $req->allowCsp( 'child-src', $logout->msg_url );
     }
 
     # HTTP-SOAP
