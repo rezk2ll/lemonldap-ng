@@ -116,7 +116,7 @@ describe("Manager homepage", () => {
       fireEvent.click(switchInput);
     }
 
-    fireEvent.click(screen.getByText(t("doItTogether")));
+    fireEvent.click(screen.getByText(t("fixItNow")));
     changeInput(4, "public");
     changeInput(1, "private");
     changeInput(2, "hash");

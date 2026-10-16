@@ -163,8 +163,8 @@ export function CreationAssistant({
           <>
             <div>
               <span>
-                Basic {appType} application setup, to customize further pls
-                access it wia the manager dashboard
+                Basic {appType} application setup, to customize further,
+                access it via the manager dashboard
               </span>
             </div>
             <div>

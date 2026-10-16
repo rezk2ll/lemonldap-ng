@@ -96,7 +96,7 @@ export function IssuerAssistant({
               {t("ignore")}
             </Button>
             <Button onClick={() => handleNextStep()}>
-              {t("doItTogether")}
+              {t("fixItNow")}
             </Button>
           </ButtonGroup>
         </div>

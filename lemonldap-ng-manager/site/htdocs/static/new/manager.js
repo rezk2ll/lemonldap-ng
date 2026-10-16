@@ -77259,7 +77259,7 @@ Use the data prop if you want to provide your own handlers.`);
 	                                                setPage(page + 1);
 	                                            }
 	                                        }, children: t$1("next") })] }) })] })), ((page === 1 && !(appType === "SPsaml" || appType === "RPoidc")) ||
-	                    (page === 2 && (appType === "SPsaml" || appType === "RPoidc"))) && (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsxs("span", { children: ["Basic ", appType, " application setup, to customize further pls access it wia the manager dashboard"] }) }), jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsx(Button$1, { variant: "outlined", onClick: closeModal, children: "confirm" }) })] }))] }) }));
+	                    (page === 2 && (appType === "SPsaml" || appType === "RPoidc"))) && (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsxs("span", { children: ["Basic ", appType, " application setup, to customize further, access it via the manager dashboard"] }) }), jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsx(Button$1, { variant: "outlined", onClick: closeModal, children: "confirm" }) })] }))] }) }));
 	}
 
 	function AddApp() {
@@ -77542,7 +77542,7 @@ Use the data prop if you want to provide your own handlers.`);
 	                                    console.debug("cancel");
 	                                    onIgnore();
 	                                    setStep(0);
-	                                }, children: t$1("ignore") }), jsxRuntimeExports.jsx(Button$1, { onClick: function () { return handleNextStep(); }, children: t$1("doItTogether") })] })] })), step === 1 && type === "saml" && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: jsxRuntimeExports.jsxs("div", { className: "issuerAssistant", children: [jsxRuntimeExports.jsx("span", { className: "text", children: t$1("samlServicePrivateKeySig") }), jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", multiline: true, variant: "filled", fullWidth: true, "data-testid": "private", rows: 4, className: "formInput", value: newKeysSAML.private || "", onChange: function (e) {
+	                                }, children: t$1("ignore") }), jsxRuntimeExports.jsx(Button$1, { onClick: function () { return handleNextStep(); }, children: t$1("fixItNow") })] })] })), step === 1 && type === "saml" && (jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: jsxRuntimeExports.jsxs("div", { className: "issuerAssistant", children: [jsxRuntimeExports.jsx("span", { className: "text", children: t$1("samlServicePrivateKeySig") }), jsxRuntimeExports.jsx(TextField$1, { size: "small", margin: "normal", multiline: true, variant: "filled", fullWidth: true, "data-testid": "private", rows: 4, className: "formInput", value: newKeysSAML.private || "", onChange: function (e) {
 	                                return setNewKeysSAML(__assign(__assign({}, newKeysSAML), { private: e.target.value }));
 	                            } }), jsxRuntimeExports.jsxs(Button$1, { sx: { margin: "5px" }, component: "label", role: undefined, variant: "contained", tabIndex: -1, startIcon: jsxRuntimeExports.jsx(CloudUploadIcon, {}), children: [t$1("upload"), jsxRuntimeExports.jsx(VisuallyHiddenInput, { type: "file", onChange: function (e) {
 	                                        if (e.target instanceof HTMLInputElement) {

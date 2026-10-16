@@ -170,7 +170,7 @@ describe("IssuerAssistants", () => {
       fireEvent.click(switchInput);
     }
 
-    fireEvent.click(screen.getByText(t("doItTogether")));
+    fireEvent.click(screen.getByText(t("fixItNow")));
     fireEvent.click(screen.getByText(t("newRSAKey")));
     expect(await screen.findByDisplayValue("public")).toBeDefined();
     expect(await screen.findByDisplayValue("hash")).toBeDefined();
@@ -213,13 +213,13 @@ describe("IssuerAssistants", () => {
       })
     );
     // eslint-disable-next-line testing-library/no-node-access
-    fireEvent.click(screen.getByText(t("doItTogether")));
+    fireEvent.click(screen.getByText(t("fixItNow")));
     fireEvent.click(screen.getByText(t("newRSAKey")));
     expect(await screen.findByDisplayValue("public")).toBeDefined();
     expect(await screen.findByDisplayValue("hash")).toBeDefined();
     expect(await screen.findByDisplayValue("private")).toBeDefined();
     fireEvent.click(screen.getByText(t("previous")));
-    fireEvent.click(screen.getByText(t("doItTogether")));
+    fireEvent.click(screen.getByText(t("fixItNow")));
     expect(await screen.findByDisplayValue("public")).toBeDefined();
     expect(await screen.findByDisplayValue("hash")).toBeDefined();
     expect(await screen.findByDisplayValue("private")).toBeDefined();
@@ -251,7 +251,7 @@ describe("IssuerAssistants", () => {
       })
     );
     // eslint-disable-next-line testing-library/no-node-access
-    fireEvent.click(screen.getByText(t("doItTogether")));
+    fireEvent.click(screen.getByText(t("fixItNow")));
     fireEvent.change(
       screen.getAllByText("", {
         selector: ".MuiInputBase-input",
