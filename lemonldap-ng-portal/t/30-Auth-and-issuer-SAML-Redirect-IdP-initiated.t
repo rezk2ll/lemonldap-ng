@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 15;
+my $maintests = 24;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -144,11 +144,75 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     );
     expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
+
+    # URL in RelayState
+    ok(
+        $res = $issuer->_post(
+            '/', IO::String->new('user=russian&password=russian'),
+            length => 29
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    $idpId = expectCookie($res);
+
+    # RelayState URL not allowed: even a trusted URL is ignored
+    $res = idpInitiatedWithRelayState( $idpId, 'http://test1.sp.com/' );
+    expectRedirection( $res, 'http://auth.sp.com/' );
+
+    # RelayState URL allowed
+    $sp =
+      register( 'sp', sub { sp( samlIDPMetaDataOptionsRelayStateURL => 1 ) } );
+
+    # Trusted URL is followed
+    $res = idpInitiatedWithRelayState( $idpId, 'http://test1.sp.com/foo?a=1' );
+    expectRedirection( $res, 'http://test1.sp.com/foo?a=1' );
+
+    # Untrusted URLs are ignored
+    foreach
+      my $url ( 'https://www.evil.com/', 'http://test1.sp.com@www.evil.com/' )
+    {
+        $res = idpInitiatedWithRelayState( $idpId, $url );
+        expectRedirection( $res, 'http://auth.sp.com/' );
+    }
 }
 
 count($maintests);
 clean_sessions();
 done_testing( count() );
+
+# IdP-initiated SSO with a RelayState added to the SAML response
+# (RelayState is not covered by the assertion signature)
+sub idpInitiatedWithRelayState {
+    my ( $idpId, $relayState ) = @_;
+    my $res;
+    ok(
+        $res = $issuer->_get(
+            '/saml/singleSignOn',
+            query  => 'IDPInitiated=1&spConfKey=sp.com',
+            cookie => "lemonldap=$idpId",
+            accept => 'test/html'
+        ),
+        'Query IdP to access to SP'
+    );
+    expectOK($res);
+    my ($url) = $res->[2]->[0] =~
+      m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#;
+    my ($samlResponse) = $res->[2]->[0] =~
+      /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s;
+    my $s =
+      buildForm( { SAMLResponse => $samlResponse, RelayState => $relayState } );
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+        ),
+        'Post SAML response with RelayState to SP'
+    );
+    expectCookie($res);
+    return $res;
+}
 
 sub issuer {
     return LLNG::Manager::Test->new( {
@@ -196,6 +260,7 @@ sub issuer {
 }
 
 sub sp {
+    my (%idpOptions) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                          => $debug,
@@ -205,6 +270,7 @@ sub sp {
                 userDB                            => 'Same',
                 issuerDBSAMLActivation            => 0,
                 restSessionServer                 => 1,
+                trustedDomains                    => 'test1.sp.com',
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
                         mail => "0;mail;;",
@@ -223,6 +289,7 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsAllowLoginFromIDP        => 1,
+                        %idpOptions,
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {
