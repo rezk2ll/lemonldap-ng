@@ -93,12 +93,17 @@ Using an expression such as ``$targetAuthnLevel <= 10`` enables the second
 factor when the application targetAuthnLevel is equal to the required
 authentication level.
 
+.. _sflogintimeout:
+
 Login timeout
 -------------
 
 Allowed time for the user to authenticate using their second factor. By default
-it is set to 2 minutes, but some complex second factor types (TOTP, email...)
-may require more time to be used.
+it is set to 2 minutes, but some complex second factor types (TOTP...) may
+require more time to be used.
+
+Some second factors have their own timeout which replaces this one, such as the
+*Code timeout* of :doc:`E-Mail 2F<mail2f>`.
 
 Registration timeout
 --------------------
