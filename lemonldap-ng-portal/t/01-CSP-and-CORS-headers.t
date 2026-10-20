@@ -3,6 +3,7 @@ use Test::More;
 use strict;
 use utf8;
 use IO::String;
+use Lemonldap::NG::Portal::Main::Request;
 
 require 't/test-lib.pm';
 
@@ -16,6 +17,7 @@ my $client = LLNG::Manager::Test->new( {
             corsAllow_Methods => 'POST',
             cspFormAction     => '*',
             cspFrameAncestors => 'test.example.com',
+            cspScript         => "'self' http://myscript",
             customToTrace     => 'mail',
             checkStateSecret  => 'x',
             checkState        => 1,
@@ -61,6 +63,14 @@ count(1);
 
 checkCorsPolicy($res);
 
+# Test allowCsp and allowCspValue
+push @{ $client->p->beforeAuth }, sub {
+    my ($req) = @_;
+    $req->allowCsp( 'media-src', "http://my.media/url" );
+    $req->allowCspValue( 'script-src-attr', 'unsafe-hashes' );
+    return 0;
+};
+
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
@@ -71,15 +81,32 @@ checkCorsPolicy($res);
 my %headers = @{ $res->[1] };
 
 #CSP
-ok(
-    $headers{'Content-Security-Policy'} =~
-m%default-src 'self';img-src 'self' data:;style-src 'self';font-src 'self';connect-src 'self';script-src 'self';form-action \*;frame-ancestors test\.example\.com;%,
-    'CSP header values found'
-) or print STDERR Dumper( $res->[1] );
+expectCsp(
+    $res,
+    'default-src'     => "'self'",
+    'img-src'         => "'self'",
+    'img-src'         => "data:",
+    'style-src'       => "'self'",
+    'font-src'        => "'self'",
+    'connect-src'     => "'self'",
+    'script-src'      => "'self'",
+    'script-src'      => "http://myscript",
+    'form-action'     => '*',
+    'frame-ancestors' => "test.example.com",
+
+    # media-src inherits from default-src
+    'media-src' => "'self'",
+    'media-src' => "http://my.media",
+
+    # script-src-attr inherits from script-src
+    'script-src-attr' => "http://myscript",
+    'script-src-attr' => "'unsafe-hashes'",
+);
+
 ok( $headers{'X-Frame-Options'} eq 'ALLOW-FROM test.example.com;',
     'X-Frame-Options "ALLOW-FROM" found' )
   or print STDERR Dumper( $res->[1] );
-count(2);
+count(1);
 
 # Try to authenticate with good password
 # --------------------------------------
@@ -155,7 +182,7 @@ subtest "Test cspGetHost function" => sub {
     );
     while ( my $case = shift @cases ) {
         my ( $input, $output ) = @$case;
-        is( $client->p->cspGetHost($input),
+        is( Lemonldap::NG::Portal::Main::Request->cspGetHost($input),
             $output, "Correct CSP source for $input" );
     }
 };

@@ -66,6 +66,7 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
 use Carp                        qw/shortmess/;
+use Plack::Util;
 
 no warnings 'redefine';
 
@@ -439,7 +440,7 @@ m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
             ok( exists $fields{$f}, qq{ Field "$f" is defined} );
             count(1);
         }
-        exceptCspFormOK( $res, $host );
+        expectCspFormOK( $res, $host );
         return ( $host, $uri, $query, $method );
     }
     else {
@@ -638,13 +639,55 @@ sub expectPdata {
     return $pdata;
 }
 
-=head4 exceptCspFormOK( $res, $host )
+=head4 expectCsp( $res, @assertions )
+
+Verify that C<Content-Security-Policy> header contains expected values.
+
+It takes a list of key-value assertions. Where keys are directives and values
+are a single directive value.
+
+For example,
+
+    "script-src" => "'self'",
+    "script-src" => "http://captcha-api.com",
+
+Will check that script-src contains both 'self', and http://captcha-api.com
+
+=cut
+
+sub expectCsp {
+    my ( $res, @assertions ) = @_;
+
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $csp = getHeader( $res, 'Content-Security-Policy' );
+    ok( $csp, "Content-Security-Policy was found" );
+    count(1);
+
+    # Parse CSP
+    my @csp_tokens = split( /\s*;\s*/, $csp );
+    my $hCsp;
+    for my $token (@csp_tokens) {
+        my @directives = split( /\s+/, $token );
+        my $name       = lc( shift @directives );
+        $hCsp->{$name} = [@directives];
+    }
+
+    while ( my ( $name, $value ) = splice @assertions, 0, 2 ) {
+        my @found = grep { $_ eq $value } @{ $hCsp->{$name} || [] };
+        ok( @found > 0, "Found $value in $name CSP" )
+          or diag "Received CSP header: $csp";
+        count(1);
+    }
+}
+
+=head4 expectCspFormOK( $res, $host )
 
 Verify that C<Content-Security-Policy> header allows one to connect to $host.
 
 =cut
 
-sub exceptCspFormOK {
+sub expectCspFormOK {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $host ) = @_;
     return 1 unless ($host);
@@ -732,15 +775,7 @@ Returns value of first header named $hname in $res response.
 
 sub getHeader {
     my ( $resp, $hname ) = @_;
-    my @hdrs = @{ $resp->[1] };
-    my $res  = {};
-    while ( my $name = shift @hdrs ) {
-        my $v = shift @hdrs;
-        if ( $name eq $hname ) {
-            return $v;
-        }
-    }
-    return undef;
+    return scalar Plack::Util::header_get( $resp->[1], $hname );
 }
 
 =head4 getRedirection($res)
