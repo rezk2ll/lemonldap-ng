@@ -65,10 +65,19 @@ Session upgrade through 2FA
 
 |beta| 
 
-If you enable the *Use 2FA for session upgrade* option, second factor will only
-be asked on login if the target application requires an authentication level
-that is strictly higher than the one obtained by the Authentication backend
-(first factor).
+If you enable the *Skip 2FA if authentication level is sufficient* option, an
+additional condition is added to the second factor activation: second factor
+will only be asked if the target application requires an authentication level
+that is strictly higher than the current one (the one obtained by the
+Authentication backend at login).
+
+.. attention::
+
+    This condition applies to every 2FA activation, including the *Force 2FA
+    registration at login* rule. A user who logs in directly on the portal, or
+    on an application that does not require a higher level (see
+    ``vhostAuthnLevel`` or ``oidcRPMetaDataOptionsAuthnLevel``), is not asked
+    for a second factor, even if they registered one.
 
 The session upgrade mechanism will only require the second factor step, instead
 of doing a complete reauthentication.

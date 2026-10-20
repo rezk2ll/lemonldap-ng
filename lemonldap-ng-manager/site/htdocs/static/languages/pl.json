@@ -1317,7 +1317,7 @@
 "sfExtra":"Dodatkowe drugie czynniki",
 "sfLoginTimeout":"Limit czasu logowania",
 "sfManagerRule":"Link do Menedżera wyświetlania",
-"sfOnlyUpgrade":"Użyj 2FA do aktualizacji sesji",
+"sfOnlyUpgrade":"Skip 2FA if authentication level is sufficient",
 "sfOptions":"Opcje globalne",
 "sfRegisterTimeout":"Limit czasu rejestracji",
 "sfRemovedMsg":"Wyświetl komunikat, gdy przeterminowany 2FA został usunięty",

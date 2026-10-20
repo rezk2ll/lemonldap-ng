@@ -18,7 +18,7 @@ they would then not be forced to use 2FA to access the strategic application.
 
 .. tip::
 
-    This use case works if you enable the *Use 2FA for session upgrade* option.
+    This use case works if you enable the *Skip 2FA if authentication level is sufficient* option.
 
 Configuration
 -------------
