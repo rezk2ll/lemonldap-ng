@@ -1317,7 +1317,7 @@
 "sfExtra":"Seconds facteurs additionnels",
 "sfLoginTimeout":"Délai maximum d'authentification",
 "sfManagerRule":"Afficher le lien du Gestionnaire",
-"sfOnlyUpgrade":"Utiliser le SF pour augmenter le niveau d'authentification",
+"sfOnlyUpgrade":"Ne pas demander le SF si le niveau d'authentification suffit",
 "sfOptions":"Options globales",
 "sfRegisterTimeout":"Délai d'expiration de l'enregistrement",
 "sfRemovedMsg":"Afficher un message si un SF expiré est supprimé",

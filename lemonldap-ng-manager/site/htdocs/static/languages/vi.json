@@ -1317,7 +1317,7 @@
 "sfExtra":"Các yếu tố thứ hai bổ sung",
 "sfLoginTimeout":"Hết thời gian đăng nhập",
 "sfManagerRule":"Hiển thị liên kết quản lý",
-"sfOnlyUpgrade":"Sử dụng 2FA để nâng cấp phiên",
+"sfOnlyUpgrade":"Skip 2FA if authentication level is sufficient",
 "sfOptions":"Global options",
 "sfRegisterTimeout":"Hết thời gian đăng ký",
 "sfRemovedMsg":"Hiển thị thông báo nếu 2FA hết hạn bị xóa",

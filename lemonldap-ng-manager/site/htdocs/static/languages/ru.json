@@ -1317,7 +1317,7 @@
 "sfExtra":"Дополнительные вторые факторы",
 "sfLoginTimeout":"Время ожидания выхода",
 "sfManagerRule":"Отображать ссылку на Диспетчер",
-"sfOnlyUpgrade":"Использовать 2FA для обновления сеанса",
+"sfOnlyUpgrade":"Skip 2FA if authentication level is sufficient",
 "sfOptions":"Global options",
 "sfRegisterTimeout":"Время ожидания регистрации",
 "sfRemovedMsg":"Отображать сообщение, если просроченный 2FA удален",

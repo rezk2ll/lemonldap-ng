@@ -4009,7 +4009,8 @@ sub attributes {
             type          => 'bool',
             default       => 0,
             help          => 'secondfactor.html',
-            documentation => 'Only trigger second factor on session upgrade',
+            documentation =>
+              'Skip second factor if the authentication level is sufficient',
         },
         sfManagerRule => {
             type          => 'boolOrExpr',

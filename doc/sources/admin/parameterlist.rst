@@ -4230,8 +4230,8 @@ sfManagerRule
     :Used by portal: yes
 
 sfOnlyUpgrade
-    :Location: General Parameters » Second factors » Global options » Use 2FA for session upgrade
-    :Description: Only trigger second factor on session upgrade
+    :Location: General Parameters » Second factors » Global options » Skip 2FA if authentication level is sufficient
+    :Description: Skip second factor if the authentication level is sufficient
     :Used by portal: yes
 
 sfRegisterTimeout

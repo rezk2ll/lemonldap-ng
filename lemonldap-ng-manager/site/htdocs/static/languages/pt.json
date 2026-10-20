@@ -1317,7 +1317,7 @@
 "sfExtra":"Segundo fatores adicionais",
 "sfLoginTimeout":"Expiração de login",
 "sfManagerRule":"Mostrar link do Gerenciamento",
-"sfOnlyUpgrade":"Usar 2FA para upgrade de sessão",
+"sfOnlyUpgrade":"Skip 2FA if authentication level is sufficient",
 "sfOptions":"Global options",
 "sfRegisterTimeout":"Expiração de cadastro",
 "sfRemovedMsg":"Mostrar uma mensagem se um 2FA expirado é removido",

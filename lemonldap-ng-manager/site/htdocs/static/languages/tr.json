@@ -1317,7 +1317,7 @@
 "sfExtra":"Ek ikinci faktörler",
 "sfLoginTimeout":"Oturum zaman aşımı",
 "sfManagerRule":"Yönetici bağlantısını görüntüle",
-"sfOnlyUpgrade":"Oturum yükseltme için 2FA kullan",
+"sfOnlyUpgrade":"Skip 2FA if authentication level is sufficient",
 "sfOptions":"Global options",
 "sfRegisterTimeout":"Kayıtlanma zaman aşımı",
 "sfRemovedMsg":"Süresi dolan bir 2FA kaldırıldığında bir mesaj göster",
