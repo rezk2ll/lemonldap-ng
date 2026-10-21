@@ -281,4 +281,10 @@ sub bind {
     return 1;
 }
 
+# Return an attribute from an entry and apply transformations if needed
+sub getLdapValue {
+    my ($self, $entry, $attribute) = @_;
+    return $self->ldap->getLdapValue($entry, $attribute);
+}
+
 1;
