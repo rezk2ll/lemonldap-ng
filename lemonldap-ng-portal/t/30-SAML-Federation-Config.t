@@ -106,6 +106,14 @@ SKIP: {
 '0;urn:oasis:names:tc:SAML:attribute:subject-id;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;subject-id'
     );
 
+    ok($saml->spMacros->{'fed:https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp'}->{'schacHomeOrganization'}, "Found per-federation macro");
+    is(
+        $saml->spAttributes->{
+'https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp'
+        }->{'subjectId'},
+'0;urn:oasis:names:tc:SAML:attribute:subject-id;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;subject-id'
+    );
+
     is(
         $saml->spOptions->{'https://www.numistral.fr/shibboleth'}
           ->{samlSPMetaDataOptionsNameIDFormat},
@@ -224,6 +232,11 @@ sub issuer {
                         additionalcn =>
 '1;cn;urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
                     }
+                },
+                samlSPMetaDataMacros => {
+                    fed => {
+                        "schacHomeOrganization" => "'Tardis Inc'",
+                    },
                 },
                 samlOrganizationDisplayName => "IDP",
                 samlOrganizationName        => "IDP",
