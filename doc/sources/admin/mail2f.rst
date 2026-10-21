@@ -38,8 +38,9 @@ Mail second factor".
 -  **Code regex**: The regular expression used to generate one-time
    codes. The default is a 6-digit code.
 -  **Code timeout**: It might take a while for users to open their
-   e-mail account and find the code. Raise this timeout if the default
-   (2 minutes) isn't enough.
+   e-mail account and find the code. This timeout replaces the second
+   factor :ref:`login timeout<sflogintimeout>` for this module and can be
+   higher. If empty, the login timeout is used (2 minutes by default).
 -  **Mail subject**: The subject of the email the user will receive. If
    you leave it blank, it will be looked up in translation files.
 -  **Mail body**: The plain text content of the email the user will

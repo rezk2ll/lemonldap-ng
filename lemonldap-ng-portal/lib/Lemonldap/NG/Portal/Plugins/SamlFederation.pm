@@ -106,6 +106,7 @@ sub get_sp_config_from_placeholders {
                 "Using federation defaults $federationConfKey for $entityID");
             $options =
               $self->conf->{samlSPMetaDataOptions}->{$federationConfKey};
+            $macros = $self->conf->{samlSPMetaDataMacros}->{$federationConfKey};
             $attributes =
               $self->configure_attributes_for_sp( $federationConfKey,
                 $attributes );
