@@ -91,5 +91,49 @@ SKIP: {
     $client->logout($id);
 }
 count($maintests);
+
+# Login values given by a federated provider skip userControl: they must
+# only match literally in the LDAP filter
+my $ldap = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel       => 'error',
+            authentication => 'LDAP',
+            userDB         => 'Same',
+            ldapServer     => 'ldap://127.0.0.1:1',
+            ldapBase       => 'ou=users,dc=example,dc=com',
+            AuthLDAPFilter =>
+              '(&(|(uid=$user)(mail=$user))(objectClass=inetOrgPerson))',
+            mailLDAPFilter => '(&(mail=$mail)(o=$o))',
+        }
+    }
+)->p->_userDB;
+subtest 'Values are escaped in LDAP filters' => sub {
+    is(
+        $ldap->filter->( { user => 'x)(uid=dwho' } ),
+        '(&(|(uid=x\29\28uid=dwho)(mail=x\29\28uid=dwho))'
+          . '(objectClass=inetOrgPerson))',
+        'Parentheses are escaped'
+    );
+    is(
+        $ldap->filter->( { user => 'd*\\' } ),
+        '(&(|(uid=d\2a\5c)(mail=d\2a\5c))(objectClass=inetOrgPerson))',
+        'Wildcard and backslash are escaped'
+    );
+    is(
+        $ldap->filter->( { user => 'dwho@badwolf.org' } ),
+        '(&(|(uid=dwho@badwolf.org)(mail=dwho@badwolf.org))'
+          . '(objectClass=inetOrgPerson))',
+        'Plain value is unchanged'
+    );
+    is(
+        $ldap->mailFilter->(
+            { user => '*', sessionInfo => { o => 'a)(o=*' } }
+        ),
+        '(&(mail=\2a)(o=a\29\28o=\2a))',
+        'Mail and session values are escaped'
+    );
+};
+count(1);
+
 clean_sessions();
 done_testing( count() );
