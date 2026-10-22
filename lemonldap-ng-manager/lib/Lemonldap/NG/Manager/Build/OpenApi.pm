@@ -865,6 +865,12 @@ EOF
                 'put' => {
                     'tags'        => ['oidcop'],
                     'summary'     => 'Replaces an OpenID Connect Provider',
+                    'description' => <<'EOF'
+Options left out get their default value. If `exportedVars` is given, it
+replaces the existing claims, otherwise the default claims are used (on
+creation, given claims are added to the default ones).
+EOF
+                    ,
                     'operationId' => 'replaceOidcOp',
                     'parameters'  => [ {
                             'name'        => 'confKey',

@@ -15,7 +15,7 @@ extends 'Lemonldap::NG::Manager::Api::Common';
 sub getOidcOpByConfKey {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->param('confKey')
+    my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug("[API] OIDC OP $confKey configuration requested");
@@ -36,9 +36,9 @@ sub findOidcOpByConfKey {
     my ( $self, $req ) = @_;
 
     my $pattern = (
-        defined $req->param('uPattern')
-        ? $req->param('uPattern')
-        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
+        defined $req->params('uPattern')
+        ? $req->params('uPattern')
+        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -94,9 +94,9 @@ sub addOidcOp {
         409
     ) if ( defined $self->_getOidcOpByConfKey( $conf, $add->{confKey} ) );
 
-    my $res = $self->_pushOidcOp( $req, $conf, $add->{confKey}, $add, 1 );
+    my $res = $self->_pushOidcOp( $req, $conf, $add->{confKey}, $add, 1, 1 );
 
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, $res->{code} || 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse(
@@ -108,7 +108,7 @@ sub addOidcOp {
 
 sub updateOidcOp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->param('confKey')
+    my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -128,7 +128,7 @@ sub updateOidcOp {
 
     my $res = $self->_pushOidcOp( $req, $conf, $confKey, $update, 0 );
 
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, $res->{code} || 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
@@ -136,7 +136,7 @@ sub updateOidcOp {
 
 sub replaceOidcOp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->param('confKey')
+    my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -158,7 +158,7 @@ sub replaceOidcOp {
       unless ( defined $self->_getOidcOpByConfKey( $conf, $confKey ) );
 
     my $res = $self->_pushOidcOp( $req, $conf, $confKey, $replace, 1 );
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, $res->{code} || 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
@@ -166,7 +166,7 @@ sub replaceOidcOp {
 
 sub deleteOidcOp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->param('confKey')
+    my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration
@@ -182,7 +182,9 @@ sub deleteOidcOp {
     delete $conf->{oidcOPMetaDataExportedVars}->{$confKey};
 
     # Save configuration
-    $self->_saveApplyConf( $req, $conf );
+    my $s = $self->_saveApplyConf( $req, $conf );
+    return $self->sendError( $req, "Unable to save configuration ($s)", 500 )
+      unless ( $s > 0 );
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -214,7 +216,7 @@ sub _getOidcOpByConfKey {
 }
 
 sub _pushOidcOp {
-    my ( $self, $req, $conf, $confKey, $push, $replace ) = @_;
+    my ( $self, $req, $conf, $confKey, $push, $replace, $new ) = @_;
 
     # The portal reads the provider's discovery document and JWKS from these
     # JSON strings
@@ -232,13 +234,17 @@ sub _pushOidcOp {
     if ($replace) {
         $conf->{oidcOPMetaDataOptions}->{$confKey} = {};
 
-        # Same default claims as a provider created in the manager
-        $conf->{oidcOPMetaDataExportedVars}->{$confKey} = {
+        # A new provider gets the same default claims as one created in the
+        # manager; on replace, claims given in the request replace them
+        $conf->{oidcOPMetaDataExportedVars}->{$confKey} =
+            ( defined $push->{exportedVars} and !$new )
+          ? {}
+          : {
             %{
                 Lemonldap::NG::Manager::Build::Attributes::attributes()
                   ->{oidcOPMetaDataExportedVars}->{default}
             }
-        };
+          };
         delete $conf->{oidcOPMetaDataJWKS}->{$confKey};
         $translatedOptions = $self->_getDefaultValues('oidcOPMetaDataNode');
     }
@@ -327,7 +333,13 @@ sub _pushOidcOp {
     }
 
     # Save configuration
-    $self->_saveApplyConf( $req, $conf, $confKey );
+    my $s = $self->_saveApplyConf( $req, $conf, $confKey );
+    return {
+        res  => 'ko',
+        code => 500,
+        msg  => "Unable to save configuration ($s)",
+      }
+      unless ( $s > 0 );
 
     return { res => 'ok' };
 }

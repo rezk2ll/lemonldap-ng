@@ -15794,7 +15794,10 @@ except ApiException as e:
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">Options left out get their default value. If &#x60;exportedVars&#x60; is given, it
+replaces the existing claims, otherwise the default claims are used (on
+creation, given claims are added to the default ones).
+</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/providers/oidc/op/{confKey}</span></code></pre>

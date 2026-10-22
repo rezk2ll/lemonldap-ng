@@ -661,6 +661,20 @@ checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/cn',  'name' );
 checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/uid', 'sub' );
 checkGet( $test, 'oidc/op', 'myOidcOp1', 'jwks',             '_undef' );
 
+$test = "OidcOp - Replace should only keep the given exportedVars";
+checkReplace(
+    $test,
+    'oidc/op',
+    'myOidcOp1',
+    {
+        metadata     => $oidcOp->{metadata},
+        exportedVars => { mail => 'email' },
+    }
+);
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/mail', 'email' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/cn',   '_missing' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/uid',  '_missing' );
+
 $test = "OidcOp - Replace should fail without metadata";
 checkReplaceWithInvalidAttribute( $test, 'oidc/op', 'myOidcOp1',
     { options => {} } );

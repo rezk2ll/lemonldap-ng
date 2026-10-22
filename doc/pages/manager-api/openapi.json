@@ -2653,6 +2653,7 @@
             ]
          },
          "put" : {
+            "description" : "Options left out get their default value. If `exportedVars` is given, it\nreplaces the existing claims, otherwise the default claims are used (on\ncreation, given claims are added to the default ones).\n",
             "operationId" : "replaceOidcOp",
             "parameters" : [
                {
