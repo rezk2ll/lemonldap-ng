@@ -47,6 +47,8 @@ Inside this jail, you can access to:
   * unicode2iso_
   * unicode2isoSafe_
   * varIsInUri_
+  * bin2guid_
+  * guid2bin_
 
 
 .. tip::
@@ -94,7 +96,7 @@ The date format corresponds to LDAP date syntax, for example for the 1st of Marc
 
    20090301000000Z
 
-The date may end with a differential timezone, 
+The date may end with a differential timezone,
 for example for the 1st of March 2009 (+0100):
 
 ::
@@ -203,7 +205,7 @@ The date format is the LDAP date syntax, for example for the 1st March
 
     20090301000000Z
 
-The date may end with a differential timezone that is interpreted to 
+The date may end with a differential timezone that is interpreted to
 adjust the epoch time, for example for the 1st March 2009 (+0100):
 
 ::
@@ -532,3 +534,34 @@ Simple usage example:
 ::
 
    unicode2isoSafe($name)
+
+bin2guid
+~~~~~~~~
+
+This function convert a binary value representing a GUID to a textual
+representation
+
+Function parameter:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   bin2guid($binvalue)
+
+guid2bin
+~~~~~~~~
+
+This function convert a textual GUID representation to a binary value
+
+Function parameter:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   guid2bin($objectGuid)

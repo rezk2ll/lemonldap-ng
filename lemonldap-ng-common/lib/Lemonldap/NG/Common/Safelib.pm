@@ -20,7 +20,7 @@ our $VERSION = '2.23.0';
 # Note that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid &inDomain_internal)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid &inDomain_internal &guid2bin &bin2guid)
   ];
 
 ## @function boolean ipInSubnet(string ip, string network, ... )
@@ -355,6 +355,47 @@ sub inDomain_internal {
     my ( $host, $domain ) = @_;
     my $res = $host =~ /(?:^|\.)\Q$domain\E$/i;
     return $res;
+}
+
+## @function boolean bin2guid(binary value)
+# Function to convert a raw guid value to text
+# @param $binvalue big-endian encoded GUID value
+# @return text representation
+sub bin2guid {
+    my ($binvalue) = @_;
+    if ( length($binvalue) == 16 ) {
+        return sprintf(
+            "%08x-%04x-%04x-%s-%s",
+            unpack( "Vvv", $binvalue ),
+            unpack( "H4",  substr( $binvalue, 8,  2 ) ),
+            unpack( "H12", substr( $binvalue, 10, 6 ) )
+        );
+    }
+    return;
+}
+
+## @function boolean guid2bin(string value)
+# Function to convert a text GUID value to binary
+# @param $guidvalue text representation of GUID value
+# @return binary representation
+sub guid2bin {
+    my ($guidvalue) = @_;
+
+    return
+      unless defined $guidvalue
+      and $guidvalue =~ /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
+
+    if ( length($guidvalue) == 36 ) {
+        $guidvalue =~ s/-//g;
+
+        return
+            pack( "V", hex( substr( $guidvalue, 0, 8 ) ) )
+          . pack( "v",   hex( substr( $guidvalue, 8,  4 ) ) )
+          . pack( "v",   hex( substr( $guidvalue, 12, 4 ) ) )
+          . pack( "H4",  substr( $guidvalue, 16, 4 ) )
+          . pack( "H12", substr( $guidvalue, 20, 12 ) );
+    }
+    return;
 }
 
 1;

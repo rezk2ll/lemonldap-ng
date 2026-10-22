@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 20;
+use Test::More tests => 27;
 require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
@@ -130,3 +130,36 @@ is(
     "xj4bnp4pahh6uqkbidpf3lrceoyagyndsylxvhfucd7wd4qacwwq",
     "subjectid works as expected"
 );
+
+$sub  = "sub { return(bin2guid(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'bin2guid extended function is defined'
+);
+is(
+    $code->( pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ) ),
+    "8d1f2ab8-11c1-45ac-be3b-ce4f62767504",
+    "bin2guid works as expected"
+);
+is( $code->( pack( 'H*', 'b82a1f8dc111ac45be3bce4f627675' ) ),
+    undef, "bin2guid fails on invalid input" );
+
+$sub  = "sub { return(guid2bin(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'guid2bin extended function is defined'
+);
+is(
+    $code->("8d1f2ab8-11c1-45ac-be3b-ce4f62767504"),
+    pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ),
+    "guid2bin works as expected"
+);
+is(
+    $code->("8D1F2AB8-11C1-45AC-BE3B-CE4F62767504"),
+    pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ),
+    "guid2bin works as expected"
+);
+is( $code->("8d1f2ab8-11c1-45ac-be3b-ce4f627504"),
+    undef, "guid2bin fails on invalid input" );
