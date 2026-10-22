@@ -113,9 +113,14 @@ sub diff {
 sub appListDiff {
     my ( $self, @conf ) = @_;
     my @res;
-    my @keys = (
-        [ sort grep { $_ !~ /^(?:catname|type|order)$/ } keys %{ $conf[0] } ],
-        [ sort grep { $_ !~ /^(?:catname|type|order)$/ } keys %{ $conf[1] } ]
+    my @keys = ( [
+            sort grep { $_ !~ /^(?:catname|type|options|order)$/ }
+              keys %{ $conf[0] }
+        ],
+        [
+            sort grep { $_ !~ /^(?:catname|type|options|order)$/ }
+              keys %{ $conf[1] }
+        ]
     );
     while ( my $key = shift @{ $keys[0] } ) {
 
@@ -135,13 +140,21 @@ sub appListDiff {
 
             # Same category found, checking for subnodes
             if ( defined $found ) {
-                my @tmp = appListDiff(
-                    $self,
-                    $conf[0]->{$key},
-                    $conf[1]->{ $keys[1]->[$found] }
-                );
+                my @cats =
+                  ( $conf[0]->{$key}, $conf[1]->{ $keys[1]->[$found] } );
+                my @tmp = appListDiff( $self, @cats );
                 for ( my $i = 0 ; $i < @tmp ; $i++ ) {
                     $res[$i]->{$cat} = $tmp[$i] if ( $tmp[$i] );
+                }
+
+                # and for translation key
+                my @tr = map {
+                    ref $_->{options} ? $_->{options}->{translation} : undef
+                } @cats;
+                unless ( ( $tr[0] // '' ) eq ( $tr[1] // '' ) ) {
+                    for ( my $i = 0 ; $i < 2 ; $i++ ) {
+                        $res[$i]->{$cat}->{options}->{translation} = $tr[$i];
+                    }
                 }
 
                 $keys[1] = \@newK;
@@ -203,12 +216,15 @@ sub _copyAppList {
     my ( $self, $conf ) = @_;
     my %res;
     if ( $conf->{type} eq 'category' ) {
-        foreach ( grep { $_ !~ /^(?:catname|type|order)$/ } keys %$conf ) {
+        foreach ( grep { $_ !~ /^(?:catname|type|options|order)$/ }
+            keys %$conf )
+        {
             my @tmp = _copyAppList( $self, $conf->{$_} );
             $res{ $tmp[0] } = $tmp[1];
         }
         $res{type}    = 'category';
         $res{catname} = $conf->{catname};
+        $res{options} = $conf->{options} if ( $conf->{options} );
         return $conf->{catname} => \%res;
     }
     else {

@@ -129,10 +129,10 @@
             <TMPL_IF NAME="category">
             <!-- Category -->
 
-              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname">" id="sort_<TMPL_VAR NAME="__counter__">" >
+              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" name="<TMPL_VAR NAME="catname" ESCAPE=HTML>" id="sort_<TMPL_VAR NAME="__counter__">" >
 
                 <div class="card-header text-white bg-secondary">
-                <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
+                <h4 class="catname card-title"><TMPL_IF NAME="cattr"><span trspan="<TMPL_VAR NAME="cattr">"><TMPL_VAR NAME="catname"></span><TMPL_ELSE><TMPL_VAR NAME="catname"></TMPL_IF><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
                 </div>
 
                   <TMPL_IF applications>
@@ -145,7 +145,7 @@
                       <!-- Application -->
                       <div class="col-md-4">
                       <div class="application <TMPL_VAR NAME="appid"> card">
-                        <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="apptip">" >
+                        <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="apptip" ESCAPE=HTML>"<TMPL_IF NAME="apptiptr"> trattribute="title:<TMPL_VAR NAME="apptiptr">"</TMPL_IF>>
 
                         <div class="card-body">
                         <div class="row">
@@ -167,13 +167,13 @@
 
                         <!-- Name and link (mandatory) -->
                         <h5 class="appname <TMPL_VAR NAME="appid"> card-title">
-                          <TMPL_VAR NAME="appname">
+                          <TMPL_IF NAME="apptr"><span trspan="<TMPL_VAR NAME="apptr">"><TMPL_VAR NAME="appname"></span><TMPL_ELSE><TMPL_VAR NAME="appname"></TMPL_IF>
                         </h5>
 
                         <!-- Description (optional) -->
                         <TMPL_IF NAME="appdesc">
                           <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted">
-                            <TMPL_VAR NAME="appdesc">
+                            <TMPL_IF NAME="appdesctr"><span trspan="<TMPL_VAR NAME="appdesctr">"><TMPL_VAR NAME="appdesc"></span><TMPL_ELSE><TMPL_VAR NAME="appdesc"></TMPL_IF>
                           </p>
                         </TMPL_IF>
 

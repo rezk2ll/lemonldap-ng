@@ -430,6 +430,16 @@ You can use the ``trspan`` HTML attribute to replace the content of a tag by an 
 
     <span trspan="myMessage">This will be replaced by the translation of myMessage</span>
 
+Arguments can be given after the message key, separated by commas. Each
+``%s`` of the translation is replaced by the next argument::
+
+    <span trspan="pwdWillExpire,3,12,30,0"></span>
+
+.. versionchanged:: 2.23.5
+
+    Arguments are now HTML-escaped. Without translation, the content of
+    the tag is kept, or the key is displayed as text if the tag is empty.
+
 
 .. versionadded:: 2.0.16
 

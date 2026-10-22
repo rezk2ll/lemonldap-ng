@@ -228,6 +228,10 @@ sub _getMenuCatByConfKey {
     $menuCat->{order} = $conf->{applicationList}->{$confKey}->{order}
       if ( defined $conf->{applicationList}->{$confKey}->{order} );
 
+    my $options = $conf->{applicationList}->{$confKey}->{options};
+    $menuCat->{translation} = $options->{translation}
+      if ( ref $options and defined $options->{translation} );
+
     return $menuCat;
 }
 
@@ -244,6 +248,17 @@ sub _pushMenuCat {
 
     $conf->{applicationList}->{$confKey}->{catname} = $push->{catname}
       if ( defined $push->{catname} );
+
+    if ( exists $push->{translation} ) {
+        if ( defined $push->{translation} and length $push->{translation} ) {
+            $conf->{applicationList}->{$confKey}->{options}->{translation} =
+              $push->{translation};
+        }
+        elsif ( ref $conf->{applicationList}->{$confKey}->{options} ) {
+            delete $conf->{applicationList}->{$confKey}->{options}
+              ->{translation};
+        }
+    }
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {

@@ -366,6 +366,15 @@ checkUpdate( $test, 'cat', 'mycat1', $cat1 );
 checkGet( $test, 'cat', 'mycat1', 'catname', 'My Cat 1' );
 checkGet( $test, 'cat', 'mycat1', 'order',   3 );
 
+$test = "Cat - Update should set the translation key";
+checkUpdate( $test, 'cat', 'mycat1', { translation => 'myCat1' } );
+checkGet( $test, 'cat', 'mycat1', 'translation', 'myCat1' );
+checkGet( $test, 'cat', 'mycat1', 'catname',     'My Cat 1' );
+
+$test = "Cat - Update should fail on invalid translation key";
+check400( $test,
+    update( $test, 'cat', 'mycat1', { translation => 'my cat' } ) );
+
 $test = "Cat - Update should fail if confKey not found";
 $cat1->{confKey} = 'mycat3';
 checkUpdateNotFound( $test, 'cat', 'mycat3', $cat1 );
