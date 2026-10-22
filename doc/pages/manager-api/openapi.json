@@ -86,6 +86,19 @@
             },
             "description" : "Return a list of Menu Categories"
          },
+         "ManyOidcOp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/OidcOp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of OpenID Connect Providers"
+         },
          "ManyOidcRp" : {
             "content" : {
                "application/json" : {
@@ -154,6 +167,16 @@
                }
             },
             "description" : "Return a Menu Category"
+         },
+         "OneOidcOp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/OidcOp"
+                  }
+               }
+            },
+            "description" : "Return an OpenID Connect Provider"
          },
          "OneOidcRp" : {
             "content" : {
@@ -477,6 +500,245 @@
             "required" : [
                "key"
             ],
+            "type" : "object"
+         },
+         "OidcOp" : {
+            "properties" : {
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "exportedVars" : {
+                  "$ref" : "#/components/schemas/OidcOpExportedVars"
+               },
+               "jwks" : {
+                  "$ref" : "#/components/schemas/OidcOpJwks"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/OidcOpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOpOptions"
+               }
+            },
+            "required" : [
+               "confKey",
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "OidcOpExportedVars" : {
+            "example" : {
+               "mail" : "email",
+               "uid" : "sub"
+            },
+            "type" : "object"
+         },
+         "OidcOpJwks" : {
+            "description" : "JWKS of the provider, as a JSON string",
+            "example" : "{\"keys\":[]}",
+            "type" : "string"
+         },
+         "OidcOpMetadata" : {
+            "description" : "Discovery document of the provider (/.well-known/openid-configuration), as a JSON string",
+            "example" : "{\"issuer\":\"https://op.example.com\",\"authorization_endpoint\":\"https://op.example.com/authorize\",\"token_endpoint\":\"https://op.example.com/token\",\"jwks_uri\":\"https://op.example.com/jwks\"}",
+            "type" : "string"
+         },
+         "OidcOpOptions" : {
+            "properties" : {
+               "IDTokenMaxAge" : {
+                  "default" : 30,
+                  "type" : "integer"
+               },
+               "acrValues" : {
+                  "type" : "string"
+               },
+               "authEndpointExtraParams" : {
+                  "default" : {},
+                  "type" : "object"
+               },
+               "authnEndpointAuthMethod" : {
+                  "enum" : [
+                     "",
+                     "jws"
+                  ],
+                  "type" : "string"
+               },
+               "authnEndpointAuthSigAlg" : {
+                  "default" : "RS256",
+                  "enum" : [
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
+               "checkJWTSignature" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "clientId" : {
+                  "type" : "string"
+               },
+               "clientSecret" : {
+                  "format" : "password",
+                  "type" : "string"
+               },
+               "comment" : {
+                  "type" : "string"
+               },
+               "configurationURI" : {
+                  "format" : "url",
+                  "type" : "string"
+               },
+               "display" : {
+                  "enum" : [
+                     "",
+                     "page",
+                     "popup",
+                     "touch",
+                     "wap"
+                  ],
+                  "type" : "string"
+               },
+               "displayName" : {
+                  "type" : "string"
+               },
+               "icon" : {
+                  "type" : "string"
+               },
+               "jWKSTimeout" : {
+                  "type" : "integer"
+               },
+               "maxAge" : {
+                  "type" : "integer"
+               },
+               "noJwtHeader" : {
+                  "type" : "boolean"
+               },
+               "prompt" : {
+                  "type" : "string"
+               },
+               "requireIss" : {
+                  "type" : "boolean"
+               },
+               "requirePkce" : {
+                  "type" : "boolean"
+               },
+               "resolutionRule" : {
+                  "type" : "string"
+               },
+               "scope" : {
+                  "default" : "openid profile",
+                  "type" : "string"
+               },
+               "signingKey" : {
+                  "type" : "string"
+               },
+               "sortNumber" : {
+                  "type" : "integer"
+               },
+               "storeIDToken" : {
+                  "type" : "boolean"
+               },
+               "tokenEndpointAuthMethod" : {
+                  "default" : "client_secret_post",
+                  "enum" : [
+                     "client_secret_post",
+                     "client_secret_basic",
+                     "client_secret_jwt",
+                     "private_key_jwt"
+                  ],
+                  "type" : "string"
+               },
+               "tokenEndpointAuthSigAlg" : {
+                  "default" : "RS256",
+                  "enum" : [
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
+               "tooltip" : {
+                  "type" : "string"
+               },
+               "uiLocales" : {
+                  "type" : "string"
+               },
+               "useNonce" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "userAttribute" : {
+                  "type" : "string"
+               },
+               "userinfoSource" : {
+                  "default" : "userinfo",
+                  "enum" : [
+                     "userinfo",
+                     "id_token",
+                     "access_token"
+                  ],
+                  "type" : "string"
+               }
+            },
+            "type" : "object"
+         },
+         "OidcOpReplace" : {
+            "properties" : {
+               "exportedVars" : {
+                  "$ref" : "#/components/schemas/OidcOpExportedVars"
+               },
+               "jwks" : {
+                  "$ref" : "#/components/schemas/OidcOpJwks"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/OidcOpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOpOptions"
+               }
+            },
+            "required" : [
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "OidcOpUpdate" : {
+            "properties" : {
+               "exportedVars" : {
+                  "$ref" : "#/components/schemas/OidcOpExportedVars"
+               },
+               "jwks" : {
+                  "$ref" : "#/components/schemas/OidcOpJwks"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/OidcOpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOpOptions"
+               }
+            },
             "type" : "object"
          },
          "OidcOptions" : {
@@ -2217,6 +2479,218 @@
             ]
          }
       },
+      "/api/v1/providers/oidc/op" : {
+         "post" : {
+            "operationId" : "addoidcop",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcOp"
+                     }
+                  }
+               },
+               "description" : "OpenID Connect Provider to add",
+               "required" : true
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new OpenID Connect Provider",
+            "tags" : [
+               "oidcop"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/op/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing providers",
+            "operationId" : "findOidcOpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyOidcOp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds OpenID Connect Providers by configuration key",
+            "tags" : [
+               "oidcop"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/op/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteOidcOp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Provider to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes an OpenID Connect Provider",
+            "tags" : [
+               "oidcop"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single OpenID Connect Provider",
+            "operationId" : "getOidcOpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Provider",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneOidcOp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get OpenID Connect Provider by configuration key",
+            "tags" : [
+               "oidcop"
+            ]
+         },
+         "patch" : {
+            "description" : "This method merges the supplied JSON object with existing configuration. You\ncan delete a subkey from a top-level key by setting its value to `null`.  For\nexample:\n```\n{\n  \"exportedVars\": {\n    \"addme\": \"newval\",\n    \"deleteme\": null\n  }\n}\n```\n",
+            "operationId" : "updateOidcOp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Provider that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcOpUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Updates an OpenID Connect Provider",
+            "tags" : [
+               "oidcop"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceOidcOp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Provider that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcOpReplace"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Replaces an OpenID Connect Provider",
+            "tags" : [
+               "oidcop"
+            ]
+         }
+      },
       "/api/v1/providers/oidc/rp" : {
          "post" : {
             "operationId" : "addoidcrp",
@@ -3030,6 +3504,10 @@
       {
          "description" : "OpenID Connect Relying Parties",
          "name" : "oidcrp"
+      },
+      {
+         "description" : "OpenID Connect Providers",
+         "name" : "oidcop"
       },
       {
          "description" : "negistered Second Factors",
