@@ -950,6 +950,192 @@
     }
   }
 };
+            defs["OidcOp"] = {
+  "required" : [ "confKey", "metadata" ],
+  "type" : "object",
+  "properties" : {
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
+    },
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/OidcOpExportedVars"
+    },
+    "jwks" : {
+      "$ref" : "#/components/schemas/OidcOpJwks"
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/OidcOpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/OidcOpOptions"
+    }
+  }
+};
+            defs["OidcOpExportedVars"] = {
+  "type" : "object",
+  "example" : {
+    "mail" : "email",
+    "uid" : "sub"
+  }
+};
+            defs["OidcOpJwks"] = {
+  "type" : "string",
+  "description" : "JWKS of the provider, as a JSON string",
+  "example" : "{\"keys\":[]}"
+};
+            defs["OidcOpMetadata"] = {
+  "type" : "string",
+  "description" : "Discovery document of the provider (/.well-known/openid-configuration), as a JSON string",
+  "example" : "{\"issuer\":\"https://op.example.com\",\"authorization_endpoint\":\"https://op.example.com/authorize\",\"token_endpoint\":\"https://op.example.com/token\",\"jwks_uri\":\"https://op.example.com/jwks\"}"
+};
+            defs["OidcOpOptions"] = {
+  "type" : "object",
+  "properties" : {
+    "IDTokenMaxAge" : {
+      "type" : "integer",
+      "default" : 30
+    },
+    "acrValues" : {
+      "type" : "string"
+    },
+    "authEndpointExtraParams" : {
+      "type" : "object",
+      "default" : { }
+    },
+    "authnEndpointAuthMethod" : {
+      "type" : "string",
+      "enum" : [ "", "jws" ]
+    },
+    "authnEndpointAuthSigAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
+    "checkJWTSignature" : {
+      "type" : "boolean"
+    },
+    "clientId" : {
+      "type" : "string"
+    },
+    "clientSecret" : {
+      "type" : "string",
+      "format" : "password"
+    },
+    "comment" : {
+      "type" : "string"
+    },
+    "configurationURI" : {
+      "type" : "string",
+      "format" : "url"
+    },
+    "display" : {
+      "type" : "string",
+      "enum" : [ "", "page", "popup", "touch", "wap" ]
+    },
+    "displayName" : {
+      "type" : "string"
+    },
+    "icon" : {
+      "type" : "string"
+    },
+    "jWKSTimeout" : {
+      "type" : "integer"
+    },
+    "maxAge" : {
+      "type" : "integer"
+    },
+    "noJwtHeader" : {
+      "type" : "boolean"
+    },
+    "prompt" : {
+      "type" : "string"
+    },
+    "requireIss" : {
+      "type" : "boolean"
+    },
+    "requirePkce" : {
+      "type" : "boolean"
+    },
+    "resolutionRule" : {
+      "type" : "string"
+    },
+    "scope" : {
+      "type" : "string",
+      "default" : "openid profile"
+    },
+    "signingKey" : {
+      "type" : "string"
+    },
+    "sortNumber" : {
+      "type" : "integer"
+    },
+    "storeIDToken" : {
+      "type" : "boolean"
+    },
+    "tokenEndpointAuthMethod" : {
+      "type" : "string",
+      "default" : "client_secret_post",
+      "enum" : [ "client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt" ]
+    },
+    "tokenEndpointAuthSigAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
+    "tooltip" : {
+      "type" : "string"
+    },
+    "uiLocales" : {
+      "type" : "string"
+    },
+    "useNonce" : {
+      "type" : "boolean"
+    },
+    "userAttribute" : {
+      "type" : "string"
+    },
+    "userinfoSource" : {
+      "type" : "string",
+      "default" : "userinfo",
+      "enum" : [ "userinfo", "id_token", "access_token" ]
+    }
+  }
+};
+            defs["OidcOpReplace"] = {
+  "required" : [ "metadata" ],
+  "type" : "object",
+  "properties" : {
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/OidcOpExportedVars"
+    },
+    "jwks" : {
+      "$ref" : "#/components/schemas/OidcOpJwks"
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/OidcOpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/OidcOpOptions"
+    }
+  }
+};
+            defs["OidcOpUpdate"] = {
+  "type" : "object",
+  "properties" : {
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/OidcOpExportedVars"
+    },
+    "jwks" : {
+      "$ref" : "#/components/schemas/OidcOpJwks"
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/OidcOpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/OidcOpOptions"
+    }
+  }
+};
             defs["OidcOptions"] = {
   "type" : "object",
   "properties" : {
@@ -1666,6 +1852,25 @@
                     </li>
                     <li data-group="Menucat" data-name="updateMenuCat" class="">
                       <a href="#api-Menucat-updateMenuCat">updateMenuCat</a>
+                    </li>
+                  <li class="nav-header" data-group="Oidcop"><a href="#api-Oidcop">API Methods - Oidcop</a></li>
+                    <li data-group="Oidcop" data-name="addoidcop" class="">
+                      <a href="#api-Oidcop-addoidcop">addoidcop</a>
+                    </li>
+                    <li data-group="Oidcop" data-name="deleteOidcOp" class="">
+                      <a href="#api-Oidcop-deleteOidcOp">deleteOidcOp</a>
+                    </li>
+                    <li data-group="Oidcop" data-name="findOidcOpByConfKey" class="">
+                      <a href="#api-Oidcop-findOidcOpByConfKey">findOidcOpByConfKey</a>
+                    </li>
+                    <li data-group="Oidcop" data-name="getOidcOpByConfKey" class="">
+                      <a href="#api-Oidcop-getOidcOpByConfKey">getOidcOpByConfKey</a>
+                    </li>
+                    <li data-group="Oidcop" data-name="replaceOidcOp" class="">
+                      <a href="#api-Oidcop-replaceOidcOp">replaceOidcOp</a>
+                    </li>
+                    <li data-group="Oidcop" data-name="updateOidcOp" class="">
+                      <a href="#api-Oidcop-updateOidcOp">updateOidcOp</a>
                     </li>
                   <li class="nav-header" data-group="Oidcrp"><a href="#api-Oidcrp">API Methods - Oidcrp</a></li>
                     <li data-group="Oidcrp" data-name="addoidcrp" class="">
@@ -14129,6 +14334,2254 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-updateMenuCat-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Oidcop">
+                  <h1>Oidcop</h1>
+                    <div id="api-Oidcop-addoidcop">
+                      <article id="api-Oidcop-addoidcop-0" data-group="User" data-name="addoidcop" data-version="0">
+                        <div class="pull-left">
+                          <h1>addoidcop</h1>
+                          <p>Create a new OpenID Connect Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/providers/oidc/op</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-addoidcop-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-addoidcop-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-addoidcop-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-addoidcop-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-addoidcop-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-addoidcop-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        OidcOp body = ; // OidcOp | OpenID Connect Provider to add
+        try {
+            apiInstance.addoidcop(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#addoidcop");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-addoidcop-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        OidcOp body = ; // OidcOp | OpenID Connect Provider to add
+        try {
+            apiInstance.addoidcop(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#addoidcop");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-addoidcop-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">OidcOp *body = ; // OpenID Connect Provider to add
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Create a new OpenID Connect Provider
+[apiInstance addoidcopWith:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var body = ; // {{OidcOp}} OpenID Connect Provider to add
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addoidcop(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-addoidcop-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addoidcopExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var body = new OidcOp(); // OidcOp | OpenID Connect Provider to add
+
+            try
+            {
+                // Create a new OpenID Connect Provider
+                apiInstance.addoidcop(body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.addoidcop: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$body = ; // OidcOp | OpenID Connect Provider to add
+
+try {
+    $api_instance->addoidcop($body);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->addoidcop: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $body = WWW::SwaggerClient::Object::OidcOp->new(); # OidcOp | OpenID Connect Provider to add
+
+eval { 
+    $api_instance->addoidcop(body => $body);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->addoidcop: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-addoidcop-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+body =  # OidcOp | OpenID Connect Provider to add
+
+try: 
+    # Create a new OpenID Connect Provider
+    api_instance.addoidcop(body)
+except ApiException as e:
+    print("Exception when calling OidcopApi->addoidcop: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "OpenID Connect Provider to add",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/OidcOp"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addoidcop_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addoidcop_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addoidcop-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addoidcop-400-schema">
+                                  <div id='responses-addoidcop-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addoidcop-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addoidcop-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addoidcop-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addoidcop-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addoidcop-409-schema">
+                                  <div id='responses-addoidcop-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addoidcop-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addoidcop-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addoidcop-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Oidcop-deleteOidcOp">
+                      <article id="api-Oidcop-deleteOidcOp-0" data-group="User" data-name="deleteOidcOp" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteOidcOp</h1>
+                          <p>Deletes an OpenID Connect Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/providers/oidc/op/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-deleteOidcOp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-deleteOidcOp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-deleteOidcOp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-deleteOidcOp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-deleteOidcOp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider to delete
+        try {
+            apiInstance.deleteOidcOp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#deleteOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider to delete
+        try {
+            apiInstance.deleteOidcOp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#deleteOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Provider to delete
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Deletes an OpenID Connect Provider
+[apiInstance deleteOidcOpWith:confKey
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Provider to delete
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteOidcOp(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteOidcOpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Provider to delete
+
+            try
+            {
+                // Deletes an OpenID Connect Provider
+                apiInstance.deleteOidcOp(confKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.deleteOidcOp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$confKey = ; // confKey | Configuration key of OpenID Connect Provider to delete
+
+try {
+    $api_instance->deleteOidcOp($confKey);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->deleteOidcOp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $confKey = ; # confKey | Configuration key of OpenID Connect Provider to delete
+
+eval { 
+    $api_instance->deleteOidcOp(confKey => $confKey);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->deleteOidcOp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-deleteOidcOp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+confKey =  # confKey | Configuration key of OpenID Connect Provider to delete
+
+try: 
+    # Deletes an OpenID Connect Provider
+    api_instance.delete_oidc_op(confKey)
+except ApiException as e:
+    print("Exception when calling OidcopApi->deleteOidcOp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteOidcOp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of OpenID Connect Provider to delete
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteOidcOp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteOidcOp-400-schema">
+                                  <div id='responses-deleteOidcOp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteOidcOp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteOidcOp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteOidcOp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteOidcOp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteOidcOp-404-schema">
+                                  <div id='responses-deleteOidcOp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteOidcOp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteOidcOp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteOidcOp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Oidcop-findOidcOpByConfKey">
+                      <article id="api-Oidcop-findOidcOpByConfKey-0" data-group="User" data-name="findOidcOpByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>findOidcOpByConfKey</h1>
+                          <p>Finds OpenID Connect Providers by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Takes a search pattern to be tested against existing providers</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/oidc/op/findByConfKey</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-findOidcOpByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-findOidcOpByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-findOidcOpByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op/findByConfKey?pattern="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[OidcOp] result = apiInstance.findOidcOpByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#findOidcOpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[OidcOp] result = apiInstance.findOidcOpByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#findOidcOpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *pattern = ; // Search pattern
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Finds OpenID Connect Providers by configuration key
+[apiInstance findOidcOpByConfKeyWith:pattern
+              completionHandler: ^(array[OidcOp] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var pattern = ; // {{confKey}} Search pattern
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.findOidcOpByConfKey(pattern, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class findOidcOpByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var pattern = new confKey(); // confKey | Search pattern
+
+            try
+            {
+                // Finds OpenID Connect Providers by configuration key
+                array[OidcOp] result = apiInstance.findOidcOpByConfKey(pattern);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.findOidcOpByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$pattern = ; // confKey | Search pattern
+
+try {
+    $result = $api_instance->findOidcOpByConfKey($pattern);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->findOidcOpByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $pattern = ; # confKey | Search pattern
+
+eval { 
+    my $result = $api_instance->findOidcOpByConfKey(pattern => $pattern);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->findOidcOpByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-findOidcOpByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+pattern =  # confKey | Search pattern
+
+try: 
+    # Finds OpenID Connect Providers by configuration key
+    api_response = api_instance.find_oidc_op_by_conf_key(pattern)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OidcopApi->findOidcOpByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">pattern*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_findOidcOpByConfKey_pattern">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    confKey
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Search pattern
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a list of OpenID Connect Providers </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findOidcOpByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findOidcOpByConfKey-200-schema">
+                                  <div id='responses-findOidcOpByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a list of OpenID Connect Providers",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/OidcOp"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findOidcOpByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findOidcOpByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findOidcOpByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findOidcOpByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findOidcOpByConfKey-400-schema">
+                                  <div id='responses-findOidcOpByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findOidcOpByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findOidcOpByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findOidcOpByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Oidcop-getOidcOpByConfKey">
+                      <article id="api-Oidcop-getOidcOpByConfKey-0" data-group="User" data-name="getOidcOpByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>getOidcOpByConfKey</h1>
+                          <p>Get OpenID Connect Provider by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns a single OpenID Connect Provider</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/oidc/op/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-getOidcOpByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-getOidcOpByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-getOidcOpByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider
+        try {
+            OidcOp result = apiInstance.getOidcOpByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#getOidcOpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider
+        try {
+            OidcOp result = apiInstance.getOidcOpByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#getOidcOpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Provider
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Get OpenID Connect Provider by configuration key
+[apiInstance getOidcOpByConfKeyWith:confKey
+              completionHandler: ^(OidcOp output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Provider
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getOidcOpByConfKey(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getOidcOpByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Provider
+
+            try
+            {
+                // Get OpenID Connect Provider by configuration key
+                OidcOp result = apiInstance.getOidcOpByConfKey(confKey);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.getOidcOpByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$confKey = ; // confKey | Configuration key of OpenID Connect Provider
+
+try {
+    $result = $api_instance->getOidcOpByConfKey($confKey);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->getOidcOpByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $confKey = ; # confKey | Configuration key of OpenID Connect Provider
+
+eval { 
+    my $result = $api_instance->getOidcOpByConfKey(confKey => $confKey);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->getOidcOpByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-getOidcOpByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+confKey =  # confKey | Configuration key of OpenID Connect Provider
+
+try: 
+    # Get OpenID Connect Provider by configuration key
+    api_response = api_instance.get_oidc_op_by_conf_key(confKey)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OidcopApi->getOidcOpByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getOidcOpByConfKey_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of OpenID Connect Provider
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return an OpenID Connect Provider </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getOidcOpByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getOidcOpByConfKey-200-schema">
+                                  <div id='responses-getOidcOpByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return an OpenID Connect Provider",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/OidcOp"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getOidcOpByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getOidcOpByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getOidcOpByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getOidcOpByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getOidcOpByConfKey-400-schema">
+                                  <div id='responses-getOidcOpByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getOidcOpByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getOidcOpByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getOidcOpByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getOidcOpByConfKey-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getOidcOpByConfKey-404-schema">
+                                  <div id='responses-getOidcOpByConfKey-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getOidcOpByConfKey-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getOidcOpByConfKey-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getOidcOpByConfKey-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Oidcop-replaceOidcOp">
+                      <article id="api-Oidcop-replaceOidcOp-0" data-group="User" data-name="replaceOidcOp" data-version="0">
+                        <div class="pull-left">
+                          <h1>replaceOidcOp</h1>
+                          <p>Replaces an OpenID Connect Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/providers/oidc/op/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-replaceOidcOp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-replaceOidcOp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-replaceOidcOp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-replaceOidcOp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-replaceOidcOp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+        OidcOpReplace body = ; // OidcOpReplace | 
+        try {
+            apiInstance.replaceOidcOp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#replaceOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+        OidcOpReplace body = ; // OidcOpReplace | 
+        try {
+            apiInstance.replaceOidcOp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#replaceOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Provider that needs to be replaced
+OidcOpReplace *body = ; //  (optional)
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Replaces an OpenID Connect Provider
+[apiInstance replaceOidcOpWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Provider that needs to be replaced
+var opts = { 
+  'body':  // {{OidcOpReplace}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.replaceOidcOp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class replaceOidcOpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+            var body = new OidcOpReplace(); // OidcOpReplace |  (optional) 
+
+            try
+            {
+                // Replaces an OpenID Connect Provider
+                apiInstance.replaceOidcOp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.replaceOidcOp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+$body = ; // OidcOpReplace | 
+
+try {
+    $api_instance->replaceOidcOp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->replaceOidcOp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $confKey = ; # confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+my $body = WWW::SwaggerClient::Object::OidcOpReplace->new(); # OidcOpReplace | 
+
+eval { 
+    $api_instance->replaceOidcOp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->replaceOidcOp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-replaceOidcOp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+confKey =  # confKey | Configuration key of OpenID Connect Provider that needs to be replaced
+body =  # OidcOpReplace |  (optional)
+
+try: 
+    # Replaces an OpenID Connect Provider
+    api_instance.replace_oidc_op(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling OidcopApi->replaceOidcOp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_replaceOidcOp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of OpenID Connect Provider that needs to be replaced
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/OidcOpReplace"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_replaceOidcOp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_replaceOidcOp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceOidcOp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceOidcOp-400-schema">
+                                  <div id='responses-replaceOidcOp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceOidcOp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceOidcOp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceOidcOp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceOidcOp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceOidcOp-404-schema">
+                                  <div id='responses-replaceOidcOp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceOidcOp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceOidcOp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceOidcOp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Oidcop-updateOidcOp">
+                      <article id="api-Oidcop-updateOidcOp-0" data-group="User" data-name="updateOidcOp" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateOidcOp</h1>
+                          <p>Updates an OpenID Connect Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;exportedVars&quot;: {
+    &quot;addme&quot;: &quot;newval&quot;,
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/oidc/op/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Oidcop-updateOidcOp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-updateOidcOp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Oidcop-updateOidcOp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Oidcop-updateOidcOp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Oidcop-updateOidcOp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/op/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OidcopApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be updated
+        OidcOpUpdate body = ; // OidcOpUpdate | 
+        try {
+            apiInstance.updateOidcOp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#updateOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OidcopApi;
+
+public class OidcopApiExample {
+
+    public static void main(String[] args) {
+        OidcopApi apiInstance = new OidcopApi();
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be updated
+        OidcOpUpdate body = ; // OidcOpUpdate | 
+        try {
+            apiInstance.updateOidcOp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OidcopApi#updateOidcOp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Provider that needs to be updated
+OidcOpUpdate *body = ; //  (optional)
+
+OidcopApi *apiInstance = [[OidcopApi alloc] init];
+
+// Updates an OpenID Connect Provider
+[apiInstance updateOidcOpWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.OidcopApi()
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Provider that needs to be updated
+var opts = { 
+  'body':  // {{OidcOpUpdate}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.updateOidcOp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateOidcOpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OidcopApi();
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Provider that needs to be updated
+            var body = new OidcOpUpdate(); // OidcOpUpdate |  (optional) 
+
+            try
+            {
+                // Updates an OpenID Connect Provider
+                apiInstance.updateOidcOp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OidcopApi.updateOidcOp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOidcopApi();
+$confKey = ; // confKey | Configuration key of OpenID Connect Provider that needs to be updated
+$body = ; // OidcOpUpdate | 
+
+try {
+    $api_instance->updateOidcOp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling OidcopApi->updateOidcOp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OidcopApi;
+
+my $api_instance = WWW::SwaggerClient::OidcopApi->new();
+my $confKey = ; # confKey | Configuration key of OpenID Connect Provider that needs to be updated
+my $body = WWW::SwaggerClient::Object::OidcOpUpdate->new(); # OidcOpUpdate | 
+
+eval { 
+    $api_instance->updateOidcOp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling OidcopApi->updateOidcOp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Oidcop-updateOidcOp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OidcopApi()
+confKey =  # confKey | Configuration key of OpenID Connect Provider that needs to be updated
+body =  # OidcOpUpdate |  (optional)
+
+try: 
+    # Updates an OpenID Connect Provider
+    api_instance.update_oidc_op(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling OidcopApi->updateOidcOp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateOidcOp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of OpenID Connect Provider that needs to be updated
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/OidcOpUpdate"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateOidcOp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateOidcOp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateOidcOp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateOidcOp-400-schema">
+                                  <div id='responses-updateOidcOp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateOidcOp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateOidcOp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateOidcOp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateOidcOp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateOidcOp-404-schema">
+                                  <div id='responses-updateOidcOp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateOidcOp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateOidcOp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateOidcOp-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 

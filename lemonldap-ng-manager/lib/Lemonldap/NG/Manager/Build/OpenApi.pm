@@ -17,9 +17,10 @@ my %TYPEMAP = (
     "intOrNull" => sub { { type => "integer" } },
     "trool"     => sub { { type => "integer", maximum => 1, minimum => -1 } },
     "select"    => \&handleSelect,
-    "password"  => sub { { type => "string", format => "password" } },
-    "file"      => sub { { type => "string" } },
-    "url"       => sub { { type => "string", format => "url" } },
+    "password"         => sub { { type => "string", format => "password" } },
+    "file"             => sub { { type => "string" } },
+    "url"              => sub { { type => "string", format => "url" } },
+    "keyTextContainer" => sub { { type => "object" } },
 );
 
 sub handleSelect {
@@ -103,6 +104,10 @@ sub openapi {
             {
                 'name'        => 'oidcrp',
                 'description' => 'OpenID Connect Relying Parties'
+            },
+            {
+                'name'        => 'oidcop',
+                'description' => 'OpenID Connect Providers'
             },
             {
                 'name'        => '2fa',
@@ -686,6 +691,223 @@ EOF
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Relying Party to delete',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/oidc/op' => {
+                'post' => {
+                    'tags'        => ['oidcop'],
+                    'summary'     => 'Create a new OpenID Connect Provider',
+                    'operationId' => 'addoidcop',
+                    'requestBody' => {
+                        'description' => 'OpenID Connect Provider to add',
+                        'content'     => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' => '#/components/schemas/OidcOp'
+                                }
+                            }
+                        },
+                        'required' => JSON::true
+                    },
+                    'responses' => {
+                        '201' => {
+                            '$ref' => '#/components/responses/Created'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '409' => {
+                            '$ref' => '#/components/responses/Conflict'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/oidc/op/findByConfKey' => {
+                'get' => {
+                    'tags'    => ['oidcop'],
+                    'summary' =>
+                      'Finds OpenID Connect Providers by configuration key',
+                    'description' =>
+'Takes a search pattern to be tested against existing providers',
+                    'operationId' => 'findOidcOpByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'pattern',
+                            'in'          => 'query',
+                            'description' => 'Search pattern',
+                            'required'    => JSON::true,
+                            'schema'      => {
+                                '$ref' => '#/components/schemas/confKey'
+                            },
+                            'examples' => {
+                                'any' => {
+                                    'summary' => 'Any value',
+                                    'value'   => '*'
+                                },
+                                'prefix' => {
+                                    'summary' => 'Given prefix',
+                                    'value'   => 'zone1-*'
+                                },
+                                'anywhere' => {
+                                    'summary' => 'Substring',
+                                    'value'   => 'something'
+                                }
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/ManyOidcOp'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/oidc/op/{confKey}' => {
+                'get' => {
+                    'tags'    => ['oidcop'],
+                    'summary' =>
+                      'Get OpenID Connect Provider by configuration key',
+                    'description' => 'Returns a single OpenID Connect Provider',
+                    'operationId' => 'getOidcOpByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+                              'Configuration key of OpenID Connect Provider',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/OneOidcOp'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'patch' => {
+                    'tags'        => ['oidcop'],
+                    'summary'     => 'Updates an OpenID Connect Provider',
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "exportedVars": {
+    "addme": "newval",
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
+                    'operationId' => 'updateOidcOp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of OpenID Connect Provider that needs to be updated',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/OidcOpUpdate'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'put' => {
+                    'tags'        => ['oidcop'],
+                    'summary'     => 'Replaces an OpenID Connect Provider',
+                    'operationId' => 'replaceOidcOp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of OpenID Connect Provider that needs to be replaced',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/OidcOpReplace'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'delete' => {
+                    'tags'        => ['oidcop'],
+                    'summary'     => 'Deletes an OpenID Connect Provider',
+                    'operationId' => 'deleteOidcOp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of OpenID Connect Provider to delete',
                             'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -2045,6 +2267,86 @@ EOF
                         }
                     }
                 },
+                'OidcOp' => {
+                    'required'   => [ 'confKey', 'metadata' ],
+                    'type'       => 'object',
+                    'properties' => {
+                        'confKey' => {
+                            '$ref' => '#/components/schemas/confKey'
+                        },
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/OidcOpMetadata'
+                        },
+                        'jwks' => {
+                            '$ref' => '#/components/schemas/OidcOpJwks'
+                        },
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/OidcOpExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/OidcOpOptions'
+                        }
+                    }
+                },
+                'OidcOpMetadata' => {
+                    'type'        => 'string',
+                    'description' =>
+'Discovery document of the provider (/.well-known/openid-configuration), as a JSON string',
+                    'example' =>
+'{"issuer":"https://op.example.com","authorization_endpoint":"https://op.example.com/authorize","token_endpoint":"https://op.example.com/token","jwks_uri":"https://op.example.com/jwks"}'
+                },
+                'OidcOpJwks' => {
+                    'type'        => 'string',
+                    'description' => 'JWKS of the provider, as a JSON string',
+                    'example'     => '{"keys":[]}'
+                },
+                'OidcOpExportedVars' => {
+                    'type'    => 'object',
+                    'example' => {
+                        'mail' => 'email',
+                        'uid'  => 'sub'
+                    }
+                },
+                'OidcOpOptions' => {
+                    'type'       => 'object',
+                    'properties' =>
+                      getOptions( $attributes, 'oidcOPMetaDataOptions' ),
+                },
+                'OidcOpUpdate' => {
+                    'type'       => 'object',
+                    'properties' => {
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/OidcOpMetadata'
+                        },
+                        'jwks' => {
+                            '$ref' => '#/components/schemas/OidcOpJwks'
+                        },
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/OidcOpExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/OidcOpOptions'
+                        }
+                    }
+                },
+                'OidcOpReplace' => {
+                    'type'       => 'object',
+                    'required'   => ['metadata'],
+                    'properties' => {
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/OidcOpMetadata'
+                        },
+                        'jwks' => {
+                            '$ref' => '#/components/schemas/OidcOpJwks'
+                        },
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/OidcOpExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/OidcOpOptions'
+                        }
+                    }
+                },
                 'CasApp' => {
                     'required'   => ['confKey'],
                     'type'       => 'object',
@@ -2355,6 +2657,30 @@ EOF
                         'application/json' => {
                             'schema' => {
                                 '$ref' => '#/components/schemas/OidcRp'
+                            }
+                        }
+                    }
+                },
+                'OneOidcOp' => {
+                    'description' => 'Return an OpenID Connect Provider',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                '$ref' => '#/components/schemas/OidcOp'
+                            }
+                        }
+                    }
+                },
+                'ManyOidcOp' => {
+                    'description' =>
+                      'Return a list of OpenID Connect Providers',
+                    'content' => {
+                        'application/json' => {
+                            'schema' => {
+                                'type'  => 'array',
+                                'items' => {
+                                    '$ref' => '#/components/schemas/OidcOp'
+                                }
                             }
                         }
                     }
