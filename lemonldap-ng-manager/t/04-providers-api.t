@@ -529,6 +529,169 @@ checkDelete( $test, 'oidc/rp', 'myOidcRp2' );
 $test = "OidcRp - Entity should not be found after clean up";
 checkDeleteNotFound( $test, 'oidc/rp', 'myOidcRp1' );
 
+my $oidcOp = {
+    confKey  => 'myOidcOp1',
+    metadata => to_json( {
+            issuer                 => 'https://op1.example.com',
+            authorization_endpoint => 'https://op1.example.com/authorize',
+            token_endpoint         => 'https://op1.example.com/token',
+            jwks_uri               => 'https://op1.example.com/jwks',
+        }
+    ),
+    jwks         => to_json( { keys => [] } ),
+    exportedVars => {
+        mail => 'email',
+        uid  => 'sub',
+    },
+    options => {
+        clientId     => 'twake',
+        clientSecret => 'secret',
+        displayName  => 'Example',
+    },
+};
+
+$test = "OidcOp - Add should succeed";
+checkAdd( $test, 'oidc/op', $oidcOp );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientId',     'twake' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientSecret', 'secret' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/mail',    'email' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'metadata', $oidcOp->{metadata} );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'jwks',     $oidcOp->{jwks} );
+
+$test = "OidcOp - Check attribute default value was set after add";
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/scope',   'openid profile' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/sn', 'family_name' );
+
+$test = "OidcOp - Add should fail on duplicate confKey";
+checkAddFailsIfExists( $test, 'oidc/op', $oidcOp );
+
+$test = "OidcOp - Add should fail without metadata";
+checkAddWithUnknownAttributes( $test, 'oidc/op', { confKey => 'myOidcOp2' } );
+
+$test = "OidcOp - Add should fail on metadata that is not a JSON object";
+checkAddWithUnknownAttributes( $test, 'oidc/op',
+    { confKey => 'myOidcOp2', metadata => 'not json' } );
+checkAddWithUnknownAttributes( $test, 'oidc/op',
+    { confKey => 'myOidcOp2', metadata => { issuer => 'x' } } );
+
+$test = "OidcOp - Add should fail on non existing options";
+checkAddWithUnknownAttributes(
+    $test,
+    'oidc/op',
+    {
+        confKey  => 'myOidcOp2',
+        metadata => $oidcOp->{metadata},
+        options  => { playingPossum => 'elephant' }
+    }
+);
+
+$test = "OidcOp - Add should fail on options that are not an object";
+checkAddWithUnknownAttributes( $test, 'oidc/op',
+    { confKey => 'myOidcOp2', metadata => $oidcOp->{metadata}, options => 'x' }
+);
+
+$test = "OidcOp - Add should fail on extra auth params that are not an object";
+checkAddWithUnknownAttributes(
+    $test,
+    'oidc/op',
+    {
+        confKey  => 'myOidcOp2',
+        metadata => $oidcOp->{metadata},
+        options  => { authEndpointExtraParams => 'x' }
+    }
+);
+
+$test = "OidcOp - Add should fail on invalid confKey";
+checkAddWithUnknownAttributes( $test, 'oidc/op',
+    { confKey => 'my Op', metadata => $oidcOp->{metadata} } );
+
+$test = "OidcOp - Update should succeed and keep existing values";
+checkUpdate(
+    $test,
+    'oidc/op',
+    'myOidcOp1',
+    {
+        options      => { clientSecret => 'secret2', displayName => undef },
+        exportedVars => { cn           => 'name',    uid         => undef },
+    }
+);
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientSecret', 'secret2' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientId',     'twake' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/displayName',  '_missing' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/cn',      'name' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/mail',    'email' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/uid',     '_missing' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'metadata', $oidcOp->{metadata} );
+
+$test = "OidcOp - Update should store extra auth params";
+checkUpdate( $test, 'oidc/op', 'myOidcOp1',
+    { options => { authEndpointExtraParams => { kc_idp_hint => 'corp' } } } );
+checkGet( $test, 'oidc/op', 'myOidcOp1',
+    'options/authEndpointExtraParams/kc_idp_hint', 'corp' );
+
+$test = "OidcOp - Update with a null jwks should remove it";
+checkUpdate( $test, 'oidc/op', 'myOidcOp1', { jwks => undef } );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'jwks',     '_undef' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'metadata', $oidcOp->{metadata} );
+
+$test = "OidcOp - Update should fail on non existing options";
+checkUpdateWithUnknownAttributes( $test, 'oidc/op', 'myOidcOp1',
+    { options => { playingPossum => 'elephant' } } );
+
+$test = "OidcOp - Update should fail if confKey not found";
+checkUpdateNotFound( $test, 'oidc/op', 'myOidcOp3', { options => {} } );
+
+$test = "OidcOp - Replace should succeed and reset what is left out";
+checkUpdate( $test, 'oidc/op', 'myOidcOp1', { jwks => $oidcOp->{jwks} } );
+checkReplace(
+    $test,
+    'oidc/op',
+    'myOidcOp1',
+    {
+        metadata => $oidcOp->{metadata},
+        options  => { clientId => 'twake2' },
+    }
+);
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientId',     'twake2' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/clientSecret', '_missing' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'options/scope', 'openid profile' );
+checkGet( $test, 'oidc/op', 'myOidcOp1',
+    'options/authEndpointExtraParams/kc_idp_hint', '_missing' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/cn',  'name' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'exportedVars/uid', 'sub' );
+checkGet( $test, 'oidc/op', 'myOidcOp1', 'jwks',             '_undef' );
+
+$test = "OidcOp - Replace should fail without metadata";
+checkReplaceWithInvalidAttribute( $test, 'oidc/op', 'myOidcOp1',
+    { options => {} } );
+
+$test = "OidcOp - Replace should fail if confKey not found";
+checkReplaceNotFound( $test, 'oidc/op', 'myOidcOp3',
+    { metadata => $oidcOp->{metadata} } );
+
+$test = "OidcOp - 2nd add should succeed";
+$oidcOp->{confKey} = 'myOidcOp2';
+checkAdd( $test, 'oidc/op', $oidcOp );
+
+$test = "OidcOp - FindByConfKey should find 2 hits";
+checkFindByConfKey( $test, 'oidc/op', 'myOidcOp*', 2 );
+
+$test = "OidcOp - FindByConfKey should find 1 hit";
+checkFindByConfKey( $test, 'oidc/op', 'myOidcOp2', 1 );
+
+$test = "OidcOp - FindByConfKey should err on invalid patterns";
+checkFindByConfKeyError( $test, 'oidc/op', '' );
+
+$test = "OidcOp - Clean up";
+checkDelete( $test, 'oidc/op', 'myOidcOp1' );
+checkDelete( $test, 'oidc/op', 'myOidcOp2' );
+ok( !exists lastConf()->{oidcOPMetaDataJSON}->{myOidcOp1},
+    "$test: discovery document removed" );
+count(1);
+$test = "OidcOp - Entity should not be found after clean up";
+checkDeleteNotFound( $test, 'oidc/op', 'myOidcOp1' );
+checkGetNotFound( $test, 'oidc/op', 'myOidcOp1' );
+
 my $metadata1 =
 "<?xml version=\"1.0\"?><md:EntityDescriptor xmlns:md=\"urn:oasis:names:tc:SAML:2.0:metadata\" validUntil=\"2019-09-25T16:44:38Z\" cacheDuration=\"PT604800S\" entityID=\"https://myapp.domain.com/saml/metadata\"><md:SPSSODescriptor AuthnRequestsSigned=\"false\" WantAssertionsSigned=\"false\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\"><md:SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://myapp.domain.com/saml/sls\" /><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat><md:AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://myapp.domain.com/saml/acs\" index=\"1\" /></md:SPSSODescriptor></md:EntityDescriptor>";
 
