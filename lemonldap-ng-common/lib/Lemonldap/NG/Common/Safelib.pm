@@ -77,28 +77,19 @@ sub encode_base32 {
 sub checkLogonHours {
     my ( $logon_hours, $syntax, $time_correction, $default_access ) = @_;
 
-    # Active Directory - logonHours: $attr_src_syntax = octetstring
-    # Samba - sambaLogonHours: ???
-    # LL::NG - ssoLogonHours: $attr_src_syntax = hexadecimal
-    $syntax ||= "hexadecimal";
-
     # Default access if no value
     $default_access ||= "0";
     return $default_access unless $logon_hours;
 
+    # Deny access if the input value is not in expected format
+    $logon_hours =~ s/ //g;
+    return 0 if $logon_hours !~ /^[0-9a-f]{42}$/i;
+
     # Get the base2 value of logon_hours
     # Each byte represent an hour of the week
     # Begin with sunday at 0h00
-    my $base2_logon_hours;
-    if ( $syntax eq "octetstring" ) {
-        $base2_logon_hours = unpack( "B*", $logon_hours );
-    }
-    if ( $syntax eq "hexadecimal" ) {
-
-        # Remove white spaces
-        $logon_hours =~ s/ //g;
-        $base2_logon_hours = unpack( "B*", pack( "H*", $logon_hours ) );
-    }
+    $logon_hours =~ s/ //g;
+    my $base2_logon_hours = unpack( "B*", pack( "H*", $logon_hours ) );
 
     # Get the present day and hour
     my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =

@@ -84,6 +84,14 @@ Handler to access insecure, unencrypted HTTP applications at all.
 You can find this setting in in *General Parameters* » *Cookies* » *Secured
 Cookie (SSL)*
 
+"octetstring" format for checkLogonHours is no longer supported
+---------------------------------------------------------------
+
+If you use the ``checkLogonHours`` custom function, be aware that the
+``octetstring`` format is no longer directly supported. The ``logonHours``
+Active Directory attribute will automatically be interpreted in the new format,
+and you don't have anything to do if you are using Active Directory.
+
 Changes in outgoing proxy configuration
 ---------------------------------------
 
