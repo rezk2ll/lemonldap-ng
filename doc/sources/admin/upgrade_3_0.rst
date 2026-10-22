@@ -152,6 +152,21 @@ OneTimeToken library name changes
 Lib::OneTimeToken library becomes Lib::StateToken.
 getToken, updateToken and createToken methods become getState, updateState and storeState.
 
+New API for Content-Security-Policy management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LemonLDAP::NG now provides new methods to set the ``Content-Security-Policy``
+header on individual HTML responses.
+
+Subkeys like ``$req->data->{cspFormAction}`` as well as directly accessing
+``$self->p->csp`` will no longer work. ``$self->p->cspGetHost`` can now be
+found in ``$req->cspGetHost``.
+
+If you set ``cspFormAction`` to an empty value, the ``form-action`` directive
+will not be set anymore, which means all form targets are allowed. Use
+``'none'`` in order to disallow all form targets by default if you want to.
+
+Refer to :ref:`the plugin documentation on CSP<plugin-csp>` for information on the new API.
 
 Reload URLs do not exist anymore
 --------------------------------

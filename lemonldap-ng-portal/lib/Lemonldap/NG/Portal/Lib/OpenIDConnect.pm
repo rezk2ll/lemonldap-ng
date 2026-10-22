@@ -638,6 +638,8 @@ sub sendOidcResponse {
     # RFC 9207: Add iss parameter to prevent mix-up attacks
     $response_params->{iss} = $self->get_issuer($req);
 
+    $req->allowCsp( 'form-action', $redirect_uri );
+
     $response_mode //= $self->getDefaultResponseModeForFlow($flow);
 
     if ( $response_mode eq "query" ) {

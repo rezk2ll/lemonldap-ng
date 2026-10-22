@@ -183,6 +183,33 @@ In order to remember data between different steps, you can use the ``$req->data`
 
 Data will not be remembered in between requests, only in between methods that process the same HTTP request.
 
+
+.. _plugin-csp:
+
+Content Security Policy
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If your plugin requires embedding resources from external domains, it will need
+to allow these external domains explicitly through the
+``Content-Security-Policy`` (CSP) header.
+
+This can be achieved by the ``allowCsp`` request method.
+
+For example, if you want to allow a template used by your plugin to load an
+external JS script:
+
+.. code:: perl
+
+    # Allow a domain from a given URL
+    $req->allowCsp( 'script-src', $url_of_external_script );
+    # Allow a special CSP keyword such as 'self' or 'sha256-***'
+    $req->allowCspValue( 'script-src', "nonce-$mynonce" );
+
+
+Note that even if you pass the URL of a precise resource to this method, the
+entire domain will be allowed. CSP does not permit restricting a single URL.
+
+
 History management
 ~~~~~~~~~~~~~~~~~~
 

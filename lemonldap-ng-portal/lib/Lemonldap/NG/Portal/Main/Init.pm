@@ -104,8 +104,8 @@ has spRules => (
 # Custom template parameters
 has customParameters => ( is => 'rw', default => sub { {} } );
 
-# Content-Security-Policy headers
-has csp => ( is => 'rw' );
+# Content-Security-Policy header components
+has csp => ( is => 'rw', default => sub { {} } );
 
 # Cross-Origine Resource Sharing headers
 has cors => ( is => 'rw' );
@@ -279,13 +279,22 @@ sub reloadConf {
     }
 
     # Initialize content-security-policy headers
-    my $csp = '';
-    foreach (qw(default img src style font connect script)) {
-        my $prm = $self->conf->{ 'csp' . ucfirst($_) };
-        $csp .= "$_-src $prm;" if ($prm);
+    my %csp_conf_option = (
+        'default-src'     => 'cspDefault',
+        'img-src'         => 'cspImg',
+        'style-src'       => 'cspStyle',
+        'font-src'        => 'cspFont',
+        'connect-src'     => 'cspConnect',
+        'script-src'      => 'cspScript',
+        'form-action'     => 'cspFormAction',
+        'frame-ancestors' => 'cspFrameAncestors',
+    );
+    my $csp = {};
+    while ( my ( $directive, $conf ) = each(%csp_conf_option) ) {
+        $csp->{$directive}->{$_} = 1 for split( ' ', $self->conf->{$conf} || '' );
     }
     $self->csp($csp);
-    $self->logger->debug( "Initialized CSP headers : " . $self->csp );
+    $self->logger->debug("Initialized CSP header default values");
 
     # Initialize Cross-Origin Resource Sharing headers
     my $cors = '';

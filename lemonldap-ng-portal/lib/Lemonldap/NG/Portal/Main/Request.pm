@@ -5,6 +5,7 @@ package Lemonldap::NG::Portal::Main::Request;
 
 use strict;
 use Mouse;
+use URI;
 use Lemonldap::NG::Portal::Main::Constants ':all';
 
 our $VERSION = '2.19.0';
@@ -209,6 +210,51 @@ sub delCookie {
         }
         return $_;
     } @{ $self->respHeaders };
+}
+
+sub allowCsp {
+    my ( $self, $type, $url ) = @_;
+    my $csp_host = $self->cspGetHost($url);
+    if ($csp_host) {
+        $self->data->{csp}->{$type}->{$csp_host} = 1;
+    }
+}
+
+sub allowCspValue {
+    my ( $self, $type, $value ) = @_;
+    $self->data->{csp}->{$type}->{"'$value'"} = 1;
+}
+
+# This method extracts the scheme://host:port part of a URL for use in
+# Content-Security-Policy header
+sub cspGetHost {
+    my ( $self, $url ) = @_;
+    return unless $url;
+    my $uri = $url;
+    unless ( blessed($uri) && $uri->isa("URI") ) {
+        $uri = URI->new($uri);
+    }
+
+    my $scheme = $uri->scheme || "";
+    if ( $scheme =~ /^https?/ ) {
+        return (
+            $scheme . "://"
+              . (
+                ( $uri->port == $uri->default_port )
+                ? $uri->host
+                : $uri->host_port
+              )
+        );
+    }
+    elsif ($scheme) {
+        return ( $scheme . ":" );
+    }
+    else {
+        if ( not $uri->authority and $uri->path =~ m,^/, ) {
+            return "'self'";
+        }
+    }
+    return;
 }
 
 # TODO: oldpassword

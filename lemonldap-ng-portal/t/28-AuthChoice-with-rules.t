@@ -10,7 +10,7 @@ BEGIN {
 }
 
 my $res;
-my $maintests = 21;
+my $maintests = 20;
 
 my $userdb = tempdb();
 
@@ -115,10 +115,11 @@ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
           m%<form id="lformSSL" action="#" method="post" class="login SSL">%,
         ' Action # found'
     ) or explain( $res->[2]->[0], '<form id="lformSSL"' );
-    my $header = getHeader( $res, 'Content-Security-Policy' );
-    ok( $header =~ m%;form-action \* https://test.example.com;%,
-        ' CSP URL found' )
-      or explain( $res->[1], 'form-action * https://test.example.com;' );
+    expectCsp(
+        $res,
+        'form-action' => '*',
+        'form-action' => 'https://test.example.com'
+    );
     ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
     ok(
         $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
