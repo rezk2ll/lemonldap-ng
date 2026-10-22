@@ -9,6 +9,7 @@ use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::History;
 use Lemonldap::NG::Manager::Api::Misc;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
+use Lemonldap::NG::Manager::Api::Providers::OidcOp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
@@ -59,6 +60,12 @@ sub init {
                                 ':uClientId' => 'findOidcRpByClientId'
                             },
                             ':confKey' => 'getOidcRpByConfKey'
+                        },
+                        op => {
+                            findByConfKey => {
+                                ':uPattern' => 'findOidcOpByConfKey'
+                            },
+                            ':confKey' => 'getOidcOpByConfKey'
                         },
                     },
                     saml => {
@@ -126,7 +133,8 @@ sub init {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => 'addOidcRp'
+                        rp => 'addOidcRp',
+                        op => 'addOidcOp'
                     },
                     saml => {
                         sp => 'addSamlSp'
@@ -159,7 +167,8 @@ sub init {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => { ':confKey' => 'replaceOidcRp' }
+                        rp => { ':confKey' => 'replaceOidcRp' },
+                        op => { ':confKey' => 'replaceOidcOp' }
                     },
                     saml => {
                         sp => { ':confKey' => 'replaceSamlSp' }
@@ -186,7 +195,8 @@ sub init {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => { ':confKey' => 'updateOidcRp' }
+                        rp => { ':confKey' => 'updateOidcRp' },
+                        op => { ':confKey' => 'updateOidcOp' }
                     },
                     saml => {
                         sp => { ':confKey' => 'updateSamlSp' }
@@ -213,7 +223,8 @@ sub init {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => { ':confKey' => 'deleteOidcRp' }
+                        rp => { ':confKey' => 'deleteOidcRp' },
+                        op => { ':confKey' => 'deleteOidcOp' }
                     },
                     saml => {
                         sp => { ':confKey' => 'deleteSamlSp' }
