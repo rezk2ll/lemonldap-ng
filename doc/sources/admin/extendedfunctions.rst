@@ -116,32 +116,45 @@ Simple usage example:
 
    checkDate($ssoStartDate, $ssoEndDate)
 
+.. _checkLogonHours:
+
 checkLogonHours
 ~~~~~~~~~~~~~~~
 
-This function checks the day and the hour of current request, and
-compare it to allowed days and hours. It returns 1 if matches, 0
-else. By default, the allowed days and hours is an hexadecimal
-value, representing each hour of the week. A day has 24 hours, and a
-week 7 days, so the value contains 168 bits, converted into 42
-hexadecimal characters. Sunday is the first day.
+This function checks the day and the hour of current request, and compare it to
+allowed days and hours. It returns 1 if matches, 0 else. The allowed days and
+hours are stored in your backend as the hexadecimal representation of a
+bit-string, with each bit representing each hour of the week. A day has 24
+hours, and a week 7 days, so the value contains 168 bits, converted into 42
+hexadecimal characters.  Sunday is the first day. Access is checked against UTC
+time, and hexadecimal values should assume big-endian order.
 
-For example, for a full access, excepted week-end:
+For example, to allow access from 06:00 UTC to 19:00 UTC, every week day
 
 ::
 
-   000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000
+    Bit string for weekends:
+    00000000 00000000 00000000 => 00 00 00
+
+    Bit string for weekdays:
+    00000011 11111111 11100000 => 03 FF E0
+
+    Final hex value:
+    00000003FFE003FFE003FFE003FFE003FFE0000000
 
 
 .. tip::
 
-    You can use the binary value from the logonHours attribute of Active
-    Directory, or create a custom attribute in your LDAP schema.
+    If you are using Active Directory, you can simply add the ``logonHours``
+    attribute in your list of exported attributes, and use it with this
+    function directly::
+
+        checkLogonHours($logonHours)
 
 Function parameters:
 
 -  **logon_hours**: String representing allowed logon hours (GMT)
--  **syntax** (optional): ``hexadecimal`` (default) or ``octetstring``
+-  **syntax** (deprecated): value is ignored
 -  **time_correction** (optional): Hours to add or to subtract
 -  **default_access** (optional): Which result to return if
    **logon_hours** is empty
@@ -152,14 +165,8 @@ Simple usage example:
 
    checkLogonHours($ssoLogonHours)
 
-If you use the binary value (Active Directory), use this:
-
-::
-
-   checkLogonHours($ssoLogonHours, 'octetstring')
-
-You can also configure jetlag (if all of your users use the same
-timezone):
+If you want to offset the allowed hours configuration to take timezones into
+account, you can specify it as the third argument.
 
 ::
 
