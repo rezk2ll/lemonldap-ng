@@ -590,6 +590,7 @@ sub tree {
                         'timeout',
                         'timeoutActivity',
                         'timeoutActivityInterval',
+                        'bindSessionIP',
                         'appAccessHistoryEnabled',
                         'grantSessionRules',
                         {

@@ -138,6 +138,7 @@
 "badValue":"Giá trị không hợp lệ",
 "badVariableName":"Tên biến không hợp lệ",
 "basicOptions":"Basic Options",
+"bindSessionIP":"Bind session to IP",
 "blackList":"Danh sách đen",
 "bool":"Boolean",
 "browse":"Duyệt",

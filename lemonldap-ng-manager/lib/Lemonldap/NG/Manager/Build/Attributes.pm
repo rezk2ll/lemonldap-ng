@@ -1382,6 +1382,12 @@ sub attributes {
             default       => '^[\w\.\-@]+$',
             documentation => 'Regular expression to validate login',
         },
+        bindSessionIP => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Ensure that requests from session use the initial IP address',
+            flags         => 'h',
+        },
         browsersDontStorePassword => {
             default       => 0,
             type          => 'bool',

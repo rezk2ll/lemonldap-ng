@@ -27,6 +27,7 @@
    "available2F": "Available second factor modules",
    "available2FSelfRegistration": "Available self-registration modules for second factor",
    "avoidAssignment": "Avoid assignment in expressions",
+   "bindSessionIP": "Ensure that requests from session use the initial IP address",
    "browsersDontStorePassword": "Avoid browsers to store users password",
    "bruteForceProtection": "Enable brute force attack protection",
    "bruteForceProtectionIncrementalTempo": "Enable incremental lock time for brute force attack protection",
