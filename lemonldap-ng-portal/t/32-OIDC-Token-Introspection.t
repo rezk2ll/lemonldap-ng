@@ -14,6 +14,9 @@ BEGIN {
 
 my $debug = 'error';
 
+# Fake authn level
+local *Lemonldap::NG::Portal::Auth::Demo::authnLevel = sub { 3 };
+
 # Initialization
 my $op = LLNG::Manager::Test->new( {
         ini => {
@@ -167,6 +170,8 @@ like( $json->{scope}, qr/\bextrascope\b/,
     "Response contains scope coming from extra claims definition" );
 is( $token_resp_scope, $json->{scope},
     "Token response scope matches token scope" );
+is( $json->{acr}, "loa-3", "Correct loa claim" );
+ok( $json->{auth_time}, "Auth time is present" );
 
 # Check status after expiration
 Time::Fake->offset("+2h");
