@@ -109,9 +109,9 @@ new_manager_vitest:
     # push only, so it could skip a commit that breaks the tests
     - if: $CI_PIPELINE_SOURCE == "push"
 
-# Fail on high/critical advisories in npm dependencies. Not restricted to
-# changed files: new advisories appear without any change on our side, so it
-# also runs alone in a scheduled pipeline defining NPMAUDITJOB=1.
+# Fail on high/critical advisories in npm dependencies. New advisories appear
+# without any change on our side, so it runs alone in a weekly scheduled
+# pipeline defining NPMAUDITJOB=1 rather than on each push.
 npm_audit:
   stage: build
   image: node:24
@@ -121,9 +121,6 @@ npm_audit:
         (cd $dir && npm audit --audit-level=high) || exit 1;
       done
   rules:
-    - if: $SONARJOB == "1"
-      when: never
-    - if: $CI_PIPELINE_SOURCE == "push"
     - if: $NPMAUDITJOB == "1"
 
 sonar-inspect:
