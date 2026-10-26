@@ -439,9 +439,9 @@ Arguments can be given after the message key, separated by commas. Each
 
     Arguments are now HTML-escaped. Without translation, the content of
     the tag is kept, or the key is displayed as text if the tag is empty.
-    A tag having a ``troptional`` attribute is hidden instead::
+    An empty tag having a ``troptional`` attribute is hidden instead::
 
-        <p trspan="myOptionalMessage" troptional hidden></p>
+        <p trspan="myOptionalMessage" troptional></p>
 
 
 .. versionadded:: 2.0.16

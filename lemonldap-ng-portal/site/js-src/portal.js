@@ -138,7 +138,7 @@ escapeHtml = function(str) {
 //    next argument (HTML escaped)
 // Without translation, the content set by the template is kept, else the
 // key is displayed as text, never as HTML. A tag having a "troptional"
-// attribute is hidden instead.
+// attribute is emptied and hidden instead of displaying the key.
 translateSpan = function(el) {
   var args, key, optional, txt, value;
   value = el.attr('trspan');
@@ -154,19 +154,18 @@ translateSpan = function(el) {
     args.forEach(function(arg) {
       txt = txt.replace(/%[sd]/, escapeHtml(arg));
     });
-    if (optional) {
-      el.prop('hidden', false);
-    }
-    return el.html(txt);
+    el.html(txt);
+  } else if (el.data('trspanKey') === value && el.data('trspanOrig').trim()) {
+    el.html(el.data('trspanOrig'));
+  } else if (optional) {
+    el.empty();
+  } else {
+    el.text(key);
   }
   if (optional) {
-    el.prop('hidden', true);
-    return el.empty();
+    el.prop('hidden', el.html() === '');
   }
-  if (el.data('trspanKey') === value && el.data('trspanOrig').trim()) {
-    return el.html(el.data('trspanOrig'));
-  }
-  return el.text(key);
+  return el;
 };
 
 // Set each attribute of a tag having a "trattribute" attribute

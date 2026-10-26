@@ -7,6 +7,7 @@
          },
          "test1" : {
             "options" : {
+               "description" : "A simple application displaying authenticated user",
                "display" : "auto",
                "logo" : "demo.png",
                "name" : "Application Test 1",
@@ -17,6 +18,7 @@
          },
          "test2" : {
             "options" : {
+               "description" : "The same simple application displaying authenticated user",
                "display" : "auto",
                "logo" : "thumbnail.png",
                "name" : "Application Test 2",
@@ -31,6 +33,7 @@
          "catname" : "Administration",
          "manager" : {
             "options" : {
+               "description" : "Configure LemonLDAP::NG WebSSO",
                "display" : "auto",
                "logo" : "configure.png",
                "name" : "WebSSO Manager",
@@ -41,6 +44,7 @@
          },
          "notifications" : {
             "options" : {
+               "description" : "Explore WebSSO notifications",
                "display" : "auto",
                "logo" : "database.png",
                "name" : "Notifications Explorer",
@@ -54,6 +58,7 @@
          },
          "sessions" : {
             "options" : {
+               "description" : "Explore WebSSO sessions",
                "display" : "auto",
                "logo" : "database.png",
                "name" : "Sessions Explorer",
@@ -68,6 +73,7 @@
          "catname" : "Documentation",
          "localdoc" : {
             "options" : {
+               "description" : "Documentation supplied with LemonLDAP::NG",
                "display" : "on",
                "logo" : "help.png",
                "name" : "Local documentation",
@@ -78,6 +84,7 @@
          },
          "officialwebsite" : {
             "options" : {
+               "description" : "Official LemonLDAP::NG Website",
                "display" : "on",
                "logo" : "network.png",
                "name" : "Official Website",

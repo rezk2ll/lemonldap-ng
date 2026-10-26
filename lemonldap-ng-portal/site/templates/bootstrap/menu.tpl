@@ -171,12 +171,12 @@
                         </h5>
 
                         <!-- Description (optional) -->
-                        <TMPL_IF NAME="appdesc">
+                        <TMPL_IF NAME="appdesctr">
+                          <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted" trspan="<TMPL_VAR NAME="appdesctr">" troptional><TMPL_VAR NAME="appdesc"></p>
+                        <TMPL_ELSE><TMPL_IF NAME="appdesc">
                           <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted">
                             <TMPL_VAR NAME="appdesc">
                           </p>
-                        <TMPL_ELSE><TMPL_IF NAME="appdesctr">
-                          <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted" trspan="<TMPL_VAR NAME="appdesctr">" troptional hidden></p>
                         </TMPL_IF></TMPL_IF>
 
                           </div>

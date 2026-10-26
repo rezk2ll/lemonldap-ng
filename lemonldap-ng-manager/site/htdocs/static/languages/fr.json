@@ -644,7 +644,7 @@
 "markAsDone":"Marquer comme validée",
 "memberOfSSOGroups":"Membre des groupes SSO",
 "menu":"Menu",
-"menuAppTranslationKeyHelp":"Facultatif. Lettres, chiffres et soulignés uniquement. Les fichiers de langue du portail donnent le nom (clé) et, si elles ne sont pas renseignées ici, la description (clé_desc) et l'info-bulle (clé_tip).",
+"menuAppTranslationKeyHelp":"Facultatif. Lettres, chiffres et soulignés uniquement. Les fichiers de langue du portail donnent le nom (clé), la description (clé_desc) et l'info-bulle (clé_tip) ; les valeurs saisies ici sont utilisées en l'absence de traduction.",
 "menuCatTranslationKeyHelp":"Facultatif. Lettres, chiffres et soulignés uniquement. Les fichiers de langue du portail donnent le nom de la catégorie sous cette clé.",
 "menuCategory":"Catégorie du menu",
 "menuTranslationKey":"Clé de traduction",

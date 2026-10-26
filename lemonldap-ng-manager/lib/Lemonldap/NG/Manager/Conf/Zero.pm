@@ -26,6 +26,7 @@ sub zeroConf {
                         'translation' => 'menuManager',
                         'display'     => 'auto',
                         'uri'         => "http://manager.$domain/manager.html",
+                        'description' => 'Configure LemonLDAP::NG WebSSO'
                     },
                     'type' => 'application'
                 },
@@ -34,6 +35,7 @@ sub zeroConf {
                     'options' => {
                         'display'     => 'auto',
                         'uri'         => "http://manager.$domain/sessions.html",
+                        'description' => 'Explore WebSSO sessions',
                         'logo'        => 'database.png',
                         'name'        => 'Sessions Explorer',
                         'translation' => 'menuSessions',
@@ -44,6 +46,7 @@ sub zeroConf {
                 'notifications' => {
                     'type'    => 'application',
                     'options' => {
+                        'description' => 'Explore WebSSO notifications',
                         'uri' => "http://manager.$domain/notifications.html",
                         'display'     => 'auto',
                         'logo'        => 'database.png',
@@ -57,6 +60,8 @@ sub zeroConf {
                 'type'     => 'category',
                 'localdoc' => {
                     'options' => {
+                        'description' =>
+                          'Documentation supplied with LemonLDAP::NG',
                         'display'     => 'on',
                         'uri'         => "http://manager.$domain/doc/",
                         'name'        => 'Local documentation',
@@ -67,6 +72,7 @@ sub zeroConf {
                 },
                 'officialwebsite' => {
                     'options' => {
+                        'description' => 'Official LemonLDAP::NG Website',
                         'uri'         => 'https://lemonldap-ng.org/',
                         'display'     => 'on',
                         'logo'        => 'network.png',
@@ -81,6 +87,8 @@ sub zeroConf {
             '1sample' => {
                 'test1' => {
                     'options' => {
+                        'description' =>
+                          'A simple application displaying authenticated user',
                         'uri'         => "http://test1.$domain/",
                         'display'     => 'auto',
                         'logo'        => 'demo.png',
@@ -95,6 +103,8 @@ sub zeroConf {
                 'test2'   => {
                     'type'    => 'application',
                     'options' => {
+                        'description' =>
+'The same simple application displaying authenticated user',
                         'uri'         => "http://test2.$domain/",
                         'display'     => 'auto',
                         'name'        => 'Application Test 2',
