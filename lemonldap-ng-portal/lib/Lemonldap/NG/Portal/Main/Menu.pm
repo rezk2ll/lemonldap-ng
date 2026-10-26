@@ -327,13 +327,14 @@ sub _buildApplicationHash {
         apptip       => $apptip,
     };
 
-    # The description and the tooltip have their own translation, the tooltip
-    # defaults to the name
+    # A description or a tooltip set in the configuration is displayed as is,
+    # else its own translation is used. Without translation, the tooltip
+    # falls back to the translated name
     if ($apptr) {
         $applicationHash->{apptr}     = $apptr;
-        $applicationHash->{appdesctr} = "${apptr}_desc";
-        $applicationHash->{apptiptr} =
-          $apphash->{options}->{tooltip} ? "${apptr}_tip" : $apptr;
+        $applicationHash->{appdesctr} = "${apptr}_desc" unless $appdesc;
+        $applicationHash->{apptiptr}  = "${apptr}_tip|$apptr"
+          unless $apphash->{options}->{tooltip};
     }
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;

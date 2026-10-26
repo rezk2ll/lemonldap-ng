@@ -173,9 +173,11 @@
                         <!-- Description (optional) -->
                         <TMPL_IF NAME="appdesc">
                           <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted">
-                            <TMPL_IF NAME="appdesctr"><span trspan="<TMPL_VAR NAME="appdesctr">"><TMPL_VAR NAME="appdesc"></span><TMPL_ELSE><TMPL_VAR NAME="appdesc"></TMPL_IF>
+                            <TMPL_VAR NAME="appdesc">
                           </p>
-                        </TMPL_IF>
+                        <TMPL_ELSE><TMPL_IF NAME="appdesctr">
+                          <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted" trspan="<TMPL_VAR NAME="appdesctr">" troptional hidden></p>
+                        </TMPL_IF></TMPL_IF>
 
                           </div>
                         </div>

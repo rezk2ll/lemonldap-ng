@@ -7,7 +7,8 @@ require 't/test-lib.pm';
 
 # Only categories and applications having a translation key are translated
 
-my $client = LLNG::Manager::Test->new( {
+my $client = LLNG::Manager::Test->new(
+    {
         ini => {
             portal          => 'http://auth.example.com/',
             authentication  => 'Demo',
@@ -105,18 +106,35 @@ is_deeply(
 is_deeply( texts('//div[contains(@class,"2raw")]//h4'),
     ['logout'], 'Category name is displayed as is' );
 
-# Applications
-is_deeply(
-    attrs( '//div[contains(@class,"app1")]//span[@trspan]', 'trspan' ),
-    [ 'myApp', 'myApp_desc' ],
-    'Name and description of app1 are translated'
-);
+# Applications: the name is translated, the description and the tooltip
+# only when they are not set
+is_deeply( attrs( '//div[contains(@class,"app1")]//*[@trspan]', 'trspan' ),
+    ['myApp'], 'Only the name of app1 is translated' );
+is_deeply( texts('//div[contains(@class,"app1")]//p'),
+    ['My description'], 'Description of app1 is displayed as is' );
 is_deeply( attrs( '//div[contains(@class,"app1")]/a', 'trattribute' ),
-    ['title:myApp_tip'], 'Tooltip of app1 is translated' );
+    [undef], 'Tooltip of app1 is not translated' );
 is_deeply( attrs( '//div[contains(@class,"app1")]/a', 'title' ),
-    ['My tooltip'], 'Tooltip is kept as fallback' );
-is_deeply( attrs( '//div[contains(@class,"app2")]/a', 'trattribute' ),
-    ['title:otherApp'], 'Tooltip of app2 defaults to the translated name' );
+    ['My tooltip'], 'Tooltip of app1 is displayed as is' );
+is_deeply(
+    attrs( '//div[contains(@class,"app2")]//*[@trspan]', 'trspan' ),
+    [ 'otherApp', 'otherApp_desc' ],
+    'Name and description of app2 are translated'
+);
+is_deeply(
+    attrs(
+        '//div[contains(@class,"app2")]//p[@troptional and @hidden]', 'trspan'
+    ),
+    ['otherApp_desc'],
+    'Description of app2 is hidden without translation'
+);
+is_deeply(
+    attrs( '//div[contains(@class,"app2")]/a', 'trattribute' ),
+    ['title:otherApp_tip|otherApp'],
+    'Tooltip of app2 is translated, with the name as fallback'
+);
+is_deeply( attrs( '//div[contains(@class,"app2")]/a', 'title' ),
+    ['Other app'], 'Tooltip of app2 defaults to the name' );
 is_deeply(
     attrs(
         '//div[contains(@class,"recorder")]//*[@trspan or @trattribute]',

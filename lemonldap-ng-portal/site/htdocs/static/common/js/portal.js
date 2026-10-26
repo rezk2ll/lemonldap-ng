@@ -202,10 +202,12 @@
   //  - trspan="key,arg1,arg2": translation of key, each %s or %d replaced by the
   //    next argument (HTML escaped)
   // Without translation, the content set by the template is kept, else the
-  // key is displayed as text, never as HTML.
+  // key is displayed as text, never as HTML. A tag having a "troptional"
+  // attribute is hidden instead.
   translateSpan = function translateSpan(el) {
-    var args, key, txt, value;
+    var args, key, optional, txt, value;
     value = el.attr('trspan');
+    optional = el.is('[troptional]');
     if (el.data('trspanKey') === undefined) {
       el.data('trspanKey', value);
       el.data('trspanOrig', el.html());
@@ -217,7 +219,14 @@
       args.forEach(function (arg) {
         txt = txt.replace(/%[sd]/, escapeHtml(arg));
       });
+      if (optional) {
+        el.prop('hidden', false);
+      }
       return el.html(txt);
+    }
+    if (optional) {
+      el.prop('hidden', true);
+      return el.empty();
     }
     if (el.data('trspanKey') === value && el.data('trspanOrig').trim()) {
       return el.html(el.data('trspanOrig'));
@@ -226,8 +235,10 @@
   };
 
   // Set each attribute of a tag having a "trattribute" attribute
-  // ("attr1:key1 attr2:key2") to the translation of its key. Without
-  // translation, the value set by the template is kept, else the key is used.
+  // ("attr1:key1 attr2:key2") to the translation of its key. Alternative keys
+  // can be given ("attr:key1|key2"): the first one having a translation is
+  // used. Without translation, the value set by the template is kept, else the
+  // (last) key is used.
   translateAttributes = function translateAttributes(el) {
     var orig;
     orig = el.data('trattributeOrig');
@@ -236,11 +247,13 @@
       el.data('trattributeOrig', orig);
     }
     el.attr('trattribute').trim().split(/\s+/).forEach(function (trattribute) {
-      var attribute, key;
+      var attribute, key, keys;
       var _trattribute$split = trattribute.split(':');
       var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
       attribute = _trattribute$split2[0];
-      key = _trattribute$split2[1];
+      keys = _trattribute$split2[1];
+      keys = (keys || '').split('|');
+      key = $.grep(keys, hasTranslation)[0] || keys[keys.length - 1];
       if (!(attribute && key)) {
         return;
       }

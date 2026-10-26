@@ -644,7 +644,7 @@
 "markAsDone":"Segna come fatto",
 "memberOfSSOGroups":"Membro di gruppi SSO",
 "menu":"Menu",
-"menuAppTranslationKeyHelp":"Optional. Letters, digits and underscores only. Portal language files give the name (key), the description (key_desc) and the tooltip (key_tip).",
+"menuAppTranslationKeyHelp":"Optional. Letters, digits and underscores only. Portal language files give the name (key) and, when they are not set here, the description (key_desc) and the tooltip (key_tip).",
 "menuCatTranslationKeyHelp":"Optional. Letters, digits and underscores only. Portal language files give the category name under this key.",
 "menuCategory":"Categoria del menu",
 "menuTranslationKey":"Translation key",

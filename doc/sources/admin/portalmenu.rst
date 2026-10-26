@@ -102,10 +102,16 @@ a lang file of the skin templates directory (see
 :doc:`portal customization<portalcustom>`). For an application whose key
 is ``myApp``:
 
--  ``myApp`` translates its name
--  ``myApp_desc`` translates its description
--  ``myApp_tip`` translates its tooltip (if no tooltip is set, the
-   tooltip is the name, translated by ``myApp``)
+-  ``myApp`` translates its name (the configured name is displayed when
+   there is no translation)
+-  ``myApp_desc`` gives its description, only if no description is set in
+   the Manager
+-  ``myApp_tip`` gives its tooltip, only if no tooltip is set in the
+   Manager; without ``myApp_tip`` translation, the tooltip is the name
+   (translated by ``myApp``)
+
+A description or a tooltip set in the Manager is always displayed as is:
+leave these fields empty to translate them.
 
 A category only uses its key. For example ``templates/bootstrap/fr.json``:
 
@@ -118,8 +124,10 @@ A category only uses its key. For example ``templates/bootstrap/fr.json``:
    }
 
 A text without translation in the current language is displayed as
-configured. The categories and applications of the default configuration
-use keys starting with ``menu`` that are already translated.
+configured (an application without description and without ``_desc``
+translation has no description). The categories and applications of the
+default configuration use keys starting with ``menu`` that are already
+translated.
 
 .. |image0| image:: /documentation/manager-portal-menu-application.png
    :class: align-center

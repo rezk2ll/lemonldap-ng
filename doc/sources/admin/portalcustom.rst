@@ -439,6 +439,9 @@ Arguments can be given after the message key, separated by commas. Each
 
     Arguments are now HTML-escaped. Without translation, the content of
     the tag is kept, or the key is displayed as text if the tag is empty.
+    A tag having a ``troptional`` attribute is hidden instead::
+
+        <p trspan="myOptionalMessage" troptional hidden></p>
 
 
 .. versionadded:: 2.0.16
@@ -450,6 +453,13 @@ Arguments can be given after the message key, separated by commas. Each
         <img src="http://xxx" trattribute="alt:myMessage data-description:myMessage"></img>
 
     In this example, the ``alt=`` and ``data-description=`` attributes will be replaced by the translation of ``myMessage``
+
+.. versionchanged:: 2.23.5
+
+    Several keys can be given, separated by ``|``: the first one that has
+    a translation is used (``trattribute="title:myTooltip|myMessage"``).
+    Without translation, the value of the attribute set in the template is
+    kept (or, if the template does not set it, the last key is used).
 
 Menu tabs
 ~~~~~~~~~
