@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::Net::LDAP;
 use Lemonldap::NG::Portal::Main::Constants;
+use Net::LDAP::Util                        qw(escape_filter_value);
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -91,7 +92,11 @@ sub _buildFilter {
     my $conf = $self->{conf};
     $self->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
     $filter =~ s/"/\\"/g;
-    $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
+
+    # Values may come from a federated provider and skip userControl: escape
+    # them so that they only match literally
+    $filter =~
+      s/\$(\w+)/".escape_filter_value(\$req->{sessionInfo}->{$1}\/\/'')."/g;
     $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
     $filter =~
       s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{data}->{$1}/g;
