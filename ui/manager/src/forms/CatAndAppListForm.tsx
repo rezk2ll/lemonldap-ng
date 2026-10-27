@@ -1,6 +1,7 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { IconButton } from "@mui/material";
 import { newCategory } from "../features/config/configSlice";
+import { menuApplicationKeys } from "../utils/menu";
 
 export default function CatAndAppListForm({
   values,
@@ -44,8 +45,7 @@ export default function CatAndAppListForm({
                   : ""}
               </li>
               <ul>
-                {Object.keys(values[key])
-                  .filter((el) => typeof values[key][el] === "object")
+                {menuApplicationKeys(values[key])
                   .sort((key1, key2) => {
                     const order1 = (values[key][key1] as Record<string, number>)
                       .order;

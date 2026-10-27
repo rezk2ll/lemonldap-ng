@@ -1,5 +1,6 @@
 import { t } from "i18next";
 import { attributes } from "../metadata";
+import { menuApplicationKeys } from "./menu";
 import { llngConfig } from "./types";
 
 export interface TreeNode {
@@ -125,10 +126,7 @@ export function recursTree(
             id: `${tree.title};${el}`,
             type: list[el].type,
             parent: id,
-            children: Object.keys(list[el])
-              .filter(
-                (key) => key !== "type" && key !== "catname" && key !== "order"
-              )
+            children: menuApplicationKeys(list[el])
               .sort((key1, key2) => list[el][key1].order - list[el][key2].order)
               .map((key) => ({
                 name: list[el][key].options.name,

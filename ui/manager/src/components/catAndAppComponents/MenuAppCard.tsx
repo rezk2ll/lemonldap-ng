@@ -232,6 +232,24 @@ export function MenuAppCard({
                 />
               </FormControl>
               <FormControl>
+                <FormLabel>{t("menuTranslationKey")}</FormLabel>
+                <TextField
+                  size="small"
+                  value={app.options.translation ?? ""}
+                  helperText={t("menuAppTranslationKeyHelp")}
+                  onChange={(e) =>
+                    dispatch(
+                      changeApplicationField({
+                        catid: catId,
+                        id: appKey,
+                        field: "translation",
+                        value: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </FormControl>
+              <FormControl>
                 <FormLabel>{t("applicationDisplay")}</FormLabel>
                 <RadioGroup
                   row

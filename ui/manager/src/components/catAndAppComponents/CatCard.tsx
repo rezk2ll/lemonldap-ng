@@ -12,11 +12,13 @@ import {
 } from "@mui/material";
 import { t } from "i18next";
 import {
+  changeCategoryTranslation,
   delCategory,
   moveCat,
   newApplication,
   renameCategory,
 } from "../../features/config/configSlice";
+import { menuApplicationKeys } from "../../utils/menu";
 import { MenuAppCard } from "./MenuAppCard";
 
 export function CatCard({
@@ -37,9 +39,7 @@ export function CatCard({
   dispatch: Function;
   portal: string;
 }) {
-  const applications = Object.keys(data)
-    .filter((key) => typeof data[key] === "object")
-    .sort(
+  const applications = menuApplicationKeys(data).sort(
       (key1, key2) =>
         Number((data[key1] as Record<string, number>).order) -
         Number((data[key2] as Record<string, number>).order)
@@ -92,6 +92,25 @@ export function CatCard({
               </IconButton>
             </span>
           </div>
+        }
+        subheader={
+          <TextField
+            className="catTranslationField"
+            size="small"
+            variant="standard"
+            label={t("menuTranslationKey")}
+            value={
+              typeof data.options === "object"
+                ? (data.options as Record<string, string>).translation ?? ""
+                : ""
+            }
+            helperText={t("menuCatTranslationKeyHelp")}
+            onChange={(e) =>
+              dispatch(
+                changeCategoryTranslation({ id: catId, value: e.target.value })
+              )
+            }
+          />
         }
       />
       <CardContent className="applications">

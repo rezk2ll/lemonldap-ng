@@ -449,6 +449,10 @@ textarea {
   font-weight: 600;
   color: #1e293b;
 }
+.catTranslationField {
+  min-width: 220px;
+  margin-top: 4px;
+}
 .catActions {
   display: flex;
   align-items: center;
