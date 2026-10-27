@@ -34,6 +34,7 @@ As an OP, LemonLDAP::NG supports many OpenID Connect features:
 -  PKCE - See :rfc:`7636`
 -  Introspection endpoint - See :rfc:`7662`
 -  JWT Introspection response - See :rfc:`9701`
+-  Step-up authentication - See :rfc:`9470`
 -  Offline access
 -  Refresh Tokens
 -  Optional JWT Access Tokens - See :rfc:`9068`

@@ -2301,7 +2301,17 @@ sub introspection {
                 client_id => $oidcSession->{data}->{client_id},
                 exp       =>
                   int( $oidcSession->data->{_utime} + $self->conf->{timeout} ),
-                iat        => int( $oidcSession->data->{iat} ),
+                iat => int( $oidcSession->data->{iat} ),
+                (
+                    $oidcSession->data->{auth_time}
+                    ? ( auth_time => int( $oidcSession->data->{auth_time} ) )
+                    : ()
+                ),
+                (
+                    $oidcSession->data->{acr}
+                    ? ( acr => $oidcSession->data->{acr} )
+                    : ()
+                ),
                 iss        => $self->get_issuer($req),
                 nbf        => int( $oidcSession->data->{nbf} ),
                 scope      => $oidcSession->{data}->{scope},
@@ -2885,21 +2895,10 @@ sub _generateIDToken {
       || $self->conf->{oidcServiceIDTokenExpiration};
     $id_token_exp += time;
 
-    my $authenticationLevel = $sessionInfo->{authenticationLevel} || 0;
-
-    my $id_token_acr = "loa-$authenticationLevel";
-    foreach ( keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} } ) {
-        if ( $self->conf->{oidcServiceMetaDataAuthnContext}->{$_} eq
-            $authenticationLevel )
-        {
-            $id_token_acr = $_;
-            last;
-        }
-    }
-
     my $sub = $self->getUserIDForRP( $req, $rp, $sessionInfo );
 
     my $amr = $self->getAmr( $req, $rp, $sessionInfo );
+    my $acr = $self->getAcr( $req, $rp, $sessionInfo );
 
     my $id_token_payload_hash = {
         iss       => $self->get_issuer($req),            # Issuer Identifier
@@ -2908,8 +2907,8 @@ sub _generateIDToken {
         exp       => $id_token_exp,                      # expiration
         iat       => time,                               # Issued time
         auth_time => $sessionInfo->{_lastAuthnUTime},    # Authentication time
-        acr       => $id_token_acr,  # Authentication Context Class Reference
-        azp       => $client_id,     # Authorized party, this is used for logout
+        acr       => $acr,          # Authentication Context Class Reference
+        azp       => $client_id,    # Authorized party, this is used for logout
         ( @$amr ? ( amr => $amr ) : () ),
         sid => $sid,
     };
@@ -2953,29 +2952,6 @@ sub _generateIDToken {
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp,
         $sessionInfo );
-}
-
-sub getAmr {
-    my ( $self, $req, $rp, $sessionInfo ) = @_;
-    my $result = [];
-
-    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-
-    for my $amr_value ( sort keys %{ $self->amrRules } ) {
-        my $richSessionInfo = {
-            %{ $sessionInfo || {} },
-            _clientId      => $client_id,
-            _clientConfKey => $rp,
-        };
-
-        if (    $self->amrRules->{$amr_value}
-            and $self->amrRules->{$amr_value}->( $req, $richSessionInfo ) )
-        {
-            push @$result, $amr_value;
-        }
-    }
-
-    return $result;
 }
 
 sub encryptToken {

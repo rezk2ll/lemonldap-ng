@@ -31,6 +31,9 @@ init(
                 vhostServiceTokenTTL => -1,
             },
         },
+        oidcServiceMetaDataAuthnContext => {
+            "mycustom-acr" => 5,
+        },
         exportedHeaders => {
             'test1.example.com' => {
                 'Auth-Token'         => '$_accessToken',
@@ -55,6 +58,9 @@ init(
                 '^/read'  => '$_scope =~ /(?<!\S)read(?!\S)/',
             },
             'test2.example.com' => {
+
+                # Require a different auth level
+                '(?#steptup)^/stepup(?#AuthnLevel=5)' => 'accept',
 
                 # Restrict audience
                 'default' => 'listMatch($_audiences, "test2.example.com")',
@@ -256,6 +262,25 @@ ok(
     'Valid access token'
 );
 is( $res->[0], 403, "Unauthorized because the write scope is not granted" );
+
+# Request with valid Access Token but insufficient authn level
+ok(
+    $res = $client->_get(
+        '/stepup',           undef,
+        'test2.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION =>
+'Bearer f0fd4e85000ce35d062f97f5b466fc00abc2fad0406e03e086605f929ec4a249',
+    ),
+    'Valid access token'
+);
+
+%h = @{ $res->[1] };
+is( $res->[0], 401, "Request denied" );
+is( $h{'WWW-Authenticate'},
+    'Bearer error="insufficient_user_authentication", acr_values="mycustom-acr"'
+);
+count(3);
 
 # Request with JWT Access Token
 ok(

@@ -245,7 +245,7 @@ sub defaultValuesInit {
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    upgradeSession
         hashedSessionStore      eventQueueName     eventStatus
-        statusQueueName useRedirectAjaxOnUnauthorized
+        statusQueueName useRedirectAjaxOnUnauthorized oidcServiceMetaDataAuthnContext
         )
       );
 

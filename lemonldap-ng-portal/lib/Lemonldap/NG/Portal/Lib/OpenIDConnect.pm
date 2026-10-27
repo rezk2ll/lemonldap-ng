@@ -1316,13 +1316,15 @@ sub getAuthorizationCode {
 # @param req current request
 # @param scope access token scope
 # @param rp configuration key of the RP this token is being made for
-# @param sessionInfo. Hashref of session info OR session ID for lazy fetching
+# @param sessionInfo. Hashref of session info
 # @param info hashref of access token session info (offline vs online)
 # @return new Lemonldap::NG::Common::Session object
 
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
+    my $auth_time = $sessionInfo->{_lastAuthnUTime};
     my $at_info   = {
         scope     => $scope,
         rp        => $rp,
@@ -1330,6 +1332,14 @@ sub newAccessToken {
         iat       => time,
         nbf       => time,
         aud       => $self->getAudiences($rp),
+        (
+            defined($auth_time)
+            ? (
+                auth_time => $auth_time,
+                acr       => $self->getAcr( $req, $rp, $sessionInfo ),
+              )
+            : ()
+        ),
         %{$info},
     };
     my $ttl =
@@ -1397,8 +1407,10 @@ sub makeJWT {
         jti => $id,                         # Access Token session ID
         sid => $self->getSidFromSession( $rp, $sessionInfo ),    # Session id
     };
-    $access_token_payload->{$_} = $at_info->{$_}
-      foreach (qw(scope client_id iat));
+
+    foreach (qw(scope client_id iat auth_time acr)) {
+        $access_token_payload->{$_} = $at_info->{$_} if defined($_);
+    }
 
     my $claims =
       $self->buildUserInfoResponseFromData( $req, $at_info->{scope}, $rp,
@@ -3203,6 +3215,46 @@ sub _getRequiredKeyTypeForAlg {
         return "EC";
     }
     return;
+}
+
+sub getAcr {
+    my ( $self, $req, $rp, $sessionInfo ) = @_;
+
+    my $authenticationLevel = $sessionInfo->{authenticationLevel} || 0;
+
+    my $acr = "loa-$authenticationLevel";
+    foreach ( sort keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} } ) {
+        if ( $self->conf->{oidcServiceMetaDataAuthnContext}->{$_} eq
+            $authenticationLevel )
+        {
+            $acr = $_;
+            last;
+        }
+    }
+    return $acr;
+}
+
+sub getAmr {
+    my ( $self, $req, $rp, $sessionInfo ) = @_;
+    my $result = [];
+
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
+    for my $amr_value ( sort keys %{ $self->amrRules } ) {
+        my $richSessionInfo = {
+            %{ $sessionInfo || {} },
+            _clientId      => $client_id,
+            _clientConfKey => $rp,
+        };
+
+        if (    $self->amrRules->{$amr_value}
+            and $self->amrRules->{$amr_value}->( $req, $richSessionInfo ) )
+        {
+            push @$result, $amr_value;
+        }
+    }
+
+    return $result;
 }
 
 1;

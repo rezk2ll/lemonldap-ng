@@ -75,6 +75,8 @@ LWP::Protocol::PSGI->register(
             ok( $json->{family_name} eq 'Frédéric Accents',
                 'Found claims into access_token' );
             ok( ( $json->{iat} and $json->{exp} ), 'Found iat and exp' );
+            ok( ( $json->{auth_time} ),            'Found auth_time' );
+            is( $json->{acr}, "customacr-1", 'Found acr' );
             ok( !$json->{nbf}, "nbf isn't part of access_token" );
         }
         return $res;

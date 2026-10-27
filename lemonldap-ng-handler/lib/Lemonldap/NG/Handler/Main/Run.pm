@@ -435,9 +435,10 @@ sub grant {
             $class->logger->debug("Required authentication level = $level");
             $class->logger->warn(
                 'User rejected due to insufficient authentication level');
+            $req->data->{_required_level} = $level;
             if ( $class->tsv->{upgradeSession} ) {
                 $class->logger->warn(' -> Session upgrade enabled');
-                $session->{_upgrade} = 1;
+                $req->data->{_upgrade} = 1;
             }
             return 0;
         }
@@ -487,7 +488,7 @@ sub forbidden {
         return $class->goToPortal( $req, $u, 'logout=1' );
     }
 
-    if ( $session->{_upgrade} ) {
+    if ( $req->data->{_upgrade} ) {
         $class->localUnlog($req);
         return $class->goToPortal( $req, $uri, undef, '/upgradesession' );
     }

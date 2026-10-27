@@ -195,6 +195,12 @@ sub goToPortal {
     if ( $req->data->{oauth2_error} ) {
         $oauth2_error = ' error="' . $req->data->{oauth2_error} . '"';
     }
+    elsif ( $req->data->{_required_level} ) {
+
+        my $acr = $class->_authn_level_to_acr( $req->data->{_required_level} );
+        $oauth2_error .= " error=\"insufficient_user_authentication\"";
+        $oauth2_error .= ", acr_values=\"$acr\"";
+    }
     $class->set_header_out( $req,
         'WWW-Authenticate' => "Bearer" . $oauth2_error );
     return $class->HTTP_UNAUTHORIZED;
@@ -212,6 +218,19 @@ sub _getTokenAttributes {
         }
     }
     return %res;
+}
+
+sub _authn_level_to_acr {
+    my ( $class, $level ) = @_;
+    my $acr = "loa-$level";
+    my $map = $class->tsv->{oidcServiceMetaDataAuthnContext} || {};
+    for my $acr_value ( sort keys %$map ) {
+        if ( $map->{$acr_value} eq $level ) {
+            $acr = $acr_value;
+            last;
+        }
+    }
+    return $acr;
 }
 
 1;

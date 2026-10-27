@@ -61,6 +61,8 @@ sub runTest {
 
     my $idpId = $op->login( 'french', { lmAuth => '1_Demo' } );
 
+    my $expected_auth_time = getSession($idpId)->data->{_lastAuthnUTime};
+
     # Inital first name
     $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} =
       'Frédéric Accents';
@@ -83,8 +85,10 @@ sub runTest {
     if ($jwt) {
         expectJWT(
             $access_token,
-            name => "Frédéric Accents",
-            sub  => "customfrench"
+            name      => "Frédéric Accents",
+            sub       => "customfrench",
+            acr       => 'loa-1',
+            auth_time => $expected_auth_time,
         );
     }
     my $refresh_token = $json->{refresh_token};
@@ -99,7 +103,7 @@ sub runTest {
 
     my $id_token_payload = id_token_payload($id_token);
     my $auth_time        = $id_token_payload->{auth_time};
-    ok( $auth_time, "Authentication date found in token" );
+    is( $auth_time, $expected_auth_time, "Authentication date found in token" );
     is(
         $id_token_payload->{name},
         'Frédéric Accents',
@@ -144,8 +148,10 @@ sub runTest {
     if ($jwt) {
         expectJWT(
             $access_token,
-            name => "Frédéric Accents",
-            sub  => "customfrench"
+            name      => "Frédéric Accents",
+            sub       => "customfrench",
+            acr       => 'loa-1',
+            auth_time => $expected_auth_time,
         );
     }
     $id_token = $json->{id_token};
@@ -194,8 +200,10 @@ sub runTest {
     if ($jwt) {
         expectJWT(
             $access_token,
-            name => "Frédéric Freedom",
-            sub  => "customfrench"
+            name      => "Frédéric Freedom",
+            sub       => "customfrench",
+            acr       => 'loa-1',
+            auth_time => $expected_auth_time,
         );
     }
     $id_token = $json->{id_token};
@@ -204,7 +212,7 @@ sub runTest {
 
     $id_token_payload = id_token_payload($id_token);
     is( $id_token_payload->{auth_time},
-        $auth_time, 'Original auth_time retained' );
+        $expected_auth_time, 'Original auth_time retained' );
     is(
         $id_token_payload->{name},
         'Frédéric Freedom',
@@ -232,6 +240,9 @@ sub runTest {
     is( $json->{active},    1,      'Token is active' );
     is( $json->{client_id}, 'rpid', 'Introspection contains client_id' );
     is( $json->{sub},       'customfrench', 'Introspection contains sub' );
+    is( $json->{acr},       'loa-1',        'Introspection contains acr' );
+    is( $json->{auth_time}, $expected_auth_time,
+        'Introspection contains original auth_time' );
 
     # #2168
     ok(
