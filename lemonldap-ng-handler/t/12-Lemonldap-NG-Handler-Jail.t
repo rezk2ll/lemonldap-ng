@@ -6,7 +6,9 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More tests => 26;
+use Test::More tests => 50;
+use Time::Fake;
+use Time::Local;
 require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
@@ -137,3 +139,108 @@ is(
     "xj4bnp4pahh6uqkbidpf3lrceoyagyndsylxvhfucd7wd4qacwwq",
     "subjectid works as expected"
 );
+
+$sub  = "sub { return(bin2guid(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'bin2guid extended function is defined'
+);
+is(
+    $code->( pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ) ),
+    "8d1f2ab8-11c1-45ac-be3b-ce4f62767504",
+    "bin2guid works as expected"
+);
+is( $code->( pack( 'H*', 'b82a1f8dc111ac45be3bce4f627675' ) ),
+    undef, "bin2guid fails on invalid input" );
+
+$sub  = "sub { return(guid2bin(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'guid2bin extended function is defined'
+);
+is(
+    $code->("8d1f2ab8-11c1-45ac-be3b-ce4f62767504"),
+    pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ),
+    "guid2bin works as expected"
+);
+is(
+    $code->("8D1F2AB8-11C1-45AC-BE3B-CE4F62767504"),
+    pack( 'H*', 'b82a1f8dc111ac45be3bce4f62767504' ),
+    "guid2bin works as expected"
+);
+is( $code->("8d1f2ab8-11c1-45ac-be3b-ce4f627504"),
+    undef, "guid2bin fails on invalid input" );
+
+$sub  = "sub { return(checkLogonHours(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'checkLogonHours extended function is defined'
+);
+
+sub case_checkLogonHours {
+    my ( $args, $hour, $day, $result ) = @_;
+    my $test_ts = timegm( 0, 15, $hour, 7 + $day, 5, 126 )
+      ;    # June 2026 starts on a monday
+    Time::Fake->offset($test_ts);
+    is(
+        $code->( @{$args} ),
+        $result,
+        "at "
+          . scalar gmtime($test_ts)
+          . ", checkLogonHours("
+          . join( ', ', @{$args} ) . ") = "
+          . ( $result ? "true" : "false" )
+    );
+    Time::Fake->reset;
+}
+
+my @clh_test_cases = (
+
+    # No value, obey default
+    [ [undef], 5, 1, 0 ],
+    [ [ undef, undef, undef, 0 ], 5, 1, 0 ],
+    [ [ undef, undef, undef, 1 ], 5, 1, 1 ],
+
+    # Invalid value, deny
+    [ [ "ffffff", undef, undef, 0 ], 5, 1, 0 ],
+    [ [ "ffffff", undef, undef, 1 ], 5, 1, 0 ],
+
+    # Workday behavior
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "5",  "1", 0 ],
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "6",  "1", 1 ],
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "13", "1", 1 ],
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "18", "1", 1 ],
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "19", "1", 0 ],
+
+    # Timezone offset
+    [
+        [ "00000003ffe003ffe003ffe003ffe003ffe0000000", undef, "+2" ],
+        "3", "1", 0
+    ],
+    [
+        [ "00000003ffe003ffe003ffe003ffe003ffe0000000", undef, "+2" ],
+        "4", "1", 1
+    ],
+    [
+        [ "00000003ffe003ffe003ffe003ffe003ffe0000000", undef, "+2" ],
+        "11", "1", 1
+    ],
+    [
+        [ "00000003ffe003ffe003ffe003ffe003ffe0000000", undef, "+2" ],
+        "16", "1", 1
+    ],
+    [
+        [ "00000003ffe003ffe003ffe003ffe003ffe0000000", undef, "+2" ],
+        "17", "1", 0
+    ],
+
+    # Weekend
+    [ ["00000003ffe003ffe003ffe003ffe003ffe0000000"], "13", "0", 0 ],
+);
+
+for my $case (@clh_test_cases) {
+    case_checkLogonHours(@$case);
+}
