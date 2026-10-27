@@ -435,6 +435,7 @@ sub grant {
             $class->logger->debug("Required authentication level = $level");
             $class->logger->warn(
                 'User rejected due to insufficient authentication level');
+            $req->data->{_required_level} = $level;
             if ( $class->tsv->{upgradeSession} ) {
                 $class->logger->warn(' -> Session upgrade enabled');
                 $req->data->{_upgrade} = 1;
