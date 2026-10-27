@@ -776,6 +776,30 @@ sub _scanNodes {
                     type    => 'category',
                     order   => $knownCat->{__id}
                 };
+
+                # Translation key of the category
+                my $tr =
+                  ref $leaf->{data} eq 'HASH'
+                  ? $leaf->{data}->{translation}
+                  : undef;
+                undef $tr unless ( defined $tr and length $tr );
+                $cn->{$newapp}->{options} = { translation => $tr }
+                  if ( defined $tr );
+                my $oldTr =
+                  ( ref $cmp->{$app} and ref $cmp->{$app}->{options} )
+                  ? $cmp->{$app}->{options}->{translation}
+                  : undef;
+                unless ( ( $oldTr // '' ) eq ( $tr // '' ) ) {
+                    $self->confChanged(1);
+                    push @{ $self->changes },
+                      {
+                        key => join( ', ',
+                            'applicationList', @path,
+                            $leaf->{title},    'translation' ),
+                        new => $tr,
+                        old => $oldTr,
+                      };
+                }
                 unless ($cmp->{$app}
                     and $cmp->{$app}->{catname} eq $cn->{$newapp}->{catname} )
                 {
@@ -818,6 +842,8 @@ sub _scanNodes {
                     order   => $knownCat->{__id}
                 };
                 $cn->{$newapp}->{options}->{name} = $leaf->{title};
+                delete $cn->{$newapp}->{options}->{translation}
+                  unless ( length $cn->{$newapp}->{options}->{translation} );
                 unless ( $cmp->{$app} ) {
                     $self->confChanged(1);
                     push @{ $self->changes },
@@ -834,10 +860,13 @@ sub _scanNodes {
                         $self->confChanged(1);
                     }
 
-                    # Check for change in options
-                    foreach my $k ( keys %{ $cn->{$newapp}->{options} } ) {
-                        unless ( $cmp->{$app}->{options}->{$k} eq
-                            $cn->{$newapp}->{options}->{$k} )
+                    # Check for change in options (including removed ones)
+                    my %optKeys = map { $_ => 1 }
+                      keys %{ $cn->{$newapp}->{options} },
+                      keys %{ $cmp->{$app}->{options} || {} };
+                    foreach my $k ( sort keys %optKeys ) {
+                        unless ( ( $cmp->{$app}->{options}->{$k} // '' ) eq
+                            ( $cn->{$newapp}->{options}->{$k} // '' ) )
                         {
                             $self->confChanged(1);
                             push @{ $self->changes },

@@ -12,6 +12,13 @@
       <th><span trspan="categoryName"></span></th>
       <td><input id="catTitle" aria-describedby="catTitleL" class="form-control" ng-model="currentNode.title"/></td> 
     </tr>
+    <tr>
+      <th><span trspan="menuTranslationKey"></span></th>
+      <td>
+        <input id="catTranslation" class="form-control" ng-model="currentNode.data.translation" aria-describedby="catTranslationHelp"/>
+        <p id="catTranslationHelp" class="help-block" trspan="menuCatTranslationKeyHelp"></p>
+      </td>
+    </tr>
   </table>
   <div class="panel-body">
     <h4 trspan="appsInThisCat"></h4>

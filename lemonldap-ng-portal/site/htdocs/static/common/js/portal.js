@@ -1,54 +1,53 @@
 (function () {
   'use strict';
 
-  function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-      var _s,
-        _e,
-        _x,
-        _r,
-        _arr = [],
-        _n = !0,
-        _d = !1;
+  function _arrayLikeToArray(r, a) {
+    (null == a || a > r.length) && (a = r.length);
+    for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+    return n;
+  }
+  function _arrayWithHoles(r) {
+    if (Array.isArray(r)) return r;
+  }
+  function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+      var e,
+        n,
+        i,
+        u,
+        a = [],
+        f = !0,
+        o = !1;
       try {
-        if (_x = (_i = _i.call(arr)).next, 0 === i) {
-          if (Object(_i) !== _i) return;
-          _n = !1;
-        } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-      } catch (err) {
-        _d = !0, _e = err;
+        if (i = (t = t.call(r)).next, 0 === l) {
+          if (Object(t) !== t) return;
+          f = !1;
+        } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+      } catch (r) {
+        o = !0, n = r;
       } finally {
         try {
-          if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
+          if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
         } finally {
-          if (_d) throw _e;
+          if (o) throw n;
         }
       }
-      return _arr;
+      return a;
     }
-  }
-  function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-  }
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-  }
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-  }
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-    return arr2;
   }
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  function _slicedToArray(r, e) {
+    return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+  }
+  function _unsupportedIterableToArray(r, a) {
+    if (r) {
+      if ("string" == typeof r) return _arrayLikeToArray(r, a);
+      var t = {}.toString.call(r).slice(8, -1);
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+    }
   }
 
   /*
@@ -57,8 +56,10 @@
   var datas,
     delKey,
     displayIcon,
+    escapeHtml,
     getQueryParam,
     getValues,
+    hasTranslation,
     _ping,
     ppolicyResults,
     removeOidcConsent,
@@ -69,7 +70,9 @@
     setResult,
     setSelector,
     translate,
+    translateAttributes,
     translatePage,
+    translateSpan,
     translationFields,
     updateBorder,
     indexOf = [].indexOf;
@@ -152,14 +155,7 @@
         }
       }
       $("[trspan]").each(function () {
-        var args, i, len, txt;
-        args = $(this).attr('trspan').split(',');
-        txt = translate(args.shift());
-        for (i = 0, len = args.length; i < len; i++) {
-          v = args[i];
-          txt = txt.replace(/%[sd]/, v);
-        }
-        return $(this).html(txt);
+        return translateSpan($(this));
       });
       $("[trmsg]").each(function () {
         var msg;
@@ -170,19 +166,7 @@
         }
       });
       $("[trattribute]").each(function () {
-        var attribute, i, len, trattribute, trattributes, value;
-        trattributes = $(this).attr('trattribute').trim().split(/\s+/);
-        for (i = 0, len = trattributes.length; i < len; i++) {
-          trattribute = trattributes[i];
-          var _trattribute$split = trattribute.split(':');
-          var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
-          attribute = _trattribute$split2[0];
-          value = _trattribute$split2[1];
-          if (attribute && value) {
-            $(this).attr(attribute, translate(value));
-          }
-        }
-        return true;
+        return translateAttributes($(this));
       });
       $("[trplaceholder]").each(function () {
         var tmp;
@@ -197,14 +181,91 @@
       });
     });
   };
+  hasTranslation = function hasTranslation(str) {
+    return Object.prototype.hasOwnProperty.call(translationFields, str) && !!translationFields[str];
+  };
 
   // Translate a string
   translate = function translate(str) {
-    if (translationFields[str]) {
+    if (hasTranslation(str)) {
       return translationFields[str];
     } else {
       return str;
     }
+  };
+  escapeHtml = function escapeHtml(str) {
+    return $('<div>').text(str).html();
+  };
+
+  // Translate the content of a tag having a "trspan" attribute:
+  //  - trspan="key": translation of key
+  //  - trspan="key,arg1,arg2": translation of key, each %s or %d replaced by the
+  //    next argument (HTML escaped)
+  // Without translation, the content set by the template is kept, else the
+  // key is displayed as text, never as HTML. A tag having a "troptional"
+  // attribute is emptied and hidden instead of displaying the key.
+  translateSpan = function translateSpan(el) {
+    var args, key, optional, txt, value;
+    value = el.attr('trspan');
+    optional = el.is('[troptional]');
+    if (el.data('trspanKey') === undefined) {
+      el.data('trspanKey', value);
+      el.data('trspanOrig', el.html());
+    }
+    args = value.split(',');
+    key = args.shift();
+    if (hasTranslation(key)) {
+      txt = translationFields[key];
+      args.forEach(function (arg) {
+        txt = txt.replace(/%[sd]/, escapeHtml(arg));
+      });
+      el.html(txt);
+    } else if (el.data('trspanKey') === value && el.data('trspanOrig').trim()) {
+      el.html(el.data('trspanOrig'));
+    } else if (optional) {
+      el.empty();
+    } else {
+      el.text(key);
+    }
+    if (optional) {
+      el.prop('hidden', el.html() === '');
+    }
+    return el;
+  };
+
+  // Set each attribute of a tag having a "trattribute" attribute
+  // ("attr1:key1 attr2:key2") to the translation of its key. Alternative keys
+  // can be given ("attr:key1|key2"): the first one having a translation is
+  // used. Without translation, the value set by the template is kept, else the
+  // (last) key is used.
+  translateAttributes = function translateAttributes(el) {
+    var orig;
+    orig = el.data('trattributeOrig');
+    if (orig === undefined) {
+      orig = {};
+      el.data('trattributeOrig', orig);
+    }
+    el.attr('trattribute').trim().split(/\s+/).forEach(function (trattribute) {
+      var attribute, key, keys;
+      var _trattribute$split = trattribute.split(':');
+      var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
+      attribute = _trattribute$split2[0];
+      keys = _trattribute$split2[1];
+      keys = (keys || '').split('|');
+      key = $.grep(keys, hasTranslation)[0] || keys[keys.length - 1];
+      if (!(attribute && key)) {
+        return;
+      }
+      if (!(attribute in orig)) {
+        orig[attribute] = el.attr(attribute);
+      }
+      if (hasTranslation(key)) {
+        el.attr(attribute, translationFields[key]);
+      } else {
+        el.attr(attribute, orig[attribute] !== undefined ? orig[attribute] : key);
+      }
+    });
+    return true;
   };
 
   // These functions are exported so that custom JS code can call them

@@ -394,6 +394,11 @@
                "tooltip" : {
                   "type" : "string"
                },
+               "translation" : {
+                  "description" : "Key of the name in portal language files, the description and the tooltip use this key followed by _desc and _tip",
+                  "pattern" : "^\\w*$",
+                  "type" : "string"
+               },
                "uri" : {
                   "type" : "string"
                }
@@ -424,6 +429,11 @@
                },
                "order" : {
                   "type" : "integer"
+               },
+               "translation" : {
+                  "description" : "Key of the category name in portal language files",
+                  "pattern" : "^\\w*$",
+                  "type" : "string"
                }
             },
             "required" : [
@@ -439,6 +449,11 @@
                },
                "order" : {
                   "type" : "integer"
+               },
+               "translation" : {
+                  "description" : "Key of the category name in portal language files",
+                  "pattern" : "^\\w*$",
+                  "type" : "string"
                }
             },
             "type" : "object"

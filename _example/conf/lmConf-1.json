@@ -2,12 +2,16 @@
    "applicationList" : {
       "1sample" : {
          "catname" : "Sample applications",
+         "options" : {
+            "translation" : "menuSampleApps"
+         },
          "test1" : {
             "options" : {
                "description" : "A simple application displaying authenticated user",
                "display" : "auto",
                "logo" : "demo.png",
                "name" : "Application Test 1",
+               "translation" : "menuAppTest1",
                "uri" : "http://test1.__DNSDOMAIN__/"
             },
             "type" : "application"
@@ -18,6 +22,7 @@
                "display" : "auto",
                "logo" : "thumbnail.png",
                "name" : "Application Test 2",
+               "translation" : "menuAppTest2",
                "uri" : "http://test2.__DNSDOMAIN__/"
             },
             "type" : "application"
@@ -32,6 +37,7 @@
                "display" : "auto",
                "logo" : "configure.png",
                "name" : "WebSSO Manager",
+               "translation" : "menuManager",
                "uri" : "http://manager.__DNSDOMAIN__/manager.html"
             },
             "type" : "application"
@@ -42,9 +48,13 @@
                "display" : "auto",
                "logo" : "database.png",
                "name" : "Notifications Explorer",
+               "translation" : "menuNotifications",
                "uri" : "http://manager.__DNSDOMAIN__/notifications.html"
             },
             "type" : "application"
+         },
+         "options" : {
+            "translation" : "menuAdministration"
          },
          "sessions" : {
             "options" : {
@@ -52,6 +62,7 @@
                "display" : "auto",
                "logo" : "database.png",
                "name" : "Sessions Explorer",
+               "translation" : "menuSessions",
                "uri" : "http://manager.__DNSDOMAIN__/sessions.html"
             },
             "type" : "application"
@@ -66,6 +77,7 @@
                "display" : "on",
                "logo" : "help.png",
                "name" : "Local documentation",
+               "translation" : "menuLocalDoc",
                "uri" : "http://manager.__DNSDOMAIN__/doc/"
             },
             "type" : "application"
@@ -76,9 +88,13 @@
                "display" : "on",
                "logo" : "network.png",
                "name" : "Official Website",
+               "translation" : "menuOfficialWebsite",
                "uri" : "https://lemonldap-ng.org/"
             },
             "type" : "application"
+         },
+         "options" : {
+            "translation" : "menuDocumentation"
          },
          "type" : "category"
       }

@@ -2215,6 +2215,12 @@ EOF
                         },
                         'order' => {
                             'type' => 'integer'
+                        },
+                        'translation' => {
+                            'type'        => 'string',
+                            'pattern'     => '^\\w*$',
+                            'description' =>
+'Key of the category name in portal language files'
                         }
                     }
                 },
@@ -2226,6 +2232,12 @@ EOF
                         },
                         'order' => {
                             'type' => 'integer'
+                        },
+                        'translation' => {
+                            'type'        => 'string',
+                            'pattern'     => '^\\w*$',
+                            'description' =>
+'Key of the category name in portal language files'
                         }
                     }
                 },
@@ -2256,6 +2268,12 @@ EOF
                         },
                         'description' => {
                             'type' => 'string'
+                        },
+                        'translation' => {
+                            'type'        => 'string',
+                            'pattern'     => '^\\w*$',
+                            'description' =>
+'Key of the name in portal language files, the description and the tooltip use this key followed by _desc and _tip'
                         },
                         'uri' => {
                             'type' => 'string'
