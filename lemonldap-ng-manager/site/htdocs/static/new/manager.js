@@ -27117,6 +27117,20 @@ ${String(error)}`;
 	instance$1.loadNamespaces;
 	instance$1.loadLanguages;
 
+	// Keys of the applications of a menu category. Besides its applications, a
+	// category holds "catname", "type", "order" and, when it has a translation
+	// key, "options": only the entries typed "application" are kept, as the
+	// portal does.
+	function menuApplicationKeys(category) {
+	    var entries = category;
+	    return Object.keys(entries).filter(function (key) {
+	        var entry = entries[key];
+	        return (typeof entry === "object" &&
+	            entry !== null &&
+	            entry.type === "application");
+	    });
+	}
+
 	var confFieldsEq = {
 	    casAppMetaDataNode: "casAppMetaDataExportedVars",
 	    casSrvMetaDataNode: "casSrvMetaDataExportedVars",
@@ -27194,8 +27208,7 @@ ${String(error)}`;
 	                id: "".concat(tree.title, ";").concat(el),
 	                type: list_1[el].type,
 	                parent: id,
-	                children: Object.keys(list_1[el])
-	                    .filter(function (key) { return key !== "type" && key !== "catname" && key !== "order"; })
+	                children: menuApplicationKeys(list_1[el])
 	                    .sort(function (key1, key2) { return list_1[el][key1].order - list_1[el][key2].order; })
 	                    .map(function (key) { return ({
 	                    name: list_1[el][key].options.name,
@@ -28349,6 +28362,22 @@ ${String(error)}`;
 	            state.data.config.applicationList[action.payload.id].catname =
 	                action.payload.newname;
 	        },
+	        changeCategoryTranslation: function (state, action) {
+	            if (!state.data.config.applicationList) {
+	                state.data.config.applicationList = {};
+	            }
+	            var category = state.data.config.applicationList[action.payload.id];
+	            // Like the legacy Manager, an empty key removes the category options
+	            if (action.payload.value) {
+	                category.options = __assign(__assign({}, category.options), { translation: action.payload.value });
+	            }
+	            else if (category.options) {
+	                delete category.options.translation;
+	                if (!Object.keys(category.options).length) {
+	                    delete category.options;
+	                }
+	            }
+	        },
 	        delCategory: function (state, action) {
 	            if (!state.data.config.applicationList) {
 	                state.data.config.applicationList = {};
@@ -28379,7 +28408,14 @@ ${String(error)}`;
 	            if (!state.data.config.applicationList) {
 	                state.data.config.applicationList = {};
 	            }
-	            state.data.config.applicationList[action.payload.catid][action.payload.id].options[action.payload.field] = action.payload.value;
+	            var options = state.data.config.applicationList[action.payload.catid][action.payload.id].options;
+	            // Like the legacy Manager, an empty translation key is removed
+	            if (action.payload.field === "translation" && !action.payload.value) {
+	                delete options.translation;
+	            }
+	            else {
+	                options[action.payload.field] = action.payload.value;
+	            }
 	        },
 	        delApplication: function (state, action) {
 	            if (!state.data.config.applicationList) {
@@ -28496,7 +28532,7 @@ ${String(error)}`;
 	        });
 	    },
 	});
-	var setError = (_a$1 = configSlice.actions, _a$1.setError), removeError = _a$1.removeError, toggleMaintenance = _a$1.toggleMaintenance, toggleCAS = _a$1.toggleCAS, toggleOIDC = _a$1.toggleOIDC, toggleSAML = _a$1.toggleSAML, toggleGET = _a$1.toggleGET, saveOIDCPrivSig = _a$1.saveOIDCPrivSig, saveOIDCPrivIdSig = _a$1.saveOIDCPrivIdSig, saveOIDCPubSig = _a$1.saveOIDCPubSig, saveSAMLPrivIdSig = _a$1.saveSAMLPrivIdSig, saveSAMLPrivSig = _a$1.saveSAMLPrivSig, saveSAMLPubSig = _a$1.saveSAMLPubSig, updateLocationRule = _a$1.updateLocationRule, updateDefaultLocationRule = _a$1.updateDefaultLocationRule, newLocationRule = _a$1.newLocationRule, delLocationRule = _a$1.delLocationRule, newVhostHeaders = _a$1.newVhostHeaders, delVhostHeader = _a$1.delVhostHeader, updateVhostHeaders = _a$1.updateVhostHeaders, updateVhostPost = _a$1.updateVhostPost, delVhostPost = _a$1.delVhostPost, newVhostPost = _a$1.newVhostPost, updateVhostOptions = _a$1.updateVhostOptions, changeAppName = _a$1.changeAppName, delApp = _a$1.delApp, dupApp = _a$1.dupApp, newApp = _a$1.newApp, updateOIDCclientID = _a$1.updateOIDCclientID, updateOIDCPrivateClient = _a$1.updateOIDCPrivateClient, updateOIDCPublicClient = _a$1.updateOIDCPublicClient; _a$1.updateCASexportedVars; _a$1.newCASexportedVars; _a$1.delCASexportedVars; _a$1.delCASAppMetaDataMacros; _a$1.updateCASAppMetaDataMacros; _a$1.newCASAppMetaDataMacros; _a$1.updateCASOptions; var updateSamlSPMetadata = _a$1.updateSamlSPMetadata; _a$1.newSAMLSPMetaDataMacros; _a$1.updateSAMLSPMetaDataMacros; _a$1.delSAMLSPMetaDataMacros; var updateSamlMetadataExportedAttribute = _a$1.updateSamlMetadataExportedAttribute, newSamlMetadataExportedAttribute = _a$1.newSamlMetadataExportedAttribute, delSamlMetadataExportedAttribute = _a$1.delSamlMetadataExportedAttribute; _a$1.updateSamlMetaDataOptions; _a$1.newOIDCRPMetaDataMacros; _a$1.updateOIDCRPMetaDataMacros; _a$1.delOIDCRPMetaDataMacros; var updateOidcRPMetaDataExportedVars = _a$1.updateOidcRPMetaDataExportedVars, newOidcRPMetaDataExportedVars = _a$1.newOidcRPMetaDataExportedVars, delOidcRPMetaDataExportedVars = _a$1.delOidcRPMetaDataExportedVars, updateAppParam = _a$1.updateAppParam; _a$1.updateOidcMetaDataOptions; _a$1.delOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataOptionsExtraClaims; _a$1.updateOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataScopeRules; _a$1.delOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataOptionsJwks; var updateAuthParams = _a$1.updateAuthParams, updateConfigParams = _a$1.updateConfigParams, delCombParam = _a$1.delCombParam, newCombParam = _a$1.newCombParam, updateCombParam = _a$1.updateCombParam, newCombOverParam = _a$1.newCombOverParam, delCombOverParam = _a$1.delCombOverParam, updateCombOverParam = _a$1.updateCombOverParam, newChoiceParam = _a$1.newChoiceParam, delChoiceParam = _a$1.delChoiceParam, updateChoiceParam = _a$1.updateChoiceParam, newChoiceOverParam = _a$1.newChoiceOverParam, delChoiceOverParam = _a$1.delChoiceOverParam, updateChoiceOverParam = _a$1.updateChoiceOverParam, newModuleOpt = _a$1.newModuleOpt, delModuleOpt = _a$1.delModuleOpt, updateModuleOpt = _a$1.updateModuleOpt, updateGetParamHostname = _a$1.updateGetParamHostname, delGetParam = _a$1.delGetParam, updateGetParamOption = _a$1.updateGetParamOption, newGetParam = _a$1.newGetParam, delGetParamOption = _a$1.delGetParamOption, newGetParamOption = _a$1.newGetParamOption, changeConf = _a$1.changeConf, newSfExtraOverParam = _a$1.newSfExtraOverParam, updateSfExtraOverParam = _a$1.updateSfExtraOverParam, deleteSfExtraOverParam = _a$1.deleteSfExtraOverParam, newCategory = _a$1.newCategory, renameCategory = _a$1.renameCategory, delCategory = _a$1.delCategory, newApplication = _a$1.newApplication, changeApplicationField = _a$1.changeApplicationField, delApplication = _a$1.delApplication, moveCat = _a$1.moveCat, moveApp = _a$1.moveApp;
+	var setError = (_a$1 = configSlice.actions, _a$1.setError), removeError = _a$1.removeError, toggleMaintenance = _a$1.toggleMaintenance, toggleCAS = _a$1.toggleCAS, toggleOIDC = _a$1.toggleOIDC, toggleSAML = _a$1.toggleSAML, toggleGET = _a$1.toggleGET, saveOIDCPrivSig = _a$1.saveOIDCPrivSig, saveOIDCPrivIdSig = _a$1.saveOIDCPrivIdSig, saveOIDCPubSig = _a$1.saveOIDCPubSig, saveSAMLPrivIdSig = _a$1.saveSAMLPrivIdSig, saveSAMLPrivSig = _a$1.saveSAMLPrivSig, saveSAMLPubSig = _a$1.saveSAMLPubSig, updateLocationRule = _a$1.updateLocationRule, updateDefaultLocationRule = _a$1.updateDefaultLocationRule, newLocationRule = _a$1.newLocationRule, delLocationRule = _a$1.delLocationRule, newVhostHeaders = _a$1.newVhostHeaders, delVhostHeader = _a$1.delVhostHeader, updateVhostHeaders = _a$1.updateVhostHeaders, updateVhostPost = _a$1.updateVhostPost, delVhostPost = _a$1.delVhostPost, newVhostPost = _a$1.newVhostPost, updateVhostOptions = _a$1.updateVhostOptions, changeAppName = _a$1.changeAppName, delApp = _a$1.delApp, dupApp = _a$1.dupApp, newApp = _a$1.newApp, updateOIDCclientID = _a$1.updateOIDCclientID, updateOIDCPrivateClient = _a$1.updateOIDCPrivateClient, updateOIDCPublicClient = _a$1.updateOIDCPublicClient; _a$1.updateCASexportedVars; _a$1.newCASexportedVars; _a$1.delCASexportedVars; _a$1.delCASAppMetaDataMacros; _a$1.updateCASAppMetaDataMacros; _a$1.newCASAppMetaDataMacros; _a$1.updateCASOptions; var updateSamlSPMetadata = _a$1.updateSamlSPMetadata; _a$1.newSAMLSPMetaDataMacros; _a$1.updateSAMLSPMetaDataMacros; _a$1.delSAMLSPMetaDataMacros; var updateSamlMetadataExportedAttribute = _a$1.updateSamlMetadataExportedAttribute, newSamlMetadataExportedAttribute = _a$1.newSamlMetadataExportedAttribute, delSamlMetadataExportedAttribute = _a$1.delSamlMetadataExportedAttribute; _a$1.updateSamlMetaDataOptions; _a$1.newOIDCRPMetaDataMacros; _a$1.updateOIDCRPMetaDataMacros; _a$1.delOIDCRPMetaDataMacros; var updateOidcRPMetaDataExportedVars = _a$1.updateOidcRPMetaDataExportedVars, newOidcRPMetaDataExportedVars = _a$1.newOidcRPMetaDataExportedVars, delOidcRPMetaDataExportedVars = _a$1.delOidcRPMetaDataExportedVars, updateAppParam = _a$1.updateAppParam; _a$1.updateOidcMetaDataOptions; _a$1.delOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataOptionsExtraClaims; _a$1.updateOidcRPMetaDataOptionsExtraClaims; _a$1.newOidcRPMetaDataScopeRules; _a$1.delOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataScopeRules; _a$1.updateOidcRPMetaDataOptionsJwks; var updateAuthParams = _a$1.updateAuthParams, updateConfigParams = _a$1.updateConfigParams, delCombParam = _a$1.delCombParam, newCombParam = _a$1.newCombParam, updateCombParam = _a$1.updateCombParam, newCombOverParam = _a$1.newCombOverParam, delCombOverParam = _a$1.delCombOverParam, updateCombOverParam = _a$1.updateCombOverParam, newChoiceParam = _a$1.newChoiceParam, delChoiceParam = _a$1.delChoiceParam, updateChoiceParam = _a$1.updateChoiceParam, newChoiceOverParam = _a$1.newChoiceOverParam, delChoiceOverParam = _a$1.delChoiceOverParam, updateChoiceOverParam = _a$1.updateChoiceOverParam, newModuleOpt = _a$1.newModuleOpt, delModuleOpt = _a$1.delModuleOpt, updateModuleOpt = _a$1.updateModuleOpt, updateGetParamHostname = _a$1.updateGetParamHostname, delGetParam = _a$1.delGetParam, updateGetParamOption = _a$1.updateGetParamOption, newGetParam = _a$1.newGetParam, delGetParamOption = _a$1.delGetParamOption, newGetParamOption = _a$1.newGetParamOption, changeConf = _a$1.changeConf, newSfExtraOverParam = _a$1.newSfExtraOverParam, updateSfExtraOverParam = _a$1.updateSfExtraOverParam, deleteSfExtraOverParam = _a$1.deleteSfExtraOverParam, newCategory = _a$1.newCategory, renameCategory = _a$1.renameCategory, changeCategoryTranslation = _a$1.changeCategoryTranslation, delCategory = _a$1.delCategory, newApplication = _a$1.newApplication, changeApplicationField = _a$1.changeApplicationField, delApplication = _a$1.delApplication, moveCat = _a$1.moveCat, moveApp = _a$1.moveApp;
 	var configReducer = configSlice.reducer;
 
 	const CALL_HISTORY_METHOD = '@@router/CALL_HISTORY_METHOD';
@@ -53419,8 +53455,9 @@ ${String(error)}`;
 	    "wheels.png",
 	];
 	function MenuAppCard(_a) {
+	    var _b;
 	    var app = _a.app, cardIndex = _a.cardIndex, catId = _a.catId, appIndex = _a.appIndex, portal = _a.portal, appKey = _a.appKey, applications = _a.applications, dispatch = _a.dispatch;
-	    var _b = reactExports.useState("auto"), display = _b[0], setDisplay = _b[1];
+	    var _c = reactExports.useState("auto"), display = _c[0], setDisplay = _c[1];
 	    reactExports.useEffect(function () {
 	        setDisplay(app.options.display === "on" ||
 	            app.options.display === "off" ||
@@ -53470,6 +53507,13 @@ ${String(error)}`;
 	                                                field: "uri",
 	                                                value: e.target.value,
 	                                            }));
+	                                        } })] }), jsxRuntimeExports.jsxs(FormControl$1, { children: [jsxRuntimeExports.jsx(FormLabel$1, { children: t$1("menuTranslationKey") }), jsxRuntimeExports.jsx(TextField$1, { size: "small", value: (_b = app.options.translation) !== null && _b !== void 0 ? _b : "", helperText: t$1("menuAppTranslationKeyHelp"), onChange: function (e) {
+	                                            return dispatch(changeApplicationField({
+	                                                catid: catId,
+	                                                id: appKey,
+	                                                field: "translation",
+	                                                value: e.target.value,
+	                                            }));
 	                                        } })] }), jsxRuntimeExports.jsxs(FormControl$1, { children: [jsxRuntimeExports.jsx(FormLabel$1, { children: t$1("applicationDisplay") }), jsxRuntimeExports.jsxs(RadioGroup$1, { row: true, value: display, onChange: function (e) {
 	                                            dispatch(changeApplicationField({
 	                                                catid: catId,
@@ -53489,10 +53533,9 @@ ${String(error)}`;
 	}
 
 	function CatCard(_a) {
+	    var _b;
 	    var catId = _a.catId, cardIndex = _a.cardIndex, dataLength = _a.dataLength, data = _a.data, dispatch = _a.dispatch, portal = _a.portal;
-	    var applications = Object.keys(data)
-	        .filter(function (key) { return typeof data[key] === "object"; })
-	        .sort(function (key1, key2) {
+	    var applications = menuApplicationKeys(data).sort(function (key1, key2) {
 	        return Number(data[key1].order) -
 	            Number(data[key2].order);
 	    });
@@ -53505,7 +53548,11 @@ ${String(error)}`;
 	                                            category: catId,
 	                                            direction: "down",
 	                                        }));
-	                                    }, disabled: cardIndex === dataLength - 1, children: jsxRuntimeExports.jsx(ArrowDownwardOutlinedIcon, { fontSize: "small" }) }), jsxRuntimeExports.jsx(IconButton$1, { size: "small", color: "error", onClick: function () { return dispatch(delCategory(catId)); }, children: jsxRuntimeExports.jsx(DeleteOutlineOutlinedIcon, { fontSize: "small" }) })] })] }) }), jsxRuntimeExports.jsxs(CardContent$1, { className: "applications", children: [applications.map(function (key, index) {
+	                                    }, disabled: cardIndex === dataLength - 1, children: jsxRuntimeExports.jsx(ArrowDownwardOutlinedIcon, { fontSize: "small" }) }), jsxRuntimeExports.jsx(IconButton$1, { size: "small", color: "error", onClick: function () { return dispatch(delCategory(catId)); }, children: jsxRuntimeExports.jsx(DeleteOutlineOutlinedIcon, { fontSize: "small" }) })] })] }), subheader: jsxRuntimeExports.jsx(TextField$1, { className: "catTranslationField", size: "small", variant: "standard", label: t$1("menuTranslationKey"), value: typeof data.options === "object"
+	                        ? (_b = data.options.translation) !== null && _b !== void 0 ? _b : ""
+	                        : "", helperText: t$1("menuCatTranslationKeyHelp"), onChange: function (e) {
+	                        return dispatch(changeCategoryTranslation({ id: catId, value: e.target.value }));
+	                    } }) }), jsxRuntimeExports.jsxs(CardContent$1, { className: "applications", children: [applications.map(function (key, index) {
 	                        if (typeof data[key] === "object") {
 	                            var app = data[key];
 	                            return (jsxRuntimeExports.jsx(MenuAppCard, { app: app, cardIndex: cardIndex, catId: catId, portal: portal, appKey: key, appIndex: index, applications: applications, dispatch: dispatch }, key));
@@ -75844,8 +75891,7 @@ Use the data prop if you want to provide your own handlers.`);
 	                })
 	                    .map(function (key) { return (jsxRuntimeExports.jsxs("ul", { children: [jsxRuntimeExports.jsx("li", { children: typeof values[key].catname === "string"
 	                                ? values[key].catname
-	                                : "" }), jsxRuntimeExports.jsx("ul", { children: Object.keys(values[key])
-	                                .filter(function (el) { return typeof values[key][el] === "object"; })
+	                                : "" }), jsxRuntimeExports.jsx("ul", { children: menuApplicationKeys(values[key])
 	                                .sort(function (key1, key2) {
 	                                var order1 = values[key][key1]
 	                                    .order;
@@ -75934,6 +75980,7 @@ Use the data prop if you want to provide your own handlers.`);
 	}
 
 	function MenuAppForm(_a) {
+	    var _b;
 	    var values = _a.values, portal = _a.portal, catid = _a.catid, id = _a.id, dispatch = _a.dispatch;
 	    var logoOptions = [
 	        "attach.png",
@@ -75957,7 +76004,7 @@ Use the data prop if you want to provide your own handlers.`);
 	        "web.png",
 	        "wheels.png",
 	    ];
-	    var _b = reactExports.useState("auto"), display = _b[0], setDisplay = _b[1];
+	    var _c = reactExports.useState("auto"), display = _c[0], setDisplay = _c[1];
 	    reactExports.useEffect(function () {
 	        setDisplay(values.options.display === "on" ||
 	            values.options.display === "off" ||
@@ -75993,7 +76040,14 @@ Use the data prop if you want to provide your own handlers.`);
 	                                            field: "tooltip",
 	                                            value: e,
 	                                        }));
-	                                    } }) }), jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx("span", { children: t$1("logo") }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsxs(FormControl$1, { children: [jsxRuntimeExports.jsx(Select$1, { value: values.options.logo ||
+	                                    } }) }), jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx("span", { children: t$1("menuTranslationKey") }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", inputProps: { "aria-label": t$1("menuTranslationKey") }, value: (_b = values.options.translation) !== null && _b !== void 0 ? _b : "", helperText: t$1("menuAppTranslationKeyHelp"), onChange: function (e) {
+	                                                return dispatch(changeApplicationField({
+	                                                    catid: catid,
+	                                                    id: id,
+	                                                    field: "translation",
+	                                                    value: e.target.value,
+	                                                }));
+	                                            } }) })] }), jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx("span", { children: t$1("logo") }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsxs(FormControl$1, { children: [jsxRuntimeExports.jsx(Select$1, { value: values.options.logo ||
 	                                                        "network.png", onChange: function (e) {
 	                                                        return dispatch(changeApplicationField({
 	                                                            catid: catid,
@@ -76020,15 +76074,20 @@ Use the data prop if you want to provide your own handlers.`);
 	}
 
 	function MenuCatForm(_a) {
+	    var _b;
 	    var values = _a.values, id = _a.id, dispatch = _a.dispatch;
-	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsxs("h3", { children: [" ", t$1("menuCategory")] }) }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsxs("td", { children: [jsxRuntimeExports.jsx(IconButton$1, { onClick: function () {
-	                                            return dispatch(moveCat({ category: id, direction: "up" }));
-	                                        }, children: jsxRuntimeExports.jsx(ArrowUpwardOutlinedIcon, {}) }), jsxRuntimeExports.jsx(IconButton$1, { onClick: function () {
-	                                            return dispatch(moveCat({ category: id, direction: "down" }));
-	                                        }, children: jsxRuntimeExports.jsx(ArrowDownwardOutlinedIcon, {}) })] }), jsxRuntimeExports.jsx(TextForm, { value: typeof values.catname === "string" ? values.catname : "", fieldName: "categoryName", updateFunc: function (e) {
-	                                    return dispatch(renameCategory({ id: id, newname: e }));
-	                                } }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(IconButton$1, { onClick: function () { return dispatch(delCategory(id)); }, className: "minus", children: jsxRuntimeExports.jsx(RemoveCircleIcon, { color: "error" }) }) })] }) }) }), jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("h4", { children: [" ", t$1("appsInThisCat")] }), jsxRuntimeExports.jsx("ul", { children: Object.keys(values)
-	                            .filter(function (key) { return typeof values[key] === "object"; })
+	    return (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("div", { children: jsxRuntimeExports.jsxs("h3", { children: [" ", t$1("menuCategory")] }) }), jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsxs("tbody", { children: [jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsxs("td", { children: [jsxRuntimeExports.jsx(IconButton$1, { onClick: function () {
+	                                                return dispatch(moveCat({ category: id, direction: "up" }));
+	                                            }, children: jsxRuntimeExports.jsx(ArrowUpwardOutlinedIcon, {}) }), jsxRuntimeExports.jsx(IconButton$1, { onClick: function () {
+	                                                return dispatch(moveCat({ category: id, direction: "down" }));
+	                                            }, children: jsxRuntimeExports.jsx(ArrowDownwardOutlinedIcon, {}) })] }), jsxRuntimeExports.jsx(TextForm, { value: typeof values.catname === "string" ? values.catname : "", fieldName: "categoryName", updateFunc: function (e) {
+	                                        return dispatch(renameCategory({ id: id, newname: e }));
+	                                    } }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(IconButton$1, { onClick: function () { return dispatch(delCategory(id)); }, className: "minus", children: jsxRuntimeExports.jsx(RemoveCircleIcon, { color: "error" }) }) })] }), jsxRuntimeExports.jsxs("tr", { children: [jsxRuntimeExports.jsx("td", {}), jsxRuntimeExports.jsx("th", { children: jsxRuntimeExports.jsx("span", { children: t$1("menuTranslationKey") }) }), jsxRuntimeExports.jsx("td", { children: jsxRuntimeExports.jsx(TextField$1, { size: "small", inputProps: { "aria-label": t$1("menuTranslationKey") }, value: typeof values.options === "object"
+	                                            ? (_b = values.options
+	                                                .translation) !== null && _b !== void 0 ? _b : ""
+	                                            : "", helperText: t$1("menuCatTranslationKeyHelp"), onChange: function (e) {
+	                                            return dispatch(changeCategoryTranslation({ id: id, value: e.target.value }));
+	                                        } }) })] })] }) }), jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsxs("h4", { children: [" ", t$1("appsInThisCat")] }), jsxRuntimeExports.jsx("ul", { children: menuApplicationKeys(values)
 	                            .sort(function (key1, key2) {
 	                            var order1 = values[key1].order;
 	                            var order2 = values[key2].order;

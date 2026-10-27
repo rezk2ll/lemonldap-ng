@@ -19,10 +19,21 @@ const tree: TreeNode[] = [
       },
     ],
   },
+  { title: "applicationList", cnodes: "applicationList" } as unknown as TreeNode,
 ];
 
 const config = {
   oidcRPMetaDataOptions: { rp1: {}, rp2: {} },
+  applicationList: {
+    "1cat": {
+      catname: "Category",
+      type: "category",
+      order: 1,
+      options: { translation: "myCategory" },
+      app2: { type: "application", order: 2, options: { name: "App 2" } },
+      app1: { type: "application", order: 1, options: { name: "App 1" } },
+    },
+  },
 } as unknown as llngConfig;
 
 describe("recursTree", () => {
@@ -59,6 +70,16 @@ describe("recursTree", () => {
       id: "root;oidcRPMetaDataNodes;rp2;oidcRPMetaDataOptionsBasic;oidcRPMetaDataOptionsClientID",
       app: "rp2",
     });
+  });
+
+  it("keeps only applications in a category, not its options", () => {
+    const list = recursTree(tree[2], config, "root");
+    const cat = list.children?.[0];
+    expect(cat).toMatchObject({ id: "applicationList;1cat", name: "Category" });
+    expect(cat?.children?.map((c) => [c.id, c.name])).toEqual([
+      ["applicationList;1cat;app1", "App 1"],
+      ["applicationList;1cat;app2", "App 2"],
+    ]);
   });
 
   it("builds children only when they are read", () => {

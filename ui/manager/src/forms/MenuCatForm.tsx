@@ -2,9 +2,10 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import { t } from "i18next";
 import {
+  changeCategoryTranslation,
   delApplication,
   delCategory,
   moveApp,
@@ -12,6 +13,7 @@ import {
   newApplication,
   renameCategory,
 } from "../features/config/configSlice";
+import { menuApplicationKeys } from "../utils/menu";
 import TextForm from "./TextForm";
 
 export default function MenuCatForm({
@@ -66,13 +68,36 @@ export default function MenuCatForm({
               </IconButton>
             </td>
           </tr>
+          <tr>
+            <td></td>
+            <th>
+              <span>{t("menuTranslationKey")}</span>
+            </th>
+            <td>
+              <TextField
+                size="small"
+                inputProps={{ "aria-label": t("menuTranslationKey") }}
+                value={
+                  typeof values.options === "object"
+                    ? (values.options as unknown as Record<string, string>)
+                        .translation ?? ""
+                    : ""
+                }
+                helperText={t("menuCatTranslationKeyHelp")}
+                onChange={(e) =>
+                  dispatch(
+                    changeCategoryTranslation({ id, value: e.target.value })
+                  )
+                }
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
       <div>
         <h4> {t("appsInThisCat")}</h4>
         <ul>
-          {Object.keys(values)
-            .filter((key) => typeof values[key] === "object")
+          {menuApplicationKeys(values)
             .sort((key1, key2) => {
               const order1 = (values[key1] as Record<string, number>).order;
               const order2 = (values[key2] as Record<string, number>).order;

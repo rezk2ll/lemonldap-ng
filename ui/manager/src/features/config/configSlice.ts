@@ -1313,6 +1313,29 @@ const configSlice = createSlice({
       state.data.config.applicationList[action.payload.id].catname =
         action.payload.newname;
     },
+    changeCategoryTranslation(
+      state,
+      action: PayloadAction<{ id: string; value: string }>
+    ) {
+      if (!state.data.config.applicationList) {
+        state.data.config.applicationList = {};
+      }
+      const category = state.data.config.applicationList[
+        action.payload.id
+      ] as Record<string, Record<string, string>>;
+      // Like the legacy Manager, an empty key removes the category options
+      if (action.payload.value) {
+        category.options = {
+          ...category.options,
+          translation: action.payload.value,
+        };
+      } else if (category.options) {
+        delete category.options.translation;
+        if (!Object.keys(category.options).length) {
+          delete category.options;
+        }
+      }
+    },
     delCategory(state, action: PayloadAction<string>) {
       if (!state.data.config.applicationList) {
         state.data.config.applicationList = {};
@@ -1363,14 +1386,20 @@ const configSlice = createSlice({
       if (!state.data.config.applicationList) {
         state.data.config.applicationList = {};
       }
-      (
+      const options = (
         (
           state.data.config.applicationList[action.payload.catid] as Record<
             string,
             object
           >
         )[action.payload.id] as Record<string, Record<string, string>>
-      ).options[action.payload.field] = action.payload.value;
+      ).options;
+      // Like the legacy Manager, an empty translation key is removed
+      if (action.payload.field === "translation" && !action.payload.value) {
+        delete options.translation;
+      } else {
+        options[action.payload.field] = action.payload.value;
+      }
     },
     delApplication(
       state,
@@ -1730,6 +1759,7 @@ export const {
   deleteSfExtraOverParam,
   newCategory,
   renameCategory,
+  changeCategoryTranslation,
   delCategory,
   newApplication,
   changeApplicationField,

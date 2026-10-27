@@ -133,6 +133,32 @@ export default function MenuAppForm({
             </tr>
             <tr>
               <th>
+                <span>{t("menuTranslationKey")}</span>
+              </th>
+              <td>
+                <TextField
+                  size="small"
+                  inputProps={{ "aria-label": t("menuTranslationKey") }}
+                  value={
+                    (values.options as Record<string, string>).translation ??
+                    ""
+                  }
+                  helperText={t("menuAppTranslationKeyHelp")}
+                  onChange={(e) =>
+                    dispatch(
+                      changeApplicationField({
+                        catid,
+                        id,
+                        field: "translation",
+                        value: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>
                 <span>{t("logo")}</span>
               </th>
               <td>
