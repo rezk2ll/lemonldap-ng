@@ -64,6 +64,7 @@ sub new {
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
         ( $conf->{ldapRaw}     ? ( raw     => $conf->{ldapRaw} )     : () ),
     );
+
     unless ($self) {
         $portal->logger->error( "LDAP initialization error: " . $@ );
         return 0;
@@ -169,7 +170,7 @@ sub bind {
         $self->{portal}->logger->debug('Call mTLS bind');
         my $sasl = Authen::SASL->new(
             mechanism => 'EXTERNAL',
-            callback => { user => '' }
+            callback  => { user => '' }
         );
         $mesg = $self->SUPER::bind( undef, sasl => $sasl );
     }
@@ -653,7 +654,7 @@ sub userModifyPassword {
             if ( defined $pp_error ) {
                 $self->{portal}
                   ->logger->error("Password policy error $pp_error");
-                return [
+                my $code = [
                     PE_PP_PASSWORD_EXPIRED,
                     PE_PP_ACCOUNT_LOCKED,
                     PE_PP_CHANGE_AFTER_RESET,
@@ -664,14 +665,24 @@ sub userModifyPassword {
                     PE_PP_PASSWORD_TOO_YOUNG,
                     PE_PP_PASSWORD_IN_HISTORY,
                 ]->[$pp_error];
+                return $code if defined $code;
             }
         }
         else {
             $self->{portal}->logger->error(
                 "Missing PPolicy control from server response. Code: "
                   . $mesg->code );
-            return PE_LDAPERROR;
         }
+
+        # The server refused the modification for a reason the password
+        # policy control does not describe (ACL, schema, constraint...).
+        # Without this, the modification error was silently reported as a
+        # success.
+        $self->{portal}
+          ->logger->error( "Password modification failed with LDAP error "
+              . $mesg->code . ": "
+              . $mesg->error );
+        return PE_LDAPERROR;
     }
 }
 
