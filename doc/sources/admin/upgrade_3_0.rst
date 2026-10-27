@@ -71,6 +71,17 @@ If you are using another backend, you have several options:
   ``lemonldap-ng-cli`` to backup sessions and configuration, fix the encoding
   using ``iconv``, and reimport
 
+Change in objectGUID Active Directory attribute
+------------------------------------------------
+
+``objectGUID`` was previously read from the AD as a binary value. Having binary
+values in the session is not supported anymore, so this value is now retrieved
+as a decoded text UUID, such as ``c232ab00-9414-11ec-b3c8-9f6bdeced846``.
+
+A ``guid2bin`` extended function is provided in case you need to derive the
+binary value again in your existing macros.
+
+
 "Double Cookies" no longer supported
 ------------------------------------
 
@@ -83,6 +94,19 @@ Handler to access insecure, unencrypted HTTP applications at all.
 
 You can find this setting in in *General Parameters* » *Cookies* » *Secured
 Cookie (SSL)*
+
+"octetstring" format for checkLogonHours is no longer supported
+---------------------------------------------------------------
+
+If you use the ``checkLogonHours`` custom function, be aware that the
+``octetstring`` format is no longer directly supported. The ``logonHours``
+Active Directory attribute will automatically be interpreted in the new format,
+and you don't have anything to do if you are using Active Directory.
+
+If you are not using Active Directory but you were relying on the
+``octetstring`` format, update your data to the :ref:`new checkLogonHours
+format<checkLogonHours>`. Access will be denied if you still use the previous
+format.
 
 Changes in outgoing proxy configuration
 ---------------------------------------

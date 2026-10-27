@@ -46,7 +46,7 @@ sub setSessionInfo {
     );
     while ( my ( $k, $v ) = each %vars ) {
 
-        my $value = $self->ldap->getLdapValue( $req->data->{ldapentry}, $v );
+        my $value = $self->getLdapValue( $req->data->{ldapentry}, $v );
 
         # getLdapValue returns an empty string for missing attribute
         # but we really want to return undef so they don't get stored in session

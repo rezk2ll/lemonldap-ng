@@ -39,8 +39,11 @@ sub newLdap {
 
     return undef
       unless (
-        $ldap = Lemonldap::NG::Portal::Lib::Net::LDAP->new(
-            { p => $self->{p}, conf => $self->{conf} }
+        $ldap = Lemonldap::NG::Portal::Lib::Net::LDAP->new( {
+                p    => $self->{p},
+                conf => $self->{conf},
+                ( $self->raw ? ( raw => $self->raw ) : () ),
+            }
         )
       );
 
@@ -51,6 +54,12 @@ sub newLdap {
 
     return $ldap;
 }
+
+has raw => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => 'buildRaw',
+);
 
 has filter => (
     is      => 'rw',
@@ -73,6 +82,17 @@ has findUserFilter => (
           || '(&(uid=$user)(objectClass=inetOrgPerson))';
     }
 );
+
+sub buildRaw {
+    my ($self) = @_;
+    my $conf = $self->conf->{ldapRaw};
+    if ($conf) {
+        return qr/$conf/;
+    }
+    else {
+        return undef;
+    }
+}
 
 sub buildFilter {
     return $_[0]->_buildFilter( $_[0]->conf->{AuthLDAPFilter}
@@ -264,6 +284,12 @@ sub bind {
     }
 
     return 1;
+}
+
+# Return an attribute from an entry and apply transformations if needed
+sub getLdapValue {
+    my ($self, $entry, $attribute) = @_;
+    return $self->ldap->getLdapValue($entry, $attribute);
 }
 
 1;
