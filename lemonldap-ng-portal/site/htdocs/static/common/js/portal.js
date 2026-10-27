@@ -56,8 +56,10 @@
   var datas,
     delKey,
     displayIcon,
+    escapeHtml,
     getQueryParam,
     getValues,
+    hasTranslation,
     _ping,
     ppolicyResults,
     removeOidcConsent,
@@ -68,7 +70,9 @@
     setResult,
     setSelector,
     translate,
+    translateAttributes,
     translatePage,
+    translateSpan,
     translationFields,
     updateBorder,
     indexOf = [].indexOf;
@@ -151,14 +155,7 @@
         }
       }
       $("[trspan]").each(function () {
-        var args, i, len, txt;
-        args = $(this).attr('trspan').split(',');
-        txt = translate(args.shift());
-        for (i = 0, len = args.length; i < len; i++) {
-          v = args[i];
-          txt = txt.replace(/%[sd]/, v);
-        }
-        return $(this).html(txt);
+        return translateSpan($(this));
       });
       $("[trmsg]").each(function () {
         var msg;
@@ -169,19 +166,7 @@
         }
       });
       $("[trattribute]").each(function () {
-        var attribute, i, len, trattribute, trattributes, value;
-        trattributes = $(this).attr('trattribute').trim().split(/\s+/);
-        for (i = 0, len = trattributes.length; i < len; i++) {
-          trattribute = trattributes[i];
-          var _trattribute$split = trattribute.split(':');
-          var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
-          attribute = _trattribute$split2[0];
-          value = _trattribute$split2[1];
-          if (attribute && value) {
-            $(this).attr(attribute, translate(value));
-          }
-        }
-        return true;
+        return translateAttributes($(this));
       });
       $("[trplaceholder]").each(function () {
         var tmp;
@@ -196,14 +181,91 @@
       });
     });
   };
+  hasTranslation = function hasTranslation(str) {
+    return Object.prototype.hasOwnProperty.call(translationFields, str) && !!translationFields[str];
+  };
 
   // Translate a string
   translate = function translate(str) {
-    if (translationFields[str]) {
+    if (hasTranslation(str)) {
       return translationFields[str];
     } else {
       return str;
     }
+  };
+  escapeHtml = function escapeHtml(str) {
+    return $('<div>').text(str).html();
+  };
+
+  // Translate the content of a tag having a "trspan" attribute:
+  //  - trspan="key": translation of key
+  //  - trspan="key,arg1,arg2": translation of key, each %s or %d replaced by the
+  //    next argument (HTML escaped)
+  // Without translation, the content set by the template is kept, else the
+  // key is displayed as text, never as HTML. A tag having a "troptional"
+  // attribute is emptied and hidden instead of displaying the key.
+  translateSpan = function translateSpan(el) {
+    var args, key, optional, txt, value;
+    value = el.attr('trspan');
+    optional = el.is('[troptional]');
+    if (el.data('trspanKey') === undefined) {
+      el.data('trspanKey', value);
+      el.data('trspanOrig', el.html());
+    }
+    args = value.split(',');
+    key = args.shift();
+    if (hasTranslation(key)) {
+      txt = translationFields[key];
+      args.forEach(function (arg) {
+        txt = txt.replace(/%[sd]/, escapeHtml(arg));
+      });
+      el.html(txt);
+    } else if (el.data('trspanKey') === value && el.data('trspanOrig').trim()) {
+      el.html(el.data('trspanOrig'));
+    } else if (optional) {
+      el.empty();
+    } else {
+      el.text(key);
+    }
+    if (optional) {
+      el.prop('hidden', el.html() === '');
+    }
+    return el;
+  };
+
+  // Set each attribute of a tag having a "trattribute" attribute
+  // ("attr1:key1 attr2:key2") to the translation of its key. Alternative keys
+  // can be given ("attr:key1|key2"): the first one having a translation is
+  // used. Without translation, the value set by the template is kept, else the
+  // (last) key is used.
+  translateAttributes = function translateAttributes(el) {
+    var orig;
+    orig = el.data('trattributeOrig');
+    if (orig === undefined) {
+      orig = {};
+      el.data('trattributeOrig', orig);
+    }
+    el.attr('trattribute').trim().split(/\s+/).forEach(function (trattribute) {
+      var attribute, key, keys;
+      var _trattribute$split = trattribute.split(':');
+      var _trattribute$split2 = _slicedToArray(_trattribute$split, 2);
+      attribute = _trattribute$split2[0];
+      keys = _trattribute$split2[1];
+      keys = (keys || '').split('|');
+      key = $.grep(keys, hasTranslation)[0] || keys[keys.length - 1];
+      if (!(attribute && key)) {
+        return;
+      }
+      if (!(attribute in orig)) {
+        orig[attribute] = el.attr(attribute);
+      }
+      if (hasTranslation(key)) {
+        el.attr(attribute, translationFields[key]);
+      } else {
+        el.attr(attribute, orig[attribute] !== undefined ? orig[attribute] : key);
+      }
+    });
+    return true;
   };
 
   // These functions are exported so that custom JS code can call them

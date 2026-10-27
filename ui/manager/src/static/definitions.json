@@ -649,7 +649,7 @@
    "sfExtra": "Extra second factors",
    "sfLoginTimeout": "Timeout for 2F login process",
    "sfManagerRule": "Rule to display second factor Manager link",
-   "sfOnlyUpgrade": "Only trigger second factor on session upgrade",
+   "sfOnlyUpgrade": "Skip second factor if the authentication level is sufficient",
    "sfRegisterTimeout": "Timeout for 2F registration process",
    "sfRemovedMsgRule": "Display a message if at leat one expired SF has been removed",
    "sfRemovedNotifMsg": "Notification message",

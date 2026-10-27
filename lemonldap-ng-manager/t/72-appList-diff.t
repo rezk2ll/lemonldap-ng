@@ -214,6 +214,35 @@ subtest "Remove an application" => sub {
     );
 };
 
+subtest "Modify a category (translation key)" => sub {
+    my $diff = getDiff(
+        $baseconfig,
+        {
+            '1sample' => {
+                %{ $baseconfig->{'1sample'} },
+                options => { translation => 'mySampleCat' },
+            },
+        }
+    );
+    is_deeply(
+        $diff,
+        [ {
+                'applicationList' => {
+                    'Sample applications' =>
+                      { options => { translation => undef } }
+                }
+            },
+            {
+                'applicationList' => {
+                    'Sample applications' =>
+                      { options => { translation => 'mySampleCat' } }
+                }
+            }
+        ],
+        "Expected result"
+    ) or diag explain $diff;
+};
+
 subtest "Modify an application (option)" => sub {
     my $oldconfig = dclone($baseconfig);
     my $newconfig = dclone($baseconfig);

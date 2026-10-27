@@ -56,6 +56,8 @@ Application parameters:
 -  **Description**
 -  **URI**: URL of the application
 -  **Tooltip**: information display on mouse over the button
+-  **Translation key**: optional, see
+   :ref:`below<portalmenu-translation>`
 -  **Logo**: file name to use as logo (you can also use a `Font Awesome icon <https://fontawesome.com/v4/icons/>`__ code)
 -  **Display application**:
 
@@ -85,6 +87,43 @@ Application parameters:
     directory (``portal/htdocs/static/common/apps/``). You can set a custom
     logo by setting the logo file name directly in the field, and copy the
     logo file in portal applications logos directory
+
+.. _portalmenu-translation:
+
+Translating categories and applications
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.23.5
+
+Categories and applications are displayed as configured, in every
+language. To translate one of them, give it a **Translation key** in the
+Manager (letters, digits and underscores only), then define this key in
+a lang file of the skin templates directory (see
+:doc:`portal customization<portalcustom>`). For an application whose key
+is ``myApp``:
+
+-  ``myApp`` translates its name
+-  ``myApp_desc`` translates its description
+-  ``myApp_tip`` translates its tooltip (if no tooltip is set in the
+   Manager, the tooltip is the name, translated by ``myApp``)
+
+The name, the description and the tooltip set in the Manager are used
+when there is no translation in the current language.
+
+A category only uses its key. For example ``templates/bootstrap/fr.json``:
+
+.. code-block:: javascript
+
+   {
+     "myCategory": "Mes applications",
+     "myApp": "Mon application",
+     "myApp_desc": "Une application de démonstration"
+   }
+
+An application without description in the Manager only has a
+description in the languages that define its ``_desc`` key. The categories and applications of the
+default configuration use keys starting with ``menu`` that are already
+translated.
 
 .. |image0| image:: /documentation/manager-portal-menu-application.png
    :class: align-center

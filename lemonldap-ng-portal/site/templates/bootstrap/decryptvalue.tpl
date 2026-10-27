@@ -4,7 +4,7 @@
   <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="MSG">"></span></div></div>
 
   <TMPL_IF NAME="DECRYPTED">
-  <div class="alert <TMPL_VAR NAME="DALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="DECRYPTED">"></span></div></div>
+  <div class="alert <TMPL_VAR NAME="DALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="DECRYPTED" ESCAPE=HTML>"></span></div></div>
   </TMPL_IF>
 
   <form id="findUser" action="<TMPL_VAR NAME="FORM_ACTION">" method="post" class="password" role="form">

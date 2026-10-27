@@ -11,6 +11,9 @@ our $VERSION = '2.23.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+# Keys of a category or an application that are not sub-entries
+my $menuProperties = qr/^(?:catname|type|options|order)$/;
+
 # PROPERTIES
 
 has menuModules => (
@@ -220,7 +223,7 @@ sub _buildCategoryHash {
     # Extract applications from hash
     my $apphash;
     foreach my $catkey ( sort keys %$cathash ) {
-        next if $catkey =~ /(type|options|catname|order)/;
+        next if $catkey =~ $menuProperties;
         if ( $cathash->{$catkey}->{type} eq "application" ) {
             $apphash->{$catkey} = $cathash->{$catkey};
         }
@@ -249,7 +252,7 @@ sub _buildCategoryHash {
               <=> ( $cathash->{$b}->{order} || 0 )
               or $a cmp $b
         }
-        grep { not /^(?:catname|type|options|order)$/ } keys %$cathash
+        grep { $_ !~ $menuProperties } keys %$cathash
       )
     {
 
@@ -264,7 +267,8 @@ sub _buildCategoryHash {
         category => 1,
         catname  => $catname,
         catid    => $catid,
-        catlevel => $catlevel
+        catlevel => $catlevel,
+        cattr    => $self->_translationKey( $cathash->{options} ),
     };
     $categoryHash->{applications} = $applications if $applications;
     $categoryHash->{categories}   = $categories   if $categories;
@@ -287,11 +291,12 @@ sub _buildApplicationHash {
     my $applogo      = $apphash->{options}->{logo};
     my $applogo_icon = ( $apphash->{options}->{logo} =~ /\./ ? 0 : 1 );
     my $apptip       = $apphash->{options}->{tooltip} || $appname;
+    my $apptr        = $self->_translationKey( $apphash->{options} );
 
     # Detect sub applications
     my $subapphash;
     foreach my $key ( sort keys %$apphash ) {
-        next if $key =~ /(type|options|catname|order)/;
+        next if $key =~ $menuProperties;
         if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
         }
@@ -323,8 +328,30 @@ sub _buildApplicationHash {
         appid        => $appid,
         apptip       => $apptip,
     };
+
+    # The name, the description and the tooltip have their own translation,
+    # the configured values are displayed when there is no translation. Without
+    # configured tooltip, the tooltip falls back to the translated name
+    if ($apptr) {
+        $applicationHash->{apptr}     = $apptr;
+        $applicationHash->{appdesctr} = "${apptr}_desc";
+        $applicationHash->{apptiptr} =
+          $apphash->{options}->{tooltip}
+          ? "${apptr}_tip"
+          : "${apptr}_tip|$apptr";
+    }
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;
+}
+
+## @method private string _translationKey(hashref options)
+# Return the translation key of a category or an application, if any
+# @param $options Options of the menu entry
+# @return translation key or undef
+sub _translationKey {
+    my ( $self, $options ) = @_;
+    my $key = ref $options ? $options->{translation} : undef;
+    return ( defined $key and $key =~ /^\w+$/ ) ? $key : undef;
 }
 
 ## @method private string _filter(hashref apphash)
@@ -364,7 +391,7 @@ sub _filterHash {
     $currentpath //= "";
 
     foreach my $key ( keys %$apphash ) {
-        next if $key =~ /(type|options|catname|order)/;
+        next if $key =~ $menuProperties;
         my $path = $currentpath ? "$currentpath/$key" : $key;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
@@ -455,7 +482,7 @@ sub _isCategoryEmpty {
 
     # Test sub categories
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options|catname|order)/;
+        next if $key =~ $menuProperties;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
         {

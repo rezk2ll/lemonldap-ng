@@ -1355,6 +1355,32 @@ sub tests {
             return 1;
         },
 
+        # Menu translation keys are used in HTML attributes and as keys of
+        # language files
+        menuTranslationKeys => sub {
+            my @pb;
+            my $walk;
+            $walk = sub {
+                my $node = shift;
+                foreach my $key ( keys %$node ) {
+                    next if $key =~ /^(?:catname|type|options|order)$/;
+                    my $child = $node->{$key};
+                    next unless ref $child eq 'HASH';
+                    my $tr =
+                      ref $child->{options}
+                      ? $child->{options}->{translation}
+                      : undef;
+                    push @pb, $tr
+                      if ( defined $tr and length $tr and $tr !~ /^\w+$/ );
+                    $walk->($child);
+                }
+            };
+            $walk->( $conf->{applicationList} || {} );
+            return 1 unless @pb;
+            return ( 0,
+                'Bad menu translation key(s): ' . join( ', ', sort @pb ) );
+        },
+
 # Warn if both oidcRPMetaDataOptionsJwks and oidcRPMetaDataOptionsJwksUri is set
         noJwksDuplication => sub {
             return 1

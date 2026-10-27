@@ -23,6 +23,7 @@ sub zeroConf {
                     'options' => {
                         'logo'        => 'configure.png',
                         'name'        => 'WebSSO Manager',
+                        'translation' => 'menuManager',
                         'display'     => 'auto',
                         'uri'         => "http://manager.$domain/manager.html",
                         'description' => 'Configure LemonLDAP::NG WebSSO'
@@ -36,18 +37,21 @@ sub zeroConf {
                         'uri'         => "http://manager.$domain/sessions.html",
                         'description' => 'Explore WebSSO sessions',
                         'logo'        => 'database.png',
-                        'name'        => 'Sessions Explorer'
+                        'name'        => 'Sessions Explorer',
+                        'translation' => 'menuSessions',
                     }
                 },
                 'catname'       => 'Administration',
+                'options'       => { 'translation' => 'menuAdministration' },
                 'notifications' => {
                     'type'    => 'application',
                     'options' => {
                         'description' => 'Explore WebSSO notifications',
                         'uri' => "http://manager.$domain/notifications.html",
-                        'display' => 'auto',
-                        'logo'    => 'database.png',
-                        'name'    => 'Notifications Explorer'
+                        'display'     => 'auto',
+                        'logo'        => 'database.png',
+                        'name'        => 'Notifications Explorer',
+                        'translation' => 'menuNotifications',
                     }
                 },
                 'type' => 'category'
@@ -58,10 +62,11 @@ sub zeroConf {
                     'options' => {
                         'description' =>
                           'Documentation supplied with LemonLDAP::NG',
-                        'display' => 'on',
-                        'uri'     => "http://manager.$domain/doc/",
-                        'name'    => 'Local documentation',
-                        'logo'    => 'help.png'
+                        'display'     => 'on',
+                        'uri'         => "http://manager.$domain/doc/",
+                        'name'        => 'Local documentation',
+                        'translation' => 'menuLocalDoc',
+                        'logo'        => 'help.png'
                     },
                     'type' => 'application'
                 },
@@ -71,35 +76,40 @@ sub zeroConf {
                         'uri'         => 'https://lemonldap-ng.org/',
                         'display'     => 'on',
                         'logo'        => 'network.png',
-                        'name'        => 'Official Website'
+                        'name'        => 'Official Website',
+                        'translation' => 'menuOfficialWebsite',
                     },
                     'type' => 'application'
                 },
-                'catname' => 'Documentation'
+                'catname' => 'Documentation',
+                'options' => { 'translation' => 'menuDocumentation' },
             },
             '1sample' => {
                 'test1' => {
                     'options' => {
                         'description' =>
                           'A simple application displaying authenticated user',
-                        'uri'     => "http://test1.$domain/",
-                        'display' => 'auto',
-                        'logo'    => 'demo.png',
-                        'name'    => 'Application Test 1'
+                        'uri'         => "http://test1.$domain/",
+                        'display'     => 'auto',
+                        'logo'        => 'demo.png',
+                        'name'        => 'Application Test 1',
+                        'translation' => 'menuAppTest1',
                     },
                     'type' => 'application'
                 },
                 'catname' => 'Sample applications',
+                'options' => { 'translation' => 'menuSampleApps' },
                 'type'    => 'category',
                 'test2'   => {
                     'type'    => 'application',
                     'options' => {
                         'description' =>
 'The same simple application displaying authenticated user',
-                        'uri'     => "http://test2.$domain/",
-                        'display' => 'auto',
-                        'name'    => 'Application Test 2',
-                        'logo'    => 'thumbnail.png'
+                        'uri'         => "http://test2.$domain/",
+                        'display'     => 'auto',
+                        'name'        => 'Application Test 2',
+                        'translation' => 'menuAppTest2',
+                        'logo'        => 'thumbnail.png'
                     }
                 }
             }

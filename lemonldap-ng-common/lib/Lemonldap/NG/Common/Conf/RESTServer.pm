@@ -706,13 +706,17 @@ sub _scanCatsAndApps {
             ( $apps->{$a}->{order} || 0 ) <=> ( $apps->{$b}->{order} || 0 )
               or $a cmp $b
         }
-        grep { not /^(?:catname|type|order)$/ } keys %$apps
+        grep { not /^(?:catname|type|options|order)$/ } keys %$apps
       )
     {
         my $item = { id => "$baseId/$cat" };
         if ( $apps->{$cat}->{type} eq 'category' ) {
             $item->{title} = $apps->{$cat}->{catname};
             $item->{type}  = 'menuCat';
+            $item->{data} =
+              { translation => $apps->{$cat}->{options}->{translation} }
+              if ( ref $apps->{$cat}->{options}
+                and defined $apps->{$cat}->{options}->{translation} );
             $item->{nodes} =
               $self->_scanCatsAndApps( $apps->{$cat}, "$baseId/$cat" );
         }
