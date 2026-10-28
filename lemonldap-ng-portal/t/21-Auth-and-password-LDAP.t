@@ -107,7 +107,7 @@ my $ldap = LLNG::Manager::Test->new( {
             mailLDAPFilter => '(&(mail=$mail)(o=$o))',
         }
     }
-)->p->_userDB;
+)->p->_authentication->userdb_modules->{Default};
 subtest 'Values are escaped in LDAP filters' => sub {
     is(
         $ldap->filter->( { user => 'x)(uid=dwho' } ),
