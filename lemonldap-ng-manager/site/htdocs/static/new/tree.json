@@ -119,13 +119,24 @@
             "title": "portalParams"
          },
          {
-            "form": "authParams",
-            "help": "start.html#authentication-users-and-password-databases",
+            "help": "authchoice.html",
             "nodes": [
-               "authentication",
-               "userDB",
-               "passwordDB",
-               "registerDB"
+               "authChoiceModules",
+               "registerDB",
+               {
+                  "form": "simpleInputContainer",
+                  "help": "authchoice.html#choiceadvparam",
+                  "nodes": [
+                     "authChoiceParam",
+                     "authChoiceAuthBasic",
+                     "authChoiceFindUser",
+                     "authChoiceSelectOnly",
+                     "authentication",
+                     "userDB",
+                     "passwordDB"
+                  ],
+                  "title": "choiceAdvParams"
+               }
             ],
             "nodes_cond": [
                {
@@ -136,18 +147,6 @@
                      "ADPwdExpireWarning"
                   ],
                   "title": "adParams"
-               },
-               {
-                  "form": "simpleInputContainer",
-                  "help": "authchoice.html",
-                  "nodes": [
-                     "authChoiceParam",
-                     "authChoiceModules",
-                     "authChoiceAuthBasic",
-                     "authChoiceFindUser",
-                     "authChoiceSelectOnly"
-                  ],
-                  "title": "choiceParams"
                },
                {
                   "form": "simpleInputContainer",

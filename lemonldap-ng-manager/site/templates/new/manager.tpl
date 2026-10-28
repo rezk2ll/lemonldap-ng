@@ -9,6 +9,6 @@
   <body>
     <div id="root" />
     <script src="<TMPL_VAR NAME="SCRIPTNAME">psgi.js"></script>
-    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.js?v=3b1910227f39"></script>
+    <script src="<TMPL_VAR NAME="STATIC_PREFIX">new/manager.min.js?v=de008214b353"></script>
   </body>
 </html>

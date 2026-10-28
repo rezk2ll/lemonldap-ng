@@ -52209,13 +52209,14 @@ ${String(error)}`;
 	    });
 	}
 	function OptionRenderer(_a) {
+	    var _b;
 	    var selected = _a.selected;
 	    var config = useAppSelector(function (state) { return state.config.data.config; });
 	    var dispatch = useAppDispatch();
 	    var test1 = tree[0].nodes.filter(function (el) { return el.title === "authParams"; })[0].nodes_cond;
 	    if (selected !== "SAML") {
 	        var l_1 = "".concat(selected === "OpenIDConnect" ? "oidc" : selected.toLowerCase(), "Params");
-	        var nodeSelected = test1.filter(function (el) { return el.title === l_1; })[0].nodes;
+	        var nodeSelected = (_b = test1.filter(function (el) { return el.title === l_1; })[0]) === null || _b === void 0 ? void 0 : _b.nodes;
 	        return (jsxRuntimeExports.jsxs("div", { children: [jsxRuntimeExports.jsx("strong", { className: "title2", children: t$1(l_1) }), jsxRuntimeExports.jsx("div", { className: "appDesc", children: nodeSelected ? (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", { children: jsxRuntimeExports.jsx(RecursRender, { param: { values: nodeSelected, config: config, tab: 0, dispatch: dispatch } }) }) }, selected)) : (jsxRuntimeExports.jsx("table", { children: jsxRuntimeExports.jsx("tbody", {}) }, selected)) })] }));
 	    }
 	    return jsxRuntimeExports.jsx(SAMLRenderer, {});
