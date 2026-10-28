@@ -17,6 +17,10 @@ dn: olcDatabase=frontend,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcFrontendConfig
 olcDatabase: frontend
+# Two schemes: the Password Modify extended operation then produces two
+# values, which the ppolicy overlay refuses (see 21-Auth-LDAP-Policy.t)
+olcPasswordHash: {SSHA}
+olcPasswordHash: {SHA}
 
 dn: olcDatabase=config,cn=config
 objectClass: olcDatabaseConfig
