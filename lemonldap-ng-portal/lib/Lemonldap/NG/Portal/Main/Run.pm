@@ -445,24 +445,8 @@ sub doPE {
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
-
-    if (
-        my $mod = {
-            auth     => '_authentication',
-            user     => '_userDB',
-            password => '_passwordDB'
-        }->{$type}
-      )
-    {
-        if ( my $sub = $self->$mod->can('name') ) {
-            return $sub->( $self->$mod, $req, $type );
-        }
-        else {
-            my $s = ref( $self->$mod );
-            $s =~
-s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth|Password)::)?//;
-            return $s;
-        }
+    if ( $type eq "auth" or $type eq "user" or $type eq "password" ) {
+        return $self->_authentication->name( $req, $type );
     }
     elsif ( $type eq 'issuer' ) {
         return $req->{_activeIssuerDB};

@@ -352,7 +352,7 @@ export function OptionRenderer({ selected }: { selected: string }) {
     }Params`;
     const nodeSelected = test1.filter(
       (el: Record<string, any>) => el.title === l
-    )[0].nodes;
+    )[0]?.nodes;
 
     return (
       <div>

@@ -53,11 +53,10 @@ ok(
     ),
     'Post FindUser request'
 );
-ok(
-    $res->[2]->[0] =~
-m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
-    'value=""'
-) or explain( $res->[2]->[0], 'value=""' );
+my $spoofid_value =
+  getHtmlElement( $res, '//input[@name="spoofId"]/@value' )->get_node(1)->value;
+is( $spoofid_value, "", "No findUser value offered" );
+
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'token' );
 $query =~ s/user=/user=rtyler/;

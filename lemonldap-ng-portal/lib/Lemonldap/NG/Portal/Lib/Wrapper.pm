@@ -10,9 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.18.0';
 
-extends 'Lemonldap::NG::Portal::Main::Auth';
-
-has availableModules => ( is => 'rw', default => sub { {} } );
+extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # Wrappers for portal entry points: entry points are enabled only for active
 # authentication module
@@ -39,36 +37,25 @@ sub _authCancel         { _wrapEntryPoint( @_, 'authCancel' ); }
 sub _wrapEntryPoint {
     my ( $self, $req, $name, $connected ) = @_;
     my @t;
+    my $mod;
     if ($connected) {
-        if ( my $mod = $req->userData->{ $self->sessionKey } ) {
-            if ( $self->modules->{$mod} ) {
-                @t = ( $self->modules->{$mod} );
-            }
-            else {
-                $self->userLogger->error(
-                    "Bad $self->{sessionKey} value in session ($name)");
-            }
+        if ( $mod = $req->userData->{ $self->sessionKey } ) {
+            push @t, $self->_get_modules($mod);
         }
         else {
             $self->userLogger->warn(
                 "Missing $self->{sessionKey} key in session");
         }
     }
-    elsif ( my $mod = $req->sessionInfo->{ $self->sessionKey } ) {
-        if ( $self->modules->{$mod} ) {
-            @t = ( $self->modules->{$mod} );
-        }
-        else {
-            $self->userLogger->error(
-                "Bad $self->{sessionKey} value in session ($name)");
-        }
+    elsif ( $mod = $req->sessionInfo->{ $self->sessionKey } ) {
+        push @t, $self->_get_modules($mod);
     }
-    elsif ( ref $req->data->{ "enabledMods" . $self->type } ) {
-        @t = @{ $req->data->{ "enabledMods" . $self->type } };
+    elsif ( $mod = $req->data->{_authChoice} ) {
+        push @t, $self->_get_modules($mod);
     }
     else {
         $self->logger->debug(
-            "Unable to find enabledMods$self->{type} in this context: $name");
+            "Unable to find _authChoice in this context: $name");
     }
     foreach (@t) {
         if ( $_->can($name) ) {
@@ -83,18 +70,30 @@ sub _wrapEntryPoint {
     return PE_OK;
 }
 
-sub AUTOLOAD {
-    no strict;
+sub _get_modules {
+    my ( $self, $choice ) = @_;
 
-    # Unknown methods are tried with real portal
-    my $self = shift;
-    my $sub  = $AUTOLOAD;
-    $sub =~ s/.*:://;
-    if ( $self->p->can($sub) ) {
-        return $self->p->$sub(@_);
+    my @res;
+
+    if ( exists $self->auth_modules->{$choice} ) {
+        push @res, $self->auth_modules->{$choice};
     }
-    require Carp;
-    Carp::confess "Unknown method $sub";
+    else {
+        $self->logger->warn("Unknown auth module: $choice");
+    }
+    if ( exists $self->userdb_modules->{$choice} ) {
+        push @res, $self->userdb_modules->{$choice};
+    }
+    else {
+        $self->logger->warn("Unknown userdb module: $choice");
+    }
+    if ( exists $self->password_modules->{$choice} ) {
+        push @res, $self->password_modules->{$choice};
+    }
+    else {
+        $self->logger->warn("Unknown password module: $choice");
+    }
+    return @res;
 }
 
 1;

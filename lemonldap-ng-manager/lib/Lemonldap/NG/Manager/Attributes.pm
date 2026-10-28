@@ -533,8 +533,12 @@ sub attributes {
             'type'    => 'bool'
         },
         'authentication' => {
-            'default' => 'Demo',
+            'default' => 'Choice',
             'select'  => [ {
+                    'k' => 'Choice',
+                    'v' => 'doNotForce'
+                },
+                {
                     'k' => 'Apache',
                     'v' => 'Apache'
                 },
@@ -591,14 +595,6 @@ sub attributes {
                     'v' => 'Demonstration'
                 },
                 {
-                    'k' => 'Choice',
-                    'v' => 'authChoice'
-                },
-                {
-                    'k' => 'Combination',
-                    'v' => 'combineMods'
-                },
-                {
                     'k' => 'CAS',
                     'v' => 'Central Authentication Service (CAS)'
                 },
@@ -623,12 +619,12 @@ sub attributes {
                     'v' => 'Slave'
                 },
                 {
-                    'k' => 'Null',
-                    'v' => 'None'
-                },
-                {
                     'k' => 'Custom',
                     'v' => 'customModule'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
                 }
             ],
             'type' => 'select'
@@ -4065,14 +4061,14 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'passwordDB' => {
-            'default' => 'Demo',
+            'default' => 'Choice',
             'select'  => [ {
-                    'k' => 'AD',
-                    'v' => 'Active Directory'
+                    'k' => 'Choice',
+                    'v' => 'doNotForce'
                 },
                 {
-                    'k' => 'Choice',
-                    'v' => 'authChoice'
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
                 },
                 {
                     'k' => 'DBI',
@@ -5801,8 +5797,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'pcre'
         },
         'userDB' => {
-            'default' => 'Same',
+            'default' => 'Choice',
             'select'  => [ {
+                    'k' => 'Choice',
+                    'v' => 'doNotForce'
+                },
+                {
                     'k' => 'Same',
                     'v' => 'Same'
                 },

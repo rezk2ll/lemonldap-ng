@@ -41,6 +41,7 @@ subtest "after sfRegisterTimeout, report errors correctly" => sub {
     ok( $res = $client->_get( '/2fregisters', cookie => $pdata ),
         'Follow redirection to /2fregisters' );
     expectRedirection( $res, qr'http://auth.example.com/+2fregisters/totp' );
+    ok( expectPdata($res)->{sfRegToken}, "sfRegToken is present" );
 
     # TOTP form
     ok(
@@ -95,10 +96,7 @@ subtest "after sfRegisterTimeout, report errors correctly" => sub {
         'Post code'
     );
     expectReject( $res, 500, "PE82" );
-    ok(
-        !expectCookie( $res, 'lemonldappdata' ),
-        "invalid sfRegToken is cleared"
-    );
+    ok( !expectPdata($res)->{sfRegToken}, "sfRegToken is cleared" );
 
     # Refresh page redirects to portal
     ok(

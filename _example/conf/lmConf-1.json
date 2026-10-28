@@ -99,7 +99,9 @@
          "type" : "category"
       }
    },
-   "authentication" : "Demo",
+   "authChoiceModules" : {
+      "Default" : "Demo;Demo;Null;;;{}"
+   },
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgDate" : "1627287638",
    "cfgNum" : 1,
@@ -170,7 +172,6 @@
       "dirName" : "__NOTIFICATIONDIR__"
    },
    "oidcServiceIgnoreScopeForClaims" : 1,
-   "passwordDB" : "Demo",
    "persistentStorage" : "Apache::Session::File",
    "persistentStorageOptions" : {
       "Directory" : "__PSESSIONDIR__",
@@ -182,7 +183,6 @@
    "securedCookie" : 0,
    "sessionDataToRemember" : {},
    "timeout" : 72000,
-   "userDB" : "Same",
    "webauthnDefaultTransports" : "usb, nfc, ble, internal",
    "whatToTrace" : "_whatToTrace"
 }

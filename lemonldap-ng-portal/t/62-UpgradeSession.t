@@ -186,7 +186,7 @@ expectPortalError( $res, 9 );
 
 ( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading', 'url' );
 
-$query = $query . "&lmAuth=strong";
+$query =~ s/lmAuth=[^&]*/lmAuth=strong/;
 
 # login with the "strong" auth choice
 

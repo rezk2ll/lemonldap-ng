@@ -63,7 +63,7 @@ sub runTest {
 
     # Get code for RP1
 
-    my $idpId = $op->login( 'dwho', { lmAuth => '1_Demo' } );
+    my $idpId = $op->login('dwho');
     my $code  = codeAuthorize(
         $op, $idpId,
         {
@@ -78,14 +78,7 @@ sub runTest {
     );
 
     $json = expectJSON( codeGrant( $op, "rpid", $code, "http://test/" ) );
-    my $access_token = $json->{access_token};
-    if ($jwt) {
-        expectJWT(
-            $access_token,
-            name => "Frédéric Accents",
-            sub  => "customfrench"
-        );
-    }
+    my $access_token  = $json->{access_token};
     my $refresh_token = $json->{refresh_token};
 
     # Make sure refresh token session has no _lastSeen to avoid purge

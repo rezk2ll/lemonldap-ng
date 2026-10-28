@@ -917,13 +917,34 @@ llapp.controller('TreeCtrl', [
       }
       // Call execFilter for authParams
       if (node._nodes_filter) {
-        if (node.nodes) {
-          ref2 = node.nodes;
-          for (r = 0, len2 = ref2.length; r < len2; r++) {
-            n = ref2[r];
-            n.onChange = $scope.execFilters;
-          }
-        }
+        var recurseOnChange = function (node) {
+          if (node._nodes) {
+                var ref2 = node._nodes;
+                var r,len2;
+                for (r = 0, len2 = ref2.length; r < len2; r++) {
+                    var n = ref2[r];
+                    if (n.nodes || n._nodes) {
+                        recurseOnChange(n);
+                    } else {
+                        n.onChange = $scope.execFilters;
+                    }
+                }
+            }
+          if (node.nodes) {
+                var ref2 = node.nodes;
+                var r,len2;
+                for (r = 0, len2 = ref2.length; r < len2; r++) {
+                    var n = ref2[r];
+                    if (n.nodes || n._nodes ) {
+                        recurseOnChange(n);
+                    } else {
+                        n.onChange = $scope.execFilters;
+                    }
+                }
+            }
+        };
+        recurseOnChange(node);
+
         $scope.filters[node._nodes_filter] = node;
         return $scope.execFilters();
       }

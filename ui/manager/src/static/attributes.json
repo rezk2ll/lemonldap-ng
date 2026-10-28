@@ -305,8 +305,12 @@
       "type": "bool"
    },
    "authentication": {
-      "default": "Demo",
+      "default": "Choice",
       "select": [
+         {
+            "k": "Choice",
+            "v": "doNotForce"
+         },
          {
             "k": "Apache",
             "v": "Apache"
@@ -364,14 +368,6 @@
             "v": "Demonstration"
          },
          {
-            "k": "Choice",
-            "v": "authChoice"
-         },
-         {
-            "k": "Combination",
-            "v": "combineMods"
-         },
-         {
             "k": "CAS",
             "v": "Central Authentication Service (CAS)"
          },
@@ -396,12 +392,12 @@
             "v": "Slave"
          },
          {
-            "k": "Null",
-            "v": "None"
-         },
-         {
             "k": "Custom",
             "v": "customModule"
+         },
+         {
+            "k": "Null",
+            "v": "None"
          }
       ],
       "type": "select"
@@ -3699,15 +3695,15 @@
       "type": "bool"
    },
    "passwordDB": {
-      "default": "Demo",
+      "default": "Choice",
       "select": [
+         {
+            "k": "Choice",
+            "v": "doNotForce"
+         },
          {
             "k": "AD",
             "v": "Active Directory"
-         },
-         {
-            "k": "Choice",
-            "v": "authChoice"
          },
          {
             "k": "DBI",
@@ -5367,8 +5363,12 @@
       "type": "pcre"
    },
    "userDB": {
-      "default": "Same",
+      "default": "Choice",
       "select": [
+         {
+            "k": "Choice",
+            "v": "doNotForce"
+         },
          {
             "k": "Same",
             "v": "Same"
