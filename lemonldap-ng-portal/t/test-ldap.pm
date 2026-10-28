@@ -8,9 +8,11 @@ use Net::LDAP;
 use IPC::Run;
 
 use File::Copy "cp";
+use File::Path qw(remove_tree);
 
 my $slapd_bin;
 my $slapadd_bin;
+our $slapmodify_bin;
 my $slapd_schema_dir;
 our $slapd_url = 'ldapi://' . uri_escape( $main::tmpDir . '/ldap_socket' );
 our $slapd_pid;
@@ -31,6 +33,8 @@ sub legacy_openldap {
 if ( $ENV{LLNGTESTLDAP} ) {
     $slapd_bin        = $ENV{LLNGTESTLDAP_SLAPD_BIN}   || '/usr/sbin/slapd';
     $slapadd_bin      = $ENV{LLNGTESTLDAP_SLAPADD_BIN} || '/usr/sbin/slapadd';
+    $slapmodify_bin =
+      $ENV{LLNGTESTLDAP_SLAPMODIFY_BIN} || '/usr/sbin/slapmodify';
     $slapd_schema_dir = (
         ( $ENV{LLNGTESTLDAP_SCHEMA_DIR} and -d $ENV{LLNGTESTLDAP_SCHEMA_DIR} )
         ? $ENV{LLNGTESTLDAP_SCHEMA_DIR}
@@ -73,19 +77,39 @@ if ( $ENV{LLNGTESTLDAP} ) {
         "/bin/sed",                       "-i",
         "s:t/testslapd/:$main::tmpDir/:", "$main::tmpDir/slapd-test.ldif"
     );
-    system( $slapadd_bin, "-F", "$main::tmpDir/slapd.d", "-n", "0",
-        "-l", "$main::tmpDir/slapd-test.ldif" );
-    system( $slapadd_bin, "-F", "$main::tmpDir/slapd.d", "-n", "1",
-        "-l", "$main::tmpDir/users.ldif" );
+    loadLdapConfAndData();
     startLdapServer();
 }
 
-sub resetLdapData {
-
-    stopLdapServer();
-    unlink glob "$main::tmpDir/data/*";
+# Load slapd configuration and data. $config is an optional LDIF of changes
+# (changetype: modify...) applied to the configuration (needs slapmodify,
+# OpenLDAP 2.5+)
+sub loadLdapConfAndData {
+    my ($config) = @_;
+    system( $slapadd_bin, "-F", "$main::tmpDir/slapd.d", "-n", "0",
+        "-l", "$main::tmpDir/slapd-test.ldif" );
+    if ($config) {
+        open my $fh, '>', "$main::tmpDir/slapd-extra.ldif" or die $!;
+        print $fh $config;
+        close $fh;
+        system( $slapmodify_bin, "-F", "$main::tmpDir/slapd.d", "-n", "0",
+            "-l", "$main::tmpDir/slapd-extra.ldif" ) == 0
+          or die "Unable to apply additional LDAP configuration";
+    }
     system( $slapadd_bin, "-F", "$main::tmpDir/slapd.d", "-n", "1",
         "-l", "$main::tmpDir/users.ldif" );
+}
+
+# Reset LDAP configuration and data.
+# Parameters:
+#  - config: additional configuration LDIF, see loadLdapConfAndData()
+sub resetLdapData {
+    my (%args) = @_;
+
+    stopLdapServer();
+    remove_tree( "$main::tmpDir/slapd.d", { keep_root => 1 } );
+    unlink glob "$main::tmpDir/data/*";
+    loadLdapConfAndData( $args{config} );
     startLdapServer();
 }
 
