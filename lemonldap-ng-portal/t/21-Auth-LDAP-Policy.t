@@ -94,6 +94,78 @@ SKIP: {
         );
         runTests($client);
     };
+
+    # With two schemes in olcPasswordHash, the Password Modify extended
+    # operation (ldapSetPassword) sends two values, which the ppolicy overlay
+    # refuses with constraintViolation and a password policy control that
+    # carries no error. The portal must report the error instead of a success
+    subtest "Password Modify refused by ppolicy without error code" => sub {
+        plan skip_all => 'slapmodify (OpenLDAP 2.5+) is required'
+          unless -x $main::slapmodify_bin;
+        resetLdapData( config => <<'EOT' );
+dn: olcDatabase={-1}frontend,cn=config
+changetype: modify
+add: olcPasswordHash
+olcPasswordHash: {SSHA}
+olcPasswordHash: {SHA}
+EOT
+        my $client = LLNG::Manager::Test->new( {
+                ini => {
+                    %ini,
+                    authentication           => 'LDAP',
+                    userDB                   => 'Same',
+                    passwordDB               => 'LDAP',
+                    ldapSetPassword          => 1,
+                    ldapChangePasswordAsUser => 1,
+                }
+            }
+        );
+
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+            ),
+            'Auth query'
+        );
+        expectOK($res);
+        my $id = expectCookie($res);
+
+        my $query =
+          'oldpassword=dwho&newpassword=Newp1@&confirmpassword=Newp1@';
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new($query),
+                cookie => "lemonldap=$id",
+                accept => 'text/html',
+                length => length($query),
+            ),
+            'Change password'
+        );
+        my $match = 'trmsg="' . PE_LDAPERROR . '"';
+        ok( $res->[2]->[0] =~ /$match/, 'LDAP error reported' );
+        $client->logout($id);
+
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new('user=dwho&password=Newp1@'),
+                length => 25,
+            ),
+            'Auth query with the refused password'
+        );
+        expectReject($res);
+
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+            ),
+            'Auth query with the old password'
+        );
+        expectOK($res);
+        $client->logout( expectCookie($res) );
+        resetLdapData();
+    };
 }
 
 sub runTests {
