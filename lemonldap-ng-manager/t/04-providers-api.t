@@ -1042,6 +1042,38 @@ checkAddWithUnknownAttributes(
     }
 );
 
+$test = "SamlIdp - Add should fail on a body that is not an object";
+checkAddWithUnknownAttributes( $test, 'saml/idp', [] );
+
+$test = "SamlIdp - Add should fail on an entityID before the EntityDescriptor";
+checkAddWithUnknownAttributes(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'mySamlIdp2',
+        metadata => '<!-- entityID="https://idp1.example.com" -->'
+          . substr( idpMetadata('https://idp2.example.com'), 21 ),
+    }
+);
+
+foreach my $attr (
+    'x',
+    { name => 'cn', format => 'bogus' },
+    { name => 'cn', format => '(' }
+  )
+{
+    $test = "SamlIdp - Add should fail on an invalid exported attribute";
+    checkAddWithUnknownAttributes(
+        $test,
+        'saml/idp',
+        {
+            confKey            => 'mySamlIdp2',
+            metadata           => idpMetadata('https://idp2.example.com'),
+            exportedAttributes => { cn => $attr },
+        }
+    );
+}
+
 $test = "SamlIdp - Update should succeed and keep existing values";
 checkUpdate(
     $test,

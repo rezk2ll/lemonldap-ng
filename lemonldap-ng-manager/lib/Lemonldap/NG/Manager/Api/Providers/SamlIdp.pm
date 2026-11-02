@@ -7,7 +7,6 @@ package Lemonldap::NG::Manager::Api;
 use strict;
 use utf8;
 use Mouse;
-use XML::LibXML;
 use Lemonldap::NG::Manager::Conf::Parser;
 
 extends 'Lemonldap::NG::Manager::Api::Common';
@@ -17,17 +16,15 @@ use constant SAML_MD_NS => 'urn:oasis:names:tc:SAML:2.0:metadata';
 sub getSamlIdpByConfKey {
     my ( $self, $req ) = @_;
 
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     $self->logger->debug("[API] SAML IdP $confKey configuration requested");
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $samlIdp = $self->_getSamlIdpByConfKey( $conf, $confKey );
 
-    # Return 404 if not found
     return $self->sendError( $req,
         "SAML identity provider '$confKey' not found", 404 )
       unless ( defined $samlIdp );
@@ -39,9 +36,9 @@ sub findSamlIdpByConfKey {
     my ( $self, $req ) = @_;
 
     my $pattern = (
-        defined $req->params('uPattern')
-        ? $req->params('uPattern')
-        : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
+        defined $req->param('uPattern')
+        ? $req->param('uPattern')
+        : ( defined $req->param('pattern') ? $req->param('pattern') : undef )
     );
 
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
@@ -55,7 +52,6 @@ sub findSamlIdpByConfKey {
     $self->logger->debug(
         "[API] Find SAML IdPs by confKey regexp $pattern requested");
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my @samlIdps =
@@ -71,6 +67,9 @@ sub addSamlIdp {
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
+
+    return $self->sendError( $req, 'Invalid input: body is not an object', 400 )
+      unless ( ref $add eq 'HASH' );
 
     return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
       unless ( defined $add->{confKey} );
@@ -88,7 +87,6 @@ sub addSamlIdp {
     $self->logger->debug(
         "[API] Add SAML IdP with confKey $add->{confKey} requested");
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     return $self->sendError(
@@ -111,7 +109,7 @@ sub addSamlIdp {
 
 sub updateSamlIdp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
@@ -119,13 +117,14 @@ sub updateSamlIdp {
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
 
+    return $self->sendError( $req, 'Invalid input: body is not an object', 400 )
+      unless ( ref $update eq 'HASH' );
+
     $self->logger->debug(
         "[API] SAML IdP $confKey configuration update requested");
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
-    # Return 404 if not found
     return $self->sendError( $req,
         "SAML identity provider '$confKey' not found", 404 )
       unless ( defined $self->_getSamlIdpByConfKey( $conf, $confKey ) );
@@ -140,7 +139,7 @@ sub updateSamlIdp {
 
 sub replaceSamlIdp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
@@ -148,16 +147,17 @@ sub replaceSamlIdp {
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
 
+    return $self->sendError( $req, 'Invalid input: body is not an object', 400 )
+      unless ( ref $replace eq 'HASH' );
+
     return $self->sendError( $req, 'Invalid input: metadata is missing', 400 )
       unless ( defined $replace->{metadata} );
 
     $self->logger->debug(
         "[API] SAML IdP $confKey configuration replace requested");
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
-    # Return 404 if not found
     return $self->sendError( $req,
         "SAML identity provider '$confKey' not found", 404 )
       unless ( defined $self->_getSamlIdpByConfKey( $conf, $confKey ) );
@@ -171,13 +171,11 @@ sub replaceSamlIdp {
 
 sub deleteSamlIdp {
     my ( $self, $req ) = @_;
-    my $confKey = $req->params('confKey')
+    my $confKey = $req->param('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
-    # Return 404 if not found
     return $self->sendError( $req,
         "SAML identity provider '$confKey' not found", 404 )
       unless ( defined $self->_getSamlIdpByConfKey( $conf, $confKey ) );
@@ -186,7 +184,6 @@ sub deleteSamlIdp {
     delete $conf->{samlIDPMetaDataOptions}->{$confKey};
     delete $conf->{samlIDPMetaDataExportedAttributes}->{$confKey};
 
-    # Save configuration
     my $s = $self->_saveApplyConf( $req, $conf );
     return $self->sendError( $req, "Unable to save configuration ($s)", 500 )
       unless ( $s > 0 );
@@ -197,10 +194,8 @@ sub deleteSamlIdp {
 sub _getSamlIdpByConfKey {
     my ( $self, $conf, $confKey ) = @_;
 
-    # Check if confKey is defined
     return undef unless ( defined $conf->{samlIDPMetaDataXML}->{$confKey} );
 
-    # Get options
     my $options = {};
     for
       my $configOption ( keys %{ $conf->{samlIDPMetaDataOptions}->{$confKey} } )
@@ -235,21 +230,24 @@ sub _getSamlIdpByConfKey {
     };
 }
 
-# Returns the entityID of an IdP EntityDescriptor, or dies. Metadata comes
-# from outside, so no DTD, external entity or network access is allowed.
+# Returns the entityID as written in the raw XML. Metadata is untrusted, so
+# DTDs, external entities and network access are refused.
 sub _readSamlIdpEntityId {
     my ( $self, $metadata ) = @_;
 
     die "metadata is not a string\n" if ( ref $metadata );
 
-    my $doc = eval {
-        XML::LibXML->new(
-            load_ext_dtd    => 0,
-            expand_entities => 0,
-            no_network      => 1,
-            expand_xinclude => 0,
-        )->parse_string($metadata);
-    };
+    # XML::LibXML is only recommended by the manager package
+    eval { require XML::LibXML; 1 }
+      or die "XML::LibXML is required to read metadata\n";
+
+    my $parser = XML::LibXML->new(
+        load_ext_dtd    => 0,
+        expand_entities => 0,
+        no_network      => 1,
+        expand_xinclude => 0,
+    );
+    my $doc = eval { $parser->parse_string($metadata) };
     die "metadata is not valid XML\n" unless ($doc);
     die "metadata must not contain a DTD\n"
       if ( $doc->internalSubset or $doc->externalSubset );
@@ -266,7 +264,19 @@ sub _readSamlIdpEntityId {
       unless (
         $root->getChildrenByTagNameNS( SAML_MD_NS, 'IDPSSODescriptor' )->size );
 
-    return $entityId;
+    # The configuration parser and the portal take the first entityID they
+    # find in the raw text, so it has to be this one
+    my ( $quote, $raw ) = $metadata =~ /entityID=(['"])(.+?)\1/si;
+    my $seen = defined $raw
+      ? eval {
+        $parser->parse_string("<x a=$quote$raw$quote/>")
+          ->documentElement->getAttribute('a');
+      }
+      : undef;
+    die "metadata has an entityID outside the EntityDescriptor\n"
+      unless ( defined $seen and $seen eq $entityId );
+
+    return $raw;
 }
 
 sub _pushSamlIdp {
@@ -280,8 +290,8 @@ sub _pushSamlIdp {
             return { res => 'ko', msg => "Invalid input: $err" };
         }
 
-        # Same entityID test as the configuration parser, which only sees
-        # the stored XML
+        # Same entityID test as the configuration parser, done here to
+        # answer 409
         foreach ( keys %{ $conf->{samlIDPMetaDataXML} } ) {
             next if ( $_ eq $confKey );
             my $xml = $conf->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML}
@@ -299,7 +309,6 @@ sub _pushSamlIdp {
 
     my $translatedOptions = {};
     if ($replace) {
-        $conf->{samlIDPMetaDataXML}->{$confKey}                = {};
         $conf->{samlIDPMetaDataOptions}->{$confKey}            = {};
         $conf->{samlIDPMetaDataExportedAttributes}->{$confKey} = {};
         $translatedOptions = $self->_getDefaultValues('samlIDPMetaDataNode');
@@ -356,7 +365,6 @@ sub _pushSamlIdp {
           $res->{exportedAttributes};
     }
 
-    # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
             refConf => $self->_confAcc->getConf( { noCache => 1 } ),
             newConf => $conf,
@@ -372,7 +380,6 @@ sub _pushSamlIdp {
         };
     }
 
-    # Save configuration
     my $s = $self->_saveApplyConf( $req, $conf, $confKey );
     return {
         res  => 'ko',
