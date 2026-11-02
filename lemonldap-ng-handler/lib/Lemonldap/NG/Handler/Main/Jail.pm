@@ -95,11 +95,9 @@ sub build_jail {
         [
             @builtCustomFunctions, '&encrypt',
             '&decrypt',            '&token',
-            '&listMatch'
+            '&listMatch',
         ]
     );
-
-    $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
     #$self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$_v'] );
 

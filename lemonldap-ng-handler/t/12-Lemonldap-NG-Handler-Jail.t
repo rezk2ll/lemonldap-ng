@@ -16,17 +16,28 @@ BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 sub doTest {
     my ($jail) = @_;
 
+    # How many tests does this function perform
+    plan tests => 56;
+
     my $res;
     my $sub  = "sub { return( basic(\@_) ) }";
     my $code = $jail->jail_reval($sub);
     ok( ( defined($code) ), 'basic extended function is defined' );
-    like(
-        $code->( 'login', 'password' ),
-        '/^Basic bG9naW46cGFzc3dvcmQ=$/',
-        'basic() function returns correct result'
+    is(
+        $code->( 'login', 'pàssword' ),
+        'Basic bG9naW46cMOgc3N3b3Jk',
+        'basic() function returns correct result, UTF8'
+    );
+    is(
+        $code->( 'login', 'pàssword', 1 ),
+        'Basic bG9naW46cOBzc3dvcmQ=',
+        'basic() function returns correct result, UTF8'
     );
 
-    $sub  = "sub { return ( encode_base64(\$_[0],'') ) }";
+    is( eval { $code->( 'login', "password\x{1f511}", 1 ) },
+        undef, 'Character that cant be represented in ISO returns an error' );
+
+    $sub  = "sub { return ( encode_base64(\@_) ) }";
     $code = $jail->jail_reval($sub);
     ok(
         ( defined($code) and ref($code) eq 'CODE' ),
@@ -34,6 +45,18 @@ sub doTest {
     );
     ok( $res = $code->('test'), "Function works" );
     is( $res, 'dGVzdA==', 'Get good result' );
+
+    is( $code->("Lemon\x{1f34b}"),
+        'TGVtb27wn42L', '4bytes characters correctly encoded' );
+    is( eval { $code->( "Lemon\x{1f34b}", 1 ) },
+        undef, '4bytes characters cannot be encoded as ISO' );
+    is( $code->("Test accentué"),
+        'VGVzdCBhY2NlbnR1w6k=', 'Accents encoded as UTF-8' );
+    is(
+        $code->( "Test accentué", 1 ),
+        'VGVzdCBhY2NlbnR16Q==',
+        'Accents encoded as ISO8859-1'
+    );
 
     $sub  = "sub { return ( listMatch('ABC; DEF; GHI','abc',1) ) }";
     $code = $jail->jail_reval($sub);
@@ -244,7 +267,6 @@ sub doTest {
 }
 
 subtest "Regular jail" => sub {
-    plan tests => 50;
     ok(
         my $jail = Lemonldap::NG::Handler::Main::Jail->new(
             'jail'                 => undef,
@@ -258,7 +280,6 @@ subtest "Regular jail" => sub {
 };
 
 subtest "Fake jail" => sub {
-    plan tests => 50;
     ok(
         my $jail = Lemonldap::NG::Handler::Main::Jail->new(
             'jail'                 => undef,

@@ -7,7 +7,7 @@ package Lemonldap::NG::Common::Safelib;
 
 use strict;
 use Encode;
-use MIME::Base64;
+require MIME::Base64;
 use JSON::XS;
 use Net::CIDR;
 use Digest::SHA;
@@ -20,7 +20,7 @@ our $VERSION = '2.23.0';
 # Note that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid &inDomain_internal &guid2bin &bin2guid)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid &inDomain_internal &guid2bin &bin2guid &encode_base64)
   ];
 
 ## @function boolean ipInSubnet(string ip, string network, ... )
@@ -220,19 +220,36 @@ sub checkDate {
 
 }
 
-## @function string basic(string login, string password)
+## @function string basic(string login, string password, boolean iso)
 # Return string that can be used for HTTP-BASIC authentication
 # @param login User login
 # @param password User password
+# @param use_iso Encode result as Latin1 rather than UTF-8
 # @return Authorization header content
 sub basic {
-    my ( $login, $password ) = @_;
+    my ( $login, $password, $use_iso ) = @_;
 
-    # UTF-8 strings should be ISO encoded
-    $login    = &unicode2isoSafe($login);
-    $password = &unicode2isoSafe($password);
+    #    # UTF-8 strings should be ISO encoded
+    #    $login    = &unicode2isoSafe($login);
+    #    $password = &unicode2isoSafe($password);
+    my $text = $login . ":" . $password;
 
-    return "Basic " . encode_base64( $login . ":" . $password, '' );
+    utf8::encode($text) unless $use_iso;
+
+    return "Basic " . MIME::Base64::encode_base64( $text, '' );
+}
+
+## @function string encode_base64(string text, boolean iso)
+# Return base64-encoded representation of text
+# @param text Text to encode as Base64
+# @param use_iso Encode result as Latin1 rather than UTF-8
+# @return Encoded string
+sub encode_base64 {
+    my ( $text, $use_iso ) = @_;
+
+    utf8::encode($text) unless $use_iso;
+
+    return MIME::Base64::encode_base64( $text, '' );
 }
 
 ## @function string unicode2iso(string string)

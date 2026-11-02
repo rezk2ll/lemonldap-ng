@@ -21,7 +21,6 @@ Inside this jail, you can access to:
 * All session values and CGI environment variables (through `$ENV{<HTTP_NAME>}`)
 * Core Perl subroutines (split, pop, map, etc.)
 * :doc:`Custom functions<customfunctions>`
-* The ``encode_base64`` subroutine
 * Information about current request
 * Extended functions except iso2unicode and unicode2iso:
 
@@ -32,6 +31,7 @@ Inside this jail, you can access to:
   * dateToTime_
   * decrypt_
   * encrypt_
+  * encode_base64_
   * groupMatch_
   * has2f_
   * inDomain_
@@ -70,12 +70,15 @@ Functions parameters:
 
 -  **user**
 -  **password**
+-  **use_iso** (optional): whether to encode the result as ISO-8859-1 instead of UTF-8
 
 Simple usage example:
 
 ::
 
    basic($uid,$_password)
+
+   basic($uid,$_password, 1)
 
 checkDate
 ~~~~~~~~~
@@ -239,6 +242,22 @@ application.
 ::
 
    encrypt($_whatToTrace)
+
+encode_base64
+~~~~~~~~~~~~~
+
+This function encodes a provided string as Base64
+
+Function parameters:
+
+-  **text**: text to encode
+-  **use_iso** (optional): whether to encode the result as ISO-8859-1 instead of UTF-8
+
+::
+
+   encode_base64($myvar)
+
+   encode_base64($myvar, 1)
 
 groupMatch
 ~~~~~~~~~~
