@@ -909,6 +909,236 @@ checkDelete( $test, 'saml/sp', 'mySamlSp2' );
 $test = "SamlSp -  Entity should not be found after clean up";
 checkDeleteNotFound( $test, 'saml/sp', 'mySamlSp1' );
 
+sub idpMetadata {
+    my ($entityId) = @_;
+    return
+'<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="'
+      . $entityId
+      . '"><md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="'
+      . $entityId
+      . '/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>';
+}
+
+my $samlIdp = {
+    confKey            => 'mySamlIdp1',
+    metadata           => idpMetadata('https://idp1.example.com'),
+    exportedAttributes => {
+        mail => {
+            name      => 'mail',
+            mandatory => 'true',
+        },
+        cn => {
+            name         => 'urn:oid:2.5.4.3',
+            format       => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
+            friendlyName => 'cn',
+        },
+    },
+    options => {
+        userAttribute            => 'mail',
+        encryptionMode           => 'assertion',
+        checkSSOMessageSignature => JSON::true,
+        signSSOMessage           => 1,
+        allowLoginFromIDP        => JSON::true,
+        nameIDFormat             => 'email',
+        comment                  => 'Example',
+    },
+};
+
+$test = "SamlIdp - Add should succeed";
+checkAdd( $test, 'saml/idp', $samlIdp );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'metadata', $samlIdp->{metadata} );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/userAttribute', 'mail' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/encryptionMode',
+    'assertion' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/checkSSOMessageSignature',
+    1 );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/signSSOMessage',    1 );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/allowLoginFromIDP', 1 );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/nameIDFormat', 'email' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/comment',      'Example' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'exportedAttributes/mail/mandatory',
+    'true' );
+checkGet(
+    $test, 'saml/idp', 'mySamlIdp1',
+    'exportedAttributes/cn/format',
+    'urn:oasis:names:tc:SAML:2.0:attrname-format:uri'
+);
+is(
+    lastConf()->{samlIDPMetaDataExportedAttributes}->{mySamlIdp1}->{cn},
+    '0;urn:oid:2.5.4.3;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;cn',
+    "$test: exported attribute stored as the manager stores it"
+);
+count(1);
+
+$test = "SamlIdp - Check attribute default value was set after add";
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/sLOBinding',    '' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/checkAudience', 1 );
+
+$test = "SamlIdp - Add should fail on duplicate confKey";
+checkAddFailsIfExists( $test, 'saml/idp', $samlIdp );
+
+$test = "SamlIdp - Add should fail on duplicate entityID";
+checkAddFailsIfExists( $test, 'saml/idp',
+    { %$samlIdp, confKey => 'mySamlIdp2' } );
+
+$test = "SamlIdp - Add should fail without metadata";
+checkAddWithUnknownAttributes( $test, 'saml/idp', { confKey => 'mySamlIdp2' } );
+
+$test = "SamlIdp - Add should fail on metadata that is not IdP metadata";
+foreach my $metadata (
+    'not xml',
+    { entityID => 'https://idp2.example.com' },
+    '<foo entityID="https://idp2.example.com"/>',
+    $metadata2,
+    '<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">'
+    . '<md:IDPSSODescriptor/></md:EntityDescriptor>',
+  )
+{
+    checkAddWithUnknownAttributes( $test, 'saml/idp',
+        { confKey => 'mySamlIdp2', metadata => $metadata } );
+}
+
+$test = "SamlIdp - Add should fail on metadata with a DTD";
+checkAddWithUnknownAttributes(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'mySamlIdp2',
+        metadata => '<?xml version="1.0"?>'
+          . '<!DOCTYPE md:EntityDescriptor [<!ENTITY x SYSTEM "file:///etc/passwd">]>'
+          . substr( idpMetadata('https://idp2.example.com'), 21 ),
+    }
+);
+
+$test = "SamlIdp - Add should fail on non existing options";
+checkAddWithUnknownAttributes(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'mySamlIdp2',
+        metadata => idpMetadata('https://idp2.example.com'),
+        options  => { playingPossum => 'elephant' }
+    }
+);
+
+$test = "SamlIdp - Add should fail on options that are not an object";
+checkAddWithUnknownAttributes(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'mySamlIdp2',
+        metadata => idpMetadata('https://idp2.example.com'),
+        options  => 'x'
+    }
+);
+
+$test = "SamlIdp - Add should fail on invalid confKey";
+checkAddWithUnknownAttributes(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'my Idp',
+        metadata => idpMetadata('https://idp2.example.com')
+    }
+);
+
+$test = "SamlIdp - Update should succeed and keep existing values";
+checkUpdate(
+    $test,
+    'saml/idp',
+    'mySamlIdp1',
+    {
+        options            => { encryptionMode => 'none', comment => undef },
+        exportedAttributes => { cn             => undef },
+    }
+);
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/encryptionMode', 'none' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/userAttribute',  'mail' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/comment', '_missing' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'exportedAttributes/mail/name',
+    'mail' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'exportedAttributes/cn',
+    '_missing' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'metadata', $samlIdp->{metadata} );
+
+$test = "SamlIdp - Update should fail on non existing options";
+checkUpdateWithUnknownAttributes( $test, 'saml/idp', 'mySamlIdp1',
+    { options => { playingPossum => 'elephant' } } );
+
+$test = "SamlIdp - Update should fail on metadata that is not IdP metadata";
+checkUpdateWithUnknownAttributes( $test, 'saml/idp', 'mySamlIdp1',
+    { metadata => $metadata2 } );
+
+$test = "SamlIdp - Update should fail if confKey not found";
+checkUpdateNotFound( $test, 'saml/idp', 'mySamlIdp3', { options => {} } );
+
+$test = "SamlIdp - Replace should succeed and reset what is left out";
+checkReplace(
+    $test,
+    'saml/idp',
+    'mySamlIdp1',
+    {
+        metadata => idpMetadata('https://idp1.example.com'),
+        options  => { userAttribute => 'uid' },
+    }
+);
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/userAttribute',     'uid' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/allowLoginFromIDP', 0 );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/nameIDFormat',      '' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'options/sLOBinding',        '' );
+checkGet( $test, 'saml/idp', 'mySamlIdp1', 'exportedAttributes/mail',
+    '_missing' );
+
+$test = "SamlIdp - Replace should fail without metadata";
+checkReplaceWithInvalidAttribute( $test, 'saml/idp', 'mySamlIdp1',
+    { options => {} } );
+
+$test = "SamlIdp - Replace should fail if confKey not found";
+checkReplaceNotFound( $test, 'saml/idp', 'mySamlIdp3',
+    { metadata => idpMetadata('https://idp3.example.com') } );
+
+$test = "SamlIdp - 2nd add should succeed";
+checkAdd(
+    $test,
+    'saml/idp',
+    {
+        confKey  => 'mySamlIdp2',
+        metadata => idpMetadata('https://idp2.example.com'),
+    }
+);
+
+$test = "SamlIdp - Replace and update should fail on another IdP's entityID";
+my $idpCfgNum = lastConf()->{cfgNum};
+check409(
+    $test,
+    replace(
+        $test, 'saml/idp',
+        'mySamlIdp2', { metadata => idpMetadata('https://idp1.example.com') }
+    )
+);
+checkConfNotStored( $test, $idpCfgNum );
+checkUpdateFailsIfExists( $test, 'saml/idp', 'mySamlIdp2',
+    { metadata => idpMetadata('https://idp1.example.com') } );
+
+$test = "SamlIdp - FindByConfKey should find 2 hits";
+checkFindByConfKey( $test, 'saml/idp', 'mySamlIdp*', 2 );
+
+$test = "SamlIdp - FindByConfKey should find 1 hit";
+checkFindByConfKey( $test, 'saml/idp', 'mySamlIdp2', 1 );
+
+$test = "SamlIdp - FindByConfKey should err on invalid patterns";
+checkFindByConfKeyError( $test, 'saml/idp', '' );
+
+$test = "SamlIdp - Clean up";
+checkDelete( $test, 'saml/idp', 'mySamlIdp1' );
+checkDelete( $test, 'saml/idp', 'mySamlIdp2' );
+ok( !exists lastConf()->{samlIDPMetaDataOptions}->{mySamlIdp1},
+    "$test: options removed" );
+count(1);
+$test = "SamlIdp - Entity should not be found after clean up";
+checkDeleteNotFound( $test, 'saml/idp', 'mySamlIdp1' );
+checkGetNotFound( $test, 'saml/idp', 'mySamlIdp1' );
+
 my $casApp = {
     confKey      => 'myCasApp1',
     exportedVars => {
@@ -1045,8 +1275,7 @@ checkAdd(
     }
 );
 my $cfgNum = lastConf()->{cfgNum};
-my $res    = &client->app->(
-    {
+my $res    = &client->app->( {
         'HTTP_ACCEPT'     => 'application/json, text/plain, */*',
         'SCRIPT_NAME'     => '',
         'SERVER_NAME'     => '127.0.0.1',
