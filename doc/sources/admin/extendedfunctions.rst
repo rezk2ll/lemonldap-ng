@@ -40,12 +40,10 @@ Inside this jail, you can access to:
   * ipInSubnet_
   * isInNet6_
   * iso2unicode_
-  * iso2unicodeSafe_
   * listMatch_
   * subjectid_
   * token_
   * unicode2iso_
-  * unicode2isoSafe_
   * varIsInUri_
   * bin2guid_
   * guid2bin_
@@ -385,26 +383,6 @@ it is not.
 iso2unicode
 ~~~~~~~~~~~
 
-.. attention::
-
-    This function is not compliant with :doc:`Safe jail<safejail>`.
-    You will have to disable the jail to use it.
-
-This function converts a string from ISO-8859-1 to UTF-8.
-
-Function parameter:
-
--  **string**
-
-Simple usage example:
-
-::
-
-   iso2unicode($name)
-
-iso2unicodeSafe
-~~~~~~~~~~~~~~~
-
 This function converts a string from ISO-8859-1 to UTF-8
 but it is not as portable as the original one.
 
@@ -417,6 +395,12 @@ Simple usage example:
 ::
 
    iso2unicodeSafe($name)
+
+iso2unicodeSafe
+~~~~~~~~~~~~~~~
+
+Same as ``iso2unicode``
+
 
 .. _listMatch:
 
@@ -523,28 +507,7 @@ Example *check if $uid is in /check-auth/ URI*:
 unicode2iso
 ~~~~~~~~~~~
 
-.. attention::
-
-    This function is not compliant with :doc:`Safe jail<safejail>`.
-    You will have to disable the jail to use it.
-
-This function convert a string from UTF-8 to ISO-8859-1.
-
-Function parameter:
-
--  **string**
-
-Simple usage example:
-
-::
-
-   unicode2iso($name)
-
-unicode2isoSafe
-~~~~~~~~~~~~~~~
-
 This function convert a string from UTF-8 to ISO-8859-1
-but it is not as portable as the original one.
 
 Function parameter:
 
@@ -555,6 +518,11 @@ Simple usage example:
 ::
 
    unicode2isoSafe($name)
+
+unicode2isoSafe
+~~~~~~~~~~~~~~~
+
+Legacy alias for `unicode2iso`
 
 bin2guid
 ~~~~~~~~

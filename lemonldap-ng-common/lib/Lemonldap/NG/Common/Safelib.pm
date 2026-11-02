@@ -6,7 +6,6 @@
 package Lemonldap::NG::Common::Safelib;
 
 use strict;
-use Encode;
 require MIME::Base64;
 use JSON::XS;
 use Net::CIDR;
@@ -259,22 +258,14 @@ sub encode_base64 {
 sub unicode2iso {
     my ($string) = @_;
 
-    return encode( "iso-8859-1", decode( "utf-8", $string ) );
-}
-
-## @function string unicode2isoSafe(string string)
-## This function is compliant with the Safe jail
-## but not as portable as the original one
-# Convert UTF-8 in ISO-8859-1
-# @param string UTF-8 string
-# @return ISO string
-sub unicode2isoSafe {
-    my ($string) = @_;
-
     my $res = $string;
     utf8::decode($res);
     utf8::downgrade($res);
     return $res;
+}
+
+sub unicode2isoSafe {
+    return unicode2iso(@_);
 }
 
 ## @function string iso2unicode(string string)
@@ -284,21 +275,13 @@ sub unicode2isoSafe {
 sub iso2unicode {
     my ($string) = @_;
 
-    return encode( "utf-8", decode( "iso-8859-1", $string ) );
-}
-
-## @function string iso2unicodeSafe(string string)
-## This function is compliant with the Safe jail
-## but not as portable as the original one
-# Convert ISO-8859-1 in UTF-8
-# @param string ISO string
-# @return UTF-8 string
-sub iso2unicodeSafe {
-    my ($string) = @_;
-
     my $res = $string;
     utf8::encode($res);
     return $res;
+}
+
+sub iso2unicodeSafe {
+    return iso2unicode(@_);
 }
 
 ## @function int groupMatch(hashref groups, string attribute, string value)
