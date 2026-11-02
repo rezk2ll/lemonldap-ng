@@ -23,7 +23,7 @@ Inside this jail, you can access to:
 * :doc:`Custom functions<customfunctions>`
 * The ``encode_base64`` subroutine
 * Information about current request
-* Extended functions except basic, iso2unicode and unicode2iso:
+* Extended functions except iso2unicode and unicode2iso:
 
   * basic_
   * checkDate_
@@ -61,11 +61,6 @@ Extended Functions List
 
 basic
 ~~~~~
-
-.. attention::
-
-    This function is not compliant with the :doc:`Safe jail<safejail>`,
-    you will have to disable the jail to use it.
 
 This function builds the ``Authorization`` HTTP header employed in
 :doc:`HTTP Basic authentication scheme<applications/authbasic>`. It will

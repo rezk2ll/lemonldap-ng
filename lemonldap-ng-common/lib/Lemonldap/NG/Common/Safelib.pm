@@ -229,8 +229,8 @@ sub basic {
     my ( $login, $password ) = @_;
 
     # UTF-8 strings should be ISO encoded
-    $login    = &unicode2iso($login);
-    $password = &unicode2iso($password);
+    $login    = &unicode2isoSafe($login);
+    $password = &unicode2isoSafe($password);
 
     return "Basic " . encode_base64( $login . ":" . $password, '' );
 }
