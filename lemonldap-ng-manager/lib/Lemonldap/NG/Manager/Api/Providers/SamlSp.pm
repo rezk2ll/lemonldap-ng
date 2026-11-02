@@ -339,6 +339,11 @@ sub _readSamlSpExportedAttributes {
     ];
     foreach ( keys %{$attrs} ) {
         if ( defined( $attrs->{$_} ) ) {
+            return {
+                res => "ko",
+                msg => "Exported attribute $_ is not a hash object"
+              }
+              unless ( ref( $attrs->{$_} ) eq 'HASH' );
             return { res => "ko", msg => "Exported attribute $_ has no name" }
               unless ( defined $attrs->{$_}->{name} );
             my $mandatory    = 0;
@@ -363,7 +368,7 @@ sub _readSamlSpExportedAttributes {
                     res => "ko",
                     msg => "Exported attribute $_ format does not exist."
                   }
-                  unless ( length( grep { /^$format$/ } @{$allowedFormats} ) );
+                  unless ( grep { $_ eq $format } @{$allowedFormats} );
             }
 
             $friendlyName = $attrs->{$_}->{friendlyName}

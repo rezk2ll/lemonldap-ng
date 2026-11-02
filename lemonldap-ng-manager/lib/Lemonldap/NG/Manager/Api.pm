@@ -11,6 +11,7 @@ use Lemonldap::NG::Manager::Api::Misc;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::OidcOp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
+use Lemonldap::NG::Manager::Api::Providers::SamlIdp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
 use Lemonldap::NG::Manager::Api::Menu::App;
@@ -78,6 +79,12 @@ sub init {
                             },
                             ':confKey' => 'getSamlSpByConfKey'
                         },
+                        idp => {
+                            findByConfKey => {
+                                ':uPattern' => 'findSamlIdpByConfKey'
+                            },
+                            ':confKey' => 'getSamlIdpByConfKey'
+                        },
                     },
                     cas => {
                         app => {
@@ -137,7 +144,8 @@ sub init {
                         op => 'addOidcOp'
                     },
                     saml => {
-                        sp => 'addSamlSp'
+                        sp  => 'addSamlSp',
+                        idp => 'addSamlIdp'
                     },
                     cas => {
                         app => 'addCasApp'
@@ -171,7 +179,8 @@ sub init {
                         op => { ':confKey' => 'replaceOidcOp' }
                     },
                     saml => {
-                        sp => { ':confKey' => 'replaceSamlSp' }
+                        sp  => { ':confKey' => 'replaceSamlSp' },
+                        idp => { ':confKey' => 'replaceSamlIdp' }
                     },
                     cas => {
                         app => { ':confKey' => 'replaceCasApp' }
@@ -199,7 +208,8 @@ sub init {
                         op => { ':confKey' => 'updateOidcOp' }
                     },
                     saml => {
-                        sp => { ':confKey' => 'updateSamlSp' }
+                        sp  => { ':confKey' => 'updateSamlSp' },
+                        idp => { ':confKey' => 'updateSamlIdp' }
                     },
                     cas => {
                         app => { ':confKey' => 'updateCasApp' }
@@ -227,7 +237,8 @@ sub init {
                         op => { ':confKey' => 'deleteOidcOp' }
                     },
                     saml => {
-                        sp => { ':confKey' => 'deleteSamlSp' }
+                        sp  => { ':confKey' => 'deleteSamlSp' },
+                        idp => { ':confKey' => 'deleteSamlIdp' }
                     },
                     cas => {
                         app => { ':confKey' => 'deleteCasApp' }
