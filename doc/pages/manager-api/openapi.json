@@ -112,6 +112,19 @@
             },
             "description" : "Return a list of OpenID Connect Providers"
          },
+         "ManySamlIdp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/SamlIdp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of SAML Identity Providers"
+         },
          "ManySamlSp" : {
             "content" : {
                "application/json" : {
@@ -187,6 +200,16 @@
                }
             },
             "description" : "Return an OpenID Connect Provider"
+         },
+         "OneSamlIdp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/SamlIdp"
+                  }
+               }
+            },
+            "description" : "Return a SAML Identity Provider"
          },
          "OneSamlSp" : {
             "content" : {
@@ -1286,6 +1309,216 @@
                      "write" : "requested and inGroup('writers')"
                   },
                   "type" : "object"
+               }
+            },
+            "type" : "object"
+         },
+         "SamlIdp" : {
+            "properties" : {
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/SamlIdpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/SamlIdpOptions"
+               }
+            },
+            "required" : [
+               "confKey",
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "SamlIdpMetadata" : {
+            "description" : "Metadata of the provider: an EntityDescriptor with an IDPSSODescriptor. A DTD is refused.",
+            "example" : "<?xml version=\"1.0\"?><EntityDescriptor...",
+            "type" : "string"
+         },
+         "SamlIdpOptions" : {
+            "properties" : {
+               "adaptSessionUtime" : {
+                  "type" : "boolean"
+               },
+               "allowLoginFromIDP" : {
+                  "type" : "boolean"
+               },
+               "checkAudience" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "checkSLOMessageSignature" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "checkSSOMessageSignature" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "checkTime" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "comment" : {
+                  "type" : "string"
+               },
+               "displayName" : {
+                  "type" : "string"
+               },
+               "encryptionMode" : {
+                  "default" : "none",
+                  "enum" : [
+                     "none",
+                     "nameid",
+                     "assertion"
+                  ],
+                  "type" : "string"
+               },
+               "federationEntityID" : {
+                  "type" : "string"
+               },
+               "forceAuthn" : {
+                  "type" : "boolean"
+               },
+               "icon" : {
+                  "type" : "string"
+               },
+               "isPassive" : {
+                  "type" : "boolean"
+               },
+               "nameIDFormat" : {
+                  "enum" : [
+                     "",
+                     "unspecified",
+                     "email",
+                     "x509",
+                     "windows",
+                     "kerberos",
+                     "entity",
+                     "persistent",
+                     "transient",
+                     "encrypted"
+                  ],
+                  "type" : "string"
+               },
+               "relayStateURL" : {
+                  "type" : "boolean"
+               },
+               "requestedAuthnContext" : {
+                  "enum" : [
+                     "",
+                     "kerberos",
+                     "password-protected-transport",
+                     "password",
+                     "tls-client"
+                  ],
+                  "type" : "string"
+               },
+               "resolutionRule" : {
+                  "type" : "string"
+               },
+               "sLOBinding" : {
+                  "enum" : [
+                     "",
+                     "http-post",
+                     "http-redirect",
+                     "http-soap"
+                  ],
+                  "type" : "string"
+               },
+               "sSOBinding" : {
+                  "enum" : [
+                     "",
+                     "http-post",
+                     "http-redirect",
+                     "artifact-get"
+                  ],
+                  "type" : "string"
+               },
+               "signSLOMessage" : {
+                  "default" : -1,
+                  "maximum" : 1,
+                  "minimum" : -1,
+                  "type" : "integer"
+               },
+               "signSSOMessage" : {
+                  "default" : -1,
+                  "maximum" : 1,
+                  "minimum" : -1,
+                  "type" : "integer"
+               },
+               "signatureKey" : {
+                  "type" : "string"
+               },
+               "signatureMethod" : {
+                  "enum" : [
+                     "",
+                     "RSA_SHA1",
+                     "RSA_SHA256",
+                     "RSA_SHA384",
+                     "RSA_SHA512"
+                  ],
+                  "type" : "string"
+               },
+               "sortNumber" : {
+                  "type" : "integer"
+               },
+               "storeSAMLToken" : {
+                  "type" : "boolean"
+               },
+               "tooltip" : {
+                  "type" : "string"
+               },
+               "uRL" : {
+                  "format" : "url",
+                  "type" : "string"
+               },
+               "userAttribute" : {
+                  "type" : "string"
+               }
+            },
+            "type" : "object"
+         },
+         "SamlIdpReplace" : {
+            "properties" : {
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/SamlIdpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/SamlIdpOptions"
+               }
+            },
+            "required" : [
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "SamlIdpUpdate" : {
+            "properties" : {
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "$ref" : "#/components/schemas/SamlIdpMetadata"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/SamlIdpOptions"
                }
             },
             "type" : "object"
@@ -2984,6 +3217,225 @@
             ]
          }
       },
+      "/api/v1/providers/saml/idp" : {
+         "post" : {
+            "operationId" : "addsamlidp",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlIdp"
+                     }
+                  }
+               },
+               "description" : "SAML Identity Provider to add",
+               "required" : true
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new SAML Identity Provider",
+            "tags" : [
+               "samlidp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/idp/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing providers",
+            "operationId" : "findSamlIdpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManySamlIdp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds SAML Identity Providers by configuration key",
+            "tags" : [
+               "samlidp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/idp/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteSamlIdp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Identity Provider to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a SAML Identity Provider",
+            "tags" : [
+               "samlidp"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single SAML Identity Provider",
+            "operationId" : "getSamlIdpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Identity Provider",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneSamlIdp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get SAML Identity Provider by configuration key",
+            "tags" : [
+               "samlidp"
+            ]
+         },
+         "patch" : {
+            "description" : "This method merges the supplied JSON object with existing configuration. You\ncan delete a subkey from a top-level key by setting its value to `null`.  For\nexample:\n```\n{\n  \"exportedAttributes\": {\n    \"deleteme\": null\n  }\n}\n```\n",
+            "operationId" : "updateSamlIdp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Identity Provider that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlIdpUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates a SAML Identity Provider",
+            "tags" : [
+               "samlidp"
+            ]
+         },
+         "put" : {
+            "description" : "Options and exported attributes left out get their default value.",
+            "operationId" : "replaceSamlIdp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Identity Provider that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : true,
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlIdpReplace"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces a SAML Identity Provider",
+            "tags" : [
+               "samlidp"
+            ]
+         }
+      },
       "/api/v1/providers/saml/sp" : {
          "post" : {
             "operationId" : "addsamlsp",
@@ -3543,6 +3995,10 @@
       {
          "description" : "SAML Service Providers",
          "name" : "samlsp"
+      },
+      {
+         "description" : "SAML Identity Providers",
+         "name" : "samlidp"
       },
       {
          "description" : "OpenID Connect Relying Parties",

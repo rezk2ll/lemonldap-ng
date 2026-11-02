@@ -103,6 +103,10 @@ sub openapi {
                 'description' => 'SAML Service Providers'
             },
             {
+                'name'        => 'samlidp',
+                'description' => 'SAML Identity Providers'
+            },
+            {
                 'name'        => 'oidcrp',
                 'description' => 'OpenID Connect Relying Parties'
             },
@@ -915,6 +919,230 @@ EOF
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Provider to delete',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/saml/idp' => {
+                'post' => {
+                    'tags'        => ['samlidp'],
+                    'summary'     => 'Create a new SAML Identity Provider',
+                    'operationId' => 'addsamlidp',
+                    'requestBody' => {
+                        'description' => 'SAML Identity Provider to add',
+                        'content'     => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' => '#/components/schemas/SamlIdp'
+                                }
+                            }
+                        },
+                        'required' => JSON::true
+                    },
+                    'responses' => {
+                        '201' => {
+                            '$ref' => '#/components/responses/Created'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '409' => {
+                            '$ref' => '#/components/responses/Conflict'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/saml/idp/findByConfKey' => {
+                'get' => {
+                    'tags'    => ['samlidp'],
+                    'summary' =>
+                      'Finds SAML Identity Providers by configuration key',
+                    'description' =>
+'Takes a search pattern to be tested against existing providers',
+                    'operationId' => 'findSamlIdpByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'pattern',
+                            'in'          => 'query',
+                            'description' => 'Search pattern',
+                            'required'    => JSON::true,
+                            'schema'      => {
+                                '$ref' => '#/components/schemas/confKey'
+                            },
+                            'examples' => {
+                                'any' => {
+                                    'summary' => 'Any value',
+                                    'value'   => '*'
+                                },
+                                'prefix' => {
+                                    'summary' => 'Given prefix',
+                                    'value'   => 'zone1-*'
+                                },
+                                'anywhere' => {
+                                    'summary' => 'Substring',
+                                    'value'   => 'something'
+                                }
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/ManySamlIdp'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/saml/idp/{confKey}' => {
+                'get' => {
+                    'tags'    => ['samlidp'],
+                    'summary' =>
+                      'Get SAML Identity Provider by configuration key',
+                    'description' => 'Returns a single SAML Identity Provider',
+                    'operationId' => 'getSamlIdpByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+                              'Configuration key of SAML Identity Provider',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/OneSamlIdp'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'patch' => {
+                    'tags'        => ['samlidp'],
+                    'summary'     => 'Updates a SAML Identity Provider',
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "exportedAttributes": {
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
+                    'operationId' => 'updateSamlIdp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of SAML Identity Provider that needs to be updated',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/SamlIdpUpdate'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        },
+                        '409' => {
+                            '$ref' => '#/components/responses/Conflict'
+                        }
+                    }
+                },
+                'put' => {
+                    'tags'        => ['samlidp'],
+                    'summary'     => 'Replaces a SAML Identity Provider',
+                    'description' =>
+'Options and exported attributes left out get their default value.',
+                    'operationId' => 'replaceSamlIdp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of SAML Identity Provider that needs to be replaced',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/SamlIdpReplace'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        },
+                        '409' => {
+                            '$ref' => '#/components/responses/Conflict'
+                        }
+                    }
+                },
+                'delete' => {
+                    'tags'        => ['samlidp'],
+                    'summary'     => 'Deletes a SAML Identity Provider',
+                    'operationId' => 'deleteSamlIdp',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+'Configuration key of SAML Identity Provider to delete',
                             'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -2126,6 +2354,73 @@ EOF
                     'properties' =>
                       getOptions( $attributes, 'samlSPMetaDataOptions' ),
                 },
+                'SamlIdp' => {
+                    'required'   => [ 'confKey', 'metadata' ],
+                    'type'       => 'object',
+                    'properties' => {
+                        'confKey' => {
+                            '$ref' => '#/components/schemas/confKey'
+                        },
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/SamlIdpMetadata'
+                        },
+                        'exportedAttributes' => {
+                            'type'  => 'object',
+                            'items' => {
+                                '$ref' => '#/components/schemas/samlAttribute'
+                            }
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/SamlIdpOptions'
+                        }
+                    }
+                },
+                'SamlIdpMetadata' => {
+                    'type'        => 'string',
+                    'description' =>
+'Metadata of the provider: an EntityDescriptor with an IDPSSODescriptor. A DTD is refused.',
+                    'example' => '<?xml version="1.0"?><EntityDescriptor...'
+                },
+                'SamlIdpOptions' => {
+                    'type'       => 'object',
+                    'properties' =>
+                      getOptions( $attributes, 'samlIDPMetaDataOptions' ),
+                },
+                'SamlIdpUpdate' => {
+                    'type'       => 'object',
+                    'properties' => {
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/SamlIdpMetadata'
+                        },
+                        'exportedAttributes' => {
+                            'type'  => 'object',
+                            'items' => {
+                                '$ref' => '#/components/schemas/samlAttribute'
+                            }
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/SamlIdpOptions'
+                        }
+                    }
+                },
+                'SamlIdpReplace' => {
+                    'type'       => 'object',
+                    'required'   => ['metadata'],
+                    'properties' => {
+                        'metadata' => {
+                            '$ref' => '#/components/schemas/SamlIdpMetadata'
+                        },
+                        'exportedAttributes' => {
+                            'type'  => 'object',
+                            'items' => {
+                                '$ref' => '#/components/schemas/samlAttribute'
+                            }
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/SamlIdpOptions'
+                        }
+                    }
+                },
                 'samlAttribute' => {
                     'type'       => 'object',
                     'properties' => {
@@ -2729,6 +3024,29 @@ EOF
                         'application/json' => {
                             'schema' => {
                                 '$ref' => '#/components/schemas/SamlSp'
+                            }
+                        }
+                    }
+                },
+                'OneSamlIdp' => {
+                    'description' => 'Return a SAML Identity Provider',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                '$ref' => '#/components/schemas/SamlIdp'
+                            }
+                        }
+                    }
+                },
+                'ManySamlIdp' => {
+                    'description' => 'Return a list of SAML Identity Providers',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                'type'  => 'array',
+                                'items' => {
+                                    '$ref' => '#/components/schemas/SamlIdp'
+                                }
                             }
                         }
                     }

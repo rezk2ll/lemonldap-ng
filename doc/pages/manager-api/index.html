@@ -1530,6 +1530,170 @@
     }
   }
 };
+            defs["SamlIdp"] = {
+  "required" : [ "confKey", "metadata" ],
+  "type" : "object",
+  "properties" : {
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
+    },
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/SamlIdpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/SamlIdpOptions"
+    }
+  }
+};
+            defs["SamlIdpMetadata"] = {
+  "type" : "string",
+  "description" : "Metadata of the provider: an EntityDescriptor with an IDPSSODescriptor. A DTD is refused.",
+  "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+};
+            defs["SamlIdpOptions"] = {
+  "type" : "object",
+  "properties" : {
+    "adaptSessionUtime" : {
+      "type" : "boolean"
+    },
+    "allowLoginFromIDP" : {
+      "type" : "boolean"
+    },
+    "checkAudience" : {
+      "type" : "boolean"
+    },
+    "checkSLOMessageSignature" : {
+      "type" : "boolean"
+    },
+    "checkSSOMessageSignature" : {
+      "type" : "boolean"
+    },
+    "checkTime" : {
+      "type" : "boolean"
+    },
+    "comment" : {
+      "type" : "string"
+    },
+    "displayName" : {
+      "type" : "string"
+    },
+    "encryptionMode" : {
+      "type" : "string",
+      "default" : "none",
+      "enum" : [ "none", "nameid", "assertion" ]
+    },
+    "federationEntityID" : {
+      "type" : "string"
+    },
+    "forceAuthn" : {
+      "type" : "boolean"
+    },
+    "icon" : {
+      "type" : "string"
+    },
+    "isPassive" : {
+      "type" : "boolean"
+    },
+    "nameIDFormat" : {
+      "type" : "string",
+      "enum" : [ "", "unspecified", "email", "x509", "windows", "kerberos", "entity", "persistent", "transient", "encrypted" ]
+    },
+    "relayStateURL" : {
+      "type" : "boolean"
+    },
+    "requestedAuthnContext" : {
+      "type" : "string",
+      "enum" : [ "", "kerberos", "password-protected-transport", "password", "tls-client" ]
+    },
+    "resolutionRule" : {
+      "type" : "string"
+    },
+    "sLOBinding" : {
+      "type" : "string",
+      "enum" : [ "", "http-post", "http-redirect", "http-soap" ]
+    },
+    "sSOBinding" : {
+      "type" : "string",
+      "enum" : [ "", "http-post", "http-redirect", "artifact-get" ]
+    },
+    "signSLOMessage" : {
+      "maximum" : 1,
+      "minimum" : -1,
+      "type" : "integer",
+      "default" : -1
+    },
+    "signSSOMessage" : {
+      "maximum" : 1,
+      "minimum" : -1,
+      "type" : "integer",
+      "default" : -1
+    },
+    "signatureKey" : {
+      "type" : "string"
+    },
+    "signatureMethod" : {
+      "type" : "string",
+      "enum" : [ "", "RSA_SHA1", "RSA_SHA256", "RSA_SHA384", "RSA_SHA512" ]
+    },
+    "sortNumber" : {
+      "type" : "integer"
+    },
+    "storeSAMLToken" : {
+      "type" : "boolean"
+    },
+    "tooltip" : {
+      "type" : "string"
+    },
+    "uRL" : {
+      "type" : "string",
+      "format" : "url"
+    },
+    "userAttribute" : {
+      "type" : "string"
+    }
+  }
+};
+            defs["SamlIdpReplace"] = {
+  "required" : [ "metadata" ],
+  "type" : "object",
+  "properties" : {
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/SamlIdpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/SamlIdpOptions"
+    }
+  }
+};
+            defs["SamlIdpUpdate"] = {
+  "type" : "object",
+  "properties" : {
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
+    },
+    "metadata" : {
+      "$ref" : "#/components/schemas/SamlIdpMetadata"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/SamlIdpOptions"
+    }
+  }
+};
             defs["samlOptions"] = {
   "type" : "object",
   "properties" : {
@@ -1925,6 +2089,25 @@
                     </li>
                     <li data-group="Oidcrp" data-name="updateOidcRp" class="">
                       <a href="#api-Oidcrp-updateOidcRp">updateOidcRp</a>
+                    </li>
+                  <li class="nav-header" data-group="Samlidp"><a href="#api-Samlidp">API Methods - Samlidp</a></li>
+                    <li data-group="Samlidp" data-name="addsamlidp" class="">
+                      <a href="#api-Samlidp-addsamlidp">addsamlidp</a>
+                    </li>
+                    <li data-group="Samlidp" data-name="deleteSamlIdp" class="">
+                      <a href="#api-Samlidp-deleteSamlIdp">deleteSamlIdp</a>
+                    </li>
+                    <li data-group="Samlidp" data-name="findSamlIdpByConfKey" class="">
+                      <a href="#api-Samlidp-findSamlIdpByConfKey">findSamlIdpByConfKey</a>
+                    </li>
+                    <li data-group="Samlidp" data-name="getSamlIdpByConfKey" class="">
+                      <a href="#api-Samlidp-getSamlIdpByConfKey">getSamlIdpByConfKey</a>
+                    </li>
+                    <li data-group="Samlidp" data-name="replaceSamlIdp" class="">
+                      <a href="#api-Samlidp-replaceSamlIdp">replaceSamlIdp</a>
+                    </li>
+                    <li data-group="Samlidp" data-name="updateSamlIdp" class="">
+                      <a href="#api-Samlidp-updateSamlIdp">updateSamlIdp</a>
                     </li>
                   <li class="nav-header" data-group="Samlsp"><a href="#api-Samlsp">API Methods - Samlsp</a></li>
                     <li data-group="Samlsp" data-name="addsamlsp" class="">
@@ -19353,6 +19536,2349 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-updateOidcRp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Samlidp">
+                  <h1>Samlidp</h1>
+                    <div id="api-Samlidp-addsamlidp">
+                      <article id="api-Samlidp-addsamlidp-0" data-group="User" data-name="addsamlidp" data-version="0">
+                        <div class="pull-left">
+                          <h1>addsamlidp</h1>
+                          <p>Create a new SAML Identity Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/providers/saml/idp</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-addsamlidp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-addsamlidp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-addsamlidp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-addsamlidp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-addsamlidp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        SamlIdp body = ; // SamlIdp | SAML Identity Provider to add
+        try {
+            apiInstance.addsamlidp(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#addsamlidp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        SamlIdp body = ; // SamlIdp | SAML Identity Provider to add
+        try {
+            apiInstance.addsamlidp(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#addsamlidp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">SamlIdp *body = ; // SAML Identity Provider to add
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Create a new SAML Identity Provider
+[apiInstance addsamlidpWith:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var body = ; // {{SamlIdp}} SAML Identity Provider to add
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addsamlidp(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-addsamlidp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addsamlidpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var body = new SamlIdp(); // SamlIdp | SAML Identity Provider to add
+
+            try
+            {
+                // Create a new SAML Identity Provider
+                apiInstance.addsamlidp(body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.addsamlidp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$body = ; // SamlIdp | SAML Identity Provider to add
+
+try {
+    $api_instance->addsamlidp($body);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->addsamlidp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $body = WWW::SwaggerClient::Object::SamlIdp->new(); # SamlIdp | SAML Identity Provider to add
+
+eval { 
+    $api_instance->addsamlidp(body => $body);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->addsamlidp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-addsamlidp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+body =  # SamlIdp | SAML Identity Provider to add
+
+try: 
+    # Create a new SAML Identity Provider
+    api_instance.addsamlidp(body)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->addsamlidp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "SAML Identity Provider to add",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/SamlIdp"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addsamlidp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addsamlidp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addsamlidp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addsamlidp-400-schema">
+                                  <div id='responses-addsamlidp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addsamlidp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addsamlidp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addsamlidp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addsamlidp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addsamlidp-409-schema">
+                                  <div id='responses-addsamlidp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addsamlidp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addsamlidp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addsamlidp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Samlidp-deleteSamlIdp">
+                      <article id="api-Samlidp-deleteSamlIdp-0" data-group="User" data-name="deleteSamlIdp" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteSamlIdp</h1>
+                          <p>Deletes a SAML Identity Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/providers/saml/idp/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-deleteSamlIdp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-deleteSamlIdp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-deleteSamlIdp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider to delete
+        try {
+            apiInstance.deleteSamlIdp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#deleteSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider to delete
+        try {
+            apiInstance.deleteSamlIdp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#deleteSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of SAML Identity Provider to delete
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Deletes a SAML Identity Provider
+[apiInstance deleteSamlIdpWith:confKey
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var confKey = ; // {{confKey}} Configuration key of SAML Identity Provider to delete
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteSamlIdp(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteSamlIdpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var confKey = new confKey(); // confKey | Configuration key of SAML Identity Provider to delete
+
+            try
+            {
+                // Deletes a SAML Identity Provider
+                apiInstance.deleteSamlIdp(confKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.deleteSamlIdp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$confKey = ; // confKey | Configuration key of SAML Identity Provider to delete
+
+try {
+    $api_instance->deleteSamlIdp($confKey);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->deleteSamlIdp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $confKey = ; # confKey | Configuration key of SAML Identity Provider to delete
+
+eval { 
+    $api_instance->deleteSamlIdp(confKey => $confKey);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->deleteSamlIdp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-deleteSamlIdp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+confKey =  # confKey | Configuration key of SAML Identity Provider to delete
+
+try: 
+    # Deletes a SAML Identity Provider
+    api_instance.delete_saml_idp(confKey)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->deleteSamlIdp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteSamlIdp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of SAML Identity Provider to delete
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteSamlIdp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteSamlIdp-400-schema">
+                                  <div id='responses-deleteSamlIdp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteSamlIdp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteSamlIdp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteSamlIdp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteSamlIdp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteSamlIdp-404-schema">
+                                  <div id='responses-deleteSamlIdp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteSamlIdp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteSamlIdp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteSamlIdp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Samlidp-findSamlIdpByConfKey">
+                      <article id="api-Samlidp-findSamlIdpByConfKey-0" data-group="User" data-name="findSamlIdpByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>findSamlIdpByConfKey</h1>
+                          <p>Finds SAML Identity Providers by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Takes a search pattern to be tested against existing providers</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/saml/idp/findByConfKey</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-findSamlIdpByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-findSamlIdpByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-findSamlIdpByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp/findByConfKey?pattern="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[SamlIdp] result = apiInstance.findSamlIdpByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#findSamlIdpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[SamlIdp] result = apiInstance.findSamlIdpByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#findSamlIdpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *pattern = ; // Search pattern
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Finds SAML Identity Providers by configuration key
+[apiInstance findSamlIdpByConfKeyWith:pattern
+              completionHandler: ^(array[SamlIdp] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var pattern = ; // {{confKey}} Search pattern
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.findSamlIdpByConfKey(pattern, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class findSamlIdpByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var pattern = new confKey(); // confKey | Search pattern
+
+            try
+            {
+                // Finds SAML Identity Providers by configuration key
+                array[SamlIdp] result = apiInstance.findSamlIdpByConfKey(pattern);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.findSamlIdpByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$pattern = ; // confKey | Search pattern
+
+try {
+    $result = $api_instance->findSamlIdpByConfKey($pattern);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->findSamlIdpByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $pattern = ; # confKey | Search pattern
+
+eval { 
+    my $result = $api_instance->findSamlIdpByConfKey(pattern => $pattern);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->findSamlIdpByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-findSamlIdpByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+pattern =  # confKey | Search pattern
+
+try: 
+    # Finds SAML Identity Providers by configuration key
+    api_response = api_instance.find_saml_idp_by_conf_key(pattern)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->findSamlIdpByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">pattern*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_findSamlIdpByConfKey_pattern">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    confKey
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Search pattern
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a list of SAML Identity Providers </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findSamlIdpByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findSamlIdpByConfKey-200-schema">
+                                  <div id='responses-findSamlIdpByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a list of SAML Identity Providers",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/SamlIdp"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findSamlIdpByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findSamlIdpByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findSamlIdpByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findSamlIdpByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findSamlIdpByConfKey-400-schema">
+                                  <div id='responses-findSamlIdpByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findSamlIdpByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findSamlIdpByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findSamlIdpByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Samlidp-getSamlIdpByConfKey">
+                      <article id="api-Samlidp-getSamlIdpByConfKey-0" data-group="User" data-name="getSamlIdpByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>getSamlIdpByConfKey</h1>
+                          <p>Get SAML Identity Provider by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns a single SAML Identity Provider</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/saml/idp/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-getSamlIdpByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-getSamlIdpByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-getSamlIdpByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider
+        try {
+            SamlIdp result = apiInstance.getSamlIdpByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#getSamlIdpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider
+        try {
+            SamlIdp result = apiInstance.getSamlIdpByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#getSamlIdpByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of SAML Identity Provider
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Get SAML Identity Provider by configuration key
+[apiInstance getSamlIdpByConfKeyWith:confKey
+              completionHandler: ^(SamlIdp output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var confKey = ; // {{confKey}} Configuration key of SAML Identity Provider
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getSamlIdpByConfKey(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getSamlIdpByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var confKey = new confKey(); // confKey | Configuration key of SAML Identity Provider
+
+            try
+            {
+                // Get SAML Identity Provider by configuration key
+                SamlIdp result = apiInstance.getSamlIdpByConfKey(confKey);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.getSamlIdpByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$confKey = ; // confKey | Configuration key of SAML Identity Provider
+
+try {
+    $result = $api_instance->getSamlIdpByConfKey($confKey);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->getSamlIdpByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $confKey = ; # confKey | Configuration key of SAML Identity Provider
+
+eval { 
+    my $result = $api_instance->getSamlIdpByConfKey(confKey => $confKey);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->getSamlIdpByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-getSamlIdpByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+confKey =  # confKey | Configuration key of SAML Identity Provider
+
+try: 
+    # Get SAML Identity Provider by configuration key
+    api_response = api_instance.get_saml_idp_by_conf_key(confKey)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->getSamlIdpByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getSamlIdpByConfKey_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of SAML Identity Provider
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a SAML Identity Provider </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getSamlIdpByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getSamlIdpByConfKey-200-schema">
+                                  <div id='responses-getSamlIdpByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a SAML Identity Provider",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/SamlIdp"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getSamlIdpByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getSamlIdpByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getSamlIdpByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getSamlIdpByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getSamlIdpByConfKey-400-schema">
+                                  <div id='responses-getSamlIdpByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getSamlIdpByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getSamlIdpByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getSamlIdpByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getSamlIdpByConfKey-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getSamlIdpByConfKey-404-schema">
+                                  <div id='responses-getSamlIdpByConfKey-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getSamlIdpByConfKey-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getSamlIdpByConfKey-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getSamlIdpByConfKey-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Samlidp-replaceSamlIdp">
+                      <article id="api-Samlidp-replaceSamlIdp-0" data-group="User" data-name="replaceSamlIdp" data-version="0">
+                        <div class="pull-left">
+                          <h1>replaceSamlIdp</h1>
+                          <p>Replaces a SAML Identity Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Options and exported attributes left out get their default value.</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/providers/saml/idp/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-replaceSamlIdp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-replaceSamlIdp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-replaceSamlIdp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be replaced
+        SamlIdpReplace body = ; // SamlIdpReplace | 
+        try {
+            apiInstance.replaceSamlIdp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#replaceSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be replaced
+        SamlIdpReplace body = ; // SamlIdpReplace | 
+        try {
+            apiInstance.replaceSamlIdp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#replaceSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of SAML Identity Provider that needs to be replaced
+SamlIdpReplace *body = ; //  (optional)
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Replaces a SAML Identity Provider
+[apiInstance replaceSamlIdpWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var confKey = ; // {{confKey}} Configuration key of SAML Identity Provider that needs to be replaced
+var opts = { 
+  'body':  // {{SamlIdpReplace}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.replaceSamlIdp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class replaceSamlIdpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var confKey = new confKey(); // confKey | Configuration key of SAML Identity Provider that needs to be replaced
+            var body = new SamlIdpReplace(); // SamlIdpReplace |  (optional) 
+
+            try
+            {
+                // Replaces a SAML Identity Provider
+                apiInstance.replaceSamlIdp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.replaceSamlIdp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be replaced
+$body = ; // SamlIdpReplace | 
+
+try {
+    $api_instance->replaceSamlIdp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->replaceSamlIdp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $confKey = ; # confKey | Configuration key of SAML Identity Provider that needs to be replaced
+my $body = WWW::SwaggerClient::Object::SamlIdpReplace->new(); # SamlIdpReplace | 
+
+eval { 
+    $api_instance->replaceSamlIdp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->replaceSamlIdp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-replaceSamlIdp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+confKey =  # confKey | Configuration key of SAML Identity Provider that needs to be replaced
+body =  # SamlIdpReplace |  (optional)
+
+try: 
+    # Replaces a SAML Identity Provider
+    api_instance.replace_saml_idp(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->replaceSamlIdp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_replaceSamlIdp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of SAML Identity Provider that needs to be replaced
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/SamlIdpReplace"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_replaceSamlIdp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_replaceSamlIdp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceSamlIdp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceSamlIdp-400-schema">
+                                  <div id='responses-replaceSamlIdp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceSamlIdp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceSamlIdp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceSamlIdp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceSamlIdp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceSamlIdp-404-schema">
+                                  <div id='responses-replaceSamlIdp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceSamlIdp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceSamlIdp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceSamlIdp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceSamlIdp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceSamlIdp-409-schema">
+                                  <div id='responses-replaceSamlIdp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceSamlIdp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceSamlIdp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceSamlIdp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Samlidp-updateSamlIdp">
+                      <article id="api-Samlidp-updateSamlIdp-0" data-group="User" data-name="updateSamlIdp" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateSamlIdp</h1>
+                          <p>Updates a SAML Identity Provider</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;exportedAttributes&quot;: {
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/saml/idp/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Samlidp-updateSamlIdp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-updateSamlIdp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Samlidp-updateSamlIdp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Samlidp-updateSamlIdp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Samlidp-updateSamlIdp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/idp/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.SamlidpApi;
+
+import java.io.File;
+import java.util.*;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be updated
+        SamlIdpUpdate body = ; // SamlIdpUpdate | 
+        try {
+            apiInstance.updateSamlIdp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#updateSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SamlidpApi;
+
+public class SamlidpApiExample {
+
+    public static void main(String[] args) {
+        SamlidpApi apiInstance = new SamlidpApi();
+        confKey confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be updated
+        SamlIdpUpdate body = ; // SamlIdpUpdate | 
+        try {
+            apiInstance.updateSamlIdp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling SamlidpApi#updateSamlIdp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of SAML Identity Provider that needs to be updated
+SamlIdpUpdate *body = ; //  (optional)
+
+SamlidpApi *apiInstance = [[SamlidpApi alloc] init];
+
+// Updates a SAML Identity Provider
+[apiInstance updateSamlIdpWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.SamlidpApi()
+var confKey = ; // {{confKey}} Configuration key of SAML Identity Provider that needs to be updated
+var opts = { 
+  'body':  // {{SamlIdpUpdate}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.updateSamlIdp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateSamlIdpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new SamlidpApi();
+            var confKey = new confKey(); // confKey | Configuration key of SAML Identity Provider that needs to be updated
+            var body = new SamlIdpUpdate(); // SamlIdpUpdate |  (optional) 
+
+            try
+            {
+                // Updates a SAML Identity Provider
+                apiInstance.updateSamlIdp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling SamlidpApi.updateSamlIdp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiSamlidpApi();
+$confKey = ; // confKey | Configuration key of SAML Identity Provider that needs to be updated
+$body = ; // SamlIdpUpdate | 
+
+try {
+    $api_instance->updateSamlIdp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling SamlidpApi->updateSamlIdp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::SamlidpApi;
+
+my $api_instance = WWW::SwaggerClient::SamlidpApi->new();
+my $confKey = ; # confKey | Configuration key of SAML Identity Provider that needs to be updated
+my $body = WWW::SwaggerClient::Object::SamlIdpUpdate->new(); # SamlIdpUpdate | 
+
+eval { 
+    $api_instance->updateSamlIdp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling SamlidpApi->updateSamlIdp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Samlidp-updateSamlIdp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.SamlidpApi()
+confKey =  # confKey | Configuration key of SAML Identity Provider that needs to be updated
+body =  # SamlIdpUpdate |  (optional)
+
+try: 
+    # Updates a SAML Identity Provider
+    api_instance.update_saml_idp(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling SamlidpApi->updateSamlIdp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateSamlIdp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of SAML Identity Provider that needs to be updated
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/SamlIdpUpdate"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateSamlIdp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateSamlIdp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateSamlIdp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateSamlIdp-400-schema">
+                                  <div id='responses-updateSamlIdp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateSamlIdp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateSamlIdp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateSamlIdp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateSamlIdp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateSamlIdp-404-schema">
+                                  <div id='responses-updateSamlIdp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateSamlIdp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateSamlIdp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateSamlIdp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateSamlIdp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateSamlIdp-409-schema">
+                                  <div id='responses-updateSamlIdp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateSamlIdp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateSamlIdp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateSamlIdp-409-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
