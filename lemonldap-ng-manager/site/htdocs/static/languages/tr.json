@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"Yanıtlarda sertifika kullan",
 "samlStorage":"SAML oturumlar modülü adı",
 "samlStorageOptions":"SAML oturumlar modülü seçenekleri",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"Spesifik query_string metodu kullan",
 "save":"Kaydet",
 "saveReport":"Raporu kaydet",

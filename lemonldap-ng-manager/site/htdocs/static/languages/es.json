@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"Use certificate in responses",
 "samlStorage":"SAML sessions module name",
 "samlStorageOptions":"SAML sessions module options",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"Use specific query_string method",
 "save":"Salvar",
 "saveReport":"Salvar informe",

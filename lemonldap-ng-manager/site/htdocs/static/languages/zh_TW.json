@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"在回應中使用憑證",
 "samlStorage":"SAML 工作階段模組名稱",
 "samlStorageOptions":"SAML 工作階段模組選項",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"使用特定的 query_string 方法",
 "save":"儲存",
 "saveReport":"儲存回報",

@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"استخدم الشهادة الرقمية في الردود",
 "samlStorage":"اسم وحدة الجلسات SAML",
 "samlStorageOptions":"خيارات وحدة جلسات SAML",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين",
 "save":"حفظ",
 "saveReport":"احفظ التقرير",

@@ -254,6 +254,15 @@ Alternatively, use the ``idp`` parameter to specify the name of the
 provider in the LemonLDAP::NG manager:
 ``https://auth.example.com/?idp=idp-example``
 
+Enable **Refuse a missing or unknown IDP** (``samlStrictIDPSelection``, in
+*SAML2 Service* » *Advanced*) to accept only an existing IDP given by one of
+these parameters. Without one, the portal returns an error instead of using
+resolution rules, the only defined IDP, the Common Domain Cookie, the
+Discovery Protocol or the IDP list. IDP-initiated responses and logout are not
+affected. A session renewal or upgrade reuses the IDP of the current session,
+while choosing SAML in a Choice menu without one of these parameters ends on
+the error.
+
 .. |image0| image:: /documentation/manager-saml-metadata.png
    :class: align-center
 .. |image1| image:: /documentation/manager-saml-attributes.png

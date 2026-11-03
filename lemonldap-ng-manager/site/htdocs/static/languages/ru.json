@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"Использовать сертификат в ответах",
 "samlStorage":"Имя модуля сеансов SAML",
 "samlStorageOptions":"Параметры модуля сеансов SAML",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"Использовать особый метод query_string",
 "save":"Сохранить",
 "saveReport":"Сохранить отчет",

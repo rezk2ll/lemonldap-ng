@@ -1283,6 +1283,7 @@
 "samlServiceUseCertificateInResponse":"Sử dụng chứng chỉ trong hồi đáp",
 "samlStorage":"tên mô-đun phiên SAML",
 "samlStorageOptions":"Tùy chọn mô-đun phiên SAML",
+"samlStrictIDPSelection":"Refuse a missing or unknown IDP",
 "samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể",
 "save":"Lưu",
 "saveReport":"Lưu báo cáo",

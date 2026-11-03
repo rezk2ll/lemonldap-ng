@@ -634,6 +634,7 @@
    "samlServiceUseCertificateInResponse": "Use certificate instead of public key in SAML responses",
    "samlStorage": "Apache::Session module to store SAML user data",
    "samlStorageOptions": "Apache::Session module parameters",
+   "samlStrictIDPSelection": "SAML SP: refuse an authentication request without a known IDP",
    "samlUseQueryStringSpecific": "SAML use specific method for query_string",
    "scrollTop": "Display back to top button",
    "secureTokenAllowOnError": "Secure Token allow requests in error",
