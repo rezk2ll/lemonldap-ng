@@ -3395,6 +3395,12 @@ sub attributes {
             documentation => 'Override SAML EntityID when acting as an IDP',
             default       => '',
         },
+        samlStrictIDPSelection => {
+            default       => 0,
+            type          => 'bool',
+            documentation =>
+              'SAML SP: refuse an authentication request without a known IDP',
+        },
         samlUseQueryStringSpecific => {
             default       => 0,
             type          => 'bool',

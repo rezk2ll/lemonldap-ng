@@ -857,6 +857,12 @@ sub extractFormInfo {
     # Search a selected IdP
     my $idp = $self->getIDP($req);
 
+    if ( !$idp and $self->conf->{samlStrictIDPSelection} ) {
+        $self->userLogger->error(
+            "No known SAML IDP requested and strict IDP selection is enabled");
+        return PE_SAML_UNKNOWN_ENTITY;
+    }
+
     # Use Common Domain Cookie
     if (   !$idp
         and $self->conf->{samlCommonDomainCookieActivation}
@@ -1506,7 +1512,7 @@ sub getIDP {
 
         # Case 3: check all IDP resolution rules
         # The first match win
-        else {
+        elsif ( !$self->conf->{samlStrictIDPSelection} ) {
             foreach ( keys %{ $self->idpList } ) {
                 my $idpConfKey = $self->idpList->{$_}->{confKey};
                 my $cond       = $self->idpRules->{$_} or next;
@@ -1518,6 +1524,13 @@ sub getIDP {
                 }
             }
         }
+
+        # Strict selection: a session renewal or upgrade goes back to the
+        # IDP the current session was opened with
+        elsif ( $req->userData and $req->userData->{_idp} ) {
+            $idp = $req->userData->{_idp};
+            $self->logger->debug("IDP $idp selected from current session");
+        }
         $self->logger->debug('No IDP selected') unless $idp;
     }
 
@@ -1526,7 +1539,8 @@ sub getIDP {
 
     # Case 6: auto select IDP if only one IDP defined and WAYF is disabled
     if (
-        scalar keys %{ $self->idpList } == 1
+            !$self->conf->{samlStrictIDPSelection}
+        and scalar keys %{ $self->idpList } == 1
         and not( $self->conf->{samlDiscoveryProtocolActivation}
             and defined $self->conf->{samlDiscoveryProtocolURL} )
       )

@@ -5390,6 +5390,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlStorageOptions' => {
             'type' => 'keyTextContainer'
         },
+        'samlStrictIDPSelection' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'samlUseQueryStringSpecific' => {
             'default' => 0,
             'type'    => 'bool'

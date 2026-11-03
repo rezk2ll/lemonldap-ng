@@ -4024,6 +4024,11 @@ samlStorageOptions
     :Description: Apache::Session module parameters
     :Used by portal: yes
 
+samlStrictIDPSelection
+    :Location: SAML2 Service » Advanced » Refuse a missing or unknown IDP
+    :Description: SAML SP: refuse an authentication request without a known IDP
+    :Used by portal: yes
+
 samlUseQueryStringSpecific
     :Location: SAML2 Service » Advanced » Use specific query_string method
     :Description: SAML use specific method for query_string

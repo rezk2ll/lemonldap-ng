@@ -4990,6 +4990,10 @@
    "samlStorageOptions": {
       "type": "keyTextContainer"
    },
+   "samlStrictIDPSelection": {
+      "default": 0,
+      "type": "bool"
+   },
    "samlUseQueryStringSpecific": {
       "default": 0,
       "type": "bool"

@@ -1487,6 +1487,7 @@ sub tree {
                         'samlRelayStateTimeout',
                         'samlUseQueryStringSpecific',
                         'samlOverrideIDPEntityID',
+                        'samlStrictIDPSelection',
 
                         {
                             title => 'samlCommonDomainCookie',
