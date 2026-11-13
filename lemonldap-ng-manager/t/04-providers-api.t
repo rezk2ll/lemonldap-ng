@@ -909,6 +909,130 @@ checkDelete( $test, 'saml/sp', 'mySamlSp2' );
 $test = "SamlSp -  Entity should not be found after clean up";
 checkDeleteNotFound( $test, 'saml/sp', 'mySamlSp1' );
 
+my $casSrv = {
+    confKey      => 'myCasSrv1',
+    exportedVars => { uid => 'uid', mail => 'mail' },
+    options      => {
+        url     => 'https://cas1.example.com/cas',
+        renew   => JSON::true,
+        comment => 'Example',
+    },
+};
+
+$test = "CasSrv - Add should succeed";
+checkAdd( $test, 'cas/srv', $casSrv );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/url',
+    'https://cas1.example.com/cas' );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/renew',     1 );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/comment',   'Example' );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'exportedVars/mail', 'mail' );
+
+$test = "CasSrv - Check attribute default value was set after add";
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/gateway', 0 );
+
+$test = "CasSrv - Add should fail on duplicate confKey";
+checkAddFailsIfExists( $test, 'cas/srv', $casSrv );
+
+$test = "CasSrv - Add should fail on invalid input";
+foreach my $add (
+    [],
+    { options => { url => 'https://cas2.example.com/cas' } },
+    { confKey => 'myCasSrv2' },
+    { confKey => 'myCasSrv2', options => 'x' },
+    { confKey => 'myCasSrv2', options => { url => 'not a url' } },
+    {
+        confKey => 'myCasSrv2',
+        options => { url => 'https://cas2.example.com/cas', bogus => 1 }
+    },
+    {
+        confKey      => 'myCasSrv2',
+        options      => { url => 'https://cas2.example.com/cas' },
+        exportedVars => { uid => [] }
+    },
+    {
+        confKey => 'my Srv',
+        options => { url => 'https://cas2.example.com/cas' }
+    },
+  )
+{
+    checkAddWithUnknownAttributes( $test, 'cas/srv', $add );
+}
+
+$test = "CasSrv - Update should succeed and keep existing values";
+checkUpdate(
+    $test,
+    'cas/srv',
+    'myCasSrv1',
+    {
+        options      => { gateway => JSON::true, comment => undef },
+        exportedVars => { mail    => undef },
+    }
+);
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/gateway',   1 );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/renew',     1 );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/comment',   '_missing' );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'exportedVars/uid',  'uid' );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'exportedVars/mail', '_missing' );
+
+$test = "CasSrv - Update should fail on non existing options";
+checkUpdateWithUnknownAttributes( $test, 'cas/srv', 'myCasSrv1',
+    { options => { playingPossum => 'elephant' } } );
+
+$test = "CasSrv - Update should fail when removing url";
+checkUpdateWithUnknownAttributes( $test, 'cas/srv', 'myCasSrv1',
+    { options => { url => undef } } );
+
+$test = "CasSrv - Update should fail if confKey not found";
+checkUpdateNotFound( $test, 'cas/srv', 'myCasSrv3', { options => {} } );
+
+$test = "CasSrv - Replace should succeed and reset what is left out";
+checkReplace( $test, 'cas/srv', 'myCasSrv1',
+    { options => { url => 'https://cas1.example.org/cas' } } );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/url',
+    'https://cas1.example.org/cas' );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/renew',    0 );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'options/gateway',  0 );
+checkGet( $test, 'cas/srv', 'myCasSrv1', 'exportedVars/uid', '_missing' );
+
+$test = "CasSrv - Replace should fail without url";
+checkReplaceWithInvalidAttribute( $test, 'cas/srv', 'myCasSrv1',
+    { options => {} } );
+
+$test = "CasSrv - Replace should fail if confKey not found";
+checkReplaceNotFound( $test, 'cas/srv', 'myCasSrv3',
+    { options => { url => 'https://cas3.example.com/cas' } } );
+
+$test = "CasSrv - 2nd add should succeed";
+checkAdd(
+    $test,
+    'cas/srv',
+    {
+        confKey => 'myCasSrv2',
+        options => { url => 'https://cas2.example.com/cas' }
+    }
+);
+
+$test = "CasSrv - FindByConfKey should find 2 hits";
+checkFindByConfKey( $test, 'cas/srv', 'myCasSrv*', 2 );
+
+$test = "CasSrv - FindByConfKey should find 1 hit";
+checkFindByConfKey( $test, 'cas/srv', 'myCasSrv2', 1 );
+
+$test = "CasSrv - FindByConfKey should err on invalid patterns";
+checkFindByConfKeyError( $test, 'cas/srv', '' );
+
+$test = "CasSrv - Clean up";
+checkDelete( $test, 'cas/srv', 'myCasSrv1' );
+checkDelete( $test, 'cas/srv', 'myCasSrv2' );
+ok( !exists lastConf()->{casSrvMetaDataOptions}->{myCasSrv1},
+    "$test: options removed" );
+ok( !exists lastConf()->{casSrvMetaDataExportedVars}->{myCasSrv1},
+    "$test: exported variables removed" );
+count(2);
+$test = "CasSrv - Entity should not be found after clean up";
+checkDeleteNotFound( $test, 'cas/srv', 'myCasSrv1' );
+checkGetNotFound( $test, 'cas/srv', 'myCasSrv1' );
+
 my $casApp = {
     confKey      => 'myCasApp1',
     exportedVars => {
