@@ -12,6 +12,7 @@ use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::OidcOp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
+use Lemonldap::NG::Manager::Api::Providers::CasSrv;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
 use Lemonldap::NG::Manager::Api::Menu::App;
 use Lemonldap::NG::Common::TOTP;
@@ -89,6 +90,12 @@ sub init {
                             },
                             ':confKey' => 'getCasAppByConfKey'
                         },
+                        srv => {
+                            findByConfKey => {
+                                ':uPattern' => 'findCasSrvByConfKey'
+                            },
+                            ':confKey' => 'getCasSrvByConfKey'
+                        },
                     },
                 },
                 secondFactor => {
@@ -140,7 +147,8 @@ sub init {
                         sp => 'addSamlSp'
                     },
                     cas => {
-                        app => 'addCasApp'
+                        app => 'addCasApp',
+                        srv => 'addCasSrv'
                     },
                 },
                 menu => {
@@ -174,7 +182,8 @@ sub init {
                         sp => { ':confKey' => 'replaceSamlSp' }
                     },
                     cas => {
-                        app => { ':confKey' => 'replaceCasApp' }
+                        app => { ':confKey' => 'replaceCasApp' },
+                        srv => { ':confKey' => 'replaceCasSrv' }
                     },
                 },
                 menu => {
@@ -202,7 +211,8 @@ sub init {
                         sp => { ':confKey' => 'updateSamlSp' }
                     },
                     cas => {
-                        app => { ':confKey' => 'updateCasApp' }
+                        app => { ':confKey' => 'updateCasApp' },
+                        srv => { ':confKey' => 'updateCasSrv' }
                     },
                 },
                 menu => {
@@ -230,7 +240,8 @@ sub init {
                         sp => { ':confKey' => 'deleteSamlSp' }
                     },
                     cas => {
-                        app => { ':confKey' => 'deleteCasApp' }
+                        app => { ':confKey' => 'deleteCasApp' },
+                        srv => { ':confKey' => 'deleteCasSrv' }
                     },
                 },
                 secondFactor => {
