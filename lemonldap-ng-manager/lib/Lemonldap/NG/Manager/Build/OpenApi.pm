@@ -35,6 +35,7 @@ sub handleSelect {
 
 my @exceptions = qw(
   oidcRPMetaDataOptionsExtraClaims
+  casSrvMetaDataOptionsProxiedServices
 );
 
 sub getOptions {
@@ -101,6 +102,10 @@ sub openapi {
         'tags' => [ {
                 'name'        => 'samlsp',
                 'description' => 'SAML Service Providers'
+            },
+            {
+                'name'        => 'cassrv',
+                'description' => 'CAS servers'
             },
             {
                 'name'        => 'oidcrp',
@@ -915,6 +920,221 @@ EOF
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Provider to delete',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/cas/srv' => {
+                'post' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Create a new CAS server',
+                    'operationId' => 'addcassrv',
+                    'requestBody' => {
+                        'description' => 'CAS server to add',
+                        'content'     => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' => '#/components/schemas/CasSrv'
+                                }
+                            }
+                        },
+                        'required' => JSON::true
+                    },
+                    'responses' => {
+                        '201' => {
+                            '$ref' => '#/components/responses/Created'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '409' => {
+                            '$ref' => '#/components/responses/Conflict'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/cas/srv/findByConfKey' => {
+                'get' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Finds CAS servers by configuration key',
+                    'description' =>
+'Takes a search pattern to be tested against existing providers',
+                    'operationId' => 'findCasSrvByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'pattern',
+                            'in'          => 'query',
+                            'description' => 'Search pattern',
+                            'required'    => JSON::true,
+                            'schema'      => {
+                                '$ref' => '#/components/schemas/confKey'
+                            },
+                            'examples' => {
+                                'any' => {
+                                    'summary' => 'Any value',
+                                    'value'   => '*'
+                                },
+                                'prefix' => {
+                                    'summary' => 'Given prefix',
+                                    'value'   => 'zone1-*'
+                                },
+                                'anywhere' => {
+                                    'summary' => 'Substring',
+                                    'value'   => 'something'
+                                }
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/ManyCasSrv'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        }
+                    }
+                }
+            },
+            '/api/v1/providers/cas/srv/{confKey}' => {
+                'get' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Get CAS server by configuration key',
+                    'description' => 'Returns a single CAS server',
+                    'operationId' => 'getCasSrvByConfKey',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' => 'Configuration key of CAS server',
+                            'required'    => JSON::true,
+                            'schema'      => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'responses' => {
+                        '200' => {
+                            '$ref' => '#/components/responses/OneCasSrv'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'patch' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Updates a CAS server',
+                    'description' => <<'EOF'
+This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to `null`.  For
+example:
+```
+{
+  "exportedVars": {
+    "deleteme": null
+  }
+}
+```
+EOF
+                    ,
+                    'operationId' => 'updateCasSrv',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+                              'Configuration key of CAS server to update',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/CasSrvUpdate'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'put' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Replaces a CAS server',
+                    'description' =>
+'Options left out get their default value. Exported variables left out are removed.',
+                    'operationId' => 'replaceCasSrv',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+                              'Configuration key of CAS server to replace',
+                            'required' => JSON::true,
+                            'schema'   => {
+                                '$ref' => '#/components/schemas/confKey'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/CasSrvReplace'
+                                }
+                            }
+                        }
+                    },
+                    'responses' => {
+                        '204' => {
+                            '$ref' => '#/components/responses/NoContent'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                },
+                'delete' => {
+                    'tags'        => ['cassrv'],
+                    'summary'     => 'Deletes a CAS server',
+                    'operationId' => 'deleteCasSrv',
+                    'parameters'  => [ {
+                            'name'        => 'confKey',
+                            'in'          => 'path',
+                            'description' =>
+                              'Configuration key of CAS server to delete',
                             'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -2430,6 +2650,55 @@ EOF
                     'properties' =>
                       getOptions( $attributes, 'casAppMetaDataOptions' ),
                 },
+                'CasSrv' => {
+                    'required'   => [ 'confKey', 'options' ],
+                    'type'       => 'object',
+                    'properties' => {
+                        'confKey' => {
+                            '$ref' => '#/components/schemas/confKey'
+                        },
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/CasSrvExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/CasSrvOptions'
+                        }
+                    }
+                },
+                'CasSrvExportedVars' => {
+                    'type'        => 'object',
+                    'description' =>
+'Session key to CAS attribute, added to the global exported variables.',
+                    'example' => { 'uid' => 'uid', 'mail' => 'mail' }
+                },
+                'CasSrvOptions' => {
+                    'type'       => 'object',
+                    'properties' =>
+                      getOptions( $attributes, 'casSrvMetaDataOptions' ),
+                },
+                'CasSrvUpdate' => {
+                    'type'       => 'object',
+                    'properties' => {
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/CasSrvExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/CasSrvOptions'
+                        }
+                    }
+                },
+                'CasSrvReplace' => {
+                    'type'       => 'object',
+                    'required'   => ['options'],
+                    'properties' => {
+                        'exportedVars' => {
+                            '$ref' => '#/components/schemas/CasSrvExportedVars'
+                        },
+                        'options' => {
+                            '$ref' => '#/components/schemas/CasSrvOptions'
+                        }
+                    }
+                },
                 'NewSecondFactor' => {
                     'type'       => 'object',
                     'required'   => ['type'],
@@ -2729,6 +2998,29 @@ EOF
                         'application/json' => {
                             'schema' => {
                                 '$ref' => '#/components/schemas/SamlSp'
+                            }
+                        }
+                    }
+                },
+                'OneCasSrv' => {
+                    'description' => 'Return a CAS server',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                '$ref' => '#/components/schemas/CasSrv'
+                            }
+                        }
+                    }
+                },
+                'ManyCasSrv' => {
+                    'description' => 'Return a list of CAS servers',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                'type'  => 'array',
+                                'items' => {
+                                    '$ref' => '#/components/schemas/CasSrv'
+                                }
                             }
                         }
                     }

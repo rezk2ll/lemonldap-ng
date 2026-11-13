@@ -798,6 +798,87 @@
     }
   }
 };
+            defs["CasSrv"] = {
+  "required" : [ "confKey", "options" ],
+  "type" : "object",
+  "properties" : {
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
+    },
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/CasSrvExportedVars"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/CasSrvOptions"
+    }
+  }
+};
+            defs["CasSrvExportedVars"] = {
+  "type" : "object",
+  "description" : "Session key to CAS attribute, added to the global exported variables.",
+  "example" : {
+    "mail" : "mail",
+    "uid" : "uid"
+  }
+};
+            defs["CasSrvOptions"] = {
+  "type" : "object",
+  "properties" : {
+    "comment" : {
+      "type" : "string"
+    },
+    "displayName" : {
+      "type" : "string"
+    },
+    "gateway" : {
+      "type" : "boolean"
+    },
+    "icon" : {
+      "type" : "string"
+    },
+    "renew" : {
+      "type" : "boolean"
+    },
+    "resolutionRule" : {
+      "type" : "string"
+    },
+    "samlValidate" : {
+      "type" : "boolean"
+    },
+    "sortNumber" : {
+      "type" : "integer"
+    },
+    "tooltip" : {
+      "type" : "string"
+    },
+    "url" : {
+      "type" : "string"
+    }
+  }
+};
+            defs["CasSrvReplace"] = {
+  "required" : [ "options" ],
+  "type" : "object",
+  "properties" : {
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/CasSrvExportedVars"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/CasSrvOptions"
+    }
+  }
+};
+            defs["CasSrvUpdate"] = {
+  "type" : "object",
+  "properties" : {
+    "exportedVars" : {
+      "$ref" : "#/components/schemas/CasSrvExportedVars"
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/CasSrvOptions"
+    }
+  }
+};
             defs["confKey"] = {
   "pattern" : "^\\w[\\w\\.\\-]*$",
   "type" : "string"
@@ -1804,6 +1885,25 @@
                     </li>
                     <li data-group="Casapp" data-name="updateCasApp" class="">
                       <a href="#api-Casapp-updateCasApp">updateCasApp</a>
+                    </li>
+                  <li class="nav-header" data-group="Cassrv"><a href="#api-Cassrv">API Methods - Cassrv</a></li>
+                    <li data-group="Cassrv" data-name="addcassrv" class="">
+                      <a href="#api-Cassrv-addcassrv">addcassrv</a>
+                    </li>
+                    <li data-group="Cassrv" data-name="deleteCasSrv" class="">
+                      <a href="#api-Cassrv-deleteCasSrv">deleteCasSrv</a>
+                    </li>
+                    <li data-group="Cassrv" data-name="findCasSrvByConfKey" class="">
+                      <a href="#api-Cassrv-findCasSrvByConfKey">findCasSrvByConfKey</a>
+                    </li>
+                    <li data-group="Cassrv" data-name="getCasSrvByConfKey" class="">
+                      <a href="#api-Cassrv-getCasSrvByConfKey">getCasSrvByConfKey</a>
+                    </li>
+                    <li data-group="Cassrv" data-name="replaceCasSrv" class="">
+                      <a href="#api-Cassrv-replaceCasSrv">replaceCasSrv</a>
+                    </li>
+                    <li data-group="Cassrv" data-name="updateCasSrv" class="">
+                      <a href="#api-Cassrv-updateCasSrv">updateCasSrv</a>
                     </li>
                   <li class="nav-header" data-group="Class2fa"><a href="#api-Class2fa">API Methods - Class2fa</a></li>
                     <li data-group="Class2fa" data-name="addSecondFactor" class="">
@@ -4696,6 +4796,2253 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-updateCasApp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Cassrv">
+                  <h1>Cassrv</h1>
+                    <div id="api-Cassrv-addcassrv">
+                      <article id="api-Cassrv-addcassrv-0" data-group="User" data-name="addcassrv" data-version="0">
+                        <div class="pull-left">
+                          <h1>addcassrv</h1>
+                          <p>Create a new CAS server</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/providers/cas/srv</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-addcassrv-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-addcassrv-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-addcassrv-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-addcassrv-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-addcassrv-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-addcassrv-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        CasSrv body = ; // CasSrv | CAS server to add
+        try {
+            apiInstance.addcassrv(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#addcassrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-addcassrv-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        CasSrv body = ; // CasSrv | CAS server to add
+        try {
+            apiInstance.addcassrv(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#addcassrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-addcassrv-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">CasSrv *body = ; // CAS server to add
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Create a new CAS server
+[apiInstance addcassrvWith:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var body = ; // {{CasSrv}} CAS server to add
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addcassrv(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-addcassrv-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addcassrvExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var body = new CasSrv(); // CasSrv | CAS server to add
+
+            try
+            {
+                // Create a new CAS server
+                apiInstance.addcassrv(body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.addcassrv: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$body = ; // CasSrv | CAS server to add
+
+try {
+    $api_instance->addcassrv($body);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->addcassrv: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $body = WWW::SwaggerClient::Object::CasSrv->new(); # CasSrv | CAS server to add
+
+eval { 
+    $api_instance->addcassrv(body => $body);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->addcassrv: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-addcassrv-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+body =  # CasSrv | CAS server to add
+
+try: 
+    # Create a new CAS server
+    api_instance.addcassrv(body)
+except ApiException as e:
+    print("Exception when calling CassrvApi->addcassrv: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "CAS server to add",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasSrv"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addcassrv_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addcassrv_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addcassrv-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addcassrv-400-schema">
+                                  <div id='responses-addcassrv-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addcassrv-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addcassrv-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addcassrv-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addcassrv-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addcassrv-409-schema">
+                                  <div id='responses-addcassrv-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addcassrv-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addcassrv-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addcassrv-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Cassrv-deleteCasSrv">
+                      <article id="api-Cassrv-deleteCasSrv-0" data-group="User" data-name="deleteCasSrv" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteCasSrv</h1>
+                          <p>Deletes a CAS server</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/providers/cas/srv/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-deleteCasSrv-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-deleteCasSrv-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-deleteCasSrv-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-deleteCasSrv-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-deleteCasSrv-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to delete
+        try {
+            apiInstance.deleteCasSrv(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#deleteCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to delete
+        try {
+            apiInstance.deleteCasSrv(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#deleteCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS server to delete
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Deletes a CAS server
+[apiInstance deleteCasSrvWith:confKey
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var confKey = ; // {{confKey}} Configuration key of CAS server to delete
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteCasSrv(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteCasSrvExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS server to delete
+
+            try
+            {
+                // Deletes a CAS server
+                apiInstance.deleteCasSrv(confKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.deleteCasSrv: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$confKey = ; // confKey | Configuration key of CAS server to delete
+
+try {
+    $api_instance->deleteCasSrv($confKey);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->deleteCasSrv: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $confKey = ; # confKey | Configuration key of CAS server to delete
+
+eval { 
+    $api_instance->deleteCasSrv(confKey => $confKey);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->deleteCasSrv: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-deleteCasSrv-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+confKey =  # confKey | Configuration key of CAS server to delete
+
+try: 
+    # Deletes a CAS server
+    api_instance.delete_cas_srv(confKey)
+except ApiException as e:
+    print("Exception when calling CassrvApi->deleteCasSrv: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteCasSrv_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS server to delete
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteCasSrv-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteCasSrv-400-schema">
+                                  <div id='responses-deleteCasSrv-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteCasSrv-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteCasSrv-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteCasSrv-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteCasSrv-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteCasSrv-404-schema">
+                                  <div id='responses-deleteCasSrv-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteCasSrv-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteCasSrv-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteCasSrv-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Cassrv-findCasSrvByConfKey">
+                      <article id="api-Cassrv-findCasSrvByConfKey-0" data-group="User" data-name="findCasSrvByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>findCasSrvByConfKey</h1>
+                          <p>Finds CAS servers by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Takes a search pattern to be tested against existing providers</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/cas/srv/findByConfKey</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-findCasSrvByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-findCasSrvByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-findCasSrvByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv/findByConfKey?pattern="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[CasSrv] result = apiInstance.findCasSrvByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#findCasSrvByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        confKey pattern = ; // confKey | Search pattern
+        try {
+            array[CasSrv] result = apiInstance.findCasSrvByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#findCasSrvByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *pattern = ; // Search pattern
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Finds CAS servers by configuration key
+[apiInstance findCasSrvByConfKeyWith:pattern
+              completionHandler: ^(array[CasSrv] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var pattern = ; // {{confKey}} Search pattern
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.findCasSrvByConfKey(pattern, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class findCasSrvByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var pattern = new confKey(); // confKey | Search pattern
+
+            try
+            {
+                // Finds CAS servers by configuration key
+                array[CasSrv] result = apiInstance.findCasSrvByConfKey(pattern);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.findCasSrvByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$pattern = ; // confKey | Search pattern
+
+try {
+    $result = $api_instance->findCasSrvByConfKey($pattern);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->findCasSrvByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $pattern = ; # confKey | Search pattern
+
+eval { 
+    my $result = $api_instance->findCasSrvByConfKey(pattern => $pattern);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->findCasSrvByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-findCasSrvByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+pattern =  # confKey | Search pattern
+
+try: 
+    # Finds CAS servers by configuration key
+    api_response = api_instance.find_cas_srv_by_conf_key(pattern)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CassrvApi->findCasSrvByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">pattern*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_findCasSrvByConfKey_pattern">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    confKey
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Search pattern
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a list of CAS servers </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasSrvByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasSrvByConfKey-200-schema">
+                                  <div id='responses-findCasSrvByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a list of CAS servers",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/CasSrv"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasSrvByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasSrvByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasSrvByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasSrvByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasSrvByConfKey-400-schema">
+                                  <div id='responses-findCasSrvByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasSrvByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasSrvByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasSrvByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Cassrv-getCasSrvByConfKey">
+                      <article id="api-Cassrv-getCasSrvByConfKey-0" data-group="User" data-name="getCasSrvByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>getCasSrvByConfKey</h1>
+                          <p>Get CAS server by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns a single CAS server</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/cas/srv/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-getCasSrvByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-getCasSrvByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-getCasSrvByConfKey-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server
+        try {
+            CasSrv result = apiInstance.getCasSrvByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#getCasSrvByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server
+        try {
+            CasSrv result = apiInstance.getCasSrvByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#getCasSrvByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS server
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Get CAS server by configuration key
+[apiInstance getCasSrvByConfKeyWith:confKey
+              completionHandler: ^(CasSrv output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var confKey = ; // {{confKey}} Configuration key of CAS server
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getCasSrvByConfKey(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getCasSrvByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS server
+
+            try
+            {
+                // Get CAS server by configuration key
+                CasSrv result = apiInstance.getCasSrvByConfKey(confKey);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.getCasSrvByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$confKey = ; // confKey | Configuration key of CAS server
+
+try {
+    $result = $api_instance->getCasSrvByConfKey($confKey);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->getCasSrvByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $confKey = ; # confKey | Configuration key of CAS server
+
+eval { 
+    my $result = $api_instance->getCasSrvByConfKey(confKey => $confKey);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->getCasSrvByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-getCasSrvByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+confKey =  # confKey | Configuration key of CAS server
+
+try: 
+    # Get CAS server by configuration key
+    api_response = api_instance.get_cas_srv_by_conf_key(confKey)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CassrvApi->getCasSrvByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getCasSrvByConfKey_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS server
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a CAS server </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasSrvByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasSrvByConfKey-200-schema">
+                                  <div id='responses-getCasSrvByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a CAS server",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasSrv"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasSrvByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasSrvByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasSrvByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasSrvByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasSrvByConfKey-400-schema">
+                                  <div id='responses-getCasSrvByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasSrvByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasSrvByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasSrvByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasSrvByConfKey-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasSrvByConfKey-404-schema">
+                                  <div id='responses-getCasSrvByConfKey-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasSrvByConfKey-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasSrvByConfKey-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasSrvByConfKey-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Cassrv-replaceCasSrv">
+                      <article id="api-Cassrv-replaceCasSrv-0" data-group="User" data-name="replaceCasSrv" data-version="0">
+                        <div class="pull-left">
+                          <h1>replaceCasSrv</h1>
+                          <p>Replaces a CAS server</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Options left out get their default value. Exported variables left out are removed.</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/providers/cas/srv/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-replaceCasSrv-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-replaceCasSrv-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-replaceCasSrv-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-replaceCasSrv-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-replaceCasSrv-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to replace
+        CasSrvReplace body = ; // CasSrvReplace | 
+        try {
+            apiInstance.replaceCasSrv(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#replaceCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to replace
+        CasSrvReplace body = ; // CasSrvReplace | 
+        try {
+            apiInstance.replaceCasSrv(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#replaceCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS server to replace
+CasSrvReplace *body = ; //  (optional)
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Replaces a CAS server
+[apiInstance replaceCasSrvWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var confKey = ; // {{confKey}} Configuration key of CAS server to replace
+var opts = { 
+  'body':  // {{CasSrvReplace}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.replaceCasSrv(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class replaceCasSrvExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS server to replace
+            var body = new CasSrvReplace(); // CasSrvReplace |  (optional) 
+
+            try
+            {
+                // Replaces a CAS server
+                apiInstance.replaceCasSrv(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.replaceCasSrv: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$confKey = ; // confKey | Configuration key of CAS server to replace
+$body = ; // CasSrvReplace | 
+
+try {
+    $api_instance->replaceCasSrv($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->replaceCasSrv: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $confKey = ; # confKey | Configuration key of CAS server to replace
+my $body = WWW::SwaggerClient::Object::CasSrvReplace->new(); # CasSrvReplace | 
+
+eval { 
+    $api_instance->replaceCasSrv(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->replaceCasSrv: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-replaceCasSrv-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+confKey =  # confKey | Configuration key of CAS server to replace
+body =  # CasSrvReplace |  (optional)
+
+try: 
+    # Replaces a CAS server
+    api_instance.replace_cas_srv(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling CassrvApi->replaceCasSrv: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_replaceCasSrv_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS server to replace
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasSrvReplace"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_replaceCasSrv_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_replaceCasSrv_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceCasSrv-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceCasSrv-400-schema">
+                                  <div id='responses-replaceCasSrv-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceCasSrv-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceCasSrv-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceCasSrv-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceCasSrv-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceCasSrv-404-schema">
+                                  <div id='responses-replaceCasSrv-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceCasSrv-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceCasSrv-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceCasSrv-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Cassrv-updateCasSrv">
+                      <article id="api-Cassrv-updateCasSrv-0" data-group="User" data-name="updateCasSrv" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateCasSrv</h1>
+                          <p>Updates a CAS server</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">This method merges the supplied JSON object with existing configuration. You
+can delete a subkey from a top-level key by setting its value to &#x60;null&#x60;.  For
+example:
+&#x60;&#x60;&#x60;
+{
+  &quot;exportedVars&quot;: {
+    &quot;deleteme&quot;: null
+  }
+}
+&#x60;&#x60;&#x60;
+</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/cas/srv/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Cassrv-updateCasSrv-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-updateCasSrv-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Cassrv-updateCasSrv-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Cassrv-updateCasSrv-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Cassrv-updateCasSrv-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/srv/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CassrvApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to update
+        CasSrvUpdate body = ; // CasSrvUpdate | 
+        try {
+            apiInstance.updateCasSrv(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#updateCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CassrvApi;
+
+public class CassrvApiExample {
+
+    public static void main(String[] args) {
+        CassrvApi apiInstance = new CassrvApi();
+        confKey confKey = ; // confKey | Configuration key of CAS server to update
+        CasSrvUpdate body = ; // CasSrvUpdate | 
+        try {
+            apiInstance.updateCasSrv(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CassrvApi#updateCasSrv");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS server to update
+CasSrvUpdate *body = ; //  (optional)
+
+CassrvApi *apiInstance = [[CassrvApi alloc] init];
+
+// Updates a CAS server
+[apiInstance updateCasSrvWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CassrvApi()
+var confKey = ; // {{confKey}} Configuration key of CAS server to update
+var opts = { 
+  'body':  // {{CasSrvUpdate}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.updateCasSrv(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateCasSrvExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CassrvApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS server to update
+            var body = new CasSrvUpdate(); // CasSrvUpdate |  (optional) 
+
+            try
+            {
+                // Updates a CAS server
+                apiInstance.updateCasSrv(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CassrvApi.updateCasSrv: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCassrvApi();
+$confKey = ; // confKey | Configuration key of CAS server to update
+$body = ; // CasSrvUpdate | 
+
+try {
+    $api_instance->updateCasSrv($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling CassrvApi->updateCasSrv: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CassrvApi;
+
+my $api_instance = WWW::SwaggerClient::CassrvApi->new();
+my $confKey = ; # confKey | Configuration key of CAS server to update
+my $body = WWW::SwaggerClient::Object::CasSrvUpdate->new(); # CasSrvUpdate | 
+
+eval { 
+    $api_instance->updateCasSrv(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling CassrvApi->updateCasSrv: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Cassrv-updateCasSrv-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CassrvApi()
+confKey =  # confKey | Configuration key of CAS server to update
+body =  # CasSrvUpdate |  (optional)
+
+try: 
+    # Updates a CAS server
+    api_instance.update_cas_srv(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling CassrvApi->updateCasSrv: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateCasSrv_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS server to update
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasSrvUpdate"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateCasSrv_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateCasSrv_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateCasSrv-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateCasSrv-400-schema">
+                                  <div id='responses-updateCasSrv-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateCasSrv-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateCasSrv-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateCasSrv-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateCasSrv-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateCasSrv-404-schema">
+                                  <div id='responses-updateCasSrv-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateCasSrv-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateCasSrv-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateCasSrv-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
