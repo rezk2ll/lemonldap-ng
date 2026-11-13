@@ -859,6 +859,10 @@ sub attributes {
         'casSrvMetaDataOptionsUserAttribute' => {
             'type' => 'text'
         },
+        'casSrvMetaDataOptionsValidateP3' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
             'test'    =>

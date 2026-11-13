@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"Подсказка",
 "casSrvMetaDataOptionsUrl":"URL-адрес сервера",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"Имя CAS-сервера",
 "casStorage":"Имя модуля сеансов CAS",
 "casStorageOptions":"Параметры модуля сеансов CAS",

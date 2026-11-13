@@ -502,7 +502,8 @@ sub validateST {
         }
         else {
             $self->_buildRequestForServiceValidate(
-                $srvConf->{casSrvMetaDataOptionsUrl}, %prm );
+                $srvConf->{casSrvMetaDataOptionsUrl},
+                $srvConf->{casSrvMetaDataOptionsValidateP3}, %prm );
         }
     };
 
@@ -562,8 +563,9 @@ sub validateST {
 }
 
 sub _buildRequestForServiceValidate {
-    my ( $self, $url, %prm ) = @_;
+    my ( $self, $url, $p3, %prm ) = @_;
 
+    $url .= '/p3' if ($p3);
     my $serviceValidateUrl = "$url/serviceValidate?" . build_urlencoded(%prm);
     $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
 

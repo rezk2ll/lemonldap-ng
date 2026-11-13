@@ -51,6 +51,29 @@ $sp =
   register( 'sp', sub { sp( casSrvMetaDataOptionsUserAttribute => 'multi' ) } );
 expectPortalError( loginRes(), 24, 'Multi-valued attribute refused' );
 
+# CAS 3 validation endpoint
+$sp = register( 'sp', sub { sp( casSrvMetaDataOptionsValidateP3 => 1 ) } );
+is( login(), 'french', 'P3: user is the CAS principal' );
+count(1);
+is_deeply(
+    \@validatePaths,
+    ['/cas/p3/serviceValidate'],
+    'P3: ticket validated on /p3/serviceValidate'
+);
+count(1);
+
+$sp = register(
+    'sp',
+    sub {
+        sp(
+            casSrvMetaDataOptionsValidateP3    => 1,
+            casSrvMetaDataOptionsUserAttribute => 'mail'
+        );
+    }
+);
+is( login(), 'fa@badwolf.org', 'P3: user is the named attribute' );
+count(1);
+
 clean_sessions();
 done_testing( count() );
 

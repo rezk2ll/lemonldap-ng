@@ -91,6 +91,9 @@ Options
    renewal on CAS server
 -  **Gateways authentication** *(default: disabled)*: Force transparent
    authentication on CAS server
+-  **Use CAS 3.0 validation** *(default: disabled)*: validate tickets on
+   ``/p3/serviceValidate`` instead of ``/serviceValidate``. Ignored when SAML
+   1.1 validation is enabled
 -  **User attribute**: CAS attribute that holds the user. It must be returned
    with exactly one value, or the login fails. When empty, the user is the CAS
    principal

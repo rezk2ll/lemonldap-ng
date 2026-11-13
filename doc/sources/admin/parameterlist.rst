@@ -390,6 +390,11 @@ casSrvMetaDataOptionsUserAttribute
     :Description: CAS attribute holding the user, default principal
     :Used by portal: yes
 
+casSrvMetaDataOptionsValidateP3
+    :Location: CAS Servers » *configuration key* » Options » Use CAS 3.0 validation
+    :Description: Validate tickets on /p3/serviceValidate
+    :Used by portal: yes
+
 casStorage
     :Location: CAS Service » Sessions » CAS sessions module name
     :Description: Apache::Session module to store CAS user data

@@ -67,6 +67,7 @@
    "casSrvMetaDataOptionsSortNumber": "Number to sort buttons",
    "casSrvMetaDataOptionsTooltip": "Tooltip for this CAS Server",
    "casSrvMetaDataOptionsUserAttribute": "CAS attribute holding the user, default principal",
+   "casSrvMetaDataOptionsValidateP3": "Validate tickets on /p3/serviceValidate",
    "casStorage": "Apache::Session module to store CAS user data",
    "casStorageOptions": "Apache::Session module parameters",
    "casStrictMatching": "Disable host-based matching of CAS services",

@@ -4269,6 +4269,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => $url,
             msgFail => '__badUrl__',
         },
+        casSrvMetaDataOptionsValidateP3 => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Validate tickets on /p3/serviceValidate',
+        },
         casSrvMetaDataOptionsUserAttribute => {
             type          => 'text',
             documentation =>

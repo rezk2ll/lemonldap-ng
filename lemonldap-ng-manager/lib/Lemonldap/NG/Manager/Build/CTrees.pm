@@ -372,6 +372,7 @@ sub cTrees {
                     'casSrvMetaDataOptionsRenew',
                     'casSrvMetaDataOptionsGateway',
                     'casSrvMetaDataOptionsSamlValidate',
+                    'casSrvMetaDataOptionsValidateP3',
                     'casSrvMetaDataOptionsUserAttribute',
                     'casSrvMetaDataOptionsComment'
                 ]

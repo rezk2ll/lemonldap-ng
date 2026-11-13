@@ -174,6 +174,13 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsValidateP3",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsValidateP3",
+            "title" : "casSrvMetaDataOptionsValidateP3",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUserAttribute",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUserAttribute",
             "title" : "casSrvMetaDataOptionsUserAttribute"

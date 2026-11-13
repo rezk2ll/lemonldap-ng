@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"Araç ipucu",
 "casSrvMetaDataOptionsUrl":"Sunucu URL'si",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"CAS Sunucu Adı",
 "casStorage":"CAS oturumları modül adı",
 "casStorageOptions":"CAS oturumları modül seçenekleri",

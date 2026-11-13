@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"Tooltip",
 "casSrvMetaDataOptionsUrl":" يو أر ل الخادم",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"اسم خادم كاس",
 "casStorage":"اسم وحدة جلسات كاس",
 "casStorageOptions":" خيارات وحدة جلسات كاس",

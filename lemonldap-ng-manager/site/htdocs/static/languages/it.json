@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"Tooltip",
 "casSrvMetaDataOptionsUrl":"URL del server",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"NOme del Server CAS",
 "casStorage":"Nome del modulo sessioni CAS",
 "casStorageOptions":"Opzioni del modulo sessioni CAS",

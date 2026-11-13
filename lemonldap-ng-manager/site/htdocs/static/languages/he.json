@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"חלונית עצה",
 "casSrvMetaDataOptionsUrl":"כתובת שרת",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"CAS Server Name",
 "casStorage":"CAS sessions module name",
 "casStorageOptions":"CAS sessions module options",

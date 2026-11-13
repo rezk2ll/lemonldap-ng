@@ -613,6 +613,10 @@
    "casSrvMetaDataOptionsUserAttribute": {
       "type": "text"
    },
+   "casSrvMetaDataOptionsValidateP3": {
+      "default": 0,
+      "type": "bool"
+   },
    "casStorage": {
       "type": "PerlModule"
    },

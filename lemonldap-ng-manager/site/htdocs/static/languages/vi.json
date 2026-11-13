@@ -203,6 +203,7 @@
 "casSrvMetaDataOptionsTooltip":"Chú giải ",
 "casSrvMetaDataOptionsUrl":"URL máy chủ",
 "casSrvMetaDataOptionsUserAttribute":"User attribute",
+"casSrvMetaDataOptionsValidateP3":"Use CAS 3.0 validation",
 "casSrvName":"Tên máy chủ CAS",
 "casStorage":"Tên mô-đun phiên CAS",
 "casStorageOptions":"Các tùy chọn mô-đun phiên CAS",
