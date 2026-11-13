@@ -91,6 +91,9 @@ Options
    renewal on CAS server
 -  **Gateways authentication** *(default: disabled)*: Force transparent
    authentication on CAS server
+-  **User attribute**: CAS attribute that holds the user. It must be returned
+   with exactly one value, or the login fails. When empty, the user is the CAS
+   principal
 -  **Comment**: set a comment
 
 Display

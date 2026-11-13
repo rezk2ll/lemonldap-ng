@@ -4269,6 +4269,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => $url,
             msgFail => '__badUrl__',
         },
+        casSrvMetaDataOptionsUserAttribute => {
+            type          => 'text',
+            documentation =>
+              'CAS attribute holding the user, default principal',
+        },
         casSrvMetaDataOptionsComment => {
             type          => 'longtext',
             documentation => 'Comment for this CAS server',

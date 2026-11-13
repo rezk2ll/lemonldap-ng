@@ -174,6 +174,11 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUserAttribute",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUserAttribute",
+            "title" : "casSrvMetaDataOptionsUserAttribute"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
             "title" : "casSrvMetaDataOptionsComment",

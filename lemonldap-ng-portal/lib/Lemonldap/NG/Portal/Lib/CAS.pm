@@ -528,6 +528,17 @@ sub validateST {
         my $user       = $extract_result->{user};
         my $attributes = $extract_result->{attributes};
 
+        if ( my $userAttr = $srvConf->{casSrvMetaDataOptionsUserAttribute} ) {
+            my $values = $attributes->{$userAttr} || [];
+            unless ( @$values == 1 and length $values->[0] ) {
+                $self->logger->error( "CAS attribute $userAttr has "
+                      . scalar(@$values)
+                      . " values, expected exactly one non-empty value" );
+                return 0;
+            }
+            $user = $values->[0];
+        }
+
         # Flatten each list of attribute values
         my $result = {};
         while ( my ( $attribute, $values ) = each %$attributes ) {

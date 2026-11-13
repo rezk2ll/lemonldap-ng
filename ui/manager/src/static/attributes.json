@@ -610,6 +610,9 @@
       "msgFail": "__badUrl__",
       "type": "text"
    },
+   "casSrvMetaDataOptionsUserAttribute": {
+      "type": "text"
+   },
    "casStorage": {
       "type": "PerlModule"
    },

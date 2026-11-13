@@ -66,6 +66,7 @@
    "casSrvMetaDataOptionsSamlValidate": "use SAML validateion",
    "casSrvMetaDataOptionsSortNumber": "Number to sort buttons",
    "casSrvMetaDataOptionsTooltip": "Tooltip for this CAS Server",
+   "casSrvMetaDataOptionsUserAttribute": "CAS attribute holding the user, default principal",
    "casStorage": "Apache::Session module to store CAS user data",
    "casStorageOptions": "Apache::Session module parameters",
    "casStrictMatching": "Disable host-based matching of CAS services",

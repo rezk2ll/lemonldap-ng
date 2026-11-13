@@ -702,6 +702,7 @@ t/31-Auth-and-issuer-CAS-samlValidate.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/31-Auth-and-issuer-CAS-XSS-on-logout.t
+t/31-Auth-CAS-server-validation.t
 t/31-Auth-CAS-strict-server-selection.t
 t/31-CAS-10.t
 t/31-CAS-Gateway.t

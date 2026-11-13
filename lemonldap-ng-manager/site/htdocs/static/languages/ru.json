@@ -202,6 +202,7 @@
 "casSrvMetaDataOptionsSortNumber":"Порядок",
 "casSrvMetaDataOptionsTooltip":"Подсказка",
 "casSrvMetaDataOptionsUrl":"URL-адрес сервера",
+"casSrvMetaDataOptionsUserAttribute":"User attribute",
 "casSrvName":"Имя CAS-сервера",
 "casStorage":"Имя модуля сеансов CAS",
 "casStorageOptions":"Параметры модуля сеансов CAS",

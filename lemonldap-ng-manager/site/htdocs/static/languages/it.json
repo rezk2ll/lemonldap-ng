@@ -202,6 +202,7 @@
 "casSrvMetaDataOptionsSortNumber":"Ordine",
 "casSrvMetaDataOptionsTooltip":"Tooltip",
 "casSrvMetaDataOptionsUrl":"URL del server",
+"casSrvMetaDataOptionsUserAttribute":"User attribute",
 "casSrvName":"NOme del Server CAS",
 "casStorage":"Nome del modulo sessioni CAS",
 "casStorageOptions":"Opzioni del modulo sessioni CAS",

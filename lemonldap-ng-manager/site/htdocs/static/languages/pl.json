@@ -202,6 +202,7 @@
 "casSrvMetaDataOptionsSortNumber":"Kolejność",
 "casSrvMetaDataOptionsTooltip":"Etykietka",
 "casSrvMetaDataOptionsUrl":"URL serwera",
+"casSrvMetaDataOptionsUserAttribute":"User attribute",
 "casSrvName":"Nazwa serwera CAS",
 "casStorage":"Nazwa modułu sesji CAS",
 "casStorageOptions":"Opcje modułu sesji CAS",

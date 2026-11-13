@@ -856,6 +856,9 @@ sub attributes {
         'casSrvMetaDataOptionsTooltip' => {
             'type' => 'text'
         },
+        'casSrvMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
             'test'    =>

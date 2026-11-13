@@ -385,6 +385,11 @@ casSrvMetaDataOptionsUrl
     :Location: CAS Servers » *configuration key* » Options » Server URL
     :Used by portal: yes
 
+casSrvMetaDataOptionsUserAttribute
+    :Location: CAS Servers » *configuration key* » Options » User attribute
+    :Description: CAS attribute holding the user, default principal
+    :Used by portal: yes
+
 casStorage
     :Location: CAS Service » Sessions » CAS sessions module name
     :Description: Apache::Session module to store CAS user data
