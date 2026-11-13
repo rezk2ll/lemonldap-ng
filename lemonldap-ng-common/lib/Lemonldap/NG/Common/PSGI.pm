@@ -237,6 +237,8 @@ sub sendJSONresponse {
     elsif ( defined $j ) {
         $json_binary = encode( 'UTF-8', $j );
     }
+    return $self->_buildPsgiResponse( $args{code}, $args{headers}, [] )
+      if ( $args{code} == 204 );
     return $self->_buildPsgiResponse(
         $args{code},
         [

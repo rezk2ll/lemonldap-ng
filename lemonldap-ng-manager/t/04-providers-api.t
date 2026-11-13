@@ -26,7 +26,11 @@ sub check204 {
     is( $res->[0], "204", "$test: Result code is 204" )
       or diag explain $res->[2];
     count(1);
-    is( $res->[2]->[0], undef, "204 code returns no content" );
+    is( join( '', @{ $res->[2] } ), '', "204 code returns no content" );
+    my %headers = @{ $res->[1] };
+    ok( !exists $headers{'Content-Length'}, "$test: no Content-Length" );
+    ok( !exists $headers{'Content-Type'},   "$test: no Content-Type" );
+    count(3);
 }
 
 sub check200 {
