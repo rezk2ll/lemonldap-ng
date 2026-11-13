@@ -385,6 +385,16 @@ casSrvMetaDataOptionsUrl
     :Location: CAS Servers » *configuration key* » Options » Server URL
     :Used by portal: yes
 
+casSrvMetaDataOptionsUserAttribute
+    :Location: CAS Servers » *configuration key* » Options » User attribute
+    :Description: CAS attribute holding the user, default principal
+    :Used by portal: yes
+
+casSrvMetaDataOptionsValidateP3
+    :Location: CAS Servers » *configuration key* » Options » Use CAS 3.0 validation
+    :Description: Validate tickets on /p3/serviceValidate
+    :Used by portal: yes
+
 casStorage
     :Location: CAS Service » Sessions » CAS sessions module name
     :Description: Apache::Session module to store CAS user data
@@ -398,6 +408,11 @@ casStorageOptions
 casStrictMatching
     :Location: CAS Service » Use strict URL matching
     :Description: Disable host-based matching of CAS services
+    :Used by portal: yes
+
+casStrictSrvSelection
+    :Location: General Parameters » Authentication parameters » CAS parameters » Refuse a missing or unknown CAS server
+    :Description: CAS: refuse an authentication request without a known server
     :Used by portal: yes
 
 casTicketExpiration

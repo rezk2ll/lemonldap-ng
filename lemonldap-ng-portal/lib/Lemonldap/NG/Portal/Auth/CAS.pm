@@ -144,8 +144,20 @@ sub extractFormInfo {
     {
         $self->logger->debug("Redirecting user to CAS server list");
 
+        # Strict selection: a session renewal or upgrade goes back to the
+        # server the current session was opened with
+        if ( $self->conf->{casStrictSrvSelection} ) {
+            $srv = $req->userData->{_casSrv} if ( $req->userData );
+            unless ($srv) {
+                $self->userLogger->error(
+"No CAS server requested and strict server selection is enabled"
+                );
+                return PE_UNKNOWNPARTNER;
+            }
+        }
+
         # Auto select provider if there is only one
-        if ( $self->srvNumber == 1 ) {
+        elsif ( $self->srvNumber == 1 ) {
             ($srv) = keys %{ $self->casSrvList };
             $self->logger->debug("Selecting the only defined CAS server: $srv");
         }
@@ -176,7 +188,9 @@ sub extractFormInfo {
     my $srvConf = $self->conf->{casSrvMetaDataOptions}->{$srv};
     unless ($srvConf) {
         $self->userLogger->error("CAS server $srv not configured");
-        return PE_ERROR;
+        return $self->conf->{casStrictSrvSelection}
+          ? PE_UNKNOWNPARTNER
+          : PE_ERROR;
     }
 
     # Provider is choosen

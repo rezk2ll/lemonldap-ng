@@ -4242,6 +4242,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'CAS authentication level',
         },
+        casStrictSrvSelection => {
+            default       => 0,
+            type          => 'bool',
+            documentation =>
+              'CAS: refuse an authentication request without a known server',
+        },
         casSrvMetaDataExportedVars => {
             type          => 'keyTextContainer',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
@@ -4262,6 +4268,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'text',
             test    => $url,
             msgFail => '__badUrl__',
+        },
+        casSrvMetaDataOptionsValidateP3 => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Validate tickets on /p3/serviceValidate',
+        },
+        casSrvMetaDataOptionsUserAttribute => {
+            type          => 'text',
+            documentation =>
+              'CAS attribute holding the user, default principal',
         },
         casSrvMetaDataOptionsComment => {
             type          => 'longtext',

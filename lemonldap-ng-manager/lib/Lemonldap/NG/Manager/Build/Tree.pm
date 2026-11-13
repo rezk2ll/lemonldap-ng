@@ -173,7 +173,8 @@ sub tree {
                             title => 'casParams',
                             help  => 'authcas.html',
                             form  => 'simpleInputContainer',
-                            nodes => ['casAuthnLevel']
+                            nodes =>
+                              [ 'casAuthnLevel', 'casStrictSrvSelection' ]
                         },
                         {
                             title => 'dbiParams',

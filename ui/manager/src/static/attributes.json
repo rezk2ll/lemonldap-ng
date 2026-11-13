@@ -610,6 +610,13 @@
       "msgFail": "__badUrl__",
       "type": "text"
    },
+   "casSrvMetaDataOptionsUserAttribute": {
+      "type": "text"
+   },
+   "casSrvMetaDataOptionsValidateP3": {
+      "default": 0,
+      "type": "bool"
+   },
    "casStorage": {
       "type": "PerlModule"
    },
@@ -617,6 +624,10 @@
       "type": "keyTextContainer"
    },
    "casStrictMatching": {
+      "default": 0,
+      "type": "bool"
+   },
+   "casStrictSrvSelection": {
       "default": 0,
       "type": "bool"
    },

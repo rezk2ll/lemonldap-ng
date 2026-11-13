@@ -856,6 +856,13 @@ sub attributes {
         'casSrvMetaDataOptionsTooltip' => {
             'type' => 'text'
         },
+        'casSrvMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
+        'casSrvMetaDataOptionsValidateP3' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
             'test'    =>
@@ -869,6 +876,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'keyTextContainer'
         },
         'casStrictMatching' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'casStrictSrvSelection' => {
             'default' => 0,
             'type'    => 'bool'
         },
