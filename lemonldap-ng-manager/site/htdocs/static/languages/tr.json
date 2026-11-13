@@ -206,6 +206,7 @@
 "casStorage":"CAS oturumları modül adı",
 "casStorageOptions":"CAS oturumları modül seçenekleri",
 "casStrictMatching":"Katı URL eşleşmesi kullan",
+"casStrictSrvSelection":"Refuse a missing or unknown CAS server",
 "casTicketExpiration":"Geçici bilet ömrü",
 "categoryName":"Kategori ismi",
 "cda":"Çoklu alan adları",

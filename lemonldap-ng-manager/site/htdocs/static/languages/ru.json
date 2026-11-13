@@ -206,6 +206,7 @@
 "casStorage":"Имя модуля сеансов CAS",
 "casStorageOptions":"Параметры модуля сеансов CAS",
 "casStrictMatching":"Используйте строгое соответствие URL",
+"casStrictSrvSelection":"Refuse a missing or unknown CAS server",
 "casTicketExpiration":"Срок действия временного билета",
 "categoryName":"Название категории",
 "cda":"Несколько доменов",

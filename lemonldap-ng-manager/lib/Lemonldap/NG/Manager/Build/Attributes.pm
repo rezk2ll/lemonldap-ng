@@ -4242,6 +4242,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'CAS authentication level',
         },
+        casStrictSrvSelection => {
+            default       => 0,
+            type          => 'bool',
+            documentation =>
+              'CAS: refuse an authentication request without a known server',
+        },
         casSrvMetaDataExportedVars => {
             type          => 'keyTextContainer',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },

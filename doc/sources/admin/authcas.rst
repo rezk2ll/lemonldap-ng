@@ -47,6 +47,8 @@ and choose CAS for authentication.
 Then, go in ``CAS parameters``:
 
 -  **Authentication level**: Authentication level for this module
+-  **Refuse a missing or unknown CAS server** *(default: disabled)*: see
+   `Manual IDP Selection`_
 
 .. attention::
 
@@ -129,3 +131,12 @@ choice screen to let the user decide which server they want to use.
 In addition to the *resolution rule* described above, you can also use the
 ``idp`` URL parameter to automatically select a CAS server for the
 user: ``https://auth.example.com/?idp=srv-example``
+
+Enable **Refuse a missing or unknown CAS server** (``casStrictSrvSelection``,
+in *CAS parameters*) to accept only an existing CAS server given by the
+``idp`` parameter. Without one, the portal returns an error instead of using
+resolution rules, the only defined server or the server list. The ticket
+returned by the CAS server is still matched to its server by the
+``llngcasserver`` cookie. A session renewal or upgrade reuses the server of
+the current session, while choosing CAS in a Choice menu without the ``idp``
+parameter ends on the error.

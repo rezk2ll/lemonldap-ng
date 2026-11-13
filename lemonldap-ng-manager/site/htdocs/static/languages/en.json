@@ -206,6 +206,7 @@
 "casStorage":"CAS sessions module name",
 "casStorageOptions":"CAS sessions module options",
 "casStrictMatching":"Use strict URL matching",
+"casStrictSrvSelection":"Refuse a missing or unknown CAS server",
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Category name",
 "cda":"Multiple domains",

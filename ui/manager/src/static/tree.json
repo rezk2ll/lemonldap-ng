@@ -160,7 +160,8 @@
                   "form": "simpleInputContainer",
                   "help": "authcas.html",
                   "nodes": [
-                     "casAuthnLevel"
+                     "casAuthnLevel",
+                     "casStrictSrvSelection"
                   ],
                   "title": "casParams"
                },

@@ -206,6 +206,7 @@
 "casStorage":"Nome del modulo sessioni CAS",
 "casStorageOptions":"Opzioni del modulo sessioni CAS",
 "casStrictMatching":"Use strict URL matching",
+"casStrictSrvSelection":"Refuse a missing or unknown CAS server",
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Nome della categoria",
 "cda":"Domini multipli",

@@ -69,6 +69,7 @@
    "casStorage": "Apache::Session module to store CAS user data",
    "casStorageOptions": "Apache::Session module parameters",
    "casStrictMatching": "Disable host-based matching of CAS services",
+   "casStrictSrvSelection": "CAS: refuse an authentication request without a known server",
    "casTicketExpiration": "Expiration time of Service and Proxy tickets",
    "cda": "Enable Cross Domain Authentication",
    "certificateResetByMailStep1Body": "Custom Certificate reset mail body",

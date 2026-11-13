@@ -400,6 +400,11 @@ casStrictMatching
     :Description: Disable host-based matching of CAS services
     :Used by portal: yes
 
+casStrictSrvSelection
+    :Location: General Parameters » Authentication parameters » CAS parameters » Refuse a missing or unknown CAS server
+    :Description: CAS: refuse an authentication request without a known server
+    :Used by portal: yes
+
 casTicketExpiration
     :Location: CAS Service » Temporary ticket lifetime
     :Description: Expiration time of Service and Proxy tickets
