@@ -531,6 +531,11 @@ sub validateST {
 
         if ( my $userAttr = $srvConf->{casSrvMetaDataOptionsUserAttribute} ) {
             my $values = $attributes->{$userAttr} || [];
+            unless (@$values) {
+                $self->logger->error(
+                    "CAS attribute $userAttr missing from the response");
+                return 0;
+            }
             unless ( @$values == 1 and length $values->[0] ) {
                 $self->logger->error( "CAS attribute $userAttr has "
                       . scalar(@$values)

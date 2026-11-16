@@ -45,11 +45,24 @@ count(1);
 # Missing or multi-valued attribute: refused
 $sp =
   register( 'sp', sub { sp( casSrvMetaDataOptionsUserAttribute => 'nope' ) } );
-expectPortalError( loginRes(), 24, 'Missing attribute refused' );
+my $logs = errorLogs(
+    sub { expectPortalError( loginRes(), 24, 'Missing attribute refused' ) } );
+like( $logs, qr/CAS attribute nope missing/, 'Missing attribute logged' );
+count(1);
 
 $sp =
   register( 'sp', sub { sp( casSrvMetaDataOptionsUserAttribute => 'multi' ) } );
-expectPortalError( loginRes(), 24, 'Multi-valued attribute refused' );
+$logs = errorLogs(
+    sub {
+        expectPortalError( loginRes(), 24, 'Multi-valued attribute refused' );
+    }
+);
+like(
+    $logs,
+    qr/CAS attribute multi has 2 values/,
+    'Multi-valued attribute logged'
+);
+count(1);
 
 # CAS 3 validation endpoint
 $sp = register( 'sp', sub { sp( casSrvMetaDataOptionsValidateP3 => 1 ) } );
@@ -95,6 +108,16 @@ count(1);
 
 clean_sessions();
 done_testing( count() );
+
+sub errorLogs {
+    my ($code) = @_;
+    my $logs = '';
+    no warnings 'redefine';
+    local *Lemonldap::NG::Common::Logger::Std::error =
+      sub { $logs .= "$_[1]\n" };
+    $code->();
+    return $logs;
+}
 
 sub loginRes {
     @validatePaths = ();
