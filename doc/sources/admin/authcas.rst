@@ -99,6 +99,12 @@ Options
    principal
 -  **Comment**: set a comment
 
+Ticket validation requests do not follow redirects and refuse a compressed
+response or one larger than 1 MiB. They stop when the response body is still
+arriving 10 seconds after the request was sent, or after 10 seconds without
+data. The ``timeout`` and ``max_size`` keys of ``lwpOpts``, when set, replace
+the time and size limits.
+
 Display
 ~~~~~~~
 

@@ -27,6 +27,34 @@ has ua => (
     }
 );
 
+# Ticket validation: the response decides who logs in, so it must come from
+# the configured server itself, in bounded time and size. LWP's timeout only
+# limits each read and max_size counts compressed bytes, so the total time is
+# checked as data arrives and compressed responses are refused.
+has validationUa => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $ua   = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
+        my $opts = $_[0]->{conf}->{lwpOpts} || {};
+        $ua->max_redirect(0);
+        $ua->timeout(10)             unless ( defined $opts->{timeout} );
+        $ua->max_size( 1024 * 1024 ) unless ( defined $opts->{max_size} );
+        $ua->default_header( 'Accept-Encoding' => 'identity' );
+        my $deadline;
+        $ua->add_handler(
+            request_send => sub { $deadline = time + $ua->timeout; return } );
+        $ua->add_handler(
+            response_data => sub {
+                die "total time over " . $ua->timeout . "s\n"
+                  if ( time > $deadline );
+                return 1;
+            }
+        );
+        return $ua;
+    }
+);
+
 has casSrvList   => ( is => 'rw', default => sub { {} }, );
 has casAppList   => ( is => 'rw', default => sub { {} }, );
 has srvRules     => ( is => 'rw', default => sub { {} }, );
@@ -507,12 +535,27 @@ sub validateST {
         }
     };
 
-    my $response = $self->ua->request($request);
+    my $response = $self->validationUa->request($request);
 
     $self->logger->debug(
         "Get CAS serviceValidate response: " . $response->as_string );
 
-    return 0 if $response->is_error;
+    unless ( $response->is_success ) {
+        $self->logger->error(
+            "CAS ticket validation failed: " . $response->status_line );
+        return 0;
+    }
+    if ( my $aborted = $response->header('Client-Aborted') ) {
+        $self->logger->error( "CAS ticket validation response aborted: "
+              . ( $response->header('X-Died') // $aborted ) );
+        return 0;
+    }
+    my $encoding = $response->header('Content-Encoding');
+    if ( $encoding and $encoding ne 'identity' ) {
+        $self->logger->error(
+            "CAS ticket validation response refused: encoded with $encoding");
+        return 0;
+    }
 
     my $xml = $response->decoded_content( default_charset => 'UTF-8' );
 

@@ -13,13 +13,44 @@ BEGIN {
 
 my $debug = 'error';
 my ( $issuer, $sp, $res );
-my @validatePaths;
+my ( @validatePaths, $gotEncoding );
 
 LWP::Protocol::PSGI->register(
     builder {
         mount "http://auth.idp.com/" => sub {
             push @validatePaths, $_[0]->{PATH_INFO};
             goto $issuer->app;
+        };
+        mount "http://redirect.idp.com/" => sub {
+            my ($env) = @_;
+            return [
+                302,
+                [
+                    Location => "http://auth.idp.com$env->{PATH_INFO}?"
+                      . $env->{QUERY_STRING}
+                ],
+                []
+            ];
+        };
+        mount "http://big.idp.com/" => sub {
+            my $res = $issuer->app->(@_);
+            push @{ $res->[2] }, '<!-- ' . ( 'x' x 2_000_000 ) . ' -->';
+            return $res;
+        };
+        mount "http://gzip.idp.com/" => sub {
+            $gotEncoding = $_[0]->{HTTP_ACCEPT_ENCODING};
+            my $res = $issuer->app->(@_);
+            push @{ $res->[1] }, 'Content-Encoding' => 'gzip';
+            return $res;
+        };
+        mount "http://slow.idp.com/" => sub {
+            my $res  = $issuer->app->(@_);
+            my @body = ( @{ $res->[2] }, ('<!-- -->') x 3 );
+            $res->[2] = Plack::Util::inline_object(
+                getline => sub { sleep 1 if @body < 4; shift @body },
+                close   => sub { },
+            );
+            return $res;
         };
         mount "/" => denyLwpRequests;
     },
@@ -86,6 +117,49 @@ $sp = register(
 );
 is( login(), 'fa@badwolf.org', 'P3: user is the named attribute' );
 count(1);
+
+# Validation request: no redirect, bounded size and time
+$sp = register( 'sp',
+    sub { sp( casSrvMetaDataOptionsUrl => 'http://redirect.idp.com/cas' ) } );
+expectPortalError( loginRes(), 24, 'Redirected validation refused' );
+is_deeply( \@validatePaths, [], 'Redirect not followed' );
+count(1);
+
+$sp = register( 'sp',
+    sub { sp( casSrvMetaDataOptionsUrl => 'http://big.idp.com/cas' ) } );
+expectPortalError( loginRes(), 24, 'Oversized validation response refused' );
+is(
+    $sp->p->loadedModules->{'Lemonldap::NG::Portal::Auth::CAS'}
+      ->validationUa->timeout,
+    10, 'Validation timeout is 10 seconds'
+);
+count(1);
+
+$sp = register( 'sp',
+    sub { sp( casSrvMetaDataOptionsUrl => 'http://gzip.idp.com/cas' ) } );
+expectPortalError( loginRes(), 24, 'Compressed validation response refused' );
+is( $gotEncoding, 'identity', 'Validation asks for an uncompressed response' );
+count(1);
+
+$sp = register(
+    'sp',
+    sub {
+        sp(
+            _lwpOpts                 => { timeout => 2 },
+            casSrvMetaDataOptionsUrl => 'http://slow.idp.com/cas'
+        );
+    }
+);
+$logs = errorLogs(
+    sub {
+        expectPortalError( loginRes(), 24,
+            'Validation over the total time refused' );
+    }
+);
+like( $logs, qr/total time over 2s/, 'Total time cap logged' );
+count(1);
+
+$sp = register( 'sp', sub { sp() } );
 
 # Logout once the session's server is no longer configured
 my $spId = expectCookie( loginRes() );
@@ -196,9 +270,11 @@ sub issuer {
 
 sub sp {
     my (%options) = @_;
-    my $srv = delete $options{_srv} || 'idp';
+    my $srv       = delete $options{_srv} || 'idp';
+    my $lwpOpts   = delete $options{_lwpOpts};
     return LLNG::Manager::Test->new( {
             ini => {
+                ( $lwpOpts ? ( lwpOpts => $lwpOpts ) : () ),
                 logLevel                   => $debug,
                 domain                     => 'sp.com',
                 portal                     => 'http://auth.sp.com/',
