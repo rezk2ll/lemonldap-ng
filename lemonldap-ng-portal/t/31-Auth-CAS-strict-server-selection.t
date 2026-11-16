@@ -64,6 +64,14 @@ count(1);
 my $spId = expectCookie($res);
 is( getSession($spId)->data->{_casSrv}, 'idp', 'On: known server accepted' );
 count(1);
+ok( ( grep { /^llngcasserver=0;.*expires=Wed, 21 Oct 2015/ } @{ $res->[1] } ),
+    'On: server cookie cleared once the ticket is used' );
+count(1);
+
+# Ticket return without the server cookie: no fallback to the idp parameter
+$ticket = getTicket($idpId);
+expectPortalError( spGet("ticket=$ticket&idp=idp"),
+    107, 'On: ticket without server cookie refused' );
 
 # Session upgrade goes back to the session's server
 ok(

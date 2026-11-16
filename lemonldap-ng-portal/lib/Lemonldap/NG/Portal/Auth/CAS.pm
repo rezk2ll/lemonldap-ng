@@ -138,6 +138,25 @@ sub extractFormInfo {
     # Check Service Ticket
     my $ticket = $req->param('ticket');
 
+    # Only a server this browser was just sent to may return a ticket, so a
+    # forged link cannot log the victim in on the attacker's account. The
+    # cookie is single use: a parallel CAS login in another tab is refused.
+    if ( $ticket and $self->conf->{casStrictSrvSelection} ) {
+        unless ( $req->cookies->{llngcasserver} ) {
+            $self->userLogger->error(
+                "CAS ticket received without server cookie, refused");
+            return PE_UNKNOWNPARTNER;
+        }
+        $req->addCookie(
+            $self->p->cookie(
+                name    => 'llngcasserver',
+                value   => 0,
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+                secure  => $self->conf->{securedCookie},
+            )
+        );
+    }
+
     # Check if CAS server is chosen
     unless ( ( $ticket and $srv = $req->cookies->{llngcasserver} )
         or $srv = $req->param('idp') )

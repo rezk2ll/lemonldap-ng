@@ -142,7 +142,10 @@ Enable **Refuse a missing or unknown CAS server** (``casStrictSrvSelection``,
 in *CAS parameters*) to accept only an existing CAS server given by the
 ``idp`` parameter. Without one, the portal returns an error instead of using
 resolution rules, the only defined server or the server list. The ticket
-returned by the CAS server is still matched to its server by the
-``llngcasserver`` cookie. A session renewal or upgrade reuses the server of
-the current session, while choosing CAS in a Choice menu without the ``idp``
-parameter ends on the error.
+returned by the CAS server is matched to its server by the ``llngcasserver``
+cookie only: a ticket without that cookie is refused, even with an ``idp``
+parameter, so a forged link cannot log in a browser that is not in the middle
+of a CAS login. The cookie is cleared once a ticket is received, so two CAS
+logins started in parallel tabs end with an error on the second one. A session
+renewal or upgrade reuses the server of the current session, while choosing
+CAS in a Choice menu without the ``idp`` parameter ends on the error.
