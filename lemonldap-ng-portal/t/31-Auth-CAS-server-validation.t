@@ -74,6 +74,25 @@ $sp = register(
 is( login(), 'fa@badwolf.org', 'P3: user is the named attribute' );
 count(1);
 
+# Logout once the session's server is no longer configured
+my $spId = expectCookie( loginRes() );
+$sp = register( 'sp', sub { sp( _srv => 'other' ) } );
+ok(
+    $res = $sp->_get(
+        '/',
+        query  => 'logout',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Logout after server removal'
+);
+count(1);
+expectOK($res);
+unlike( $res->[2]->[0], qr#/logout\?service=#, 'No CAS logout redirect' );
+count(1);
+ok( !getSession($spId)->data->{_user}, 'Session deleted' );
+count(1);
+
 clean_sessions();
 done_testing( count() );
 
@@ -154,6 +173,7 @@ sub issuer {
 
 sub sp {
     my (%options) = @_;
+    my $srv = delete $options{_srv} || 'idp';
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
@@ -163,9 +183,9 @@ sub sp {
                 userDB                     => 'Same',
                 issuerDBCASActivation      => 0,
                 multiValuesSeparator       => ';',
-                casSrvMetaDataExportedVars => { idp => { uid => 'uid' } },
+                casSrvMetaDataExportedVars => { $srv => { uid => 'uid' } },
                 casSrvMetaDataOptions      => {
-                    idp => {
+                    $srv => {
                         casSrvMetaDataOptionsUrl => 'http://auth.idp.com/cas',
                         %options,
                     }

@@ -389,10 +389,17 @@ sub authLogout {
     my $session_id = $req->sessionInfo->{_session_id};
     $self->deleteCasSecondarySessions($session_id);
 
+    my $srv     = $req->userData->{_casSrv} // '';
+    my $srvConf = $self->conf->{casSrvMetaDataOptions}->{$srv} || {};
+    unless ( $srvConf->{casSrvMetaDataOptionsUrl} ) {
+        $self->logger->notice(
+            "CAS server '$srv' not configured, skip CAS logout");
+        return PE_OK;
+    }
+
     # Build CAS logout URL
     my $logout_url = $self->getServerLogoutURL( $self->p->fullUrl($req),
-        $self->conf->{casSrvMetaDataOptions}->{ $req->userData->{_casSrv} }
-          ->{casSrvMetaDataOptionsUrl} );
+        $srvConf->{casSrvMetaDataOptionsUrl} );
 
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
